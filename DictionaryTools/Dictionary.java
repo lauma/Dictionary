@@ -1,4 +1,12 @@
-package DictionaryTools;
+/*****************
+Autors: Gunârs Danovskis
+Pçdçjais laboðanas datums: 28.05.2014
+
+Klases mçríis:
+	Klase Dictionary ietver sevî main funkciju
+*****************/
+
+package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,7 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
+//bibliotçka *.doc failu apstrâdei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
@@ -19,61 +27,64 @@ public class Dictionary
 	public static void main(String[] args)
 		throws IOException
 		{
-			// Argumentu paarbaude.
-			File TestFolder = new File("./files/");
+			// pârbaude vai ir izveidota mape "files".
+			File testFolder = new File("./files/");
 
-			if(!TestFolder.exists())
+			if(!testFolder.exists())
 			{
-				System.out.println("Kïûda - nav atrasta mape ar failiem.\n"
+				System.out.println("Kïûda - nav atrasta mape ar failiem.\n" // kïûdas paziòojums
 							+ "Izveidojiet mapi 'files'!");
 				return;
 			}
 			
 			File folder = null;
-			int FileCount = 0;
-			String FileName;
-			File EntryFile = null;
-			WordExtractor EntryExtract = null ;
-			Excel Table = new Excel();
+			int fileCount = 0;
+			String fileName;
+			File entryFile = null;
+			WordExtractor entryExtract = null ;
+			Excel table = new Excel();
 			
 			//Izveido .xls failu kur glabât statistikas datus
-			Excel.CreateXls();
+			Excel.createXls();
 			//Izveido sarakstu ar ðíirkïiem ko navajag apskatît
-			ExceptionList.GetExceptData();
+			ExceptionList.getExceptData();
 			//Izveido sarakstu ar visâm atsaucçm
-			ReferenceList.GetReferData();
+			ReferenceList.getReferData();
 			
 			folder = new File("./files/");
 			File[] listOfFiles = folder.listFiles();
 			
-			int file_sk = listOfFiles.length;
-		
-			for (int p = 0; p < file_sk; p++)
+			int allFileCount = listOfFiles.length;
+			// masîvs iet cauri visiem mapes "files"
+			for (int p = 0; p < allFileCount; p++)
 			{
-				String ext = "";
-				FileName = listOfFiles[p].getName();
-				int s = FileName.lastIndexOf('.');
+				String ext = ""; // faila saîsinâjums
+				fileName = listOfFiles[p].getName(); //iegûts faila nosaukums
+				int s = fileName.lastIndexOf('.');
 				if (s > 0)
 				{
 				    ext = listOfFiles[p].getName().substring(s+1);
 				}
+				//tiek apstrâdâti tikai tie faili kuriem galâ ir saîsinâjums doc
 			    if (listOfFiles[p].isFile() && ext.equals("doc")) 
 			    {
-			        FileCount ++;
+			        fileCount ++;
 			        
-			        EntryFile = new File("./files/" + FileName);
-			        FileInputStream fis=new FileInputStream(EntryFile.getAbsolutePath());
+			        entryFile = new File("./files/" + fileName);
+			        // apstrâdâjamâfaila ceïa ieguve
+			        FileInputStream fis=new FileInputStream(entryFile.getAbsolutePath());
 			        HWPFDocument EntryDoc=new HWPFDocument(fis);
-			        EntryExtract = new WordExtractor(EntryDoc);
-			        // visu skjirklu ielase
-			        String [] Entries = EntryExtract.getParagraphText();
+			        entryExtract = new WordExtractor(EntryDoc);
+			        // visu ðíirkïu ielase, katrs paragrâfs savâ masîva laukâ
+			        String [] Entries = entryExtract.getParagraphText();
 			        
+			        // divdimensiju masîvs kur uzglabât ðíirkïa vârdu un maríiera IN vçrtîbu
 			        String [][] InEntries = new String [Entries.length][2];
 			        
 			        int k = 0;
-			        float Progress = 0;
+			        float progress = 0; // mainîgais progressa uzskaitei
 			        int EntryLen = Entries.length;
-			        Stats StatData = new Stats();
+			        Stats statData = new Stats(); // tiek stats klases mainîgais datu uzglabâðanai
 			        
 			        //slikto ðíirkïu saraksts
 			        String BadRow;
@@ -82,115 +93,119 @@ public class Dictionary
 			        /////Datu apstrâde//////
 			        for(int i=0; i<EntryLen; i++)
 			        {
-			        	if(!StringUtils.IsEmptyEntry(Entries[i], bad))
+			        	//pârbaude vai ðíirklis nav tukðs
+			        	if(!StringUtils.isEntryEmpty(Entries[i], bad))
 			        	{
-			        		Progress = (((float)i/EntryLen)*100);
-			        		StatData.WordCount = StatData.WordCount + StringUtils.WordCount(Entries[i]);
-			        		StatData.EntryCount++;
-			        		
-			        		String EntryInf = Entries[i].substring(Entries[i].indexOf(" ")).trim();
-			        		String EntryName = Entries[i].substring(0, Entries[i].indexOf(" ")).trim();
-			        		
-			        		if(!EntryChecks.IsEntryNameGood(Entries[i], bad))
+			        		progress = (((float)i/EntryLen)*100);
+			        		statData.wordCount = statData.wordCount + StringUtils.wordCount(Entries[i]);
+			        		statData.entryCount++;
+			        		//ðíirkïa informâcijas ieguve
+			        		String entryInf = Entries[i].substring(Entries[i].indexOf(" ")).trim();
+			        		//ðíirkïa vârda ieguve
+			        		String entryName = Entries[i].substring(0, Entries[i].indexOf(" ")).trim();
+			        		// pârbaude vai ðíirkïa vârds ir labs
+			        		if(!EntryChecks.isEntryNameGood(Entries[i], bad))
 			        		{
 			        			//Metode statistikas datu par ðíirkli ievâkðanai
-			        			Stats.Statistics(Entries[i], StatData);
-			        			
-			        			if(!StringUtils.Exclusion(ExceptionList.Exceptions, Entries[i]))
+			        			Stats.Statistics(Entries[i], statData);
+			        			//paºabaude vai nav izòçmums
+			        			if(!StringUtils.exclusion(ExceptionList.exceptions, Entries[i]))
 			        			{
 			        				//Metode, kâs pârbauda simbolus ðíirklî
-			        				EntryChecks.LangCharCheck(Entries[i], bad);
+			        				EntryChecks.langCharCheck(Entries[i], bad);
 			        				
 			        				//Metode, kas pârbauda saîsinâjumu un vietniekvârdu gramatiku
-			        				EntryChecks.GrammarCheck(Entries[i], bad);
+			        				EntryChecks.grammarCheck(Entries[i], bad);
 			        			
 			        				//Metode kas pârbauda vai aiz @ seko pareizs skaitlis
-			        				EntryChecks.AtCheck(Entries[i], bad);
+			        				EntryChecks.atCheck(Entries[i], bad);
 			        			
 			        				//Metode pârbauda vai ir visi nepiecieðamie indikatori
-			        				EntryChecks.IdentCheck(Entries[i], bad);
+			        				EntryChecks.identCheck(Entries[i], bad);
 						
 			        				//Metode pârbauda vai aiz IN DS NS FS obligâti seko skaitlis
-			        				EntryChecks.InDsNsFsNumberCheck(Entries[i], bad);
+			        				EntryChecks.inDsNsFsNumberCheck(Entries[i], bad);
 			        			
 			        				//iekavu lîdzsvars
-			        				EntryChecks.CheckBrackets(Entries[i], bad);
+			        				EntryChecks.checkBrackets(Entries[i], bad);
 			        			
 			        				//pârbauda ðíirkïus kas satur GR
-			        				EntryChecks.GrCheck(Entries[i], bad);
+			        				EntryChecks.grCheck(Entries[i], bad);
 			        			
 			        				//Metode kas iet cauri skjirklim pa vienam vârdam un sîki pârbauda visus iespçjamos gadîjumus
-			        				EntryChecks.WordByWordCheck(Entries[i], bad);
+			        				EntryChecks.wordByWordCheck(Entries[i], bad);
 						
 			        				//pârbauda síirkïus kas satur RU
-			        				EntryChecks.RuCheck(Entries[i], bad);			        			
+			        				EntryChecks.ruCheck(Entries[i], bad);			        			
 						
 			        				//Pârbauda vai eksistç ðíirkïa vârds kâds minçts aiz CD
-			        				EntryChecks.WordAfterCd(Entries, Entries[i], bad);
+			        				EntryChecks.wordAfterCd(Entries, Entries[i], bad);
 			        			
 			        				//Pârbauda vai eksistç ðíirkïa vârds kâds minçts aiz DN
-			        				EntryChecks.WordAfterDn(Entries, Entries[i], bad);
+			        				EntryChecks.wordAfterDn(Entries, Entries[i], bad);
 			        							
 			        				//Skjirkli ar IN indikatoriem
-			        				if (EntryInf.matches("^IN\\s.*$"))
+			        				if (entryInf.matches("^IN\\s.*$"))
 			        				{
-			        					String bezIn = EntryInf.substring(3).trim();
-			        					int index = StringUtils.FindNumber(bezIn);
+			        					String bezIn = entryInf.substring(3).trim();
+			        					int index = StringUtils.findNumber(bezIn);
 			        					
 			        					//Metode kas pârbauda likumsakarîbas ar IN 0 un IN 1
-			        					EntryChecks.In0In1Check(Entries[i], bad, InEntries, Entries, i, index);
+			        					EntryChecks.in0In1Check(Entries[i], bad, InEntries, Entries, i, index);
 			        					
-			        					//Metode, kas pârbauda NS
-			        					EntryChecks.NsCheck(Entries[i], bad);
+			        					//Metode, kas pârbauda nozîmes - NS
+			        					EntryChecks.nsCheck(Entries[i], bad);
 			        				
-			        					//Metode, kas pârbauda PI
-			        					EntryChecks.PiCheck(Entries[i], bad);
+			        					//Metode, kas pârbauda piemçrus -  PI
+			        					EntryChecks.piCheck(Entries[i], bad);
 			        					
 			        					//Metode, kas pârbauda Frazeoloìismus
-			        					EntryChecks.FsCheck(Entries[i], bad);
+			        					EntryChecks.fsCheck(Entries[i], bad);
 			        										
 			        					//Metode, kas pârbauda Divdabjus
-			        					EntryChecks.DsCheck(Entries[i], bad);
+			        					EntryChecks.dsCheck(Entries[i], bad);
 			        					
 			        					//Metode, kas pârbauda atsauces - LI
-			        					EntryChecks.LiCheck(Entries[i], bad, ReferenceList.References);
+			        					EntryChecks.liCheck(Entries[i], bad, ReferenceList.references);
 			        				
 			        					// ieliek bijushos vaardus ar IN sarakstâ
-			        					InEntries[k][0] = EntryName;
+			        					InEntries[k][0] = entryName;
 			        					InEntries[k][1] = String.valueOf(index); 
 			        					k++;
 			        				}
 			        			}
 			        		}
 			        	}
-			        	System.out.print("File " + FileName + " [");
-			        	System.out.printf("%.1f", Progress);
-			        	System.out.print("%]\r");
+			        	System.out.print("File " + fileName + " [");//
+			        	System.out.printf("%.1f", progress);		// Progresa izvade uz ekrâna
+			        	System.out.print("%]\r");					//
 			        }
-			        System.out.print("File " + FileName + " [DONE]\t\n");
+			        System.out.print("File " + fileName + " [DONE]\t\n"); //izvade uz ekrâna kad pabeigts fails
 			        
 			        ///Datu izvade *.klu failâ///
 			        
 			        // Izejas pluusma.
-			        String[] parts = FileName.split("\\.");
+			        String[] parts = fileName.split("\\.");
 			        String part1 = parts[0];
+			        //statistikas datu ielikeðana tabulâ
+			        Stats.FillTable(table, statData , fileName, fileCount);
+					// summaçðanas metode
+			        Stats.SumTable(table);
+			        // datu ierakstîðana
+			        Excel.write();
 			        
-			        Stats.FillTable(Table, StatData , FileName, FileCount);
-					
-			        Stats.SumTable(Table);
-			        
-			        Excel.Write();
-			        
-			        // Savaakto shkjirklju analiize un atbilstosho izejas datu izdrukaashana.
+			        // Savaakto ðíirkïu analîze un atbilstoðo izejas datu izdrukâðana.
 			        if(!bad.isEmpty())
 			        {
-			        	BufferedWriter OutFile = new BufferedWriter(
+			        	//izejas plûsma *.klu failam
+			        	BufferedWriter outFile = new BufferedWriter(
 			        			new OutputStreamWriter(new FileOutputStream("./files/" + part1 + ".klu"), "windows-1257"));
+			        	//slikto ðíirkïu saraksta pârrakstîðana izejas failâ
 			        	while (!bad.isEmpty())
 			        	{
 			        		int indx = 0;
 			        		BadRow = bad.remove(indx);
-			        		OutFile.write(BadRow + "\n");
+			        		outFile.write(BadRow + "\n");
 			        		int atkaartojums = bad.indexOf(BadRow);
 			        		while (atkaartojums > -1)
 			        		{
@@ -199,12 +214,12 @@ public class Dictionary
 			        		}
 			        		indx++;
 			        	}
-			        	OutFile.flush();
-			        	OutFile.close();
+			        	outFile.flush(); // plûsmas iztukðoðana
+			        	outFile.close(); //faila aizvçrðana
 			        }
 			    }
 			}
-			System.out.print("ALL FILES DONE!" + "\n");
+			System.out.print("ALL FILES DONE!" + "\n"); // paziòujoms par visu failu pabeigðanu
 		}	// main funkcijas beigas
 
 }

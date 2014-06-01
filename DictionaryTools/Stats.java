@@ -1,4 +1,12 @@
-package  DictionaryTools;
+/*****************
+Autors: Gunârs Danovskis
+Pçdçjais laboðanas datums: 28.05.2014
+
+Klases mçríis:
+	Klase Stats ietver sevî metodes statistikas datu iegûðanai
+	un uzglabâðanai
+*****************/
+package  DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
 
 //excel
 import java.util.regex.Matcher;
@@ -12,102 +20,112 @@ import org.apache.poi.ss.usermodel.CellStyle;
 public class Stats
 {
 	String filename = "./files/vardusk.xls";
-    Excel Table = new Excel();
+    Excel table = new Excel();
     
 	public String FileName = "";
-	public int WordCount = 0;
-	public int EntryCount = 0;
-	public int InCount = 0; 
-	public int In1Count = 0; 
-	public int In2Count = 0; 
-	public int In3Count = 0; 
-	public int In4Count = 0; 
-	public int In5Count = 0; 
-	public int CdCount = 0;
-	public int DnCount = 0;
-	public int FrCount = 0;
-	public int PiCount = 0;
-	public int NoCount = 0;
-	public int InDnCd = 0;
+	public int wordCount = 0;
+	public int entryCount = 0;
+	public int inCount = 0; 
+	public int in1Count = 0; 
+	public int in2Count = 0; 
+	public int in3Count = 0; 
+	public int in4Count = 0; 
+	public int in5Count = 0; 
+	public int cdCount = 0;
+	public int dnCount = 0;
+	public int frCount = 0;
+	public int piCount = 0;
+	public int noCount = 0;
+	public int inDnCd = 0;
 	
-	public static void Statistics(String Entry, Stats data)
+	//metode kas ievâc statistikas datus par ðíirkli
+	public static void Statistics(String entry, Stats data)
 	{
-		String EntryInf = Entry.substring(Entry.indexOf(" ")).trim();
-		if (EntryInf.matches("^IN\\s.*$"))
+		// maríiera IN skaita ieguve
+		String entryInf = entry.substring(entry.indexOf(" ")).trim();
+		if (entryInf.matches("^IN\\s.*$"))
 		{
-			String bezIn = EntryInf.substring(3).trim();
-			int index = StringUtils.FindNumber(bezIn);
+			String withoutIn = entryInf.substring(3).trim();
+			int index = StringUtils.findNumber(withoutIn);
 			
-			if(!EntryInf.matches("^..+\\sCD\\s.*$") && !EntryInf.matches("^..+\\sDN\\s.*$"))
-				data.InCount++;
-			
+			if(!entryInf.matches("^..+\\sCD\\s.*$") && !entryInf.matches("^..+\\sDN\\s.*$"))
+				data.inCount++;
+			// maríiera IN 1 skaita ieguve
 			if(index == 1)
 			{
-				data.In1Count++;
+				data.in1Count++;
 			}
+			// maríiera IN 2 skaita ieguve
 			if(index == 2)
 			{
-				data.In2Count++;
+				data.in2Count++;
 			}
+			// maríiera IN 3 skaita ieguve
 			if(index == 3)
 			{
-				data.In3Count++;
+				data.in3Count++;
 			}
+			// maríiera IN 4 skaita ieguve
 			if(index == 4)
 			{
-			data.In4Count++;
+			data.in4Count++;
 			}
+			// maríiera IN 5 skaita ieguve
 			if(index == 5)
 			{
-				data.In5Count++;
+				data.in5Count++;
 			}
 		}
-		if (EntryInf.matches("^.*\\sCD\\s.*$") || EntryInf.matches("^CD\\s.*$"))
+		// maríiera CD skaita ieguve
+		if (entryInf.matches("^.*\\sCD\\s.*$") || entryInf.matches("^CD\\s.*$"))
 		{
-			data.CdCount++;
+			data.cdCount++;
 		}
-		if (EntryInf.matches("^.*\\sDN\\s.*$") || EntryInf.matches("^DN\\s.*$"))
+		// maríiera DN skaita ieguve
+		if (entryInf.matches("^.*\\sDN\\s.*$") || entryInf.matches("^DN\\s.*$"))
 		{
-			data.DnCount++;
+			data.dnCount++;
 		}
-
+		// maríiera NO skaita ieguve
 		Pattern noPat = Pattern.compile("\\sNO\\s");
-		Matcher no = noPat.matcher(EntryInf);
+		Matcher no = noPat.matcher(entryInf);
 		int visiNo = 0;
 		while (no.find())
 		{
 			visiNo++;
 		}
-		data.NoCount = data.NoCount + visiNo;
-		
-		Matcher pi = Pattern.compile("\\sPI(?=\\s)").matcher(EntryInf);
+		data.noCount = data.noCount + visiNo;
+		// maríiera PI skaita ieguve
+		Matcher pi = Pattern.compile("\\sPI(?=\\s)").matcher(entryInf);
 		int piSkaits = 0;
 		while (pi.find())
 		{
 			piSkaits++;
 		}
-		data.PiCount = data.PiCount + piSkaits;
-		
+		data.piCount = data.piCount + piSkaits;
+		// maríiera FR skaita ieguve
 		Pattern frPat = Pattern.compile("\\sFR(?=\\s)");
-		Matcher fr = frPat.matcher(EntryInf);
+		Matcher fr = frPat.matcher(entryInf);
 		int visiFr = 0;
 		while(fr.find())
 		{
 			visiFr++;
 		}
-		data.FrCount = data.FrCount + visiFr;
+		data.frCount = data.frCount + visiFr;
 	}
-		
-	public static void FillTable(Excel Table, Stats data , String FileName, int FileCount)
+	// metode kas ieliek datus *.xls failâ	
+	public static void FillTable(Excel table, Stats data , String FileName, int FileCount)
 	{
+		// masîvs ar kolonnu nosaukumiem
 		String[] header = {" ","Vârdi","Ðíirkïi","IN","IN1","IN2","IN3",
-							"IN4","IN5","CD","DN","IN + DN","FR","NO","PI"};
-		String[] parts = FileName.split("\\.");
-		String part1 = parts[0];
-	
-		data.InDnCd = data.InCount + data.CdCount + data.DnCount;
-		HSSFRow rowhead = Excel.Sheet.createRow((short)0);
+							"IN4","IN5","CD","DN","IN + DN","FR","NO","PI"}; 
 		
+		String[] parts = FileName.split("\\."); // apstrâdâta faila nosaukuma ieguve
+		String part1 = parts[0];
+		
+		data.inDnCd = data.inCount + data.cdCount + data.dnCount;
+		HSSFRow rowhead = Excel.Sheet.createRow((short)0);
+		// tabulas ðûnu stila pielâgoðana
 		HSSFCellStyle headerStyle=Excel.Workbook.createCellStyle();
 	    headerStyle.setAlignment(CellStyle.ALIGN_RIGHT);
 				
@@ -116,27 +134,28 @@ public class Stats
 			rowhead.createCell(i).setCellValue(header[i]);
 			rowhead.getCell(i).setCellStyle(headerStyle);
 		}
-		
+		//tabulas ðûnu aizpildîðana ar statitikas datiem
 		HSSFRow row = Excel.Sheet.createRow((short)FileCount+3);
 	       row.createCell(0).setCellValue(part1);
-	       row.createCell(1).setCellValue(data.WordCount);
-	       row.createCell(2).setCellValue(data.EntryCount);
-	       row.createCell(3).setCellValue(data.InCount);
-	       row.createCell(4).setCellValue(data.In1Count);
-	       row.createCell(5).setCellValue(data.In2Count);
-	       row.createCell(6).setCellValue(data.In3Count);
-	       row.createCell(7).setCellValue(data.In4Count);
-	       row.createCell(8).setCellValue(data.In5Count);
-	       row.createCell(9).setCellValue(data.CdCount);
-	       row.createCell(10).setCellValue(data.DnCount);
-	       row.createCell(11).setCellValue(data.InDnCd);
-	       row.createCell(12).setCellValue(data.FrCount);
-	       row.createCell(13).setCellValue(data.NoCount);
-	       row.createCell(14).setCellValue(data.PiCount);
+	       row.createCell(1).setCellValue(data.wordCount);
+	       row.createCell(2).setCellValue(data.entryCount);
+	       row.createCell(3).setCellValue(data.inCount);
+	       row.createCell(4).setCellValue(data.in1Count);
+	       row.createCell(5).setCellValue(data.in2Count);
+	       row.createCell(6).setCellValue(data.in3Count);
+	       row.createCell(7).setCellValue(data.in4Count);
+	       row.createCell(8).setCellValue(data.in5Count);
+	       row.createCell(9).setCellValue(data.cdCount);
+	       row.createCell(10).setCellValue(data.dnCount);
+	       row.createCell(11).setCellValue(data.inDnCd);
+	       row.createCell(12).setCellValue(data.frCount);
+	       row.createCell(13).setCellValue(data.noCount);
+	       row.createCell(14).setCellValue(data.piCount);
 	}
-			
-	public static void SumTable(Excel Table)
+	// metode kas izveido *.xls failâ jaunu rindu ar katras kolonnas kopsummu		
+	public static void SumTable(Excel table)
 	{
+		//katru reizi tiek kad tiek izpildîta metode tiek summçti dati lîdz pçdçjai aizpildîtajai rindai
 		int lastRowNr = Excel.Sheet.getLastRowNum() + 1;
 		HSSFRow sum_row = Excel.Sheet.createRow((short)2);
 	       sum_row.createCell(0).setCellValue("Kopâ:");

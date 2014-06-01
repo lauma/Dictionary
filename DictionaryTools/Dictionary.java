@@ -32,8 +32,8 @@ public class Dictionary
 
 			if(!testFolder.exists())
 			{
-				System.out.println("Kïûda - nav atrasta mape ar failiem.\n" // kïûdas paziòojums
-							+ "Izveidojiet mapi 'files'!");
+				System.out.println("Error -can't find folder 'files'.\n" // kïûdas paziòojums
+							+ "Please, create folder 'files'!");
 				return;
 			}
 			

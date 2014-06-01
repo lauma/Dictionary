@@ -37,8 +37,8 @@ public class Excel
 
 		if(!TestFolder.exists())
 		{
-			System.out.println("Kïûda - nav atrasta mape 'files'.\n"
-					+ "Izveidojiet mapi 'files'!");
+			System.out.println("Error - cant find folder 'files'.\n"
+					+ "Please, create folder 'files'!");
 			return;
 		}
     	

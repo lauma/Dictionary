@@ -102,7 +102,7 @@ public class EntryChecks
 		}
 	}
 	// metode kas pârbauda katru ðíirkïa vârdu atseviðíi						
-	public static void wordByWordCheck(String entries, ArrayList<String> bad)
+	public static void wordByWordCheck(String entry, ArrayList<String> bad)
 	{
 		//masîvs ar vârdòicas maríieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
@@ -126,7 +126,7 @@ public class EntryChecks
 		int at = 0;
 		boolean gramOpen = false; // vai teksts ir tieði aiz gramtikas infikatora
 		boolean open = false; // vai ir bijis @2 indikators
-		String entryInf = entries.substring(entries.indexOf(" ")).trim();
+		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		int len = entryInf.length();
 		int index = 0;
 		int spaces = StringUtils.countSpaces(entryInf); // atstarpju skaits simbolu virknç
@@ -151,7 +151,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi PI pçc kârtas, bez PN)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Divi PI pçc kârtas, bez PN)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 					}
 					if(word.equals("PN")) // pârbauda vai nav bijis PN bez PI pa vidu, pirms tam
@@ -164,7 +164,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi PN pçc kârtas, bez PI)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Divi PN pçc kârtas, bez PI)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 					}
 					if(word.equals("NO"))
@@ -182,7 +182,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Pirms NG nav atrodams NO)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Pirms NG nav atrodams NO)" + entry); // slikto ðíirkïu saraksta papildinâðana
 							ng = 0;
 						}
 					}						
@@ -193,7 +193,7 @@ public class EntryChecks
 						{
 							if(StringUtils.wordAfter(entryInf, word).contains("@5")) // pârbauda starp @2 un @5 ir teksts
 							{
-								bad.add("(Starp @2 un @5 jâbût tekstam)" + entries); // slikto ðíirkïu saraksta papildinâðana
+								bad.add("(Starp @2 un @5 jâbût tekstam)" + entry); // slikto ðíirkïu saraksta papildinâðana
 							}
 						}
 						if(at == 0 || at == 5) // pârbauda vai nav 2 @2 pçc kârtas bez @5 pa vidu
@@ -202,7 +202,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi @2 pçc kârtas)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Divi @2 pçc kârtas)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 					}
 					if(word.contains("@5"))
@@ -212,17 +212,17 @@ public class EntryChecks
 						{
 							if(StringUtils.wordAfter(entryInf, word).contains("@2") && !word.contains(")"))
 							{
-								bad.add("(Starp @5 un @2 jâbût tekstam)" + entries); // pârbauda starp @5 un @2 ir teksts
+								bad.add("(Starp @5 un @2 jâbût tekstam)" + entry); // pârbauda starp @5 un @2 ir teksts
 																					// izòemot ja tos atdala iekavas
 							}
 						}
 						if(at == 0) //pârbauda vai pirms tam ir bijis @2 bez @5, gadîjumâ ja @5 ir ðíirkïa sâkumâ
 						{
-							bad.add("(Pirms @5 jâbût @2)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Pirms @5 jâbût @2)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 						if(at == 5) //pârbauda vai pirms tam ir bijis @2 bez @5
 						{
-							bad.add("(Divi @5 pçc kârtas)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(Divi @5 pçc kârtas)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 						if(at == 2)
 						{
@@ -234,7 +234,7 @@ public class EntryChecks
 						if(Arrays.asList(ident).contains(word) // ja ir kâds ident masîva locekïiem no maríierem
 						|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekïiem
 						{
-							bad.add("(@2 un @5 jâbût 1 maríiera robeþâs)" + entries); // slikto ðíirkïu saraksta papildinâðana
+							bad.add("(@2 un @5 jâbût 1 maríiera robeþâs)" + entry); // slikto ðíirkïu saraksta papildinâðana
 						}
 					}
 					//beigu pieturzîmes pârbaude
@@ -247,7 +247,7 @@ public class EntryChecks
 							//pârbauda vai vârds pirms tam satur beigu pieturzîmi
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(NO nebeidzas ar pieturzîmi)" + entries); // slikto ðíirkïu saraksta papildinâðana
+								bad.add("(NO nebeidzas ar pieturzîmi)" + entry); // slikto ðíirkïu saraksta papildinâðana
 								noEndSym = 0;
 							}
 							else
@@ -265,7 +265,7 @@ public class EntryChecks
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?'
 							&& word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(PN nebeidzas ar pieturzîmi)" + entries); // slikto ðíirkïu saraksta papildinâðana
+								bad.add("(PN nebeidzas ar pieturzîmi)" + entry); // slikto ðíirkïu saraksta papildinâðana
 								pnEndSym = 0;
 							}
 							else
@@ -279,14 +279,14 @@ public class EntryChecks
 						gramOpen = true; // ir bijis gramatikas maríieris
 						if(!StringUtils.wordAfter(entryInf, word).contains("@2")) // vai aiz maríiera ir @2
 						{
-							bad.add("(Aiz gramatikas maríiera jâbût @2)" + entries);
+							bad.add("(Aiz gramatikas maríiera jâbût @2)" + entry);
 						}
 					}
 					if(gramOpen)
 					{
 						if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits maríieris
 						{
-							bad.add("(Gramatikai jâbeidzâs ar @5)" + entries);
+							bad.add("(Gramatikai jâbeidzâs ar @5)" + entry);
 							gramOpen = false;
 						}
 						if(word.contains("@5")) // ja @5 tad gramatika noslçdzas
@@ -305,11 +305,11 @@ public class EntryChecks
 		// ja pçdçjais vârds, tiek veiktas pârbaudes vai ir @5 galâ
 		if(gramOpen)
 		{
-			bad.add("(Gramatikai jâbeidzâs ar @5)" + entries);
+			bad.add("(Gramatikai jâbeidzâs ar @5)" + entry);
 		}
 		if(open && !entryInf.contains("@5"))
 		{
-			bad.add("(Ðíirkïa beigâs jâbût @5)" + entries);
+			bad.add("(Ðíirkïa beigâs jâbût @5)" + entry);
 		}
 	}
 	//metode kas veic pârbaudes saistîtas ar maríieri DS		

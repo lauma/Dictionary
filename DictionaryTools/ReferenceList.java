@@ -1,34 +1,34 @@
 /*****************
-Autors: Gunârs Danovskis
-Pçdçjais laboğanas datums: 28.05.2014
+Autors: GunÄrs Danovskis
+PÄ“dÄ“jais laboÅ¡anas datums: 28.05.2014
 
-Klases mçríis:
-	Klase ReferenceList ietver sevî funkcijas avotu saraksta izveidei
+Klases mÄ“rÄ·is:
+	Klase ReferenceList ietver sevÄ« funkcijas avotu saraksta izveidei
 *****************/
 
-package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
+package DictionaryTools; //KopÄ«ga paka, kurÄ ir iekÄ¼autas visas klases veiksmÄ«gai programmas darbÄ«bai
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-//bibliotçka *.doc failu apstrâdei
+//bibliotÄ“ka *.doc failu apstrÄdei
 import org.apache.poi.hwpf.HWPFDocument; 
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
 public class ReferenceList
 {
-public static String[] references; // publisks klases mainîgais kas tiek
-									// izmantots visu vârdnîcas avotu glabâğanai
+public static String[] references; // publisks klases mainÄ«gais kas tiek
+									// izmantots visu vÄrdnÄ«cas avotu glabÄÅ¡anai
 	
 	public static void getReferData()
 	throws IOException
 	{
-		// pârbaude vai ieejas fails eksistç
+		// pÄrbaude vai ieejas fails eksistÄ“
 		File testFile = new File("./files/prog files/zLI.doc");
 
 		if(!testFile.exists())
 		{
-			System.out.println("Error - can't find file 'zLI.doc'.\n" // paziòojums lietotâjam
+			System.out.println("Error - can't find file 'zLI.doc'.\n" // paziÅ†ojums lietotÄjam
 					+ "Please put 'zLI.doc' file in to 'prog files'!");
 			System.exit(0);
 			return;
@@ -37,17 +37,17 @@ public static String[] references; // publisks klases mainîgais kas tiek
 		File referFile = null;
 		FileInputStream fis = null;
 		WordExtractor referExtract = null;
-		// tiek norâdîts ceïğ uz avotu failu
+		// tiek norÄdÄ«ts ceÄ¼Å¡ uz avotu failu
 		referFile = new File("./files/prog files/zLI.doc");
 		fis = new FileInputStream(referFile.getAbsolutePath());
 		
 		HWPFDocument referDoc=new HWPFDocument(fis);
 		referExtract = new WordExtractor(referDoc);
-		// faila saturs tiek ielikts pagiadu masîvâ
+		// faila saturs tiek ielikts pagiadu masÄ«vÄ
 		String[] referTemp = referExtract.getParagraphText();
         references = new String[referTemp.length];
-        // dati tiek pârrakstîti no pagaidu masîva galvenajâ masîvâ
-        // lai galvenajâ masîvâ bûtu tikai avotu saîsinâjumi
+        // dati tiek pÄrrakstÄ«ti no pagaidu masÄ«va galvenajÄ masÄ«vÄ
+        // lai galvenajÄ masÄ«vÄ bÅ«tu tikai avotu saÄ«sinÄjumi
         for(int j=0; j<referTemp.length; j++)
         {
         	if(referTemp[j] != null)

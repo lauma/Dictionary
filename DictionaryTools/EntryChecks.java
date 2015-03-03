@@ -1,11 +1,11 @@
 /*****************
-Autors: Gunârs Danovskis
-Pçdçjais laboğanas datums: 28.05.2014
+Autors: GunÄrs Danovskis
+PÄ“dÄ“jais laboÅ¡anas datums: 28.05.2014
 
-Klases mçríis:
-	Klase EntryChecks ietver sevî visas galvenâs metodes, kas pârbauda ğíirkïus
+Klases mÄ“rÄ·is:
+	Klase EntryChecks ietver sevÄ« visas galvenÄs metodes, kas pÄrbauda Å¡Ä·irkÄ¼us
 *****************/
-package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
+package DictionaryTools; //KopÄ«ga paka, kurÄ ir iekÄ¼autas visas klases veiksmÄ«gai programmas darbÄ«bai
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,146 +15,146 @@ import java.util.regex.Pattern;
 
 public class EntryChecks
 {
-	//metode kas pârbauda vai ğíirklim netrûkst síirkïa vârda
+	//metode kas pÄrbauda vai Å¡Ä·irklim netrÅ«kst sÄ·irkÄ¼a vÄrda
 	public static boolean isEntryNameGood(String entry, ArrayList<String> bad)
 	{
-		boolean good = true; // mainîgais, kas apzîmç vai ğíirklis ir labs
-		// pirmâ vârda lîdz atstarpei ieguve
+		boolean good = true; // mainÄ«gais, kas apzÄ«mÄ“ vai Å¡Ä·irklis ir labs
+		// pirmÄ vÄrda lÄ«dz atstarpei ieguve
 		String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 		
 		if(entryName.equals(""))
 		{
-			bad.add("(Trûkst ğíirkïa vârds)" + entry); // slikto ğíirkïu saraksta paildinâğana
+			bad.add("(TrÅ«kst Å¡Ä·irkÄ¼a vÄrds)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta paildinÄÅ¡ana
 		}
 		else
 		{
 			good = false;
 		}
-		return good; // atgrieş labs vai slikts
+		return good; // atgrieÅ¾ labs vai slikts
 	}
-	//metode kas pârbauda vai ğíirklî ir iekavu lîdzsvars						
+	//metode kas pÄrbauda vai Å¡Ä·irklÄ« ir iekavu lÄ«dzsvars						
 	public static void checkBrackets(String entries, ArrayList<String> bad)
 	{
-		int sqBrackets = 0; // kvadrâtiekavu skaits
-		int circBracket = 0; // apaïo iekavu skaits
-		String entryInf = entries.substring(entries.indexOf(" ")).trim();//ğíirkïa info ieguve
+		int sqBrackets = 0; // kvadrÄtiekavu skaits
+		int circBracket = 0; // apaÄ¼o iekavu skaits
+		String entryInf = entries.substring(entries.indexOf(" ")).trim();//Å¡Ä·irkÄ¼a info ieguve
 		int len = entryInf.length();
 		for(int i = 0; i<len; i++) // iet cauri pa vienam simbolam
 		{
-			if(entryInf.charAt(i) == '[') // atveroğâs iekavas
+			if(entryInf.charAt(i) == '[') // atveroÅ¡Äs iekavas
 			{
-				sqBrackets ++; //skaits palielinâs par 1
-				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pçdiòas
+				sqBrackets ++; //skaits palielinÄs par 1
+				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pÄ“diÅ†as
 				{
-					sqBrackets --; // skaits samazinâs par 1
+					sqBrackets --; // skaits samazinÄs par 1
 				}
 			}
-			if(entryInf.charAt(i) == ']') // aizveroğâs iekavas
+			if(entryInf.charAt(i) == ']') // aizveroÅ¡Äs iekavas
 			{
-				if(i < len-1) // ja pçdçjais simbols
+				if(i < len-1) // ja pÄ“dÄ“jais simbols
 				{
-					sqBrackets --; // skaits samazinâs par 1
+					sqBrackets --; // skaits samazinÄs par 1
 				}
-				if(i < len-1) // ja nav pçdçjais simbols
+				if(i < len-1) // ja nav pÄ“dÄ“jais simbols
 				{
-					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pçdiòas
+					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pÄ“diÅ†as
 					{
-						sqBrackets ++; //skaits palielinâs par 1
+						sqBrackets ++; //skaits palielinÄs par 1
 					}
 				}
-				if(i == len-1) // ja ir pçdçjais simbols
+				if(i == len-1) // ja ir pÄ“dÄ“jais simbols
 				{
-					sqBrackets--; // skaits samazinâs par 1
+					sqBrackets--; // skaits samazinÄs par 1
 				}
 			}
 			
-			if(entryInf.charAt(i) == '(') // atveroğâs iekavas
+			if(entryInf.charAt(i) == '(') // atveroÅ¡Äs iekavas
 			{
-				circBracket ++;   //skaits palielinâs par 1
-				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pçdiòas
+				circBracket ++;   //skaits palielinÄs par 1
+				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pÄ“diÅ†as
 				{
-					circBracket --; // skaits samazinâs par 1
+					circBracket --; // skaits samazinÄs par 1
 				}
 			}
-			if(entryInf.charAt(i) == ')') // aizveroğâs iekavas
+			if(entryInf.charAt(i) == ')') // aizveroÅ¡Äs iekavas
 			{
-				if(i < len-1) // ja nav pçdçjais simbols
+				if(i < len-1) // ja nav pÄ“dÄ“jais simbols
 				{
-					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pçdiòas
+					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pÄ“diÅ†as
 					{
-						circBracket ++;  //skaits palielinâs par 1
+						circBracket ++;  //skaits palielinÄs par 1
 					}
 				}
-				if(i == len-1) // ja ir pçdçjais simbols
+				if(i == len-1) // ja ir pÄ“dÄ“jais simbols
 				{
-					circBracket--; // skaits samazinâs par 1
+					circBracket--; // skaits samazinÄs par 1
 				}
 			}
 		}
 		
-		if(sqBrackets != 0) //ja nav lîdzsvars
+		if(sqBrackets != 0) //ja nav lÄ«dzsvars
 		{
-			bad.add("(Problçma ar [] iekavâm)" + entries); // pievieno slikto sarakstam
+			bad.add("(ProblÄ“ma ar [] iekavÄm)" + entries); // pievieno slikto sarakstam
 		}
-		if(circBracket != 0) //ja nav lîdzsvars
+		if(circBracket != 0) //ja nav lÄ«dzsvars
 		{
-			bad.add("(Problçma ar () iekavâm)" + entries); // pievieno slikto sarakstam
+			bad.add("(ProblÄ“ma ar () iekavÄm)" + entries); // pievieno slikto sarakstam
 		}
 	}
-	// metode kas pârbauda katru ğíirkïa vârdu atseviğíi						
+	// metode kas pÄrbauda katru Å¡Ä·irkÄ¼a vÄrdu atseviÅ¡Ä·i						
 	public static void wordByWordCheck(String entry, ArrayList<String> bad)
 	{
-		//masîvs ar vârdòicas maríieriem
+		//masÄ«vs ar vÄrdÅ†icas marÄ·ieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
 		String word = " ";
-		String[] gramIdent = {"NG","AG","PG","FG"}; // masîvs ar gramatikas maríieriem
-		// mainîgais ko izmanto PN beigu simbola pârbaudei
+		String[] gramIdent = {"NG","AG","PG","FG"}; // masÄ«vs ar gramatikas marÄ·ieriem
+		// mainÄ«gais ko izmanto PN beigu simbola pÄrbaudei
 		int pnEndSym = 0; 
-		// mainîgais ko izmanto NO beigu simbola pârbaudei
+		// mainÄ«gais ko izmanto NO beigu simbola pÄrbaudei
 		int noEndSym = 0; 
-		//mainîgais ko izmanto, lai pârbaudîtu, vai pçc NO ir PN un vai pirms NG ir NO
+		//mainÄ«gais ko izmanto, lai pÄrbaudÄ«tu, vai pÄ“c NO ir PN un vai pirms NG ir NO
 		int no = 0; 
-		// mainîgais ko izmanto lai pârbaudîtu vai pirms PN ir NO
+		// mainÄ«gais ko izmanto lai pÄrbaudÄ«tu vai pirms PN ir NO
 		int pn = 0;
-		// vârda garuma mainîgais
+		// vÄrda garuma mainÄ«gais
 		int wordLen = 0;
-		//mainîgais ko izmanto, lai pârbaudîtu vai pirms NG ir NO
+		//mainÄ«gais ko izmanto, lai pÄrbaudÄ«tu vai pirms NG ir NO
 		int ng = 0;
-		//mainîgais ko izmanto, lai pârbaudîtu vai pirms pirms PN ir PI
+		//mainÄ«gais ko izmanto, lai pÄrbaudÄ«tu vai pirms pirms PN ir PI
 		int pi = 0;
-		//mainîgais ko izmanto, lai pârbaudîtu @2 un @5 lîdzsvaru
+		//mainÄ«gais ko izmanto, lai pÄrbaudÄ«tu @2 un @5 lÄ«dzsvaru
 		int at = 0;
-		boolean gramOpen = false; // vai teksts ir tieği aiz gramtikas infikatora
+		boolean gramOpen = false; // vai teksts ir tieÅ¡i aiz gramtikas infikatora
 		boolean open = false; // vai ir bijis @2 indikators
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		int len = entryInf.length();
 		int index = 0;
-		int spaces = StringUtils.countSpaces(entryInf); // atstarpju skaits simbolu virknç
+		int spaces = StringUtils.countSpaces(entryInf); // atstarpju skaits simbolu virknÄ“
 		
-		while(len > 0 && spaces > 0) // kamçr nav palicis viens vârds
+		while(len > 0 && spaces > 0) // kamÄ“r nav palicis viens vÄrds
 		{
 			if(StringUtils.countSpaces(entryInf) > 0)
 			{
 				word = entryInf.substring(0, entryInf.indexOf(" ")).trim();
 				if(StringUtils.countSpaces(entryInf) == 0)
 				{
-					word = entryInf.substring(0).trim(); // iegûts pirmais vârds virknç
+					word = entryInf.substring(0).trim(); // iegÅ«ts pirmais vÄrds virknÄ“
 				}
 				if(word.length() > 0)
 				{
 					if(word.equals("PI"))
 					{
-						if(pi == 0) // pârbauda vai nav bijis PI bez PN pa vidu pirms tam
+						if(pi == 0) // pÄrbauda vai nav bijis PI bez PN pa vidu pirms tam
 						{
 							pi = 1;
 							pn = 0;
 						}
 						else
 						{
-							bad.add("(Divi PI pçc kârtas, bez PN)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Divi PI pÄ“c kÄrtas, bez PN)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
 					}
-					if(word.equals("PN")) // pârbauda vai nav bijis PN bez PI pa vidu, pirms tam
+					if(word.equals("PN")) // pÄrbauda vai nav bijis PN bez PI pa vidu, pirms tam
 					{
 						if(pn == 0)
 						{
@@ -164,7 +164,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi PN pçc kârtas, bez PI)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Divi PN pÄ“c kÄrtas, bez PI)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
 					}
 					if(word.equals("NO"))
@@ -173,7 +173,7 @@ public class EntryChecks
 						noEndSym = 1;
 						ng = 0;
 					}
-					if(word.equals("NG"))  // pârbauda pirmd NG ir bijis NO
+					if(word.equals("NG"))  // pÄrbauda pirmd NG ir bijis NO
 					{
 						if(ng == 0 && no == 1)
 						{
@@ -182,7 +182,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Pirms NG nav atrodams NO)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Pirms NG nav atrodams NO)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 							ng = 0;
 						}
 					}						
@@ -191,18 +191,18 @@ public class EntryChecks
 						open = true; 
 						if(StringUtils.countSpaces(entryInf) > 0)
 						{
-							if(StringUtils.wordAfter(entryInf, word).contains("@5")) // pârbauda starp @2 un @5 ir teksts
+							if(StringUtils.wordAfter(entryInf, word).contains("@5")) // pÄrbauda starp @2 un @5 ir teksts
 							{
-								bad.add("(Starp @2 un @5 jâbût tekstam)" + entry); // slikto ğíirkïu saraksta papildinâğana
+								bad.add("(Starp @2 un @5 jÄbÅ«t tekstam)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 							}
 						}
-						if(at == 0 || at == 5) // pârbauda vai nav 2 @2 pçc kârtas bez @5 pa vidu
+						if(at == 0 || at == 5) // pÄrbauda vai nav 2 @2 pÄ“c kÄrtas bez @5 pa vidu
 						{
 							at = 2;
 						}
 						else
 						{
-							bad.add("(Divi @2 pçc kârtas)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Divi @2 pÄ“c kÄrtas)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
 					}
 					if(word.contains("@5"))
@@ -212,42 +212,42 @@ public class EntryChecks
 						{
 							if(StringUtils.wordAfter(entryInf, word).contains("@2") && !word.contains(")"))
 							{
-								bad.add("(Starp @5 un @2 jâbût tekstam)" + entry); // pârbauda starp @5 un @2 ir teksts
-																					// izòemot ja tos atdala iekavas
+								bad.add("(Starp @5 un @2 jÄbÅ«t tekstam)" + entry); // pÄrbauda starp @5 un @2 ir teksts
+																					// izÅ†emot ja tos atdala iekavas
 							}
 						}
-						if(at == 0) //pârbauda vai pirms tam ir bijis @2 bez @5, gadîjumâ ja @5 ir ğíirkïa sâkumâ
+						if(at == 0) //pÄrbauda vai pirms tam ir bijis @2 bez @5, gadÄ«jumÄ ja @5 ir Å¡Ä·irkÄ¼a sÄkumÄ
 						{
-							bad.add("(Pirms @5 jâbût @2)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Pirms @5 jÄbÅ«t @2)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
-						if(at == 5) //pârbauda vai pirms tam ir bijis @2 bez @5
+						if(at == 5) //pÄrbauda vai pirms tam ir bijis @2 bez @5
 						{
-							bad.add("(Divi @5 pçc kârtas)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(Divi @5 pÄ“c kÄrtas)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
 						if(at == 2)
 						{
 							at = 5;
 						}
 					}
-					if(open) //pârbauda vai @2 un @5 ir viena maríiera robeşâs
+					if(open) //pÄrbauda vai @2 un @5 ir viena marÄ·iera robeÅ¾Äs
 					{
-						if(Arrays.asList(ident).contains(word) // ja ir kâds ident masîva locekïiem no maríierem
-						|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekïiem
+						if(Arrays.asList(ident).contains(word) // ja ir kÄds ident masÄ«va locekÄ¼iem no marÄ·ierem
+						|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekÄ¼iem
 						{
-							bad.add("(@2 un @5 jâbût 1 maríiera robeşâs)" + entry); // slikto ğíirkïu saraksta papildinâğana
+							bad.add("(@2 un @5 jÄbÅ«t 1 marÄ·iera robeÅ¾Äs)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 						}
 					}
-					//beigu pieturzîmes pârbaude
+					//beigu pieturzÄ«mes pÄrbaude
 					wordLen = word.length();
-					if(noEndSym == 1) // norâda to ka ir bjis NO maríieris
+					if(noEndSym == 1) // norÄda to ka ir bjis NO marÄ·ieris
 					{
 						if(Arrays.asList(ident).contains(StringUtils.wordAfter(entryInf, word))		//
-						|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(entryInf, word)))// kad ir atrasts cits maríieris
+						|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(entryInf, word)))// kad ir atrasts cits marÄ·ieris
 						{
-							//pârbauda vai vârds pirms tam satur beigu pieturzîmi
+							//pÄrbauda vai vÄrds pirms tam satur beigu pieturzÄ«mi
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(NO nebeidzas ar pieturzîmi)" + entry); // slikto ğíirkïu saraksta papildinâğana
+								bad.add("(NO nebeidzas ar pieturzÄ«mi)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 								noEndSym = 0;
 							}
 							else
@@ -256,16 +256,16 @@ public class EntryChecks
 							}
 						}
 					}
-					if(pnEndSym == 1) // norâda to ka ir bjis PN maríieris
+					if(pnEndSym == 1) // norÄda to ka ir bjis PN marÄ·ieris
 					{
 						if(Arrays.asList(ident).contains(StringUtils.wordAfter(entryInf, word))				 //
-								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(entryInf, word))) // kad ir atrasts cits maríieris
+								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(entryInf, word))) // kad ir atrasts cits marÄ·ieris
 						{
-							//pârbauda vai vârds pirms tam satur beigu pieturzîmi
+							//pÄrbauda vai vÄrds pirms tam satur beigu pieturzÄ«mi
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?'
 							&& word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(PN nebeidzas ar pieturzîmi)" + entry); // slikto ğíirkïu saraksta papildinâğana
+								bad.add("(PN nebeidzas ar pieturzÄ«mi)" + entry); // slikto Å¡Ä·irkÄ¼u saraksta papildinÄÅ¡ana
 								pnEndSym = 0;
 							}
 							else
@@ -274,123 +274,123 @@ public class EntryChecks
 							}
 						}
 					}
-					if(Arrays.asList(gramIdent).contains(word)) // pârbaudes kas saistâs ar gramatikas maríierim
+					if(Arrays.asList(gramIdent).contains(word)) // pÄrbaudes kas saistÄs ar gramatikas marÄ·ierim
 					{
-						gramOpen = true; // ir bijis gramatikas maríieris
-						if(!StringUtils.wordAfter(entryInf, word).contains("@2")) // vai aiz maríiera ir @2
+						gramOpen = true; // ir bijis gramatikas marÄ·ieris
+						if(!StringUtils.wordAfter(entryInf, word).contains("@2")) // vai aiz marÄ·iera ir @2
 						{
-							bad.add("(Aiz gramatikas maríiera jâbût @2)" + entry);
+							bad.add("(Aiz gramatikas marÄ·iera jÄbÅ«t @2)" + entry);
 						}
 					}
 					if(gramOpen)
 					{
-						if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits maríieris
+						if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits marÄ·ieris
 						{
-							bad.add("(Gramatikai jâbeidzâs ar @5)" + entry);
+							bad.add("(Gramatikai jÄbeidzÄs ar @5)" + entry);
 							gramOpen = false;
 						}
-						if(word.contains("@5")) // ja @5 tad gramatika noslçdzas
+						if(word.contains("@5")) // ja @5 tad gramatika noslÄ“dzas
 						{
 							gramOpen = false;
 						}
 					}
 				}
 				//viens cikls beidzas
-				index = entryInf.indexOf(word) + word.length() + 1;  //indeks tiek pârlikts uz nâkamo vârdu
-				entryInf = entryInf.substring(index); // virkne zaudç pirmo vârdu
-				len = entryInf.length(); // jaunâs virknes garums
-				spaces = StringUtils.countSpaces(entryInf); // jaunâs virknes atstarpju skaits
+				index = entryInf.indexOf(word) + word.length() + 1;  //indeks tiek pÄrlikts uz nÄkamo vÄrdu
+				entryInf = entryInf.substring(index); // virkne zaudÄ“ pirmo vÄrdu
+				len = entryInf.length(); // jaunÄs virknes garums
+				spaces = StringUtils.countSpaces(entryInf); // jaunÄs virknes atstarpju skaits
 			}
 		}
-		// ja pçdçjais vârds, tiek veiktas pârbaudes vai ir @5 galâ
+		// ja pÄ“dÄ“jais vÄrds, tiek veiktas pÄrbaudes vai ir @5 galÄ
 		if(gramOpen)
 		{
-			bad.add("(Gramatikai jâbeidzâs ar @5)" + entry);
+			bad.add("(Gramatikai jÄbeidzÄs ar @5)" + entry);
 		}
 		if(open && !entryInf.contains("@5"))
 		{
-			bad.add("(Ğíirkïa beigâs jâbût @5)" + entry);
+			bad.add("(Å Ä·irkÄ¼a beigÄs jÄbÅ«t @5)" + entry);
 		}
 	}
-	//metode kas veic pârbaudes saistîtas ar maríieri DS		
+	//metode kas veic pÄrbaudes saistÄ«tas ar marÄ·ieri DS		
 	public static void dsCheck(String entry, ArrayList<String> bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		
-		if (entryInf.matches("^.*\\sDS\\s.*$")) // regulârâ izteiksme pârbauda vai ir DS
+		if (entryInf.matches("^.*\\sDS\\s.*$")) // regulÄrÄ izteiksme pÄrbauda vai ir DS
 		{
 			Matcher ds = Pattern.compile("\\sDS(?=\\s)").matcher(entryInf);
-			ds.find(); // meklç DS pa visu ğíirkli
+			ds.find(); // meklÄ“ DS pa visu Å¡Ä·irkli
 			int dsPlace = ds.end(); // atrod kur beidzas DS
-			String afterDs = entryInf.substring(dsPlace).trim(); // iegûst to daïu kura ir aiz DS
+			String afterDs = entryInf.substring(dsPlace).trim(); // iegÅ«st to daÄ¼u kura ir aiz DS
 			// Atsijaa tos, kam par daudz DS
-			if (afterDs.matches("^.*\\sDS\\s.*$")) // pârbauda vai nav vçlviens DS
+			if (afterDs.matches("^.*\\sDS\\s.*$")) // pÄrbauda vai nav vÄ“lviens DS
 			{		
 				bad.add("(par daudz DS)" + entry);
 			}
 			else
 			{
-				int deCount = StringUtils.findNumber(afterDs); // skaitlis aiz DS norâda ciks ir DE
-				Pattern dePat = Pattern.compile("\\sDE(?=\\s)"); // izteksme DE meklçğanai
+				int deCount = StringUtils.findNumber(afterDs); // skaitlis aiz DS norÄda ciks ir DE
+				Pattern dePat = Pattern.compile("\\sDE(?=\\s)"); // izteksme DE meklÄ“Å¡anai
 				Matcher de = dePat.matcher(entryInf);
 				int	allDe = 0;
-				while(de.find()) //meklç vius DE pa visu ğíirkli
+				while(de.find()) //meklÄ“ vius DE pa visu Å¡Ä·irkli
 				{
 					allDe++;
 				}
 				de = dePat.matcher(afterDs);
 				int deAfterDs = 0;
-				while(de.find()) // meklç DE pçc DS
+				while(de.find()) // meklÄ“ DE pÄ“c DS
 				{
 					deAfterDs++;
 				}
 				// Atsijaa tos, kam nesakriit DE un DS skaiti.
-				if(deCount != allDe || deCount != deAfterDs) // pârbauda vai DE ir pareiz skaits
+				if(deCount != allDe || deCount != deAfterDs) // pÄrbauda vai DE ir pareiz skaits
 				{
 					bad.add("(nesakriit DE un DS skaiti)" + entry);
 				}
 			}
 		}
-		//Pârbauda vai DE sâkas ar mazo burtu
+		//PÄrbauda vai DE sÄkas ar mazo burtu
 		if(Character.isUpperCase(StringUtils.nextCh(entryInf, "DE ")) 
 				&& Character.isDigit(StringUtils.nextCh(entryInf, "DE "))
 				&& StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "DE ")))
 		{
-			bad.add("(DE nesâkas ar mazo burtu)" + entry);
+			bad.add("(DE nesÄkas ar mazo burtu)" + entry);
 		}
 	}
-	//metode kas veic pârbaudes saistîtas ar maríieri FS	
+	//metode kas veic pÄrbaudes saistÄ«tas ar marÄ·ieri FS	
 	public static void fsCheck(String entry, ArrayList<String> bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 							 
-		if (entryInf.matches("^.*\\sFS\\s.*$")) // regulârâ izteiksme pârbauda vai ir FS
+		if (entryInf.matches("^.*\\sFS\\s.*$")) // regulÄrÄ izteiksme pÄrbauda vai ir FS
 		{
 			Matcher fs = Pattern.compile("\\sFS(?=\\s)").matcher(entryInf);
-			fs.find(); // meklç FS pa visu ğíirkli
+			fs.find(); // meklÄ“ FS pa visu Å¡Ä·irkli
 			int fsPlace = fs.end(); // nosaka kur beidzas FS
 			String afterFs = entryInf.substring(fsPlace).trim();
 			
 			// Atsijaa tos, kam par daudz FS
-			if (afterFs.matches("^.*\\sFS\\s.*$")) // vai nav vçl kâds FS
+			if (afterFs.matches("^.*\\sFS\\s.*$")) // vai nav vÄ“l kÄds FS
 			{		
 				bad.add("(par daudz FS)" + entry);
 			}
 			else
 			{
-				int frCount = StringUtils.findNumber(afterFs); // skaitlis pçc FS norâda FR skaitu
+				int frCount = StringUtils.findNumber(afterFs); // skaitlis pÄ“c FS norÄda FR skaitu
 				int fnCount = frCount;
 	
 				Pattern frPat = Pattern.compile("\\sFR(?=\\s)");
 				Matcher fr = frPat.matcher(entryInf); 
 				int allFr = 0;
-				while(fr.find()) // meklç FR pa visu ğíirkli
+				while(fr.find()) // meklÄ“ FR pa visu Å¡Ä·irkli
 				{
 					allFr++;
 				}
 				fr = frPat.matcher(afterFs);
 				int frAfterFs = 0;
-				while(fr.find()) // meklç FR pçc FS
+				while(fr.find()) // meklÄ“ FR pÄ“c FS
 				{
 					frAfterFs++;
 				}
@@ -405,18 +405,18 @@ public class EntryChecks
 					Pattern fnPat = Pattern.compile("\\sFN(?=\\s)"); 
 					Matcher fn = fnPat.matcher(entryInf); 
 					int allFn = 0;
-					while(fn.find()) // meklç FN pa ğíirkli
+					while(fn.find()) // meklÄ“ FN pa Å¡Ä·irkli
 					{
 						allFn++;
 					}
 					fn = fnPat.matcher(afterFs); 
 					int fnAfterFs = 0;
-					while(fn.find()) // meklç FN pçc FS
+					while(fn.find()) // meklÄ“ FN pÄ“c FS
 					{
 						fnAfterFs++;
 					}
 					
-					// Atsijaa tos, kam nesakriit FR un FN skaiti. var bût  FN <= FR
+					// Atsijaa tos, kam nesakriit FR un FN skaiti. var bÅ«t  FN <= FR
 					if(fnCount != allFn || fnCount != fnAfterFs)
 					{
 						bad.add("(nesakriit FR un FN skaits)" + entry);
@@ -425,20 +425,20 @@ public class EntryChecks
 			}
 		}
 		
-		//Pârbauda vai FR sâkas ar lielo burtu
+		//PÄrbauda vai FR sÄkas ar lielo burtu
 		if(Character.isLowerCase(StringUtils.nextCh(entryInf, "FR ")) 
 				&& !Character.isDigit(StringUtils.nextCh(entryInf, "FR "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "FR ")))
 		{
-			bad.add("(FR nesâkas ar lielo burtu vai skaitli )" + entry);
+			bad.add("(FR nesÄkas ar lielo burtu vai skaitli )" + entry);
 		}	
 	}
-	//metode kas pârbauda vai aiz LI norâdîtâs atsauces ir atrodams avotu sarakstâ
+	//metode kas pÄrbauda vai aiz LI norÄdÄ«tÄs atsauces ir atrodams avotu sarakstÄ
 	public static void liCheck(String entry, ArrayList<String> bad, String [] references)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 									
-				if (entryInf.matches("^.*\\sLI\\s.*$")) // pârbauda vai ir LI
+				if (entryInf.matches("^.*\\sLI\\s.*$")) // pÄrbauda vai ir LI
 				{		
 					Matcher li = Pattern.compile("\\sLI(?=\\s)").matcher(entryInf);
 					li.find();
@@ -456,37 +456,37 @@ public class EntryChecks
 						int goodReferCount = 0;
 						if(AfterLI.contains("["))
 						{
-							int referBegin = AfterLI.indexOf( '[' ) + 1; //iegûst apgabalu kur sâkas atsauces
-							int referEnd = AfterLI.indexOf( ']' ); //iegûst apgabalu kur beidzas atsauces
-							String entryRefer = AfterLI.substring(referBegin, referEnd);// atsauces izgrieş ârâ no virknes
+							int referBegin = AfterLI.indexOf( '[' ) + 1; //iegÅ«st apgabalu kur sÄkas atsauces
+							int referEnd = AfterLI.indexOf( ']' ); //iegÅ«st apgabalu kur beidzas atsauces
+							String entryRefer = AfterLI.substring(referBegin, referEnd);// atsauces izgrieÅ¾ ÄrÄ no virknes
 							int ats_len = entryRefer.length();
 							for(int m=0; m<ats_len; m++)
 							{
-								if(Character.isWhitespace(entryRefer.charAt(m))) // iegûst atsauèu skaitu pçc tâ cik ir atstarpes
+								if(Character.isWhitespace(entryRefer.charAt(m))) // iegÅ«st atsauÄu skaitu pÄ“c tÄ cik ir atstarpes
 								{
 								referCount++;
 								}
 							}
-							//metode salîdzina cik pareizas atsauces ir norâdîtas
+							//metode salÄ«dzina cik pareizas atsauces ir norÄdÄ«tas
 							goodReferCount = StringUtils.referCount(references, entryRefer);
 							if(referCount != goodReferCount)
 							{
-								bad.add("(Problçma ar atsaucçm)" + entry); // jan pareizo un norâdîto avotu skaits nesakrît
+								bad.add("(ProblÄ“ma ar atsaucÄ“m)" + entry); // jan pareizo un norÄdÄ«to avotu skaits nesakrÄ«t
 							}
 						}
 						else
 						{
-							bad.add("(Nav norâdîtas atsauces)" + entry); // nav bijuğas norâdîtas atsauces
+							bad.add("(Nav norÄdÄ«tas atsauces)" + entry); // nav bijuÅ¡as norÄdÄ«tas atsauces
 						}
 					}
 				}	
 			}
-			//metode kas pârbauda ğíirkïus ar PI
+			//metode kas pÄrbauda Å¡Ä·irkÄ¼us ar PI
 			public static void piCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 									
-				if(entryInf.matches("^.*\\sPI\\s.*$")) // reg. izteiksme pârbauda vai ir PI
+				if(entryInf.matches("^.*\\sPI\\s.*$")) // reg. izteiksme pÄrbauda vai ir PI
 				{
 					Matcher pi = Pattern.compile("\\sPI(?=\\s)").matcher(entryInf);
 					int piCount = 0;
@@ -507,12 +507,12 @@ public class EntryChecks
 					}
 				}
 		
-				//Pârbauda vai PI sâkas ar lielo burtu vai ciparu
+				//PÄrbauda vai PI sÄkas ar lielo burtu vai ciparu
 				if(Character.isLowerCase(StringUtils.nextCh(entryInf, "PI ")) 
 						&& !Character.isDigit(StringUtils.nextCh(entryInf, "PI "))
 						&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "PI ")))
 				{
-					bad.add("(PI nesâkas ar lielo burtu vai skaitli )" + entry);
+					bad.add("(PI nesÄkas ar lielo burtu vai skaitli )" + entry);
 				}
 			}
 			
@@ -528,7 +528,7 @@ public class EntryChecks
 				else
 				{
 					Matcher ns = Pattern.compile("\\sNS\\s").matcher(entryInf);
-					ns.find(); // atrod NS ğíirkïî
+					ns.find(); // atrod NS Å¡Ä·irkÄ¼Ä«
 					int nsPlace = ns.end(); // atrod NS beigas
 					String afterNs = entryInf.substring(nsPlace).trim();
 					
@@ -539,26 +539,26 @@ public class EntryChecks
 					}
 					else
 					{
-						int noCount = StringUtils.findNumber(afterNs); // skaitlis pçc NS - norâda NO skaitu
+						int noCount = StringUtils.findNumber(afterNs); // skaitlis pÄ“c NS - norÄda NO skaitu
 						Pattern noPat = Pattern.compile("\\sNO\\s");
-						// pârbuda vai skaitlis pçc  NS ir lielâk par 0
+						// pÄrbuda vai skaitlis pÄ“c  NS ir lielÄk par 0
 						if(noCount < 1)
 						{
-							bad.add("(NS jâbût liekâkam par 0)" + entry);
+							bad.add("(NS jÄbÅ«t liekÄkam par 0)" + entry);
 						}
 						Matcher no = noPat.matcher(entryInf);
 						int allNo = 0;
-						while (no.find()) // atrod visus NO ğíirklî
+						while (no.find()) // atrod visus NO Å¡Ä·irklÄ«
 						{
 							allNo++; 
 						}
 						no = noPat.matcher(afterNs); 
 						int noAfterNs = 0;
-						while (no.find()) // atrod visus NO pçc NS
+						while (no.find()) // atrod visus NO pÄ“c NS
 						{
 							noAfterNs++;
 						}
-						// Atsijâ tos, kam nesakrît NO skaiti.
+						// AtsijÄ tos, kam nesakrÄ«t NO skaiti.
 						if(noCount != allNo || noCount != noAfterNs)
 						{
 							bad.add("(nesakriit NO skaiti)" + entry);
@@ -573,13 +573,13 @@ public class EntryChecks
 							{
 								allNG++;
 							}
-							ng = ngPat.matcher(afterNs); // atrod visus NG pçc NS
+							ng = ngPat.matcher(afterNs); // atrod visus NG pÄ“c NS
 							int ngAfterNs = 0;
 							while (ng.find())
 							{
 								ngAfterNs++;
 							}
-							// Atsijaa tos, NG skaits ir lielâks par NO skaitu
+							// Atsijaa tos, NG skaits ir lielÄks par NO skaitu
 							if (noCount < allNG || noCount < ngAfterNs)
 							{
 								bad.add("(par daudz NG)" + entry);
@@ -588,23 +588,23 @@ public class EntryChecks
 					}
 				}
 		
-				//Pârbauda vai NO sâkas ar lielo burtu vai ciparu
+				//PÄrbauda vai NO sÄkas ar lielo burtu vai ciparu
 				if(Character.isLowerCase(StringUtils.nextCh(entryInf, "NO ")) 
 						&& !Character.isDigit(StringUtils.nextCh(entryInf, "NO "))
 						&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "NO ")))
 				{
-					bad.add("(NO nesâkas ar lielo burtu vai skaitli )" + entry);
+					bad.add("(NO nesÄkas ar lielo burtu vai skaitli )" + entry);
 				}
 				
-				//Pârbauda vai AN sâkas ar lielo burtu vai ciparu
+				//PÄrbauda vai AN sÄkas ar lielo burtu vai ciparu
 				if(Character.isLowerCase(StringUtils.nextCh(entryInf, "AN ")) 
 						&& !Character.isDigit(StringUtils.nextCh(entryInf, "AN "))
 						&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "AN ")))
 				{
-					bad.add("(AN nesâkas ar lielo burtu vai skaitli )" + entry);
+					bad.add("(AN nesÄkas ar lielo burtu vai skaitli )" + entry);
 				}
 			}
-			// metode kas pârbauda likumsakraîbas ar IN0 un IN1
+			// metode kas pÄrbauda likumsakraÄ«bas ar IN0 un IN1
 			public static void in0In1Check(String entry, ArrayList<String> bad, 
 									String [][] InEntries, String [] entries, int i, int index)
 			{
@@ -623,19 +623,19 @@ public class EntryChecks
 					boolean good_1 = false;
 					int sk_len = entries.length;
 					int brPoint = 0;
-					for(int j = i+1; j<sk_len; j++) // cikls iet cauri ğíirkïiem uz priekğu un 
-													//pârbauda vai nav vçl kâds tâds pats ğíirklis
+					for(int j = i+1; j<sk_len; j++) // cikls iet cauri Å¡Ä·irkÄ¼iem uz priekÅ¡u un 
+													//pÄrbauda vai nav vÄ“l kÄds tÄds pats Å¡Ä·irklis
 					{
 						int sk_len_j = entries[j].length();
 						if(sk_len_j > 2 && StringUtils.countSpaces(entries[j]) > 0)
 						{	
 							String EntryName2 = entries[j].substring(0, entries[j].indexOf(" "));
-							if(EntryName2.equals(entryName)) // ja atrpd tâdu pağu ğkirkïa vârdu
+							if(EntryName2.equals(entryName)) // ja atrpd tÄdu paÅ¡u Å¡kirkÄ¼a vÄrdu
 							{
 								good_1 = true;
 								break;
 							}
-							if(brPoint > 4) // lai programma neietu cauri lîdz galam tiek nosprausts limits 4 ğíirkïi uz priekğu
+							if(brPoint > 4) // lai programma neietu cauri lÄ«dz galam tiek nosprausts limits 4 Å¡Ä·irkÄ¼i uz priekÅ¡u
 							{
 								break;
 							}
@@ -648,21 +648,21 @@ public class EntryChecks
 					}	
 				}
 				//ja skjirklis ir ar IN 0
-				//Paarbauda, vai jau neeksistee ğíirklis ar taadu nosaukumu 
+				//Paarbauda, vai jau neeksistee Å¡Ä·irklis ar taadu nosaukumu 
 				if (index == 0)
 				{	
 					int sk_len = entries.length;
 					boolean good_0 = true;
 					int brPoint = 0;
-					for(int j = i+1; j<sk_len; j++)// cikls iet cauri ğíirkïiem uz priekğu un 
-													//pârbauda vai nav vçl kâds tâds pats ğíirklis
+					for(int j = i+1; j<sk_len; j++)// cikls iet cauri Å¡Ä·irkÄ¼iem uz priekÅ¡u un 
+													//pÄrbauda vai nav vÄ“l kÄds tÄds pats Å¡Ä·irklis
 					{
 						int sk_len_j = entries[j].length();
 						if(sk_len_j > 2 && StringUtils.countSpaces(entries[j]) > 0)
 						{								
 							String EntryName2 = entries[j].substring(0, entries[j].indexOf(" "));
 							String EntryInf2 = entries[j].substring(entries[j].indexOf(" ")).trim();
-							if(EntryName2.equals(entryName) && EntryInf2.matches("^IN\\s.*$")) // ja atrod tâdu pağu ğíirkla vârdu
+							if(EntryName2.equals(entryName) && EntryInf2.matches("^IN\\s.*$")) // ja atrod tÄdu paÅ¡u Å¡Ä·irkla vÄrdu
 							{
 								good_0 = false;
 								break;
@@ -676,15 +676,15 @@ public class EntryChecks
 					}
 					if(!good_0 || StringUtils.entryExist(InEntries, entryName))
 					{
-						bad.add("(pastâv vçl ğíirkïi ar tâdu vârdu)" + entry);
+						bad.add("(pastÄv vÄ“l Å¡Ä·irkÄ¼i ar tÄdu vÄrdu)" + entry);
 					}
-					if(entryInf.matches("^.*\\sCD\\s.*$") || entryInf.matches("^.*\\sDN\\s.*$")) // ja IN0 tad nevar bût CD un DN
+					if(entryInf.matches("^.*\\sCD\\s.*$") || entryInf.matches("^.*\\sDN\\s.*$")) // ja IN0 tad nevar bÅ«t CD un DN
 					{
-						bad.add("(ja IN 0 nevar bût CD | DN)" + entry);
+						bad.add("(ja IN 0 nevar bÅ«t CD | DN)" + entry);
 					}
 				}
 			}
-			// metode pârbaudavai ir visi nepiecieğamie maríieri
+			// metode pÄrbaudavai ir visi nepiecieÅ¡amie marÄ·ieri
 			public static void identCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
@@ -711,54 +711,54 @@ public class EntryChecks
     					bad.add("(Nav neviena NO)" + entry);
     				}
     			}
-				// pârbauda vai CD un DN nav vienlaicîgi
+				// pÄrbauda vai CD un DN nav vienlaicÄ«gi
 				if (entryInf.matches("^..+\\sCD\\s.*$") && entryInf.matches("^..+\\sDN\\s.*$")) 
     			{
-    				bad.add("(DN un CD nevar bût vienlaicîgi)" + entry);
+    				bad.add("(DN un CD nevar bÅ«t vienlaicÄ«gi)" + entry);
     			}
-				// pârbauda vai CD vai DN nav vienlaicîgi ar NS un NO
+				// pÄrbauda vai CD vai DN nav vienlaicÄ«gi ar NS un NO
     			if (entryInf.matches("^..+\\sCD\\s.*$") || entryInf.matches("^..+\\sDN\\s.*$"))
     			{
     				if (entryInf.matches ("^.*\\s(NS|NO)\\s.*$"))
     				{
-    					bad.add("(ja ir CD | DN nevar bût NS|NO)" + entry);
+    					bad.add("(ja ir CD | DN nevar bÅ«t NS|NO)" + entry);
     				}
     		
     			}
 			}
-			// metode pârbauda vai ğíirklî nav ne pareizi simboli
+			// metode pÄrbauda vai Å¡Ä·irklÄ« nav ne pareizi simboli
 			public static void langCharCheck(String entry, ArrayList<String> bad)
 			{
 				String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 				
 				//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
-    			if(!entryName.matches("^[\\wÂâÈèÇçÌìÎîÍíÏïÒòĞğÛûŞşÔôªº\\./’'\\(\\)\\<\\>-]*$"))
-    				bad.add("(Ğíikïa vârds satur neparedzçtus simbolus)" + entry);
+    			if(!entryName.matches("^[\\wÄ€ÄÄŒÄÄ’Ä“Ä¢Ä£ÄªÄ«Ä¶Ä·Ä»Ä¼Å…Å†Å Å¡ÅªÅ«Å½Å¾ÅŒÅÅ–Å—\\./â€™'\\(\\)\\<\\>-]*$"))
+    				bad.add("(Å Ä·ikÄ¼a vÄrds satur neparedzÄ“tus simbolus)" + entry);
     			//Parbauda vai skjirkla info nesatur nepaziistami simboli
-    			if(!entryInf.matches("^[\\wÂâÈèÇçÌìÎîÍíÏïÒòĞğÛûŞşÔôªº\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]*$") 
+    			if(!entryInf.matches("^[\\wÄ€ÄÄŒÄÄ’Ä“Ä¢Ä£ÄªÄ«Ä¶Ä·Ä»Ä¼Å…Å†Å Å¡ÅªÅ«Å½Å¾ÅŒÅÅ–Å—\\p{Punct}\\p{Space}\\â€™\\â€”\"â€~`â€˜\\â€“]*$") 
     					&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
     			{
-    				//sliktos simbolus aizvieto vieglâkai atrağanai
-    				entry = entry.replaceAll("[^\\wÂâÈèÇçÌìÎîÍíÏïÒòĞğÛûŞşÔôªº\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]", "?");
+    				//sliktos simbolus aizvieto vieglÄkai atraÅ¡anai
+    				entry = entry.replaceAll("[^\\wÄ€ÄÄŒÄÄ’Ä“Ä¢Ä£ÄªÄ«Ä¶Ä·Ä»Ä¼Å…Å†Å Å¡ÅªÅ«Å½Å¾ÅŒÅÅ–Å—\\p{Punct}\\p{Space}\\â€™\\â€”\"â€~`â€˜\\â€“]", "?");
     				bad.add("(Skjirkla info satur neparedzeetus simbolus)" + entry);
     			}
-    			//ja satur Ô pârbauda vai tas ir lîbieğu vai latgïu vârds
-    			if((entry.contains("ô") || entry.contains("Ô")) && !entryInf.matches("^.*\\s(latg|lîb)\\.\\s.*$")
+    			//ja satur ÅŒ pÄrbauda vai tas ir lÄ«bieÅ¡u vai latgÄ¼u vÄrds
+    			if((entry.contains("Å") || entry.contains("ÅŒ")) && !entryInf.matches("^.*\\s(latg|lÄ«b)\\.\\s.*$")
     				&& !entryInf.matches("^.*\\sRU\\s\\[.*\\].*$") && !entryInf.matches("^.*\\sval.\\s.*$") 
     				&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
     			{
-    				bad.add("(Síirklis satur ô bet nav latg.|lîb.)" + entry);
+    				bad.add("(SÄ·irklis satur Å bet nav latg.|lÄ«b.)" + entry);
     			}
-    			//ja satur ª pârbauda vai tas ir lîbieğu vai latgïu vârds
-    			if((entry.contains("º") || entry.contains("ª")) && !entryInf.matches("^.*\\s(latg|lîb)\\.\\s.*$") 
+    			//ja satur Å– pÄrbauda vai tas ir lÄ«bieÅ¡u vai latgÄ¼u vÄrds
+    			if((entry.contains("Å—") || entry.contains("Å–")) && !entryInf.matches("^.*\\s(latg|lÄ«b)\\.\\s.*$") 
     			&& !entryInf.matches("^.*\\sRU\\s.*$") && !entryInf.matches("^.*\\sval\\.\\s.*$") 
     			&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
     			{
-    				bad.add("(Síirklis satur º bet nav latg.|lîb.)" + entry);
+    				bad.add("(SÄ·irklis satur Å— bet nav latg.|lÄ«b.)" + entry);
     			}
 			}
-			//pârbauda vai aiz IN DS NS FS ir skaitïi
+			//pÄrbauda vai aiz IN DS NS FS ir skaitÄ¼i
 			public static void inDsNsFsNumberCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
@@ -781,40 +781,40 @@ public class EntryChecks
     			}
 				
 			}
-			// pârbauda vai aiz CD esoğais vârds ir vârdnîcâ
+			// pÄrbauda vai aiz CD esoÅ¡ais vÄrds ir vÄrdnÄ«cÄ
 			public static void wordAfterCd(String [] entries, String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 				
 				if (entryInf.matches ("^.*\\sCD\\s.*$"))
     			{
-    				String cdWord = StringUtils.wordAfter(entryInf, "CD"); // atrod vârdu aiz CD
-    				if(!StringUtils.wordExist(entries, cdWord)) // pârbauda vai ir iekğâ vardnîcâ
+    				String cdWord = StringUtils.wordAfter(entryInf, "CD"); // atrod vÄrdu aiz CD
+    				if(!StringUtils.wordExist(entries, cdWord)) // pÄrbauda vai ir iekÅ¡Ä vardnÄ«cÄ
     				{
-    					bad.add("(vârds pçc CD nav atrodams)" + entry);
+    					bad.add("(vÄrds pÄ“c CD nav atrodams)" + entry);
     				}
     			}
 			}
-			// pârbauda vai aiz DN esoğais vârds ir vârdnîcâ
+			// pÄrbauda vai aiz DN esoÅ¡ais vÄrds ir vÄrdnÄ«cÄ
 			public static void wordAfterDn(String [] entries, String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 				
 				if (entryInf.matches ("^.*\\sDN\\s.*$"))
     			{
-    				String dnWord = StringUtils.wordAfter(entryInf, "DN"); // atrod vârdu aiz DN
-    				if(!StringUtils.wordExist(entries, dnWord)) // pârbauda vai ir vârdnîcâ
+    				String dnWord = StringUtils.wordAfter(entryInf, "DN"); // atrod vÄrdu aiz DN
+    				if(!StringUtils.wordExist(entries, dnWord)) // pÄrbauda vai ir vÄrdnÄ«cÄ
     				{
-    					bad.add("(vârds pçc DN nav atrodams)" + entry);
+    					bad.add("(vÄrds pÄ“c DN nav atrodams)" + entry);
     				}
     			}
 			}
-			//metode pârbauda vai ir ievçrotas GR likumsakarîbas
+			//metode pÄrbauda vai ir ievÄ“rotas GR likumsakarÄ«bas
 			public static void grCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 				
-				if (entryInf.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidû
+				if (entryInf.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidÅ«
     			{
     				Matcher gr = Pattern.compile("\\sGR(?=\\s)").matcher(entryInf);
     				gr.find();
@@ -825,18 +825,18 @@ public class EntryChecks
     				{
     					bad.add("(par daudz GR)" + entry);
     				}
-    				// pârbauda vai GR ir pirms NS un nav atrodams CD un DN
+    				// pÄrbauda vai GR ir pirms NS un nav atrodams CD un DN
     				if(!AfterGR.matches("^.*\\sNS\\s.*$") && !AfterGR.matches("^.*\\s(CD|DN)\\s.*$"))
     				{
-    					bad.add("(GR jâatrodas pirms NS)" + entry); 
+    					bad.add("(GR jÄatrodas pirms NS)" + entry); 
     				}
     			}
 				
-				if (entryInf.matches("^GR\\s.*$")) // ja GR ir teksta sâkumâ
+				if (entryInf.matches("^GR\\s.*$")) // ja GR ir teksta sÄkumÄ
     			{
     				Matcher cdDn = Pattern.compile("\\s(DN|CD)(?=\\s)").matcher(entryInf);
     				int cdDnCount = 0;
-    				while (cdDn.find()) // meklç CD un DN pa ğíirkli
+    				while (cdDn.find()) // meklÄ“ CD un DN pa Å¡Ä·irkli
     				{
     					cdDnCount++;
     				}
@@ -844,13 +844,13 @@ public class EntryChecks
     				{
     					bad.add("(nav indikatori CD | DN)" + entry);
     				}
-    				if (cdDnCount > 1) // ja ir atrasti vairâk par vienu
+    				if (cdDnCount > 1) // ja ir atrasti vairÄk par vienu
     				{
-    					bad.add("(var eksistçt tikai viens indikators CD | DN)" + entry);
+    					bad.add("(var eksistÄ“t tikai viens indikators CD | DN)" + entry);
     				}
     			}
 			}
-			//metode pârbauda vai ir ievçrotas RU likumsakarîbas
+			//metode pÄrbauda vai ir ievÄ“rotas RU likumsakarÄ«bas
 			public static void ruCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
@@ -866,39 +866,39 @@ public class EntryChecks
     				{
     					bad.add("(par daudz RU)" + entry);
     				}
-    				// pârbauda vai RU ir pirms NS
+    				// pÄrbauda vai RU ir pirms NS
     				if(!AfterRU.matches("^.*\\sNS\\s.*$"))
     				{
-    					bad.add("(RU jâatrodas pirms NS)" + entry);
+    					bad.add("(RU jÄatrodas pirms NS)" + entry);
     				}
     			}
 			}
-			// metode pârbauda vai aiz @2 un @5 maríieri ir pareizi konstruçti
+			// metode pÄrbauda vai aiz @2 un @5 marÄ·ieri ir pareizi konstruÄ“ti
 			public static void atCheck(String entry, ArrayList<String> bad)
 			{
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
-				// pârbauda vai aiz @ seko 2 vai 5
+				// pÄrbauda vai aiz @ seko 2 vai 5
 				if(entryInf.matches("^.*@.\\s.*$") && StringUtils.nextCh(entryInf, "@") != '2' && StringUtils.nextCh(entryInf, "@") != '5')
     			{
 					bad.add("(aiz @ seko nepareizs skaitlis)" + entry);
     			}
 			}
-			// metode pârbauda vai ir ir pareiza gramatika saîsinâjumiem un vietvârdiem
+			// metode pÄrbauda vai ir ir pareiza gramatika saÄ«sinÄjumiem un vietvÄrdiem
 			public static void grammarCheck(String entry, ArrayList<String> bad)
 			{
 				String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 				String entryInf = entry.substring(entry.indexOf(" ")).trim();
 				
-				//Ja ğíirkïa vârds beidzas ar punktu, tad vajadzçtu pârbaudît vai ir "GR @2 saîs. @5".
+				//Ja Å¡Ä·irkÄ¼a vÄrds beidzas ar punktu, tad vajadzÄ“tu pÄrbaudÄ«t vai ir "GR @2 saÄ«s. @5".
     			if(entryName.charAt(entryName.length() - 1) == '.' 
-    					&& !entryInf.matches("^.*\\sGR\\s@2.*\\ssaîs\\..*\\s@5\\s.*$"))
+    					&& !entryInf.matches("^.*\\sGR\\s@2.*\\ssaÄ«s\\..*\\s@5\\s.*$"))
     			{
-    				bad.add("(problçma ar saîs.)" + entry);
+    				bad.add("(problÄ“ma ar saÄ«s.)" + entry);
     			}
-    			//Ja vârds ir vietniekvârds tam jâsâkâs ar lielo burtu
+    			//Ja vÄrds ir vietniekvÄrds tam jÄsÄkÄs ar lielo burtu
     			if(entryInf.matches("^.*\\sGR\\s@2\\vietv\\.\\s@5\\s.*$") && !Character.isUpperCase(entryName.charAt(0)))
     			{
-    				bad.add("(Ğíirkïa vârds nesâkas ar lielo burtu)" + entry);
+    				bad.add("(Å Ä·irkÄ¼a vÄrds nesÄkas ar lielo burtu)" + entry);
     			}
 			}
 }

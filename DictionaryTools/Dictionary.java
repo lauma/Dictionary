@@ -6,7 +6,7 @@ Klases mçríis:
 	Klase Dictionary ietver sevî main funkciju
 *****************/
 
-package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
+package DictionaryTools; //Kopîga paka, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
 
 import java.io.BufferedWriter;
 import java.io.File;

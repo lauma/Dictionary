@@ -1,34 +1,34 @@
 /*****************
-Autors: Gunârs Danovskis
-Pçdçjais laboğanas datums: 28.05.2014
+Autors: GunÄrs Danovskis
+PÄ“dÄ“jais laboÅ¡anas datums: 28.05.2014
 
-Klases mçríis:
-	Klase ExceptionList ietver sevî funkcijas izòçmumu saraksta izveidei
+Klases mÄ“rÄ·is:
+	Klase ExceptionList ietver sevÄ« funkcijas izÅ†Ä“mumu saraksta izveidei
 *****************/
 
-package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
+package DictionaryTools; //KopÄ«ga paka, kurÄ ir iekÄ¼autas visas klases veiksmÄ«gai programmas darbÄ«bai
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-//bibliotçka *.doc failu apstrâdei
+//bibliotÄ“ka *.doc failu apstrÄdei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
 public class ExceptionList
 {
-	public static String[] exceptions;	// publisks klases mainîgais kas tiek
-										// izmantots neapskatâmo ğíirkïu masîvam
+	public static String[] exceptions;	// publisks klases mainÄ«gais kas tiek
+										// izmantots neapskatÄmo Å¡Ä·irkÄ¼u masÄ«vam
 	
-	public static void getExceptData() //metode lai iegûtu datus par izòçmumu ğíirkïiem
+	public static void getExceptData() //metode lai iegÅ«tu datus par izÅ†Ä“mumu Å¡Ä·irkÄ¼iem
 	throws IOException
 	{
-		// pârbaude vai ieejas fails eksistç
+		// pÄrbaude vai ieejas fails eksistÄ“
 		File testFile = new File("./files/prog files/exceptions.doc");
 
 		if(!testFile.exists())
 		{
-			System.out.println("Error - can't find file 'exceptions.doc'.\n" // paziòojums lietotâjam
+			System.out.println("Error - can't find file 'exceptions.doc'.\n" // paziÅ†ojums lietotÄjam
 					+ "Please put 'exceptions.doc' file in to 'prog files'!");
 			System.exit(0);
 			return;
@@ -37,16 +37,16 @@ public class ExceptionList
 		File excepFile = null;
 		FileInputStream Fis = null;
 		WordExtractor excepExtract = null;
-		// tiek norâdîts ceïğ uz avotu failu
+		// tiek norÄdÄ«ts ceÄ¼Å¡ uz avotu failu
 		excepFile = new File("./files/prog files/exceptions.doc");
 		Fis = new FileInputStream(excepFile.getAbsolutePath());
 		
 		HWPFDocument excepDoc=new HWPFDocument(Fis);
 		excepExtract = new WordExtractor(excepDoc);
 		
-		// faila saturs tiek ielikts izòçmumu sarakstâ
-		// ğoreiz viss saturs tiek likts masîvâ,
-		//jo ir vairâki ğíirkïi ar vienâdu ğíirkïa vârdu 
+		// faila saturs tiek ielikts izÅ†Ä“mumu sarakstÄ
+		// Å¡oreiz viss saturs tiek likts masÄ«vÄ,
+		//jo ir vairÄki Å¡Ä·irkÄ¼i ar vienÄdu Å¡Ä·irkÄ¼a vÄrdu 
         exceptions = excepExtract.getParagraphText();
 	}
 	

@@ -1,53 +1,53 @@
 /*****************
-Autors: Gunârs Danovskis
-Pçdçjais laboğanas datums: 28.05.2014
+Autors: GunÄrs Danovskis
+PÄ“dÄ“jais laboÅ¡anas datums: 28.05.2014
 
-Klases mçríis:
-	Klase StringUtils ietver sevî visas palîgmetodes ğíiríïu apstrâdei
+Klases mÄ“rÄ·is:
+	Klase StringUtils ietver sevÄ« visas palÄ«gmetodes Å¡Ä·irÄ·Ä¼u apstrÄdei
 *****************/
 
-package DictionaryTools; //Kopîga pakotnetne, kurâ ir iekïautas visas klases veiksmîgai programmas darbîbai
+package DictionaryTools; //KopÄ«ga paka, kurÄ ir iekÄ¼autas visas klases veiksmÄ«gai programmas darbÄ«bai
 
-//Importçtâs Java bibliotçkas
+//ImportÄ“tÄs Java bibliotÄ“kas
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils
 {
-	// metode, kas pârbauda vai padotais ğíirklis nav tukğs
+	// metode, kas pÄrbauda vai padotais Å¡Ä·irklis nav tukÅ¡s
 	public static boolean isEntryEmpty(String entry, ArrayList<String> bad)
 	{
 		boolean notEmpty = true;
-		//ja ğkirklis atmetot atstarpes ir tukğs 
+		//ja Å¡kirklis atmetot atstarpes ir tukÅ¡s 
 		if(entry.trim().isEmpty())
     	{
-			//ğkirklis tiek ierakstîts slikto sarakstâ
-    		bad.add("(Tukğa rinda)" + entry);
+			//Å¡kirklis tiek ierakstÄ«ts slikto sarakstÄ
+    		bad.add("(TukÅ¡a rinda)" + entry);
     	}
 		else
 		{
-			notEmpty = false; // ja nav tukğs tad noimaina uz false
+			notEmpty = false; // ja nav tukÅ¡s tad noimaina uz false
 		}
 		return notEmpty;
 	}
-	// metode, kas pârbauda kâds skaitlis ir atrodams aiz maríiera kuram to lieto
+	// metode, kas pÄrbauda kÄds skaitlis ir atrodams aiz marÄ·iera kuram to lieto
 	public static int findNumber(String s) 
 	{
 		String tmp = s;
 		if (tmp.contains(" ")) tmp = tmp.substring(0, tmp.indexOf(" "));
-		//regulârâ izteksme skaitïa meklçğanai
+		//regulÄrÄ izteksme skaitÄ¼a meklÄ“Å¡anai
 		Matcher m = Pattern.compile("^\\d+").matcher(tmp); 
 		if (!m.find()) return 0; // ja nav atrodams tad return 0
-		//tiek atgiezts pirmais objekts no grupas un pârvçrsts par integer
+		//tiek atgiezts pirmais objekts no grupas un pÄrvÄ“rsts par integer
 		return Integer.parseInt(m.group(0)); 
 	}
-	// metode, kas pârbauda vai padotais ğíirklis eksistç
+	// metode, kas pÄrbauda vai padotais Å¡Ä·irklis eksistÄ“
 	public static Boolean entryExist(String [][] inEntries, String word)
 	{	
 		boolean found = false;
 		int len = inEntries.length;
-		//cikls iet pa inEntries masîvu un salîdzina vai vârds ir atrodams
+		//cikls iet pa inEntries masÄ«vu un salÄ«dzina vai vÄrds ir atrodams
 		for(int i = 0; i<len; i++) 
 		{
 			if(word.equals(inEntries[i][0]))
@@ -58,12 +58,12 @@ public class StringUtils
 		}
 		return found; // tiek atgriezta atbilde vai atrasts
 	}
-	// metode, kas pârbauda vai padotais ğkirklis ir exclusion sarakstâ
+	// metode, kas pÄrbauda vai padotais Å¡kirklis ir exclusion sarakstÄ
 	public static boolean exclusion(String [] except, String entry) 
 	{
 		boolean found = false;
 		int len = except.length;
-		//cikls iet pa except masîvu un salîdzina vai vârds ir atrodams
+		//cikls iet pa except masÄ«vu un salÄ«dzina vai vÄrds ir atrodams
 	    for(int i=0; i<len; i++)
 	    {
 	    	if(except[i].equals(entry))
@@ -74,13 +74,13 @@ public class StringUtils
 	    }
 		return found;//tiek atgriezta atbilde vai atrasts
 	}
-	//metode, ka pârbauda vai padotais simbols ir lielais latvieğu burts
+	//metode, ka pÄrbauda vai padotais simbols ir lielais latvieÅ¡u burts
 	public static boolean isBalticUpper(char Symbol)
 	{
-		String UPPER = "ÂÈÇÌÎÍÏÒĞÛŞÔª"; //iespçjamie leilie burti
+		String UPPER = "Ä€ÄŒÄ’Ä¢ÄªÄ¶Ä»Å…Å ÅªÅ½ÅŒÅ–"; //iespÄ“jamie leilie burti
 		boolean good = false;
 		int len = UPPER.length();
-		//cikls iet pa simbolu virkni un salîdzina vai simbols ir atrodams
+		//cikls iet pa simbolu virkni un salÄ«dzina vai simbols ir atrodams
 		for(int i = 0; i < len; i++)
 		{
 			if(UPPER.charAt(i) == Symbol)
@@ -91,7 +91,7 @@ public class StringUtils
 		}						
 		return good;//tiek atgriezta atbilde vai atrasts
 	}
-	//metode, kas atrod nâkamo simbolu aiz padotâs simbolu virknes
+	//metode, kas atrod nÄkamo simbolu aiz padotÄs simbolu virknes
 	public static char nextCh(String entry, String Symbol)
 	{
 		char nextChar;
@@ -99,16 +99,16 @@ public class StringUtils
 		nextChar = entry.charAt(pos);
 		return nextChar;
 	}
-	//metode, kas atrod nâkamo vârdu aiz metodei padotâ vârda
+	//metode, kas atrod nÄkamo vÄrdu aiz metodei padotÄ vÄrda
 	public static String wordAfter(String entryInf, String word)
 	{
 		String finalWord;
 		String tempWord;
 		int len = entryInf.length();
-		//noteikts vârda sâkums
+		//noteikts vÄrda sÄkums
 		int index = entryInf.indexOf(word) + word.length() + 1;
 		tempWord = entryInf.substring(index);
-		//ja aiz atrastâ vârda ir vçl citi vârdi		
+		//ja aiz atrastÄ vÄrda ir vÄ“l citi vÄrdi		
 		if(countSpaces(tempWord) != 0 && len > 1) 
 		{
 			finalWord = tempWord.substring(0, tempWord.indexOf(' ')).trim();
@@ -117,31 +117,31 @@ public class StringUtils
 		{
 			finalWord = tempWord; 
 		}
-		return finalWord; //atgriezsts atrastais vârds
+		return finalWord; //atgriezsts atrastais vÄrds
 	}
-	//metode, kas atrod vârdu skaitu síirkïî
+	//metode, kas atrod vÄrdu skaitu sÄ·irkÄ¼Ä«
 	public static int wordCount(String entry)
 	{
-		int count = 1; //pieòam ka ir vismaz vien vârds
+		int count = 1; //pieÅ†am ka ir vismaz vien vÄrds
 		char character[]= new char[entry.length()];
-		//cikls iet pa ğkirkli pa vienam simbolam
+		//cikls iet pa Å¡kirkli pa vienam simbolam
 	    for(int i=0; i<entry.length(); i++)
 	    {
 	    	character[i]=entry.charAt(i);
-			//ja ir atstarpe un pirms tâs nav bijusi atstarpe tad pieskaita viens
+			//ja ir atstarpe un pirms tÄs nav bijusi atstarpe tad pieskaita viens
 		    if((i>0 && character[i-1]!=' ') && character[i]==' ')
 		    {
 		    	count++;
 		    }
 		}
-	    return count; //atgrieş gala vçrtîbu
+	    return count; //atgrieÅ¾ gala vÄ“rtÄ«bu
 	}
-	//metode, kas atrod atstarpju skaitu padotajâ simbolu virknç
+	//metode, kas atrod atstarpju skaitu padotajÄ simbolu virknÄ“
 	public static int countSpaces(String s)
 	{
 		int count = 0;
 		int len = s.length();
-		//cikls iet pa ğkirkli pa vienam simbolam
+		//cikls iet pa Å¡kirkli pa vienam simbolam
 		for(int i=0; i<len; i++)
 		{
 			char ch=s.charAt(i);
@@ -150,22 +150,22 @@ public class StringUtils
 		    	count++;
 		    }
 		}
-		return count;//atgrieş gala vçrtîbu
+		return count;//atgrieÅ¾ gala vÄ“rtÄ«bu
 	}
-	//metode, kas pârbauda vai padotais vârds eksitç ğíirílu sarakstâ
+	//metode, kas pÄrbauda vai padotais vÄrds eksitÄ“ Å¡Ä·irÄ·lu sarakstÄ
 	public static boolean wordExist(String [] entries, String word)
 	{
 		boolean good = false;
 		int len = entries.length;
-		//cikls iet pa ğkirkïu sarakstu
+		//cikls iet pa Å¡kirkÄ¼u sarakstu
 		for(int i=0; i<len; i++)
 		{
-			//ja síirklis ir vismaz divi vârdi
+			//ja sÄ·irklis ir vismaz divi vÄrdi
 			if(entries[i].length() > 2 && StringUtils.countSpaces(entries[i]) > 0)
 			{
-				//tiek atarsts pirmais vârds
+				//tiek atarsts pirmais vÄrds
 				String entryName = entries[i].substring(0, entries[i].indexOf(" "));
-				//ja ğíirkïa vârds atbilst padotajam vârdam
+				//ja Å¡Ä·irkÄ¼a vÄrds atbilst padotajam vÄrdam
 				if(entryName.equals(word))
 				{
 					good = true;
@@ -173,17 +173,17 @@ public class StringUtils
 				}
 			}
 		}
-		return good; //atgrieş gala vçrtîbu
+		return good; //atgrieÅ¾ gala vÄ“rtÄ«bu
 	}
-	//metode, kas atgrieş pareizu avotu skaitu ğíirklî
+	//metode, kas atgrieÅ¾ pareizu avotu skaitu Å¡Ä·irklÄ«
 	public static int referCount(String [] references, String entryRefer)
 	{
 		int count = 0;
-		// izdalîtas visas ğíirklî ierakstîtâs atsauces
+		// izdalÄ«tas visas Å¡Ä·irklÄ« ierakstÄ«tÄs atsauces
 		String[] parts = entryRefer.split(", "); 
 		int len = parts.length;
 		int len2 = entryRefer.length();
-		//cikls iet pa ğkirkïa atsauèu sarakstam
+		//cikls iet pa Å¡kirkÄ¼a atsauÄu sarakstam
 		for(int i = 0; i<len; i++)
 		{
 			if(parts[i].length() <= 0)
@@ -195,14 +195,14 @@ public class StringUtils
 				for(int j=0; j<len2; j++)
 				{
 					int referLen = references[j].length();
-					// ja atsauce ir atrodama avotu sarakstâ
+					// ja atsauce ir atrodama avotu sarakstÄ
 					if(parts[i].equals(references[j]))
 					{
 						count++;
 					}
 					else
 					{
-						//ja astauce ir atrodama avotu sarakstâ/**(şurnâliem un avîzçm u.c.)*//
+						//ja astauce ir atrodama avotu sarakstÄ/**(Å¾urnÄliem un avÄ«zÄ“m u.c.)*//
 						 if( parts[i].contains(references[j]) && parts[i].charAt(referLen) == '-')
 						 {
 							 count ++;
@@ -212,20 +212,20 @@ public class StringUtils
 			}
 		}
 				
-		return count; //atgrieş gala vçrtîbu
+		return count; //atgrieÅ¾ gala vÄ“rtÄ«bu
 	}
-	//metode kas atrgrieş lielâko IN vçrtîbu padotajam ğíirkïa vârdam
+	//metode kas atrgrieÅ¾ lielÄko IN vÄ“rtÄ«bu padotajam Å¡Ä·irkÄ¼a vÄrdam
 	public static int maxIN(String [][] inEntries, String word)
 	{
 		int max = 0;
 		int len = inEntries.length;
-		//cikls iet pa inEntries masîvu
+		//cikls iet pa inEntries masÄ«vu
 		for(int i=0; i< len; i++)
-				//ja padotais vârds atbilst un in vçrtîba ir lielâka par max
-				// max vçr'ti'ba tiek palielinâta
+				//ja padotais vÄrds atbilst un in vÄ“rtÄ«ba ir lielÄka par max
+				// max vÄ“r'ti'ba tiek palielinÄta
 				if(inEntries[i][0] == word && Integer.parseInt(inEntries[i][1]) > max) 
 					max = Integer.parseInt(inEntries[i][1]);
 						
-		return max; //atgrieş gala vçrtîbu
+		return max; //atgrieÅ¾ gala vÄ“rtÄ«bu
 	}
 }

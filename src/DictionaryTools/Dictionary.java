@@ -176,9 +176,12 @@ public class Dictionary
 			        			}
 			        		}
 			        	}
-			        	System.out.print("File " + fileName + " [");//
-			        	System.out.printf("%.1f", progress);		// Progresa izvade uz ekrāna
-			        	System.out.print("%]\r");					//
+			        	if (i % 50 == 0)
+			        	{
+			        		System.out.print("File " + fileName + " [");//
+			        		System.out.printf("%.1f", progress);		// Progresa izvade uz ekrāna
+			        		System.out.print("%]\r");					//
+			        	}
 			        }
 			        System.out.print("File " + fileName + " [DONE]\t\n"); //izvade uz ekrāna kad pabeigts fails
 			        

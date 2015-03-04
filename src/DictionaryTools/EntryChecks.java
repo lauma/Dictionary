@@ -1,24 +1,20 @@
-/*****************
-Autors: Gunārs Danovskis
-Pēdējais labošanas datums: 28.05.2014
+package DictionaryTools;
 
-Klases mērķis:
-	Klase EntryChecks ietver sevī visas galvenās metodes, kas pārbauda šķirkļus
- *****************/
-package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
-
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Statisks šķirkļa pārbaudes metožu apvienojums.
+ * @author Lauma, Gunārs Danovskis
+ */
 public class EntryChecks
 {
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda
 	 */
-	public static boolean isEntryNameGood(String entry, ArrayList<String> bad)
+	public static boolean isEntryNameGood(String entry, int entryID, BadEntries bad)
 	{
 		boolean good = true; // mainīgais, kas apzīmē vai šķirklis ir labs
 		// pirmā vārda līdz atstarpei ieguve
@@ -26,7 +22,7 @@ public class EntryChecks
 
 		if(entryName.equals(""))
 		{
-			bad.add("(Trūkst šķirkļa vārds)" + entry); // slikto šķirkļu saraksta paildināšana
+			bad.addNewEntry(entryID, entry, "Trūkst šķirkļa vārda");
 		}
 		else
 		{
@@ -38,77 +34,65 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
 	 */
-	public static void checkBrackets(String entries, ArrayList<String> bad)
+	public static void checkBrackets(String entries, int entryID, BadEntries bad)
 	{
-		int sqBrackets = 0; // kvadrātiekavu skaits
-		int circBracket = 0; // apaļo iekavu skaits
-		String entryInf = entries.substring(entries.indexOf(" ")).trim();//šķirkļa info ieguve
-		int len = entryInf.length();
-		for(int i = 0; i<len; i++) // iet cauri pa vienam simbolam
+		int sqBrackets = 0; // atvērto kvadrātiekavu skaits
+		int circBrackets = 0; // atvērto apaļo iekavu skaits
+		String entryInf = entries.trim().substring(entries.indexOf(" ")).trim();// šķirkļa ķermenis
+		
+		for(int i = 0; i<entryInf.length(); i++) // iet cauri pa vienam simbolam
 		{
+			// kvadrātiekavas
 			if(entryInf.charAt(i) == '[') // atverošās iekavas
 			{
-				sqBrackets ++; //skaits palielinās par 1
-				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pēdiņas
-				{
-					sqBrackets --; // skaits samazinās par 1
-				}
+				// Ja iekava nav pēdiņās.
+				if (!(i > 0 && i < entryInf.length() - 1 &&
+						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
+					sqBrackets++; //skaitītājs palielinās par 1
 			}
 			if(entryInf.charAt(i) == ']') // aizverošās iekavas
 			{
-				if(i < len-1) // ja pēdējais simbols
+				// Ja iekava nav pēdiņās.
+				if (!(i > 0 && i < entryInf.length() - 1 &&
+						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
 				{
-					sqBrackets --; // skaits samazinās par 1
-				}
-				if(i < len-1) // ja nav pēdējais simbols
-				{
-					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pēdiņas
-					{
-						sqBrackets ++; //skaits palielinās par 1
-					}
-				}
-				if(i == len-1) // ja ir pēdējais simbols
-				{
-					sqBrackets--; // skaits samazinās par 1
+					sqBrackets--; //skaitītājs samazinās 1
+					if (sqBrackets < 0)
+						bad.addNewEntry(entryID, entries, "] pirms atbilstošās [");
 				}
 			}
 
+			// apaļās iekavas
 			if(entryInf.charAt(i) == '(') // atverošās iekavas
 			{
-				circBracket ++;   //skaits palielinās par 1
-				if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pēdiņas
-				{
-					circBracket --; // skaits samazinās par 1
-				}
+				// Ja iekava nav pēdiņās.
+				if (!(i > 0 && i < entryInf.length() - 1 &&
+						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
+					circBrackets++; //skaitītājs palielinās par 1
 			}
 			if(entryInf.charAt(i) == ')') // aizverošās iekavas
 			{
-				if(i < len-1) // ja nav pēdējais simbols
+				// Ja iekava nav pēdiņās.
+				if (!(i > 0 && i < entryInf.length() - 1 &&
+						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
 				{
-					if(entryInf.charAt(i+1) == '"' && entryInf.charAt(i-1) == '"') // ja iekavu ieskauj pēdiņas
-					{
-						circBracket ++;  //skaits palielinās par 1
-					}
-				}
-				if(i == len-1) // ja ir pēdējais simbols
-				{
-					circBracket--; // skaits samazinās par 1
+					circBrackets--; //skaitītājs samazinās 1	
+					if (circBrackets < 0)
+						bad.addNewEntry(entryID, entries, ") pirms atbilstošās (");
 				}
 			}
 		}
-
-		if(sqBrackets != 0) //ja nav līdzsvars
-		{
-			bad.add("(Problēma ar [] iekavām)" + entries); // pievieno slikto sarakstam
-		}
-		if(circBracket != 0) //ja nav līdzsvars
-		{
-			bad.add("(Problēma ar () iekavām)" + entries); // pievieno slikto sarakstam
-		}
+		if(sqBrackets > 0) //ja nav līdzsvars
+			bad.addNewEntry(entryID, entries, "Neaizvērtas []");
+		if(circBrackets > 0) //ja nav līdzsvars
+			bad.addNewEntry(entryID, entries, "Neaizvērtas ()");
 	}
 
-	// metode kas pārbauda katru šķirkļa vārdu atsevišķi						
-	public static void wordByWordCheck(String entry, ArrayList<String> bad)
+	/**
+	 * Vārdu pa vārdam pārbauda dažādas marķieru specifiskās lietas.
+	 * FIXME - iespējams, ka šo derētu kaut kā sacirst mazākos gabalos.
+	 */
+	public static void wordByWordCheck(String entry, int entryID, BadEntries bad)
 	{
 		//masīvs ar vārdņicas marķieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
@@ -159,7 +143,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi PI pēc kārtas, bez PN)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Divi PI pēc kārtas, bez PN");
 						}
 					}
 					if(word.equals("PN")) // pārbauda vai nav bijis PN bez PI pa vidu, pirms tam
@@ -172,7 +156,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi PN pēc kārtas, bez PI)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Divi PN pēc kārtas, bez PI");
 						}
 					}
 					if(word.equals("NO"))
@@ -190,7 +174,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Pirms NG nav atrodams NO)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Pirms NG nav atrodams NO");
 							ng = 0;
 						}
 					}						
@@ -201,7 +185,7 @@ public class EntryChecks
 						{
 							if(StringUtils.wordAfter(entryInf, word).contains("@5")) // pārbauda starp @2 un @5 ir teksts
 							{
-								bad.add("(Starp @2 un @5 jābūt tekstam)" + entry); // slikto šķirkļu saraksta papildināšana
+								bad.addNewEntry(entryID, entry, "Starp @2 un @5 jābūt tekstam");
 							}
 						}
 						if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
@@ -210,7 +194,7 @@ public class EntryChecks
 						}
 						else
 						{
-							bad.add("(Divi @2 pēc kārtas)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Divi @2 pēc kārtas");
 						}
 					}
 					if(word.contains("@5"))
@@ -220,17 +204,17 @@ public class EntryChecks
 						{
 							if(StringUtils.wordAfter(entryInf, word).contains("@2") && !word.contains(")"))
 							{
-								bad.add("(Starp @5 un @2 jābūt tekstam)" + entry); // pārbauda starp @5 un @2 ir teksts
+								bad.addNewEntry(entryID, entry, "Starp @5 un @2 jābūt tekstam");
 								// izņemot ja tos atdala iekavas
 							}
 						}
 						if(at == 0) //pārbauda vai pirms tam ir bijis @2 bez @5, gadījumā ja @5 ir šķirkļa sākumā
 						{
-							bad.add("(Pirms @5 jābūt @2)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Pirms @5 jābūt @2");
 						}
 						if(at == 5) //pārbauda vai pirms tam ir bijis @2 bez @5
 						{
-							bad.add("(Divi @5 pēc kārtas)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "Divi @5 pēc kārtas");
 						}
 						if(at == 2)
 						{
@@ -242,7 +226,7 @@ public class EntryChecks
 						if(Arrays.asList(ident).contains(word) // ja ir kāds ident masīva locekļiem no marķierem
 								|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekļiem
 						{
-							bad.add("(@2 un @5 jābūt 1 marķiera robežās)" + entry); // slikto šķirkļu saraksta papildināšana
+							bad.addNewEntry(entryID, entry, "@2 un @5 jābūt 1 marķiera robežās");
 						}
 					}
 					//beigu pieturzīmes pārbaude
@@ -255,12 +239,12 @@ public class EntryChecks
 							//pārbauda vai vārds pirms tam satur beigu pieturzīmi
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(NO nebeidzas ar pieturzīmi)" + entry); // slikto šķirkļu saraksta papildināšana
+								bad.addNewEntry(entryID, entry, "NO nebeidzas ar pieturzīmi");
 							}
 							// pārbauda, vai nav tukšs NO, piemēram, NO . FS
 							else if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
 							{
-								bad.add("(NO nesatur tekstu)" + entry);
+								bad.addNewEntry(entryID, entry, "NO nesatur tekstu");
 							}
 							
 							noEndSym = 0;
@@ -275,7 +259,7 @@ public class EntryChecks
 							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?'
 									&& word.charAt(wordLen -1) != '!')
 							{
-								bad.add("(PN nebeidzas ar pieturzīmi)" + entry); // slikto šķirkļu saraksta papildināšana
+								bad.addNewEntry(entryID, entry, "PN nebeidzas ar pieturzīmi");
 								pnEndSym = 0;
 							}
 							else
@@ -289,14 +273,14 @@ public class EntryChecks
 						gramOpen = true; // ir bijis gramatikas marķieris
 						if(!StringUtils.wordAfter(entryInf, word).contains("@2")) // vai aiz marķiera ir @2
 						{
-							bad.add("(Aiz gramatikas marķiera jābūt @2)" + entry);
+							bad.addNewEntry(entryID, entry, "Aiz gramatikas marķiera jābūt @2");
 						}
 					}
 					if(gramOpen)
 					{
 						if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits marķieris
 						{
-							bad.add("(Gramatikai jābeidzās ar @5)" + entry);
+							bad.addNewEntry(entryID, entry, "Gramatikai jābeidzās ar @5");
 							gramOpen = false;
 						}
 						if(word.contains("@5")) // ja @5 tad gramatika noslēdzas
@@ -315,18 +299,18 @@ public class EntryChecks
 		// ja pēdējais vārds, tiek veiktas pārbaudes vai ir @5 galā
 		if(gramOpen)
 		{
-			bad.add("(Gramatikai jābeidzās ar @5)" + entry);
+			bad.addNewEntry(entryID, entry, "Gramatikai jābeidzās ar @5");
 		}
 		if(open && !entryInf.contains("@5"))
 		{
-			bad.add("(Šķirkļa beigās jābūt @5)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirkļa beigās jābūt @5");
 		}
 	}
 
 	/**
 	 * Ar marķieri DS saistītās pārbaudes
 	 */
-	public static void dsCheck(String entry, ArrayList<String> bad)
+	public static void dsCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -338,8 +322,8 @@ public class EntryChecks
 			String afterDs = entryInf.substring(dsPlace).trim(); // iegūst to daļu kura ir aiz DS
 			// Atsijaa tos, kam par daudz DS
 			if (afterDs.matches("^.*\\sDS\\s.*$")) // pārbauda vai nav vēlviens DS
-			{		
-				bad.add("(par daudz DS)" + entry);
+			{
+				bad.addNewEntry(entryID, entry, "Par daudz DS");
 			}
 			else
 			{
@@ -360,7 +344,7 @@ public class EntryChecks
 				// Atsijaa tos, kam nesakriit DE un DS skaiti.
 				if(deCount != allDe || deCount != deAfterDs) // pārbauda vai DE ir pareiz skaits
 				{
-					bad.add("(nesakriit DE un DS skaiti)" + entry);
+					bad.addNewEntry(entryID, entry, "Nesakrīt DE un DS skaiti");
 				}
 			}
 		}
@@ -369,14 +353,14 @@ public class EntryChecks
 				&& Character.isDigit(StringUtils.nextCh(entryInf, "DE "))
 				&& StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "DE ")))
 		{
-			bad.add("(DE nesākas ar mazo burtu)" + entry);
+			bad.addNewEntry(entryID, entry, "DE nesākas ar mazo burtu");
 		}
 	}
 
 	/**
 	 * Ar marķieri FS saistītās pārbaudes
 	 */
-	public static void fsCheck(String entry, ArrayList<String> bad)
+	public static void fsCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -390,7 +374,7 @@ public class EntryChecks
 			// Atsijaa tos, kam par daudz FS
 			if (afterFs.matches("^.*\\sFS\\s.*$")) // vai nav vēl kāds FS
 			{		
-				bad.add("(par daudz FS)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi FS");
 			}
 			else
 			{
@@ -414,7 +398,7 @@ public class EntryChecks
 				// Atsijaa tos, kam nesakriit FR skaiti.
 				if(frCount != allFr || frCount != frAfterFs)// ja skaits nav pareizs
 				{
-					bad.add("(nesakriit FR un FS skaiti)" + entry);
+					bad.addNewEntry(entryID, entry, "Nesakrīt FR un FS skaits");
 				}
 				else
 				{
@@ -435,7 +419,7 @@ public class EntryChecks
 					// Atsijaa tos, kam nesakriit FR un FN skaiti. var būt  FN <= FR
 					if(fnCount != allFn || fnCount != fnAfterFs)
 					{
-						bad.add("(nesakriit FR un FN skaits)" + entry);
+						bad.addNewEntry(entryID, entry, "Nesakrīt FR un FN skaits");
 					}
 				}
 			}
@@ -446,15 +430,15 @@ public class EntryChecks
 				&& !Character.isDigit(StringUtils.nextCh(entryInf, "FR "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "FR ")))
 		{
-			bad.add("(FR nesākas ar lielo burtu vai skaitli )" + entry);
+			bad.addNewEntry(entryID, entry, "FR jāsākas ar lielo burtu vai skaitli");
 		}	
 	}
 
 
 	/**
-	 * pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā
+	 * Pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā.
 	 */
-	public static void liCheck(String entry, ArrayList<String> bad, ReferenceList references)
+	public static void liCheck(String entry, int entryID, BadEntries bad, ReferenceList references)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -468,7 +452,7 @@ public class EntryChecks
 			// Atsijaa tos, kam par daudz LI
 			if (AfterLI.matches("^.*\\sLI\\s.*$"))
 			{	
-				bad.add("(par daudz LI)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi LI");
 			}
 			else
 			{
@@ -491,12 +475,12 @@ public class EntryChecks
 					goodReferCount = references.referCount(entryRefer);
 					if(referCount != goodReferCount)
 					{
-						bad.add("(Problēma ar atsaucēm)" + entry); // jan pareizo un norādīto avotu skaits nesakrīt
+						bad.addNewEntry(entryID, entry, "Problēma ar atsaucēm"); // jan pareizo un norādīto avotu skaits nesakrīt
 					}
 				}
 				else
 				{
-					bad.add("(Nav norādītas atsauces)" + entry); // nav bijušas norādītas atsauces
+					bad.addNewEntry(entryID, entry, "Nav norādītas atsauces"); // nav bijušas norādītas atsauces
 				}
 			}
 		}	
@@ -505,7 +489,7 @@ public class EntryChecks
 	/**
 	 * Pārbaudes šķirkļiem ar PI
 	 */
-	public static void piCheck(String entry, ArrayList<String> bad)
+	public static void piCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -526,7 +510,7 @@ public class EntryChecks
 			// Atsijaa tos, kam nesakriit PI un PN skaits.
 			if (piCount != pnCount)
 			{
-				bad.add("(nesakriit PI un PN skaits)" + entry);
+				bad.addNewEntry(entryID, entry, "Nesakrīt PI un PN skaits");
 			}
 		}
 
@@ -535,21 +519,21 @@ public class EntryChecks
 				&& !Character.isDigit(StringUtils.nextCh(entryInf, "PI "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "PI ")))
 		{
-			bad.add("(PI nesākas ar lielo burtu vai skaitli )" + entry);
+			bad.addNewEntry(entryID, entry, "PI jāsākas ar lielo burtu vai skaitli");
 		}
 	}
 
 	/**
 	 * Ar NS saistītās pārbaudes
 	 */
-	public static void nsCheck(String entry, ArrayList<String> bad)
+	public static void nsCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
 		// Atsijaa tos, kam nav NS
 		if (!entryInf.matches("^.*\\sNS\\s.*$")  && !entryInf.matches("^..+\\s(DN|CD)\\s.*$"))
 		{
-			bad.add("(nav NS)" + entry);
+			bad.addNewEntry(entryID, entry, "Trūkst NS");
 		}
 		else
 		{
@@ -561,7 +545,7 @@ public class EntryChecks
 			// Atsijaa tos, kam par daudz NS
 			if (afterNs.matches("^.*\\sNS\\s.*$"))
 			{		
-				bad.add("(par daudz NS)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi NS");
 			}
 			else
 			{
@@ -570,7 +554,7 @@ public class EntryChecks
 				// pārbuda vai skaitlis pēc  NS ir lielāk par 0
 				if(noCount < 1)
 				{
-					bad.add("(NS jābūt liekākam par 0)" + entry);
+					bad.addNewEntry(entryID, entry, "NS jābūt lielākam par 0");
 				}
 				Matcher no = noPat.matcher(entryInf);
 				int allNo = 0;
@@ -587,7 +571,7 @@ public class EntryChecks
 				// Atsijā tos, kam nesakrīt NO skaiti.
 				if(noCount != allNo || noCount != noAfterNs)
 				{
-					bad.add("(nesakriit NO skaiti)" + entry);
+					bad.addNewEntry(entryID, entry, "Nesakrīt NO skaiti");
 
 				}
 				else
@@ -608,7 +592,7 @@ public class EntryChecks
 					// Atsijaa tos, NG skaits ir lielāks par NO skaitu
 					if (noCount < allNG || noCount < ngAfterNs)
 					{
-						bad.add("(par daudz NG)" + entry);
+						bad.addNewEntry(entryID, entry, "Pārāk daudzi NG");
 					}
 				}
 			}
@@ -619,7 +603,7 @@ public class EntryChecks
 				&& !Character.isDigit(StringUtils.nextCh(entryInf, "NO "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "NO ")))
 		{
-			bad.add("(NO nesākas ar lielo burtu vai skaitli )" + entry);
+			bad.addNewEntry(entryID, entry, "NO jāsākas ar lielo burtu vai skaitli");
 		}
 
 		//Pārbauda vai AN sākas ar lielo burtu vai ciparu
@@ -627,53 +611,28 @@ public class EntryChecks
 				&& !Character.isDigit(StringUtils.nextCh(entryInf, "AN "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entryInf, "AN ")))
 		{
-			bad.add("(AN nesākas ar lielo burtu vai skaitli )" + entry);
+			bad.addNewEntry(entryID, entry, "AN jāsākas ar lielo burtu vai skaitli");
 		}
 	}
 	
-	// metode kas pārbauda likumsakraības ar IN0 un IN1
-	public static void in0In1Check(String entry, ArrayList<String> bad, 
-			String [][] InEntries, String [] entries, int i, int index)
+	/**
+	 * Pārbaude, vai IN indekss drīkst sekot tam indeksam, kas ir bijis iepriekš:
+	 * 0 vai 1 var būt, ja iepriekš šāds šķirkļa vārds nav bijis;
+	 * 2 vai vairāk var būt, ja iepriekš ir bijis par vienu mazāks.
+	 */
+	public static void in0In1Check(String entry, int entryID, BadEntries bad, 
+			Map<String, Trio<Integer, String, Integer>> prevIN, String [] entries, int index)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 
 		//Atsijaa ar sliktajiem indeksiem.
-		if(index <= StringUtils.maxIN(InEntries, entryName) && index != 0)
+		if(!prevIN.containsKey(entryName) && index != 0 && index != 1 ||
+				prevIN.containsKey(entryName) && index != prevIN.get(entryName).first && prevIN.get(entryName).first != 0)
 		{
-			bad.add("(slikts indekss pie IN)" + entry);
+			bad.addNewEntry(entryID, entry, "Slikts indekss pie IN");
 		}
 
-		//Paarbauda, lai nebuutu vientulji entries ar IN 1 
-		if (index == 1)
-		{
-			boolean good_1 = false;
-			int sk_len = entries.length;
-			int brPoint = 0;
-			for(int j = i+1; j<sk_len; j++) // cikls iet cauri šķirkļiem uz priekšu un 
-				//pārbauda vai nav vēl kāds tāds pats šķirklis
-			{
-				int sk_len_j = entries[j].length();
-				if(sk_len_j > 2 && StringUtils.countSpaces(entries[j]) > 0)
-				{	
-					String EntryName2 = entries[j].substring(0, entries[j].indexOf(" "));
-					if(EntryName2.equals(entryName)) // ja atrpd tādu pašu škirkļa vārdu
-					{
-						good_1 = true;
-						break;
-					}
-					if(brPoint > 4) // lai programma neietu cauri līdz galam tiek nosprausts limits 4 šķirkļi uz priekšu
-					{
-						break;
-					}
-				}
-				brPoint++;
-			}
-			if(!good_1)
-			{
-				bad.add("(vientulsh IN 1)" + entry);
-			}	
-		}
 		//ja skjirklis ir ar IN 0
 		//Paarbauda, vai jau neeksistee šķirklis ar taadu nosaukumu 
 		if (index == 0)
@@ -681,7 +640,7 @@ public class EntryChecks
 			int sk_len = entries.length;
 			boolean good_0 = true;
 			int brPoint = 0;
-			for(int j = i+1; j<sk_len; j++)// cikls iet cauri šķirkļiem uz priekšu un 
+			for(int j = entryID+1; j<sk_len; j++)// cikls iet cauri šķirkļiem uz priekšu un 
 				//pārbauda vai nav vēl kāds tāds pats šķirklis
 			{
 				int sk_len_j = entries[j].length();
@@ -701,116 +660,119 @@ public class EntryChecks
 				}
 				brPoint++;
 			}
-			if(!good_0 || StringUtils.entryExist(InEntries, entryName))
+			if(!good_0 || prevIN.containsKey(entryName))
 			{
-				bad.add("(pastāv vēl šķirkļi ar tādu vārdu)" + entry);
+				bad.addNewEntry(entryID, entry, "Pastāv vēl šķirkļi ar tādu vārdu");
 			}
-			if(entryInf.matches("^.*\\sCD\\s.*$") || entryInf.matches("^.*\\sDN\\s.*$")) // ja IN0 tad nevar būt CD un DN
+			if(entryInf.matches("^.*\\s(CD|DN)\\s.*$")) // ja IN0 tad nevar būt CD un DN
 			{
-				bad.add("(ja IN 0 nevar būt CD | DN)" + entry);
+				bad.addNewEntry(entryID, entry, "Ir gan IN 0, gan CD vai DN");
 			}
 		}
 	}
 	
 	// metode pārbaudavai ir visi nepieciešamie marķieri
-	public static void identCheck(String entry, ArrayList<String> bad)
+	public static void identCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		if(!entryInf.matches("^.*CD\\s.*$") && !entryInf.matches("^.*DN\\s.*$"))
 		{
 			if(!entryInf.matches("^IN\\s.*$"))
 			{
-				bad.add("(Nav IN indikatora)" + entry);
+				bad.addNewEntry(entryID, entry, "Nav IN indikatora");
 			}
 			if(!entryInf.matches("^..+\\sNS\\s.*$"))
 			{
-				bad.add("(Nav NS indikatora)" + entry);
+				bad.addNewEntry(entryID, entry, "Nav NS indikatora");
 			}
 			if(!entryInf.matches("^..+\\sFS\\s.*$"))
 			{
-				bad.add("(Nav FS indikatora)" + entry);
+				bad.addNewEntry(entryID, entry, "Nav FS indikatora");
 			}
 			if(!entryInf.matches("^..+\\sDS\\s.*$"))
 			{
-				bad.add("(Nav DS indikatora)" + entry);
+				bad.addNewEntry(entryID, entry, "Nav DS indikatora");
 			}
 			if(!entryInf.matches("^..+\\sNO\\s.*$"))
 			{
-				bad.add("(Nav neviena NO)" + entry);
+				bad.addNewEntry(entryID, entry, "Nav neviena NO");
 			}
 		}
 		// pārbauda vai CD un DN nav vienlaicīgi
 		if (entryInf.matches("^..+\\sCD\\s.*$") && entryInf.matches("^..+\\sDN\\s.*$")) 
 		{
-			bad.add("(DN un CD nevar būt vienlaicīgi)" + entry);
+			bad.addNewEntry(entryID, entry, "DN un CD vienlaicīgi");
 		}
 		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
 		if (entryInf.matches("^..+\\sCD\\s.*$") || entryInf.matches("^..+\\sDN\\s.*$"))
 		{
 			if (entryInf.matches ("^.*\\s(NS|NO)\\s.*$"))
 			{
-				bad.add("(ja ir CD | DN nevar būt NS|NO)" + entry);
+				bad.addNewEntry(entryID, entry, "Ja ir CD vai DN, nedrīkst būt NS vai NO");
 			}
 
 		}
 	}
-	// metode pārbauda vai šķirklī nav ne pareizi simboli
-	public static void langCharCheck(String entry, ArrayList<String> bad)
+	
+	/**
+	 * Šķirkļa simbolu pārbaude.
+	 */
+	public static void langCharCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
 		if(!entryName.matches("^[\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\./’'\\(\\)\\<\\>-]*$"))
-			bad.add("(Šķikļa vārds satur neparedzētus simbolus)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirkļa vārds satur neparedzētus simbolus");
 		//Parbauda vai skjirkla info nesatur nepaziistami simboli
 		if(!entryInf.matches("^[\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]*$") 
 				&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
 		{
 			//sliktos simbolus aizvieto vieglākai atrašanai
 			entry = entry.replaceAll("[^\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]", "?");
-			bad.add("(Skjirkla info satur neparedzeetus simbolus)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirkļa teksts satur neparedzētus simbolus");
 		}
 		//ja satur Ō pārbauda vai tas ir lībiešu vai latgļu vārds
 		if((entry.contains("ō") || entry.contains("Ō")) && !entryInf.matches("^.*\\s(latg|līb)\\.\\s.*$")
 				&& !entryInf.matches("^.*\\sRU\\s\\[.*\\].*$") && !entryInf.matches("^.*\\sval.\\s.*$") 
 				&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
 		{
-			bad.add("(Sķirklis satur ō bet nav latg.|līb.)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirklis satur ō, bet nav latg.|līb.");
 		}
 		//ja satur Ŗ pārbauda vai tas ir lībiešu vai latgļu vārds
 		if((entry.contains("ŗ") || entry.contains("Ŗ")) && !entryInf.matches("^.*\\s(latg|līb)\\.\\s.*$") 
 				&& !entryInf.matches("^.*\\sRU\\s.*$") && !entryInf.matches("^.*\\sval\\.\\s.*$") 
 				&& !entryInf.matches("^.*\\sRU\\s[.*]\\s.*$"))
 		{
-			bad.add("(Sķirklis satur ŗ bet nav latg.|līb.)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
 		}
 	}
 	//pārbauda vai aiz IN DS NS FS ir skaitļi
-	public static void inDsNsFsNumberCheck(String entry, ArrayList<String> bad)
+	public static void inDsNsFsNumberCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
 		if(!entryInf.matches("^IN\\s\\d*\\s.*$") && entryInf.matches("^IN\\s.*$"))
 		{
-			bad.add("(Aiz IN neseko skaitlis)" + entry);
+			bad.addNewEntry(entryID, entry, "Aiz IN neseko skaitlis");
 		}
 		if(!entryInf.matches("^..+\\sNS\\s\\d*\\s.*$") && entryInf.matches("^..+\\sNS\\s.*$"))
 		{
-			bad.add("(Aiz NS neseko skaitlis)" + entry);
+			bad.addNewEntry(entryID, entry, "Aiz NS neseko skaitlis");
 		}
 		if(!entryInf.matches("^..+\\sDS\\s\\d*.*$") && entryInf.matches("^..+\\sDS\\s.*$"))
 		{
-			bad.add("(Aiz DS neseko skaitlis)" + entry);
+			bad.addNewEntry(entryID, entry, "Aiz DS neseko skaitlis");
 		}
 		if(!entryInf.matches("^..+\\sFS\\s\\d*\\s.*$") && entryInf.matches("^..+\\sFS\\s.*$"))
 		{
-			bad.add("(Aiz FS neseko skaitlis)" + entry);
+			bad.addNewEntry(entryID, entry, "Aiz FS neseko skaitlis");
 		}
 
 	}
 	// pārbauda vai aiz CD esošais vārds ir vārdnīcā
-	public static void wordAfterCd(String [] entries, String entry, ArrayList<String> bad)
+	public static void wordAfterCd(String [] entries, String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -819,12 +781,12 @@ public class EntryChecks
 			String cdWord = StringUtils.wordAfter(entryInf, "CD"); // atrod vārdu aiz CD
 			if(!StringUtils.wordExist(entries, cdWord)) // pārbauda vai ir iekšā vardnīcā
 			{
-				bad.add("(vārds pēc CD nav atrodams)" + entry);
+				bad.addNewEntry(entryID, entry, "Vārds pēc CD nav atrodams");
 			}
 		}
 	}
 	// pārbauda vai aiz DN esošais vārds ir vārdnīcā
-	public static void wordAfterDn(String [] entries, String entry, ArrayList<String> bad)
+	public static void wordAfterDn(String [] entries, String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -833,12 +795,12 @@ public class EntryChecks
 			String dnWord = StringUtils.wordAfter(entryInf, "DN"); // atrod vārdu aiz DN
 			if(!StringUtils.wordExist(entries, dnWord)) // pārbauda vai ir vārdnīcā
 			{
-				bad.add("(vārds pēc DN nav atrodams)" + entry);
+				bad.addNewEntry(entryID, entry, "Vārds pēc DN nav atrodams");
 			}
 		}
 	}
 	//metode pārbauda vai ir ievērotas GR likumsakarības
-	public static void grCheck(String entry, ArrayList<String> bad)
+	public static void grCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -851,12 +813,12 @@ public class EntryChecks
 			// Atsijaa tos, kam par daudz GR
 			if (AfterGR.matches("^.*\\sGR\\s.*$"))	
 			{
-				bad.add("(par daudz GR)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi GR");
 			}
 			// pārbauda vai GR ir pirms NS un nav atrodams CD un DN
 			if(!AfterGR.matches("^.*\\sNS\\s.*$") && !AfterGR.matches("^.*\\s(CD|DN)\\s.*$"))
 			{
-				bad.add("(GR jāatrodas pirms NS)" + entry); 
+				bad.addNewEntry(entryID, entry, "GR jāatrodas pirms NS");
 			}
 		}
 
@@ -870,16 +832,16 @@ public class EntryChecks
 			}
 			if (cdDnCount == 0) // ja nav atrodams
 			{
-				bad.add("(nav indikatori CD | DN)" + entry);
+				bad.addNewEntry(entryID, entry, "Trūkst indikatora CD vai DN");
 			}
 			if (cdDnCount > 1) // ja ir atrasti vairāk par vienu
 			{
-				bad.add("(var eksistēt tikai viens indikators CD | DN)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi CD un/vai DN");
 			}
 		}
 	}
 	//metode pārbauda vai ir ievērotas RU likumsakarības
-	public static void ruCheck(String entry, ArrayList<String> bad)
+	public static void ruCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -892,27 +854,27 @@ public class EntryChecks
 			// Atsijaa tos, kam par daudz RU
 			if (AfterRU.matches("^.*\\sRU\\s.*$"))	
 			{
-				bad.add("(par daudz RU)" + entry);
+				bad.addNewEntry(entryID, entry, "Pārāk daudzi RU");
 			}
 			// pārbauda vai RU ir pirms NS
 			if(!AfterRU.matches("^.*\\sNS\\s.*$"))
 			{
-				bad.add("(RU jāatrodas pirms NS)" + entry);
+				bad.addNewEntry(entryID, entry, "RU jāatrodas pirms NS");
 			}
 		}
 	}
 	// metode pārbauda vai aiz @2 un @5 marķieri ir pareizi konstruēti
-	public static void atCheck(String entry, ArrayList<String> bad)
+	public static void atCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entryInf.matches("^.*@.\\s.*$") && StringUtils.nextCh(entryInf, "@") != '2' && StringUtils.nextCh(entryInf, "@") != '5')
 		{
-			bad.add("(aiz @ seko nepareizs skaitlis)" + entry);
+			bad.addNewEntry(entryID, entry, "Aiz @ seko nepareizs skaitlis");
 		}
 	}
 	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
-	public static void grammarCheck(String entry, ArrayList<String> bad)
+	public static void grammarCheck(String entry, int entryID, BadEntries bad)
 	{
 		String entryName = entry.substring(0, entry.indexOf(" ")).trim();
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
@@ -921,12 +883,12 @@ public class EntryChecks
 		if(entryName.charAt(entryName.length() - 1) == '.' 
 				&& !entryInf.matches("^.*\\sGR\\s@2.*\\ssaīs\\..*\\s@5\\s.*$"))
 		{
-			bad.add("(problēma ar saīs.)" + entry);
+			bad.addNewEntry(entryID, entry, "Problēma ar saīs.");
 		}
 		//Ja vārds ir vietniekvārds tam jāsākās ar lielo burtu
 		if(entryInf.matches("^.*\\sGR\\s@2\\vietv\\.\\s@5\\s.*$") && !Character.isUpperCase(entryName.charAt(0)))
 		{
-			bad.add("(Šķirkļa vārds nesākas ar lielo burtu)" + entry);
+			bad.addNewEntry(entryID, entry, "Šķirkļa vārds nesākas ar lielo burtu");
 		}
 	}
 }

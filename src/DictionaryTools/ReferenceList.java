@@ -12,8 +12,8 @@ import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
 /**
- * @author Gunārs Danovskis, Lauma Pretkalniņa
  * Avotu saraksts.
+ * @author Lauma, Gunārs Danovskis
  */
 public class ReferenceList
 {

@@ -1,26 +1,23 @@
-/*****************
-Autors: Gunārs Danovskis
-Pēdējais labošanas datums: 28.05.2014
+/**
+ * Kopējā vārdnīcas apstrādes paka.
+ */
+package DictionaryTools;
 
-Klases mērķis:
-	Klase Dictionary ietver sevī main funkciju
-*****************/
-
-package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
+
+import java.util.HashMap;
+
 //bibliotēka *.doc failu apstrādei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
-
-
+/**
+ * Programmas ārējā saskarne, no kuras FIXME daļu analīzes funkcionalitātes
+ * vajadzētu izcelt ārā.
+ * @author Lauma, Gunārs Danovskis
+ */
 public class Dictionary
 {
 
@@ -28,16 +25,15 @@ public class Dictionary
 		throws IOException
 		{
 			// pārbaude vai ir izveidota mape "files".
-			File testFolder = new File("./files/");
+			File folder = new File("./files/");
 
-			if(!testFolder.exists())
+			if(!folder.exists())
 			{
 				System.out.println("Error -can't find folder 'files'.\n" // kļūdas paziņojums
 							+ "Please, create folder 'files'!");
 				return;
 			}
 			
-			File folder = null;
 			int fileCount = 0;
 			String fileName;
 			File entryFile = null;
@@ -51,7 +47,6 @@ public class Dictionary
 			//Izveido sarakstu ar visām atsaucēm
 			ReferenceList refList = new ReferenceList("./files/prog files/zLI.doc");
 			
-			folder = new File("./files/");
 			File[] listOfFiles = folder.listFiles();
 			
 			int allFileCount = listOfFiles.length;
@@ -76,73 +71,75 @@ public class Dictionary
 			        HWPFDocument EntryDoc=new HWPFDocument(fis);
 			        entryExtract = new WordExtractor(EntryDoc);
 			        // visu šķirkļu ielase, katrs paragrāfs savā masīva laukā
-			        String [] Entries = entryExtract.getParagraphText();
+			        String [] entries = entryExtract.getParagraphText();
 			        
 			        // divdimensiju masīvs kur uzglabāt šķirkļa vārdu un marķiera IN vērtību
-			        String [][] InEntries = new String [Entries.length][2];
+			        //String [][] InEntries = new String [entries.length][2];
+			        HashMap<String, Trio<Integer, String, Integer>> prevIN = new HashMap<String, Trio<Integer, String, Integer>>();
 			        
 			        int k = 0;
 			        float progress = 0; // mainīgais progressa uzskaitei
-			        int EntryLen = Entries.length;
+			        int EntryLen = entries.length;
 			        Stats statData = new Stats(); // tiek stats klases mainīgais datu uzglabāšanai
 			        
 			        //slikto šķirkļu saraksts
-			        String BadRow;
-			        ArrayList<String> bad = new ArrayList<String>();
+			        //String BadRow;
+			        //ArrayList<String> bad = new ArrayList<String>();
+			        BadEntries bad = new BadEntries();
 			        
 			        /////Datu apstrāde//////
 			        for(int i=0; i<EntryLen; i++)
 			        {
 			        	//pārbaude vai šķirklis nav tukšs
-			        	if(!StringUtils.isEntryEmpty(Entries[i], bad))
+			        	if(!StringUtils.isEntryEmpty(entries[i], i, bad))
 			        	{
 			        		progress = (((float)i/EntryLen)*100);
-			        		statData.wordCount = statData.wordCount + StringUtils.wordCount(Entries[i]);
+			        		statData.wordCount = statData.wordCount + StringUtils.wordCount(entries[i]);
 			        		statData.entryCount++;
 			        		//šķirkļa informācijas ieguve
-			        		String entryInf = Entries[i].substring(Entries[i].indexOf(" ")).trim();
+			        		String entryInf = entries[i].substring(entries[i].indexOf(" ")).trim();
 			        		//šķirkļa vārda ieguve
-			        		String entryName = Entries[i].substring(0, Entries[i].indexOf(" ")).trim();
+			        		String entryName = entries[i].substring(0, entries[i].indexOf(" ")).trim();
 			        		// pārbaude vai šķirkļa vārds ir labs
-			        		if(!EntryChecks.isEntryNameGood(Entries[i], bad))
+			        		if(!EntryChecks.isEntryNameGood(entries[i], i, bad))
 			        		{
 			        			//Metode statistikas datu par šķirkli ievākšanai
-			        			Stats.Statistics(Entries[i], statData);
+			        			Stats.Statistics(entries[i], statData);
 			        			//paŗabaude vai nav izņēmums
-			        			if(!StringUtils.exclusion(ExceptionList.exceptions, Entries[i]))
+			        			if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 			        			{
 			        				//Metode, kās pārbauda simbolus šķirklī
-			        				EntryChecks.langCharCheck(Entries[i], bad);
+			        				EntryChecks.langCharCheck(entries[i], i, bad);
 			        				
 			        				//Metode, kas pārbauda saīsinājumu un vietniekvārdu gramatiku
-			        				EntryChecks.grammarCheck(Entries[i], bad);
+			        				EntryChecks.grammarCheck(entries[i], i, bad);
 			        			
 			        				//Metode kas pārbauda vai aiz @ seko pareizs skaitlis
-			        				EntryChecks.atCheck(Entries[i], bad);
+			        				EntryChecks.atCheck(entries[i], i, bad);
 			        			
 			        				//Metode pārbauda vai ir visi nepieciešamie indikatori
-			        				EntryChecks.identCheck(Entries[i], bad);
+			        				EntryChecks.identCheck(entries[i], i, bad);
 						
 			        				//Metode pārbauda vai aiz IN DS NS FS obligāti seko skaitlis
-			        				EntryChecks.inDsNsFsNumberCheck(Entries[i], bad);
+			        				EntryChecks.inDsNsFsNumberCheck(entries[i], i, bad);
 			        			
 			        				//iekavu līdzsvars
-			        				EntryChecks.checkBrackets(Entries[i], bad);
+			        				EntryChecks.checkBrackets(entries[i], i, bad);
 			        			
 			        				//pārbauda šķirkļus kas satur GR
-			        				EntryChecks.grCheck(Entries[i], bad);
+			        				EntryChecks.grCheck(entries[i], i, bad);
 			        			
 			        				//Metode kas iet cauri skjirklim pa vienam vārdam un sīki pārbauda visus iespējamos gadījumus
-			        				EntryChecks.wordByWordCheck(Entries[i], bad);
+			        				EntryChecks.wordByWordCheck(entries[i], i, bad);
 						
 			        				//pārbauda sķirkļus kas satur RU
-			        				EntryChecks.ruCheck(Entries[i], bad);			        			
+			        				EntryChecks.ruCheck(entries[i], i, bad);			        			
 						
 			        				//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz CD
-			        				EntryChecks.wordAfterCd(Entries, Entries[i], bad);
+			        				EntryChecks.wordAfterCd(entries, entries[i], i, bad);
 			        			
 			        				//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz DN
-			        				EntryChecks.wordAfterDn(Entries, Entries[i], bad);
+			        				EntryChecks.wordAfterDn(entries, entries[i], i, bad);
 			        							
 			        				//Skjirkli ar IN indikatoriem
 			        				if (entryInf.matches("^IN\\s.*$"))
@@ -151,31 +148,33 @@ public class Dictionary
 			        					int index = StringUtils.findNumber(bezIn);
 			        					
 			        					//Metode kas pārbauda likumsakarības ar IN 0 un IN 1
-			        					EntryChecks.in0In1Check(Entries[i], bad, InEntries, Entries, i, index);
+			        					EntryChecks.in0In1Check(entries[i], i, bad, prevIN, entries, index);
 			        					
 			        					//Metode, kas pārbauda nozīmes - NS
-			        					EntryChecks.nsCheck(Entries[i], bad);
+			        					EntryChecks.nsCheck(entries[i], i, bad);
 			        				
 			        					//Metode, kas pārbauda piemērus -  PI
-			        					EntryChecks.piCheck(Entries[i], bad);
+			        					EntryChecks.piCheck(entries[i], i, bad);
 			        					
 			        					//Metode, kas pārbauda Frazeoloģismus
-			        					EntryChecks.fsCheck(Entries[i], bad);
+			        					EntryChecks.fsCheck(entries[i], i, bad);
 			        										
 			        					//Metode, kas pārbauda Divdabjus
-			        					EntryChecks.dsCheck(Entries[i], bad);
+			        					EntryChecks.dsCheck(entries[i], i, bad);
 			        					
 			        					//Metode, kas pārbauda atsauces - LI
-			        					EntryChecks.liCheck(Entries[i], bad, refList);
+			        					EntryChecks.liCheck(entries[i], i, bad, refList);
 			        				
 			        					// ieliek bijushos vaardus ar IN sarakstā
-			        					InEntries[k][0] = entryName;
-			        					InEntries[k][1] = String.valueOf(index); 
+			        					//InEntries[k][0] = entryName;
+			        					//InEntries[k][1] = String.valueOf(index); 
+			        					prevIN.put(entryName, Trio.of(index, entries[i], i));
 			        					k++;
 			        				}
 			        			}
 			        		}
 			        	}
+			        	
 			        	if (i % 50 == 0)
 			        	{
 			        		System.out.print("File " + fileName + " [");//
@@ -183,6 +182,8 @@ public class Dictionary
 			        		System.out.print("%]\r");					//
 			        	}
 			        }
+			        System.out.print("File " + fileName + " [postprocessing]\t\n"); //izvade uz ekrāna kad pabeigts fails
+			        GlobalChecks.singleIn1Check(prevIN, bad);
 			        System.out.print("File " + fileName + " [DONE]\t\n"); //izvade uz ekrāna kad pabeigts fails
 			        
 			        ///Datu izvade *.klu failā///
@@ -198,28 +199,7 @@ public class Dictionary
 			        Excel.write();
 			        
 			        // Savaakto šķirkļu analīze un atbilstošo izejas datu izdrukāšana.
-			        if(!bad.isEmpty())
-			        {
-			        	//izejas plūsma *.klu failam
-			        	BufferedWriter outFile = new BufferedWriter(
-			        			new OutputStreamWriter(new FileOutputStream("./files/" + part1 + ".klu"), "windows-1257"));
-			        	//slikto šķirkļu saraksta pārrakstīšana izejas failā
-			        	while (!bad.isEmpty())
-			        	{
-			        		int indx = 0;
-			        		BadRow = bad.remove(indx);
-			        		outFile.write(BadRow + "\n");
-			        		int atkaartojums = bad.indexOf(BadRow);
-			        		while (atkaartojums > -1)
-			        		{
-			        			bad.remove(atkaartojums);
-			        			atkaartojums = bad.indexOf(BadRow);
-			        		}
-			        		indx++;
-			        	}
-			        	outFile.flush(); // plūsmas iztukšošana
-			        	outFile.close(); //faila aizvēršana
-			        }
+			        bad.printAll("./files/" + part1 + ".klu");
 			    }
 			}
 			System.out.print("ALL FILES DONE!" + "\n"); // paziņujoms par visu failu pabeigšanu

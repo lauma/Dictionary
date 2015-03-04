@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
 public class StringUtils
 {
 	// metode, kas pārbauda vai padotais šķirklis nav tukšs
-	public static boolean isEntryEmpty(String entry, ArrayList<String> bad)
+	public static boolean isEntryEmpty(String entry, int entryID, BadEntries bad)
 	{
 		boolean notEmpty = true;
 		//ja škirklis atmetot atstarpes ir tukšs 
 		if(entry.trim().isEmpty())
     	{
 			//škirklis tiek ierakstīts slikto sarakstā
-    		bad.add("(Tukša rinda)" + entry);
+			bad.addNewEntry(entryID, entry, "Tukša rinda");
     	}
 		else
 		{

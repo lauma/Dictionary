@@ -49,7 +49,7 @@ public class Dictionary
 			//Izveido sarakstu ar šķirkļiem ko navajag apskatīt
 			ExceptionList.getExceptData();
 			//Izveido sarakstu ar visām atsaucēm
-			ReferenceList.getReferData();
+			ReferenceList refList = new ReferenceList("./files/prog files/zLI.doc");
 			
 			folder = new File("./files/");
 			File[] listOfFiles = folder.listFiles();
@@ -166,7 +166,7 @@ public class Dictionary
 			        					EntryChecks.dsCheck(Entries[i], bad);
 			        					
 			        					//Metode, kas pārbauda atsauces - LI
-			        					EntryChecks.liCheck(Entries[i], bad, ReferenceList.references);
+			        					EntryChecks.liCheck(Entries[i], bad, refList);
 			        				
 			        					// ieliek bijushos vaardus ar IN sarakstā
 			        					InEntries[k][0] = entryName;

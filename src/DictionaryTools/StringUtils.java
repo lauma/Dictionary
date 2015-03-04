@@ -1,6 +1,5 @@
 /*****************
 Autors: Gunārs Danovskis
-Pēdējais labošanas datums: 28.05.2014
 
 Klases mērķis:
 	Klase StringUtils ietver sevī visas palīgmetodes šķirķļu apstrādei
@@ -175,45 +174,7 @@ public class StringUtils
 		}
 		return good; //atgriež gala vērtību
 	}
-	//metode, kas atgriež pareizu avotu skaitu šķirklī
-	public static int referCount(String [] references, String entryRefer)
-	{
-		int count = 0;
-		// izdalītas visas šķirklī ierakstītās atsauces
-		String[] parts = entryRefer.split(", "); 
-		int len = parts.length;
-		int len2 = entryRefer.length();
-		//cikls iet pa škirkļa atsauču sarakstam
-		for(int i = 0; i<len; i++)
-		{
-			if(parts[i].length() <= 0)
-			{
-				return 1;
-			}
-			else
-			{
-				for(int j=0; j<len2; j++)
-				{
-					int referLen = references[j].length();
-					// ja atsauce ir atrodama avotu sarakstā
-					if(parts[i].equals(references[j]))
-					{
-						count++;
-					}
-					else
-					{
-						//ja astauce ir atrodama avotu sarakstā/**(žurnāliem un avīzēm u.c.)*//
-						 if( parts[i].contains(references[j]) && parts[i].charAt(referLen) == '-')
-						 {
-							 count ++;
-						 }
-					}							
-				}
-			}
-		}
-				
-		return count; //atgriež gala vērtību
-	}
+
 	//metode kas atrgriež lielāko IN vērtību padotajam šķirkļa vārdam
 	public static int maxIN(String [][] inEntries, String word)
 	{

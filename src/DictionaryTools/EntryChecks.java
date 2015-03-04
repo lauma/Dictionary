@@ -258,7 +258,7 @@ public class EntryChecks
 								bad.add("(NO nebeidzas ar pieturzīmi)" + entry); // slikto šķirkļu saraksta papildināšana
 							}
 							// pārbauda, vai nav tukšs NO, piemēram, NO . FS
-							else if (prevWord.trim().equals("") || prevWord.trim().equals("NO"))
+							else if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
 							{
 								bad.add("(NO nesatur tekstu)" + entry);
 							}
@@ -454,7 +454,7 @@ public class EntryChecks
 	/**
 	 * pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā
 	 */
-	public static void liCheck(String entry, ArrayList<String> bad, String [] references)
+	public static void liCheck(String entry, ArrayList<String> bad, ReferenceList references)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();
 
@@ -488,7 +488,7 @@ public class EntryChecks
 						}
 					}
 					//metode salīdzina cik pareizas atsauces ir norādītas
-					goodReferCount = StringUtils.referCount(references, entryRefer);
+					goodReferCount = references.referCount(entryRefer);
 					if(referCount != goodReferCount)
 					{
 						bad.add("(Problēma ar atsaucēm)" + entry); // jan pareizo un norādīto avotu skaits nesakrīt

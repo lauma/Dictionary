@@ -7,8 +7,6 @@ Klases mērķis:
 
 package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
 
-//Importētās Java bibliotēkas
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

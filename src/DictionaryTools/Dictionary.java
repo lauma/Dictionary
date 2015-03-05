@@ -77,14 +77,11 @@ public class Dictionary
 			        //String [][] InEntries = new String [entries.length][2];
 			        HashMap<String, Trio<Integer, String, Integer>> prevIN = new HashMap<String, Trio<Integer, String, Integer>>();
 			        
-			        int k = 0;
 			        float progress = 0; // mainīgais progressa uzskaitei
 			        int EntryLen = entries.length;
 			        Stats statData = new Stats(); // tiek stats klases mainīgais datu uzglabāšanai
 			        
 			        //slikto šķirkļu saraksts
-			        //String BadRow;
-			        //ArrayList<String> bad = new ArrayList<String>();
 			        BadEntries bad = new BadEntries();
 			        
 			        /////Datu apstrāde//////
@@ -148,7 +145,7 @@ public class Dictionary
 			        					int index = StringUtils.findNumber(bezIn);
 			        					
 			        					//Metode kas pārbauda likumsakarības ar IN 0 un IN 1
-			        					EntryChecks.in0In1Check(entries[i], i, bad, prevIN, entries, index);
+			        					EntryChecks.inNumberCheck(entries[i], i, bad, prevIN, entries, index);
 			        					
 			        					//Metode, kas pārbauda nozīmes - NS
 			        					EntryChecks.nsCheck(entries[i], i, bad);
@@ -169,7 +166,12 @@ public class Dictionary
 			        					//InEntries[k][0] = entryName;
 			        					//InEntries[k][1] = String.valueOf(index); 
 			        					prevIN.put(entryName, Trio.of(index, entries[i], i));
-			        					k++;
+			        				}
+			        				else
+			        				{
+			        					EntryChecks.notInUnityCheck(entries[i], i, bad, prevIN);
+			        						
+			        					prevIN.put(entryName, Trio.of(-1, entries[i], i));
 			        				}
 			        			}
 			        		}
@@ -197,7 +199,6 @@ public class Dictionary
 			        Stats.SumTable(table);
 			        // datu ierakstīšana
 			        Excel.write();
-			        
 			        // Savaakto šķirkļu analīze un atbilstošo izejas datu izdrukāšana.
 			        bad.printAll("./files/" + part1 + ".klu");
 			    }

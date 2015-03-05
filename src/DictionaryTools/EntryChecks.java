@@ -46,20 +46,20 @@ public class EntryChecks
 			if(entryInf.charAt(i) == '[') // atverošās iekavas
 			{
 				// Ja iekava nav pēdiņās.
-				if (!(i > 0 && i < entryInf.length() - 1 &&
-						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
+				//if (!(i > 0 && i < entryInf.length() - 1 &&
+				//		entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
 					sqBrackets++; //skaitītājs palielinās par 1
 			}
 			if(entryInf.charAt(i) == ']') // aizverošās iekavas
 			{
 				// Ja iekava nav pēdiņās.
-				if (!(i > 0 && i < entryInf.length() - 1 &&
-						entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
-				{
+				//if (!(i > 0 && i < entryInf.length() - 1 &&
+				//		entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
+				//{
 					sqBrackets--; //skaitītājs samazinās 1
 					if (sqBrackets < 0)
 						bad.addNewEntry(entryID, entries, "] pirms atbilstošās [");
-				}
+				//}
 			}
 
 			// apaļās iekavas
@@ -616,11 +616,23 @@ public class EntryChecks
 	}
 	
 	/**
+	 * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
+	 */
+	public static void notInUnityCheck (String entry, int entryID, BadEntries bad, 
+			Map<String, Trio<Integer, String, Integer>> prevIN)
+	{
+		String entryInf = entry.substring(entry.indexOf(" ")).trim();
+		String entryName = entry.substring(0, entry.indexOf(" ")).trim();
+		
+		if (prevIN.containsKey(entryName))
+			bad.addNewEntry(entryID, entry, "Pastāv vēl šķirkļi ar tādu vārdu");
+	}
+	/**
 	 * Pārbaude, vai IN indekss drīkst sekot tam indeksam, kas ir bijis iepriekš:
 	 * 0 vai 1 var būt, ja iepriekš šāds šķirkļa vārds nav bijis;
 	 * 2 vai vairāk var būt, ja iepriekš ir bijis par vienu mazāks.
 	 */
-	public static void in0In1Check(String entry, int entryID, BadEntries bad, 
+	public static void inNumberCheck(String entry, int entryID, BadEntries bad, 
 			Map<String, Trio<Integer, String, Integer>> prevIN, String [] entries, int index)
 	{
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();

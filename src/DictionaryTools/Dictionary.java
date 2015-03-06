@@ -8,6 +8,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
+
+
+
 //bibliotēka *.doc failu apstrādei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -38,7 +41,15 @@ public class Dictionary
 	 */
 	public String fileName;
 	
-	public void readFromFile(String path)
+	/**
+	 * Statistics collector.
+	 */
+	public Stats stats;
+	
+	/**
+	 * Ielādē no word faila vārdnīcas fragmenta saturu un sagatavo pārbaudēm.
+	 */
+	public void loadFromFile(String path)
 	throws IOException
 	{
 		File entryFile = new File(path);
@@ -55,10 +66,14 @@ public class Dictionary
 
 		// Notīra uzkrājošos statistikas mainīgos.
 		prevIN = new HashMap<String, Trio<Integer, String, Integer>>();
-		bad = new BadEntries();		
+		bad = new BadEntries();
+		stats = new Stats();
 	}
 	
-	public void check (Stats statData, ReferenceList references)
+	/**
+	 * Izpilda visas šķirkļu pārbaudes.
+	 */
+	public void check (ReferenceList references)
 	{
 		float progress = 0;
 		for(int i=0; i < entries.length; i++)
@@ -67,8 +82,8 @@ public class Dictionary
 			if(!StringUtils.isEntryEmpty(this, i))
 			{
 				//progress = (((float)i/EntryLen)*100);
-				statData.wordCount = statData.wordCount + StringUtils.wordCount(entries[i]);
-				statData.entryCount++;
+				stats.wordCount += StringUtils.wordCount(entries[i]);
+				stats.entryCount++;
 				//šķirkļa informācijas ieguve
 				Dictionary.Entry entry = new Dictionary.Entry(entries[i], i);
 				//String entryInf = entries[i].substring(entries[i].indexOf(" ")).trim();
@@ -78,7 +93,7 @@ public class Dictionary
 				if(!EntryChecks.isEntryNameGood(entry, bad))
 				{
 					//Metode statistikas datu par šķirkli ievākšanai
-					statData.collectStats(entries[i]);
+					stats.collectStats(entries[i]);
 					//paŗabaude vai nav izņēmums
 					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 					{
@@ -163,6 +178,22 @@ public class Dictionary
 		GlobalChecks.singleIn1Check(this);
 		System.out.print("File " + fileName + " [DONE]\t\t\t\n"); //izvade uz ekrāna kad pabeigts fails
 
+	}
+	
+	/**
+	 * Izdrukā pārbaužu rezultātus.
+	 */
+	public void printResults(ExcelOutputer table) throws IOException
+	{
+		// Izejas pluusma.
+		String[] parts = fileName.split("\\.");
+		String part1 = parts[0];
+		// Statistikas datu ielikšana tabulā.
+		table.addNewStatsRow(stats, fileName);
+		table.sumTable();
+		table.flush();
+		// Kļūdaino šķirkļu izdrukāšana .klu failā.
+		if (!bad.isEmpty()) bad.printAll("./files/" + part1 + ".klu");
 	}
 	
 	/**

@@ -28,12 +28,11 @@ public class DictionaryCheckerUI
 			return;
 		}
 
-		int fileCount = 0;
+		//int fileCount = 0;
 		String fileName;
-		Excel table = new Excel();
-
 		//Izveido .xls failu kur glabāt statistikas datus
-		Excel.createXls();
+		ExcelOutputer table = new ExcelOutputer();
+
 		//Izveido sarakstu ar šķirkļiem ko navajag apskatīt
 		ExceptionList.getExceptData();
 		//Izveido sarakstu ar visām atsaucēm
@@ -55,26 +54,16 @@ public class DictionaryCheckerUI
 			//tiek apstrādāti tikai tie faili kuriem galā ir saīsinājums doc
 			if (listOfFiles[p].isFile() && ext.equals("doc")) 
 			{
-				fileCount ++;
+				// Inicē.
+				//fileCount ++;
 				Dictionary dictFile = new Dictionary();
-				dictFile.readFromFile("./files/" + fileName);
-				Stats statData = new Stats(); // tiek stats klases mainīgais datu uzglabāšanai
+				dictFile.loadFromFile("./files/" + fileName);
 
-				/////Datu apstrāde//////
-				dictFile.check(statData, refList);
-				///Datu izvade *.klu failā///
-
-				// Izejas pluusma.
-				String[] parts = fileName.split("\\.");
-				String part1 = parts[0];
-				//statistikas datu ielikešana tabulā
-				statData.writeInTable(table, fileName, fileCount);
-				// summaēšanas metode
-				Stats.sumTable(table);
-				// datu ierakstīšana
-				Excel.write();
-				// Savaakto šķirkļu analīze un atbilstošo izejas datu izdrukāšana.
-				if (!dictFile.bad.isEmpty()) dictFile.bad.printAll("./files/" + part1 + ".klu");
+				// Apstrādā.
+				dictFile.check(refList);
+				
+				// Izdrukā rezultātus.
+				dictFile.printResults(table);
 			}
 		}
 		System.out.print("ALL FILES DONE!" + "\n"); // paziņujoms par visu failu pabeigšanu

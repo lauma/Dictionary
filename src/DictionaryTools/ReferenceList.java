@@ -3,9 +3,10 @@ package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksm
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
 
 //bibliotēka *.doc failu apstrādei
 import org.apache.poi.hwpf.HWPFDocument; 
@@ -60,34 +61,29 @@ public class ReferenceList
 	}
 	
 	/**
-	 * Saskaita šķirklī atsauču daļā atpazītos avotus.
-	 * @param entryRefer šķirkļa daļa, kas satur atsauces.
+	 * Pārbauda, vai visi šķirķļa atsauču daļā uzskaitītie avoti ir atpazīstami
+	 * un atgriež neatpazītos.
+	 * @param entryRefer šķirkļa daļa, kas satur atsauces (bez []).
 	 */
-	public int referCount(String entryRefer)
+	public ArrayList<String> verifyReferences(String entryRefer)
 	{
-		int count = 0;
+		ArrayList<String> unrec = new ArrayList<String> ();
 		// izdalītas visas šķirklī ierakstītās atsauces
 		String[] parts = entryRefer.split(", "); 
-		if (parts.length < 1) return 0;
+		if (parts.length < 1) return unrec;
 		//cikls iet pa škirkļa atsauču sarakstam
 		for(String part : parts)
 		{
-			//if(part.length() <= 0)
-			//	return 1;
-			//else
-			//{
-				// Parasta atsauce.
-				if (references.contains(part))
-					count++;
-				// Atsauce ar papildinformāciju - žurnāli vai avīzes.
-				else if (part.contains("-"))
-				{
-					if (references.contains(part.substring(0, part.indexOf('-')).trim()))
-						count++;
-				}
-			//}
+			part = part.trim();
+			if(part.length() <= 1)
+				continue;
+					// Parasta atsauce.
+			if ( ! (references.contains(part) ||
+					// Atsauce ar papildinformāciju - žurnāli vai avīzes.
+					part.contains("-") && references.contains(part.substring(0, part.indexOf('-')).trim())) )
+				unrec.add(part);
 		}
 				
-		return count; //atgriež gala vērtību
+		return unrec;
 	}
 }

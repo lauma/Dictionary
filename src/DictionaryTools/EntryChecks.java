@@ -1,5 +1,6 @@
 package DictionaryTools;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -456,26 +457,29 @@ public class EntryChecks
 			}
 			else
 			{
-				int referCount = 1;
-				int goodReferCount = 0;
+				//int referCount = 1;
+				//int goodReferCount = 0;
 				if(AfterLI.contains("["))
 				{
 					int referBegin = AfterLI.indexOf( '[' ) + 1; //iegūst apgabalu kur sākas atsauces
 					int referEnd = AfterLI.indexOf( ']' ); //iegūst apgabalu kur beidzas atsauces
 					String entryRefer = AfterLI.substring(referBegin, referEnd);// atsauces izgriež ārā no virknes
-					int ats_len = entryRefer.length();
-					for(int m=0; m<ats_len; m++)
-					{
-						if(Character.isWhitespace(entryRefer.charAt(m))) // iegūst atsauču skaitu pēc tā cik ir atstarpes
-						{
-							referCount++;
-						}
-					}
+					//int ats_len = entryRefer.length();
+					//for(int m=0; m<ats_len; m++)
+					//{
+					//	if(Character.isWhitespace(entryRefer.charAt(m))) // iegūst atsauču skaitu pēc tā cik ir atstarpes
+					//	{
+					//		referCount++;
+					//	}
+					//}
 					//metode salīdzina cik pareizas atsauces ir norādītas
-					goodReferCount = references.referCount(entryRefer);
-					if(referCount != goodReferCount)
+					//goodReferCount = references.referCount(entryRefer);
+					//if(referCount != goodReferCount)
+					ArrayList<String> unrecognized = references.verifyReferences(entryRefer);
+					if (!unrecognized.isEmpty())
 					{
-						bad.addNewEntry(entryID, entry, "Problēma ar atsaucēm"); // jan pareizo un norādīto avotu skaits nesakrīt
+						String errorMsg = String.join(", ", unrecognized);
+						bad.addNewEntry(entryID, entry, "Neatpazīta(s) atsauce(s): " + errorMsg); // jan pareizo un norādīto avotu skaits nesakrīt
 					}
 				}
 				else

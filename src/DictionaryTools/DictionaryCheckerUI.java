@@ -68,9 +68,9 @@ public class DictionaryCheckerUI
 				String[] parts = fileName.split("\\.");
 				String part1 = parts[0];
 				//statistikas datu ielikešana tabulā
-				Stats.FillTable(table, statData , fileName, fileCount);
+				statData.writeInTable(table, fileName, fileCount);
 				// summaēšanas metode
-				Stats.SumTable(table);
+				Stats.sumTable(table);
 				// datu ierakstīšana
 				Excel.write();
 				// Savaakto šķirkļu analīze un atbilstošo izejas datu izdrukāšana.

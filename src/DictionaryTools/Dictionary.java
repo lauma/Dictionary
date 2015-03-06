@@ -78,7 +78,7 @@ public class Dictionary
 				if(!EntryChecks.isEntryNameGood(entry, bad))
 				{
 					//Metode statistikas datu par šķirkli ievākšanai
-					Stats.Statistics(entries[i], statData);
+					statData.collectStats(entries[i]);
 					//paŗabaude vai nav izņēmums
 					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 					{

@@ -13,13 +13,13 @@ public class GlobalChecks
 	/**
 	 * Atlasa atlasa vientuļos IN 1.
 	 */
-	public static void singleIn1Check(Map<String, Trio<Integer, String, Integer>> finalIN, BadEntries bad)
+	public static void singleIn1Check(Dictionary dict)
 	{
-		for (String entryName : finalIN.keySet())
+		for (String entryName : dict.prevIN.keySet())
 		{
-			Trio<Integer, String, Integer> entry = finalIN.get(entryName);
+			Trio<Integer, String, Integer> entry = dict.prevIN.get(entryName);
 			if (entry.first == 1)
-				bad.addNewEntry(entry.third, entry.second, "Vientuļš IN 1");
+				dict.bad.addNewEntryFromString(entry.third, entry.second, "Vientuļš IN 1");
 		}
 	}
 }

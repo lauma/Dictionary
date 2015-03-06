@@ -13,14 +13,15 @@ import java.util.regex.Pattern;
 public class StringUtils
 {
 	// metode, kas pārbauda vai padotais šķirklis nav tukšs
-	public static boolean isEntryEmpty(String entry, int entryID, BadEntries bad)
+	public static boolean isEntryEmpty(Dictionary dict, int entryID)//String entry, int entryID, BadEntries bad)
 	{
 		boolean notEmpty = true;
+		String entry = dict.entries[entryID];
 		//ja škirklis atmetot atstarpes ir tukšs 
 		if(entry.trim().isEmpty())
     	{
 			//škirklis tiek ierakstīts slikto sarakstā
-			bad.addNewEntry(entryID, entry, "Tukša rinda");
+			dict.bad.addNewEntryFromString(entryID, entry, "Tukša rinda");
     	}
 		else
 		{

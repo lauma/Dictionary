@@ -20,12 +20,20 @@ public class BadEntries
 	protected Map<Integer, BadEntry> register =
 			new HashMap<Integer, BadEntry>();
 	
-	public void addNewEntry(int lineNumber, String entry, String error)
+	public void addNewEntry(Dictionary.Entry entry, String error)
 	{
-		BadEntry e = register.get(lineNumber);
+		BadEntry e = register.get(entry.id);
+		if (e == null) e = new BadEntry(entry.fullText, error);
+		else e.errors.add(error);
+		register.put(entry.id, e);
+	}
+
+	public void addNewEntryFromString(int entryID, String entry, String error)
+	{
+		BadEntry e = register.get(entryID);
 		if (e == null) e = new BadEntry(entry, error);
 		else e.errors.add(error);
-		register.put(lineNumber, e);
+		register.put(entryID, e);
 	}
 	
 	public boolean isEmpty()

@@ -640,7 +640,8 @@ public class EntryChecks
 
 		//Atsijaa ar sliktajiem indeksiem.
 		if(!prevIN.containsKey(entryName) && index != 0 && index != 1 ||
-				prevIN.containsKey(entryName) && index != prevIN.get(entryName).first && prevIN.get(entryName).first != 0)
+				prevIN.containsKey(entryName) &&
+				(index != prevIN.get(entryName).first + 1 || prevIN.get(entryName).first == 0))
 		{
 			bad.addNewEntry(entryID, entry, "Slikts indekss pie IN");
 		}

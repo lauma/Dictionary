@@ -11,8 +11,9 @@ import lv.ailab.tezaurs.io.DocLoader;
 public class DictionaryToDicUI
 {
 	protected static String splitPattern =
-			"\\s(?=(NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG|@2|@5)\\s)|" +
+			"\\s(?=(NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
+	protected static String removePattern = "\\s(@5|@2)(?=\\s)";
 	
 	public static void main(String[] args)
 			throws IOException
@@ -55,14 +56,28 @@ public class DictionaryToDicUI
 	}
 	
 
-	
+	/**
+	 * Sadala šķirkli elementos un veic citas normalizācijas.
+	 * @param entry
+	 * @return
+	 */
 	protected static String[] convertEntry(String entry)
 	{
 		entry = "VR " + entry.trim();
+		entry = entry.replaceAll(removePattern, "");
+		entry = entry.replaceAll(" \\.(?!\\.)", ". ");
+		entry = entry.replaceAll("\\s\\s+", " ");
 		String[] rows = entry.split(splitPattern);
 		return rows;
 	}
 	
+	/**
+	 * Elementos sadalīto šķirkli izdrukā dotajā izejas failā, pabeidzot to ar
+	 * tukšu rindu.
+	 * @param entryElements
+	 * @param out
+	 * @throws IOException
+	 */
 	protected static void printEntry(String[] entryElements, BufferedWriter out)
 			throws IOException
 	{

@@ -13,7 +13,7 @@ public class DictionaryToDicUI
 	protected static String splitPattern =
 			"\\s(?=(NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
-	protected static String removePattern = "\\s(@5|@2)(?=\\s)";
+	protected static String removePattern = "\\s(@5|@2)((?=\\s)|$)";
 	
 	public static void main(String[] args)
 			throws IOException
@@ -38,7 +38,7 @@ public class DictionaryToDicUI
 			if (!fileName.endsWith(".doc"))
 				continue;
 			BufferedWriter dicOut = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream("./files/dic/" +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "UTF8"));
+					new FileOutputStream("./files/dic/" +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
 			
 			String[] entities = DocLoader.loadDictionary("./files/" + fileName);
 			for (String e : entities)

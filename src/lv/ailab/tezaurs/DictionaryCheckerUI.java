@@ -1,9 +1,14 @@
-package DictionaryTools;
+package lv.ailab.tezaurs;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+
+import lv.ailab.tezaurs.checker.Dictionary;
+import lv.ailab.tezaurs.checker.ExceptionList;
+import lv.ailab.tezaurs.checker.ReferenceList;
+import lv.ailab.tezaurs.io.XlsOutputer;
 
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -31,7 +36,7 @@ public class DictionaryCheckerUI
 		//int fileCount = 0;
 		String fileName;
 		//Izveido .xls failu kur glabāt statistikas datus
-		ExcelOutputer table = new ExcelOutputer();
+		XlsOutputer table = new XlsOutputer();
 
 		//Izveido sarakstu ar šķirkļiem ko navajag apskatīt
 		ExceptionList.getExceptData();
@@ -55,7 +60,6 @@ public class DictionaryCheckerUI
 			if (listOfFiles[p].isFile() && ext.equals("doc")) 
 			{
 				// Inicē.
-				//fileCount ++;
 				Dictionary dictFile = new Dictionary();
 				dictFile.loadFromFile("./files/" + fileName);
 

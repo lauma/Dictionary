@@ -1,7 +1,7 @@
 /**
  * Kopējā vārdnīcas apstrādes paka.
  */
-package DictionaryTools;
+package lv.ailab.tezaurs.checker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,14 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
+
+
+
+
+import lv.ailab.tezaurs.io.DocLoader;
+import lv.ailab.tezaurs.io.XlsOutputer;
+import lv.ailab.tezaurs.utils.StringUtils;
+import lv.ailab.tezaurs.utils.Trio;
 
 
 //bibliotēka *.doc failu apstrādei
@@ -52,18 +60,16 @@ public class Dictionary
 	public void loadFromFile(String path)
 	throws IOException
 	{
-		File entryFile = new File(path);
-		FileInputStream fis = new FileInputStream(entryFile.getAbsolutePath());
-		WordExtractor entryExtract = new WordExtractor(new HWPFDocument(fis));
+		// Ielādē šķirkļus.
+		entries = DocLoader.loadDictionary(path);
+		
+		// Savāc faila nosaukumu.
 		fileName = path;
 		if (fileName.contains("\\"))
 			fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
 		if (fileName.contains("/"))
 			fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 		
-		// Ielādē šķirkļus.
-		entries = entryExtract.getParagraphText();
-
 		// Notīra uzkrājošos statistikas mainīgos.
 		prevIN = new HashMap<String, Trio<Integer, String, Integer>>();
 		bad = new BadEntries();
@@ -183,7 +189,7 @@ public class Dictionary
 	/**
 	 * Izdrukā pārbaužu rezultātus.
 	 */
-	public void printResults(ExcelOutputer table) throws IOException
+	public void printResults(XlsOutputer table) throws IOException
 	{
 		// Izejas pluusma.
 		String[] parts = fileName.split("\\.");

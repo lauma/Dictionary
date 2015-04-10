@@ -1,11 +1,9 @@
-package  DictionaryTools;
+package  lv.ailab.tezaurs.checker;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.ss.usermodel.CellStyle;
+import lv.ailab.tezaurs.utils.StringUtils;
 
 /**
  * Klase Stats ietver sevī metodes statistikas datu uzkrāšanai un izvadīšanai
@@ -14,7 +12,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
  */
 public class Stats
 {
-	protected String filename = "./files/vardusk.xls";
+	//protected String filename = "./files/vardusk.xls";
 	//protected Excel table = new Excel();
 
 	public String FileName = "";

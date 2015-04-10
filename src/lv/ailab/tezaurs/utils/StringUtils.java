@@ -5,10 +5,12 @@ Klases mērķis:
 	Klase StringUtils ietver sevī visas palīgmetodes šķirķļu apstrādei
 *****************/
 
-package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
+package lv.ailab.tezaurs.utils; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lv.ailab.tezaurs.checker.Dictionary;
 
 public class StringUtils
 {

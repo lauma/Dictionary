@@ -1,7 +1,9 @@
-package DictionaryTools;
+package lv.ailab.tezaurs.checker;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import lv.ailab.tezaurs.utils.Trio;
 
 /**
  * Struktūras pārbaudes, kas attiecināmas uz vairākiem šķirkļiem.

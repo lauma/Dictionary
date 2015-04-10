@@ -1,10 +1,13 @@
-package DictionaryTools;
+package lv.ailab.tezaurs.checker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lv.ailab.tezaurs.utils.StringUtils;
+import lv.ailab.tezaurs.utils.Trio;
 
 /**
  * Statisks šķirkļa pārbaudes metožu apvienojums.

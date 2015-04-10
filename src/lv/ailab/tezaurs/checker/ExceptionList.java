@@ -6,7 +6,7 @@ Klases mērķis:
 	Klase ExceptionList ietver sevī funkcijas izņēmumu saraksta izveidei
 *****************/
 
-package DictionaryTools; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
+package lv.ailab.tezaurs.checker; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
 
 import java.io.File;
 import java.io.FileInputStream;

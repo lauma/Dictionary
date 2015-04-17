@@ -13,7 +13,7 @@ public class DictionaryToDicUI
 	public static String inputDataPath = "./dati/";
 
 	protected static String splitPattern =
-			"\\s(?=(NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
+			"\\s(?=(GR|RU|NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
 	protected static String removePattern = "\\s(@5|@2)((?=\\s)|$)";
 	

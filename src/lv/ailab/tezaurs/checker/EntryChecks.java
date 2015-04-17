@@ -241,7 +241,7 @@ public class EntryChecks
 							noEndSym = 0;
 						}
 					}
-					if(pnEndSym == 1) // norāda to ka ir bjis PN marķieris
+				/*	if(pnEndSym == 1) // norāda to ka ir bjis PN marķieris
 					{
 						if(Arrays.asList(ident).contains(StringUtils.wordAfter(forChecking, word))				 //
 								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(forChecking, word))) // kad ir atrasts cits marķieris
@@ -258,7 +258,7 @@ public class EntryChecks
 								pnEndSym = 0;
 							}
 						}
-					}
+					}*/
 					if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
 					{
 						gramOpen = true; // ir bijis gramatikas marķieris
@@ -482,6 +482,9 @@ public class EntryChecks
 			bad.addNewEntry(entry, "Divi PI pēc kārtas, bez PN");
 		if (entry.contents.matches(".*\\sPN\\s((?!PI).)*\\sPN\\s.*"))
 			bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
+
+		if (entry.contents.matches(".*\\sPN\\s.*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?$)"))
+			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
 
 		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");

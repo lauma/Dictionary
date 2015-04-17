@@ -1,0 +1,71 @@
+<project name="Dictionary" default="clean-build" basedir=".">
+
+  <description>
+    Build file for Dictionary project
+  </description>
+  
+  <!-- set global properties for this build -->
+  <property name="main.src" location="src"/>
+  <property name="main.resources" location="resources"/>
+  <property name="out" location="out"/>
+  <property name="out.prod" location="out/production"/>
+  <property name="testsamples" location="testpiem"/>
+  <property name="lib"   location="lib"/>
+
+  <path id="project.class.path">
+    <fileset dir="lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${out.prod}"/>
+  </target>
+
+  <target name="compile" depends="init"
+          description="compile the source " >
+    <!-- Compile the java code from ${src} into ${out.build} -->
+    <javac encoding="UTF-8" includeantruntime="false" srcdir="${main.src}" destdir="${out.prod}">
+      <classpath refid="project.class.path" />
+  	</javac>
+  	
+  </target>
+
+  <target name="build" depends="compile"
+          description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${out.prod}"/>
+    <copy todir="${out.prod}">
+      <fileset dir="${main.resources}"/>
+    </copy>
+
+    <mkdir dir="${out.prod}/files"/>
+    <copy todir="${out.prod}/files">
+      <fileset dir="${testsamples}"/>
+    </copy>
+
+    <mkdir dir="${out.prod}/lib"/>
+    <copy todir="${out.prod}/lib">
+      <fileset dir="${lib}"/>
+    </copy>
+
+  </target>
+
+  <target name="zip" depends="build" description="compress distribution files">
+    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="files/*.doc,files/*.klu,files/*.xls,dic"/>
+  </target>
+	
+  <target name="clean"
+          description="clean up" >
+    <!-- Delete the ${out.build} and ${dist} directory trees -->
+    <delete dir="${out}"/>
+  </target>
+
+  <target name="clean-build" depends="clean,build,zip"
+          description="clean and generate the distribution" >
+  </target>
+
+</project>

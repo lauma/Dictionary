@@ -41,7 +41,7 @@ public class DictionaryCheckerUI
 		//Izveido sarakstu ar šķirkļiem ko navajag apskatīt
 		ExceptionList.getExceptData();
 		//Izveido sarakstu ar visām atsaucēm
-		ReferenceList refList = new ReferenceList("./files/prog files/zLI.doc");
+		ReferenceList refList = new ReferenceList("./files/saraksti/zLI.doc");
 
 		File[] listOfFiles = folder.listFiles();
 

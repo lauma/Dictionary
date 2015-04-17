@@ -110,7 +110,7 @@ public class Dictionary
 						EntryChecks.oblMarkers(entry, bad);
 
 						//Metode pārbauda vai aiz IN DS NS FS obligāti seko skaitlis
-						EntryChecks.inDsNsFsNumber(entry, bad);
+						EntryChecks.dsNsFsNumber(entry, bad);
 
 						//iekavu līdzsvars
 						EntryChecks.bracketing(entry, bad);
@@ -143,7 +143,7 @@ public class Dictionary
 							EntryChecks.ns(entry, bad);
 
 							//Metode, kas pārbauda piemērus -  PI
-							EntryChecks.pi(entry, bad);
+							EntryChecks.piPn(entry, bad);
 
 							//Metode, kas pārbauda Frazeoloģismus
 							EntryChecks.fs(entry, bad);

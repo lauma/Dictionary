@@ -127,11 +127,11 @@ public class EntryChecks
 				word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
 				if(StringUtils.countSpaces(forChecking) == 0)
 				{
-					word = forChecking.substring(0).trim(); // iegūts pirmais vārds virknē
+					word = forChecking.trim(); // iegūts pirmais vārds virknē
 				}
 				if(word.length() > 0)
 				{
-					if(word.equals("PI"))
+					/*if(word.equals("PI"))
 					{
 						if(pi == 0) // pārbauda vai nav bijis PI bez PN pa vidu pirms tam
 						{
@@ -151,7 +151,7 @@ public class EntryChecks
 						}
 						else
 							bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
-					}
+					}*/
 					if(word.equals("NO"))
 					{
 						no = 1;
@@ -453,9 +453,7 @@ public class EntryChecks
 					}
 				}
 				else
-				{
 					bad.addNewEntry(entry, "Nav norādītas atsauces"); // nav bijušas norādītas atsauces
-				}
 			}
 		}	
 	}
@@ -463,37 +461,38 @@ public class EntryChecks
 	/**
 	 * Pārbaudes šķirkļiem ar PI un PN
 	 */
-	public static void pi(Dictionary.Entry entry, BadEntries bad)
+	public static void piPn(Dictionary.Entry entry, BadEntries bad)
 	{
+		if (!entry.contents.matches(".*\\s(PI|PN)\\s.*"))
+			return; // Šīs pārbaudes nav attiecināmas uz šo šķirkli.
 
-		if(entry.contents.matches("^.*\\sPI\\s.*$")) // reg. izteiksme pārbauda vai ir PI
-		{
-			Matcher pi = Pattern.compile("\\sPI(?=\\s)").matcher(entry.contents);
-			int piCount = 0;
-			while (pi.find()) //tiek atrsti visi PI
-			{
-				piCount++;
-			}
-			Matcher pn = Pattern.compile("\\sPN(?=\\s)").matcher(entry.contents);
-			int pnCount = 0;
-			while (pn.find()) // tiek atrsti vis PN
-			{
-				pnCount++;
-			}
-			// Atsijaa tos, kam nesakriit PI un PN skaits.
-			if (piCount != pnCount)
-			{
-				bad.addNewEntry(entry, "Nesakrīt PI un PN skaits");
-			}
-		}
+		// Saskaita PI
+		Matcher pi = Pattern.compile("\\sPI(?=\\s)").matcher(entry.contents);
+		int piCount = 0;
+		while (pi.find()) piCount++;
+		Matcher pn = Pattern.compile("\\sPN(?=\\s)").matcher(entry.contents);
+		// Saskaita PN
+		int pnCount = 0;
+		while (pn.find()) pnCount++;
+		// Atsijaa tos, kam nesakriit PI un PN skaits.
+		if (piCount != pnCount)
+			bad.addNewEntry(entry, "Nesakrīt PI un PN skaits");
+
+		if (entry.contents.matches(".*\\sPI\\s((?!PN).)*\\sPI\\s.*"))
+			bad.addNewEntry(entry, "Divi PI pēc kārtas, bez PN");
+		if (entry.contents.matches(".*\\sPN\\s((?!PI).)*\\sPN\\s.*"))
+			bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
+
+		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
 
 		//Pārbauda vai PI sākas ar lielo burtu vai ciparu
-		if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "PI ")) 
+	/*	if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "PI "))
 				&& !Character.isDigit(StringUtils.nextCh(entry.contents, "PI "))
 				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "PI ")))
 		{
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
-		}
+		}*/
 	}
 
 	/**
@@ -603,6 +602,10 @@ public class EntryChecks
 	 */
 	public static void inNumber(Dictionary.Entry entry, Dictionary dict, int index)
 	{
+		// Pārbauda, vai nav IN vispār bez skaitļa.
+		if(!entry.contents.matches("^IN\\s\\d*\\s.*$") && entry.contents.matches("^IN\\s.*$"))
+			dict.bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
+
 		//Atsijaa ar sliktajiem indeksiem.
 		if(!dict.prevIN.containsKey(entry.name) && index != 0 && index != 1 ||
 				dict.prevIN.containsKey(entry.name) &&
@@ -724,12 +727,10 @@ public class EntryChecks
 	}
 	
 	/**
-	 * Pārbaude, vai aiz IN DS NS FS ir skaitļi.
+	 * Pārbaude, vai aiz DS, NS, FS ir skaitļi.
 	 */
-	public static void inDsNsFsNumber(Dictionary.Entry entry, BadEntries bad)
+	public static void dsNsFsNumber(Dictionary.Entry entry, BadEntries bad)
 	{
-		if(!entry.contents.matches("^IN\\s\\d*\\s.*$") && entry.contents.matches("^IN\\s.*$"))
-			bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
 
 		if(!entry.contents.matches("^..+\\sNS\\s\\d*\\s.*$") && entry.contents.matches("^..+\\sNS\\s.*$"))
 			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");

@@ -77,7 +77,7 @@ public class BadEntries
 		
 		public String toString()
 		{
-			String res = "(" + String.join(";", errors) + ")\t" + entry;
+			String res = "(" + String.join(". ", errors) + ".)\t" + entry;
 			return res;
 		}
 	}

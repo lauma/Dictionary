@@ -71,7 +71,7 @@ public class DictionaryCheckerUI
 				ext = listOfFiles[p].getName().substring(s+1);
 			}
 			//tiek apstrādāti tikai tie faili kuriem galā ir saīsinājums doc
-			if (listOfFiles[p].isFile() && ext.equals("doc")) 
+			if (listOfFiles[p].isFile() && ext.equals("doc") && !fileName.startsWith("~"))
 			{
 				// Inicē.
 				Dictionary dictFile = new Dictionary();

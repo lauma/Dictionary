@@ -20,25 +20,14 @@ public class ExceptionList
 	public static String[] exceptions;	// publisks klases mainīgais kas tiek
 										// izmantots neapskatāmo šķirkļu masīvam
 	
-	public static void getExceptData() //metode lai iegūtu datus par izņēmumu šķirkļiem
+	public static void getExceptData(String path) //metode lai iegūtu datus par izņēmumu šķirkļiem
 	throws IOException
 	{
-		// pārbaude vai ieejas fails eksistē
-		File testFile = new File("./files/prog files/exceptions.doc");
 
-		if(!testFile.exists())
-		{
-			System.out.println("Error - can't find file 'exceptions.doc'.\n" // paziņojums lietotājam
-					+ "Please put 'exceptions.doc' file in to 'prog files'!");
-			System.exit(0);
-			return;
-		}
-		
-		File excepFile = null;
+		File excepFile = new File(path);
 		FileInputStream Fis = null;
 		WordExtractor excepExtract = null;
 		// tiek norādīts ceļš uz avotu failu
-		excepFile = new File("./files/prog files/exceptions.doc");
 		Fis = new FileInputStream(excepFile.getAbsolutePath());
 		
 		HWPFDocument excepDoc=new HWPFDocument(Fis);

@@ -10,6 +10,8 @@ import lv.ailab.tezaurs.io.DocLoader;
 
 public class DictionaryToDicUI
 {
+	public static String inputDataPath = "./dati/";
+
 	protected static String splitPattern =
 			"\\s(?=(NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
@@ -18,17 +20,16 @@ public class DictionaryToDicUI
 	public static void main(String[] args)
 			throws IOException
 	{
-		// pārbaude vai ir izveidota mape "files".
-		File folder = new File("./files/");
-
+		// pārbaude vai ir izveidota datu failu mape.
+		File folder = new File(inputDataPath);
 		if(!folder.exists())
 		{
-			System.out.println("Error: can't find folder 'files'.\n"
-					+ "Please, create folder 'files'!");
+			System.out.println(
+					"Ups! Nevar atrast ieejas datu mapi \"" + inputDataPath + "\"!");
 			return;
 		}
 		
-		File dicFolder = new File("./files/dic/");
+		File dicFolder = new File(inputDataPath + "dic/");
 		if(!dicFolder.exists()) dicFolder.mkdirs();
 
 		File[] listOfFiles = folder.listFiles();
@@ -38,9 +39,9 @@ public class DictionaryToDicUI
 			if (!fileName.endsWith(".doc"))
 				continue;
 			BufferedWriter dicOut = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream("./files/dic/" +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
+					new FileOutputStream(inputDataPath + "dic/" +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
 			
-			String[] entities = DocLoader.loadDictionary("./files/" + fileName);
+			String[] entities = DocLoader.loadDictionary(inputDataPath + fileName);
 			for (String e : entities)
 			{
 				String[] elements = convertEntry(e);
@@ -49,10 +50,10 @@ public class DictionaryToDicUI
 			dicOut.flush();
 			dicOut.close();
 			
-			System.out.println(fileName + " [DONE]");
+			System.out.println(fileName + " [Pabeigts]");
 			
 		}
-		System.out.println("ALL FILES DONE!"); // paziņujoms par visu failu pabeigšanu
+		System.out.println("Viss pabeigts!"); // paziņujoms par visu failu pabeigšanu
 	}
 	
 

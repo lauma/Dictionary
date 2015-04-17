@@ -25,9 +25,9 @@ public class XlsOutputer
     protected String filePath;
     protected int fileCount;
     
-    public XlsOutputer()
+    public XlsOutputer(String path)
     {
-    	filePath = "./files/vardusk.xls";
+    	filePath = path;
         workbook  = new HSSFWorkbook();
         sheet =  workbook.createSheet("sheet_1");
         fileCount = 0;
@@ -40,16 +40,6 @@ public class XlsOutputer
     public void flush()
     throws IOException
     {
-    	//pārbaude vai ir atrodama mape "files"
-    	File testFolder = new File("./files");
-
-		if(!testFolder.exists())
-		{
-			System.out.println("Error - cant find folder 'files'.\n"
-					+ "Please, create folder 'files'!");
-			return;
-		}
-    	
     	// izejas plūmas izveidošana
     	FileOutputStream fileOut =  new FileOutputStream(filePath);
     	//datu ierakstīšana

@@ -42,8 +42,8 @@
       <fileset dir="${main.resources}"/>
     </copy>
 
-    <mkdir dir="${out.prod}/files"/>
-    <copy todir="${out.prod}/files">
+    <mkdir dir="${out.prod}/dati"/>
+    <copy todir="${out.prod}/dati">
       <fileset dir="${testsamples}"/>
     </copy>
 
@@ -55,7 +55,7 @@
   </target>
 
   <target name="zip" depends="build" description="compress distribution files">
-    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="files/*.doc,files/*.klu,files/*.xls,dic"/>
+    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="dati/*.doc,dati/*.klu,dati/*.xls" whenempty="create"/>
   </target>
 	
   <target name="clean"

@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-
-
-
-
+import lv.ailab.tezaurs.DictionaryCheckerUI;
 import lv.ailab.tezaurs.io.DocLoader;
 import lv.ailab.tezaurs.io.XlsOutputer;
 import lv.ailab.tezaurs.utils.StringUtils;
@@ -175,14 +172,14 @@ public class Dictionary
 			progress = ((float) i) / entries.length * 100;
 			if (i % 50 == 0)
 			{
-				System.out.print("File " + fileName + " [");//
+				System.out.print(fileName + " [");//
 				System.out.printf("%.1f", progress);		// Progresa izvade uz ekrāna
 				System.out.print("%]\r");					//
 			}
 		}
-		System.out.print("File " + fileName + " [postprocessing]\r"); // Progresa izvade uz ekrāna
+		System.out.print(fileName + " [...]\r"); // Progresa izvade uz ekrāna
 		GlobalChecks.singleIn1Check(this);
-		System.out.print("File " + fileName + " [DONE]\t\t\t\n"); //izvade uz ekrāna kad pabeigts fails
+		System.out.print(fileName + " [Pabeigts]\t\t\t\n"); //izvade uz ekrāna kad pabeigts fails
 
 	}
 	
@@ -199,7 +196,7 @@ public class Dictionary
 		table.sumTable();
 		table.flush();
 		// Kļūdaino šķirkļu izdrukāšana .klu failā.
-		if (!bad.isEmpty()) bad.printAll("./files/" + part1 + ".klu");
+		if (!bad.isEmpty()) bad.printAll(DictionaryCheckerUI.inputDataPath + part1 + ".klu");
 	}
 	
 	/**

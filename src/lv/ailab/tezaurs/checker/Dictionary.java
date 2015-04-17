@@ -3,8 +3,6 @@
  */
 package lv.ailab.tezaurs.checker;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -17,8 +15,7 @@ import lv.ailab.tezaurs.utils.Trio;
 
 
 //bibliotēka *.doc failu apstrādei
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
+
 
 /**
  * Dati par vienu vārdnīcas failu.
@@ -93,7 +90,7 @@ public class Dictionary
 				//šķirkļa vārda ieguve
 				//String entryName = entries[i].substring(0, entries[i].indexOf(" ")).trim();
 				// pārbaude vai šķirkļa vārds ir labs
-				if(!EntryChecks.isEntryNameGood(entry, bad))
+				if(EntryChecks.isEntryNameGood(entry, bad))
 				{
 					//Metode statistikas datu par šķirkli ievākšanai
 					stats.collectStats(entries[i]);
@@ -101,31 +98,31 @@ public class Dictionary
 					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 					{
 						//Metode, kās pārbauda simbolus šķirklī
-						EntryChecks.langCharCheck(entry, bad);
+						EntryChecks.langChars(entry, bad);
 
 						//Metode, kas pārbauda saīsinājumu un vietniekvārdu gramatiku
-						EntryChecks.grammarCheck(entry, bad);
+						EntryChecks.grammar(entry, bad);
 
 						//Metode kas pārbauda vai aiz @ seko pareizs skaitlis
-						EntryChecks.atCheck(entry, bad);
+						EntryChecks.at(entry, bad);
 
 						//Metode pārbauda vai ir visi nepieciešamie indikatori
-						EntryChecks.identCheck(entry, bad);
+						EntryChecks.oblMarkers(entry, bad);
 
 						//Metode pārbauda vai aiz IN DS NS FS obligāti seko skaitlis
-						EntryChecks.inDsNsFsNumberCheck(entry, bad);
+						EntryChecks.inDsNsFsNumber(entry, bad);
 
 						//iekavu līdzsvars
-						EntryChecks.checkBrackets(entry, bad);
+						EntryChecks.bracketing(entry, bad);
 
 						//pārbauda šķirkļus kas satur GR
-						EntryChecks.grCheck(entry, bad);
+						EntryChecks.gr(entry, bad);
 
 						//Metode kas iet cauri skjirklim pa vienam vārdam un sīki pārbauda visus iespējamos gadījumus
-						EntryChecks.wordByWordCheck(entry, bad);
+						EntryChecks.wordByWord(entry, bad);
 
 						//pārbauda sķirkļus kas satur RU
-						EntryChecks.ruCheck(entry, bad);			        			
+						EntryChecks.ru(entry, bad);
 
 						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz CD
 						EntryChecks.wordAfterCd(entry, entries, bad);
@@ -140,29 +137,29 @@ public class Dictionary
 							int index = StringUtils.findNumber(bezIn);
 
 							//Metode kas pārbauda likumsakarības ar IN 0 un IN 1
-							EntryChecks.inNumberCheck(entry, this, index);
+							EntryChecks.inNumber(entry, this, index);
 
 							//Metode, kas pārbauda nozīmes - NS
-							EntryChecks.nsCheck(entry, bad);
+							EntryChecks.ns(entry, bad);
 
 							//Metode, kas pārbauda piemērus -  PI
-							EntryChecks.piCheck(entry, bad);
+							EntryChecks.pi(entry, bad);
 
 							//Metode, kas pārbauda Frazeoloģismus
-							EntryChecks.fsCheck(entry, bad);
+							EntryChecks.fs(entry, bad);
 
 							//Metode, kas pārbauda Divdabjus
-							EntryChecks.dsCheck(entry, bad);
+							EntryChecks.ds(entry, bad);
 
 							//Metode, kas pārbauda atsauces - LI
-							EntryChecks.liCheck(entry, bad, references);
+							EntryChecks.li(entry, bad, references);
 
 							// ieliek bijushos vaardus ar IN sarakstā
 							prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
 						}
 						else
 						{
-							EntryChecks.notInUnityCheck(entry, bad, prevIN);
+							EntryChecks.notInUnity(entry, bad, prevIN);
 
 							prevIN.put(entry.name, Trio.of(-1, entry.fullText, entry.id));
 						}

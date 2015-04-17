@@ -15,29 +15,23 @@ import lv.ailab.tezaurs.utils.Trio;
  */
 public class EntryChecks
 {
-	
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda
 	 */
 	public static boolean isEntryNameGood(Dictionary.Entry entry, BadEntries bad)
 	{
-		boolean good = true; // mainīgais, kas apzīmē vai šķirklis ir labs
-
 		if(entry.name.equals(""))
 		{
 			bad.addNewEntry(entry, "Trūkst šķirkļa vārda");
+			return false;
 		}
-		else
-		{
-			good = false;
-		}
-		return good; // atgriež labs vai slikts
+		return true;
 	}
 
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
 	 */
-	public static void checkBrackets(Dictionary.Entry entry, BadEntries bad)
+	public static void bracketing(Dictionary.Entry entry, BadEntries bad)
 	{
 		int sqBrackets = 0; // atvērto kvadrātiekavu skaits
 		int circBrackets = 0; // atvērto apaļo iekavu skaits
@@ -69,20 +63,20 @@ public class EntryChecks
 			if(entry.contents.charAt(i) == '(') // atverošās iekavas
 			{
 				// Ja iekava nav pēdiņās.
-				if (!(i > 0 && i < entry.contents.length() - 1 &&
-						entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
+				//if (!(i > 0 && i < entry.contents.length() - 1 &&
+				//		entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
 					circBrackets++; //skaitītājs palielinās par 1
 			}
 			if(entry.contents.charAt(i) == ')') // aizverošās iekavas
 			{
 				// Ja iekava nav pēdiņās.
-				if (!(i > 0 && i < entry.contents.length() - 1 &&
-						entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
-				{
+				//if (!(i > 0 && i < entry.contents.length() - 1 &&
+				//		entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
+				//{
 					circBrackets--; //skaitītājs samazinās 1	
 					if (circBrackets < 0)
 						bad.addNewEntry(entry, "\')\' pirms atbilstošās \'(\'");
-				}
+				//}
 			}
 		}
 		if(sqBrackets > 0) //ja nav līdzsvars
@@ -95,7 +89,7 @@ public class EntryChecks
 	 * Vārdu pa vārdam pārbauda dažādas marķieru specifiskās lietas.
 	 * FIXME - iespējams, ka šo derētu kaut kā sacirst mazākos gabalos.
 	 */
-	public static void wordByWordCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void wordByWord(Dictionary.Entry entry, BadEntries bad)
 	{
 		//masīvs ar vārdņicas marķieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
@@ -307,7 +301,7 @@ public class EntryChecks
 	/**
 	 * Ar marķieri DS saistītās pārbaudes
 	 */
-	public static void dsCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void ds(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sDS\\s.*$")) // regulārā izteiksme pārbauda vai ir DS
 		{
@@ -355,7 +349,7 @@ public class EntryChecks
 	/**
 	 * Ar marķieri FS saistītās pārbaudes
 	 */
-	public static void fsCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void fs(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sFS\\s.*$")) // regulārā izteiksme pārbauda vai ir FS
 		{
@@ -430,7 +424,7 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā.
 	 */
-	public static void liCheck(Dictionary.Entry entry, BadEntries bad, ReferenceList references)
+	public static void li(Dictionary.Entry entry, BadEntries bad, ReferenceList references)
 	{
 		if (entry.contents.matches("^.*\\sLI\\s.*$")) // pārbauda vai ir LI
 		{		
@@ -467,9 +461,9 @@ public class EntryChecks
 	}
 	
 	/**
-	 * Pārbaudes šķirkļiem ar PI
+	 * Pārbaudes šķirkļiem ar PI un PN
 	 */
-	public static void piCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void pi(Dictionary.Entry entry, BadEntries bad)
 	{
 
 		if(entry.contents.matches("^.*\\sPI\\s.*$")) // reg. izteiksme pārbauda vai ir PI
@@ -505,7 +499,7 @@ public class EntryChecks
 	/**
 	 * Ar NS saistītās pārbaudes
 	 */
-	public static void nsCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void ns(Dictionary.Entry entry, BadEntries bad)
 	{
 		// Atsijaa tos, kam nav NS
 		if (!entry.contents.matches("^.*\\sNS\\s.*$")  && !entry.contents.matches("^..+\\s(DN|CD)\\s.*$"))
@@ -595,7 +589,7 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
 	 */
-	public static void notInUnityCheck (Dictionary.Entry entry, BadEntries bad, 
+	public static void notInUnity(Dictionary.Entry entry, BadEntries bad,
 			Map<String, Trio<Integer, String, Integer>> prevIN)
 	{
 		
@@ -607,7 +601,7 @@ public class EntryChecks
 	 * 0 vai 1 var būt, ja iepriekš šāds šķirkļa vārds nav bijis;
 	 * 2 vai vairāk var būt, ja iepriekš ir bijis par vienu mazāks.
 	 */
-	public static void inNumberCheck(Dictionary.Entry entry, Dictionary dict, int index)
+	public static void inNumber(Dictionary.Entry entry, Dictionary dict, int index)
 	{
 		//Atsijaa ar sliktajiem indeksiem.
 		if(!dict.prevIN.containsKey(entry.name) && index != 0 && index != 1 ||
@@ -657,7 +651,7 @@ public class EntryChecks
 	}
 	
 	// metode pārbaudavai ir visi nepieciešamie marķieri
-	public static void identCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void oblMarkers(Dictionary.Entry entry, BadEntries bad)
 	{
 		if(!entry.contents.matches("^.*CD\\s.*$") && !entry.contents.matches("^.*DN\\s.*$"))
 		{
@@ -694,7 +688,7 @@ public class EntryChecks
 	/**
 	 * Šķirkļa simbolu pārbaude.
 	 */
-	public static void langCharCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void langChars(Dictionary.Entry entry, BadEntries bad)
 	{
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
 		if(!entry.name.matches("^[\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\./’'\\(\\)\\<\\>-]*$"))
@@ -732,7 +726,7 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz IN DS NS FS ir skaitļi.
 	 */
-	public static void inDsNsFsNumberCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void inDsNsFsNumber(Dictionary.Entry entry, BadEntries bad)
 	{
 		if(!entry.contents.matches("^IN\\s\\d*\\s.*$") && entry.contents.matches("^IN\\s.*$"))
 			bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
@@ -777,7 +771,7 @@ public class EntryChecks
 	}
 	
 	//metode pārbauda vai ir ievērotas GR likumsakarības
-	public static void grCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void gr(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidū
 		{
@@ -817,7 +811,7 @@ public class EntryChecks
 	}
 
 	//metode pārbauda vai ir ievērotas RU likumsakarības
-	public static void ruCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void ru(Dictionary.Entry entry, BadEntries bad)
 	{
 		if(entry.contents.matches("^.*\\sRU\\s.*$"))
 		{
@@ -835,7 +829,7 @@ public class EntryChecks
 		}
 	}
 	// metode pārbauda vai aiz @2 un @5 marķieri ir pareizi konstruēti
-	public static void atCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void at(Dictionary.Entry entry, BadEntries bad)
 	{
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entry.contents.matches("^.*@.\\s.*$")
@@ -846,7 +840,7 @@ public class EntryChecks
 		}
 	}
 	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
-	public static void grammarCheck(Dictionary.Entry entry, BadEntries bad)
+	public static void grammar(Dictionary.Entry entry, BadEntries bad)
 	{
 		//Ja šķirkļa vārds beidzas ar punktu, tad vajadzētu pārbaudīt vai ir "GR @2 saīs. @5".
 		if(entry.name.charAt(entry.name.length() - 1) == '.' 

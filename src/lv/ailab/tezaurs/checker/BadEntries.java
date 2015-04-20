@@ -30,7 +30,11 @@ public class BadEntries
 	{
 		BadEntry e = register.get(entryID);
 		if (e == null) e = new BadEntry(entry, error);
-		else e.errors.add(error);
+		else
+		{
+			e.errors.add(error);
+			e.entry = entry;
+		}
 		register.put(entryID, e);
 	}
 	

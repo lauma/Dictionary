@@ -79,7 +79,7 @@ public class DictionaryToDicUI
 	{
 		for (String elem : entryElements)
 		{
-			out.write(elem);
+			out.write(elem.trim());
 			out.newLine();
 		}
 		out.newLine();

@@ -16,6 +16,11 @@ import lv.ailab.tezaurs.utils.Trio;
 public class EntryChecks
 {
 	/**
+	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
+	 * visi simboli, kas pieļaujami šķirkļa tekstā, izņemot izrunas laukus.
+	 */
+	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?()\\[\\]@ ’—\"„~`‘–\\-";
+	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda
 	 */
 	public static boolean isEntryNameGood(Dictionary.Entry entry, BadEntries bad)
@@ -94,22 +99,7 @@ public class EntryChecks
 		//masīvs ar vārdņicas marķieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
 		String word = " ";
-		String prevWord = "";
 		String[] gramIdent = {"NG","AG","PG","FG"}; // masīvs ar gramatikas marķieriem
-		// mainīgais ko izmanto PN beigu simbola pārbaudei
-		int pnEndSym = 0; 
-		// mainīgais ko izmanto NO beigu simbola pārbaudei
-		int noEndSym = 0; 
-		//mainīgais ko izmanto, lai pārbaudītu, vai pēc NO ir PN un vai pirms NG ir NO
-		int no = 0; 
-		// mainīgais ko izmanto lai pārbaudītu vai pirms PN ir NO
-		int pn = 0;
-		// vārda garuma mainīgais
-		int wordLen = 0;
-		//mainīgais ko izmanto, lai pārbaudītu vai pirms NG ir NO
-		int ng = 0;
-		//mainīgais ko izmanto, lai pārbaudītu vai pirms pirms PN ir PI
-		int pi = 0;
 		//mainīgais ko izmanto, lai pārbaudītu @2 un @5 līdzsvaru
 		int at = 0;
 		boolean gramOpen = false; // vai teksts ir tieši aiz gramtikas infikatora
@@ -123,7 +113,6 @@ public class EntryChecks
 		{
 			if(StringUtils.countSpaces(forChecking) > 0)
 			{
-				prevWord = word;
 				word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
 				if(StringUtils.countSpaces(forChecking) == 0)
 				{
@@ -131,23 +120,6 @@ public class EntryChecks
 				}
 				if(word.length() > 0)
 				{
-					if(word.equals("NO"))
-					{
-						no = 1;
-						noEndSym = 1;
-						ng = 0;
-					}
-					/*if(word.equals("NG"))  // pārbauda pirmd NG ir bijis NO
-					{
-						if(ng == 0 && no == 1)
-						{
-							ng = 1;
-							no = 0;
-						}
-						else
-							bad.addNewEntry(entry, "Pirms NG nav atrodams NO");
-							ng = 0;
-					}*/
 					if(word.contains("@2"))
 					{
 						open = true; 
@@ -200,34 +172,12 @@ public class EntryChecks
 						}
 					}
 					//beigu pieturzīmes pārbaude
-					wordLen = word.length();
-					if(noEndSym == 1) // norāda to ka ir bjis NO marķieris
-					{
-						if(Arrays.asList(ident).contains(StringUtils.wordAfter(forChecking, word))		//
-								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(forChecking, word)))// kad ir atrasts cits marķieris
-						{
-							//pārbauda vai vārds pirms tam satur beigu pieturzīmi
-							/*if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
-							{
-								bad.addNewEntry(entry, "NO nebeidzas ar pieturzīmi");
-							}
-							// pārbauda, vai nav tukšs NO, piemēram, NO . FS
-							else*/
-							/*if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
-							{
-								bad.addNewEntry(entry, "NO nesatur tekstu");
-							}*/
-							
-							noEndSym = 0;
-						}
-					}
 					if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
 					{
 						gramOpen = true; // ir bijis gramatikas marķieris
 						if(!StringUtils.wordAfter(forChecking, word).contains("@2")) // vai aiz marķiera ir @2
-						{
-							bad.addNewEntry(entry, "Aiz gramatikas marķiera jābūt @2");
-						}
+							bad.addNewEntry(entry,
+									"Aiz gramatikas marķiera jābūt @2");
 					}
 					if(gramOpen)
 					{
@@ -237,9 +187,7 @@ public class EntryChecks
 							gramOpen = false;
 						}
 						if(word.contains("@5")) // ja @5 tad gramatika noslēdzas
-						{
 							gramOpen = false;
-						}
 					}
 				}
 				//viens cikls beidzas
@@ -251,13 +199,9 @@ public class EntryChecks
 		}
 		// ja pēdējais vārds, tiek veiktas pārbaudes vai ir @5 galā
 		if(gramOpen)
-		{
 			bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
-		}
 		if(open && !forChecking.contains("@5"))
-		{
 			bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
-		}
 	}
 
 	/**
@@ -273,9 +217,7 @@ public class EntryChecks
 			String afterDs = entry.contents.substring(dsPlace).trim(); // iegūst to daļu kura ir aiz DS
 			// Atsijaa tos, kam par daudz DS
 			if (afterDs.matches("^.*\\sDS\\s.*$")) // pārbauda vai nav vēlviens DS
-			{
 				bad.addNewEntry(entry, "Par daudz DS");
-			}
 			else
 			{
 				int deCount = StringUtils.findNumber(afterDs); // skaitlis aiz DS norāda ciks ir DE
@@ -283,20 +225,14 @@ public class EntryChecks
 				Matcher de = dePat.matcher(entry.contents);
 				int	allDe = 0;
 				while(de.find()) //meklē vius DE pa visu šķirkli
-				{
 					allDe++;
-				}
 				de = dePat.matcher(afterDs);
 				int deAfterDs = 0;
 				while(de.find()) // meklē DE pēc DS
-				{
 					deAfterDs++;
-				}
 				// Atsijaa tos, kam nesakriit DE un DS skaiti.
 				if(deCount != allDe || deCount != deAfterDs) // pārbauda vai DE ir pareiz skaits
-				{
 					bad.addNewEntry(entry, "Nesakrīt DE un DS skaiti");
-				}
 			}
 		}
 		if(entry.contents.matches(".*\\sDS\\s(?![0-9]+\\s).*"))
@@ -319,9 +255,7 @@ public class EntryChecks
 
 			// Atsijaa tos, kam par daudz FS
 			if (afterFs.matches("^.*\\sFS\\s.*$")) // vai nav vēl kāds FS
-			{		
 				bad.addNewEntry(entry, "Pārāk daudzi FS");
-			}
 			else
 			{
 				int frCount = StringUtils.findNumber(afterFs); // skaitlis pēc FS norāda FR skaitu
@@ -331,42 +265,30 @@ public class EntryChecks
 				Matcher fr = frPat.matcher(entry.contents); 
 				int allFr = 0;
 				while(fr.find()) // meklē FR pa visu šķirkli
-				{
 					allFr++;
-				}
 				fr = frPat.matcher(afterFs);
 				int frAfterFs = 0;
 				while(fr.find()) // meklē FR pēc FS
-				{
 					frAfterFs++;
-				}
 
 				// Atsijaa tos, kam nesakriit FR skaiti.
 				if(frCount != allFr || frCount != frAfterFs)// ja skaits nav pareizs
-				{
 					bad.addNewEntry(entry, "Nesakrīt FR un FS skaits");
-				}
 				else
 				{
 					Pattern fnPat = Pattern.compile("\\sFN(?=\\s)"); 
 					Matcher fn = fnPat.matcher(entry.contents); 
 					int allFn = 0;
 					while(fn.find()) // meklē FN pa šķirkli
-					{
 						allFn++;
-					}
 					fn = fnPat.matcher(afterFs); 
 					int fnAfterFs = 0;
 					while(fn.find()) // meklē FN pēc FS
-					{
 						fnAfterFs++;
-					}
 
 					// Atsijaa tos, kam nesakriit FR un FN skaiti. var būt  FN <= FR
 					if(fnCount != allFn || fnCount != fnAfterFs)
-					{
 						bad.addNewEntry(entry, "Nesakrīt FR un FN skaits");
-					}
 				}
 			}
 		}
@@ -391,9 +313,7 @@ public class EntryChecks
 
 			// Atsijaa tos, kam par daudz LI
 			if (AfterLI.matches("^.*\\sLI\\s.*$"))
-			{	
 				bad.addNewEntry(entry, "Pārāk daudzi LI");
-			}
 			else
 			{
 				if(AfterLI.contains("["))
@@ -459,9 +379,7 @@ public class EntryChecks
 
 			// Atsijaa tos, kam par daudz NS
 			if (afterNs.matches("^.*\\sNS\\s.*$"))
-			{		
 				bad.addNewEntry(entry, "Pārāk daudzi NS");
-			}
 			else
 			{
 				int noCount = StringUtils.findNumber(afterNs); // skaitlis pēc NS - norāda NO skaitu
@@ -486,20 +404,14 @@ public class EntryChecks
 					Matcher ng = ngPat.matcher(entry.contents);
 					int allNG = 0;
 					while (ng.find()) // atrod visus NG
-					{
 						allNG++;
-					}
 					ng = ngPat.matcher(afterNs); // atrod visus NG pēc NS
 					int ngAfterNs = 0;
 					while (ng.find())
-					{
 						ngAfterNs++;
-					}
 					// Atsijaa tos, NG skaits ir lielāks par NO skaitu
 					if (noCount < allNG || noCount < ngAfterNs)
-					{
 						bad.addNewEntry(entry, "Pārāk daudzi NG");
-					}
 				}
 			}
 		}
@@ -582,20 +494,14 @@ public class EntryChecks
 						break;
 					}
 					if(brPoint > 4)
-					{
 						break;
-					}
 				}
 				brPoint++;
 			}
 			if(!good_0 || dict.prevIN.containsKey(entry.name))
-			{
 				dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
-			}
 			if(entry.contents.matches("^.*\\s(CD|DN)\\s.*$")) // ja IN0 tad nevar būt CD un DN
-			{
 				dict.bad.addNewEntry(entry, "Ir gan IN 0, gan CD vai DN");
-			}
 		}
 	}
 
@@ -633,18 +539,22 @@ public class EntryChecks
 	public static void langChars(Dictionary.Entry entry, BadEntries bad)
 	{
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
-		if(!entry.name.matches("^[\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\./’'\\(\\)\\<\\>-]*$"))
+		if(!entry.name.matches("[A-Za-z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\./’'\\(\\)\\<\\>-]*"))
 			bad.addNewEntry(entry, "Šķirkļa vārds satur neparedzētus simbolus");
 		//Parbauda vai skjirkla info nesatur nepaziistami simboli
-		if(!entry.contents.matches("^[\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]*$") 
-				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
+		if(!entry.contents.matches("[" +contentSymbolRegexp + "]*"+
+				"(\\sRU\\s\\[[^]]+\\]\\s)?[" + contentSymbolRegexp + "]*"))
 		{
 			//sliktos simbolus aizvieto vieglākai atrašanai
-			String edited = entry.fullText.replaceAll(
-					"[^\\wĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\p{Punct}\\p{Space}\\’\\—\"„~`‘\\–]", "?");
+			String edited = "";
+			if (entry.contents.matches(".*\\sRU\\s\\[[^]]+\\]\\s.*"))
+				edited = entry.contents.replaceAll("\\sRU\\s\\[[^]]+\\]", " RU [..]" );
+			edited = entry.name + " " + entry.contents.replaceAll(
+					"[^" + contentSymbolRegexp + "]", "?");
 			bad.addNewEntryFromString(
 					entry.id, edited, "Šķirkļa teksts satur neparedzētus simbolus");
 		}
+
 		//ja satur Ō pārbauda vai tas ir lībiešu vai latgļu vārds
 		if((entry.fullText.contains("ō") || entry.fullText.contains("Ō"))
 				&& !entry.contents.matches("^.*\\s(latg|līb)\\.\\s.*$")

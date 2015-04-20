@@ -55,7 +55,7 @@
   </target>
 
   <target name="zip" depends="build" description="compress distribution files">
-    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="dati/*.doc,dati/*.klu,dati/*.xls" whenempty="create"/>
+    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="dati/*.doc,dati/*.klu,dati/*.xls,dati/*.tmp" whenempty="create"/>
   </target>
 	
   <target name="clean"

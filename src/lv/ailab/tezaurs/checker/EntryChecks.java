@@ -439,9 +439,8 @@ public class EntryChecks
 		if (entry.contents.matches(".*\\sPN\\s((?!PI).)*\\sPN\\s.*"))
 			bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
 
-		if (entry.contents.matches(".*\\sPN\\s.*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?$)"))
+		if (entry.contents.matches(".*\\sPN\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
-
 		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
 
@@ -459,12 +458,7 @@ public class EntryChecks
 	 */
 	public static void nsNoNgAn(Dictionary.Entry entry, BadEntries bad)
 	{
-		// Atsijaa tos, kam nav NS
-		if (!entry.contents.matches("^.*\\sNS\\s.*$")  && !entry.contents.matches("^..+\\s(DN|CD)\\s.*$"))
-		{
-			bad.addNewEntry(entry, "Trūkst NS");
-		}
-		else if (entry.contents.matches("^.*\\sNS\\s.*$"))
+		if (entry.contents.matches("^.*\\sNS\\s.*$"))
 		{
 			Matcher ns = Pattern.compile("\\sNS\\s").matcher(entry.contents);
 			ns.find(); // atrod NS šķirkļī
@@ -520,15 +514,17 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\sNG\\s((?!NO).)*\\sNG\\s.*"))
 			bad.addNewEntry(entry, "Divi NG pēc kārtas, bez NO");
-		if (entry.contents.matches("((?!NO).)*\\sNG\\s.*"))
+		if (entry.contents.matches("((?!\\sNO\\s).)*\\sNG\\s.*"))
 			bad.addNewEntry(entry, "Pirms pirmā NG nav atrodams NO");
+		if (entry.contents.matches(".*\\s(?!NO)" + Markers.regexp + "\\s((?!\\s" + Markers.regexp +"\\s).)*\\sNG\\s.*"))
+			bad.addNewEntry(entry, "NG seko pēc identifikatora, kas nav NO");
 
 		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+\\s).*"))
 			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
 
 		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
-		if (entry.contents.matches(".*\\sNO\\s.*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?$)"))
+		if (entry.contents.matches(".*\\sNO\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "NO nebeidzas ar pieturzīmi");
 	}
 
@@ -608,40 +604,33 @@ public class EntryChecks
 			}
 		}
 	}
-	
-	// metode pārbaudavai ir visi nepieciešamie marķieri
+
+	/**
+	 * Šeit ir pārbaudes par to, kuriem marķieriem vai to kombinācijām noteikti
+	 * ir jābūt.
+	 */
 	public static void obligatoryMarkers(Dictionary.Entry entry, BadEntries bad)
 	{
-		if(!entry.contents.matches("^.*CD\\s.*$") && !entry.contents.matches("^.*DN\\s.*$"))
+		if(!entry.contents.matches(".*\\s(CD|DN)\\s.*"))
 		{
-			if(!entry.contents.matches("^IN\\s.*$"))
+			if(!entry.contents.matches("IN\\s.*"))
 				bad.addNewEntry(entry, "Nav IN indikatora");
-
-			if(!entry.contents.matches("^..+\\sNS\\s.*$"))
+			if(!entry.contents.matches(".*\\sNS\\s.*"))
 				bad.addNewEntry(entry, "Nav NS indikatora");
-
-			if(!entry.contents.matches("^..+\\sFS\\s.*$"))
+			if(!entry.contents.matches(".*\\sFS\\s.*"))
 				bad.addNewEntry(entry, "Nav FS indikatora");
-
-			if(!entry.contents.matches("^..+\\sDS\\s.*$"))
+			if(!entry.contents.matches(".*\\sDS\\s.*"))
 				bad.addNewEntry(entry, "Nav DS indikatora");
-
-			if(!entry.contents.matches("^..+\\sNO\\s.*$"))
-				bad.addNewEntry(entry, "Nav neviena NO");
-
+			if(!entry.contents.matches(".*\\sNO\\s.*"))
+				bad.addNewEntry(entry, "Nav neviena NO indikatora");
 		}
 		// pārbauda vai CD un DN nav vienlaicīgi
-		if (entry.contents.matches("^..+\\sCD\\s.*$") && entry.contents.matches("^..+\\sDN\\s.*$")) 
-		{
+		if (entry.contents.matches(".*\\sCD\\s.*") && entry.contents.matches(".*\\sDN\\s.*"))
 			bad.addNewEntry(entry, "DN un CD vienlaicīgi");
-		}
-		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
-		if (entry.contents.matches("^..+\\sCD\\s.*$") || entry.contents.matches("^..+\\sDN\\s.*$"))
-		{
-			if (entry.contents.matches ("^.*\\s(NS|NO)\\s.*$"))
-				bad.addNewEntry(entry, "Ja ir CD vai DN, nedrīkst būt NS vai NO");
 
-		}
+		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
+		if (entry.contents.matches(".*\\s(CD|DN)\\s.*") && entry.contents.matches(".*\\s(NS|NO)\\s.*"))
+				bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
 	}
 	
 	/**

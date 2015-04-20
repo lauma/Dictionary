@@ -213,10 +213,10 @@ public class EntryChecks
 							}
 							// pārbauda, vai nav tukšs NO, piemēram, NO . FS
 							else*/
-							if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
+							/*if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
 							{
 								bad.addNewEntry(entry, "NO nesatur tekstu");
-							}
+							}*/
 							
 							noEndSym = 0;
 						}
@@ -443,18 +443,10 @@ public class EntryChecks
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
 		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
-
-		//Pārbauda vai PI sākas ar lielo burtu vai ciparu
-	/*	if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "PI "))
-				&& !Character.isDigit(StringUtils.nextCh(entry.contents, "PI "))
-				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "PI ")))
-		{
-			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
-		}*/
 	}
 
 	/**
-	 * Ar NS, NO, NG un AN saistītās pārbaudes
+	 * Ar NS, NO, NG saistītās pārbaudes
 	 */
 	public static void nsNoNgAn(Dictionary.Entry entry, BadEntries bad)
 	{
@@ -524,6 +516,8 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
+		if (entry.contents.matches(".*\\sNO\\s\\P{L}*?\\s" + Markers.regexp + ".*"))
+			bad.addNewEntry(entry, "NO nesatur tekstu");
 		if (entry.contents.matches(".*\\sNO\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "NO nebeidzas ar pieturzīmi");
 	}

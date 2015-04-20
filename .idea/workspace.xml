@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,12 +50,12 @@
       <file leaf-file-name="EntryChecks.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6102041">
-              <caret line="442" column="65" selection-start-line="442" selection-start-column="65" selection-end-line="442" selection-end-column="65" />
+            <state vertical-scroll-proportion="-1.4571428">
+              <caret line="218" column="31" selection-start-line="218" selection-start-column="31" selection-end-line="218" selection-end-column="31" />
               <folding>
-                <marker date="1429550366073" expanded="true" signature="4117:8141" placeholder="{...}" />
-                <marker date="1429550366073" expanded="false" signature="4461:4694" placeholder="..." />
-                <marker date="1429550366073" expanded="false" signature="6576:6891" placeholder="..." />
+                <marker date="1429552257359" expanded="true" signature="4117:8145" placeholder="{...}" />
+                <marker date="1429552257359" expanded="false" signature="4461:4694" placeholder="..." />
+                <marker date="1429552257359" expanded="false" signature="6576:6891" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -133,6 +132,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -242,7 +242,6 @@
       <pane id="Scope">
         <subPane subId="Changed Files" />
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -399,11 +398,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1484992" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1711569" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1983871" sideWeight="0.4853229" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1983871" sideWeight="0.5146771" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1983871" sideWeight="0.4853229" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1983871" sideWeight="0.5146771" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16774194" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1983871" sideWeight="0.5146771" order="4" side_tool="false" content_ui="combo" x="518" y="128" width="246" height="511" />
+      <window_info id="Favorites" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1983871" sideWeight="0.5146771" order="6" side_tool="false" content_ui="combo" x="518" y="128" width="246" height="511" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -471,9 +470,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1429550366073" expanded="true" signature="4117:8141" placeholder="{...}" />
-            <marker date="1429550366073" expanded="false" signature="4461:4694" placeholder="..." />
-            <marker date="1429550366073" expanded="false" signature="6576:6891" placeholder="..." />
+            <marker date="1429552257359" expanded="true" signature="4117:8145" placeholder="{...}" />
+            <marker date="1429552257359" expanded="false" signature="4461:4694" placeholder="..." />
+            <marker date="1429552257359" expanded="false" signature="6576:6891" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -512,9 +511,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="243" column="18" selection-start-line="243" selection-start-column="18" selection-end-line="260" selection-end-column="21" />
           <folding>
-            <marker date="1429550366073" expanded="true" signature="4117:8141" placeholder="{...}" />
-            <marker date="1429550366073" expanded="false" signature="4461:4694" placeholder="..." />
-            <marker date="1429550366073" expanded="false" signature="6576:6891" placeholder="..." />
+            <marker date="1429552257359" expanded="true" signature="4117:8145" placeholder="{...}" />
+            <marker date="1429552257359" expanded="false" signature="4461:4694" placeholder="..." />
+            <marker date="1429552257359" expanded="false" signature="6576:6891" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -523,6 +522,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="82" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="82" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -580,13 +580,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDicUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7245902">
-          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryCheckerUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -608,14 +601,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDicUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90204084">
+          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6102041">
-          <caret line="442" column="65" selection-start-line="442" selection-start-column="65" selection-end-line="442" selection-end-column="65" />
+        <state vertical-scroll-proportion="-1.4571428">
+          <caret line="218" column="31" selection-start-line="218" selection-start-column="31" selection-end-line="218" selection-end-column="31" />
           <folding>
-            <marker date="1429550366073" expanded="true" signature="4117:8141" placeholder="{...}" />
-            <marker date="1429550366073" expanded="false" signature="4461:4694" placeholder="..." />
-            <marker date="1429550366073" expanded="false" signature="6576:6891" placeholder="..." />
+            <marker date="1429552257359" expanded="true" signature="4117:8145" placeholder="{...}" />
+            <marker date="1429552257359" expanded="false" signature="4461:4694" placeholder="..." />
+            <marker date="1429552257359" expanded="false" signature="6576:6891" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -97,6 +97,8 @@ public class Dictionary
 					//paŗabaude vai nav izņēmums
 					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 					{
+						EntryChecks.hasContents(entry, bad);
+
 						//Metode, kās pārbauda simbolus šķirklī
 						EntryChecks.langChars(entry, bad);
 

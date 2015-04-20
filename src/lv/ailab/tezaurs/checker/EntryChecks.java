@@ -21,7 +21,7 @@ public class EntryChecks
 	 */
 	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?()\\[\\]@ ’—\"„~`‘–\\-";
 	/**
-	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda
+	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
 	public static boolean isEntryNameGood(Dictionary.Entry entry, BadEntries bad)
 	{
@@ -33,6 +33,14 @@ public class EntryChecks
 		return true;
 	}
 
+	/**
+	 * Pārbaude vai šķirklim netrūkst satura.
+	 */
+	public static void hasContents (Dictionary.Entry entry, BadEntries bad)
+	{
+		if (entry.contents.equals("") || entry.contents.length() < 4)
+			bad.addNewEntry(entry, "Trūkst šķirkļa satura");
+	}
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
 	 */

@@ -59,8 +59,6 @@ public class DictionaryToDicUI
 
 	/**
 	 * Sadala šķirkli elementos un veic citas normalizācijas.
-	 * @param entry
-	 * @return
 	 */
 	protected static String[] convertEntry(String entry)
 	{
@@ -75,9 +73,6 @@ public class DictionaryToDicUI
 	/**
 	 * Elementos sadalīto šķirkli izdrukā dotajā izejas failā, pabeidzot to ar
 	 * tukšu rindu.
-	 * @param entryElements
-	 * @param out
-	 * @throws IOException
 	 */
 	protected static void printEntry(String[] entryElements, BufferedWriter out)
 			throws IOException

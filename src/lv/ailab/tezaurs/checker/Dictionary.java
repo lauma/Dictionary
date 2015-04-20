@@ -107,10 +107,7 @@ public class Dictionary
 						EntryChecks.at(entry, bad);
 
 						//Metode pārbauda vai ir visi nepieciešamie indikatori
-						EntryChecks.oblMarkers(entry, bad);
-
-						//Metode pārbauda vai aiz IN DS NS FS obligāti seko skaitlis
-						EntryChecks.dsNsFsNumber(entry, bad);
+						EntryChecks.obligatoryMarkers(entry, bad);
 
 						//iekavu līdzsvars
 						EntryChecks.bracketing(entry, bad);
@@ -140,16 +137,17 @@ public class Dictionary
 							EntryChecks.inNumber(entry, this, index);
 
 							//Metode, kas pārbauda nozīmes - NS
-							EntryChecks.ns(entry, bad);
+							EntryChecks.nsNoNgAn(entry, bad);
+							EntryChecks.an(entry, bad);
 
 							//Metode, kas pārbauda piemērus -  PI
 							EntryChecks.piPn(entry, bad);
 
 							//Metode, kas pārbauda Frazeoloģismus
-							EntryChecks.fs(entry, bad);
+							EntryChecks.fsFr(entry, bad);
 
 							//Metode, kas pārbauda Divdabjus
-							EntryChecks.ds(entry, bad);
+							EntryChecks.dsDe(entry, bad);
 
 							//Metode, kas pārbauda atsauces - LI
 							EntryChecks.li(entry, bad, references);

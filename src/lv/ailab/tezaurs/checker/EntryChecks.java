@@ -131,34 +131,13 @@ public class EntryChecks
 				}
 				if(word.length() > 0)
 				{
-					/*if(word.equals("PI"))
-					{
-						if(pi == 0) // pārbauda vai nav bijis PI bez PN pa vidu pirms tam
-						{
-							pi = 1;
-							pn = 0;
-						}
-						else
-							bad.addNewEntry(entry, "Divi PI pēc kārtas, bez PN");
-					}
-					if(word.equals("PN")) // pārbauda vai nav bijis PN bez PI pa vidu, pirms tam
-					{
-						if(pn == 0)
-						{
-							pn = 1;
-							pnEndSym = 1;
-							pi = 0;
-						}
-						else
-							bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
-					}*/
 					if(word.equals("NO"))
 					{
 						no = 1;
 						noEndSym = 1;
 						ng = 0;
 					}
-					if(word.equals("NG"))  // pārbauda pirmd NG ir bijis NO
+					/*if(word.equals("NG"))  // pārbauda pirmd NG ir bijis NO
 					{
 						if(ng == 0 && no == 1)
 						{
@@ -168,7 +147,7 @@ public class EntryChecks
 						else
 							bad.addNewEntry(entry, "Pirms NG nav atrodams NO");
 							ng = 0;
-					}						
+					}*/
 					if(word.contains("@2"))
 					{
 						open = true; 
@@ -228,12 +207,13 @@ public class EntryChecks
 								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(forChecking, word)))// kad ir atrasts cits marķieris
 						{
 							//pārbauda vai vārds pirms tam satur beigu pieturzīmi
-							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
+							/*if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?' && word.charAt(wordLen -1) != '!')
 							{
 								bad.addNewEntry(entry, "NO nebeidzas ar pieturzīmi");
 							}
 							// pārbauda, vai nav tukšs NO, piemēram, NO . FS
-							else if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
+							else*/
+							if (word.matches("^[^\\p{L}]*$") && (prevWord.trim().equals("") || prevWord.trim().equals("NO")))
 							{
 								bad.addNewEntry(entry, "NO nesatur tekstu");
 							}
@@ -241,24 +221,6 @@ public class EntryChecks
 							noEndSym = 0;
 						}
 					}
-				/*	if(pnEndSym == 1) // norāda to ka ir bjis PN marķieris
-					{
-						if(Arrays.asList(ident).contains(StringUtils.wordAfter(forChecking, word))				 //
-								|| Arrays.asList(gramIdent).contains(StringUtils.wordAfter(forChecking, word))) // kad ir atrasts cits marķieris
-						{
-							//pārbauda vai vārds pirms tam satur beigu pieturzīmi
-							if(word.charAt(wordLen -1) != '.' && word.charAt(wordLen -1) != '?'
-									&& word.charAt(wordLen -1) != '!')
-							{
-								bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
-								pnEndSym = 0;
-							}
-							else
-							{
-								pnEndSym = 0;
-							}
-						}
-					}*/
 					if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
 					{
 						gramOpen = true; // ir bijis gramatikas marķieris
@@ -299,9 +261,9 @@ public class EntryChecks
 	}
 
 	/**
-	 * Ar marķieri DS saistītās pārbaudes
+	 * Ar marķieriem DS, DE saistītās pārbaudes.
 	 */
-	public static void ds(Dictionary.Entry entry, BadEntries bad)
+	public static void dsDe(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sDS\\s.*$")) // regulārā izteiksme pārbauda vai ir DS
 		{
@@ -337,19 +299,16 @@ public class EntryChecks
 				}
 			}
 		}
-		//Pārbauda vai DE sākas ar mazo burtu
-		if(Character.isUpperCase(StringUtils.nextCh(entry.contents, "DE ")) 
-				&& Character.isDigit(StringUtils.nextCh(entry.contents, "DE "))
-				&& StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "DE ")))
-		{
-			bad.addNewEntry(entry, "DE nesākas ar mazo burtu");
-		}
+		if(entry.contents.matches(".*\\sDS\\s(?![0-9]+\\s).*"))
+			bad.addNewEntry(entry, "Aiz DS neseko skaitlis");
+		if (entry.contents.matches(".*\\sDE\\s[^a-zāčēģīķļņŗšūž].*"))
+			bad.addNewEntry(entry, "DE jāsākas ar mazo burtu");
 	}
 
 	/**
-	 * Ar marķieri FS saistītās pārbaudes
+	 * Ar marķieriem FS, FR saistītās pārbaudes.
 	 */
-	public static void fs(Dictionary.Entry entry, BadEntries bad)
+	public static void fsFr(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sFS\\s.*$")) // regulārā izteiksme pārbauda vai ir FS
 		{
@@ -412,13 +371,10 @@ public class EntryChecks
 			}
 		}
 
-		//Pārbauda vai FR sākas ar lielo burtu
-		if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "FR ")) 
-				&& !Character.isDigit(StringUtils.nextCh(entry.contents, "FR "))
-				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "FR ")))
-		{
+		if(entry.contents.matches(".*\\sFS\\s(?![0-9]+\\s).*"))
+			bad.addNewEntry(entry, "Aiz FS neseko skaitlis");
+		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "FR jāsākas ar lielo burtu vai skaitli");
-		}	
 	}
 
 	/**
@@ -499,9 +455,9 @@ public class EntryChecks
 	}
 
 	/**
-	 * Ar NS saistītās pārbaudes
+	 * Ar NS, NO, NG un AN saistītās pārbaudes
 	 */
-	public static void ns(Dictionary.Entry entry, BadEntries bad)
+	public static void nsNoNgAn(Dictionary.Entry entry, BadEntries bad)
 	{
 		// Atsijaa tos, kam nav NS
 		if (!entry.contents.matches("^.*\\sNS\\s.*$")  && !entry.contents.matches("^..+\\s(DN|CD)\\s.*$"))
@@ -526,27 +482,18 @@ public class EntryChecks
 				Pattern noPat = Pattern.compile("\\sNO\\s");
 				// pārbuda vai skaitlis pēc  NS ir lielāk par 0
 				if(noCount < 1)
-				{
 					bad.addNewEntry(entry, "NS jābūt lielākam par 0");
-				}
 				Matcher no = noPat.matcher(entry.contents);
 				int allNo = 0;
 				while (no.find()) // atrod visus NO šķirklī
-				{
-					allNo++; 
-				}
+					allNo++;
 				no = noPat.matcher(afterNs); 
 				int noAfterNs = 0;
 				while (no.find()) // atrod visus NO pēc NS
-				{
 					noAfterNs++;
-				}
 				// Atsijā tos, kam nesakrīt NO skaiti.
 				if(noCount != allNo || noCount != noAfterNs)
-				{
 					bad.addNewEntry(entry, "Nesakrīt NO skaiti");
-
-				}
 				else
 				{
 					Pattern ngPat = Pattern.compile("\\sNG(?=\\s)");
@@ -571,26 +518,32 @@ public class EntryChecks
 			}
 		}
 
-		//Pārbauda vai NO sākas ar lielo burtu vai ciparu
-		if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "NO ")) 
-				&& !Character.isDigit(StringUtils.nextCh(entry.contents, "NO "))
-				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "NO ")))
-		{
-			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
-		}
+		if (entry.contents.matches(".*\\sNG\\s((?!NO).)*\\sNG\\s.*"))
+			bad.addNewEntry(entry, "Divi NG pēc kārtas, bez NO");
+		if (entry.contents.matches("((?!NO).)*\\sNG\\s.*"))
+			bad.addNewEntry(entry, "Pirms pirmā NG nav atrodams NO");
 
-		//Pārbauda vai AN sākas ar lielo burtu vai ciparu
-		if(Character.isLowerCase(StringUtils.nextCh(entry.contents, "AN ")) 
-				&& !Character.isDigit(StringUtils.nextCh(entry.contents, "AN "))
-				&& !StringUtils.isBalticUpper(StringUtils.nextCh(entry.contents, "AN ")))
-		{
-			bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
-		}
+		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+\\s).*"))
+			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
+
+		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
+		if (entry.contents.matches(".*\\sNO\\s.*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?$)"))
+			bad.addNewEntry(entry, "NO nebeidzas ar pieturzīmi");
 	}
-	
+
 	/**
-	 * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
+	 * Ar AN saistītās pārbaudes
 	 */
+	public static void an(Dictionary.Entry entry, BadEntries bad)
+	{
+		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+			bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
+	}
+
+	/**
+     * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
+     */
 	public static void notInUnity(Dictionary.Entry entry, BadEntries bad,
 			Map<String, Trio<Integer, String, Integer>> prevIN)
 	{
@@ -606,7 +559,7 @@ public class EntryChecks
 	public static void inNumber(Dictionary.Entry entry, Dictionary dict, int index)
 	{
 		// Pārbauda, vai nav IN vispār bez skaitļa.
-		if(!entry.contents.matches("^IN\\s\\d*\\s.*$") && entry.contents.matches("^IN\\s.*$"))
+		if(entry.contents.matches("IN\\s(?![0-9]+\\s).*"))
 			dict.bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
 
 		//Atsijaa ar sliktajiem indeksiem.
@@ -657,7 +610,7 @@ public class EntryChecks
 	}
 	
 	// metode pārbaudavai ir visi nepieciešamie marķieri
-	public static void oblMarkers(Dictionary.Entry entry, BadEntries bad)
+	public static void obligatoryMarkers(Dictionary.Entry entry, BadEntries bad)
 	{
 		if(!entry.contents.matches("^.*CD\\s.*$") && !entry.contents.matches("^.*DN\\s.*$"))
 		{
@@ -727,23 +680,6 @@ public class EntryChecks
 		{
 			bad.addNewEntry(entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
 		}
-	}
-	
-	/**
-	 * Pārbaude, vai aiz DS, NS, FS ir skaitļi.
-	 */
-	public static void dsNsFsNumber(Dictionary.Entry entry, BadEntries bad)
-	{
-
-		if(!entry.contents.matches("^..+\\sNS\\s\\d*\\s.*$") && entry.contents.matches("^..+\\sNS\\s.*$"))
-			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
-
-		if(!entry.contents.matches("^..+\\sDS\\s\\d*.*$") && entry.contents.matches("^..+\\sDS\\s.*$"))
-			bad.addNewEntry(entry, "Aiz DS neseko skaitlis");
-
-		if(!entry.contents.matches("^..+\\sFS\\s\\d*\\s.*$") && entry.contents.matches("^..+\\sFS\\s.*$"))
-			bad.addNewEntry(entry, "Aiz FS neseko skaitlis");
-
 	}
 	
 	/**

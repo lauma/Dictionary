@@ -139,7 +139,7 @@ public class Dictionary
 							EntryChecks.inNumber(entry, this, index);
 
 							//Metode, kas pārbauda nozīmes - NS
-							EntryChecks.nsNoNgAn(entry, bad);
+							EntryChecks.nsNoNg(entry, bad);
 							EntryChecks.an(entry, bad);
 
 							//Metode, kas pārbauda piemērus -  PI

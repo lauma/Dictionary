@@ -19,12 +19,12 @@ public class EntryChecks
 	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
 	 * visi simboli, kas pieļaujami šķirkļa tekstā, izņemot izrunas laukus.
 	 */
-	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?()\\[\\]@'<>~^ ’—\"„~`‘–\\-";
+	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?\\(\\)\\[\\]@'\"<>~^ —/%=~–\\-";
 	/**
 	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
 	 * visi simboli, kas pieļaujami šķirkļavārdā.
 	 */
-	public static String nameSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ./’'()<>\\-";
+	public static String nameSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ./'\\(\\)<>\\-";
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
@@ -140,13 +140,9 @@ public class EntryChecks
 								bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
 						}
 						if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
-						{
 							at = 2;
-						}
 						else
-						{
 							bad.addNewEntry(entry, "Divi @2 pēc kārtas");
-						}
 					}
 					if(word.contains("@5"))
 					{
@@ -296,9 +292,12 @@ public class EntryChecks
 			}
 		}
 
+		if (entry.contents.matches(".*\\s(?!FR)" + Markers.regexp + "\\s((?!\\s" + Markers.regexp +"\\s).)*\\sFG\\s.*"))
+			bad.addNewEntry(entry, "FG seko pēc identifikatora, kas nav FR");
+
 		if(entry.contents.matches(".*\\sFS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz FS neseko skaitlis");
-		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
+		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
 			bad.addNewEntry(entry, "FR jāsākas ar lielo burtu vai skaitli");
 	}
 
@@ -364,14 +363,14 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\sPN\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
-		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
+		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
 	}
 
 	/**
 	 * Ar NS, NO, NG saistītās pārbaudes
 	 */
-	public static void nsNoNgAn(Dictionary.Entry entry, BadEntries bad)
+	public static void nsNoNg(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sNS\\s.*$"))
 		{
@@ -429,7 +428,7 @@ public class EntryChecks
 		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
 
-		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
+		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
 			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
 		if (entry.contents.matches(".*\\sNO\\s\\P{L}*?\\s" + Markers.regexp + ".*"))
 			bad.addNewEntry(entry, "NO nesatur tekstu");
@@ -442,7 +441,7 @@ public class EntryChecks
 	 */
 	public static void an(Dictionary.Entry entry, BadEntries bad)
 	{
-		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
+		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
 			bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
 	}
 

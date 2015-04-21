@@ -39,10 +39,10 @@
       <file leaf-file-name="EntryChecks.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5755102">
-              <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.29795918">
+              <caret line="475" column="51" selection-start-line="475" selection-start-column="51" selection-end-line="475" selection-end-column="51" />
               <folding>
-                <marker date="1429606737154" expanded="true" signature="4318:7117" placeholder="{...}" />
+                <marker date="1429607647612" expanded="true" signature="4318:7117" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -456,7 +456,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1429606737154" expanded="true" signature="4318:7117" placeholder="{...}" />
+            <marker date="1429607647612" expanded="true" signature="4318:7117" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -494,7 +494,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="243" column="18" selection-start-line="243" selection-start-column="18" selection-end-line="260" selection-end-column="21" />
           <folding>
-            <marker date="1429606737154" expanded="true" signature="4318:7117" placeholder="{...}" />
+            <marker date="1429607647612" expanded="true" signature="4318:7117" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -599,10 +599,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5755102">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.29795918">
+          <caret line="475" column="51" selection-start-line="475" selection-start-column="51" selection-end-line="475" selection-end-column="51" />
           <folding>
-            <marker date="1429606737154" expanded="true" signature="4318:7117" placeholder="{...}" />
+            <marker date="1429607647612" expanded="true" signature="4318:7117" placeholder="{...}" />
           </folding>
         </state>
       </provider>

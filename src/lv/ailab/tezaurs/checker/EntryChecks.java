@@ -248,7 +248,7 @@ public class EntryChecks
 					bad.addNewEntry(entry, "Nesakrīt DE un DS skaiti");
 			}
 		}
-		if(entry.contents.matches(".*\\sDS\\s(?![0-9]+\\s).*"))
+		if(entry.contents.matches(".*\\sDS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz DS neseko skaitlis");
 		if (entry.contents.matches(".*\\sDE\\s[^a-zāčēģīķļņŗšūž].*"))
 			bad.addNewEntry(entry, "DE jāsākas ar mazo burtu");
@@ -306,7 +306,7 @@ public class EntryChecks
 			}
 		}
 
-		if(entry.contents.matches(".*\\sFS\\s(?![0-9]+\\s).*"))
+		if(entry.contents.matches(".*\\sFS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz FS neseko skaitlis");
 		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
 			bad.addNewEntry(entry, "FR jāsākas ar lielo burtu vai skaitli");
@@ -436,7 +436,7 @@ public class EntryChecks
 		if (entry.contents.matches(".*\\s(?!NO)" + Markers.regexp + "\\s((?!\\s" + Markers.regexp +"\\s).)*\\sNG\\s.*"))
 			bad.addNewEntry(entry, "NG seko pēc identifikatora, kas nav NO");
 
-		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+\\s).*"))
+		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
 
 		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
@@ -474,7 +474,7 @@ public class EntryChecks
 	public static void inNumber(Dictionary.Entry entry, Dictionary dict, int index)
 	{
 		// Pārbauda, vai nav IN vispār bez skaitļa.
-		if(entry.contents.matches("IN\\s(?![0-9]+\\s).*"))
+		if(entry.contents.matches("IN\\s(?![0-9]+(\\s.*|$))"))
 			dict.bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
 
 		//Atsijaa ar sliktajiem indeksiem.

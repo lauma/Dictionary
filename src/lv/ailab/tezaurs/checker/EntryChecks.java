@@ -19,7 +19,12 @@ public class EntryChecks
 	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
 	 * visi simboli, kas pieļaujami šķirkļa tekstā, izņemot izrunas laukus.
 	 */
-	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?()\\[\\]@ ’—\"„~`‘–\\-";
+	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?()\\[\\]@'<>~^ ’—\"„~`‘–\\-";
+	/**
+	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
+	 * visi simboli, kas pieļaujami šķirkļavārdā.
+	 */
+	public static String nameSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ./’'()<>\\-";
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
@@ -547,7 +552,7 @@ public class EntryChecks
 	public static void langChars(Dictionary.Entry entry, BadEntries bad)
 	{
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
-		if(!entry.name.matches("[A-Za-z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ\\./’'\\(\\)\\<\\>-]*"))
+		if(!entry.name.matches("[" + nameSymbolRegexp + "]*"))
 			bad.addNewEntry(entry, "Šķirkļa vārds satur neparedzētus simbolus");
 		//Parbauda vai skjirkla info nesatur nepaziistami simboli
 		if(!entry.contents.matches("[" +contentSymbolRegexp + "]*"+

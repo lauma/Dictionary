@@ -1,17 +1,14 @@
-/*****************
-Autors: Gunārs Danovskis
-
-Klases mērķis:
-	Klase StringUtils ietver sevī visas palīgmetodes šķirķļu apstrādei
-*****************/
-
-package lv.ailab.tezaurs.utils; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
+package lv.ailab.tezaurs.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lv.ailab.tezaurs.checker.Dictionary;
 
+/**
+ * Palīgmetodes vārdnīcas simbolu virkņu apstrādei.
+ * @author Gunārs Danovskis, Lauma
+ */
 public class StringUtils
 {
 	// metode, kas pārbauda vai padotais šķirklis nav tukšs
@@ -42,55 +39,23 @@ public class StringUtils
 		//tiek atgiezts pirmais objekts no grupas un pārvērsts par integer
 		return Integer.parseInt(m.group(0)); 
 	}
-	// metode, kas pārbauda vai padotais šķirklis eksistē
-	public static Boolean entryExist(String [][] inEntries, String word)
-	{	
+
+	// metode, kas pārbauda vai padotais škirklis ir exclusion sarakstā
+	public static boolean exclusion(String [] except, String entry) 
+	{
 		boolean found = false;
-		int len = inEntries.length;
-		//cikls iet pa inEntries masīvu un salīdzina vai vārds ir atrodams
-		for(int i = 0; i<len; i++) 
+		//cikls iet pa except masīvu un salīdzina vai vārds ir atrodams
+		for (String exception : except)
 		{
-			if(word.equals(inEntries[i][0]))
+			if (exception.equals(entry))
 			{
 				found = true;
 				break;
 			}
 		}
-		return found; // tiek atgriezta atbilde vai atrasts
-	}
-	// metode, kas pārbauda vai padotais škirklis ir exclusion sarakstā
-	public static boolean exclusion(String [] except, String entry) 
-	{
-		boolean found = false;
-		int len = except.length;
-		//cikls iet pa except masīvu un salīdzina vai vārds ir atrodams
-	    for(int i=0; i<len; i++)
-	    {
-	    	if(except[i].equals(entry))
-	    	{
-	    		found = true;
-		        break;
-		    }
-	    }
 		return found;//tiek atgriezta atbilde vai atrasts
 	}
-	//metode, ka pārbauda vai padotais simbols ir lielais latviešu burts
-	public static boolean isBalticUpper(char Symbol)
-	{
-		String UPPER = "ĀČĒĢĪĶĻŅŠŪŽŌŖ"; //iespējamie leilie burti
-		boolean good = false;
-		int len = UPPER.length();
-		//cikls iet pa simbolu virkni un salīdzina vai simbols ir atrodams
-		for(int i = 0; i < len; i++)
-		{
-			if(UPPER.charAt(i) == Symbol)
-			{
-				good = true;
-				break;
-			}
-		}						
-		return good;//tiek atgriezta atbilde vai atrasts
-	}
+
 	//metode, kas atrod nākamo simbolu aiz padotās simbolu virknes
 	public static char nextCh(String entry, String Symbol)
 	{
@@ -156,17 +121,16 @@ public class StringUtils
 	public static boolean wordExist(String [] entries, String word)
 	{
 		boolean good = false;
-		int len = entries.length;
 		//cikls iet pa škirkļu sarakstu
-		for(int i=0; i<len; i++)
+		for (String entry : entries)
 		{
 			//ja sķirklis ir vismaz divi vārdi
-			if(entries[i].length() > 2 && StringUtils.countSpaces(entries[i]) > 0)
+			if (entry.length() > 2 && StringUtils.countSpaces(entry) > 0)
 			{
 				//tiek atarsts pirmais vārds
-				String entryName = entries[i].substring(0, entries[i].indexOf(" "));
+				String entryName = entry.substring(0, entry.indexOf(" "));
 				//ja šķirkļa vārds atbilst padotajam vārdam
-				if(entryName.equals(word))
+				if (entryName.equals(word))
 				{
 					good = true;
 					break;
@@ -174,20 +138,5 @@ public class StringUtils
 			}
 		}
 		return good; //atgriež gala vērtību
-	}
-
-	//metode kas atrgriež lielāko IN vērtību padotajam šķirkļa vārdam
-	public static int maxIN(String [][] inEntries, String word)
-	{
-		int max = 0;
-		int len = inEntries.length;
-		//cikls iet pa inEntries masīvu
-		for(int i=0; i< len; i++)
-				//ja padotais vārds atbilst un in vērtība ir lielāka par max
-				// max vēr'ti'ba tiek palielināta
-				if(inEntries[i][0] == word && Integer.parseInt(inEntries[i][1]) > max) 
-					max = Integer.parseInt(inEntries[i][1]);
-						
-		return max; //atgriež gala vērtību
 	}
 }

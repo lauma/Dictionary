@@ -128,9 +128,7 @@ public class EntryChecks
 			{
 				word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
 				if(StringUtils.countSpaces(forChecking) == 0)
-				{
 					word = forChecking.trim(); // iegūts pirmais vārds virknē
-				}
 				if(word.length() > 0)
 				{
 					if(word.contains("@2"))
@@ -139,9 +137,7 @@ public class EntryChecks
 						if(StringUtils.countSpaces(forChecking) > 0)
 						{
 							if(StringUtils.wordAfter(forChecking, word).contains("@5")) // pārbauda starp @2 un @5 ir teksts
-							{
 								bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
-							}
 						}
 						if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
 						{
@@ -164,17 +160,11 @@ public class EntryChecks
 							}
 						}
 						if(at == 0) //pārbauda vai pirms tam ir bijis @2 bez @5, gadījumā ja @5 ir šķirkļa sākumā
-						{
 							bad.addNewEntry(entry, "Pirms @5 jābūt @2");
-						}
 						if(at == 5) //pārbauda vai pirms tam ir bijis @2 bez @5
-						{
 							bad.addNewEntry(entry, "Divi @5 pēc kārtas");
-						}
 						if(at == 2)
-						{
 							at = 5;
-						}
 					}
 					if(open) //pārbauda vai @2 un @5 ir viena marķiera robežās
 					{
@@ -308,7 +298,7 @@ public class EntryChecks
 
 		if(entry.contents.matches(".*\\sFS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz FS neseko skaitlis");
-		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+		if (entry.contents.matches(".*\\sFR\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
 			bad.addNewEntry(entry, "FR jāsākas ar lielo burtu vai skaitli");
 	}
 
@@ -374,7 +364,7 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\sPN\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
-		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
 			bad.addNewEntry(entry, "PI jāsākas ar lielo burtu vai skaitli");
 	}
 
@@ -439,7 +429,7 @@ public class EntryChecks
 		if(entry.contents.matches(".*\\sNS\\s(?![0-9]+(\\s.*|$))"))
 			bad.addNewEntry(entry, "Aiz NS neseko skaitlis");
 
-		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+		if (entry.contents.matches(".*\\sNO\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
 			bad.addNewEntry(entry, "NO jāsākas ar lielo burtu vai skaitli");
 		if (entry.contents.matches(".*\\sNO\\s\\P{L}*?\\s" + Markers.regexp + ".*"))
 			bad.addNewEntry(entry, "NO nesatur tekstu");
@@ -452,7 +442,7 @@ public class EntryChecks
 	 */
 	public static void an(Dictionary.Entry entry, BadEntries bad)
 	{
-		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ].*"))
+		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(].*"))
 			bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
 	}
 

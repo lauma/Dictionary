@@ -20,8 +20,8 @@ package lv.ailab.tezaurs.analyzer.struct;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
+import lv.ailab.tezaurs.utils.HasToJSON;
+import lv.ailab.tezaurs.utils.JSONUtils;
 
 
 import org.w3c.dom.Node;
@@ -90,7 +90,7 @@ public class Sources implements HasToJSON
 		if (sourcesText.endsWith("]"))
 			sourcesText = sourcesText.substring(0, sourcesText.length() - 1);
 		
-		LinkedList<String> res = new LinkedList<String>();
+		LinkedList<String> res = new LinkedList<>();
 		res.addAll(Arrays.asList(sourcesText.split(",\\s*")));
 		return res;
 	}

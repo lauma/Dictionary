@@ -19,11 +19,10 @@ package lv.ailab.tezaurs.analyzer.struct;
 
 
 import java.util.LinkedList;
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import lv.ailab.tezaurs.utils.HasToJSON;
 
 /**
  * v (vārds) field.

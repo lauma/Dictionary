@@ -16,7 +16,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
 
-package lv.ailab.tezaurs.analyzer;
+package lv.ailab.tezaurs;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;

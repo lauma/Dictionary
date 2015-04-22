@@ -1,6 +1,6 @@
 package lv.ailab.tezaurs.analyzer.struct.gramlogic;
 
-import lv.ailab.tezaurs.analyzer.utils.MappingSet;
+import lv.ailab.tezaurs.utils.MappingSet;
 
 /**
  * Singleton class containing all known abbreviations and their

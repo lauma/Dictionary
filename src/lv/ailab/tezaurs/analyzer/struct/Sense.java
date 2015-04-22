@@ -18,15 +18,13 @@
 package lv.ailab.tezaurs.analyzer.struct;
 
 import java.util.LinkedList;
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-import lv.ailab.tezaurs.analyzer.utils.Loaders;
-import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
-
-
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.json.simple.JSONObject;
+
+import lv.ailab.tezaurs.utils.HasToJSON;
+import lv.ailab.tezaurs.utils.JSONUtils;
+import lv.ailab.tezaurs.analyzer.utils.Loaders;
 
 /**
  * n (nozīme / nozīmes nianse) field.
@@ -151,7 +149,7 @@ public class Sense implements HasToJSON
 		if (ordNumber != null)
 		{
 			res.append("\"SenseID\":\"");
-			res.append(JSONObject.escape(ordNumber.toString()));
+			res.append(JSONObject.escape(ordNumber));
 			res.append("\"");
 			hasPrev = true;
 		}

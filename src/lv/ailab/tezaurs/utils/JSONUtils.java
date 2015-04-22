@@ -15,49 +15,45 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.ailab.tezaurs.analyzer.utils;
+package lv.ailab.tezaurs.utils;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Iterator;
+import org.json.simple.JSONObject;
 
-/**
- * Limited use multimap. Incomplete interface, might need additional
- * methods later.
- */
-public class MappingSet<K, V>
+public class JSONUtils
 {
-	private HashMap<K, HashSet<V>> map = new HashMap<K, HashSet<V>>();
-	
-	public void put (K key, V value)
+	public static <E extends HasToJSON> String objectsToJSON(Iterable<E> l)
 	{
-		HashSet<V> values = new HashSet<V>();
-		if (map.containsKey(key))
+		if (l == null) return "[]";
+		StringBuilder res = new StringBuilder();
+		res.append("[");
+		Iterator<E> i = l.iterator();
+		while (i.hasNext())
 		{
-			values = map.get(key);
+			res.append("{");
+			res.append(i.next().toJSON());
+			res.append("}");
+			if (i.hasNext()) res.append(", ");
 		}
-		values.add(value);
-		map.put(key, values);
+		res.append("]");			
+		return res.toString();
 	}
 	
-	public HashSet<V> getAll(K key)
+	public static<E> String simplesToJSON(Iterable<E> l)
 	{
-		return map.get(key);
-	}
-	
-	public boolean containsKey(K key)
-	{
-		return map.containsKey(key);
-	}
-	
-	public boolean isEmpty()
-	{
-		return map.isEmpty();
-	}
-	
-	public Set<K> keySet()
-	{
-		return map.keySet();
+		if (l == null) return "[]";
+		StringBuilder res = new StringBuilder();
+		res.append("[");
+		Iterator<E> i = l.iterator();
+		while (i.hasNext())
+		{
+			res.append("\"");
+			res.append(JSONObject.escape(i.next().toString()));
+			res.append("\"");
+			if (i.hasNext()) res.append(", ");
+		}
+		res.append("]");			
+		return res.toString();
 	}
 	
 }

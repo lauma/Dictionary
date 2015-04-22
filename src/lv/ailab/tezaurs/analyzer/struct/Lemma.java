@@ -17,8 +17,7 @@
  *******************************************************************************/
 package lv.ailab.tezaurs.analyzer.struct;
 
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
+import lv.ailab.tezaurs.utils.HasToJSON;
 
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;

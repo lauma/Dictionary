@@ -17,11 +17,10 @@
  *******************************************************************************/
 package lv.ailab.tezaurs.analyzer.struct;
 
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
+import org.json.simple.JSONObject;
+
+import lv.ailab.tezaurs.utils.HasToJSON;
 
 /**
  * d (definīcija) field.

@@ -22,15 +22,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-import lv.ailab.tezaurs.analyzer.utils.MappingSet;
-import lv.ailab.tezaurs.analyzer.utils.Tuple;
-import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
-import lv.ailab.tezaurs.analyzer.struct.gramlogic.*;
-
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
+import org.json.simple.JSONObject;
+
+import lv.ailab.tezaurs.utils.HasToJSON;
+import lv.ailab.tezaurs.utils.MappingSet;
+import lv.ailab.tezaurs.utils.Tuple;
+import lv.ailab.tezaurs.utils.JSONUtils;
+import lv.ailab.tezaurs.analyzer.struct.gramlogic.*;
 
 /**
  * g (gramatika) field.

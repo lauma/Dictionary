@@ -23,13 +23,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-
-import lv.ailab.tezaurs.analyzer.utils.Loaders;
-import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
-
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.json.simple.JSONObject;
+
+import lv.ailab.tezaurs.analyzer.utils.Loaders;
+import lv.ailab.tezaurs.utils.JSONUtils;
 
 /**
  * Structured representation of entry header.

@@ -18,13 +18,12 @@
 package lv.ailab.tezaurs.analyzer.struct;
 
 import java.util.LinkedList;
-
-import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
-import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
-
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.json.simple.JSONObject;
+
+import lv.ailab.tezaurs.utils.HasToJSON;
+import lv.ailab.tezaurs.utils.JSONUtils;
 
 /**
  * piem (piemērs) and fraz (frazeoloģisms) fields.

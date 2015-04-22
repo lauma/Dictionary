@@ -710,8 +710,8 @@ public class Gram  implements HasToJSON
 	{
 		orig = gramNode.getTextContent();
 		leftovers = null;
-		flags = new HashSet<String> ();
-		paradigm = new HashSet<Integer>();
+		flags = new HashSet<> ();
+		paradigm = new HashSet<>();
 		altLemmas = null;
 		parseGram(lemma);
 	}
@@ -722,8 +722,8 @@ public class Gram  implements HasToJSON
 	{
 		orig = gramText;
 		leftovers = null;
-		flags = new HashSet<String> ();
-		paradigm = new HashSet<Integer>();
+		flags = new HashSet<> ();
+		paradigm = new HashSet<>();
 		altLemmas = null;
 		parseGram(lemma);
 	}
@@ -748,21 +748,21 @@ public class Gram  implements HasToJSON
 	private void parseGram(String lemma)
 	{
 		String correctedGram = correctOCRErrors(orig);
-		altLemmas = new MappingSet<Integer, Tuple<Lemma, HashSet<String>>>();
+		altLemmas = new MappingSet<>();
 		
 		// First process ending patterns, usually located in the beginning
 		// of the grammar string.
 		correctedGram = processBeginingWithPatterns(correctedGram, lemma);
 		
 		String[] subGrams = correctedGram.split("\\s*;\\s*");
-		leftovers = new LinkedList<LinkedList<String>> ();
+		leftovers = new LinkedList<> ();
 		
 		// Process each semicolon-separated substring.
 		for (String subGram : subGrams)	
 		{
 			subGram = processWithNoSemicolonPatterns(subGram, lemma);
 			String[] gramElems = subGram.split("\\s*,\\s*");
-			LinkedList<String> toDo = new LinkedList<String> ();
+			LinkedList<String> toDo = new LinkedList<> ();
 			
 			// Process each comma-separated substring.
 			for (String gramElem : gramElems) 
@@ -856,9 +856,9 @@ public class Gram  implements HasToJSON
 			{
 				newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2) + "ņš, -ņa, v.").length();
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "ņš");
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
-				altLemmas.put(2, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(2, new Tuple<>(altLemma, altParams));
 				paradigm.add(2);
 				flags.add("Vīriešu dzimte");
 				flags.add("Lietvārds");
@@ -872,9 +872,9 @@ public class Gram  implements HasToJSON
 			{
 				newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2)+"nis, -ņa, v.").length();
 				Lemma altLemma = new Lemma(lemma.substring(0, lemma.length() - 2) + "nis");
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
-				altLemmas.put(3, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(3, new Tuple<>(altLemma, altParams));
 				paradigm.add(3);
 				flags.add("Vīriešu dzimte");
 				flags.add("Lietvārds");
@@ -887,9 +887,9 @@ public class Gram  implements HasToJSON
 			{
 				newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 3)+"lnis, -ļņa, v.").length();
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "lnis");
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
-				altLemmas.put(3, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(3, new Tuple<>(altLemma, altParams));
 				paradigm.add(3);
 				flags.add("Vīriešu dzimte");
 				flags.add("Lietvārds");
@@ -900,9 +900,9 @@ public class Gram  implements HasToJSON
 			{
 				newBegin = ("-u, vsk. " + lemma + "s, -ja, v.").length();
 				Lemma altLemma = new Lemma (lemma + "s");
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
-				altLemmas.put(3, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(3, new Tuple<>(altLemma, altParams));
 				paradigm.add(3);
 				flags.add("Vīriešu dzimte");
 				flags.add("Lietvārds");
@@ -917,9 +917,9 @@ public class Gram  implements HasToJSON
 			{
 				newBegin = ("-u, vsk. " + lemma.substring(0, lemma.length() - 1) + "s, -a, v.").length();
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "s");
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
-				altLemmas.put(1, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(1, new Tuple<>(altLemma, altParams));
 				paradigm.add(1);
 				flags.add("Vīriešu dzimte");
 				flags.add("Lietvārds");
@@ -1212,10 +1212,10 @@ public class Gram  implements HasToJSON
 				if (lemma.endsWith("ts"))
 				{
 					Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "e");
-					HashSet<String> altParams = new HashSet<String> ();
+					HashSet<String> altParams = new HashSet<> ();
 					altParams.add("Sieviešu dzimte");
 					altParams.add("Cita paradigma");
-					altLemmas.put(9, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(9, new Tuple<>(altLemma, altParams));
 					
 					paradigm.add(1);
 					flags.add("Lietvārds");
@@ -1235,10 +1235,10 @@ public class Gram  implements HasToJSON
 				if (lemma.endsWith("ķis"))
 				{
 					Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-					HashSet<String> altParams = new HashSet<String> ();
+					HashSet<String> altParams = new HashSet<> ();
 					altParams.add("Sieviešu dzimte");
 					altParams.add("Cita paradigma");
-					altLemmas.put(9, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(9, new Tuple<>(altLemma, altParams));
 					
 					paradigm.add(2);
 					flags.add("Lietvārds");
@@ -1256,10 +1256,10 @@ public class Gram  implements HasToJSON
 				if (lemma.endsWith("tis"))
 				{
 					Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-					HashSet<String> altParams = new HashSet<String> ();
+					HashSet<String> altParams = new HashSet<> ();
 					altParams.add("Sieviešu dzimte");
 					altParams.add("Cita paradigma");
-					altLemmas.put(9, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(9, new Tuple<>(altLemma, altParams));
 					
 					paradigm.add(2);
 					flags.add("Lietvārds");
@@ -1445,9 +1445,9 @@ public class Gram  implements HasToJSON
 				if (lemma.endsWith("dzis"))
 				{
 					Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 4) + "gusi");
-					HashSet<String> altParams = new HashSet<String> ();
+					HashSet<String> altParams = new HashSet<> ();
 					altParams.add("Sieviešu dzimte");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					paradigm.add(0);
 					flags.add("Divdabis");
@@ -1466,9 +1466,9 @@ public class Gram  implements HasToJSON
 				if (lemma.matches(".*[cdjlmprstv]is"))
 				{
 					Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "usi");
-					HashSet<String> altParams = new HashSet<String> ();
+					HashSet<String> altParams = new HashSet<> ();
 					altParams.add("Sieviešu dzimte");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					paradigm.add(0);
 					flags.add("Divdabis");
@@ -1529,7 +1529,7 @@ public class Gram  implements HasToJSON
 			m.matches();
 			String newLemma = m.group(2);
 			Lemma altLemma = new Lemma (newLemma);
-			HashSet<String> altParams = new HashSet<String> ();
+			HashSet<String> altParams = new HashSet<> ();
 			altParams.add("Divdabis");
 			altParams.add("Cita paradigma");
 			
@@ -1537,7 +1537,7 @@ public class Gram  implements HasToJSON
 			if (newLemma.endsWith("ts")) // aizdzert->aizdzerts
 			{
 				altParams.add("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)");
-				altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
 				flags.add("Darbības vārds");
 				flags.add("Parasti divdabja formā");
@@ -1546,7 +1546,7 @@ public class Gram  implements HasToJSON
 			else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizmakt->aizsmacis, pieriesties->pieriesies
 			{
 				altParams.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
-				altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
 				flags.add("Darbības vārds");
 				flags.add("Parasti divdabja formā");
@@ -1555,7 +1555,7 @@ public class Gram  implements HasToJSON
 			else if (newLemma.endsWith("damies")) //aizvilkties->aizvilkdamies
 			{
 				altParams.add("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)");
-				altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
 				flags.add("Darbības vārds");
 				flags.add("Parasti divdabja formā");
@@ -1604,14 +1604,14 @@ public class Gram  implements HasToJSON
 			for (String newLemma : newLemmas)
 			{
 				Lemma altLemma = new Lemma (newLemma);
-				HashSet<String> altParams = new HashSet<String> ();
+				HashSet<String> altParams = new HashSet<> ();
 				altParams.add("Divdabis");
 				altParams.add("Cita paradigma");
 				
 				if (newLemma.endsWith("ts")) // noliegt->noliegts
 				{
 					altParams.add("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					flags.add("Darbības vārds");
 					flags.add("Parasti divdabja formā");
@@ -1629,7 +1629,7 @@ public class Gram  implements HasToJSON
 				else if (newLemma.endsWith("ams") || newLemma.endsWith("āms")) // noliegt->noliedzams
 				{
 					altParams.add("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					flags.add("Darbības vārds");
 					flags.add("Parasti divdabja formā");
@@ -1638,7 +1638,7 @@ public class Gram  implements HasToJSON
 				else if (newLemma.endsWith("damies")) //aizelsties->aizelsdamies
 				{
 					altParams.add("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					flags.add("Darbības vārds");
 					flags.add("Parasti divdabja formā");

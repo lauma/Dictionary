@@ -37,7 +37,7 @@ public class Loaders
 	public static LinkedList<Sense> loadSenses(Node allSenses, String lemma)
 	{
 		//if (senses == null) senses = new LinkedList<Sense>();
-		LinkedList<Sense> res = new LinkedList<Sense>();
+		LinkedList<Sense> res = new LinkedList<>();
 		NodeList senseNodes = allSenses.getChildNodes(); 
 		for (int i = 0; i < senseNodes.getLength(); i++)
 		{
@@ -62,7 +62,7 @@ public class Loaders
 	public static LinkedList<Phrase> loadPhrases(
 			Node allPhrases, String lemma, String subElemName)
 	{
-		LinkedList<Phrase> res = new LinkedList<Phrase>();
+		LinkedList<Phrase> res = new LinkedList<>();
 		NodeList phraseNodes = allPhrases.getChildNodes(); 
 		for (int i = 0; i < phraseNodes.getLength(); i++)
 		{

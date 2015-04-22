@@ -67,7 +67,7 @@ public class Phrase implements HasToJSON
 				grammar = new Gram (field, lemma);
 			else if (fieldname.equals("n"))
 			{
-				if (subsenses == null) subsenses = new LinkedList<Sense>();
+				if (subsenses == null) subsenses = new LinkedList<>();
 				subsenses.add(new Sense (field, lemma));
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.

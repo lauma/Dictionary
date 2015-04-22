@@ -17,11 +17,11 @@ public class AbbrMap {
 		return am;
 	}
 	
-	protected AbbrMap() {};
+	protected AbbrMap() {}
 	
 	protected static MappingSet<String, String> populateMap()
 	{
-		MappingSet<String, String> res = new MappingSet<String, String>();
+		MappingSet<String, String> res = new MappingSet<>();
 		
 		// TODO Sort out this mess.
 		// Source: LLVV, data.

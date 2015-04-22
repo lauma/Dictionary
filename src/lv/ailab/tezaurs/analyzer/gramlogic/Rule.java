@@ -20,7 +20,7 @@ public interface Rule {
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.
 	 */
-	public int applyDirect (
+	int applyDirect (
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			HashSet<String> flagCollector);
@@ -36,7 +36,7 @@ public interface Rule {
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.
 	 */
-	public int applyOptHyperns (
+	int applyOptHyphens(
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			HashSet<String> flagCollector);

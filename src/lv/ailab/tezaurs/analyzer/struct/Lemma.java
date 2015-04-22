@@ -73,11 +73,10 @@ public class Lemma implements HasToJSON
 	{
 		if (o == null) return false;
 		if (this.getClass() != o.getClass()) return false;
-		if ((text == null && ((Lemma)o).text == null || text != null && text.equals(((Lemma)o).text))
-				&& (pronunciation == null && ((Lemma)o).pronunciation == null
-				|| pronunciation != null && pronunciation.equals(((Lemma)o).pronunciation)))
-			return true;
-		else return false;
+		return (text == null && ((Lemma) o).text == null ||
+				text != null && text.equals(((Lemma) o).text))
+				&& (pronunciation == null && ((Lemma) o).pronunciation == null
+				|| pronunciation != null && pronunciation.equals(((Lemma) o).pronunciation));
 	}
 	
 	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
@@ -95,7 +94,7 @@ public class Lemma implements HasToJSON
 		if (pronunciation != null)
 		{
 			res.append(", \"Pronunciation\":\"");
-			res.append(JSONObject.escape(pronunciation.toString()));
+			res.append(JSONObject.escape(pronunciation));
 			res.append("\"");
 		}
 		return res.toString();

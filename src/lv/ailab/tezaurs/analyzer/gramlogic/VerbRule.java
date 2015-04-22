@@ -180,7 +180,7 @@ public class VerbRule implements Rule
 		if (newBegin == -1)
 			newBegin = allPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
 		return newBegin;
-	};	
+	}
 	
 	/**
 	 * Apply rule, but hyperns in pattern are optional.
@@ -193,16 +193,18 @@ public class VerbRule implements Rule
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.
 	 */
-	public int applyOptHyperns (
+	public int applyOptHyphens(
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			HashSet<String> flagCollector)
 	{
-		int newBegin = thirdPersonRule.applyOptHyperns(gramText, lemma, paradigmCollector, flagCollector);
+		int newBegin = thirdPersonRule.applyOptHyphens(gramText, lemma,
+				paradigmCollector, flagCollector);
 		if (newBegin == -1)
-			newBegin = allPersonRule.applyOptHyperns(gramText, lemma, paradigmCollector, flagCollector);
+			newBegin = allPersonRule.applyOptHyphens(gramText, lemma,
+					paradigmCollector, flagCollector);
 		return newBegin;		
-	};
+	}
 
 
 }

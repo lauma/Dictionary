@@ -267,7 +267,7 @@ public class Gram  implements HasToJSON
 	};
 	
 	/**
-	 * Collection of rules that can be used as SimpleRule.applyOptHyperns()
+	 * Collection of rules that can be used as SimpleRule.applyOptHyphens()
 	 * This is seperated out for readability from
 	 * {@link #processBeginingWithPatterns(String, String)} as currently these 
 	 * rules are long and highly specific and, thus, do not conflict
@@ -815,7 +815,7 @@ public class Gram  implements HasToJSON
 		for (Rule s : simpleRulesOptHyperns)
 		{
 			if (newBegin != -1) break;
-			newBegin = s.applyOptHyperns(gramText, lemma, paradigm, flags);
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
 		
 		// Complicated rules: grammar contains lemma variation spelled out.
@@ -1460,7 +1460,7 @@ public class Gram  implements HasToJSON
 					newBegin = 0;
 				}
 			}
-			else if (gramText.matches("-ušais; s. -usi\\, -usī([.;].*)?")) //aizkūpis
+			else if (gramText.matches("-ušais; s. -usi, -usī([.;].*)?")) //aizkūpis
 			{
 				newBegin = "-ušais; s. -usi, -usī".length();
 				if (lemma.matches(".*[cdjlmprstv]is"))
@@ -1620,7 +1620,7 @@ public class Gram  implements HasToJSON
 				else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizelsties->aizelsies
 				{
 					altParams.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
-					altLemmas.put(0, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
 					flags.add("Darbības vārds");
 					flags.add("Parasti divdabja formā");

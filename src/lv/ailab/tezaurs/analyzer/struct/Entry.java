@@ -74,7 +74,7 @@ public class Entry
 	public Entry(Node sNode)
 	{
 		NodeList fields = sNode.getChildNodes();
-		LinkedList<Node> postponed = new LinkedList<Node>();
+		LinkedList<Node> postponed = new LinkedList<>();
 		for (int i = 0; i < fields.getLength(); i++)
 		{
 			Node field = fields.item(i);
@@ -119,7 +119,7 @@ public class Entry
 	 */
 	private void loadDerivs(Node allDerivs)
 	{
-		if (derivs == null) derivs = new LinkedList<Header>();
+		if (derivs == null) derivs = new LinkedList<>();
 		NodeList derivNodes = allDerivs.getChildNodes(); 
 		for (int i = 0; i < derivNodes.getLength(); i++)
 		{
@@ -157,21 +157,21 @@ public class Entry
 	 */
 	private static HashSet<String> initBlacklist()
 	{
-		HashSet<String> blist = new HashSet<String>();
-		BufferedReader ieeja;
+		HashSet<String> blist = new HashSet<>();
+		BufferedReader input;
 		try {
 			// Blacklist file format - one word (lemma) per line.
-			ieeja = new BufferedReader(
+			input = new BufferedReader(
 					new InputStreamReader(
 					new FileInputStream("blacklist.txt"), "UTF-8"));
-			String rinda;
-			while ((rinda = ieeja.readLine()) != null)
+			String line;
+			while ((line = input.readLine()) != null)
 			{
-				//if (rinda.contains("<s>") || rinda.contains("</s>") || rinda.isEmpty())
+				//if (line.contains("<s>") || line.contains("</s>") || line.isEmpty())
 				//	continue;
-				blist.add(rinda.trim());
+				blist.add(line.trim());
 			}		
-			ieeja.close();
+			input.close();
 		} catch (Exception e)
 		{
 			System.err.println("Blacklist was not loaded.");
@@ -224,11 +224,10 @@ public class Entry
 	
 	/**
 	 * Collects all pronunciation elements from lemmas and derivatives.
-	 * @return
 	 */
 	public ArrayList<String> collectPronunciations()
 	{
-		ArrayList<String> res = new ArrayList<String> ();
+		ArrayList<String> res = new ArrayList<> ();
 		if (head.lemma.pronunciation != null)
 			res.add(head.lemma.pronunciation);
 		if (derivs == null || derivs.isEmpty()) return res;
@@ -261,7 +260,7 @@ public class Entry
 		if (homId != null)
 		{
 			s.append(", \"ID\":\"");
-			s.append(JSONObject.escape(homId.toString()));
+			s.append(JSONObject.escape(homId));
 			s.append("\"");
 		}
 		

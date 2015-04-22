@@ -48,7 +48,7 @@ public class Header implements HasToJSON
 	public Header (Node vNode)
 	{
 		NodeList fields = vNode.getChildNodes();
-		LinkedList<Node> postponed = new LinkedList<Node>();
+		LinkedList<Node> postponed = new LinkedList<>();
 		for (int i = 0; i < fields.getLength(); i++)
 		{
 			Node field = fields.item(i);

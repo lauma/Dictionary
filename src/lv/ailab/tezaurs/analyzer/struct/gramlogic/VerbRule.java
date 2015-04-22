@@ -1,4 +1,4 @@
-package lv.semti.Thesaurus.struct.gramlogic;
+package lv.ailab.tezaurs.analyzer.struct.gramlogic;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,7 +19,7 @@ public class VerbRule implements Rule
 	/**
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @param paradigmId	paradigm ID to set if rule matched
@@ -61,7 +61,7 @@ public class VerbRule implements Rule
 	 * forms or infinitive homoforms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 15 and flag about conjugating.
@@ -79,7 +79,7 @@ public class VerbRule implements Rule
 	 * forms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 16
@@ -96,7 +96,7 @@ public class VerbRule implements Rule
 	 * forms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 17
@@ -113,7 +113,7 @@ public class VerbRule implements Rule
 	 * parallel forms or infinitive homoforms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 18 and flag about conjugating.
@@ -131,7 +131,7 @@ public class VerbRule implements Rule
 	 * parallel forms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 19
@@ -148,7 +148,7 @@ public class VerbRule implements Rule
 	 * parallel forms.
 	 * @param patternBegin	part of the grammar string containing endings for
 	 * 						1st and 2nd person
-	 * @param patternEndint	part of the grammar string containing endings for
+	 * @param patternEnd	part of the grammar string containing endings for
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @return VerbRule with Paradigm 20
@@ -166,7 +166,7 @@ public class VerbRule implements Rule
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule
 	 * 							matches.
-	 * @param flagCollectoer	Map, where flags will be added, if rule
+	 * @param flagCollector	Map, where flags will be added, if rule
 	 * 							matches.
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.
@@ -188,7 +188,7 @@ public class VerbRule implements Rule
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule
 	 * 							matches.
-	 * @param flagCollectoer	Map, where flags will be added, if rule
+	 * @param flagCollector		Map, where flags will be added, if rule
 	 * 							matches.
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.

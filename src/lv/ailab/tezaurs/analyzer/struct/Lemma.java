@@ -15,10 +15,10 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.semti.Thesaurus.struct;
+package lv.ailab.tezaurs.analyzer.struct;
 
 
-import lv.semti.Thesaurus.utils.HasToJSON;
+import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
 
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;

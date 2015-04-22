@@ -15,7 +15,7 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.semti.Thesaurus.struct;
+package lv.ailab.tezaurs.analyzer.struct;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,11 +23,11 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lv.semti.Thesaurus.utils.HasToJSON;
-import lv.semti.Thesaurus.utils.MappingSet;
-import lv.semti.Thesaurus.utils.Tuple;
-import lv.semti.Thesaurus.utils.JSONUtils;
-import lv.semti.Thesaurus.struct.gramlogic.*;
+import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
+import lv.ailab.tezaurs.analyzer.utils.MappingSet;
+import lv.ailab.tezaurs.analyzer.utils.Tuple;
+import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
+import lv.ailab.tezaurs.analyzer.struct.gramlogic.*;
 
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;

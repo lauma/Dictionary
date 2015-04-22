@@ -15,12 +15,12 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.semti.Thesaurus.utils;
+package lv.ailab.tezaurs.analyzer.utils;
 
 import java.util.LinkedList;
 
-import lv.semti.Thesaurus.struct.Phrase;
-import lv.semti.Thesaurus.struct.Sense;
+import lv.ailab.tezaurs.analyzer.struct.Phrase;
+import lv.ailab.tezaurs.analyzer.struct.Sense;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

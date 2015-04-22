@@ -15,21 +15,17 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.semti.Thesaurus.struct;
+package lv.ailab.tezaurs.analyzer.struct;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import lv.semti.Thesaurus.utils.Loaders;
-import lv.semti.Thesaurus.utils.JSONUtils;
-import lv.semti.morphology.analyzer.Analyzer;
-import lv.semti.morphology.analyzer.Wordform;
-import lv.semti.morphology.attributes.AttributeNames;
+import lv.ailab.tezaurs.analyzer.utils.Loaders;
+import lv.ailab.tezaurs.analyzer.utils.JSONUtils;
 
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;

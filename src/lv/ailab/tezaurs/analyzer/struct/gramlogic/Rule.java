@@ -1,4 +1,4 @@
-package lv.semti.Thesaurus.struct.gramlogic;
+package lv.ailab.tezaurs.analyzer.struct.gramlogic;
 
 import java.util.HashSet;
 
@@ -15,7 +15,7 @@ public interface Rule {
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule
 	 * 							matches.
-	 * @param flagCollectoer	Map, where flags will be added, if rule
+	 * @param flagCollector	Map, where flags will be added, if rule
 	 * 							matches.
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.
@@ -31,7 +31,7 @@ public interface Rule {
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule
 	 * 							matches.
-	 * @param flagCollectoer	Map, where flags will be added, if rule
+	 * @param flagCollector	Map, where flags will be added, if rule
 	 * 							matches.
 	 * @return New beginning for gram string if one of these rules matched,
 	 * -1 otherwise.

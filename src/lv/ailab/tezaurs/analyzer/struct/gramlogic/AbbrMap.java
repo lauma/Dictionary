@@ -1,6 +1,6 @@
-package lv.semti.Thesaurus.struct.gramlogic;
+package lv.ailab.tezaurs.analyzer.struct.gramlogic;
 
-import lv.semti.Thesaurus.utils.MappingSet;
+import lv.ailab.tezaurs.analyzer.utils.MappingSet;
 
 /**
  * Singleton class containing all known abbreviations and their

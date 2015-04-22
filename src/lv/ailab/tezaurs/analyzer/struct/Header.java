@@ -15,16 +15,12 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.semti.Thesaurus.struct;
+package lv.ailab.tezaurs.analyzer.struct;
 
-import java.util.HashSet;
+
 import java.util.LinkedList;
 
-import lv.semti.Thesaurus.utils.HasToJSON;
-import lv.semti.morphology.analyzer.Analyzer;
-import lv.semti.morphology.analyzer.Word;
-import lv.semti.morphology.attributes.AttributeNames;
-import lv.semti.morphology.lexicon.Lexeme;
+import lv.ailab.tezaurs.analyzer.utils.HasToJSON;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

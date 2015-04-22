@@ -1,4 +1,4 @@
-package lv.ailab.tezaurs.analyzer.struct.gramlogic;
+package lv.ailab.tezaurs.analyzer.gramlogic;
 
 import java.util.HashSet;
 

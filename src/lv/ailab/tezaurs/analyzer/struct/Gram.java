@@ -29,7 +29,7 @@ import lv.ailab.tezaurs.utils.HasToJSON;
 import lv.ailab.tezaurs.utils.MappingSet;
 import lv.ailab.tezaurs.utils.Tuple;
 import lv.ailab.tezaurs.utils.JSONUtils;
-import lv.ailab.tezaurs.analyzer.struct.gramlogic.*;
+import lv.ailab.tezaurs.analyzer.gramlogic.*;
 
 /**
  * g (gramatika) field.

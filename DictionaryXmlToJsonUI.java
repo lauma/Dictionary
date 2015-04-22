@@ -22,11 +22,6 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -36,14 +31,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import lv.semti.Thesaurus.struct.Entry;
-import lv.semti.morphology.analyzer.Analyzer;
-import lv.semti.morphology.analyzer.Word;
-import lv.semti.morphology.analyzer.Wordform;
-import lv.semti.morphology.attributes.AttributeNames;
 
-public class ThesaurusImport {
+public class DictionaryXmlToJsonUI {
 
-	public static boolean addToLexicon = false;
 	/**
 	 * Create file with all pronunciation.
 	 */
@@ -59,25 +49,6 @@ public class ThesaurusImport {
 		String noParadigm = "tezaurs-noParadigm.json";
 		String badOutputFile = "tezaurs-bad.json";
 		String pronunciationOutputFile = "tezaurs-pronunce.txt";
-		String newLexiconFile = "Lexicon_sv.xml";
-		String importSource = "Imports no Tezaura SV " + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-		Analyzer analizators = null;
-		if (addToLexicon)
-		{
-			analizators = new Analyzer("dist/Lexicon.xml",
-					new ArrayList<String>(Arrays.asList(newLexiconFile)));
-			analizators.guessNouns = true;
-			analizators.guessParticiples = false;
-			analizators.guessVerbs = false;
-			analizators.guessAdjectives = false;
-			analizators.enableDiminutive = false;
-			analizators.enablePrefixes = false;
-			analizators.enableGuessing = false;
-			analizators.meklētsalikteņus = false;
-			analizators.guessInflexibleNouns = true;
-			analizators.setCacheSize(0);
-		}
 		
 		// Load Thesaurus file.
 		DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -91,10 +62,13 @@ public class ThesaurusImport {
 		// Output.
 		BufferedWriter goodOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(goodOutputFile), "UTF-8"));
+		goodOut.write("[\n");
 		BufferedWriter noParadigmOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(noParadigm), "UTF-8"));
+		noParadigmOut.write("[\n");
 		BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(badOutputFile), "UTF-8"));
+		badOut.write("[\n");
 		BufferedWriter pronunceOut = null;
 		if (makePronunceList)
 			pronunceOut = new BufferedWriter(new OutputStreamWriter(
@@ -117,13 +91,11 @@ public class ThesaurusImport {
 					//entries.add(entry);
 					if (entry.hasParadigm() && !entry.hasUnparsedGram()) {
 						// Looks good, let's write it to all the proper output
-						goodOut.write(entry.toJSON() + "\n");
-						if (addToLexicon)
-							entry.addToLexicon(analizators, importSource);
+						goodOut.write(entry.toJSON() + ",\n");
 					} else if (!entry.hasParadigm() && !entry.hasUnparsedGram())
-						noParadigmOut.write(entry.toJSON() + "\n");
+						noParadigmOut.write(entry.toJSON() + ",\n");
 					else {
-						badOut.write(entry.toJSON() + "\n");
+						badOut.write(entry.toJSON() + ",\n");
 						badCount++;
 					}
 				}
@@ -138,12 +110,14 @@ public class ThesaurusImport {
 			//if (badCount >= 40) break;	//Temporary.
 		}
 		
+		goodOut.write("]");
 		goodOut.close();
+		noParadigmOut.write("]");
 		noParadigmOut.close();
+		badOut.write("]");
 		badOut.close();
 		if (makePronunceList) pronunceOut.close();
 		
-		if (addToLexicon) analizators.toXML_sub(newLexiconFile, importSource);
 	}
 	
 

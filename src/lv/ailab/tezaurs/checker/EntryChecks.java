@@ -19,7 +19,7 @@ public class EntryChecks
 	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
 	 * visi simboli, kas pieļaujami šķirkļa tekstā, izņemot izrunas laukus.
 	 */
-	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?\\(\\)\\[\\]@'\"<>~^ —/%=~–\\-";
+	public static String contentSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ.,:;!?\\()\\[\\]{}@+*&'\"<>~^ —/%=~–\\-";
 	/**
 	 * Kā regulārās izteiksmes klases saturs (bez kvadrātiekavām) uzskaitīti
 	 * visi simboli, kas pieļaujami šķirkļavārdā.
@@ -502,7 +502,7 @@ public class EntryChecks
 			}
 			if(!good_0 || dict.prevIN.containsKey(entry.name))
 				dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
-			if(entry.contents.matches("^.*\\s(CD|DN)\\s.*$")) // ja IN0 tad nevar būt CD un DN
+			if(entry.contents.matches("(.*\\s)?(CD|DN)\\s.*")) // ja IN0 tad nevar būt CD un DN
 				dict.bad.addNewEntry(entry, "Ir gan IN 0, gan CD vai DN");
 		}
 	}
@@ -513,7 +513,7 @@ public class EntryChecks
 	 */
 	public static void obligatoryMarkers(Dictionary.Entry entry, BadEntries bad)
 	{
-		if(!entry.contents.matches(".*\\s(CD|DN)\\s.*"))
+		if(!entry.contents.matches("(.*\\s)?(CD|DN)\\s.*"))
 		{
 			if(!entry.contents.matches("IN\\s.*"))
 				bad.addNewEntry(entry, "Nav IN indikatora");
@@ -527,11 +527,11 @@ public class EntryChecks
 				bad.addNewEntry(entry, "Nav neviena NO indikatora");
 		}
 		// pārbauda vai CD un DN nav vienlaicīgi
-		if (entry.contents.matches(".*\\sCD\\s.*") && entry.contents.matches(".*\\sDN\\s.*"))
+		if (entry.contents.matches("(.*\\s)?CD\\s.*") && entry.contents.matches("(.*\\s)?DN\\s.*"))
 			bad.addNewEntry(entry, "DN un CD vienlaicīgi");
 
 		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
-		if (entry.contents.matches(".*\\s(CD|DN)\\s.*") && entry.contents.matches(".*\\s(NS|NO)\\s.*"))
+		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
 				bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
 	}
 	
@@ -615,12 +615,12 @@ public class EntryChecks
 			int grPlace = gr.end();
 			String AfterGR = entry.contents.substring(grPlace).trim();
 			// Atsijaa tos, kam par daudz GR
-			if (AfterGR.matches("^.*\\sGR\\s.*$"))	
+			if (AfterGR.matches(".*\\sGR\\s.*"))
 			{
 				bad.addNewEntry(entry, "Pārāk daudzi GR");
 			}
 			// pārbauda vai GR ir pirms NS un nav atrodams CD un DN
-			if(!AfterGR.matches("^.*\\sNS\\s.*$") && !AfterGR.matches("^.*\\s(CD|DN)\\s.*$"))
+			if(!AfterGR.matches(".*\\sNS\\s.*") && !AfterGR.matches("(.*\\s)?(CD|DN)\\s.*"))
 			{
 				bad.addNewEntry(entry, "GR jāatrodas pirms NS");
 			}
@@ -628,7 +628,7 @@ public class EntryChecks
 
 		if (entry.contents.matches("^GR\\s.*$")) // ja GR ir teksta sākumā
 		{
-			Matcher cdDn = Pattern.compile("\\s(DN|CD)(?=\\s)").matcher(entry.contents);
+			Matcher cdDn = Pattern.compile("(\\s|^)(DN|CD)(?=\\s)").matcher(entry.contents);
 			int cdDnCount = 0;
 			while (cdDn.find()) // meklē CD un DN pa šķirkli
 			{

@@ -1,2 +1,2 @@
-java -Xmx4g -cp "./lib/*;." lv.ailab.tezaurs.DictionaryXmlToJsonUI labie.xml
+java -Xmx4g -cp "./lib/*;." lv.ailab.tezaurs.DictionaryXmlToJsonUI dati/labie.xml
 @pause

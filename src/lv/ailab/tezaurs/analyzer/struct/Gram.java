@@ -1,7 +1,6 @@
 /*******************************************************************************
  * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa
- * 
+ *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
@@ -1366,7 +1365,7 @@ public class Gram  implements HasToJSON
 				}
 				flags.add("Vietniekvārds");
 			}
-			
+
 			// Paradigm 30: jaundzimušais, pēdējais
 			else if (gramText.startsWith("-šā, v. -šās, s.")) //iereibušais
 			{
@@ -1422,13 +1421,16 @@ public class Gram  implements HasToJSON
 				}
 				flags.add("Sieviešu dzimte");
 			}
-			else if (gramText.matches("s\\. -ā([.;].*)?")) //agrākais
+			else if (gramText.matches("s\\. -ā([.;].*)?")) //agrākais, pirmais
 			{
 				newBegin = "s. -ā".length();
 				if (lemma.endsWith("ais"))
 				{
 					paradigm.add(30);
-					flags.add("Īpašības vārds");					
+					paradigm.add(22);
+					flags.add("Skaitļa vārds");
+					flags.add("Īpašības vārds");
+					flags.add("Neviennozīmīga paradigma");
 				}
 				else
 				{

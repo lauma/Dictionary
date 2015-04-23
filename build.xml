@@ -1,4 +1,4 @@
-<project name="Dictionary" default="clean-build" basedir=".">
+<project name="Dictionary" default="clean-build-no-anal" basedir=".">
 
   <description>
     Build file for Dictionary project
@@ -54,17 +54,30 @@
 
   </target>
 
-  <target name="zip" depends="build" description="compress distribution files">
-    <zip destfile="Dictionary.zip" basedir="${out.prod}" excludes="dati/*.doc,dati/*.klu,dati/*.xls,dati/*.tmp" whenempty="create"/>
+  <target name="zip-all" depends="build" description="compress distribution files">
+    <zip destfile="Dictionary.zip" basedir="${out.prod}"
+         excludes="dati/*.doc,dati/*.klu,dati/*.xls,dati/*.tmp,dati/*.xml"
+         whenempty="create"/>
   </target>
-	
+
+  <target name="zip-no-anal" depends="build" description="compress distribution files">
+    <zip destfile="Dictionary.zip" basedir="${out.prod}"
+         excludes="dati/*.doc,dati/*.klu,dati/*.xls,dati/*.tmp,dati/*.xml,lv/ailab/tezaurs/analyzer/**,lv/ailab/tezaurs/DictionaryXmlToJsonUI.*,TezaursXml2Json.bat"
+         whenempty="create"/>
+  </target>
+
+
   <target name="clean"
           description="clean up" >
     <!-- Delete the ${out.build} and ${dist} directory trees -->
     <delete dir="${out}"/>
   </target>
 
-  <target name="clean-build" depends="clean,build,zip"
+  <target name="clean-build-no-anal" depends="clean,build,zip-no-anal"
+          description="clean and generate the distribution" >
+  </target>
+
+  <target name="clean-build-all" depends="clean,build,zip-all"
           description="clean and generate the distribution" >
   </target>
 

@@ -65,7 +65,13 @@ public class StaxReader
         // Aiztin līdz nākamajam interesantajam elementam.
         while (!e.isEndDocument() && !e.isEndElement() && !e.isStartElement())
         {
-            System.err.println("Event " + e + "ignored ...");
+            // Pabrīdina, ja nu tomēr bija kaut kas interesants.
+            if (!e.isCharacters() || !e.asCharacters().isWhiteSpace())
+            {
+                StringWriter sw = new StringWriter();
+                e.writeAsEncodedUnicode(sw);
+                System.err.println("Event " + sw.toString() + " ignored ...");
+            }
             e = reader.nextEvent();
         }
         // Speciāladījumu apstrāde.
@@ -105,9 +111,7 @@ public class StaxReader
                 if (e.isEndElement() && e.asEndElement().getName().getLocalPart().equals("s"))
                     break;
             }
-
         }
-
         return res.toString();
     }
 

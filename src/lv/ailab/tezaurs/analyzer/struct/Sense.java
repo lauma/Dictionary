@@ -24,7 +24,7 @@ import org.json.simple.JSONObject;
 
 import lv.ailab.tezaurs.utils.HasToJSON;
 import lv.ailab.tezaurs.utils.JSONUtils;
-import lv.ailab.tezaurs.analyzer.utils.Loaders;
+import lv.ailab.tezaurs.analyzer.io.Loaders;
 
 /**
  * n (nozīme / nozīmes nianse) field.

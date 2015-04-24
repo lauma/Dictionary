@@ -27,7 +27,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.json.simple.JSONObject;
 
-import lv.ailab.tezaurs.analyzer.utils.Loaders;
+import lv.ailab.tezaurs.analyzer.io.Loaders;
 import lv.ailab.tezaurs.utils.JSONUtils;
 
 /**

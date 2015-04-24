@@ -20,14 +20,10 @@ package lv.ailab.tezaurs;
 
 import java.io.*;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import lv.ailab.tezaurs.analyzer.io.StaxReader;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import lv.ailab.tezaurs.analyzer.struct.Entry;
 
@@ -70,13 +66,10 @@ public class DictionaryXmlToJsonUI {
 		System.out.println("Sāk apstrādāt.");
 		// Process each node.
 		int count = 0;
-		String thisEntry = dicReader.nexEntry();
-		while (thisEntry != null)
+		Node entryNode = dicReader.readNexEntry();
+		while (entryNode != null)
 		{
-			Node sNode =  DocumentBuilderFactory.newInstance()
-					.newDocumentBuilder().parse(new ByteArrayInputStream(thisEntry.getBytes("UTF8")))
-					.getDocumentElement();
-			Entry entry = new Entry(sNode);
+			Entry entry = new Entry(entryNode);
 			// Print out all pronunciations.
 			if (makePronunceList)
 				for (String p : entry.collectPronunciations())
@@ -91,7 +84,7 @@ public class DictionaryXmlToJsonUI {
 				else
 					badOut.write(entry.toJSON() + ",\n");
 			}
-			thisEntry = dicReader.nexEntry();
+			entryNode = dicReader.readNexEntry();
 			count++;
 			if (count % 50 == 0)
 			System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");

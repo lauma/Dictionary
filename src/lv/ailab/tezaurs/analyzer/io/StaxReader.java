@@ -1,14 +1,15 @@
 package lv.ailab.tezaurs.analyzer.io;
 
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.*;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.StringWriter;
+import java.io.*;
 
 /**
  * Nolasa Tēzaura XML pa vienam šķirklim.
@@ -53,27 +54,17 @@ public class StaxReader
 
     /**
      * Nolasa nākamo <s></s> elementu, ja tāds ir.
-     * @return nolasītā elementa XML vai null, ja elementa nav.
+     * @return nolasītā elementa DOM koks vai null, ja elementa nav.
      */
-    public String nexEntry()
-            throws XMLStreamException, ThesaurusReadingException
+    public Node readNexEntry()
+            throws XMLStreamException, ThesaurusReadingException, IOException,
+            SAXException, ParserConfigurationException
     {
-        //StringBuilder res = new StringBuilder();
         StringWriter res = new StringWriter();
-
-        XMLEvent e = reader.nextEvent();
+        XMLEventWriter writer =
+                XMLOutputFactory.newInstance().createXMLEventWriter(res);
         // Aiztin līdz nākamajam interesantajam elementam.
-        while (!e.isEndDocument() && !e.isEndElement() && !e.isStartElement())
-        {
-            // Pabrīdina, ja nu tomēr bija kaut kas interesants.
-            if (!e.isCharacters() || !e.asCharacters().isWhiteSpace())
-            {
-                StringWriter sw = new StringWriter();
-                e.writeAsEncodedUnicode(sw);
-                System.err.println("Event " + sw.toString() + " ignored ...");
-            }
-            e = reader.nextEvent();
-        }
+        XMLEvent e = getNextInterestingEntry();
         // Speciāladījumu apstrāde.
         if (finished && !e.isEndDocument())
             throw new ThesaurusReadingException("XML document with multiple roots!");
@@ -100,19 +91,70 @@ public class StaxReader
                         "Entry element \"s\" expected," + name + "got!");
 
             // Normālais gadījums, kad tiešām ir šķirklis.
-            e.writeAsEncodedUnicode(res);
+            //e.writeAsEncodedUnicode(res);
+            writer.add(e);
             while (reader.hasNext())
             {
                 e = reader.nextEvent();
                 if (e.isEndDocument())
                     throw new ThesaurusReadingException(
                             "XML document unexpectedly ended in the midle ot the entry!");
-                e.writeAsEncodedUnicode(res);
+                writer.add(e);
+                //e.writeAsEncodedUnicode(res);     // Problēma ar apstrofiem atribūtos.
                 if (e.isEndElement() && e.asEndElement().getName().getLocalPart().equals("s"))
                     break;
             }
         }
-        return res.toString();
+        writer.flush();
+        writer.close();
+        return parseNode(res.toString());
     }
 
+    /**
+     * Atrod nākamo elementu, kam ir tips EndDocument, EndElement vai
+     * StartElement.
+     * @return atrastais elements
+     * @throws XMLStreamException
+     */
+    protected XMLEvent getNextInterestingEntry() throws XMLStreamException
+    {
+        XMLEvent e = reader.nextEvent();
+        while (!e.isEndDocument() && !e.isEndElement() && !e.isStartElement())
+        {
+            // Pabrīdina, ja nu tomēr bija kaut kas interesants.
+            if (!e.isCharacters() || !e.asCharacters().isWhiteSpace())
+            {
+                StringWriter sw = new StringWriter();
+                e.writeAsEncodedUnicode(sw);
+                System.err.println("Event " + sw.toString() + " ignored ...");
+            }
+            e = reader.nextEvent();
+        }
+        return e;
+    }
+
+    /**
+     * No tekstā dota XML elementa izparsē DOM koku.
+     * @param xml   parsējamais teksts
+     * @return  izparsētais DOM koks
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     */
+    protected static Node parseNode(String xml)
+    throws ParserConfigurationException, IOException, SAXException
+    {
+        try
+        {
+            return DocumentBuilderFactory.newInstance()
+                    .newDocumentBuilder()
+                    .parse(new ByteArrayInputStream(xml.getBytes("UTF8")))
+                    .getDocumentElement();
+
+        } catch (Exception e)
+        {
+            System.err.println("Neizdevās dabūt DOM koku:\n\"" + xml + "\"!");
+            throw e;
+        }
+    }
 }

@@ -26,7 +26,7 @@ public interface Rule {
 			HashSet<String> flagCollector);
 	
 	/**
-	 * Apply rule, but hyperns in pattern are optional.
+	 * Apply rule, but hyperns in patternText are optional.
 	 * @param gramText			Grammar string currently being processed.
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule

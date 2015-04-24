@@ -91,6 +91,7 @@ public class DictionaryXmlToJsonUI {
 				else
 					badOut.write(entry.toJSON() + ",\n");
 			}
+			thisEntry = dicReader.nexEntry();
 			count++;
 			if (count % 50 == 0)
 			System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");

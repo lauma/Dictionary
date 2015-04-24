@@ -16,7 +16,16 @@ public class SimpleRule implements Rule
 	 * Un-escaped ending string grammar text must begin with to apply this
 	 * rule.
 	 */
-	protected final String pattern;
+	protected final String patternText;
+
+	/**
+	 * Compiled pattern for direct rule (derived from patternText).
+	 */
+	protected final Pattern directPattern;
+	/**
+	 * Compiled pattern for optional hyphen rule (derived from patternText).
+	 */
+	protected final Pattern optHyphenPattern;
 	/**
 	 * Required ending for the lemma to apply this rule.
 	 */
@@ -26,18 +35,21 @@ public class SimpleRule implements Rule
 	 */
 	protected final int paradigmId;
 	/**
-	 * These flags are added if rule pattern and lemma ending matched.
+	 * These flags are added if rule patternText and lemma ending matched.
 	 */
 	protected final String[] positiveFlags;
 	/**
-	 * These flags are added if rule pattern matched.
+	 * These flags are added if rule patternText matched.
 	 */
 	protected final String[] alwaysFlags;
 
 	public SimpleRule(String pattern, String lemmaEnding, int paradigmId,
 			String[] positiveFlags, String[] alwaysFlags)
 	{
-		this.pattern = pattern;
+		this.patternText = pattern;
+		directPattern = Pattern.compile("\\Q" + patternText + "\\E([;,.].*)?");
+		String regExpPattern = patternText.replace("-", "\\E-?\\Q");
+		optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
 		this.lemmaEnding = lemmaEnding;
 		this.paradigmId = paradigmId;
 		this.positiveFlags = positiveFlags;
@@ -61,9 +73,9 @@ public class SimpleRule implements Rule
 			HashSet<String> flagCollector)
 	{
 		int newBegin = -1;
-		if (gramText.matches("\\Q" + pattern + "\\E([;,.].*)?"))
+		if (directPattern.matcher(gramText).matches())
 		{
-			newBegin = pattern.length();
+			newBegin = patternText.length();
 			if (lemma.endsWith(lemmaEnding))
 			{
 				paradigmCollector.add(paradigmId);
@@ -81,7 +93,7 @@ public class SimpleRule implements Rule
 	}
 	
 	/**
-	 * Apply rule, but hyperns in pattern are optional.
+	 * Apply rule, but hyperns in patternText are optional.
 	 * @param gramText			Grammar string currently being processed.
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule
@@ -97,9 +109,7 @@ public class SimpleRule implements Rule
 			HashSet<String> flagCollector)
 	{
 		int newBegin = -1;
-		String regExpPattern = pattern.replace("-", "\\E-?\\Q");
-		regExpPattern = "(\\Q" + regExpPattern + "\\E)([;,.].*)?";
-		Matcher m = Pattern.compile(regExpPattern).matcher(gramText);
+		Matcher m = optHyphenPattern.matcher(gramText);
 		if (m.matches())
 		{
 			newBegin = m.group(1).length();

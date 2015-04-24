@@ -828,10 +828,10 @@ public class Gram  implements HasToJSON
 						+ lemma.substring(0, lemma.length() - 1)
 						+ "s\\E) \\[([^\\]]*?)\\] -a, v\\.)(.*)?")) // ābeļziedi: -u, vsk. ābeļzieds [a^be`ļzie^c] -a, v.
 			{
-				Pattern pattern = Pattern.compile("(-u, vsk\\. (\\Q"
+				Pattern patternText = Pattern.compile("(-u, vsk\\. (\\Q"
 						+ lemma.substring(0, lemma.length() - 1)
 						+ "s\\E) \\[([^\\]]*?)\\] -a, v\\.)(.*)?");
-				Matcher matcher = pattern.matcher(gramText);
+				Matcher matcher = patternText.matcher(gramText);
 				if (!matcher.matches()) 
 					System.err.printf("Problem matching \"%s\" with \"ābeļzieds\" rule\n", lemma);
 				newBegin = matcher.group(1).length();

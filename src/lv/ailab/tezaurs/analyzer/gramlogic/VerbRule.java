@@ -23,9 +23,9 @@ public class VerbRule implements Rule
 	 * 						3rd parson in present and past
 	 * @param lemmaEnd		required ending for the lemma to apply this rule
 	 * @param paradigmId	paradigm ID to set if rule matched
-	 * @param positiveFlags	flags to set if rule pattern and lemma ending
+	 * @param positiveFlags	flags to set if rule patternText and lemma ending
 	 * 						matched
-	 * @param alwaysFlags	flags to set if rule pattern matched
+	 * @param alwaysFlags	flags to set if rule patternText matched
 	 */
 	public VerbRule(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
@@ -183,7 +183,7 @@ public class VerbRule implements Rule
 	}
 	
 	/**
-	 * Apply rule, but hyperns in pattern are optional.
+	 * Apply rule, but hyperns in patternText are optional.
 	 * @param gramText			Grammar string currently being processed.
 	 * @param lemma				Lemma string for this header.
 	 * @param paradigmCollector	Map, where paradigm will be added, if rule

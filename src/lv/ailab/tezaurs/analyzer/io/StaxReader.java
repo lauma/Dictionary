@@ -13,6 +13,7 @@ import java.io.*;
 
 /**
  * Nolasa Tēzaura XML pa vienam šķirklim.
+ * FIXME Ja risinājums ir par lēnu, atmest katra šķirkļa parsēšanu ar DOM.
  * @author Lauma
  */
 public class StaxReader

@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import org.w3c.dom.Node;
@@ -229,12 +230,12 @@ public class Entry
 	{
 		ArrayList<String> res = new ArrayList<> ();
 		if (head.lemma.pronunciation != null)
-			res.add(head.lemma.pronunciation);
+			res.addAll(Arrays.asList(head.lemma.pronunciation));
 		if (derivs == null || derivs.isEmpty()) return res;
 		for (Header h : derivs)
 		{
 			if (h.lemma.pronunciation != null)
-				res.add(h.lemma.pronunciation);
+				res.addAll(Arrays.asList(h.lemma.pronunciation));
 		}
 		return res;
 	}

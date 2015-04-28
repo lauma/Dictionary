@@ -22,6 +22,9 @@ import lv.ailab.tezaurs.utils.HasToJSON;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * vf (vārdforma) field.
  */
@@ -31,7 +34,7 @@ public class Lemma implements HasToJSON
 	/**
 	 * ru (runa) field, optional here.
 	 */
-	public String pronunciation;
+	public String[] pronunciation;
 	
 	public Lemma ()
 	{
@@ -46,13 +49,23 @@ public class Lemma implements HasToJSON
 	public Lemma (Node vfNode)
 	{
 		text = vfNode.getTextContent();
-		pronunciation = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		if ("".equals(pronunciation)) pronunciation = null;
-		if (pronunciation == null) return;
-		if (pronunciation.startsWith("["))
-			pronunciation = pronunciation.substring(1);
-		if (pronunciation.endsWith("]"))
-			pronunciation = pronunciation.substring(0, pronunciation.length() - 1);
+
+		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
+		if ("".equals(pronString)) return;
+		if (pronString.contains(", arī "))
+			pronunciation = pronString.split(", arī ");
+		else if (pronString.contains(","))
+			pronunciation = pronString.split(",");
+		else pronunciation = new String[] {pronString};
+		for (int i = 0; i < pronunciation.length; i++)
+		{
+			pronunciation[i] = pronunciation[i].trim();
+			if (pronunciation[i].startsWith("["))
+				pronunciation[i] = pronunciation[i].substring(1);
+			if (pronunciation[i].endsWith("]"))
+				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
+		}
+
 	}
 	
 	/**
@@ -93,9 +106,12 @@ public class Lemma implements HasToJSON
 		res.append(String.format("\"Lemma\":\"%s\"", JSONObject.escape(text)));
 		if (pronunciation != null)
 		{
-			res.append(", \"Pronunciation\":\"");
-			res.append(JSONObject.escape(pronunciation));
-			res.append("\"");
+			res.append(", \"Pronunciation\":[\"");
+			ArrayList<String> escaped = new ArrayList<>();
+			for (String pron : pronunciation)
+				escaped.add(JSONObject.escape(pron));
+			res.append(String.join("\", \"", escaped));
+			res.append("\"]");
 		}
 		return res.toString();
 	}

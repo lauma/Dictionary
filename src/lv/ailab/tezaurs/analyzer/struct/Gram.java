@@ -59,7 +59,7 @@ public class Gram  implements HasToJSON
 	{
 		/* Paradigm Unknown: Atgriezeniskie lietvārdi -šanās
 		 */
-		new SimpleRule("ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", "šanās", 0,
+		SimpleRule.of("ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", "šanās", 0,
 				new String[] {"Lietvārds", "Atgriezeniskais lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //aizbildināšanās
 		
@@ -72,9 +72,9 @@ public class Gram  implements HasToJSON
 		VerbRule.secondConjDir("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
 
 		// Single-case rules.
-		new SimpleRule(	"-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", "ēt", 16,
+		SimpleRule.of(	"-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", "ēt", 16,
 				new String[] {"Darbības vārds"}, null), //adverbializēt
-		new SimpleRule("-oju, -o, -o, -ojam, -ojat, pag. -oju; -ojām, -ojāt; pav. -o, -ojiet", "ot", 16,
+		SimpleRule.of("-oju, -o, -o, -ojam, -ojat, pag. -oju; -ojām, -ojāt; pav. -o, -ojiet", "ot", 16,
 				new String[] {"Darbības vārds"}, null), //acot
 				
 				
@@ -85,9 +85,7 @@ public class Gram  implements HasToJSON
 		VerbRule.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt"), //aizsvilināt
 				
 		// Single-case rules.
-		new SimpleRule("parasti 3. pers., -ina, pag. -ināja", "ināt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizducināt
+		ThirdPersVerbRule.thirdConjDir("-ina, pag. -ināja", "ināt"), //aizducināt
 		
 
 		/* Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
@@ -117,17 +115,11 @@ public class Gram  implements HasToJSON
 		// Single-case rules.
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A, B, C, D
-		new SimpleRule("parasti 3. pers., -dūcas, pag. -dūcās", "dūkties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"dūkties\""},
-				new String[] {"Parasti 3. personā"}),  //aizdūkties
+		ThirdPersVerbRule.firstConjRefl("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
 		// E, F, G, H, I, J, K
-		new SimpleRule("parasti 3. pers., -kaucas, pag. -kaucās", "kaukties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"kaukties\""},
-				new String[] {"Parasti 3. personā"}), //aizkaukties
+		ThirdPersVerbRule.firstConjRefl("-kaucas, pag. -kaucās", "kaukties"), //aizkaukties
 		// L, M, N, O, P, R, S, Š
-		new SimpleRule("parasti 3. pers., -šalcas, pag. -šalcās", "šalkties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"šalkties\""},
-				new String[] {"Parasti 3. personā"}), //aizšalkties
+		ThirdPersVerbRule.firstConjRefl("-šalcas, pag. -šalcās", "šalkties"), //aizšalkties
 		// T, U, V, Z
 		
 		
@@ -139,14 +131,10 @@ public class Gram  implements HasToJSON
 		VerbRule.secondConjRefl("-ājos, -ājies,", "-ājas, pag. -ājos", "āties"), //aizdomāties
 		
 		// Single-case rules.
-		new SimpleRule("parasti 3. pers., -ējas, pag. -ējās", "ēties", 19,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //absorbēties
-		new SimpleRule("parasti 3. pers., -ojas, pag. -ojās", "oties", 19,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //daudzkāršoties
+		ThirdPersVerbRule.secondConjRefl("-ējas, pag. -ējās", "ēties"), //absorbēties
+			ThirdPersVerbRule.secondConjRefl("-ojas, pag. -ojās", "oties"), //daudzkāršoties
 			
-		new SimpleRule("-ējos, -ējies, -ējas, -ējamies, -ējaties, pag. -ējos, -ējāmies, -ējāties; pav. -ējies, -ējieties", "ēties", 19,
+		SimpleRule.of("-ējos, -ējies, -ējas, -ējamies, -ējaties, pag. -ējos, -ējāmies, -ējāties; pav. -ējies, -ējieties", "ēties", 19,
 				new String[] {"Darbības vārds"}, null), //adverbiēties
 				
 		
@@ -164,104 +152,59 @@ public class Gram  implements HasToJSON
 
 		// Single-case rules.
 		// Generic ending rules.
-		new SimpleRule("parasti 3. pers., -as, pag. -ējās", "ēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizčiepstēties
-		new SimpleRule("parasti 3. pers., -inās, pag. -inājās", "ināties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbubināties
-		new SimpleRule("parasti 3. pers., -ās, pag. -ījās", "īties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbīdīties
+		ThirdPersVerbRule.thirdConjRefl("-as, pag. -ējās", "ēties"), //aizčiepstēties
+		ThirdPersVerbRule.thirdConjRefl("-inās, pag. -inājās", "ināties"), //aizbubināties
+		ThirdPersVerbRule.thirdConjRefl("-ās, pag. -ījās", "īties"), //aizbīdīties
 		
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A, B
-		new SimpleRule("parasti 3. pers., -brikšķas, pag. -brikšķējās", "brikšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbrikšķēties
-		new SimpleRule("parasti 3. pers., -brikšas, pag. -brikšējās", "brikšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbrikšēties
-		new SimpleRule("parasti 3. pers., -brīkšķas, pag. -brīkšķējās", "brīkšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbrīkšķēties
-		new SimpleRule("parasti 3. pers., -brīkšas, pag. -brīkšējās", "brīkšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizbrīkšēties
+		ThirdPersVerbRule.thirdConjRefl("-brikšķas, pag. -brikšķējās", "brikšķēties"), //aizbrikšķēties
+		ThirdPersVerbRule.thirdConjRefl("-brikšas, pag. -brikšējās", "brikšēties"), //aizbrikšēties
+		ThirdPersVerbRule.thirdConjRefl("-brīkšķas, pag. -brīkšķējās", "brīkšķēties"), //aizbrīkšķēties
+		ThirdPersVerbRule.thirdConjRefl("-brīkšas, pag. -brīkšējās", "brīkšēties"), //aizbrīkšēties
 		// C, Č
-		new SimpleRule("parasti 3. pers., -čabas, pag. -čabējās", "čabēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizčabēties
-		new SimpleRule("parasti 3. pers., -čaukstas, pag. -čaukstējās", "čaukstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizčaukstēties
+		ThirdPersVerbRule.thirdConjRefl("-čabas, pag. -čabējās", "čabēties"), //aizčabēties
+		ThirdPersVerbRule.thirdConjRefl("-čaukstas, pag. -čaukstējās", "čaukstēties"), //aizčaukstēties
 		// D
-		new SimpleRule("parasti 3. pers., -dārdas, pag. -dārdējās", "dārdēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdārdēties
-		new SimpleRule("parasti 3. pers., -drebas, pag. -drebējās", "drebēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdrebēties
+		ThirdPersVerbRule.thirdConjRefl("-dārdas, pag. -dārdējās", "dārdēties"), //aizdārdēties
+		ThirdPersVerbRule.thirdConjRefl("-drebas, pag. -drebējās", "drebēties"), //aizdrebēties
 		// E, F, G
-		new SimpleRule("parasti 3. pers., -grābās, pag. -grābējās", "grabēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizgrabēties
-		new SimpleRule("parasti 3. pers., -gurkstas, pag. -gurkstējās", "gurkstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizgurkstēties
+		ThirdPersVerbRule.thirdConjRefl("-grābās, pag. -grābējās", "grabēties"), //aizgrabēties
+		ThirdPersVerbRule.thirdConjRefl("-gurkstas, pag. -gurkstējās", "gurkstēties"), //aizgurkstēties
 		// H, I, J, K
-		new SimpleRule("parasti 3. pers., -klabas, pag. -klabējās", "klabēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklabēties
-		new SimpleRule("parasti 3. pers., -klaudzas, pag. -klaudzējās", "klaudzēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklaudzēties
-		new SimpleRule("parasti 3. pers., -klukstas, pag. -klukstējās", "klukstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklukstēties
-		new SimpleRule("parasti 3. pers., -klunkšas, pag. -klunkšējās", "klunkšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklunkšēties
-		new SimpleRule("parasti 3. pers., -klunkšķas, pag. -klunkšķējās", "klunkšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklunkšķēties
-		new SimpleRule("parasti 3. pers., -knakstās, pag. -knakstējās", "knakstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknakstēties
-		new SimpleRule("parasti 3. pers., -knakšas, pag. -knakšējās", "knakšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknakšēties
-		new SimpleRule("parasti 3. pers., -knakšķas, pag. -knakšķējās", "knakšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknakšķēties
-		new SimpleRule("parasti 3. pers., -knaukšas, pag. -knaukšējās", "knaukšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknaukšēties
-		new SimpleRule("parasti 3. pers., -knaukšķas, pag. -knaukšķējās", "knaukšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknaukšķēties
-		new SimpleRule("parasti 3. pers., -knikšas, pag. -knikšējās", "knikšēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknikšēties
-		new SimpleRule("parasti 3. pers., -knikšķas, pag. -knikšķējās", "knikšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizknikšķēties
-		new SimpleRule("parasti 3. pers., -krakstas, pag. -krakstējās", "krakstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizkrakstēties
-		new SimpleRule("parasti 3. pers., -krakšķas, pag. -krakšķējās", "krakšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizkrakšķēties
-		new SimpleRule("parasti 3. pers., -kurkstas, pag. -kurkstējās", "kurkstēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizkurkstēties
-		new SimpleRule("parasti 3. pers., -kurkšķas, pag. -kurkšķējās", "kurkšķēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizkurkšķēties
+		ThirdPersVerbRule.thirdConjRefl("-klabas, pag. -klabējās", "klabēties"), //aizklabēties
+		ThirdPersVerbRule.thirdConjRefl("-klaudzas, pag. -klaudzējās",
+				"klaudzēties"), //aizklaudzēties
+		ThirdPersVerbRule.thirdConjRefl("-klukstas, pag. -klukstējās",
+				"klukstēties"), //aizklukstēties
+		ThirdPersVerbRule.thirdConjRefl("-klunkšas, pag. -klunkšējās",
+				"klunkšēties"), //aizklunkšēties
+		ThirdPersVerbRule.thirdConjRefl("-klunkšķas, pag. -klunkšķējās",
+				"klunkšķēties"), //aizklunkšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knakstās, pag. -knakstējās",
+				"knakstēties"), //aizknakstēties
+		ThirdPersVerbRule.thirdConjRefl("-knakšas, pag. -knakšējās",
+				"knakšēties"), //aizknakšēties
+		ThirdPersVerbRule.thirdConjRefl("-knakšķas, pag. -knakšķējās",
+				"knakšķēties"), //aizknakšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knaukšas, pag. -knaukšējās",
+				"knaukšēties"), //aizknaukšēties
+		ThirdPersVerbRule.thirdConjRefl("-knaukšķas, pag. -knaukšķējās",
+				"knaukšķēties"), //aizknaukšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knikšas, pag. -knikšējās",
+				"knikšēties"), //aizknikšēties
+		ThirdPersVerbRule.thirdConjRefl("-knikšķas, pag. -knikšķējās",
+				"knikšķēties"), //aizknikšķēties
+		ThirdPersVerbRule.thirdConjRefl("-krakstas, pag. -krakstējās",
+				"krakstēties"), //aizkrakstēties
+		ThirdPersVerbRule.thirdConjRefl("-krakšķas, pag. -krakšķējās",
+				"krakšķēties"), //aizkrakšķēties
+		ThirdPersVerbRule.thirdConjRefl("-kurkstas, pag. -kurkstējās",
+				"kurkstēties"), //aizkurkstēties
+		ThirdPersVerbRule.thirdConjRefl("-kurkšķas, pag. -kurkšķējās",
+				"kurkšķēties"), //aizkurkšķēties
 		// L, M
-		new SimpleRule("parasti 3. pers., -mirdzas, pag. -mirdzējās", "mirdzēties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}) //aizmirdzēties
+		ThirdPersVerbRule.thirdConjRefl("-mirdzas, pag. -mirdzējās", "mirdzēties") //aizmirdzēties
 		//N, O, P, R, S, T, U, V, Z	
 	};
 	
@@ -278,13 +221,13 @@ public class Gram  implements HasToJSON
 		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
 		 * declension nouns.
 		 */
-		new SimpleRule("-acs, dsk. ģen. -acu, s.", "acs", 11,
+		SimpleRule.of("-acs, dsk. ģen. -acu, s.", "acs", 11,
 				new String[] {"Lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //uzacs, acs
-		new SimpleRule("-krāsns, dsk. ģen. -krāšņu, s.", "krāsns", 11,
+		SimpleRule.of("-krāsns, dsk. ģen. -krāšņu, s.", "krāsns", 11,
 				new String[] {"Lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //aizkrāsns
-		new SimpleRule("-valsts, dsk. ģen. -valstu, s.", "valsts", 11,
+		SimpleRule.of("-valsts, dsk. ģen. -valstu, s.", "valsts", 11,
 				new String[] {"Lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //agrārvalsts
 
@@ -292,25 +235,25 @@ public class Gram  implements HasToJSON
 		 */
 		// Rules for both all person and third-person-only cases.
 		// Verbs with infinitive homoforms:
-		new VerbRule("-aužu, -aud,", "-auž, pag. -audu", "aust", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"aust\" (kā zirneklis)"},
+		VerbRule.of("-aužu, -aud,", "-auž, pag. -audu", "aust", 15,
+				new String[] {"Locīt kā \"aust\" (kā zirneklis)"},
 				null), //aizaust 2
-		new VerbRule("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"degt\" (kādu citu)"},
+		VerbRule.of("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt", 15,
+				new String[] {"Locīt kā \"degt\" (kādu citu)"},
 				null), //aizdegt 1
-		new VerbRule("-degu, -dedz,", "-deg, pag. -degu", "degt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"degt\" (pašam)"},
+		VerbRule.of("-degu, -dedz,", "-deg, pag. -degu", "degt", 15,
+				new String[] {"Locīt kā \"degt\" (pašam)"},
 				null), //apdegt, aizdegt 2
-		new VerbRule("-dzenu, -dzen,", "-dzen, pag. -dzinu", "dzīt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"dzīt\" (kā lopus)"},
+		VerbRule.of("-dzenu, -dzen,", "-dzen, pag. -dzinu", "dzīt", 15,
+				new String[] {"Locīt kā \"dzīt\" (kā lopus)"},
 				null), //aizdzīt 1	
-		new VerbRule("-iru, -ir,", "-ir, pag. -īru", "irt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā ar airiem)"},
+		VerbRule.of("-iru, -ir,", "-ir, pag. -īru", "irt", 15,
+				new String[] {"Locīt kā \"irt\" (kā ar airiem)"},
 				null), //aizirt 1
-		new VerbRule("-minu, -min,", "-min, pag. -minu", "mīt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"mīt\" (kā pedāļus)"},
+		VerbRule.of("-minu, -min,", "-min, pag. -minu", "mīt", 15,
+				new String[] {"Locīt kā \"mīt\" (kā pedāļus)"},
 				null), //aizmīt 1
-		new VerbRule("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
+		VerbRule.of("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"mīt\" (kā naudu)"},
 				null), //aizmīt 2
 				
@@ -429,62 +372,48 @@ public class Gram  implements HasToJSON
 				
 		// Single case rules.		
 		// Verb specific rules ordered by type and alphabetically by verb infinitive.
-		new SimpleRule("-gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu", "gult", 15,
+		SimpleRule.of("-gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu", "gult", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"gult\"", "Paralēlās formas"},
 				null), //aizgult
-		new SimpleRule("-jumju, -jum, -jumj, pag. -jūmu, arī -jumu", "jumt", 15,
+		SimpleRule.of("-jumju, -jum, -jumj, pag. -jūmu, arī -jumu", "jumt", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"jumt\"", "Paralēlās formas"},
 				null), //aizjumt
-		new SimpleRule("-plešu, -plet, -pleš, pag. -pletu, arī -plētu", "plest", 15,
+		SimpleRule.of("-plešu, -plet, -pleš, pag. -pletu, arī -plētu", "plest", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"plest\"", "Paralēlās formas"},
 				null), //aizplest
-		new SimpleRule("-tupstu, -tupsti, -tupst, pag. -tupu", "tupt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"tupt\"", "Paralēlās formas"},
+		SimpleRule.of("-tupstu, -tupsti, -tupst, pag. -tupu", "tupt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"tupt\"", "Paralēlās formas"},
 				null), //aiztupt
 				// TODO tupu/tupstu
 				
-		// A
-		new SimpleRule("parasti 3. pers., -aust, pag. -ausa", "aust", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)"},
-				new String[] {"Parasti 3. personā"}), //aizaust 1
-		// B
-		new SimpleRule("parasti 3. pers., -brūk, pag. -bruka", "brukt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"brukt\""},
-				new String[] {"Parasti 3. personā"}), //aizbrukt
+		// A, B
+		ThirdPersVerbRule.firstConjDir("-brūk, pag. -bruka", "brukt"), //aizbrukt
 		// C, D
-		new SimpleRule("parasti 3. pers., -dim, pag. -dima", "dimt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"dimt\""},
-				new String[] {"Parasti 3. personā"}), //aizdimt
-		new SimpleRule("parasti 3. pers., -dip, pag. -dipa", "dipt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"dipt\""},
-				new String[] {"Parasti 3. personā"}), //aizdipt
-		new SimpleRule("parasti 3. pers., -dzīst, pag. -dzija", "dzīt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)"},
-				new String[] {"Parasti 3. personā"}), //aizdzīt 2
+		ThirdPersVerbRule.firstConjDir("-dim, pag. -dima", "dimt"), //aizdimt
+		ThirdPersVerbRule.firstConjDir("-dip, pag. -dipa", "dipt"), //aizdipt
 		// E, F, G
-		new SimpleRule("parasti 3. pers., -grūst, pag. -gruva", "grūt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"grūt\""},
-				new String[] {"Parasti 3. personā"}), //aizgrūt
-		new SimpleRule("3. pers. -guldz, pag. -guldza", "gulgt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"gulgt\""},
-				new String[] {"Parasti 3. personā"}), //aizgulgt
-		// H, I
-		new SimpleRule("parasti 3. pers., -irst, pag. -ira", "irt", 15,
+		ThirdPersVerbRule.firstConjDir("-grūst, pag. -gruva", "grūt"), //aizgrūt
+		// H, I, J, K
+		ThirdPersVerbRule.firstConjDir("-kviec, pag. -kvieca", "kviekt"), //aizkviekt
+		// L, M
+		ThirdPersVerbRule.firstConjDir("-milst, pag. -milza", "milzt"), //aizmilzt
+		// N, Ņ
+		ThirdPersVerbRule.firstConjDir("-ņirb, pag. -ņirba", "ņirbt"), //aizņirbt
+		// O, P, R, S, Š, T, U, V, Z
+
+		// Parallel forms and nonstandard.
+		SimpleRule.of("parasti 3. pers., -aust, pag. -ausa", "aust", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)"},
+				new String[]{"Parasti 3. personā"}), //aizaust 1
+		SimpleRule.of("parasti 3. pers., -dzīst, pag. -dzija", "dzīt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)"},
+				new String[]{"Parasti 3. personā"}), //aizdzīt 2
+		SimpleRule.of("parasti 3. pers., -irst, pag. -ira", "irt", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā audums)"},
 				new String[] {"Parasti 3. personā"}), //irt 2
-		// J, K
-		new SimpleRule("parasti 3. pers., -kviec, pag. -kvieca", "kviekt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"kviekt\""},
-				new String[] {"Parasti 3. personā"}), //aizkviekt
-		// L, M
-		new SimpleRule("parasti 3. pers., -milst, pag. -milza", "milzt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"milzt\""},
-				new String[] {"Parasti 3. personā"}), //aizmilzt
-		// N, Ņ
-		new SimpleRule("parasti 3. pers., -ņirb, pag. -ņirba", "ņirbt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"ņirbt\""},
-				new String[] {"Parasti 3. personā"}), //aizņirbt
-		// O, P, R, S, Š, T, U, V, Z
+		SimpleRule.of("3. pers. -guldz, pag. -guldza", "gulgt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"gulgt\""},
+				new String[]{"Parasti 3. personā"}), //aizgulgt
 
 		/* Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 		 */
@@ -493,14 +422,18 @@ public class Gram  implements HasToJSON
 				
 		// Single case rules.
 		// Verb-specific rules.
-		new SimpleRule("parasti 3. pers., -kūko, pag. -kūkoja", "kūkot", 16,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizkūkot
-		new SimpleRule("parasti 3. pers., -mirgo, pag. -mirgoja", "mirgot", 16,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizmirgot
+		ThirdPersVerbRule.secondConjDir("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
+		ThirdPersVerbRule.secondConjDir("-mirgo, pag. -mirgoja", "mirgot"), //aizmirgot
+		// Parallel forms.
+		SimpleRule.of("parasti 3. pers., -ē, pag. -ēja (retāk -gluma, 1. konj.)", "glumēt", 16,
+				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Parasti 3. personā"}), //aizglumēt
+		SimpleRule.of("parasti 3. pers., -glumē, pag. -glumēja (retāk -gluma, 1. konj.)", "glumēt", 16,
+				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Parasti 3. personā"}), //izglumēt
+
 				
-		new SimpleRule("-dabūju, -dabū, -dabū, pag. -dabūju", "dabūt", 16,
+		SimpleRule.of("-dabūju, -dabū, -dabū, pag. -dabūju", "dabūt", 16,
 				new String[] {"Darbības vārds"}, null), //aizdabūt
 				
 		/* Paradigm 17: Darbības vārdi 3. konjugācija tiešie
@@ -528,76 +461,58 @@ public class Gram  implements HasToJSON
 				
 		// Single case rules.		
 		// Verb specific rules ordered by type and alphabetically by verb infinitive.
-		new SimpleRule("-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju", "mocīt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas"}, null), //aizmocīt
+		SimpleRule.of(
+				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
+				"mocīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas"}, null), //aizmocīt
 			
 		// A, B
-		new SimpleRule("parasti 3. pers., -blākš, pag. -blākšēja", "blākšēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizblākšēt
-		new SimpleRule("parasti 3. pers., -blākšķ, pag. -blākšķēja", "blākšķēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizblākšķēt
+		ThirdPersVerbRule.thirdConjDir("-blākš, pag. -blākšēja", "blākšēt"), //aizblākšēt
+		ThirdPersVerbRule.thirdConjDir("-blākšķ, pag. -blākšķēja", "blākšķēt"), //aizblākšķēt
 		// C, Č
-		new SimpleRule("parasti 3. pers., -čab, pag. -čabēja", "čabēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizčabēt
-		new SimpleRule("parasti 3. pers., -čaukst, pag. -čaukstēja", "čaukstēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizčaukstēt
+		ThirdPersVerbRule.thirdConjDir("-čab, pag. -čabēja", "čabēt"), //aizčabēt
+		ThirdPersVerbRule.thirdConjDir("-čaukst, pag. -čaukstēja", "čaukstēt"), //aizčaukstēt
 		// D
-		new SimpleRule("parasti 3. pers., -dārd, pag. -dārdēja", "dārdēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdārdēt
-		new SimpleRule("parasti 3. pers., -dimd, pag. -dimdēja", "dimdēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdimdēt
-		new SimpleRule("parasti 3. pers., -dip, pag. -dipēja", "dipēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdipēt
-		new SimpleRule("parasti 3. pers., -dun, pag. -dunēja", "dunēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdunēt
-		new SimpleRule("parasti 3. pers., -džinkst, pag. -džinkstēja", "džinkstēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizdžinkstēt
+		ThirdPersVerbRule.thirdConjDir("-dārd, pag. -dārdēja", "dārdēt"), //aizdārdēt
+		ThirdPersVerbRule.thirdConjDir("-dimd, pag. -dimdēja", "dimdēt"), //aizdimdēt
+		ThirdPersVerbRule.thirdConjDir("-dip, pag. -dipēja", "dipēt"), //aizdipēt
+		ThirdPersVerbRule.thirdConjDir("-dun, pag. -dunēja", "dunēt"), //aizdunēt
+		ThirdPersVerbRule.thirdConjDir("-džinkst, pag. -džinkstēja", "džinkstēt"), //aizdžinkstēt
 		// E, F, G
-		new SimpleRule("parasti 3. pers., -gurkst, pag. -gurkstēja", "gurkstēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizgurkstēt
+		ThirdPersVerbRule.thirdConjDir("-gurkst, pag. -gurkstēja", "gurkstēt"), //aizgurkstēt
 		// H, I, J, K
-		new SimpleRule("parasti 3. pers., -klakst, pag. -klakstēja", "klakstēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklakstēt
-		new SimpleRule("parasti 3. pers., -klaudz, pag. -klaudzēja", "klaudzēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizklaudzēt
-		// L, M
-		new SimpleRule("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", "mirdzēt", 17,
+		ThirdPersVerbRule.thirdConjDir("-klakst, pag. -klakstēja", "klakstēt"), //aizklakstēt
+		ThirdPersVerbRule.thirdConjDir("-klaudz, pag. -klaudzēja", "klaudzēt"), //aizklaudzēt
+		// L, M, N, Ņ
+		ThirdPersVerbRule.thirdConjDir("-ņirb, pag. -ņirbēja", "ņirbēt"), //aizņirbēt
+		// O, P, R, S, T, U, V, Z
+
+		// Parallel forms.
+		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", "grandēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Parasti 3. personā"}), //aizgrandēt
+		SimpleRule.of("parasti 3. pers., -gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", "gruzdēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Parasti 3. personā"}), //aizgruzdēt
+		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", "mirdzēt", 17,
 				new String[] {"Darbības vārds", "Paralēlās formas"},
 				new String[] {"Parasti 3. personā"}), //aizmirdzēt
-		// N, Ņ
-		new SimpleRule("parasti 3. pers., -ņirb, pag. -ņirbēja", "ņirbēt", 17,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizņirbēt
-		// O, P
-		new SimpleRule("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", "pelēt", 17,
+		SimpleRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", "pelēt", 17,
 				new String[] {"Darbības vārds", "Paralēlās formas"},
 				new String[] {"Parasti 3. personā"}), //aizpelēt
-		// R, S, T, U, V, Z
 				
 		/* Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 		 */
 		// Rules for both all person and third-person-only cases.
 		// Verbs with infinitive homoforms:
-		new VerbRule("-iros, -iries,", "-iras, pag. -īros", "irties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"irties\" (kā ar airiem)"},
+		VerbRule.of("-iros, -iries,", "-iras, pag. -īros", "irties", 18,
+				new String[] {"Locīt kā \"irties\" (kā ar airiem)"},
 				null), //aizirties
-		new VerbRule("-minos, -minies,", "-minas, pag. -minos", "mīties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"mīties\" (kā pedāļus)"},
+		VerbRule.of("-minos, -minies,", "-minas, pag. -minos", "mīties", 18,
+				new String[] {"Locīt kā \"mīties\" (kā pedāļus)"},
 				null), //aizmīties
-		new VerbRule("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"mīties\" (kā naudu)"},
+		VerbRule.of("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties", 18,
+				new String[] {"Locīt kā \"mīties\" (kā naudu)"},
 				null), //apmīties
 				
 		// Verb-specific rules ordered alphabetically by verb infinitive.
@@ -636,18 +551,17 @@ public class Gram  implements HasToJSON
 				
 				
 		// Single case rules.
-		new SimpleRule("-gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos", "gulties", 18,
+		SimpleRule.of("-gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos", "gulties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"gulties\"", "Paralēlās formas"},
 				null), //aizgulties
-		new SimpleRule("-plešos, -pleties, -plešas, pag. -pletos, arī -plētos", "plesties", 18,
+		SimpleRule.of("-plešos, -pleties, -plešas, pag. -pletos, arī -plētos", "plesties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
 				null), //ieplesties
-		new SimpleRule("-tupstos, -tupsties, -tupstas, pag. -tupos", "tupties", 18,
+		SimpleRule.of("-tupstos, -tupsties, -tupstas, pag. -tupos", "tupties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"tupties\"", "Paralēlās formas"},
 				null), //aiztupties
-				//TODO check paralel forms.
-				
-		new SimpleRule("parasti 3. pers., -plešas, pag. -pletās, arī -plētās", "plesties", 18,
+
+		SimpleRule.of("parasti 3. pers., -plešas, pag. -pletās, arī -plētās", "plesties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
 				new String[] {"Parasti 3. personā"}), //aizplesties
 
@@ -660,12 +574,11 @@ public class Gram  implements HasToJSON
 		VerbRule.thirdConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 				
 		// Single case rules.
-		new SimpleRule("-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties", 20,
+		ThirdPersVerbRule.secondConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
+
+		SimpleRule.of("-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties", 20,
 				new String[] {"Darbības vārds", "Paralēlās formas"},
-				null), //aizmocīties	
-		new SimpleRule("parasti 3. pers., -lokās, pag. -locījās", "locīties", 20,
-				new String[] {"Darbības vārds"},
-				new String[] {"Parasti 3. personā"}), //aizlocīties
+				null) //aizmocīties
 	};
 	
 	/**

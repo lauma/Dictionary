@@ -2,6 +2,7 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Rule that contains two verb-specific grammar string cases, each of them is
@@ -14,7 +15,7 @@ import java.util.HashSet;
 public class VerbRule implements Rule
 {
 	protected SimpleRule allPersonRule;
-	protected SimpleRule thirdPersonRule;
+	protected ThirdPersVerbRule thirdPersonRule;
 	
 	/**
 	 * @param patternBegin	part of the grammar string containing endings for
@@ -29,33 +30,41 @@ public class VerbRule implements Rule
 	 */
 	public VerbRule(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			String[] positiveFlags, String[] alwaysFlags)
+			Set<String> positiveFlags, Set<String> alwaysFlags)
 	{
-		String[] alwaysFlags3p;
-		if (alwaysFlags != null)
-		{
-			alwaysFlags3p = Arrays.copyOf(alwaysFlags, alwaysFlags.length + 1);
-			alwaysFlags3p[alwaysFlags3p.length-1] = "Parasti 3. personā";
-		}
-		else alwaysFlags3p = new String[] {"Parasti 3. personā"};
+		HashSet<String> positiveFlagsFull = new HashSet<>();
+		positiveFlagsFull.add("Darbības vārds");
+		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
+		HashSet<String> alwaysFlagsSet = alwaysFlags == null ? null : new HashSet<>(alwaysFlags);
+
 		String begin = patternBegin.trim();
 		String end = patternEnd.trim();
 		String allPersonPattern = begin + " " + end;
 		String thirdPersonPattern;
 		if (end.endsWith("u"))
-			thirdPersonPattern = "parasti 3. pers., " + end.substring(0, end.length()-1) + "a";
+			thirdPersonPattern = end.substring(0, end.length()-1) + "a";
 		else if (end.endsWith("os"))
-			thirdPersonPattern = "parasti 3. pers., " + end.substring(0, end.length()-2) + "ās";
+			thirdPersonPattern = end.substring(0, end.length()-2) + "ās";
 		else
 		{
 			System.err.printf("Could not figure out third-person-only rule for grammar pattern \"%s\"\n", allPersonPattern);
 			thirdPersonPattern = allPersonPattern;
 		}
 		allPersonRule = new SimpleRule(allPersonPattern,
-				lemmaEnd, paradigmId, positiveFlags, alwaysFlags);
-		thirdPersonRule = new SimpleRule(thirdPersonPattern,
-				lemmaEnd, paradigmId, positiveFlags, alwaysFlags3p);
+				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+		thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
+				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 	}
+
+	public static VerbRule of(String patternBegin, String patternEnd,
+			String lemmaEnd, int paradigmId,
+			String[] positiveFlags, String[] alwaysFlags)
+	{
+		return new VerbRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+	}
+
 	/**
 	 * Create simple VerbRule for 1st conjugation direct verbs without parallel
 	 * forms or infinitive homoforms.
@@ -70,8 +79,8 @@ public class VerbRule implements Rule
 	public static VerbRule firstConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				15, new String[] {"Darbības vārds", "Locīt kā \""+ lemmaEnd + "\""}, null);
+		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
+				15, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
 	}
 	
 	/**
@@ -87,8 +96,7 @@ public class VerbRule implements Rule
 	public static VerbRule secondConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				16, new String[] {"Darbības vārds"}, null);
+		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 16, null, null);
 	}
 	
 	/**
@@ -104,8 +112,7 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				17, new String[] {"Darbības vārds"}, null);
+		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 17, null, null);
 	}
 	
 	/**
@@ -122,8 +129,8 @@ public class VerbRule implements Rule
 	public static VerbRule firstConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				18, new String[] {"Darbības vārds", "Locīt kā \""+ lemmaEnd + "\""}, null);
+		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
+				18, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
 	}
 	
 	/**
@@ -139,8 +146,7 @@ public class VerbRule implements Rule
 	public static VerbRule secondConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				19, new String[] {"Darbības vārds"}, null);
+		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 19, null, null);
 	}
 	
 	/**
@@ -156,8 +162,7 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new VerbRule(patternBegin, patternEnd, lemmaEnd,
-				20, new String[] {"Darbības vārds"}, null);
+		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 20, null, null);
 	}
 	
 	/**

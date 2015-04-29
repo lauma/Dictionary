@@ -1,7 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,14 +36,14 @@ public class SimpleRule implements Rule
 	/**
 	 * These flags are added if rule patternText and lemma ending matched.
 	 */
-	protected final String[] positiveFlags;
+	protected final Set<String> positiveFlags;
 	/**
 	 * These flags are added if rule patternText matched.
 	 */
-	protected final String[] alwaysFlags;
+	protected final Set<String> alwaysFlags;
 
 	public SimpleRule(String pattern, String lemmaEnding, int paradigmId,
-			String[] positiveFlags, String[] alwaysFlags)
+			Set<String> positiveFlags, Set<String> alwaysFlags)
 	{
 		this.patternText = pattern;
 		directPattern = Pattern.compile("\\Q" + patternText + "\\E([;,.].*)?");
@@ -52,8 +51,27 @@ public class SimpleRule implements Rule
 		optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
 		this.lemmaEnding = lemmaEnding;
 		this.paradigmId = paradigmId;
-		this.positiveFlags = positiveFlags;
-		this.alwaysFlags = alwaysFlags;
+		this.positiveFlags = positiveFlags == null? null : Collections.unmodifiableSet(positiveFlags);
+		this.alwaysFlags = alwaysFlags == null ? null : Collections.unmodifiableSet(alwaysFlags);
+	}
+
+	/**
+	 * Constructor method for convenience - make SimpleRule if flags are given
+	 * in arrays, not sets.
+	 * @param patternText	text grammar string must start with
+	 * @param lemmaEnding	required ending for the lemma to apply this rule
+	 * @param paradigmId	paradigm ID to set if rule matched
+	 * @param positiveFlags	flags to set if rule patternText and lemma ending
+	 * 						matched
+	 * @param alwaysFlags	flags to set if rule patternText matched
+	 * @return	new SimpleRule
+	 */
+	public static SimpleRule of(String patternText, String lemmaEnding,
+			int paradigmId, String[] positiveFlags, String[] alwaysFlags)
+	{
+		return new SimpleRule(patternText, lemmaEnding, paradigmId,
+				positiveFlags == null ? null : new HashSet<String>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
 	}
 	
 	/**
@@ -80,14 +98,14 @@ public class SimpleRule implements Rule
 			{
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)
-					flagCollector.addAll(Arrays.asList(positiveFlags));
+					flagCollector.addAll(positiveFlags);
 			}
 			else
 			{
 				System.err.printf("Problem matching \"%s\" with paradigm %s\n", lemma, paradigmId);
 				newBegin = 0;
 			}
-			if (alwaysFlags != null) flagCollector.addAll(Arrays.asList(alwaysFlags));
+			if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);
 		}
 		return newBegin;
 	}
@@ -117,14 +135,14 @@ public class SimpleRule implements Rule
 			{
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)
-					flagCollector.addAll(Arrays.asList(positiveFlags));
+					flagCollector.addAll(positiveFlags);
 			}
 			else
 			{
 				System.err.printf("Problem matching \"%s\" with paradigm %s\n", lemma, paradigmId);
 				newBegin = 0;
 			}
-			if (alwaysFlags != null) flagCollector.addAll(Arrays.asList(alwaysFlags));
+			if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);
 		}
 		return newBegin;
 	}

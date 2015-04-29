@@ -574,7 +574,7 @@ public class Gram  implements HasToJSON
 		VerbRule.thirdConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 				
 		// Single case rules.
-		ThirdPersVerbRule.secondConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
+		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
 
 		SimpleRule.of("-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties", 20,
 				new String[] {"Darbības vārds", "Paralēlās formas"},

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 /**
  * Rule for patterns starting with "parasti 3.pers.,".
@@ -21,10 +20,10 @@ public class ThirdPersVerbRule extends SimpleRule
         super("parasti 3. pers., " + pattern, lemmaEnding, paradigmId,
                 Collections.unmodifiableSet(new HashSet<String>() {{
                         add("Darbības vārds");
-                        if (alwaysFlags!= null) addAll(positiveFlags); }}),
+                        if (positiveFlags != null) addAll(positiveFlags); }}),
                 Collections.unmodifiableSet(new HashSet<String>() {{
                         add("Parasti 3. personā");
-                        if (alwaysFlags!= null) addAll(alwaysFlags); }}));
+                        if (alwaysFlags != null) addAll(alwaysFlags); }}));
     }
 
     /**
@@ -43,8 +42,8 @@ public class ThirdPersVerbRule extends SimpleRule
             int paradigmId, String[] positiveFlags, String[] alwaysFlags)
     {
         return new ThirdPersVerbRule(patternText, lemmaEnding, paradigmId,
-                positiveFlags == null ? null : new HashSet<String>(Arrays.asList(positiveFlags)),
-                alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
+                positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+                alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
     }
 
     /**

@@ -18,12 +18,12 @@ public class ThirdPersVerbRule extends SimpleRule
     public ThirdPersVerbRule(String pattern, String lemmaEnding, int paradigmId,
             Set<String> positiveFlags, Set<String> alwaysFlags)
     {
-        super("parasti 3.pers., " + pattern, lemmaEnding, paradigmId,
+        super("parasti 3. pers., " + pattern, lemmaEnding, paradigmId,
                 Collections.unmodifiableSet(new HashSet<String>() {{
-                        add("Darb?bas v?rds");
+                        add("Darbības vārds");
                         if (alwaysFlags!= null) addAll(positiveFlags); }}),
                 Collections.unmodifiableSet(new HashSet<String>() {{
-                        add("Parasti 3. person?");
+                        add("Parasti 3. personā");
                         if (alwaysFlags!= null) addAll(alwaysFlags); }}));
     }
 
@@ -34,9 +34,9 @@ public class ThirdPersVerbRule extends SimpleRule
      * @param lemmaEnding   required ending for the lemma to apply this rule
      * @param paradigmId	paradigm ID to set if rule matched
      * @param positiveFlags	flags to set if rule patternText and lemma ending
-     * 						matched ("Darb?bas v?rds" is added automatically).
+     * 						matched ("Darbības vārds" is added automatically).
      * @param alwaysFlags	flags to set if rule patternText matched ("Parasti
-     *                      3. person?" is added automatically).
+     *                      3. personā" is added automatically).
      * @return	new ThirdPersVerbRule
      */
     public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
@@ -61,7 +61,7 @@ public class ThirdPersVerbRule extends SimpleRule
             String pattern, String lemmaEnd)
     {
         return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                15, new String[]{"Loc?t k? \"" + lemmaEnd + "\""}, null);
+                15, new String[]{"Locīt kā \"" + lemmaEnd + "\""}, null);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ThirdPersVerbRule extends SimpleRule
             String pattern, String lemmaEnd)
     {
         return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                18, new String[] {"Loc?t k? \""+ lemmaEnd + "\""}, null);
+                18, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
     }
 
     /**

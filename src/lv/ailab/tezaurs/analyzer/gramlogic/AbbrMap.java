@@ -191,11 +191,23 @@ public class AbbrMap {
 		res.put("val.", "Valodniecība");
 		res.put("vet.", "Veterinārija");
 		res.put("zool.", "Zooloģija");
-		
+
+		res.put("angļu val.", "Angļu");
+		res.put("angļu val.", "Vārds svešvalodā");
 		res.put("arābu", "Arābu");
 		res.put("arābu", "Vārds svešvalodā");
 		res.put("arābu val.", "Arābu");
 		res.put("arābu val.", "Vārds svešvalodā");
+		res.put("ig. val.", "Igauņu");
+		res.put("ig. val.", "Vārds svešvalodā");
+		res.put("itāļu val.", "Itāļu/Itāliešu");
+		res.put("itāļu val.", "Vārds svešvalodā");
+		res.put("krievu val.", "Krievu");
+		res.put("krievu val.", "Vārds svešvalodā");
+		res.put("poļu val.", "Poļu");
+		res.put("poļu val.", "Vārds svešvalodā");
+		res.put("turku val.", "Turku");
+		res.put("turku val.", "Vārds svešvalodā");
 		res.put("vācu val.", "Vācu");
 		res.put("vācu val.", "Vārds svešvalodā");
 		res.put("fr.", "Franču");
@@ -204,7 +216,7 @@ public class AbbrMap {
 		res.put("grieķu", "Vārds svešvalodā");
 		res.put("gr.", "Grieķu");
 		res.put("gr.", "Vārds svešvalodā");
-		res.put("it.", "Itāliešu"); //Muz
+		res.put("it.", "Itāļu/Itāliešu"); //Muz
 		res.put("it.", "Vārds svešvalodā");
 		res.put("lat.", "Latīņu");
 		res.put("lat.", "Vārds svešvalodā");
@@ -212,7 +224,10 @@ public class AbbrMap {
 		res.put("liet.", "Vārds svešvalodā");
 		res.put("sengr.", "Sengrieķu");
 		res.put("sengr.", "Vārds svešvalodā");
-		
+
+		res.put("bērnu val.", "Bērnu valoda");
+		res.put("parasti bērnu val.", "Bērnu valoda");
+
 		res.put("dial. (augšzemnieku)", "Agušzemnieku");	// Unique.
 		res.put("dial. (augšzemnieku)", "Dialekts");	// Unique.
 		res.put("latg.", "Latgaliešu");

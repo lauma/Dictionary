@@ -200,8 +200,6 @@ public class AbbrMap {
 		res.put("arābu val.", "Vārds svešvalodā");
 		res.put("ig. val.", "Igauņu");
 		res.put("ig. val.", "Vārds svešvalodā");
-		res.put("itāļu val.", "Itāļu/Itāliešu");
-		res.put("itāļu val.", "Vārds svešvalodā");
 		res.put("krievu val.", "Krievu");
 		res.put("krievu val.", "Vārds svešvalodā");
 		res.put("poļu val.", "Poļu");

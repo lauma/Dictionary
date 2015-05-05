@@ -6,30 +6,48 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Rule for patterns starting with "parasti 3.pers.,".
+ * Rule for patterns starting with "parasti 3. pers.," or  "tikai 3. pers.,"
  */
-public class ThirdPersVerbRule extends SimpleRule
+public class ThirdPersVerbRule implements Rule
 {
+    protected SimpleRule thirdPersOnly;
+    protected SimpleRule thirdPersUsually;
 
     /**
-
+     * @param patternText   pattern text without "parasti/tikai 3. pers.," part.
+     * @param lemmaEnding   required ending for the lemma to apply this rule
+     * @param paradigmId	paradigm ID to set if rule matched
+     * @param positiveFlags	flags to set if rule patternText and lemma ending
+     * 						matched ("Darbības vārds" is added automatically).
+     * @param alwaysFlags	flags to set if rule patternText matched ("Parasti
+     *                      3. personā" is added automatically).
+     * @return	new ThirdPersVerbRule
      */
-    public ThirdPersVerbRule(String pattern, String lemmaEnding, int paradigmId,
+    public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
             Set<String> positiveFlags, Set<String> alwaysFlags)
     {
-        super("parasti 3. pers., " + pattern, lemmaEnding, paradigmId,
-                Collections.unmodifiableSet(new HashSet<String>() {{
+        thirdPersUsually = new SimpleRule(
+                "parasti 3. pers., " + patternText, lemmaEnding, paradigmId,
+                new HashSet<String>() {{
                         add("Darbības vārds");
-                        if (positiveFlags != null) addAll(positiveFlags); }}),
-                Collections.unmodifiableSet(new HashSet<String>() {{
+                        if (positiveFlags != null) addAll(positiveFlags); }},
+                new HashSet<String>() {{
                         add("Parasti 3. personā");
-                        if (alwaysFlags != null) addAll(alwaysFlags); }}));
+                        if (alwaysFlags != null) addAll(alwaysFlags); }});
+        thirdPersOnly = new SimpleRule(
+                "tikai 3. pers., " + patternText, lemmaEnding, paradigmId,
+                new HashSet<String>() {{
+                    add("Darbības vārds");
+                    if (positiveFlags != null) addAll(positiveFlags); }},
+                new HashSet<String>() {{
+                    add("Tikai 3. personā");
+                    if (alwaysFlags != null) addAll(alwaysFlags); }});
     }
 
     /**
      * Constructor method for convenience - make ThirdPersVerbRule if flags are
      * given in arrays, not sets.
-     * @param patternText   pattern text without "parasti 3.pers.," part.
+     * @param patternText   pattern text without "parasti/tikai 3. pers.," part.
      * @param lemmaEnding   required ending for the lemma to apply this rule
      * @param paradigmId	paradigm ID to set if rule matched
      * @param positiveFlags	flags to set if rule patternText and lemma ending
@@ -140,4 +158,51 @@ public class ThirdPersVerbRule extends SimpleRule
         return new ThirdPersVerbRule(pattern, lemmaEnd, 20, null, null);
     }
 
+    /**
+     * Apply rule as-is - no magic whatsoever.
+     *
+     * @param gramText          Grammar string currently being processed.
+     * @param lemma             Lemma string for this header.
+     * @param paradigmCollector Map, where paradigm will be added, if rule
+     *                          matches.
+     * @param flagCollector     Map, where flags will be added, if rule
+     *                          matches.
+     * @return New beginning for gram string if one of these rules matched,
+     * -1 otherwise.
+     */
+    @Override
+    public int applyDirect(String gramText, String lemma,
+            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+    {
+        int newBegin = thirdPersUsually.applyDirect(
+                gramText, lemma, paradigmCollector, flagCollector);
+        if (newBegin == -1)
+            newBegin = thirdPersOnly.applyDirect(
+                    gramText, lemma, paradigmCollector, flagCollector);
+        return newBegin;
+    }
+
+    /**
+     * Apply rule, but hyperns in patternText are optional.
+     *
+     * @param gramText          Grammar string currently being processed.
+     * @param lemma             Lemma string for this header.
+     * @param paradigmCollector Map, where paradigm will be added, if rule
+     *                          matches.
+     * @param flagCollector     Map, where flags will be added, if rule
+     *                          matches.
+     * @return New beginning for gram string if one of these rules matched,
+     * -1 otherwise.
+     */
+    @Override
+    public int applyOptHyphens(String gramText, String lemma,
+            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+    {
+        int newBegin = thirdPersUsually.applyOptHyphens(
+                gramText, lemma, paradigmCollector, flagCollector);
+        if (newBegin == -1)
+            newBegin = thirdPersOnly.applyOptHyphens(
+                    gramText, lemma, paradigmCollector, flagCollector);
+        return newBegin;
+    }
 }

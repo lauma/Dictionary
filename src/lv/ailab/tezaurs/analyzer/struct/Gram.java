@@ -173,36 +173,21 @@ public class Gram  implements HasToJSON
 		ThirdPersVerbRule.thirdConjRefl("-gurkstas, pag. -gurkstējās", "gurkstēties"), //aizgurkstēties
 		// H, I, J, K
 		ThirdPersVerbRule.thirdConjRefl("-klabas, pag. -klabējās", "klabēties"), //aizklabēties
-		ThirdPersVerbRule.thirdConjRefl("-klaudzas, pag. -klaudzējās",
-				"klaudzēties"), //aizklaudzēties
-		ThirdPersVerbRule.thirdConjRefl("-klukstas, pag. -klukstējās",
-				"klukstēties"), //aizklukstēties
-		ThirdPersVerbRule.thirdConjRefl("-klunkšas, pag. -klunkšējās",
-				"klunkšēties"), //aizklunkšēties
-		ThirdPersVerbRule.thirdConjRefl("-klunkšķas, pag. -klunkšķējās",
-				"klunkšķēties"), //aizklunkšķēties
-		ThirdPersVerbRule.thirdConjRefl("-knakstās, pag. -knakstējās",
-				"knakstēties"), //aizknakstēties
-		ThirdPersVerbRule.thirdConjRefl("-knakšas, pag. -knakšējās",
-				"knakšēties"), //aizknakšēties
-		ThirdPersVerbRule.thirdConjRefl("-knakšķas, pag. -knakšķējās",
-				"knakšķēties"), //aizknakšķēties
-		ThirdPersVerbRule.thirdConjRefl("-knaukšas, pag. -knaukšējās",
-				"knaukšēties"), //aizknaukšēties
-		ThirdPersVerbRule.thirdConjRefl("-knaukšķas, pag. -knaukšķējās",
-				"knaukšķēties"), //aizknaukšķēties
-		ThirdPersVerbRule.thirdConjRefl("-knikšas, pag. -knikšējās",
-				"knikšēties"), //aizknikšēties
-		ThirdPersVerbRule.thirdConjRefl("-knikšķas, pag. -knikšķējās",
-				"knikšķēties"), //aizknikšķēties
-		ThirdPersVerbRule.thirdConjRefl("-krakstas, pag. -krakstējās",
-				"krakstēties"), //aizkrakstēties
-		ThirdPersVerbRule.thirdConjRefl("-krakšķas, pag. -krakšķējās",
-				"krakšķēties"), //aizkrakšķēties
-		ThirdPersVerbRule.thirdConjRefl("-kurkstas, pag. -kurkstējās",
-				"kurkstēties"), //aizkurkstēties
-		ThirdPersVerbRule.thirdConjRefl("-kurkšķas, pag. -kurkšķējās",
-				"kurkšķēties"), //aizkurkšķēties
+		ThirdPersVerbRule.thirdConjRefl("-klaudzas, pag. -klaudzējās", "klaudzēties"), //aizklaudzēties
+		ThirdPersVerbRule.thirdConjRefl("-klukstas, pag. -klukstējās", "klukstēties"), //aizklukstēties
+		ThirdPersVerbRule.thirdConjRefl("-klunkšas, pag. -klunkšējās", "klunkšēties"), //aizklunkšēties
+		ThirdPersVerbRule.thirdConjRefl("-klunkšķas, pag. -klunkšķējās", "klunkšķēties"), //aizklunkšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knakstās, pag. -knakstējās", "knakstēties"), //aizknakstēties
+		ThirdPersVerbRule.thirdConjRefl("-knakšas, pag. -knakšējās", "knakšēties"), //aizknakšēties
+		ThirdPersVerbRule.thirdConjRefl("-knakšķas, pag. -knakšķējās", "knakšķēties"), //aizknakšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knaukšas, pag. -knaukšējās", 	"knaukšēties"), //aizknaukšēties
+		ThirdPersVerbRule.thirdConjRefl("-knaukšķas, pag. -knaukšķējās", "knaukšķēties"), //aizknaukšķēties
+		ThirdPersVerbRule.thirdConjRefl("-knikšas, pag. -knikšējās", "knikšēties"), //aizknikšēties
+		ThirdPersVerbRule.thirdConjRefl("-knikšķas, pag. -knikšķējās", "knikšķēties"), //aizknikšķēties
+		ThirdPersVerbRule.thirdConjRefl("-krakstas, pag. -krakstējās", "krakstēties"), //aizkrakstēties
+		ThirdPersVerbRule.thirdConjRefl("-krakšķas, pag. -krakšķējās", "krakšķēties"), //aizkrakšķēties
+		ThirdPersVerbRule.thirdConjRefl("-kurkstas, pag. -kurkstējās", "kurkstēties"), //aizkurkstēties
+		ThirdPersVerbRule.thirdConjRefl("-kurkšķas, pag. -kurkšķējās", "kurkšķēties"), //aizkurkšķēties
 		// L, M
 		ThirdPersVerbRule.thirdConjRefl("-mirdzas, pag. -mirdzējās", "mirdzēties") //aizmirdzēties
 		//N, O, P, R, S, T, U, V, Z	
@@ -222,40 +207,30 @@ public class Gram  implements HasToJSON
 		 * declension nouns.
 		 */
 		SimpleRule.of("-acs, dsk. ģen. -acu, s.", "acs", 11,
-				new String[] {"Lietvārds"},
-				new String[] {"Sieviešu dzimte"}), //uzacs, acs
+				new String[] {"Lietvārds"}, new String[] {"Sieviešu dzimte"}), //uzacs, acs
 		SimpleRule.of("-krāsns, dsk. ģen. -krāšņu, s.", "krāsns", 11,
-				new String[] {"Lietvārds"},
-				new String[] {"Sieviešu dzimte"}), //aizkrāsns
+				new String[] {"Lietvārds"}, new String[] {"Sieviešu dzimte"}), //aizkrāsns
 		SimpleRule.of("-valsts, dsk. ģen. -valstu, s.", "valsts", 11,
-				new String[] {"Lietvārds"},
-				new String[] {"Sieviešu dzimte"}), //agrārvalsts
+				new String[] {"Lietvārds"}, new String[] {"Sieviešu dzimte"}), //agrārvalsts
 
 		/* Paradigm 15: Darbības vārdi 1. konjugācija tiešie + parasti 3. pers.
 		 */
 		// Rules for both all person and third-person-only cases.
 		// Verbs with infinitive homoforms:
 		VerbRule.of("-aužu, -aud,", "-auž, pag. -audu", "aust", 15,
-				new String[] {"Locīt kā \"aust\" (kā zirneklis)"},
-				null), //aizaust 2
+				new String[] {"Locīt kā \"aust\" (kā zirneklis)"}, null), //aizaust 2
 		VerbRule.of("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt", 15,
-				new String[] {"Locīt kā \"degt\" (kādu citu)"},
-				null), //aizdegt 1
+				new String[] {"Locīt kā \"degt\" (kādu citu)"}, null), //aizdegt 1
 		VerbRule.of("-degu, -dedz,", "-deg, pag. -degu", "degt", 15,
-				new String[] {"Locīt kā \"degt\" (pašam)"},
-				null), //apdegt, aizdegt 2
+				new String[] {"Locīt kā \"degt\" (pašam)"}, null), //apdegt, aizdegt 2
 		VerbRule.of("-dzenu, -dzen,", "-dzen, pag. -dzinu", "dzīt", 15,
-				new String[] {"Locīt kā \"dzīt\" (kā lopus)"},
-				null), //aizdzīt 1	
+				new String[] {"Locīt kā \"dzīt\" (kā lopus)"}, null), //aizdzīt 1
 		VerbRule.of("-iru, -ir,", "-ir, pag. -īru", "irt", 15,
-				new String[] {"Locīt kā \"irt\" (kā ar airiem)"},
-				null), //aizirt 1
+				new String[] {"Locīt kā \"irt\" (kā ar airiem)"}, null), //aizirt 1
 		VerbRule.of("-minu, -min,", "-min, pag. -minu", "mīt", 15,
-				new String[] {"Locīt kā \"mīt\" (kā pedāļus)"},
-				null), //aizmīt 1
+				new String[] {"Locīt kā \"mīt\" (kā pedāļus)"}, null), //aizmīt 1
 		VerbRule.of("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"mīt\" (kā naudu)"},
-				null), //aizmīt 2
+				new String[] {"Locīt kā \"mīt\" (kā naudu)"}, null), //aizmīt 2
 				
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A
@@ -428,14 +403,13 @@ public class Gram  implements HasToJSON
 		SimpleRule.of("parasti 3. pers., -ē, pag. -ēja (retāk -gluma, 1. konj.)", "glumēt", 16,
 				new String[] {"Darbības vārds", "Paralēlās formas"},
 				new String[] {"Parasti 3. personā"}), //aizglumēt
-		SimpleRule.of("parasti 3. pers., -glumē, pag. -glumēja (retāk -gluma, 1. konj.)", "glumēt", 16,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
-				new String[] {"Parasti 3. personā"}), //izglumēt
+		SimpleRule.of(
+				"parasti 3. pers., -glumē, pag. -glumēja (retāk -gluma, 1. konj.)",
+				"glumēt", 16,
+				new String[]{"Darbības vārds", "Paralēlās formas"},
+				new String[]{"Parasti 3. personā"}), //izglumēt
 
-				
-		SimpleRule.of("-dabūju, -dabū, -dabū, pag. -dabūju", "dabūt", 16,
-				new String[] {"Darbības vārds"}, null), //aizdabūt
-				
+
 		/* Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 		 */
 		// Rules for both all person and third-person-only cases.
@@ -455,6 +429,7 @@ public class Gram  implements HasToJSON
 		// M, N, O, P
 		VerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt"), //aizpeldēt
 		VerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt"), //appilēt, aizpilēt
+		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt"), //aizprecēt
 		// R, S, T
 		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt"), //aizturēt
 		// U, V, Z
@@ -485,7 +460,9 @@ public class Gram  implements HasToJSON
 		ThirdPersVerbRule.thirdConjDir("-klaudz, pag. -klaudzēja", "klaudzēt"), //aizklaudzēt
 		// L, M, N, Ņ
 		ThirdPersVerbRule.thirdConjDir("-ņirb, pag. -ņirbēja", "ņirbēt"), //aizņirbēt
-		// O, P, R, S, T, U, V, Z
+		// O, P
+
+		// R, S, T, U, V, Z
 
 		// Parallel forms.
 		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", "grandēt", 17,
@@ -546,7 +523,7 @@ public class Gram  implements HasToJSON
 		// N
 		VerbRule.firstConjRefl("-nesos, -nesies,", "-nesas, pag. -nesos", "nesties"), //aiznesties
 		// Ņ
-		VerbRule.firstConjRefl("-ņemos, -ņemies,", "-ņemas, pag. -ņemos", "ņemties"), //aizņemties
+		VerbRule.firstConjRefl("-ņemos, -ņemies,", "-ņemas, pag. -ņēmos", "ņemties"), //aizņemties
 		// O, P, R, S, T, U, V, Z
 				
 				
@@ -572,12 +549,16 @@ public class Gram  implements HasToJSON
 		VerbRule.thirdConjRefl("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties"), //aizdzīties
 		VerbRule.thirdConjRefl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties"), //aizkustēties
 		VerbRule.thirdConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
-				
+		VerbRule.thirdConjRefl("-precos, -precies,", "-precas, pag. -precējos", "precēties"), //aizprecēties
+
 		// Single case rules.
 		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
+		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
 
-		SimpleRule.of("-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties", 20,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
+		SimpleRule.of(
+				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos",
+				"mocīties", 20,
+				new String[]{"Darbības vārds", "Paralēlās formas"},
 				null) //aizmocīties
 	};
 	

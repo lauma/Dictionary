@@ -56,14 +56,6 @@ public class StringUtils
 		return found;//tiek atgriezta atbilde vai atrasts
 	}
 
-	//metode, kas atrod nākamo simbolu aiz padotās simbolu virknes
-	public static char nextCh(String entry, String Symbol)
-	{
-		char nextChar;
-		int pos = entry.indexOf(Symbol) + Symbol.length();
-		nextChar = entry.charAt(pos);
-		return nextChar;
-	}
 	//metode, kas atrod nākamo vārdu aiz metodei padotā vārda
 	public static String wordAfter(String entryInf, String word)
 	{

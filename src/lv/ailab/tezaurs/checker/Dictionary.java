@@ -86,9 +86,7 @@ public class Dictionary
 				stats.entryCount++;
 				//šķirkļa informācijas ieguve
 				Dictionary.Entry entry = new Dictionary.Entry(entries[i], i);
-				//String entryInf = entries[i].substring(entries[i].indexOf(" ")).trim();
-				//šķirkļa vārda ieguve
-				//String entryName = entries[i].substring(0, entries[i].indexOf(" ")).trim();
+
 				// pārbaude vai šķirkļa vārds ir labs
 				if(EntryChecks.isEntryNameGood(entry, bad))
 				{
@@ -98,37 +96,27 @@ public class Dictionary
 					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
 					{
 						EntryChecks.hasContents(entry, bad);
-
 						//Metode, kās pārbauda simbolus šķirklī
 						EntryChecks.langChars(entry, bad);
-
+                        // Marķieru pareizrakstība
+                        EntryChecks.markerCase(entry, bad);
 						//Metode, kas pārbauda saīsinājumu un vietniekvārdu gramatiku
 						EntryChecks.grammar(entry, bad);
-
 						//Metode kas pārbauda vai aiz @ seko pareizs skaitlis
 						EntryChecks.at(entry, bad);
-
 						//Metode pārbauda vai ir visi nepieciešamie indikatori
 						EntryChecks.obligatoryMarkers(entry, bad);
-
 						//iekavu līdzsvars
 						EntryChecks.bracketing(entry, bad);
 
 						//pārbauda šķirkļus kas satur GR
 						EntryChecks.gr(entry, bad);
-
-						//Metode kas iet cauri skjirklim pa vienam vārdam un sīki pārbauda visus iespējamos gadījumus
-						//EntryChecks.wordByWord(entry, bad);
-
 						//pārbauda sķirkļus kas satur RU
 						EntryChecks.ru(entry, bad);
-
 						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz CD
 						EntryChecks.wordAfterCd(entry, entries, bad);
-
 						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz DN
 						EntryChecks.wordAfterDn(entry, entries, bad);
-
 						//Skjirkli ar IN indikatoriem
 						if (entry.contents.matches("^IN\\s.*$"))
 						{
@@ -137,30 +125,24 @@ public class Dictionary
 
 							//Metode kas pārbauda likumsakarības ar IN 0 un IN 1
 							EntryChecks.inNumber(entry, this, index);
-
 							//Metode, kas pārbauda nozīmes - NS
 							EntryChecks.nsNoNg(entry, bad);
+							//Metode, kas pārbauda apakšnozīmes
 							EntryChecks.an(entry, bad);
-
 							//Metode, kas pārbauda piemērus -  PI
 							EntryChecks.piPn(entry, bad);
-
-							//Metode, kas pārbauda Frazeoloģismus
+							//Metode, kas pārbauda frazeoloģismus
 							EntryChecks.fsFr(entry, bad);
-
-							//Metode, kas pārbauda Divdabjus
+							//Metode, kas pārbauda divdabjus
 							EntryChecks.dsDe(entry, bad);
-
 							//Metode, kas pārbauda atsauces - LI
 							EntryChecks.li(entry, bad, references);
-
-							// ieliek bijushos vaardus ar IN sarakstā
+							// ieliek sastaptos vārdus ar IN sarakstā
 							prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
 						}
 						else
 						{
 							EntryChecks.notInUnity(entry, bad, prevIN);
-
 							prevIN.put(entry.name, Trio.of(-1, entry.fullText, entry.id));
 						}
 					}

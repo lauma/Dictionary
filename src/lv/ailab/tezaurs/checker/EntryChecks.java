@@ -104,100 +104,6 @@ public class EntryChecks
 	}
 
 	/**
-	 * Vārdu pa vārdam pārbauda dažādas marķieru specifiskās lietas.
-	 * FIXME - iespējams, ka šo derētu kaut kā sacirst mazākos gabalos.
-	 */
-/*	public static void wordByWord(Dictionary.Entry entry, BadEntries bad)
-	{
-		//masīvs ar vārdņicas marķieriem
-		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
-		String[] gramIdent = {"NG","AG","PG","FG"}; // masīvs ar gramatikas marķieriem
-		//mainīgais ko izmanto, lai pārbaudītu @2 un @5 līdzsvaru
-		int at = 0;
-		boolean gramOpen = false; // vai teksts ir tieši aiz gramtikas infikatora
-		boolean open = false; // vai ir bijis @2 indikators
-		String forChecking = entry.contents;
-		int len = forChecking.length();
-		int spaces = StringUtils.countSpaces(forChecking); // atstarpju skaits simbolu virknē
-
-		while(len > 0 && spaces > 0) // kamēr nav palicis viens vārds
-		{
-			if (StringUtils.countSpaces(forChecking) <= 0) continue;
-
-			String word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
-			if(StringUtils.countSpaces(forChecking) == 0)
-				word = forChecking.trim(); // iegūts pirmais vārds virknē
-			if(word.length() > 0)
-			{
-				if(word.contains("@2"))
-				{
-					open = true;
-					//if(StringUtils.countSpaces(forChecking) > 0)
-					//{
-						// pārbauda starp @2 un @5 ir teksts
-						//if(StringUtils.wordAfter(forChecking, word).contains("@5"))
-						//	bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
-					//}
-					if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
-						at = 2;
-					//else
-					//	bad.addNewEntry(entry, "Divi @2 pēc kārtas");
-				}
-				if(word.contains("@5"))
-				{
-					open = false;
-					//if(StringUtils.countSpaces(forChecking) > 0)
-					//{
-						// izņemot ja tos atdala iekavas
-						//if(StringUtils.wordAfter(forChecking, word).contains("@2") && !word.contains(")"))
-						//	bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam");
-					//}
-					//if(at == 0) //pārbauda vai pirms tam ir bijis @2 bez @5, gadījumā ja @5 ir šķirkļa sākumā
-					//	bad.addNewEntry(entry, "Pirms @5 jābūt @2");
-					//if(at == 5) //pārbauda vai pirms tam ir bijis @2 bez @5
-					//	bad.addNewEntry(entry, "Divi @5 pēc kārtas");
-					if(at == 2)
-						at = 5;
-				}
-				//if(open) //pārbauda vai @2 un @5 ir viena marķiera robežās
-				//{
-					//if(Arrays.asList(ident).contains(word) // ja ir kāds ident masīva locekļiem no marķierem
-					//		|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekļiem
-                    //    bad.addNewEntry(entry, "@2 un @5 jābūt 1 marķiera robežās");
-				//}
-				//beigu pieturzīmes pārbaude
-				if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
-				{
-					gramOpen = true; // ir bijis gramatikas marķieris
-					if(!StringUtils.wordAfter(forChecking, word).contains("@2")) // vai aiz marķiera ir @2
-						bad.addNewEntry(entry,
-								"Aiz gramatikas marķiera jābūt @2");
-				}
-				if(gramOpen)
-				{
-					if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits marķieris
-					{
-						//bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
-						gramOpen = false;
-					}
-					if(word.contains("@5")) // ja @5 tad gramatika noslēdzas
-						gramOpen = false;
-				}
-			}
-			//viens cikls beidzas
-			int index = forChecking.indexOf(word) + word.length() + 1;  //indekss tiek pārlikts uz nākamo vārdu
-			forChecking = forChecking.substring(index); // virkne zaudē pirmo vārdu
-			len = forChecking.length(); // jaunās virknes garums
-			spaces = StringUtils.countSpaces(forChecking); // jaunās virknes atstarpju skaits
-		}
-		// ja pēdējais vārds, tiek veiktas pārbaudes vai ir @5 galā
-		//if(gramOpen)
-		//	bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
-		//if(open && !forChecking.contains("@5"))
-		//	bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
-	}//*/
-
-	/**
 	 * Ar @2 un @5 marķieriem saistītās pārbāudes.
  	 */
 	public static void at(Dictionary.Entry entry, BadEntries bad)
@@ -205,15 +111,15 @@ public class EntryChecks
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entry.contents.matches(".*@[13467890].*"))
 			bad.addNewEntry(entry, "Aiz @ seko nepareizs cipars");
-		if (entry.contents.matches(".*[^\\s]@.*"))
-			bad.addNewEntry(entry, "Pirms @ neseko atstarpe");
-		if (entry.contents.matches(".*@\\d[^\\s].*"))
+		if (entry.contents.matches(".*[^\\s(]@.*"))
+			bad.addNewEntry(entry, "Pirms @ neseko atstarpe vai iekava");
+		if (entry.contents.matches(".*@\\d[^\\s)].*"))
 			bad.addNewEntry(entry, "Pēc @ seko kas vairāk par vienu ciparu");
 
 		if (entry.contents.matches(".*\\s@2[^\\p{L}]*@5\\s.*"))
 			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
         if (entry.contents.matches(".*\\s@5[^\\p{L})]*@2\\s.*"))
-            bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai \')\'");
+            bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai iekavai");
 
 		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))
 			bad.addNewEntry(entry, "Divi @2 pēc kārtas, bez @5");
@@ -388,6 +294,9 @@ public class EntryChecks
 		if (entry.contents.matches(".*\\sPN\\s((?!PI).)*\\sPN\\s.*"))
 			bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
 
+        if (entry.contents.matches(".*\\sPI\\s[.!?]?\\s*" + Markers.regexp + "\\s.*|\\s?"))
+            bad.addNewEntry(entry, "PN bez tekstuāla satura");
+
 		if (entry.contents.matches(".*\\sPN\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");
 		if (entry.contents.matches(".*\\sPI\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
@@ -561,7 +470,31 @@ public class EntryChecks
 		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
 				bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
 	}
-	
+
+    /**
+     * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.
+     */
+    public static void markerCase(Dictionary.Entry entry, BadEntries bad)
+    {
+        Matcher tagsInsens = Pattern.compile(
+                "(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
+                .matcher(entry.contents);
+
+        while (tagsInsens.find())
+        {
+            String potTag = tagsInsens.group().trim();
+            if (!potTag.equals(potTag.toUpperCase()))
+            {
+                if (potTag.equals("No") && tagsInsens.regionStart() >= 2
+                        && !potTag.substring(0, tagsInsens.regionStart()).matches("(.*\\s)?(NO|AN|PI|FR)\\s?"))
+                    bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+                else if (!potTag.equals("no"))
+                    bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+            }
+        }
+
+    }
+
 	/**
 	 * Šķirkļa simbolu pārbaude.
 	 */

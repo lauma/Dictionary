@@ -118,7 +118,7 @@ public class Dictionary
 						EntryChecks.gr(entry, bad);
 
 						//Metode kas iet cauri skjirklim pa vienam vārdam un sīki pārbauda visus iespējamos gadījumus
-						EntryChecks.wordByWord(entry, bad);
+						//EntryChecks.wordByWord(entry, bad);
 
 						//pārbauda sķirkļus kas satur RU
 						EntryChecks.ru(entry, bad);

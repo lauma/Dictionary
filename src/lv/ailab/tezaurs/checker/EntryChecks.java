@@ -107,11 +107,10 @@ public class EntryChecks
 	 * Vārdu pa vārdam pārbauda dažādas marķieru specifiskās lietas.
 	 * FIXME - iespējams, ka šo derētu kaut kā sacirst mazākos gabalos.
 	 */
-	public static void wordByWord(Dictionary.Entry entry, BadEntries bad)
+/*	public static void wordByWord(Dictionary.Entry entry, BadEntries bad)
 	{
 		//masīvs ar vārdņicas marķieriem
 		String[] ident = {"NO","NS","PI","PN","FS","FR","FN","FP","DS","DE","DG","AN","DN","CD","LI"};
-		String word = " ";
 		String[] gramIdent = {"NG","AG","PG","FG"}; // masīvs ar gramatikas marķieriem
 		//mainīgais ko izmanto, lai pārbaudītu @2 un @5 līdzsvaru
 		int at = 0;
@@ -119,88 +118,118 @@ public class EntryChecks
 		boolean open = false; // vai ir bijis @2 indikators
 		String forChecking = entry.contents;
 		int len = forChecking.length();
-		int index = 0;
 		int spaces = StringUtils.countSpaces(forChecking); // atstarpju skaits simbolu virknē
 
 		while(len > 0 && spaces > 0) // kamēr nav palicis viens vārds
 		{
-			if(StringUtils.countSpaces(forChecking) > 0)
+			if (StringUtils.countSpaces(forChecking) <= 0) continue;
+
+			String word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
+			if(StringUtils.countSpaces(forChecking) == 0)
+				word = forChecking.trim(); // iegūts pirmais vārds virknē
+			if(word.length() > 0)
 			{
-				word = forChecking.substring(0, forChecking.indexOf(" ")).trim();
-				if(StringUtils.countSpaces(forChecking) == 0)
-					word = forChecking.trim(); // iegūts pirmais vārds virknē
-				if(word.length() > 0)
+				if(word.contains("@2"))
 				{
-					if(word.contains("@2"))
-					{
-						open = true; 
-						if(StringUtils.countSpaces(forChecking) > 0)
-						{
-							if(StringUtils.wordAfter(forChecking, word).contains("@5")) // pārbauda starp @2 un @5 ir teksts
-								bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
-						}
-						if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
-							at = 2;
-						else
-							bad.addNewEntry(entry, "Divi @2 pēc kārtas");
-					}
-					if(word.contains("@5"))
-					{
-						open = false;
-						if(StringUtils.countSpaces(forChecking) > 0)
-						{
-							if(StringUtils.wordAfter(forChecking, word).contains("@2") && !word.contains(")"))
-							{
-								bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam");
-								// izņemot ja tos atdala iekavas
-							}
-						}
-						if(at == 0) //pārbauda vai pirms tam ir bijis @2 bez @5, gadījumā ja @5 ir šķirkļa sākumā
-							bad.addNewEntry(entry, "Pirms @5 jābūt @2");
-						if(at == 5) //pārbauda vai pirms tam ir bijis @2 bez @5
-							bad.addNewEntry(entry, "Divi @5 pēc kārtas");
-						if(at == 2)
-							at = 5;
-					}
-					if(open) //pārbauda vai @2 un @5 ir viena marķiera robežās
-					{
-						if(Arrays.asList(ident).contains(word) // ja ir kāds ident masīva locekļiem no marķierem
-								|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekļiem
-						{
-							bad.addNewEntry(entry, "@2 un @5 jābūt 1 marķiera robežās");
-						}
-					}
-					//beigu pieturzīmes pārbaude
-					if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
-					{
-						gramOpen = true; // ir bijis gramatikas marķieris
-						if(!StringUtils.wordAfter(forChecking, word).contains("@2")) // vai aiz marķiera ir @2
-							bad.addNewEntry(entry,
-									"Aiz gramatikas marķiera jābūt @2");
-					}
-					if(gramOpen)
-					{
-						if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits marķieris
-						{
-							bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
-							gramOpen = false;
-						}
-						if(word.contains("@5")) // ja @5 tad gramatika noslēdzas
-							gramOpen = false;
-					}
+					open = true;
+					//if(StringUtils.countSpaces(forChecking) > 0)
+					//{
+						// pārbauda starp @2 un @5 ir teksts
+						//if(StringUtils.wordAfter(forChecking, word).contains("@5"))
+						//	bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
+					//}
+					if(at == 0 || at == 5) // pārbauda vai nav 2 @2 pēc kārtas bez @5 pa vidu
+						at = 2;
+					//else
+					//	bad.addNewEntry(entry, "Divi @2 pēc kārtas");
 				}
-				//viens cikls beidzas
-				index = forChecking.indexOf(word) + word.length() + 1;  //indekss tiek pārlikts uz nākamo vārdu
-				forChecking = forChecking.substring(index); // virkne zaudē pirmo vārdu
-				len = forChecking.length(); // jaunās virknes garums
-				spaces = StringUtils.countSpaces(forChecking); // jaunās virknes atstarpju skaits
+				if(word.contains("@5"))
+				{
+					open = false;
+					//if(StringUtils.countSpaces(forChecking) > 0)
+					//{
+						// izņemot ja tos atdala iekavas
+						//if(StringUtils.wordAfter(forChecking, word).contains("@2") && !word.contains(")"))
+						//	bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam");
+					//}
+					//if(at == 0) //pārbauda vai pirms tam ir bijis @2 bez @5, gadījumā ja @5 ir šķirkļa sākumā
+					//	bad.addNewEntry(entry, "Pirms @5 jābūt @2");
+					//if(at == 5) //pārbauda vai pirms tam ir bijis @2 bez @5
+					//	bad.addNewEntry(entry, "Divi @5 pēc kārtas");
+					if(at == 2)
+						at = 5;
+				}
+				//if(open) //pārbauda vai @2 un @5 ir viena marķiera robežās
+				//{
+					//if(Arrays.asList(ident).contains(word) // ja ir kāds ident masīva locekļiem no marķierem
+					//		|| Arrays.asList(gramIdent).contains(word)) // vai gramident locekļiem
+                    //    bad.addNewEntry(entry, "@2 un @5 jābūt 1 marķiera robežās");
+				//}
+				//beigu pieturzīmes pārbaude
+				if(Arrays.asList(gramIdent).contains(word)) // pārbaudes kas saistās ar gramatikas marķierim
+				{
+					gramOpen = true; // ir bijis gramatikas marķieris
+					if(!StringUtils.wordAfter(forChecking, word).contains("@2")) // vai aiz marķiera ir @2
+						bad.addNewEntry(entry,
+								"Aiz gramatikas marķiera jābūt @2");
+				}
+				if(gramOpen)
+				{
+					if(Arrays.asList(ident).contains(word)) // ja ir gramatika un sastapts cits marķieris
+					{
+						//bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
+						gramOpen = false;
+					}
+					if(word.contains("@5")) // ja @5 tad gramatika noslēdzas
+						gramOpen = false;
+				}
 			}
+			//viens cikls beidzas
+			int index = forChecking.indexOf(word) + word.length() + 1;  //indekss tiek pārlikts uz nākamo vārdu
+			forChecking = forChecking.substring(index); // virkne zaudē pirmo vārdu
+			len = forChecking.length(); // jaunās virknes garums
+			spaces = StringUtils.countSpaces(forChecking); // jaunās virknes atstarpju skaits
 		}
 		// ja pēdējais vārds, tiek veiktas pārbaudes vai ir @5 galā
-		if(gramOpen)
-			bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
-		if(open && !forChecking.contains("@5"))
-			bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
+		//if(gramOpen)
+		//	bad.addNewEntry(entry, "Gramatikai jābeidzās ar @5");
+		//if(open && !forChecking.contains("@5"))
+		//	bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
+	}//*/
+
+	/**
+	 * Ar @2 un @5 marķieriem saistītās pārbāudes.
+ 	 */
+	public static void at(Dictionary.Entry entry, BadEntries bad)
+	{
+		// pārbauda vai aiz @ seko 2 vai 5
+		if(entry.contents.matches(".*@[13467890].*"))
+			bad.addNewEntry(entry, "Aiz @ seko nepareizs cipars");
+		if (entry.contents.matches(".*[^\\s]@.*"))
+			bad.addNewEntry(entry, "Pirms @ neseko atstarpe");
+		if (entry.contents.matches(".*@\\d[^\\s].*"))
+			bad.addNewEntry(entry, "Pēc @ seko kas vairāk par vienu ciparu");
+
+		if (entry.contents.matches(".*\\s@2[^\\p{L}]*@5\\s.*"))
+			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
+        if (entry.contents.matches(".*\\s@5[^\\p{L})]*@2\\s.*"))
+            bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai \')\'");
+
+		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))
+			bad.addNewEntry(entry, "Divi @2 pēc kārtas, bez @5");
+		if (entry.contents.matches(".*\\s@5\\s((?!@2).)*\\s@5\\s.*"))
+			bad.addNewEntry(entry, "Divi @5 pēc kārtas, bez @2");
+
+        if (entry.contents.matches(".*\\s@2\\s((?!@5).)*"))
+            bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
+        if (entry.contents.matches("((?!@2).)*\\s@5\\s.*"))
+            bad.addNewEntry(entry, "Pirms @5 jābūt @2");
+
+		if (entry.contents.matches(".*@2\\s((?!@5).)*" + Markers.regexp + ".*"))
+			bad.addNewEntry(entry, "Pēc @2 seko nākamais marķieris, nevis @5");
+
+        if (entry.contents.matches(".*(NG|AG|PG|FG)\\s(?!@2).*"))
+            bad.addNewEntry(entry, "Aiz \"mazā\" gramatikas marķiera jābūt @2");
 	}
 
 	/**
@@ -258,8 +287,6 @@ public class EntryChecks
 			else
 			{
 				int frCount = StringUtils.findNumber(afterFs); // skaitlis pēc FS norāda FR skaitu
-				int fnCount = frCount;
-
 				Pattern frPat = Pattern.compile("\\sFR(?=\\s)");
 				Matcher fr = frPat.matcher(entry.contents); 
 				int allFr = 0;
@@ -286,7 +313,7 @@ public class EntryChecks
 						fnAfterFs++;
 
 					// Atsijaa tos, kam nesakriit FR un FN skaiti. var būt  FN <= FR
-					if(fnCount != allFn || fnCount != fnAfterFs)
+					if(frCount != allFn || frCount != fnAfterFs)
 						bad.addNewEntry(entry, "Nesakrīt FR un FN skaits");
 				}
 			}
@@ -548,10 +575,10 @@ public class EntryChecks
 				"(\\sRU\\s\\[[^]]+\\]\\s)?[" + contentSymbolRegexp + "]*"))
 		{
 			//sliktos simbolus aizvieto vieglākai atrašanai
-			String edited = "";
+			String edited = entry.contents;
 			if (entry.contents.matches(".*\\sRU\\s\\[[^]]+\\]\\s.*"))
 				edited = entry.contents.replaceAll("\\sRU\\s\\[[^]]+\\]", " RU [..]" );
-			edited = entry.name + " " + entry.contents.replaceAll(
+			edited = entry.name + " " + edited.replaceAll(
 					"[^" + contentSymbolRegexp + "]", "?");
 			bad.addNewEntryFromString(
 					entry.id, edited, "Šķirkļa teksts satur neparedzētus simbolus");
@@ -606,6 +633,7 @@ public class EntryChecks
 	}
 	
 	//metode pārbauda vai ir ievērotas GR likumsakarības
+	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
 	public static void gr(Dictionary.Entry entry, BadEntries bad)
 	{
 		if (entry.contents.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidū
@@ -616,14 +644,10 @@ public class EntryChecks
 			String AfterGR = entry.contents.substring(grPlace).trim();
 			// Atsijaa tos, kam par daudz GR
 			if (AfterGR.matches(".*\\sGR\\s.*"))
-			{
 				bad.addNewEntry(entry, "Pārāk daudzi GR");
-			}
 			// pārbauda vai GR ir pirms NS un nav atrodams CD un DN
 			if(!AfterGR.matches(".*\\sNS\\s.*") && !AfterGR.matches("(.*\\s)?(CD|DN)\\s.*"))
-			{
 				bad.addNewEntry(entry, "GR jāatrodas pirms NS");
-			}
 		}
 
 		if (entry.contents.matches("^GR\\s.*$")) // ja GR ir teksta sākumā
@@ -631,18 +655,21 @@ public class EntryChecks
 			Matcher cdDn = Pattern.compile("(\\s|^)(DN|CD)(?=\\s)").matcher(entry.contents);
 			int cdDnCount = 0;
 			while (cdDn.find()) // meklē CD un DN pa šķirkli
-			{
 				cdDnCount++;
-			}
 			if (cdDnCount == 0) // ja nav atrodams
-			{
 				bad.addNewEntry(entry, "Trūkst indikatora CD vai DN");
-			}
 			if (cdDnCount > 1) // ja ir atrasti vairāk par vienu
-			{
 				bad.addNewEntry(entry, "Pārāk daudzi CD un/vai DN");
-			}
 		}
+
+		//Ja šķirkļa vārds beidzas ar punktu, tad vajadzētu pārbaudīt vai ir "GR @2 saīs. @5".
+		if(entry.name.charAt(entry.name.length() - 1) == '.'
+				&& !entry.contents.matches("^.*\\sGR\\s@2.*\\ssaīs\\..*\\s@5\\s.*$"))
+			bad.addNewEntry(entry, "Problēma ar saīs.");
+
+		//Ja vārds ir vietniekvārds tam jāsākās ar lielo burtu
+		if(entry.contents.matches("^.*\\sGR\\s@2\\vietv\\.\\s@5\\s.*$") && !Character.isUpperCase(entry.name.charAt(0)))
+			bad.addNewEntry(entry, "Šķirkļa vārds nesākas ar lielo burtu");
 	}
 
 	//metode pārbauda vai ir ievērotas RU likumsakarības
@@ -663,27 +690,22 @@ public class EntryChecks
 				bad.addNewEntry(entry, "RU jāatrodas pirms NS");
 		}
 	}
-	// metode pārbauda vai aiz @2 un @5 marķieri ir pareizi konstruēti
-	public static void at(Dictionary.Entry entry, BadEntries bad)
-	{
-		// pārbauda vai aiz @ seko 2 vai 5
-		if(entry.contents.matches("^.*@.\\s.*$")
-				&& StringUtils.nextCh(entry.contents, "@") != '2'
-				&& StringUtils.nextCh(entry.contents, "@") != '5')
-		{
-			bad.addNewEntry(entry, "Aiz @ seko nepareizs skaitlis");
-		}
-	}
-	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
+
+	/**
+	 * Visām gramatikām kopīgie testi: pārbauda, vai gramatika nesatur lielos
+	 * burtus.
+	 */
 	public static void grammar(Dictionary.Entry entry, BadEntries bad)
 	{
-		//Ja šķirkļa vārds beidzas ar punktu, tad vajadzētu pārbaudīt vai ir "GR @2 saīs. @5".
-		if(entry.name.charAt(entry.name.length() - 1) == '.' 
-				&& !entry.contents.matches("^.*\\sGR\\s@2.*\\ssaīs\\..*\\s@5\\s.*$"))
-			bad.addNewEntry(entry, "Problēma ar saīs.");
+        String grams = "(^|\\s)(GR|FG|NG|AG|PG)\\s";
+		Matcher m = Pattern.compile(grams + "(((?!\\s" + Markers.regexp + "\\s).)*)(\\s" + Markers.regexp + "\\s|$)")
+				.matcher(entry.contents);
+		while (m.find())
+		{
+			String gram = m.group(3);
+			if (gram.matches(".*\\p{Lu}.*"))
+				bad.addNewEntry(entry, "Gramatika satur lielos burtus");
+		}
 
-		//Ja vārds ir vietniekvārds tam jāsākās ar lielo burtu
-		if(entry.contents.matches("^.*\\sGR\\s@2\\vietv\\.\\s@5\\s.*$") && !Character.isUpperCase(entry.name.charAt(0)))
-			bad.addNewEntry(entry, "Šķirkļa vārds nesākas ar lielo burtu");
 	}
 }

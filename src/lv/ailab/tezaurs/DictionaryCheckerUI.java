@@ -3,6 +3,7 @@ package lv.ailab.tezaurs;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import lv.ailab.tezaurs.checker.Dictionary;
@@ -24,8 +25,8 @@ public class DictionaryCheckerUI
 	public static String settingsPath = "./saraksti/";
 
 	public static void main(String[] args)
-			throws IOException
-	{
+    throws IOException, InvocationTargetException, IllegalAccessException
+    {
 		// pārbaude vai ir izveidota datu failu mape.
 		File folder = new File(inputDataPath);
 		if(!folder.exists())
@@ -74,11 +75,11 @@ public class DictionaryCheckerUI
 			if (listOfFiles[p].isFile() && ext.equals("doc") && !fileName.startsWith("~"))
 			{
 				// Inicē.
-				Dictionary dictFile = new Dictionary();
-				dictFile.loadFromFile(inputDataPath + fileName);
+				Dictionary dictFile = Dictionary.loadFromFile(
+						inputDataPath + fileName, refList);
 
 				// Apstrādā.
-				dictFile.check(refList);
+				dictFile.check();
 				
 				// Izdrukā rezultātus.
 				dictFile.printResults(table);

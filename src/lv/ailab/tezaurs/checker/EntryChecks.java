@@ -1,16 +1,16 @@
 package lv.ailab.tezaurs.checker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lv.ailab.tezaurs.utils.StringUtils;
-import lv.ailab.tezaurs.utils.Trio;
 
 /**
- * Statisks šķirkļa pārbaudes metožu apvienojums.
+ * Statisks šķirkļa pārbaudes metožu apvienojums - galvenais pārbaužu bloks.
+ * Visas metodes secīgi izsauc Dictionary klase, izmantojot Reflection
+ * mehānismu, tāpēc šeit nav paredzēts atrasties metodēm, kas nav pārbaudes.
+ * Vienīgie pieļaujamie metožu blakusefekti: izmaiņas slikto šķirkļu masīvā.
  * @author Lauma, Gunārs Danovskis
  */
 public class EntryChecks
@@ -25,32 +25,23 @@ public class EntryChecks
 	 * visi simboli, kas pieļaujami šķirkļavārdā.
 	 */
 	public static String nameSymbolRegexp = "a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽžŌōŖŗ./'\\(\\)<>\\-";
-	/**
-	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
-	 */
-	public static boolean isEntryNameGood(Dictionary.Entry entry, BadEntries bad)
-	{
-		if(entry.name.equals(""))
-		{
-			bad.addNewEntry(entry, "Trūkst šķirkļa vārda");
-			return false;
-		}
-		return true;
-	}
 
-	/**
+    /**
 	 * Pārbaude vai šķirklim netrūkst satura.
 	 */
-	public static void hasContents (Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void hasContents (Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.equals("") || entry.contents.length() < 4)
-			bad.addNewEntry(entry, "Trūkst šķirkļa satura");
+			dict.bad.addNewEntry(entry, "Trūkst šķirkļa satura");
 	}
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
 	 */
-	public static void bracketing(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void bracketing(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		int sqBrackets = 0; // atvērto kvadrātiekavu skaits
 		int circBrackets = 0; // atvērto apaļo iekavu skaits
 		//String entryInf = entries.trim().substring(entries.indexOf(" ")).trim();// šķirkļa ķermenis
@@ -106,8 +97,10 @@ public class EntryChecks
 	/**
 	 * Ar @2 un @5 marķieriem saistītās pārbāudes.
  	 */
-	public static void at(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void at(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entry.contents.matches(".*@[13467890].*"))
 			bad.addNewEntry(entry, "Aiz @ seko nepareizs cipars");
@@ -141,8 +134,10 @@ public class EntryChecks
 	/**
 	 * Ar marķieriem DS, DE saistītās pārbaudes.
 	 */
-	public static void dsDe(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void dsDe(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sDS\\s.*$")) // regulārā izteiksme pārbauda vai ir DS
 		{
 			Matcher ds = Pattern.compile("\\sDS(?=\\s)").matcher(entry.contents);
@@ -178,8 +173,10 @@ public class EntryChecks
 	/**
 	 * Ar marķieriem FS, FR saistītās pārbaudes.
 	 */
-	public static void fsFr(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void fsFr(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sFS\\s.*$")) // regulārā izteiksme pārbauda vai ir FS
 		{
 			Matcher fs = Pattern.compile("\\sFS(?=\\s)").matcher(entry.contents);
@@ -237,43 +234,47 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā.
 	 */
-	public static void li(Dictionary.Entry entry, BadEntries bad, ReferenceList references)
-	{
-		if (entry.contents.matches("^.*\\sLI\\s.*$")) // pārbauda vai ir LI
-		{		
-			Matcher li = Pattern.compile("\\sLI(?=\\s)").matcher(entry.contents);
-			li.find();
-			int liPlace = li.end();
-			String AfterLI = entry.contents.substring(liPlace).trim();
+	public static void li(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
+		if (!entry.contents.matches("^.*\\sLI\\s.*$"))
+            return; // pārbauda vai ir LI
 
-			// Atsijaa tos, kam par daudz LI
-			if (AfterLI.matches("^.*\\sLI\\s.*$"))
-				bad.addNewEntry(entry, "Pārāk daudzi LI");
-			else
-			{
-				if(AfterLI.contains("["))
-				{
-					int referBegin = AfterLI.indexOf( '[' ) + 1; //iegūst apgabalu kur sākas atsauces
-					int referEnd = AfterLI.indexOf( ']' ); //iegūst apgabalu kur beidzas atsauces
-					String entryRefer = AfterLI.substring(referBegin, referEnd);// atsauces izgriež ārā no virknes
-					ArrayList<String> unrecognized = references.verifyReferences(entryRefer);
-					if (!unrecognized.isEmpty())
-					{
-						String errorMsg = String.join(", ", unrecognized);
-						bad.addNewEntry(entry, "Neatpazīta(s) atsauce(s): " + errorMsg); // jan pareizo un norādīto avotu skaits nesakrīt
-					}
-				}
-				else
-					bad.addNewEntry(entry, "Nav norādītas atsauces"); // nav bijušas norādītas atsauces
-			}
-		}	
+        Matcher li = Pattern.compile("\\sLI(?=\\s)").matcher(entry.contents);
+        li.find();
+        int liPlace = li.end();
+        String AfterLI = entry.contents.substring(liPlace).trim();
+
+        // Atsijaa tos, kam par daudz LI
+        if (AfterLI.matches("^.*\\sLI\\s.*$"))
+            bad.addNewEntry(entry, "Pārāk daudzi LI");
+        else
+        {
+            if(AfterLI.contains("["))
+            {
+                int referBegin = AfterLI.indexOf( '[' ) + 1; //iegūst apgabalu kur sākas atsauces
+                int referEnd = AfterLI.indexOf( ']' ); //iegūst apgabalu kur beidzas atsauces
+                String entryRefer = AfterLI.substring(referBegin, referEnd);// atsauces izgriež ārā no virknes
+                ArrayList<String> unrecognized = dict.references.verifyReferences(entryRefer);
+                if (!unrecognized.isEmpty())
+                {
+                    String errorMsg = String.join(", ", unrecognized);
+                    bad.addNewEntry(entry, "Neatpazīta(s) atsauce(s): " + errorMsg); // jan pareizo un norādīto avotu skaits nesakrīt
+                }
+            }
+            else
+                bad.addNewEntry(entry, "Nav norādītas atsauces"); // nav bijušas norādītas atsauces
+        }
 	}
 	
 	/**
 	 * Pārbaudes šķirkļiem ar PI un PN
 	 */
-	public static void piPn(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void piPn(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if (!entry.contents.matches(".*\\s(PI|PN)\\s.*"))
 			return; // Šīs pārbaudes nav attiecināmas uz šo šķirkli.
 
@@ -306,8 +307,10 @@ public class EntryChecks
 	/**
 	 * Ar NS, NO, NG saistītās pārbaudes
 	 */
-	public static void nsNoNg(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void nsNoNg(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sNS\\s.*$"))
 		{
 			Matcher ns = Pattern.compile("\\sNS\\s").matcher(entry.contents);
@@ -375,80 +378,71 @@ public class EntryChecks
 	/**
 	 * Ar AN saistītās pārbaudes
 	 */
-	public static void an(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void an(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
-			bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
+			dict.bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
 	}
 
 	/**
      * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
      */
-	public static void notInUnity(Dictionary.Entry entry, BadEntries bad,
-			Map<String, Trio<Integer, String, Integer>> prevIN)
-	{
-		
-		if (prevIN.containsKey(entry.name))
-			bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
+	public static void notInUniquety(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+		if (!entry.contents.matches("^IN\\s.*$") && dict.prevIN.containsKey(entry.name))
+			dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
 	}
 	/**
 	 * Pārbaude, vai IN indekss drīkst sekot tam indeksam, kas ir bijis iepriekš:
 	 * 0 vai 1 var būt, ja iepriekš šāds šķirkļa vārds nav bijis;
 	 * 2 vai vairāk var būt, ja iepriekš ir bijis par vienu mazāks.
 	 */
-	public static void inNumber(Dictionary.Entry entry, Dictionary dict, int index)
-	{
-		// Pārbauda, vai nav IN vispār bez skaitļa.
-		if(entry.contents.matches("IN\\s(?![0-9]+(\\s.*|$))"))
-			dict.bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
+    public static void inNumber(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        if(!entry.contents.matches("^IN\\s.*$"))
+            return; // Visas pārbaudes attiecināmas tikai uz šķirkļiem, kuros ir IN.
 
-		//Atsijaa ar sliktajiem indeksiem.
-		if(!dict.prevIN.containsKey(entry.name) && index != 0 && index != 1 ||
-				dict.prevIN.containsKey(entry.name) &&
-				(index != dict.prevIN.get(entry.name).first + 1 ||
-				dict.prevIN.get(entry.name).first == 0))
-		{
-			dict.bad.addNewEntry(entry, "Slikts indekss pie IN");
-		}
+        String bezIn = entry.contents.substring(3).trim();
+        int index = StringUtils.findNumber(bezIn);
 
-		//ja skjirklis ir ar IN 0
-		//Paarbauda, vai jau neeksistee šķirklis ar taadu nosaukumu 
-		if (index == 0)
-		{	
-			int sk_len = dict.entries.length;
-			boolean good_0 = true;
-			int brPoint = 0;
-			for(int j = entry.id + 1; j < sk_len; j++)// cikls iet cauri šķirkļiem uz priekšu un 
-				//pārbauda vai nav vēl kāds tāds pats šķirklis
-			{
-				int sk_len_j = dict.entries[j].length();
-				if(sk_len_j > 2 && StringUtils.countSpaces(dict.entries[j]) > 0)
-				{								
-					String EntryName2 = dict.entries[j].substring(0, dict.entries[j].indexOf(" "));
-					String EntryInf2 = dict.entries[j].substring(dict.entries[j].indexOf(" ")).trim();
-					if(EntryName2.equals(entry.name) && EntryInf2.matches("^IN\\s.*$")) // ja atrod tādu pašu šķirkla vārdu
-					{
-						good_0 = false;
-						break;
-					}
-					if(brPoint > 4)
-						break;
-				}
-				brPoint++;
-			}
-			if(!good_0 || dict.prevIN.containsKey(entry.name))
-				dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
-			if(entry.contents.matches("(.*\\s)?(CD|DN)\\s.*")) // ja IN0 tad nevar būt CD un DN
-				dict.bad.addNewEntry(entry, "Ir gan IN 0, gan CD vai DN");
-		}
-	}
+        // Pārbauda, vai nav IN vispār bez skaitļa.
+        if(entry.contents.matches("IN\\s(?![0-9]+(\\s.*|$))"))
+            dict.bad.addNewEntry(entry, "Aiz IN neseko skaitlis");
+
+        //Atsijaa ar sliktajiem indeksiem.
+        if(!dict.prevIN.containsKey(entry.name) && index != 0 && index != 1 ||
+                dict.prevIN.containsKey(entry.name) &&
+                        (index != dict.prevIN.get(entry.name).first + 1 ||
+                                dict.prevIN.get(entry.name).first == 0))
+        {
+            dict.bad.addNewEntry(entry, "Slikts indekss pie IN");
+            if (dict.prevIN.containsKey(entry.name))
+                dict.bad.addNewEntry(
+                        dict.entries[dict.prevIN.get(entry.name).third], "Slikts indekss pie IN");
+        }
+
+        //ja skjirklis ir ar IN 0
+        //Paarbauda, vai jau neeksistee šķirklis ar taadu nosaukumu
+        if (index == 0)
+        {
+            if(dict.prevIN.containsKey(entry.name))
+                dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
+            if(entry.contents.matches("(.*\\s)?(CD|DN)\\s.*")) // ja IN0 tad nevar būt CD un DN
+                dict.bad.addNewEntry(entry, "Ir gan IN 0, gan CD vai DN");
+        }
+    }
 
 	/**
 	 * Šeit ir pārbaudes par to, kuriem marķieriem vai to kombinācijām noteikti
 	 * ir jābūt.
 	 */
-	public static void obligatoryMarkers(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void obligatoryMarkers(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if(!entry.contents.matches("(.*\\s)?(CD|DN)\\s.*"))
 		{
 			if(!entry.contents.matches("IN\\s.*"))
@@ -474,8 +468,9 @@ public class EntryChecks
     /**
      * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.
      */
-    public static void markerCase(Dictionary.Entry entry, BadEntries bad)
+    public static void markerCase(Dictionary dict, int entryIndex)
     {
+        Dictionary.Entry entry = dict.entries[entryIndex];
         Matcher tagsInsens = Pattern.compile(
                 "(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
                 .matcher(entry.contents);
@@ -487,9 +482,9 @@ public class EntryChecks
             {
                 if (potTag.equals("No") && tagsInsens.regionStart() >= 2
                         && !potTag.substring(0, tagsInsens.regionStart()).matches("(.*\\s)?(NO|AN|PI|FR)\\s?"))
-                    bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+                    dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
                 else if (!potTag.equals("no"))
-                    bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+                    dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
             }
         }
 
@@ -498,11 +493,12 @@ public class EntryChecks
 	/**
 	 * Šķirkļa simbolu pārbaude.
 	 */
-	public static void langChars(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void langChars(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
 		if(!entry.name.matches("[" + nameSymbolRegexp + "]*"))
-			bad.addNewEntry(entry, "Šķirkļa vārds satur neparedzētus simbolus");
+			dict.bad.addNewEntry(entry, "Šķirkļa vārds satur neparedzētus simbolus");
 		//Parbauda vai skjirkla info nesatur nepaziistami simboli
 		if(!entry.contents.matches("[" +contentSymbolRegexp + "]*"+
 				"(\\sRU\\s\\[[^]]+\\]\\s)?[" + contentSymbolRegexp + "]*"))
@@ -513,7 +509,7 @@ public class EntryChecks
 				edited = entry.contents.replaceAll("\\sRU\\s\\[[^]]+\\]", " RU [..]" );
 			edited = entry.name + " " + edited.replaceAll(
 					"[^" + contentSymbolRegexp + "]", "?");
-			bad.addNewEntryFromString(
+			dict.bad.addNewEntryFromString(
 					entry.id, edited, "Šķirkļa teksts satur neparedzētus simbolus");
 		}
 
@@ -524,7 +520,7 @@ public class EntryChecks
 				&& !entry.contents.matches("^.*\\sval.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
 		{
-			bad.addNewEntry(entry, "Šķirklis satur ō, bet nav latg.|līb.");
+			dict.bad.addNewEntry(entry, "Šķirklis satur ō, bet nav latg.|līb.");
 		}
 		//ja satur Ŗ pārbauda vai tas ir lībiešu vai latgļu vārds
 		if((entry.fullText.contains("ŗ") || entry.fullText.contains("Ŗ"))
@@ -533,42 +529,44 @@ public class EntryChecks
 				&& !entry.contents.matches("^.*\\sval\\.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
 		{
-			bad.addNewEntry(entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
+			dict.bad.addNewEntry(entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
 		}
 	}
 	
 	/**
 	 * Pārbaude, vai aiz CD esošais vārds ir vārdnīcā.
-	 * FIXME - nepārlasīt vēlreiz visu šķirkļu masīvu.
 	 */
-	public static void wordAfterCd(Dictionary.Entry entry, String [] entries, BadEntries bad)
-	{
+	public static void wordAfterCd(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches ("^.*\\sCD\\s.*$"))
 		{
 			String cdWord = StringUtils.wordAfter(entry.contents, "CD"); // atrod vārdu aiz CD
-			if(!StringUtils.wordExist(entries, cdWord)) // pārbauda vai ir iekšā vardnīcā
-				bad.addNewEntry(entry, "Vārds pēc CD nav atrodams");
+			if(!dict.entryNames.contains(cdWord)) // pārbauda vai ir iekšā vardnīcā
+				dict.bad.addNewEntry(entry, "Vārds pēc CD nav atrodams");
 		}
 	}
 	
 	/**
 	 * Pārbaude, vai aiz DN esošais vārds ir vārdnīcā.
-	 * FIXME - nepārlasīt vēlreiz visu šķirkļu masīvu.
 	 */
-	public static void wordAfterDn(Dictionary.Entry entry, String [] entries, BadEntries bad)
-	{
+	public static void wordAfterDn(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches ("^.*\\sDN\\s.*$"))
 		{
 			String dnWord = StringUtils.wordAfter(entry.contents, "DN"); // atrod vārdu aiz DN
-			if(!StringUtils.wordExist(entries, dnWord)) // pārbauda vai ir vārdnīcā
-				bad.addNewEntry(entry, "Vārds pēc DN nav atrodams");
+			if(!dict.entryNames.contains(dnWord)) // pārbauda vai ir vārdnīcā
+				dict.bad.addNewEntry(entry, "Vārds pēc DN nav atrodams");
 		}
 	}
 	
 	//metode pārbauda vai ir ievērotas GR likumsakarības
 	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
-	public static void gr(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void gr(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidū
 		{
 			Matcher gr = Pattern.compile("\\sGR(?=\\s)").matcher(entry.contents);
@@ -606,8 +604,10 @@ public class EntryChecks
 	}
 
 	//metode pārbauda vai ir ievērotas RU likumsakarības
-	public static void ru(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void ru(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
+        BadEntries bad = dict.bad;
 		if(entry.contents.matches("^.*\\sRU\\s.*$"))
 		{
 			Matcher ru = Pattern.compile("\\sRU(?=\\s)").matcher(entry.contents);
@@ -628,8 +628,9 @@ public class EntryChecks
 	 * Visām gramatikām kopīgie testi: pārbauda, vai gramatika nesatur lielos
 	 * burtus.
 	 */
-	public static void grammar(Dictionary.Entry entry, BadEntries bad)
-	{
+	public static void grammar(Dictionary dict, int entryIndex)
+    {
+        Dictionary.Entry entry = dict.entries[entryIndex];
         String grams = "(^|\\s)(GR|FG|NG|AG|PG)\\s";
 		Matcher m = Pattern.compile(grams + "(((?!\\s" + Markers.regexp + "\\s).)*)(\\s" + Markers.regexp + "\\s|$)")
 				.matcher(entry.contents);
@@ -637,7 +638,7 @@ public class EntryChecks
 		{
 			String gram = m.group(3);
 			if (gram.matches(".*\\p{Lu}.*"))
-				bad.addNewEntry(entry, "Gramatika satur lielos burtus");
+				dict.bad.addNewEntry(entry, "Gramatika satur lielos burtus");
 		}
 
 	}

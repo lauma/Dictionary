@@ -4,7 +4,10 @@
 package lv.ailab.tezaurs.checker;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 
 
 import lv.ailab.tezaurs.DictionaryCheckerUI;
@@ -26,7 +29,16 @@ public class Dictionary
 	/**
 	 * Šķirkļu teksti.
 	 */
-	public String [] entries;
+	public Entry [] entries;
+
+    /**
+     * Šķirkļu vārdi.
+     */
+    public HashSet<String> entryNames;
+    /**
+     * Avotu saraksts.
+     */
+    public ReferenceList references;
 	/**
 	 * Kļūdainie šķirkļi
 	 */
@@ -47,113 +59,123 @@ public class Dictionary
 	 * Statistics collector.
 	 */
 	public Stats stats;
-	
+
 	/**
 	 * Ielādē no word faila vārdnīcas fragmenta saturu un sagatavo pārbaudēm.
 	 */
-	public void loadFromFile(String path)
+	public static Dictionary loadFromFile(String path, ReferenceList references)
 	throws IOException
 	{
+        Dictionary dict = new Dictionary();
+        dict.prevIN = new HashMap<>();
+        dict.bad = new BadEntries();
+        dict.stats = new Stats();
+        dict.references = references;
+
 		// Ielādē šķirkļus.
-		entries = DocLoader.loadDictionary(path);
-		
+		String[] entryTexts = DocLoader.loadDictionary(path);
+        dict.entries = new Entry[entryTexts.length];
+        dict.entryNames = new HashSet<>();
+        for (int i = 0; i < entryTexts.length; i++)
+        {
+            dict.entries[i] = new Entry(entryTexts[i], i);
+            dict.entryNames.add(dict.entries[i].name);
+        }
 		// Savāc faila nosaukumu.
-		fileName = path;
-		if (fileName.contains("\\"))
-			fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-		if (fileName.contains("/"))
-			fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
-		
-		// Notīra uzkrājošos statistikas mainīgos.
-		prevIN = new HashMap<String, Trio<Integer, String, Integer>>();
-		bad = new BadEntries();
-		stats = new Stats();
+		dict.fileName = path;
+		if (dict.fileName.contains("\\"))
+			dict.fileName = dict.fileName.substring(dict.fileName.lastIndexOf('\\') + 1);
+		if (dict.fileName.contains("/"))
+			dict.fileName = dict.fileName.substring(dict.fileName.lastIndexOf('/') + 1);
+        return dict;
 	}
 	
 	/**
 	 * Izpilda visas šķirkļu pārbaudes.
 	 */
-	public void check (ReferenceList references)
-	{
-		float progress = 0;
+	public void check() throws InvocationTargetException, IllegalAccessException
+    {
 		for(int i=0; i < entries.length; i++)
 		{
 			//pārbaude vai šķirklis nav tukšs
 			if(!StringUtils.isEntryEmpty(this, i))
 			{
 				//progress = (((float)i/EntryLen)*100);
-				stats.wordCount += StringUtils.wordCount(entries[i]);
+				stats.wordCount += StringUtils.wordCount(entries[i].fullText);
 				stats.entryCount++;
-				//šķirkļa informācijas ieguve
-				Dictionary.Entry entry = new Dictionary.Entry(entries[i], i);
+				Dictionary.Entry entry = entries[i];
 
 				// pārbaude vai šķirkļa vārds ir labs
-				if(EntryChecks.isEntryNameGood(entry, bad))
+				if(EntryPreChecks.isEntryNameGood(this, i))
 				{
 					//Metode statistikas datu par šķirkli ievākšanai
-					stats.collectStats(entries[i]);
+					stats.collectStats(entries[i].fullText);
 					//paŗabaude vai nav izņēmums
-					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i]))
+					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i].fullText))
 					{
-						EntryChecks.hasContents(entry, bad);
+                        Method[] tests = EntryChecks.class.getDeclaredMethods();
+                        for (Method test : tests)
+                            test.invoke(null, this, i);
+
+                        /*
+						EntryChecks.hasContents(this, i);
 						//Metode, kās pārbauda simbolus šķirklī
-						EntryChecks.langChars(entry, bad);
+						EntryChecks.langChars(this, i);
                         // Marķieru pareizrakstība
-                        EntryChecks.markerCase(entry, bad);
+                        EntryChecks.markerCase(this, i);
 						//Metode, kas pārbauda saīsinājumu un vietniekvārdu gramatiku
-						EntryChecks.grammar(entry, bad);
+						EntryChecks.grammar(this, i);
 						//Metode kas pārbauda vai aiz @ seko pareizs skaitlis
-						EntryChecks.at(entry, bad);
+						EntryChecks.at(this, i);
 						//Metode pārbauda vai ir visi nepieciešamie indikatori
-						EntryChecks.obligatoryMarkers(entry, bad);
+						EntryChecks.obligatoryMarkers(this, i);
 						//iekavu līdzsvars
-						EntryChecks.bracketing(entry, bad);
+						EntryChecks.bracketing(this, i);
 
 						//pārbauda šķirkļus kas satur GR
-						EntryChecks.gr(entry, bad);
+						EntryChecks.gr(this, i);
 						//pārbauda sķirkļus kas satur RU
-						EntryChecks.ru(entry, bad);
+						EntryChecks.ru(this, i);
 						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz CD
-						EntryChecks.wordAfterCd(entry, entries, bad);
+						EntryChecks.wordAfterCd(this, i);
 						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz DN
-						EntryChecks.wordAfterDn(entry, entries, bad);
-						//Skjirkli ar IN indikatoriem
-						if (entry.contents.matches("^IN\\s.*$"))
-						{
-							String bezIn = entry.contents.substring(3).trim();
-							int index = StringUtils.findNumber(bezIn);
+						EntryChecks.wordAfterDn(this, i);
 
-							//Metode kas pārbauda likumsakarības ar IN 0 un IN 1
-							EntryChecks.inNumber(entry, this, index);
-							//Metode, kas pārbauda nozīmes - NS
-							EntryChecks.nsNoNg(entry, bad);
-							//Metode, kas pārbauda apakšnozīmes
-							EntryChecks.an(entry, bad);
-							//Metode, kas pārbauda piemērus -  PI
-							EntryChecks.piPn(entry, bad);
-							//Metode, kas pārbauda frazeoloģismus
-							EntryChecks.fsFr(entry, bad);
-							//Metode, kas pārbauda divdabjus
-							EntryChecks.dsDe(entry, bad);
-							//Metode, kas pārbauda atsauces - LI
-							EntryChecks.li(entry, bad, references);
-							// ieliek sastaptos vārdus ar IN sarakstā
-							prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
-						}
-						else
-						{
-							EntryChecks.notInUnity(entry, bad, prevIN);
-							prevIN.put(entry.name, Trio.of(-1, entry.fullText, entry.id));
-						}
+                        //Metode kas pārbauda likumsakarības ar IN 0 un IN 1
+                        EntryChecks.inNumber(this, i);
+                        // Pārbauda šķirkļu bez IN unigalitāti
+                        EntryChecks.notInUniquety(this, i);
+                        //Metode, kas pārbauda nozīmes - NS
+                        EntryChecks.nsNoNg(this, i);
+                        //Metode, kas pārbauda apakšnozīmes
+                        EntryChecks.an(this, i);
+                        //Metode, kas pārbauda piemērus -  PI
+                        EntryChecks.piPn(this, i);
+                        //Metode, kas pārbauda frazeoloģismus
+                        EntryChecks.fsFr(this, i);
+                        //Metode, kas pārbauda divdabjus
+                        EntryChecks.dsDe(this, i);
+                        //Metode, kas pārbauda atsauces - LI
+                        EntryChecks.li(this, i);
+                        //*/
+
+                        // Papildina sastapto šķirkļu un indeksu "datubāzi".
+                        int index = -1;
+						if (entry.contents.matches("^IN\\s.*$"))
+                        {
+                            String bezIn = entry.contents.substring(3).trim();
+                            index = StringUtils.findNumber(bezIn);
+                        }
+                        prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
 					}
 				}
 			}
-			progress = ((float) i) / entries.length * 100;
+            // Progresa izvade uz ekrāna
 			if (i % 50 == 0)
 			{
-				System.out.print(fileName + " [");//
-				System.out.printf("%.1f", progress);		// Progresa izvade uz ekrāna
-				System.out.print("%]\r");					//
+				System.out.print(fileName + " [");
+				System.out.printf("%.1f", ((float) i) / entries.length * 100);
+				System.out.print("%]\r");
 			}
 		}
 		System.out.print(fileName + " [...]\r"); // Progresa izvade uz ekrāna

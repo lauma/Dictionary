@@ -15,7 +15,7 @@ public class DictionaryToDicUI
 	protected static String splitPattern =
 			"\\s(?=(GR|RU|NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
-	protected static String removePattern = "\\s(@5|@2)((?=\\s)|$)";
+	protected static String removePattern = "[\\s()](@5|@2)((?=[\\s()])|$)";
 	
 	public static void main(String[] args)
 			throws IOException

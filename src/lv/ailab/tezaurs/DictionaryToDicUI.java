@@ -70,7 +70,7 @@ public class DictionaryToDicUI
 		// marķieriem, tas netiek atdalīts atsevšķā rindā no VR.
 		String[] rows = entry.split(splitPattern);
 		if (rows.length > 0)
-			rows[0] = "VR " + rows;
+			rows[0] = "VR " + rows[0];
 		return rows;
 	}
 	

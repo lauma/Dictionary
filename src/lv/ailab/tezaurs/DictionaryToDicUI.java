@@ -62,11 +62,15 @@ public class DictionaryToDicUI
 	 */
 	protected static String[] convertEntry(String entry)
 	{
-		entry = "VR " + entry.trim();
+		//entry = "VR " + entry.trim();
 		entry = entry.replaceAll(removePattern, "");
 		entry = entry.replaceAll(" \\.(?!\\.)", ". ");
 		entry = entry.replaceAll("\\s\\s+", " ");
+		// Te tiek nodrošināts, ka, ja šķirkļa vārds sakrīt ar kādu no
+		// marķieriem, tas netiek atdalīts atsevšķā rindā no VR.
 		String[] rows = entry.split(splitPattern);
+		if (rows.length > 0)
+			rows[0] = "VR " + rows;
 		return rows;
 	}
 	

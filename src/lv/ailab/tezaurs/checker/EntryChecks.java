@@ -124,7 +124,7 @@ public class EntryChecks
         if (entry.contents.matches("((?!@2).)*\\s@5\\s.*"))
             bad.addNewEntry(entry, "Pirms @5 jābūt @2");
 
-		if (entry.contents.matches(".*@2\\s((?!@5).)*" + Markers.regexp + ".*"))
+		if (entry.contents.matches(".*@2\\s((?!@5).)*\\s" + Markers.regexp + "\\s.*"))
 			bad.addNewEntry(entry, "Pēc @2 seko nākamais marķieris, nevis @5");
 
         if (entry.contents.matches(".*(NG|AG|PG|FG)\\s(?!@2).*"))
@@ -483,7 +483,7 @@ public class EntryChecks
                 if (potTag.equals("No") && tagsInsens.regionStart() >= 2
                         && !potTag.substring(0, tagsInsens.regionStart()).matches("(.*\\s)?(NO|AN|PI|FR)\\s?"))
                     dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
-                else if (!potTag.equals("no"))
+                else if (!potTag.equals("no") && !potTag.equals("de"))
                     dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
             }
         }

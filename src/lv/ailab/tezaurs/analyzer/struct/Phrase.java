@@ -17,7 +17,10 @@
  *******************************************************************************/
 package lv.ailab.tezaurs.analyzer.struct;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.json.simple.JSONObject;
@@ -82,14 +85,49 @@ public class Phrase implements HasToJSON
 	 */
 	public boolean hasParadigm()
 	{
-		if (grammar != null && grammar.hasParadigm()) return true;
+		if (grammar != null && grammar.paradigmCount() > 0) return true;
 		if (subsenses != null) for (Sense s : subsenses)
 		{
 			if (s.hasParadigm()) return true;
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Not sure if this is the best way to treat paradigms.
+	 */
+	public boolean hasMultipleParadigms()
+	{
+		return getAllMentionedParadigms().size() > 1;
+	}
+
+	/*
+	 * For statistical use only. Collects all paradigm numbers mentioned in this
+ 	 * structure
+ 	 */
+	protected Set<Integer> getAllMentionedParadigms()
+	{
+		HashSet<Integer> paradigms = new HashSet<>();
+		if (grammar != null && grammar.paradigmCount() > 0)
+			paradigms.addAll(grammar.paradigm);
+		if (subsenses != null) for (Sense s : subsenses)
+			paradigms.addAll(s.getAllMentionedParadigms());
+		return paradigms;
+	}
+
+	/**
+	 * Get all flags used in this structure.
+	 */
+	public Set<String> getUsedFlags()
+	{
+		HashSet<String> flags = new HashSet<>();
+		if (grammar != null && grammar.flags != null)
+			flags.addAll(grammar.flags);
+		if (subsenses != null) for (Sense s : subsenses)
+			flags.addAll(s.getUsedFlags());
+		return flags;
+	}
+
 	public boolean hasUnparsedGram()
 	{
 		if (grammar != null && grammar.hasUnparsedGram()) return true;

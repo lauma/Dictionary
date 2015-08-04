@@ -621,9 +621,10 @@ public class Gram  implements HasToJSON
 		parseGram(lemma);
 	}
 	
-	public boolean hasParadigm()
+	public int paradigmCount()
 	{
-		return !paradigm.isEmpty();
+		if (paradigm == null) return 0;
+		return paradigm.size();
 	}
 	
 	/**
@@ -714,7 +715,7 @@ public class Gram  implements HasToJSON
 		// Complicated rules: grammar contains lemma variation spelled out.
 		if (newBegin == -1)
 		{
-			// Super-complicated case: pronunciation included.			
+			// Super-complicated case: pronunciations included.
 			// Paradigm 1: Lietvārds 1. deklinācija -s
 			// Changed in new version
 			/*if (lemma.endsWith("di") &&
@@ -730,7 +731,7 @@ public class Gram  implements HasToJSON
 					System.err.printf("Problem matching \"%s\" with \"ābeļzieds\" rule\n", lemma);
 				newBegin = matcher.group(1).length();
 				Lemma altLemma = new Lemma(matcher.group(2));
-				altLemma.pronunciation = matcher.group(3);
+				altLemma.pronunciations = matcher.group(3);
 				HashSet<String> altParams = new HashSet<String> ();
 				altParams.add("Šķirkļavārds vienskaitlī");
 				altLemmas.put(1, new Tuple<Lemma, HashSet<String>>(altLemma, altParams));

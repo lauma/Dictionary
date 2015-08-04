@@ -75,10 +75,10 @@ public class Header implements HasToJSON
 		}				
 	}
 	
-	public boolean hasParadigm()
+	public int paradigmCount()
 	{
-		if (gram == null) return false;
-		return gram.hasParadigm();
+		if (gram == null) return 0;
+		return gram.paradigmCount();
 	}
 	
 	public boolean hasUnparsedGram()

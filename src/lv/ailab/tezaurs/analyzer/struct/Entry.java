@@ -20,10 +20,8 @@ package lv.ailab.tezaurs.analyzer.struct;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.json.simple.JSONObject;
@@ -187,7 +185,7 @@ public class Entry
 	 */
 	public boolean hasParadigm()
 	{
-		boolean res = head.hasParadigm();
+		boolean res = head.paradigmCount() > 0;
 		//if (head.hasParadigm()) return true;
 		if (senses != null) for (Sense s : senses)
 		{
@@ -200,11 +198,55 @@ public class Entry
 		
 		if (derivs != null) for (Header d : derivs)
 		{
-			if (!d.hasParadigm()) res = false;
+			if (d.paradigmCount() <= 0) res = false;
 		}
 		return res;
 	}
-			
+
+	/**
+	 * Not sure if this is the best way to treat paradigms.
+	 */
+	public boolean hasMultipleParadigms()
+	{
+		return getAllMentionedParadigms().size() > 1;
+	}
+
+	/*
+	 * For statistical use only. Collects all paradigm numbers mentioned in this
+ 	 * structure
+ 	 */
+	protected Set<Integer> getAllMentionedParadigms()
+	{
+		HashSet<Integer> paradigms = new HashSet<>();
+		if (head != null && head.paradigmCount() > 0)
+			paradigms.addAll(head.gram.paradigm);
+		if (senses != null) for (Sense s : senses)
+			paradigms.addAll(s.getAllMentionedParadigms());
+		if (phrases != null) for (Phrase p : phrases)
+			paradigms.addAll(p.getAllMentionedParadigms());
+		if (derivs != null) for (Header d : derivs)
+			if (d.paradigmCount() > 0) paradigms.addAll(d.gram.paradigm);
+		return paradigms;
+	}
+
+	/**
+	 * Get all flags used in this structure.
+	 */
+	public Set<String> getUsedFlags()
+	{
+		HashSet<String> flags = new HashSet<>();
+		if (head != null && head.gram != null && head.gram.flags != null)
+			flags.addAll(head.gram.flags);
+		if (senses != null) for (Sense s : senses)
+			flags.addAll(s.getUsedFlags());
+		if (phrases != null) for (Phrase p : phrases)
+			flags.addAll(p.getUsedFlags());
+		if (derivs != null) for (Header d : derivs)
+			if (d.gram != null && d.gram.flags != null)
+				flags.addAll(d.gram.flags);
+		return flags;
+	}
+
 	public boolean hasUnparsedGram()
 	{
 		if (head != null && head.hasUnparsedGram()) return true;
@@ -224,7 +266,7 @@ public class Entry
 	}
 	
 	/**
-	 * Collects all pronunciation elements from lemmas and derivatives.
+	 * Collects all pronunciations elements from lemmas and derivatives.
 	 */
 	public ArrayList<String> collectPronunciations()
 	{

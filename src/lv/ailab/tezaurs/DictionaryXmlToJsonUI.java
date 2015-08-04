@@ -22,6 +22,7 @@ import java.io.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import lv.ailab.tezaurs.analyzer.StatsCollector;
 import lv.ailab.tezaurs.analyzer.io.StaxReader;
 import org.w3c.dom.Node;
 
@@ -30,9 +31,10 @@ import lv.ailab.tezaurs.analyzer.struct.Entry;
 public class DictionaryXmlToJsonUI {
 
 	/**
-	 * Create file with all pronunciation.
+	 * Create file with all pronunciations.
 	 */
-	public static boolean makePronunceList = true;
+	//public static boolean makePronunceList = true;
+
 	/**
 	 * 
 	 * @param args File name expected as first argument.
@@ -40,12 +42,14 @@ public class DictionaryXmlToJsonUI {
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		StatsCollector sc = new StatsCollector();
+
 		// Initialize IO.
 		String thesaurusFile = args[0];
 		String goodOutputFile = "tezaurs-good.json";
 		String noParadigm = "tezaurs-noParadigm.json";
 		String badOutputFile = "tezaurs-bad.json";
-		String pronunciationOutputFile = "tezaurs-pronunce.txt";
+		String statsFile = "tezaurs-stats.txt";
 
 		StaxReader dicReader = new StaxReader(thesaurusFile);
 
@@ -58,11 +62,7 @@ public class DictionaryXmlToJsonUI {
 		BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(badOutputFile), "UTF-8"));
 		badOut.write("[\n");
-		BufferedWriter pronunceOut = null;
 
-		if (makePronunceList)
-			pronunceOut = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(pronunciationOutputFile), "UTF-8"));
 		System.out.println("Sāk apstrādāt.");
 		// Process each node.
 		int count = 0;
@@ -70,10 +70,12 @@ public class DictionaryXmlToJsonUI {
 		while (entryNode != null)
 		{
 			Entry entry = new Entry(entryNode);
+			sc.countEntry(entry);
+
 			// Print out all pronunciations.
-			if (makePronunceList)
-				for (String p : entry.collectPronunciations())
-					pronunceOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
+			//if (makePronunceList)
+			//	for (String p : entry.collectPronunciations())
+			//		statsOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
 
 			if (!entry.inBlacklist())	// Blacklisted entries are not included in output logs.
 			{
@@ -96,7 +98,13 @@ public class DictionaryXmlToJsonUI {
 		noParadigmOut.close();
 		badOut.write("]");
 		badOut.close();
-		if (makePronunceList) pronunceOut.close();
+
+		System.out.println("Drukā statistiku...");
+		BufferedWriter statsOut  = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(statsFile), "UTF-8"));
+		sc.printContents(statsOut);
+		statsOut.close();
+		//if (makePronunceList) statsOut.close();
 		System.out.println("Viss pabeigts!");
 	}
 }

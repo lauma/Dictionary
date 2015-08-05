@@ -46,7 +46,7 @@ public class SimpleRule implements Rule
 			Set<String> positiveFlags, Set<String> alwaysFlags)
 	{
 		this.patternText = pattern;
-		directPattern = Pattern.compile("\\Q" + patternText + "\\E([;,.].*)?");
+		directPattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
 		String regExpPattern = patternText.replace("-", "\\E-?\\Q");
 		optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
@@ -76,6 +76,7 @@ public class SimpleRule implements Rule
 	}
 
 	/**
+	 * Shortcut method.
 	 * Creates SimpleRule for 5th declension nouns if entry word is singular and
 	 * feminine.
 	 * @param patternText		text grammar string must start with
@@ -90,6 +91,7 @@ public class SimpleRule implements Rule
 				new String[]{"Sieviešu dzimte"});
 	}
 	/**
+	 * Shortcut method.
 	 * Creates SimpleRule for 1th declension nouns if entry word is singular and
 	 * masculine.
 	 * @param patternText		text grammar string must start with
@@ -112,32 +114,14 @@ public class SimpleRule implements Rule
 	 * 							matches.
 	 * @param flagCollector		Map, where flags will be added, if rule
 	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * @return New beginning for gram string if rule matched, -1 otherwise.
 	 */
 	public int applyDirect (
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			HashSet<String> flagCollector)
 	{
-		int newBegin = -1;
-		if (directPattern.matcher(gramText).matches())
-		{
-			newBegin = patternText.length();
-			if (lemmaRestrict.matcher(lemma).matches())
-			{
-				paradigmCollector.add(paradigmId);
-				if (positiveFlags != null)
-					flagCollector.addAll(positiveFlags);
-			}
-			else
-			{
-				System.err.printf("Problem matching \"%s\" with paradigm %s\n", lemma, paradigmId);
-				newBegin = 0;
-			}
-			if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);
-		}
-		return newBegin;
+		return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
 	}
 	
 	/**
@@ -148,16 +132,35 @@ public class SimpleRule implements Rule
 	 * 							matches.
 	 * @param flagCollector	Map, where flags will be added, if rule
 	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * @return New beginning for gram string if rule matched, -1 otherwise.
 	 */
 	public int applyOptHyphens(
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			HashSet<String> flagCollector)
 	{
+		return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector);
+	}
+
+	/**
+	 * Apply rule, determining match by provided pattern.
+	 * Internal function.
+	 * @param gramPattern		Pattern for determining if rule should be
+	 *                          applied.
+	 * @param gramText			Grammar string currently being processed.
+	 * @param lemma				Lemma string for this header.
+	 * @param paradigmCollector	Map, where paradigm will be added, if rule
+	 * 							matches.
+	 * @param flagCollector	Map, where flags will be added, if rule
+	 * 							matches.
+	 * @return New beginning for gram string if rule matched, -1 otherwise.
+	 */
+	protected int apply(Pattern gramPattern, String gramText, String lemma,
+			HashSet<Integer> paradigmCollector,
+			HashSet<String> flagCollector)
+	{
 		int newBegin = -1;
-		Matcher m = optHyphenPattern.matcher(gramText);
+		Matcher m = gramPattern.matcher(gramText);
 		if (m.matches())
 		{
 			newBegin = m.group(1).length();

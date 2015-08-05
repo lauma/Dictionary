@@ -3,22 +3,22 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 import java.util.HashSet;
 
 /**
- * Grammar processing rule.
+ * Gramatiku apstrādes likums.
  * @author Lauma
  *
  */
 public interface Rule {
 
 	/**
-	 * Apply rule as-is - no magic whatsoever.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector	Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * Piemērot likumu bez papildus maģijas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyDirect (
 			String gramText, String lemma,
@@ -26,15 +26,15 @@ public interface Rule {
 			HashSet<String> flagCollector);
 	
 	/**
-	 * Apply rule, but hyperns in patternText are optional.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector	Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyOptHyphens(
 			String gramText, String lemma,

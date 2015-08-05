@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,24 +49,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gram.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Gram.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1900" column="16" selection-start-line="1900" selection-start-column="16" selection-end-line="1900" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.44420132">
+              <caret line="138" column="31" selection-start-line="138" selection-start-column="31" selection-end-line="138" selection-end-column="31" />
               <folding>
-                <element signature="e#83189#83190#0" expanded="true" />
-                <element signature="e#83215#83216#0" expanded="true" />
+                <element signature="e#83263#83264#0" expanded="true" />
+                <element signature="e#83289#83290#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleRule.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SimpleRule.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8315098">
-              <caret line="51" column="24" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="62" column="32" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -123,10 +125,7 @@
         <option value="$PROJECT_DIR$/resources/TezaursChecker.bat" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/StaxReader.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Lemma.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AbbrMap.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Markers.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/StringUtils.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryCheckerUI.java" />
@@ -140,6 +139,9 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Phrase.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
       </list>
     </option>
@@ -525,9 +527,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1696" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18790323" sideWeight="0.4853229" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18790323" sideWeight="0.4853229" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25750396" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1967742" sideWeight="0.5146771" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1967742" sideWeight="0.5146771" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14919356" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1983871" sideWeight="0.5146771" order="6" side_tool="false" content_ui="combo" x="518" y="128" width="246" height="511" />
@@ -780,31 +782,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AbbrMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="201" column="48" selection-start-line="201" selection-start-column="48" selection-end-line="201" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="186" column="24" selection-start-line="183" selection-start-column="8" selection-end-line="186" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="67" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
         </state>
       </provider>
     </entry>
@@ -970,22 +951,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1900" column="16" selection-start-line="1900" selection-start-column="16" selection-end-line="1900" selection-end-column="16" />
-          <folding>
-            <element signature="e#83189#83190#0" expanded="true" />
-            <element signature="e#83215#83216#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="1.0137615">
+          <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.92997813">
+          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9671773">
+          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8315098">
-          <caret line="51" column="24" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="32" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="32" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44420132">
+          <caret line="138" column="31" selection-start-line="138" selection-start-column="31" selection-end-line="138" selection-end-column="31" />
+          <folding>
+            <element signature="e#83263#83264#0" expanded="true" />
+            <element signature="e#83289#83290#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

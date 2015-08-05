@@ -51,7 +51,7 @@ public class VerbRule implements Rule
 			thirdPersonPattern = allPersonPattern;
 		}
 		allPersonRule = new SimpleRule(allPersonPattern,
-				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+				".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 		thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 	}

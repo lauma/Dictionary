@@ -27,7 +27,7 @@ public class ThirdPersVerbRule implements Rule
             Set<String> positiveFlags, Set<String> alwaysFlags)
     {
         thirdPersUsually = new SimpleRule(
-                "parasti 3. pers., " + patternText, lemmaEnding, paradigmId,
+                "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
                 new HashSet<String>() {{
                         add("Darbības vārds");
                         if (positiveFlags != null) addAll(positiveFlags); }},
@@ -35,7 +35,7 @@ public class ThirdPersVerbRule implements Rule
                         add("Parasti 3. personā");
                         if (alwaysFlags != null) addAll(alwaysFlags); }});
         thirdPersOnly = new SimpleRule(
-                "tikai 3. pers., " + patternText, lemmaEnding, paradigmId,
+                "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
                 new HashSet<String>() {{
                     add("Darbības vārds");
                     if (positiveFlags != null) addAll(positiveFlags); }},

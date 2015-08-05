@@ -26,9 +26,9 @@ public class SimpleRule implements Rule
 	 */
 	protected final Pattern optHyphenPattern;
 	/**
-	 * Required ending for the lemma to apply this rule.
+	 * To apply rule lemma must match this regular expression.
 	 */
-	protected final String lemmaEnding;
+	protected final Pattern lemmaRestrict;
 	/**
 	 * Paradigm ID to set if rule matched.
 	 */
@@ -42,14 +42,14 @@ public class SimpleRule implements Rule
 	 */
 	protected final Set<String> alwaysFlags;
 
-	public SimpleRule(String pattern, String lemmaEnding, int paradigmId,
+	public SimpleRule(String pattern, String lemmaRestrict, int paradigmId,
 			Set<String> positiveFlags, Set<String> alwaysFlags)
 	{
 		this.patternText = pattern;
 		directPattern = Pattern.compile("\\Q" + patternText + "\\E([;,.].*)?");
 		String regExpPattern = patternText.replace("-", "\\E-?\\Q");
 		optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
-		this.lemmaEnding = lemmaEnding;
+		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		this.paradigmId = paradigmId;
 		this.positiveFlags = positiveFlags == null? null : Collections.unmodifiableSet(positiveFlags);
 		this.alwaysFlags = alwaysFlags == null ? null : Collections.unmodifiableSet(alwaysFlags);
@@ -58,18 +58,19 @@ public class SimpleRule implements Rule
 	/**
 	 * Constructor method for convenience - make SimpleRule if flags are given
 	 * in arrays, not sets.
-	 * @param patternText	text grammar string must start with
-	 * @param lemmaEnding	required ending for the lemma to apply this rule
-	 * @param paradigmId	paradigm ID to set if rule matched
-	 * @param positiveFlags	flags to set if rule patternText and lemma ending
-	 * 						matched
-	 * @param alwaysFlags	flags to set if rule patternText matched
+	 * @param patternText		text grammar string must start with
+	 * @param lemmaRestrictions	to apply rule lemma must match this regular
+	 *                          expression
+	 * @param paradigmId		paradigm ID to set if rule matched
+	 * @param positiveFlags		flags to set if rule patternText and lemma
+	 * 							ending matched
+	 * @param alwaysFlags		flags to set if rule patternText matched
 	 * @return	new SimpleRule
 	 */
-	public static SimpleRule of(String patternText, String lemmaEnding,
+	public static SimpleRule of(String patternText, String lemmaRestrictions,
 			int paradigmId, String[] positiveFlags, String[] alwaysFlags)
 	{
-		return new SimpleRule(patternText, lemmaEnding, paradigmId,
+		return new SimpleRule(patternText, lemmaRestrictions, paradigmId,
 				positiveFlags == null ? null : new HashSet<String>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
 	}
@@ -94,7 +95,7 @@ public class SimpleRule implements Rule
 		if (directPattern.matcher(gramText).matches())
 		{
 			newBegin = patternText.length();
-			if (lemma.endsWith(lemmaEnding))
+			if (lemmaRestrict.matcher(lemma).matches())
 			{
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)
@@ -131,7 +132,7 @@ public class SimpleRule implements Rule
 		if (m.matches())
 		{
 			newBegin = m.group(1).length();
-			if (lemma.endsWith(lemmaEnding))
+			if (lemmaRestrict.matcher(lemma).matches())
 			{
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)

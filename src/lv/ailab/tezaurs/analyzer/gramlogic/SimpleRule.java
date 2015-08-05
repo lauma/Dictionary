@@ -12,33 +12,37 @@ import java.util.regex.Pattern;
 public class SimpleRule implements Rule
 {
 	/**
-	 * Un-escaped ending string grammar text must begin with to apply this
-	 * rule.
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
 	 */
 	protected final String patternText;
 
 	/**
-	 * Compiled pattern for direct rule (derived from patternText).
+	 * Nokompilēts šablons tiešajam likumam (iegūts no patternText).
 	 */
 	protected final Pattern directPattern;
 	/**
-	 * Compiled pattern for optional hyphen rule (derived from patternText).
+	 * Nokompilēts šablons likumam ar neoglibātām defisēm (iegūts no
+	 * patternText).
 	 */
 	protected final Pattern optHyphenPattern;
 	/**
-	 * To apply rule lemma must match this regular expression.
+	 * Lai likums būtu piemērojams, lemmai jāatbilst šim šablonam.
 	 */
 	protected final Pattern lemmaRestrict;
 	/**
-	 * Paradigm ID to set if rule matched.
+	 * Paradigmas ID, ko lieto, ja likums ir piemērojams (gan gramatikas teksts,
+	 * gan lemma atbilst attiecīgajiem šabloniem).
 	 */
 	protected final int paradigmId;
 	/**
-	 * These flags are added if rule patternText and lemma ending matched.
+	 * Šos karodziņus uzstāda, ja gan gramatikas teksts, gan lemma atbilst
+	 * attiecīgajiem šabloniem.
 	 */
 	protected final Set<String> positiveFlags;
 	/**
-	 * These flags are added if rule patternText matched.
+	 * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
+	 * šablonam.
 	 */
 	protected final Set<String> alwaysFlags;
 
@@ -56,16 +60,18 @@ public class SimpleRule implements Rule
 	}
 
 	/**
-	 * Constructor method for convenience - make SimpleRule if flags are given
-	 * in arrays, not sets.
-	 * @param patternText		text grammar string must start with
-	 * @param lemmaRestrictions	to apply rule lemma must match this regular
-	 *                          expression
-	 * @param paradigmId		paradigm ID to set if rule matched
-	 * @param positiveFlags		flags to set if rule patternText and lemma
-	 * 							ending matched
-	 * @param alwaysFlags		flags to set if rule patternText matched
-	 * @return	new SimpleRule
+	 * Papildus konstruktors īsumam.
+	 * Izveido SimpleRule, ja karodziņi doti masīvos, nevis kopās.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @param paradigmId		paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem.
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                          atbilst attiecīgajam šablonam.
+	 * @return	jauns SimpleRule
 	 */
 	public static SimpleRule of(String patternText, String lemmaRestrictions,
 			int paradigmId, String[] positiveFlags, String[] alwaysFlags)
@@ -76,13 +82,12 @@ public class SimpleRule implements Rule
 	}
 
 	/**
-	 * Shortcut method.
-	 * Creates SimpleRule for 5th declension nouns if entry word is singular and
-	 * feminine.
-	 * @param patternText		text grammar string must start with
-	 * @param lemmaRestrictions	to apply rule lemma must match this regular
-	 *                          expression
-	 * @return SimpleRule with paradigm 9
+	 * Metode īsumam.
+	 * Izveido SimpleRule 5. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return SimpleRule ar 9. paradigmu
 	 */
 	public static SimpleRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
@@ -91,13 +96,12 @@ public class SimpleRule implements Rule
 				new String[]{"Sieviešu dzimte"});
 	}
 	/**
-	 * Shortcut method.
-	 * Creates SimpleRule for 1th declension nouns if entry word is singular and
-	 * masculine.
-	 * @param patternText		text grammar string must start with
-	 * @param lemmaRestrictions	to apply rule lemma must match this regular
-	 *                          expression
-	 * @return SimpleRule with paradigm 3
+	 * Metode īsumam.
+	 * Izveido SimpleRule 2. deklinācijas vīriešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return SimpleRule ar 3. paradigmu
 	 */
 	public static SimpleRule secondDeclStd(String patternText, String lemmaRestrictions)
 	{
@@ -107,14 +111,16 @@ public class SimpleRule implements Rule
 	}
 
 	/**
-	 * Apply rule as-is - no magic whatsoever.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector		Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if rule matched, -1 otherwise.
+	 * Piemērot likumu bez papildus maģijas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int applyDirect (
 			String gramText, String lemma,
@@ -123,16 +129,18 @@ public class SimpleRule implements Rule
 	{
 		return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
 	}
-	
+
 	/**
-	 * Apply rule, but hyperns in patternText are optional.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector	Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if rule matched, -1 otherwise.
+	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int applyOptHyphens(
 			String gramText, String lemma,
@@ -143,17 +151,19 @@ public class SimpleRule implements Rule
 	}
 
 	/**
-	 * Apply rule, determining match by provided pattern.
-	 * Internal function.
-	 * @param gramPattern		Pattern for determining if rule should be
-	 *                          applied.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector	Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if rule matched, -1 otherwise.
+	 * Piemērot likumu, gramatikas teksta atbilstību nosakot ar parametros doto
+	 * šablonu.
+	 * Funkcija iekšējām vajadzībām.
+	 * @param gramPattern		šablons, kas nosaka gramatikas teksta "derīgumu"
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	protected int apply(Pattern gramPattern, String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,

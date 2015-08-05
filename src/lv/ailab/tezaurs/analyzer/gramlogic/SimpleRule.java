@@ -74,7 +74,36 @@ public class SimpleRule implements Rule
 				positiveFlags == null ? null : new HashSet<String>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
 	}
-	
+
+	/**
+	 * Creates SimpleRule for 5th declension nouns if entry word is singular and
+	 * feminine.
+	 * @param patternText		text grammar string must start with
+	 * @param lemmaRestrictions	to apply rule lemma must match this regular
+	 *                          expression
+	 * @return SimpleRule with paradigm 9
+	 */
+	public static SimpleRule fifthDeclStd(String patternText, String lemmaRestrictions)
+	{
+		return SimpleRule.of(patternText, lemmaRestrictions, 9,
+				new String[]{"Lietvārds"},
+				new String[]{"Sieviešu dzimte"});
+	}
+	/**
+	 * Creates SimpleRule for 1th declension nouns if entry word is singular and
+	 * masculine.
+	 * @param patternText		text grammar string must start with
+	 * @param lemmaRestrictions	to apply rule lemma must match this regular
+	 *                          expression
+	 * @return SimpleRule with paradigm 3
+	 */
+	public static SimpleRule secondDeclStd(String patternText, String lemmaRestrictions)
+	{
+		return SimpleRule.of(patternText, lemmaRestrictions, 3,
+				new String[]{"Lietvārds"},
+				new String[]{"Vīriešu dzimte"});
+	}
+
 	/**
 	 * Apply rule as-is - no magic whatsoever.
 	 * @param gramText			Grammar string currently being processed.

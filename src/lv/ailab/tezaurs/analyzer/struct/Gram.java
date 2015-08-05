@@ -62,7 +62,7 @@ public class Gram  implements HasToJSON
 		SimpleRule.of("ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", "šanās", 0,
 				new String[] {"Lietvārds", "Atgriezeniskais lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //aizbildināšanās
-		
+
 		/* Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 		 */
 		// Rules for both all person and third-person-only cases.
@@ -567,27 +567,6 @@ public class Gram  implements HasToJSON
 	 */
 	public static  MappingSet<String, String> knownAbbr = AbbrMap.getAbbrMap();
 
-	
-	/*/*
-	 * Patterns for identifying (true) grammatical information.
-	 */
-//	public static LinkedList<Pattern> knownPatterns = generateKnownPatterns();
-/*	private static LinkedList<Pattern> generateKnownPatterns()
-	{
-		LinkedList<Pattern> res = new LinkedList<Pattern>();
-		res.add(Pattern.compile("^(.*)(vokatīvs [^ ,;:]+)(.*)$"));
-		res.add(Pattern.compile("^(.*)(bieži lok\\.: [^ ,;:]+)(.*)$"));
-		res.add(Pattern.compile("^(.*)(parasti lok\\.: [^ ,;:]+)(.*)$"));
-		res.add(Pattern.compile("^(.*)(parasti vsk\\. lok\\.: [^ ,;:]+)(.*)$"));
-		res.add(Pattern.compile("^(.*)(parasti ģen\\.: [^ ,;:]+)(.*)$"));
-		res.add(Pattern.compile("^(.*)(pamata skait(\\.|ļa vārds) lietv(\\.|ārda) nozīmē\\.?)(.*)$"));
-		res.add(Pattern.compile("^(.*)(\\(?parasti folkl\\.(\\)\\.)?)(.*)$"));
-		res.add(Pattern.compile("^(.*)(parasti saistītā valodā\\.)(.*)$"));
-		res.add(Pattern.compile("^(.*)(apst\\. nozīmē)(.*)$"));
-		res.add(Pattern.compile("^(.*)(\\(vācu \"krava\"\\))(.*)$"));
-		return res;
-	}//*/
-	
 	public Gram ()
 	{
 		orig = null;

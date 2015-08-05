@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -18,12 +19,14 @@ public class StatsCollector
 {
     public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
     public TreeSet<String> flags = new TreeSet<>();
+    // Counting entries with various properties:
     public int overallCount = 0;
     public int hasParadigm = 0;
     public int hasMultipleParadigms = 0;
+    public int hasMultipleParadigmFlag = 0;
+    public int hasLociitKaaFlag = 0;
     public int hasNoParadigm = 0;
     public int hasUnparsedGram = 0;
-
 
     public void countEntry( Entry entry)
     {
@@ -33,10 +36,16 @@ public class StatsCollector
         if (entry.hasMultipleParadigms()) hasMultipleParadigms++;
         if (entry.hasUnparsedGram()) hasUnparsedGram++;
 
+        Set<String> entryFlags = entry.getUsedFlags();
+        if (entryFlags.contains("Neviennozīmīga paradigma"))
+            hasMultipleParadigmFlag++;
+        if (entryFlags.stream().filter(f -> f.startsWith("Locīt kā ")).count() > 0)
+            hasLociitKaaFlag++;
+        flags.addAll(entryFlags);
+
         for (String p : entry.collectPronunciations())
             pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
 
-        flags.addAll(entry.getUsedFlags());
     }
 
     public void printContents(BufferedWriter out)
@@ -44,17 +53,20 @@ public class StatsCollector
     {
         out.write("{\n");
 
-        out.write("\"Total entry count\":" + overallCount + ",\n");
-        out.write("\"Entries with at least one paradigm\":" + hasParadigm + ",\n");
-        out.write("\"Entries with more than one paradigm\":" + hasMultipleParadigms + ",\n");
-        out.write("\"Entries with no paradigm\":" + hasNoParadigm + ",\n");
-        out.write("\"Partially parsed entries\":" + hasUnparsedGram + ",\n");
-        out.write("\"Amount of different flags used\":" + flags.size() + ",\n");
-        out.write("\"Amount of different \\\"Locīt kā...\\\" flags\":" +
-                flags.stream().filter(f -> f.startsWith("Locīt kā ")).count() + ",\n");
-        out.write("\"Amount of pronunciation transcriptions\":" + pronunciations.size() + ",\n");
+        out.write("\"Total entry count\":" + overallCount);
+        out.write(",\n\"Entries with at least one paradigm\":" + hasParadigm);
+        out.write(",\n\"Entries with more than one paradigm\":" + hasMultipleParadigms);
+        out.write(",\n\"Entries with \\\"Neviennozīmīga paradigma\\\" flag\":" +
+                hasMultipleParadigmFlag);
+        out.write(",\n\"Entries with no paradigm\":" + hasNoParadigm);
+        out.write(",\n\"Partially parsed entries\":" + hasUnparsedGram);
+        out.write(",\n\"Amount of distinct flags used\":" + flags.size());
+        out.write(",\n\"Amount of distinct \\\"Locīt kā...\\\" flags\":" +
+                flags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
+        out.write(",\n\"Entries with \\\"Locīt kā...\\\" flags\":" + hasLociitKaaFlag);
+        out.write(",\n\"Amount of pronunciation transcriptions\":" + pronunciations.size());
 
-        out.write("\"Pronunciations\":[");
+        out.write(",\n\"Pronunciations\":[");
         out.write(pronunciations.stream().map(t ->
                 "[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
                         .escape(t.second) + "\", \"" + JSONObject

@@ -1224,7 +1224,7 @@ public class Gram  implements HasToJSON
 			newBegin = "-žu, v.".length();
 			if (lemma.endsWith("ļaudis"))
 			{
-				paradigm.add(32);
+				paradigm.add(11);
 				flags.add("Šķirkļavārds daudzskaitlī");
 				flags.add("Lietvārds");
 			}

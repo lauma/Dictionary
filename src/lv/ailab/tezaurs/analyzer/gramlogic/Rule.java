@@ -12,7 +12,8 @@ public interface Rule {
 	/**
 	 * Piemērot likumu bez papildus maģijas.
 	 * @param gramText          apstrādājamā gramatika
-	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā lemma
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
 	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
@@ -28,7 +29,8 @@ public interface Rule {
 	/**
 	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
 	 * @param gramText          apstrādājamā gramatika
-	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā lemma
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
 	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja

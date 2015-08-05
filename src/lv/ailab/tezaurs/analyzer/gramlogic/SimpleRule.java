@@ -5,8 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Simple rule - tries to match grammar text to given string and lemma
- * ending. If matched, adds a single paradigm.
+ * Vienkāršais likums - pārbauda, vai gramatika sākas ar noteiktu tekstu un vai
+ * lemma atbilst dotai regulārai izteiksmei. Ja jā, pievieno vienu paradigmu.
  * @author Lauma
  */
 public class SimpleRule implements Rule

@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Dictionary.iws" />
@@ -53,48 +52,32 @@
       <file leaf-file-name="Gram.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.423077">
-              <caret line="1230" column="16" selection-start-line="1230" selection-start-column="16" selection-end-line="1230" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="688" column="0" selection-start-line="688" selection-start-column="0" selection-end-line="688" selection-end-column="0" />
               <folding>
                 <element signature="method#Gram#0;class#Gram#0" expanded="false" />
-                <element signature="method#Gram#1;class#Gram#0" expanded="false" />
-                <element signature="method#set#0;class#Gram#0" expanded="false" />
-                <element signature="method#paradigmCount#0;class#Gram#0" expanded="false" />
-                <element signature="method#hasUnparsedGram#0;class#Gram#0" expanded="false" />
-                <element signature="e#44284#44285#0" expanded="true" />
-                <element signature="e#44310#44311#0" expanded="true" />
+                <element signature="e#32031#32032#0" expanded="true" />
+                <element signature="e#32057#32058#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ComplexRule.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java">
+      <file leaf-file-name="Rules.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.10722101">
-              <caret line="124" column="85" selection-start-line="124" selection-start-column="85" selection-end-line="124" selection-end-column="85" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleRule.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="190" column="5" selection-start-line="152" selection-start-column="0" selection-end-line="190" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.702407">
+              <caret line="191" column="77" selection-start-line="191" selection-start-column="77" selection-end-line="191" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rules.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
+      <file leaf-file-name="ComplexRule.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="108" column="69" selection-start-line="108" selection-start-column="69" selection-end-line="108" selection-end-column="69" />
+              <caret line="66" column="8" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -158,11 +141,11 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" />
       </list>
     </option>
   </component>
@@ -535,7 +518,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1290" height="776" extended-state="7" />
+    <frame x="-4" y="-4" width="1290" height="776" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -932,16 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="82" selection-start-line="41" selection-start-column="82" selection-end-line="41" selection-end-column="82" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryXmlToJsonUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -982,45 +955,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.423077">
-          <caret line="1230" column="16" selection-start-line="1230" selection-start-column="16" selection-end-line="1230" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="92" selection-start-line="80" selection-start-column="16" selection-end-line="80" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="82" selection-start-line="41" selection-start-column="82" selection-end-line="41" selection-end-column="82" />
           <folding>
-            <element signature="method#Gram#0;class#Gram#0" expanded="false" />
-            <element signature="method#Gram#1;class#Gram#0" expanded="false" />
-            <element signature="method#set#0;class#Gram#0" expanded="false" />
-            <element signature="method#paradigmCount#0;class#Gram#0" expanded="false" />
-            <element signature="method#hasUnparsedGram#0;class#Gram#0" expanded="false" />
-            <element signature="e#44284#44285#0" expanded="true" />
-            <element signature="e#44310#44311#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="69" selection-start-line="108" selection-start-column="69" selection-end-line="108" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleRule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="190" column="5" selection-start-line="152" selection-start-column="0" selection-end-line="190" selection-end-column="5" />
-          <folding />
+          <caret line="688" column="0" selection-start-line="688" selection-start-column="0" selection-end-line="688" selection-end-column="0" />
+          <folding>
+            <element signature="method#Gram#0;class#Gram#0" expanded="false" />
+            <element signature="e#32031#32032#0" expanded="true" />
+            <element signature="e#32057#32058#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ComplexRule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10722101">
-          <caret line="124" column="85" selection-start-line="124" selection-start-column="85" selection-end-line="124" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="8" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.702407">
+          <caret line="191" column="77" selection-start-line="191" selection-start-column="77" selection-end-line="191" selection-end-column="77" />
+          <folding />
         </state>
       </provider>
     </entry>

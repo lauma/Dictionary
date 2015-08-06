@@ -1,5 +1,7 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.utils.Trio;
+
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * Gram.processBeginingWithPatterns(String, String)
@@ -11,7 +13,7 @@ public class Rules
 {
 
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyDirect().
+	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] otherRulesDirect = {
@@ -31,6 +33,10 @@ public class Rules
 				new String[] {"Lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //adatzivs
 
+		SimpleRule.of("-žu, v.", ".*ļaudis", 11,
+					new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Tikai daudzskaitlī"},
+					new String[] {"Vīriešu dzimte"}), //ļaudis
+
 		/* Paradigm 25: Vietniekvārdi
 		 */
 		SimpleRule.of("s. -as; vietniekv.", ".*i", 25,
@@ -48,10 +54,10 @@ public class Rules
 	};
 
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyOptHyphens()
+	 * Likumi kas jālieto ar Rule.applyOptHyphens()
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
-	public static final Rule[] simpleRulesOptHyperns = {
+	public static final Rule[] otherRulesOptHyperns = {
 		/* Paradigm 11: Lietvārds 6. deklinācija -s
 		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
 		 * declension nouns.
@@ -70,7 +76,7 @@ public class Rules
 	};
 
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyDirect().
+	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Paradigm 9: Lietvārds 2. deklinācija -is
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
@@ -92,13 +98,16 @@ public class Rules
 		SimpleRule.fifthDeclStd("-es, s., dsk. ģen. -bju", ".*be"), //acetilsalicilskābe
 		SimpleRule.fifthDeclStd("-es, s. dsk. -es, -bju", ".*be"), //astilbe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ru", ".*re"), //ādere
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šņu", ".*[šs][nņ]e") //aizkrāsne
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šņu", ".*[šs][nņ]e"), //aizkrāsne
 
+		SimpleRule.of("-ļu, s.", ".*les", 9,
+				new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī"},
+				new String[]{"Sieviešu dzimete"}), //bailes
 	};
 
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyDirect().
-	 * Paradigm 3: Lietvārds 5. deklinācija -e siev. dz.
+	 * Likumi kas jālieto ar Rule.applyDirect().
+	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] secondDeclNounRulesDirect = {
@@ -110,7 +119,93 @@ public class Rules
 	};
 
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyDirect().
+	 * Likumi kas jālieto ar Rule.applyDirect().
+	 * Paradigm 1: Lietvārds 1. deklinācija -s
+	 * Paradigm 2: Lietvārds 1. deklinācija -š
+	 * Paradigm 3: Lietvārds 2. deklinācija -is
+	 * Paradigm 4: Lietvārds 2. deklinācija -s (nom. == ģen.)
+	 * Paradigm 5: Lietvārds 2. deklinācija -suns, durkls, (nom.!= ģen.)
+	 * Paradigm 7: Lietvārds 4. deklinācija -a siev. dz.
+	 * Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
+	 * Paradigm 11: Lietvārds 6. deklinācija -s
+	 * Vīriešu dzimtes galotnes, kur jāveic paradigmu šķirošana.
+	 */
+	public static final Rule[] nounMultiDeclRulesDirect = {
+		// Paradigmas: 3, 5
+		ComplexRule.of("-ļa, v.", new Trio[] {
+					Trio.of(".*lis", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*ls", new Integer[] {5}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // acumirklis, durkls
+		ComplexRule.of("-ša, v.", new Trio[] {
+					Trio.of(".*[stš]is", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*ss", new Integer[] {5}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // abrkasis, lemess
+		//Paradigmas: 1, 3
+		ComplexRule.of("-ra, v.", new Trio[] {
+					Trio.of(".*rs", new Integer[] {1}, new String[] {"Lietvārds"}),
+					Trio.of(".*ris", new Integer[] {3}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // airis, mūrniekmeistars
+		// Paradigmas: 2, 3, 5
+		ComplexRule.of("-ņa, v.", new Trio[] {
+					Trio.of(".*ņš", new Integer[] {2}, new String[] {"Lietvārds"}),
+					Trio.of(".*nis", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*suns", new Integer[] {5}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // abesīnis, dižtauriņš, dzinējsuns
+		// Paradigmsa: 1, 2, 3 (bez mijas), 1-5 (daudzskaitlī)
+		ComplexRule.of("-a, v.", new Trio[] {
+					Trio.of(".*[^aeiouāēīōū]s", new Integer[] {1}, new String[] {"Lietvārds"}),
+					Trio.of(".*š", new Integer[] {2}, new String[] {"Lietvārds"}),
+					Trio.of(".*[ģjķr]is", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*[ņ]i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*[ļ]i", new Integer[] {1, 2, 3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
+				new String[]{"Vīriešu dzimte"}), // abats, akustiķis, sparguļi, skostiņi
+
+		// Paradigms: 9, vienskaitlis + daudzskaitlis.
+		ComplexRule.of("-es, dsk. ģen. -pju, s.", new Trio[] {
+					Trio.of(".*pe", new Integer[] {9}, new String[] {"Lietvārds"}),
+					Trio.of(".*pes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // aitkope, tūsklapes
+
+		// Paradigms: 7, 9
+		ComplexRule.of("-žu, s.", new Trio[] {
+					Trio.of(".*žas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[dz]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // mirādes, graizes, bažas
+		ComplexRule.of("-ņu, s.", new Trio[] {
+					Trio.of(".*ne", new Integer[] {0}, new String[] {"Lietvārds"}),
+					Trio.of(".*ņas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // acenes, iemaņas, balodene
+		// Paradigms: 7, 9, 11
+		ComplexRule.of("-šu, s.", new Trio[] {
+					Trio.of(".*te", new Integer[] {9}, new String[] {"Lietvārds"}),
+					Trio.of(".*šas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[st]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*tis", new Integer[] {11}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // ahajiete, aizkulises, bikses, klaušas
+
+		// Paradigas: 7, 9
+		ComplexRule.of("-u, s.", new Trio[] {
+					Trio.of(".*a", new Integer[] {7}, new String[] {"Lietvārds"}),
+					Trio.of(".*as", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*ķes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // aijas, zeķes, konkrēcija
+
+		// Paradigms: 1-5 (plural forms)
+		ComplexRule.of("-ņu, v.", new Trio[] {
+					Trio.of(".*ņi", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
+				new String[]{"Vīriešu dzimte"}), // bretoņi
+		ComplexRule.of("-u, v.", new Trio[] {
+					Trio.of(".*(nieki|umi|otāji)", new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[cdlmnpvz]i", new Integer[] {1, 2}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*(ieši|[vpm]ji)", new Integer[] {3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*[ņš]i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*([bgkhrstčģķļž]|[aeiouāēīōū]j)i", new Integer[] {1, 2, 3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
+				new String[]{"Vīriešu dzimte"}), // abesīņi, abhāzi, ādgrauži, adigejieši, adžāri, alimenti, angļi, antinukloni, apakšbrunči
+};
+
+	/**
+	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Likumi, kas ir citu likumu prefiksi.
 	 */
 	public static final Rule[] dangerousRulesDirect = {
@@ -119,7 +214,7 @@ public class Rules
 		SimpleRule.fifthDeclStd("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
-		/* Paradigm 3: Lietvārds 5. deklinācija -e siev. dz.
+		/* Paradigm 3: Lietvārds 2. deklinācija -is
 		 */
 		SimpleRule.of("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
 				new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī"},
@@ -127,7 +222,7 @@ public class Rules
 			// konflikts ar "bizmanis"
 	};
 	/**
-	 * Likumi kas jālieto ar SimpleRule.applyDirect().
+	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Šeit ir izdalīti atsevišķi darbības vārdu likumi, jo tie ir gari,
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 */

@@ -5,7 +5,6 @@ import lv.ailab.tezaurs.utils.Trio;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Vispārīgais likums - ja gramatika atbilst dotajam šablonam, tad atkarībā no
@@ -52,10 +51,10 @@ public class ComplexRule implements Rule
 
     /**
      * @param pattern		teksts, ar kuru jāsākas gramatikai
-     * @param lemmaLogic	nosacījumu saraksts, kurā katrs elements sastāv no
-     *                      trijnieka: 1)lemmu aprakstoša šablona, 2)
-     *                      paradigmām, ko lietot, ja lemma atbilst šim
-     *                      šablonam, 3) karodziņiem, ko uzstādīt, ja lemma
+     * @param lemmaLogic	nosacījumu saraksts (nedrīkst būt null, kurā katrs
+     *                      elements sastāv no trijnieka: 1)lemmu aprakstoša
+     *                      šablona, 2) paradigmām, ko lietot, ja lemma atbilst
+     *                      šim šablonam, 3) karodziņiem, ko uzstādīt, ja lemma
      *                      atbilst šim šablonam
      * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts
      *                      atbilst attiecīgajam šablonam.
@@ -65,18 +64,21 @@ public class ComplexRule implements Rule
             Set<String> alwaysFlags)
 
     {
+        if (lemmaLogic == null)
+            throw new IllegalArgumentException (
+                    "Nav paredzēts, ka ComplexRule tiek viedots vispār bez lemmu nosacījumiem!");
         this.patternText = pattern;
         directPattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
         String regExpPattern = patternText.replace("-", "\\E-?\\Q");
         optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
 
-        this.lemmaLogic = lemmaLogic == null ? null : Collections.unmodifiableList(lemmaLogic);
+        this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
         this.alwaysFlags = alwaysFlags == null ? null : Collections.unmodifiableSet(alwaysFlags);
 
         errorMessage = "Problem matching \"%s\" with paradigm " +
                 lemmaLogic.stream().map(t -> t.second).flatMap(m -> m.stream())
-                        .distinct().sorted().map(i -> i.toString()).
-                        reduce((a, b) -> a + ", " + b).orElse("")+ "\n";
+                        .distinct().sorted().map(i -> i.toString())
+                        .reduce((a, b) -> a + ", " + b).orElse("")+ "\n";
     }
     /**
      * Papildus konstruktors īsumam.
@@ -90,22 +92,19 @@ public class ComplexRule implements Rule
      *                          atbilst šim šablonam.
      * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
      *                          atbilst attiecīgajam šablonam.
-     * @return	jauns SimpleRule
+     * @return	jauns ComplexRule
      */
-    public ComplexRule of (String patternText,
+    public static ComplexRule of (String patternText,
             Trio<String, Integer[], String[]>[] lemmaLogic,
-            Set<String> alwaysFlags)
+            String[] alwaysFlags)
     {
         ArrayList<Trio<Pattern, Set<Integer>, Set<String>>> tmp = new ArrayList<>();
         for (Trio<String, Integer[], String[]> t : lemmaLogic)
             tmp.add(Trio.of(Pattern.compile(t.first),
-                    Collections.unmodifiableSet(new HashSet<Integer>()
-                    {{
-                            addAll(Arrays.asList(t.second));
-                        }}),
-                    Collections.unmodifiableSet(new HashSet<String>(){{
-                        addAll(Arrays.asList(t.first));}})));
-        return new ComplexRule(patternText, tmp, alwaysFlags);
+                    Collections.unmodifiableSet(new HashSet<Integer>(Arrays.asList(t.second))),
+                    Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(t.first)))));
+        return new ComplexRule(patternText, tmp,
+                alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
     }
     /**
      * Piemērot likumu bez papildus maģijas.

@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.utils.StringUtils;
 import lv.ailab.tezaurs.utils.Trio;
 
 /**
@@ -248,19 +249,34 @@ public class Rules
 	/**
 	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Likumi, kas ir citu likumu prefiksi.
+	 * Šajā masīvā jāievēro likumu secība, citādi slikti būs. Šo masīvu jālieto
+	 * pašu pēdējo.
 	 */
 	public static final Rule[] dangerousRulesDirect = {
-		/* Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
-		 */
+		// Paradigma: 9 - Lietvārds 5. deklinācija -e siev. dz.
 		SimpleRule.fifthDeclStd("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
-		/* Paradigm 3: Lietvārds 2. deklinācija -is
-		 */
+		// Paradigma: 3 - Lietvārds 2. deklinācija -is
 		SimpleRule.of("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
 				new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī"},
 				new String[]{"Vīriešu dzimte"}), //afroamerikāņi
 			// konflikts ar "bizmanis"
+
+		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
+		// Paradigmas: 9, 7 - vienskaitlī un daudzskaitlī
+		ComplexRule.of("-žu", new Trio[] {
+					Trio.of(".*[dz]e", new Integer[] {9}, new String[] {"Lietvārds", "Sieviešu dzimte"}),
+					Trio.of(".*[dz]es", new Integer[] {9}, new String[] {"Lietvārds", "Sieviešu dzimte", "Šķirkļavārds daudzskaitlī"})},
+				null), // abioģenēze, ablumozes, akolāde, nematodes
+		ComplexRule.of("-ņu", new Trio[] {
+					Trio.of(".*ne", new Integer[] {9}, new String[] {"Lietvārds", "Sieviešu dzimte"}),
+					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Sieviešu dzimte", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*ņas", new Integer[] {7}, new String[] {"Lietvārds", "Sieviešu dzimte", "Šķirkļavārds daudzskaitlī"})},
+				null), // agrene, aizlaidnes
+		// Paradigma: 3
+		SimpleRule.of("-ņa", ".*nis", 3,
+				new String[]{"Lietvārds", "Sieviešu dzimte"}, null), // abolainis
 	};
 	/**
 	 * Likumi kas jālieto ar Rule.applyDirect().

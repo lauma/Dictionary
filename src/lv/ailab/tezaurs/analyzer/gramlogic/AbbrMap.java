@@ -2,6 +2,8 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.tezaurs.utils.MappingSet;
 
+import java.util.Set;
+
 /**
  * Singleton class containing all known abbreviations and their
  * de-abbreviations.
@@ -16,7 +18,7 @@ public class AbbrMap {
 		if (am == null) am = populateMap();
 		return am;
 	}
-	
+
 	protected AbbrMap() {}
 	
 	protected static MappingSet<String, String> populateMap()

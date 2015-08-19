@@ -102,7 +102,7 @@ public class ComplexRule implements Rule
         for (Trio<String, Integer[], String[]> t : lemmaLogic)
             tmp.add(Trio.of(Pattern.compile(t.first),
                     Collections.unmodifiableSet(new HashSet<Integer>(Arrays.asList(t.second))),
-                    Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(t.first)))));
+                    t.third == null ? null : Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(t.third)))));
         return new ComplexRule(patternText, tmp,
                 alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
     }

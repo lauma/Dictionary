@@ -66,18 +66,18 @@ public class StatsCollector
         out.write(",\n\"Entries with \\\"Locīt kā...\\\" flags\":" + hasLociitKaaFlag);
         out.write(",\n\"Amount of pronunciation transcriptions\":" + pronunciations.size());
 
-        out.write(",\n\"Pronunciations\":[");
+        out.write(",\n\"Pronunciations\":[\n");
         out.write(pronunciations.stream().map(t ->
-                "[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+                "\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
                         .escape(t.second) + "\", \"" + JSONObject
                         .escape(t.third) + "\"]")
-                .reduce((t1, t2) -> t1 + ", " + t2).orElse(""));
-        out.write("],\n");
+                .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+        out.write("\n],\n");
 
-        out.write("\"Flags\":[\"");
-        out.write(flags.stream().map(f -> "\"" + JSONObject.escape(f) + "\"")
-                .reduce((f1, f2) -> f1 + ", " + f2).orElse(""));
-        out.write("]\n");
+        out.write("\"Flags\":[\n");
+        out.write(flags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
+                .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
+        out.write("\n]\n");
 
         out.write("}\n");
     }

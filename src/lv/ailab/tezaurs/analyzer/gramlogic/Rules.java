@@ -17,15 +17,38 @@ public class Rules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] otherRulesDirect = {
-		/* Paradigm Unknown: Atgriezeniskie lietvārdi -šanās
-		 */
+		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
 		SimpleRule.of("ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 0,
 				new String[] {"Lietvārds", "Atgriezeniskais lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //aizbildināšanās
+		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
+		ComplexRule.of("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", new Trio[] {
+					Trio.of(".*a", new Integer[] {7, 8}, new String[] {"Lietvārds"})},
+				new String[]{"Kopdzimte"}), // aitasgalva, aizmārša
 
+		// Paradigmas: 1, 2 - 1. deklinācija
+		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
+		SimpleRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1,
+				null, new String[]{"Vīriešu dzimte", "Lietvārds"}), // aerobs
+		SimpleRule.of("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1,
+				new String[]{"Lietvārds"},
+				new String[]{"Vīriešu dzimte", "Vienskaitlis"}), // acteks
 
-		/* Paradigm 11: Lietvārds 6. deklinācija -s
-		 */
+		// Paradigmas: 7, 11
+		ComplexRule.of("-as, s.", new Trio[] {
+					Trio.of(".*a", new Integer[] {7}, new String[] {"Lietvārds"}),
+					Trio.of(".*[^aeiouāēīōū]as", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[^aeiouāēīōū]s", new Integer[] {11}, new String[] {"Lietvārds"})},
+				new String[] {"Sieviešu dzimte"}), // aberācija, milns, najādas
+
+		// Paradigmas: 9, 11
+		ComplexRule.of("dsk. ģen. -ņu, s.", new Trio[] {
+					Trio.of(".*ne", new Integer[] {9}, new String[] {"Lietvārds"}),
+					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[^aeiouāēīōū]s", new Integer[] {11}, new String[] {"Lietvārds"})},
+				new String[] {"Sieviešu dzimte"}), // ādmine, bākuguns, bārkšsaknes
+
+		// Paradigma: 11 - 6. dekl.
 		SimpleRule.of("-ts, -šu", ".*ts", 11,
 				new String[] {"Lietvārds"},
 				new String[] {"Sieviešu dzimte"}), //abonentpults
@@ -34,23 +57,41 @@ public class Rules
 				new String[] {"Sieviešu dzimte"}), //adatzivs
 
 		SimpleRule.of("-žu, v.", ".*ļaudis", 11,
-					new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Tikai daudzskaitlī"},
-					new String[] {"Vīriešu dzimte"}), //ļaudis
+				new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Tikai daudzskaitlī"},
+				new String[] {"Vīriešu dzimte"}), //ļaudis
 
-		/* Paradigm 25: Vietniekvārdi
-		 */
+		// Paradigmas: 13, 14 - īpašības vārdi daudzskaitlī
+		ComplexRule.of("s. -as; adj.", new Trio[] {
+					Trio.of(".*i", new Integer[] {13, 14}, new String[] {"Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"})},
+				new String[] {"Īpašības vārds"}), // abēji 2
+		ComplexRule.of("s. -as; tikai dsk.", new Trio[] {
+							Trio.of(".*i", new Integer[] {13, 14}, new String[] {"Īpašības vārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"})},
+					new String[] {"Tikai daudzskaitlī"}), // abēji 1
+
+		// Paradigma: 25 - vietniekvārdi
 		SimpleRule.of("s. -as; vietniekv.", ".*i", 25,
 				new String[] {"Šķirkļavārds daudzskaitlī"},
 				new String[] {"Vietniekvārds"}), //abi
 
-		/* Paradigm 30: jaundzimušais, pēdējais
-		 */
+		// Paradigma: 30 - jaundzimušais, pēdējais
 		SimpleRule.of("-šā, v. -šās, s.", ".*ušais", 30,
 				new String[] {"Īpašības vārds", "Lietvārds"},
 				null), //iereibušais	//TODO vai te vajag alternatīvo lemmu?
 		SimpleRule.of("-ā, v.", ".*ais", 30,
 				new String[] {"Īpašības vārds", "Lietvārds"},
-				new String[] {"Vīriešu dzimte"}) //pirmdzimtais
+				new String[] {"Vīriešu dzimte"}), //pirmdzimtais
+
+		// Paradigmas: 30 -  jaundzimušais, pēdējais
+		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
+		ComplexRule.of("-ās, s.", new Trio[] {
+					Trio.of(".*šanās", new Integer[] {0}, new String[] {"Atgriezeniskais lietvārds", "Lietvārds"}),
+					Trio.of(".*ā", new Integer[] {30}, new String[] {"Īpašības vārds", "Lietvārds"})},
+				new String[] {"Sieviešu dzimte"}), // pirmdzimtā, -šanās
+
+		// Paradigmas: 22, 30
+		ComplexRule.of("s. -ā", new Trio[] {
+					Trio.of(".*ais", new Integer[] {22, 30}, new String[] {"Īpašības vārds", "Skaitļa vārds", "Neviennozīmīga paradigma"})},
+				null) // agrākais, pirmais	//TODO vai te vajag alternatīvo lemmu?
 	};
 
 	/**
@@ -102,7 +143,7 @@ public class Rules
 
 		SimpleRule.of("-ļu, s.", ".*les", 9,
 				new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī"},
-				new String[]{"Sieviešu dzimete"}), //bailes
+				new String[]{"Sieviešu dzimte"}), //bailes
 	};
 
 	/**
@@ -172,7 +213,7 @@ public class Rules
 					Trio.of(".*[dz]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
 				new String[]{"Sieviešu dzimte"}), // mirādes, graizes, bažas
 		ComplexRule.of("-ņu, s.", new Trio[] {
-					Trio.of(".*ne", new Integer[] {0}, new String[] {"Lietvārds"}),
+					Trio.of(".*ne", new Integer[] {9}, new String[] {"Lietvārds"}),
 					Trio.of(".*ņas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
 				new String[]{"Sieviešu dzimte"}), // acenes, iemaņas, balodene

@@ -12,7 +12,6 @@ import lv.ailab.tezaurs.utils.Trio;
  */
 public class Rules
 {
-
 	/**
 	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Pārējie likumi, kas neatbilst citām grupām.
@@ -197,7 +196,7 @@ public class Rules
 		ComplexRule.of("-a, v.", new Trio[] {
 					Trio.of(".*[^aeiouāēīōū]s", new Integer[] {1}, new String[] {"Lietvārds"}),
 					Trio.of(".*š", new Integer[] {2}, new String[] {"Lietvārds"}),
-					Trio.of(".*[ģjķr]is", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*[ģjķrt]is", new Integer[] {3}, new String[] {"Lietvārds"}),
 					Trio.of(".*[ņ]i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
 					Trio.of(".*[ļ]i", new Integer[] {1, 2, 3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
 				new String[]{"Vīriešu dzimte"}), // abats, akustiķis, sparguļi, skostiņi
@@ -371,6 +370,7 @@ public class Rules
 
 		VerbRule.thirdConjRefl("-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties"), //aizdziedāties
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties"), //aizgulēties
+		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties"), //aizraudāties
 
 		// Single-case rules.
 		// Generic ending rules.
@@ -412,7 +412,7 @@ public class Rules
 		ThirdPersVerbRule.thirdConjRefl("-kurkšķas, pag. -kurkšķējās", "kurkšķēties"), //aizkurkšķēties
 		// L, M
 		ThirdPersVerbRule.thirdConjRefl("-mirdzas, pag. -mirdzējās", "mirdzēties") //aizmirdzēties
-		//N, O, P, R, S, T, U, V, Z
+		// N, O, P, R, S, T, U, V, Z
 	};
 
 	/**
@@ -544,8 +544,10 @@ public class Rules
 		VerbRule.firstConjDir("-plūstu, -plūsti,", "-plūst, pag. -plūdu", "plūst"), //applūst, aizplūst
 		VerbRule.firstConjDir("-pļauju, -pļauj,", "-pļauj, pag. -pļāvu", "pļaut"), //aizpļaut
 		VerbRule.firstConjDir("-pūšu, -pūt,", "-pūš, pag. -pūtu", "pūst"), //aizpūst
+		VerbRule.firstConjDir("-pūstu, -pūsti,", "-pūst, pag. -puvu", "pūt"), //aizpūt, pūt
 		// R
 		VerbRule.firstConjDir("-roku, -roc,", "-rok, pag. -raku", "rakt"), //aizrakt
+		VerbRule.firstConjDir("-raušu, -raus,", "-rauš, pag. -rausu", "raust"), //aizraust
 		// S, Š
 		VerbRule.firstConjDir("-šalcu, -šalc,", "-šalc, pag. -šalcu", "šalkt"), //pašalkt, aizšalkt
 		// T
@@ -638,7 +640,10 @@ public class Rules
 		VerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt"), //aizpeldēt
 		VerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt"), //appilēt, aizpilēt
 		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt"), //aizprecēt
-		// R, S, T
+		VerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt"), //aizputēt, apputēt
+		// R
+		VerbRule.thirdConjDir("-raušos, -rausies,", "-raušas, pag. -rausos", "rausties"), //aizrausties
+		// S, T
 		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt"), //aizturēt
 		// U, V, Z
 
@@ -732,7 +737,10 @@ public class Rules
 		VerbRule.firstConjRefl("-nesos, -nesies,", "-nesas, pag. -nesos", "nesties"), //aiznesties
 		// Ņ
 		VerbRule.firstConjRefl("-ņemos, -ņemies,", "-ņemas, pag. -ņēmos", "ņemties"), //aizņemties
-		// O, P, R, S, T, U, V, Z
+		// O, P, R
+		VerbRule.firstConjRefl("-rokos, -rocies,", "-rokas, pag. -rakos", "rakties"), // aizrakties
+		VerbRule.firstConjRefl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
+		// S, T, U, V, Z
 
 
 		// Single case rules.

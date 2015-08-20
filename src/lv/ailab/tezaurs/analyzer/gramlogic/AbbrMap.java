@@ -255,6 +255,7 @@ public class AbbrMap {
 		res.put("parasti vsk", "Parasti vienskaitlī");
 		res.put("par. vsk.", "Parasti vienskaitlī");
 		res.put("tikai vsk.", "Tikai vienskaitlī");
+		res.put("arī dsk.", "Arī daudzskaitlī");		// Ļaunums.
 		res.put("parasti dsk.", "Parasti daudzskaitlī");		
 		res.put("tikai dsk.", "Tikai daudzskaitlī");
 		res.put("parasti 3. pers.", "Parasti 3. personā");

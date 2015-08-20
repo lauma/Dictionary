@@ -47,7 +47,7 @@ public class VerbRule implements Rule
 			thirdPersonPattern = end.substring(0, end.length()-2) + "ās";
 		else
 		{
-			System.err.printf("Could not figure out third-person-only rule for grammar pattern \"%s\"\n", allPersonPattern);
+			System.err.printf("Neizdevās izveidot \"parasti 3. pers.\" likumu gramatikas šablonam \"%s\"\n", allPersonPattern);
 			thirdPersonPattern = allPersonPattern;
 		}
 		allPersonRule = new SimpleRule(allPersonPattern,

@@ -118,22 +118,45 @@ public class Rules
 
 	/**
 	 * Likumi kas jālieto ar Rule.applyDirect().
-	 * Paradigm 9: Lietvārds 2. deklinācija -is
+	 * Paradigm 9: Lietvārds 5. deklinācija -e
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] fifthDeclNounRulesDirect = {
 		//Standartizētie
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ču, s.", ".*[cč]e"), //ābece
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ļu, s.", ".*[lļ]e"), //ābele
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šu, s.", ".*[tsš]e"), //abate
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ņu, s.", ".*[nņ]e"), //ābolaine
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -žu, s.", ".*[zžd]e"), //ābolmaize
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ču, s.", ".*[cč]e"), //ābece, veče
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -fu, s.", ".*fe"), //arheogrāfe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ģu, s.", ".*[ģ]e"), //aeroloģe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ju, s.", ".*je"), //baskāje
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ķu, s.", ".*[ķ]e"), //agnostiķe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ķu; s.", ".*[ķ]e"), //leduspuķe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ļu, s.", ".*[l]e"), //ābele
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ņu, s.", ".*[n]e"), //ābolaine
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ru, s.", ".*re"), //administratore
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -stu, s.", ".*ste"), //abolicioniste
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ģu, s.", ".*[gģ]e"), //aeroloģe
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -vju, s.", ".*ve"), //agave
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ķu, s.", ".*[kķ]e"), //agnostiķe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šu, s.", ".*[sšt]e"), //abate, adrese, larkše
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šu; s.", ".*[st]e"), //apokalipse, note
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -žu, s.", ".*[dz]e"), //ābolmaize, aģitbrigāde
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -žu; s.", ".*[dz]e"), //bilde, pirolīze
+
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -bju, s.", ".*be"), //apdobe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -džu, s.", ".*dze"), //kāršaudze
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -kšu, s.", ".*kte"), //daudzpunkte
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ļļu, s.", ".*lle"), //zaļumballe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -mju, s.", ".*me"), //agronome
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -stu, s.", ".*ste"), //abolicioniste
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šķu, s.", ".*šķe"), //draišķe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šļu, s.", ".*sle"), //gaisagrābsle
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -vju, s.", ".*ve"), //agave
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -vju; s.", ".*ve"), //aizstāve
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -žņu, s.", ".*zne"), //asteszvaigzne
+
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. aļģu, s.", ".*aļģe"), //aļģe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), //aļģe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. āru, s.", ".*āre"), //āre
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -āru, s.", ".*āre"), //āre
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. biržu, s.", ".*birze"), //birze
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -biržu, s.", ".*birze"), //birze
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. upju, s.", ".*upe"), //dzirnavupe
+		SimpleRule.fifthDeclStd("-es, dsk. ģen. -upju, s.", ".*upe"), //dzirnavupe
 
 		// Mazāk standartizētie
 		SimpleRule.fifthDeclStd("-es, s., dsk. ģen. -bju", ".*be"), //acetilsalicilskābe
@@ -144,6 +167,26 @@ public class Rules
 		SimpleRule.of("-ļu, s.", ".*les", 9,
 				new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī"},
 				new String[]{"Sieviešu dzimte"}), //bailes
+		SimpleRule.of("-es, dsk. ģen. -stu, arī -šu, s.", ".*ste", 9,
+				new String[]{"Lietvārds", "Miju varianti: -stu/-šu"},
+				new String[]{"Sieviešu dzimte"}), //dzeņaukste
+
+		// Bez mijām
+		SimpleRule.of("-es, dsk. ģen. -du, s.", ".*de", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), // diplomande
+		SimpleRule.of("-es, dsk. ģen. -pu, s.", ".*pe", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), // filantrope
+		SimpleRule.of("-es, dsk. ģen. -su, s.", ".*se", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), // bise
+		SimpleRule.of("-es, dsk. ģen. -tu, s.", ".*te", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), // antisemīte
+		SimpleRule.of("-es, dsk. ģen. -zu, s.", ".*ze", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), // autobāze
 	};
 
 	/**

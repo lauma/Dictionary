@@ -122,9 +122,8 @@ public class Rules
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] fifthDeclNounRulesDirect = {
-		//Standartizētie
+		// Standartizētie
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ču", ".*[cč]e"), //ābece, veče
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -fu", ".*fe"), //arheogrāfe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ģu", ".*[ģ]e"), //aeroloģe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ju", ".*je"), //baskāje
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ķu", ".*[ķ]e"), //agnostiķe, leduspuķe
@@ -140,7 +139,6 @@ public class Rules
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ļļu", ".*lle"), //zaļumballe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ļņu", ".*lne"), //nokalne
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -mju", ".*me"), //agronome
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. -pju", ".*pe"), //antilope
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -smju", ".*sme"), //noslieksme
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -stu", ".*ste"), //abolicioniste
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -šķu", ".*šķe"), //draišķe
@@ -149,12 +147,18 @@ public class Rules
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -vju", ".*ve"), //agave
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -vju", ".*ve"), //aizstāve
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -žņu", ".*zne"), //asteszvaigzne
+
+		// Vienskaitlis + daudzskaitlis
+		ComplexRule.of("-es, dsk. ģen. -pju", new Trio[]{
+					Trio.of(".*pe", new Integer[]{9}, new String[]{"Lietvārds", "Sieviešu dzimte"}),
+					Trio.of(".*pes", new Integer[]{9}, new String[]{"Lietvārds", "Šķirkļavārds daudzskaitlī", "Sieviešu dzimte"}),},
+				null), // aitkope, antilope, tūsklapes
+
 		// Nejauki, pārāk specifiski gdījumi
 		// Šiem defišu izņemšanas mehānisms īsti neder, jo vienā vietā vajag atstāt.
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. aļģu", ".*aļģe"), //aļģe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. āru", ".*āre"), //āre
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. biržu", ".*birze"), //birze
-		SimpleRule.fifthDeclStd("-es, dsk. ģen. mufu", ".*mufe"), //mufe
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. pūšu", ".*pūte"), //pūte 1, 3
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. puvju", ".*puve"), //puve
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. šaļļu", ".*šalle"), //šalle
@@ -181,6 +185,12 @@ public class Rules
 		SimpleRule.of("-es, dsk. ģen. -du", ".*de", 9,
 				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
 				null), // diplomande
+		SimpleRule.of("-es, dsk. ģen. -fu", ".*fe", 9,
+				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), //arheogrāfe
+		SimpleRule.of("-es, dsk. ģen. mufu", ".*mufe", 9,
+				new String[]{"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
+				null), //mufe
 		SimpleRule.of("-es, dsk. ģen. -pu", ".*pe", 9,
 				new  String[] {"Lietvārds", "Locīt bez mijas", "Sieviešu dzimte"},
 				null), // filantrope
@@ -207,7 +217,6 @@ public class Rules
 	/**
 	 * Likumi kas jālieto ar Rule.applyDirect().
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
-	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] secondDeclNounRulesDirect = {
 		SimpleRule.secondDeclStd("-ņa, dsk. ģen. -ņu, v.", ".*nis"), //bizmanis
@@ -218,89 +227,112 @@ public class Rules
 	};
 
 	/**
-	 * Likumi kas jālieto ar Rule.applyDirect().
-	 * Paradigm 1: Lietvārds 1. deklinācija -s
-	 * Paradigm 2: Lietvārds 1. deklinācija -š
+	 * Likumi kas jālieto ar Rule.applyOptHyphens().
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
-	 * Paradigm 4: Lietvārds 2. deklinācija -s (nom. == ģen.)
-	 * Paradigm 5: Lietvārds 2. deklinācija -suns, durkls, (nom.!= ģen.)
-	 * Paradigm 7: Lietvārds 4. deklinācija -a siev. dz.
-	 * Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
-	 * Paradigm 11: Lietvārds 6. deklinācija -s
-	 * Vīriešu dzimtes galotnes, kur jāveic paradigmu šķirošana.
+	 */
+	public static final Rule[] secondDeclNounRulesOptHyperns = {
+			SimpleRule.secondDeclStd("-tēta, v.", ".*tētis"), //tētis
+	};
+
+	/**
+	 * Likumi kas jālieto ar Rule.applyDirect().
+	 * Īsie šabloni ar vienu galotni un dzimti.
+	 * Visiem likumiem ir iespējami vairāki galotņu varianti, bet uzskaitīti
+	 * ir tikai vārdnīcā sastaptie.
 	 */
 	public static final Rule[] nounMultiDeclRulesDirect = {
-		// Paradigmas: 3, 5
+		// Vienskaitlis, vīriešu dzimte
+		// Ar mijām
 		ComplexRule.of("-ļa, v.", new Trio[] {
 					Trio.of(".*lis", new Integer[] {3}, new String[] {"Lietvārds"}),
 					Trio.of(".*ls", new Integer[] {5}, new String[] {"Lietvārds"})},
-				new String[]{"Vīriešu dzimte"}), // acumirklis, durkls
-		ComplexRule.of("-ša, v.", new Trio[] {
-					Trio.of(".*[stš]is", new Integer[] {3}, new String[] {"Lietvārds"}),
-					Trio.of(".*ss", new Integer[] {5}, new String[] {"Lietvārds"})},
-				new String[]{"Vīriešu dzimte"}), // abrkasis, lemess
-		//Paradigmas: 1, 3
-		ComplexRule.of("-ra, v.", new Trio[] {
-					Trio.of(".*rs", new Integer[] {1}, new String[] {"Lietvārds"}),
-					Trio.of(".*ris", new Integer[] {3}, new String[] {"Lietvārds"})},
-				new String[]{"Vīriešu dzimte"}), // airis, mūrniekmeistars
-		// Paradigmas: 2, 3, 5
+				new String[]{"Vīriešu dzimte"}), // acumirklis, bacils, durkls
 		ComplexRule.of("-ņa, v.", new Trio[] {
 					Trio.of(".*ņš", new Integer[] {2}, new String[] {"Lietvārds"}),
 					Trio.of(".*nis", new Integer[] {3}, new String[] {"Lietvārds"}),
 					Trio.of(".*suns", new Integer[] {5}, new String[] {"Lietvārds"})},
 				new String[]{"Vīriešu dzimte"}), // abesīnis, dižtauriņš, dzinējsuns
-		// Paradigmsa: 1, 2, 3 (bez mijas), 1-5 (daudzskaitlī)
+		ComplexRule.of("-ša, v.", new Trio[] {
+					Trio.of(".*[sšt]is", new Integer[] {3}, new String[] {"Lietvārds"}),
+					Trio.of(".*ss", new Integer[] {5}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // abrkasis, lemess
+		// Bez mijām
+		ComplexRule.of("-ra, v.", new Trio[] {
+					Trio.of(".*rs", new Integer[] {1}, new String[] {"Lietvārds"}),
+					Trio.of(".*ris", new Integer[] {3}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // airis, mūrniekmeistars
+		ComplexRule.of("-sa, v.", new Trio[] {
+					Trio.of(".*ss", new Integer[] {1}, new String[] {"Lietvārds"}),
+					Trio.of(".*sis", new Integer[] {3}, new String[] {"Lietvārds", "Locīt bez mijas"})},
+				new String[]{"Vīriešu dzimte"}), // balanss, kūrviesis
+		ComplexRule.of("-ta, v.", new Trio[] {
+					Trio.of(".*tis", new Integer[] {3}, new String[] {"Lietvārds", "Locīt bez mijas"})},
+				new String[]{"Vīriešu dzimte"}), // stereotālskatis
+		// Vispārīgā galotne, kas der visam un neder nekam
 		ComplexRule.of("-a, v.", new Trio[] {
 					Trio.of(".*[^aeiouāēīōū]s", new Integer[] {1}, new String[] {"Lietvārds"}),
 					Trio.of(".*š", new Integer[] {2}, new String[] {"Lietvārds"}),
-					Trio.of(".*[ģjķrt]is", new Integer[] {3}, new String[] {"Lietvārds"}),
-					Trio.of(".*[ņ]i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*[ļ]i", new Integer[] {1, 2, 3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
-				new String[]{"Vīriešu dzimte"}), // abats, akustiķis, sparguļi, skostiņi
+					Trio.of(".*[ģjķr]is", new Integer[] {3}, new String[] {"Lietvārds"})},
+				new String[]{"Vīriešu dzimte"}), // abats, akustiķis//, sparguļi, skostiņi
 
-		// Paradigms: 9, vienskaitlis + daudzskaitlis.
-		ComplexRule.of("-es, dsk. ģen. -pju, s.", new Trio[] {
-					Trio.of(".*pe", new Integer[] {9}, new String[] {"Lietvārds"}),
-					Trio.of(".*pes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
-				new String[]{"Sieviešu dzimte"}), // aitkope, tūsklapes
+		// Daudzkaitlis, vīriešu dzimte
+		// Ar mijām
+		ComplexRule.of("-ņu, v.", new Trio[] {
+					Trio.of(".*ņi", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
+				new String[]{"Vīriešu dzimte"}), // bretoņi
+		// Vispārīgā galotne, kas der visam un neder nekam
+		ComplexRule.of("-u, v.", new Trio[] {
+					Trio.of(".*(otāji|umi|anti|nieki|[aeiouāēīōū]īdi|isti|mēsli|svārki|plūdi|rati|vecāki|bērni|raksti|vidi|rīti|vakari|vārdi|kapi|augi|svētki|audi|laiki|putni|svari)",
+							new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[bcdghklmnpstvz]i", new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*(ieši|āņi|ēži|grieži|stāvji|grauži|brunči|viļņi|ceļi|liberāļi|krampji|kaļķi)", new Integer[] {3}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*ši", new Integer[] {1, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*[čž]i", new Integer[] {2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*(ģ|[mv]j)i", new Integer[] {4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*([ķļņr]|[aeiāē]j)i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+				},
+				new String[]{"Vīriešu dzimte"}),
+			// atgremotāji, apstādījumi, antikoagulanti, austrumnieki, eiropeīdi,
+				// leiboristi, amonijmēsli, apakšsvārki, asinsplūdi, atsperrati,
+				// audžuvecāki, bērnubērni, ciltsraksti, dienvidi, dienvidrīti,
+				// dienvidvakari, dievvārdi, dzimtkapi, čiekuraugi, pēcsvētki,
+				// vadaudi, senlaiki, dziedātājputni, decimalsvari, dolomītkaļķi
+			// abhāzi, arābi, alimenti, antinukloni, aplausi, ārdi, baltkrievi,
+				// beduīni, būvkoki, būvmateriāli, čehi, dūmi, nevāci, kvēpi, varjagi
+			// adigejieši, afgāņi, apakšbrunči, īsviļņi, urīnceļi, trūdēži, ādgrauži,
+				// laikgrieži, saulstāvji, nacionalliberāļi, stingumkrampji
+			// anglosakši
+			// čukči, būvgruži
+			// beļģi, gliemji, latvji
+			// adžāri, abesīņi, angļi, grieķi, ebreji, karačaji, maiji, rudenāji, sodrēji
 
-		// Paradigms: 7, 9
-		ComplexRule.of("-žu, s.", new Trio[] {
-					Trio.of(".*žas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
-					Trio.of(".*[dz]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
-				new String[]{"Sieviešu dzimte"}), // mirādes, graizes, bažas
+				// FIXME Likums neņem vērā 2.deklinācijas izņēmumus bez mijas.
+		// Daudzkaitlis, sieviešu dzimte
+		// Ar mijām
 		ComplexRule.of("-ņu, s.", new Trio[] {
 					Trio.of(".*ne", new Integer[] {9}, new String[] {"Lietvārds"}),
 					Trio.of(".*ņas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
-					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+				},
 				new String[]{"Sieviešu dzimte"}), // acenes, iemaņas, balodene
-		// Paradigms: 7, 9, 11
 		ComplexRule.of("-šu, s.", new Trio[] {
 					Trio.of(".*te", new Integer[] {9}, new String[] {"Lietvārds"}),
 					Trio.of(".*šas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*[st]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*tis", new Integer[] {11}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
-				new String[]{"Sieviešu dzimte"}), // ahajiete, aizkulises, bikses, klaušas
-
-		// Paradigas: 7, 9
+				new String[]{"Sieviešu dzimte"}), // ahajiete, aizkulises, autosacīkstes, klaušas, šķūtis
+		ComplexRule.of("-žu, s.", new Trio[] {
+					Trio.of(".*žas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[dz]es", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
+				new String[]{"Sieviešu dzimte"}), // mirādes, graizes, bažas
+		// Vispārīgā galotne, kas der visam un neder nekam
 		ComplexRule.of("-u, s.", new Trio[] {
 					Trio.of(".*a", new Integer[] {7}, new String[] {"Lietvārds"}),
-					Trio.of(".*as", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*[^aeiouāēīōū]as", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*ķes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),},
-				new String[]{"Sieviešu dzimte"}), // aijas, zeķes, konkrēcija
+				new String[]{"Sieviešu dzimte"}), // aijas, spēķes, zeķes, konkrēcija
 
-		// Paradigms: 1-5 (plural forms)
-		ComplexRule.of("-ņu, v.", new Trio[] {
-					Trio.of(".*ņi", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
-				new String[]{"Vīriešu dzimte"}), // bretoņi
-		ComplexRule.of("-u, v.", new Trio[] {
-					Trio.of(".*(nieki|umi|otāji)", new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
-					Trio.of(".*[cdlmnpvz]i", new Integer[] {1, 2}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*(ieši|[vpm]ji)", new Integer[] {3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*[ņš]i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*([bgkhrstčģķļž]|[aeiouāēīōū]j)i", new Integer[] {1, 2, 3, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),},
-				new String[]{"Vīriešu dzimte"}), // abesīņi, abhāzi, ādgrauži, adigejieši, adžāri, alimenti, angļi, antinukloni, apakšbrunči
+
 };
 
 	/**

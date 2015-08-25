@@ -429,6 +429,11 @@ public class Gram  implements HasToJSON
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
+		for (Rule s : Rules.secondDeclNounRulesOptHyperns)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
 		// Paradigmas: 9
 		for (Rule s : Rules.fifthDeclNounRulesDirect)
 		{

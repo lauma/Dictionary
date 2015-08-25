@@ -1,6 +1,7 @@
 package lv.ailab.tezaurs.analyzer;
 
 import lv.ailab.tezaurs.analyzer.struct.Entry;
+import lv.ailab.tezaurs.analyzer.struct.Header;
 import lv.ailab.tezaurs.utils.Trio;
 import org.json.simple.JSONObject;
 
@@ -27,6 +28,7 @@ public class StatsCollector
     public int hasLociitKaaFlag = 0;
     public int hasNoParadigm = 0;
     public int hasUnparsedGram = 0;
+    public ArrayList<Trio<String, String, String>> fifthDeclExceptions = new ArrayList<>();
 
     public void countEntry( Entry entry)
     {
@@ -45,6 +47,12 @@ public class StatsCollector
 
         for (String p : entry.collectPronunciations())
             pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
+        for (Header h : entry.getAllHeaders())
+        {
+            if (h.gram != null &&
+                    h.gram.paradigm.contains(9) && h.gram.flags.contains("Locīt bez mijas"))
+                fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
+        }
 
     }
 
@@ -53,20 +61,25 @@ public class StatsCollector
     {
         out.write("{\n");
 
-        out.write("\"Total entry count\":" + overallCount);
-        out.write(",\n\"Entries with at least one paradigm\":" + hasParadigm);
-        out.write(",\n\"Entries with more than one paradigm\":" + hasMultipleParadigms);
-        out.write(",\n\"Entries with \\\"Neviennozīmīga paradigma\\\" flag\":" +
+        out.write("\"Šķirkļu kopskaits\":" + overallCount);
+        out.write(",\n\"Šķirkļi ar vismaz vienu paradigmu\":" + hasParadigm);
+        out.write(",\n\"Šķirkļi ar vairāk kā vienu paradigmu\":" + hasMultipleParadigms);
+        out.write(",\n\"Šķirkļi ar karodziņu \\\"Neviennozīmīga paradigma\\\"\":" +
                 hasMultipleParadigmFlag);
-        out.write(",\n\"Entries with no paradigm\":" + hasNoParadigm);
-        out.write(",\n\"Partially parsed entries\":" + hasUnparsedGram);
-        out.write(",\n\"Amount of distinct flags used\":" + flags.size());
-        out.write(",\n\"Amount of distinct \\\"Locīt kā...\\\" flags\":" +
+        out.write(",\n\"Šķirkļi bez paradigmām\":" + hasNoParadigm);
+        out.write(",\n\"Daļēji atpazīti šķirkļi\":" + hasUnparsedGram);
+        out.write(",\n\"Unikālo karodziņu skaits\":" + flags.size());
+        out.write(",\n\"Unikālu \\\"Locīt kā...\\\" karodziņu skaits\":" +
                 flags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
-        out.write(",\n\"Entries with \\\"Locīt kā...\\\" flags\":" + hasLociitKaaFlag);
-        out.write(",\n\"Amount of pronunciation transcriptions\":" + pronunciations.size());
+        out.write(",\n\"Šķirkļi ar \\\"Locīt kā...\\\" karodziņiem\":" + hasLociitKaaFlag);
+        out.write(",\n\"Izrunas transkripciju kopskaits\":" + pronunciations.size());
 
-        out.write(",\n\"Pronunciations\":[\n");
+        out.write("\"Karodziņi\":[\n");
+        out.write(flags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
+                .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
+        out.write("\n],\n");
+
+        out.write(",\n\"Izrunas transkripcijas\":[\n");
         out.write(pronunciations.stream().map(t ->
                 "\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
                         .escape(t.second) + "\", \"" + JSONObject
@@ -74,9 +87,12 @@ public class StatsCollector
                 .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
         out.write("\n],\n");
 
-        out.write("\"Flags\":[\n");
-        out.write(flags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
-                .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
+        out.write(",\n\"5. deklinācijas izņēmumi\":[\n");
+        out.write(fifthDeclExceptions.stream().map(t ->
+                "\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+                        .escape(t.second) + "\", \"" + JSONObject
+                        .escape(t.third) + "\"]")
+                .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
         out.write("\n]\n");
 
         out.write("}\n");

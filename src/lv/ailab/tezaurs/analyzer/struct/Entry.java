@@ -247,6 +247,17 @@ public class Entry
 		return flags;
 	}
 
+	/**
+	 * Get all headers - main header + derivatives
+	 */
+	public ArrayList<Header> getAllHeaders()
+	{
+		ArrayList<Header> res = new ArrayList<>();
+		res.add(head);
+		if (derivs != null) res.addAll(derivs);
+		return res;
+	}
+
 	public boolean hasUnparsedGram()
 	{
 		if (head != null && head.hasUnparsedGram()) return true;

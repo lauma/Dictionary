@@ -92,8 +92,8 @@ public class SimpleRule implements Rule
 	public static SimpleRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return SimpleRule.of(patternText, lemmaRestrictions, 9,
-				new String[]{"Lietvārds"},
-				new String[]{"Sieviešu dzimte"});
+				new String[]{"Lietvārds", "Sieviešu dzimte"},
+				null);
 	}
 	/**
 	 * Metode īsumam.

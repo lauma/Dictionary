@@ -4,7 +4,6 @@
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,11 +51,12 @@
       <file leaf-file-name="Gram.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="431" column="57" selection-start-line="431" selection-start-column="57" selection-end-line="431" selection-end-column="57" />
+            <state vertical-scroll-proportion="-7.4615383">
+              <caret line="447" column="33" selection-start-line="447" selection-start-column="32" selection-end-line="447" selection-end-column="33" />
               <folding>
+                <element signature="n#!!doc" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <marker date="1440512448200" expanded="true" signature="12244:12864" placeholder="{...}" />
+                <marker date="1440582138200" expanded="true" signature="12244:12864" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -77,8 +77,8 @@
       <file leaf-file-name="Rules.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3622951">
-              <caret line="291" column="45" selection-start-line="291" selection-start-column="45" selection-end-line="291" selection-end-column="45" />
+            <state vertical-scroll-proportion="-0.29109588">
+              <caret line="293" column="34" selection-start-line="293" selection-start-column="34" selection-end-line="293" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -973,19 +973,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="431" column="57" selection-start-line="431" selection-start-column="57" selection-end-line="431" selection-end-column="57" />
+        <state vertical-scroll-proportion="-7.4615383">
+          <caret line="447" column="33" selection-start-line="447" selection-start-column="32" selection-end-line="447" selection-end-column="33" />
           <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
-            <marker date="1440512448200" expanded="true" signature="12244:12864" placeholder="{...}" />
+            <marker date="1440582138200" expanded="true" signature="12244:12864" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rules.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3622951">
-          <caret line="291" column="45" selection-start-line="291" selection-start-column="45" selection-end-line="291" selection-end-column="45" />
+        <state vertical-scroll-proportion="-0.29109588">
+          <caret line="293" column="34" selection-start-line="293" selection-start-column="34" selection-end-line="293" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

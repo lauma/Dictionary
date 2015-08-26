@@ -266,7 +266,7 @@ public class Gram  implements HasToJSON
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 1 & 5\n", lemma);
+				System.err.printf("Problem matching \"%s\" with paradigm 1 & 9\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -289,7 +289,7 @@ public class Gram  implements HasToJSON
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 3 & 5\n", lemma);
+				System.err.printf("Problem matching \"%s\" with paradigm 2 & 9\n", lemma);
 				newBegin = 0;
 			}
 		} else if (gramText.matches("-ša; s. -te, -šu([;.].*)?")) //aiolietis
@@ -309,7 +309,7 @@ public class Gram  implements HasToJSON
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 3 & 5\n", lemma);
+				System.err.printf("Problem matching \"%s\" with paradigm 2 & 9\n", lemma);
 				newBegin = 0;
 			}
 		}

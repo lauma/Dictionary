@@ -285,11 +285,13 @@ public class Rules
 					Trio.of(".*(otāji|umi|anti|nieki|[aeiouāēīōū]īdi|isti|mēsli|svārki|plūdi|rati|vecāki|bērni|raksti|vidi|rīti|vakari|vārdi|kapi|augi|svētki|audi|laiki|putni|svari)",
 							new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*[bcdghklmnpstvz]i", new Integer[] {1}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
-					Trio.of(".*(ieši|āņi|ēži|grieži|stāvji|grauži|brunči|viļņi|ceļi|liberāļi|krampji|kaļķi)", new Integer[] {3}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
-					Trio.of(".*ši", new Integer[] {1, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*[čž]i", new Integer[] {2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*(ģ|[mv]j)i", new Integer[] {4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
-					Trio.of(".*([ķļņr]|[aeiāē]j)i", new Integer[] {1, 2, 3, 4, 5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*(ieši|āņi|ēži|grieži|stāvji|grauži|brunči|viļņi|ceļi|liberāļi|krampji|kaļķi)",
+							new Integer[] {3}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*suņi", new Integer[] {5}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*ši", new Integer[] {1, 3, 4}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*[čļņž]i", new Integer[] {2, 3, 4}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*(ģ|[mv]j)i", new Integer[] {3, 4}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
+					Trio.of(".*([ķr]|[aeiāē]j)i", new Integer[] {1, 2, 3, 4}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī", "Neviennozīmīga paradigma"}),
 				},
 				new String[]{"Vīriešu dzimte"}),
 			// atgremotāji, apstādījumi, antikoagulanti, austrumnieki, eiropeīdi,
@@ -301,12 +303,13 @@ public class Rules
 				// beduīni, būvkoki, būvmateriāli, čehi, dūmi, nevāci, kvēpi, varjagi
 			// adigejieši, afgāņi, apakšbrunči, īsviļņi, urīnceļi, trūdēži, ādgrauži,
 				// laikgrieži, saulstāvji, nacionalliberāļi, stingumkrampji
+			// nav precedenta
 			// anglosakši
-			// čukči, būvgruži
+			// abesīņi, angļi, čukči, būvgruži
 			// beļģi, gliemji, latvji
-			// adžāri, abesīņi, angļi, grieķi, ebreji, karačaji, maiji, rudenāji, sodrēji
+			// adžāri, grieķi, ebreji, karačaji, maiji, rudenāji, sodrēji
 
-				// FIXME Likums neņem vērā 2.deklinācijas izņēmumus bez mijas.
+			// NB! Likums neņem vērā 2.deklinācijas izņēmumus bez mijas.
 		// Daudzkaitlis, sieviešu dzimte
 		// Ar mijām
 		ComplexRule.of("-ņu, s.", new Trio[] {

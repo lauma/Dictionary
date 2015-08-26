@@ -273,6 +273,7 @@ public class AbbrMap {
 		res.put("īp. nozīmē.", "Īpašības vārda nozīmē");
 		res.put("ar not. gal.", "Ar noteikto galotni");
 		res.put("ar lielo sākumburtu", "Ar lielo sākumburtu");
+		res.put("ar mazo sākumburtu", "Ar mazo sākumburtu");
 		res.put("pareti.", "Pareti");
 		res.put("pareti", "Pareti");
 		res.put("reti.", "Reti");

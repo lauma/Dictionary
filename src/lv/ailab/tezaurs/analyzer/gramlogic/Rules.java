@@ -641,7 +641,13 @@ public class Rules
 		// R
 		VerbRule.firstConjDir("-roku, -roc,", "-rok, pag. -raku", "rakt"), //aizrakt
 		VerbRule.firstConjDir("-raušu, -raus,", "-rauš, pag. -rausu", "raust"), //aizraust
-		// S, Š
+		VerbRule.firstConjDir("-rauju, -rauj,", "-rauj, pag. -rāvu", "raut"), //aizraut
+		VerbRule.firstConjDir("-riebju, -rieb,", "-riebj, pag. -riebu", "riebt"), //aizriebt
+		VerbRule.firstConjDir("-riju, -rij,", "-rij, pag. -riju", "rīt"), //aizrīt
+		// S
+		VerbRule.firstConjDir("-sāku, -sāc,", "-sāk, pag. -sāku", "sākt"), //aizsākt
+		VerbRule.firstConjDir("-salkstu, -salksti,", "-salkst, pag. -salku", "salkt"), //aizsalkt
+		// Š
 		VerbRule.firstConjDir("-šalcu, -šalc,", "-šalc, pag. -šalcu", "šalkt"), //pašalkt, aizšalkt
 		// T
 		VerbRule.firstConjDir("-tūkstu, -tūksti,", "-tūkst; pag. -tūku", "tūkt"), //aptūkt, aiztūkt
@@ -735,7 +741,6 @@ public class Rules
 		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt"), //aizprecēt
 		VerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt"), //aizputēt, apputēt
 		// R
-		VerbRule.thirdConjDir("-raušos, -rausies,", "-raušas, pag. -rausos", "rausties"), //aizrausties
 		// S, T
 		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt"), //aizturēt
 		// U, V, Z
@@ -746,6 +751,10 @@ public class Rules
 				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
 				".*mocīt", 17,
 				new String[]{"Darbības vārds", "Paralēlās formas"}, null), //aizmocīt
+		SimpleRule.of(
+				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
+				".*rotīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas"}, null), //aizrotīt
 
 		// A, B
 		ThirdPersVerbRule.thirdConjDir("-blākš, pag. -blākšēja", "blākšēt"), //aizblākšēt
@@ -771,6 +780,10 @@ public class Rules
 		// R, S, T, U, V, Z
 
 		// Parallel forms.
+		ComplexRule.of("-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju", new Trio[]{
+					Trio.of(".*sargāt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+				null), // aizsargāties
+
 		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", ".*grandēt", 17,
 				new String[] {"Darbības vārds", "Paralēlās formas"},
 				new String[] {"Parasti 3. personā"}), //aizgrandēt
@@ -833,8 +846,8 @@ public class Rules
 		// O, P, R
 		VerbRule.firstConjRefl("-rokos, -rocies,", "-rokas, pag. -rakos", "rakties"), // aizrakties
 		VerbRule.firstConjRefl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
+		VerbRule.thirdConjRefl("-raušos, -rausies,", "-raušas, pag. -rausos", "rausties"), //aizrausties
 		// S, T, U, V, Z
-
 
 		// Single case rules.
 		SimpleRule.of("-gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos",

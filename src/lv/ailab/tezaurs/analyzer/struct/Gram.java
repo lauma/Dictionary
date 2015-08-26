@@ -109,14 +109,13 @@ public class Gram  implements HasToJSON
 		String correctedGram = correctOCRErrors(orig);
 		altLemmas = new MappingSet<>();
 		
-		// First process ending patterns, usually located in the beginning
-		// of the grammar string.
+		// Vispirms apstrādā galotņu šablonus (tie parasti ir gramatikas sākumā).
 		correctedGram = processBeginingWithPatterns(correctedGram, lemma);
 		
 		String[] subGrams = correctedGram.split("\\s*;\\s*");
 		leftovers = new LinkedList<> ();
 		
-		// Process each semicolon-separated substring.
+		// Apstrādā katru ar semikolu atdalīto apakšvirkni.
 		for (String subGram : subGrams)	
 		{
 			subGram = processWithNoSemicolonPatterns(subGram, lemma);
@@ -127,25 +126,23 @@ public class Gram  implements HasToJSON
 			for (String gramElem : gramElems) 
 			{
 				gramElem = gramElem.trim();
-				// Check for abbreviations.
+				// Meklē atbilstību zināmajiem saīsinājumiem.
 				if (knownAbbr.containsKey(gramElem))
 					flags.addAll(knownAbbr.getAll(gramElem));
 				else
 				{
-					// Check for matches regular expressions.
+					// Meklē atbilstību regulārājām izteiksmēm.
 					gramElem = processWithNoCommaPatterns(gramElem, lemma);
-					// Unprocessed leftovers. 
+					// Pārpalikumi, ko neizdevās apstrādāt.
 					if (!gramElem.equals(""))
 						toDo.add(gramElem);	
 				}
 			}
-			
-			// TODO: magical patterns for processing endings.
-			
+
 			leftovers.add(toDo);
 		}
 		
-		// Try to deduce paradigm from flags.
+		// Mēģina izdomāt paradigmu no karodziņiem.
 		paradigmFromFlags(lemma);
 		
 		cleanupLeftovers();

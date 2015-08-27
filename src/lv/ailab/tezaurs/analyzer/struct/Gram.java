@@ -395,24 +395,70 @@ public class Gram  implements HasToJSON
 		}
 		// Ārpus šīs klases formalizētie likumi:
 		// Darbības vārdi.
-		for (Rule s : Rules.verbRulesDirect)
+		for (Rule s : DirectRules.directSecondConjVerb)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : Rules.verbRulesOptHyperns)
+		for (Rule s : DirectRules.directThirdConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : DirectRules.reflFirstConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : DirectRules.reflSecondConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : DirectRules.reflThirdConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
+
+		for (Rule s : OptHypernRules.directFirstConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : OptHypernRules.directSecondConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : OptHypernRules.directThirdConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : OptHypernRules.directMultiConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : OptHypernRules.reflFirstConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+		for (Rule s : OptHypernRules.reflThirdConjVerb)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
 
 		// Kaut kādi sarežģītie likumi.
-		for (Rule s : Rules.otherRulesDirect)
+		for (Rule s : DirectRules.other)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : Rules.otherRulesOptHyperns)
+		for (Rule s : OptHypernRules.other)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
@@ -421,29 +467,29 @@ public class Gram  implements HasToJSON
 		// "-??a, v.", "-??u, s.", "-??u, v."
 		// "-es, dsk. ģen. -??u, s."
 		// Paradigmas: 3
-		for (Rule s : Rules.secondDeclNounRulesDirect)
+		for (Rule s : DirectRules.secondDeclNounRulesDirect)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : Rules.secondDeclNounRulesOptHyperns)
+		for (Rule s : OptHypernRules.secondDeclNoun)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
 		// Paradigmas: 9
-		for (Rule s : Rules.fifthDeclNounRulesDirect)
+		for (Rule s : DirectRules.fifthDeclNoun)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : Rules.fifthDeclNounRulesOptHyperns)
+		for (Rule s : OptHypernRules.fifthDeclNoun)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
 		// Paradigmas: 1, 2, 3, 5, 9
-		for (Rule s : Rules.nounMultiDeclRulesDirect)
+		for (Rule s : DirectRules.nounMultiDecl)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
@@ -451,7 +497,7 @@ public class Gram  implements HasToJSON
 
 		// === Bīstamie likumi =================================================
 		// Likumi, kas ir prefiksi citiem likumiem
-		for (Rule s : Rules.dangerousRulesDirect)
+		for (Rule s : DirectRules.dangerous)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);

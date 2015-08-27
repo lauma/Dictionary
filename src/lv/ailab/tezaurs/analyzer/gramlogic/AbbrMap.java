@@ -76,6 +76,9 @@ public class AbbrMap {
 		res.put("lok.", "Lokatīvs");
 		res.put("nom.", "Nominatīvs");
 
+		res.put("dsk. ģen.", "Daudzskaitļa ģenitīvs"); // Daudzskaitlinieks?
+		res.put("vsk. ģen.", "Vienskaitļa ģenitīvs");
+
 
 		res.put("divsk.", "Divskaitlis"); // Do we really still have one of these?!
 		res.put("dsk.", "Daudzskaitlis");
@@ -111,7 +114,7 @@ public class AbbrMap {
 		res.put("Refl.", "Refleksīvs");
 		res.put("Refl.", "Darbības vārds");			
 
-		res.put("aeron.", "Aeronautika");	// ?
+		res.put("aeron.", "Aeronautika");
 		res.put("agr.", "Agronomija");
 		res.put("anat.", "Anatomija");
 		res.put("arheol.", "Arheoloģija");
@@ -124,7 +127,7 @@ public class AbbrMap {
 		res.put("bot.", "Botānika");
 		res.put("būvn.", "Būvniecība");
 		res.put("ek.", "Ekonomika");
-		res.put("ekol.", "Ekoloģija");		// ?
+		res.put("ekol.", "Ekoloģija");
 		res.put("ekon.", "Ekonomika");
 		res.put("el.", "Elektrotehnika");
 		res.put("etn.", "Etnogrāfija");
@@ -136,7 +139,7 @@ public class AbbrMap {
 		res.put("fizk.", "Fiziskā kultūra un sports");
 		res.put("folkl.", "Folklora");
 		res.put("fotogr.", "Fotogrāfija");
-		res.put("ģenēt.", "Ģenētika");	// ?
+		res.put("ģenēt.", "Ģenētika");
 		res.put("ģeod.", "Ģeodēzija");
 		res.put("ģeogr.", "Ģeogrāfija");
 		res.put("ģeol.", "Ģeoloģija");
@@ -149,26 +152,27 @@ public class AbbrMap {
 		res.put("jūrn.", "Jūrniecība");
 		res.put("kap.", "Attiecas uz kapitālistisko iekārtu, kapitālistisko sabiedrību");
 		res.put("kardioloģijā", "Kardioloģija");
-		res.put("kart.", "Kartogrāfija");		// ?
+		res.put("kart.", "Kartogrāfija");
 		res.put("kibern.", "Kibernētika");
 		res.put("kino", "Kinematogrāfija");
-		res.put("kokapstr.", "Kokapstrāde");	// ?
+		res.put("kokapstr.", "Kokapstrāde");
 		res.put("kul.", "Kulinārija");
 		res.put("ķīm.", "Ķīmija");
 		res.put("lauks.", "Lauksaimniecība");
-		res.put("lauks. tehn.", "Lauksaimniecības tehnika");	// ?
+		res.put("lauks. tehn.", "Lauksaimniecības tehnika");
 		res.put("literat.", "Literatūrzinātne");
 		res.put("loģ.", "Loģika");
 		res.put("lopk.", "Lopkopība");
 		res.put("mat.", "Matemātika");
-		res.put("matem.", "Matemātika");	// ?
+		res.put("matem.", "Matemātika");
+		res.put("materiālt.", "Materāltehnoloģija");		// ?
 		res.put("med.", "Medicīna");
 		res.put("medn.", "Medniecība");
-		res.put("met.", "Meteoroloģija");		// ?
+		res.put("met.", "Meteoroloģija");
 		res.put("metal.", "Metalurģija");
-		res.put("metāl.", "Metālapstrāde");		// ?
+		res.put("metāl.", "Metālapstrāde");
 		res.put("meteorol.", "Meteoroloģija");
-		res.put("mež.", "Mežniecība");		// ?
+		res.put("mež.", "Mežniecība");
 		res.put("mežr.", "Mežrūpniecība");
 		res.put("mežs.", "Mežsaimniecība");
 		res.put("mil.", "Militārās zinātnes");
@@ -181,14 +185,14 @@ public class AbbrMap {
 		res.put("poligr.", "Poligrāfija");
 		res.put("psih.", "Psiholoģija");
 		res.put("rel.", "Reliģija");
-		res.put("social.", "Socioloģija");	// ?
+		res.put("social.", "Socioloģija");
 		res.put("sociol.", "Socioloģija");
 		res.put("tehn.", "Tehnika");
 		res.put("tehnol.", "Tehnoloģija");
-		res.put("telek.", "Telekomunikācijas");	// ?
+		res.put("telek.", "Telekomunikācijas");
 		res.put("telev.", "Televīzija");
 		res.put("tekst.", "Tekstilrūpniecība");
-		res.put("tekstilr.", "Tekstilrūpniecība");	// ?
+		res.put("tekstilr.", "Tekstilrūpniecība");
 		res.put("TV", "Televīzija");
 		res.put("val.", "Valodniecība");
 		res.put("vet.", "Veterinārija");

@@ -189,6 +189,7 @@ public class DirectRules
 		SimpleRule.secondDeclStd("-bja, v.", ".*bis"), //aizsargdambis
 		SimpleRule.secondDeclStd("-ķa, v.", ".*[kķ]is"), //agnostiķis
 		SimpleRule.secondDeclStd("-pja, v.", ".*pis"), //aitkopis
+		SimpleRule.secondDeclStd("-vja, v.", ".*vis"), //aizstāvis
 		SimpleRule.secondDeclStd("-žņa, v.", ".*znis"), //aitkopis
 		SimpleRule.secondDeclStd("-ža, v.", ".*[dzž]is"), //ādgrauzis
 	};
@@ -341,8 +342,8 @@ public class DirectRules
 		VerbRule.secondConjDir("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
 
 		// Single-case rules.
-		SimpleRule.of(	"-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", ".*ēt", 16,
-				new String[] {"Darbības vārds"}, null), //adverbializēt
+		SimpleRule.of("-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", ".*ēt", 16,
+				new String[] {"Darbības vārds"}, null), //adverbializēt, anamorfēt
 		SimpleRule.of("-oju, -o, -o, -ojam, -ojat, pag. -oju; -ojām, -ojāt; pav. -o, -ojiet", ".*ot", 16,
 				new String[] {"Darbības vārds"}, null), //acot
 	};
@@ -379,24 +380,26 @@ public class DirectRules
 		VerbRule.firstConjRefl("-elšos, -elsies,", "-elšas, pag. -elsos", "elsties"), //aizelsties
 		// F, G
 		VerbRule.firstConjRefl("-gārdzos, -gārdzies,", "-gārdzas, pag. -gārdzos", "gārgties"), //aizgārgties
-		VerbRule.firstConjRefl("-gūstos, -gūsties,", "-gūstas, pag. -guvos", "gūties"), //aizgūties
 		// Ģ,
 		VerbRule.firstConjRefl("-ģiedos, -ģiedies,", "-ģiedas, pag. -ģidos", "ģisties"), //apģisties
-		// H, I
-		VerbRule.firstConjRefl("-ejos, -ejos,", "-ietas, pag. -gājos", "ieties"), //apieties
-		// J, K
+		// H, I, J, K
 		VerbRule.firstConjRefl("-kliedzos, -kliedzies,", "-kliedzas, pag. -kliedzos", "kliegties"), //aizkliegties
 		VerbRule.firstConjRefl("-krācos, -krācies,", "-krācas, pag. -krācos", "krākties"), //aizkrākties
 		// L, M
 		VerbRule.firstConjRefl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
 		// N, O, P, R
-		VerbRule.firstConjRefl("-rijos, -rijies,", "-rijas, pag. -rijos", "rīties"), //aizrīties
 		VerbRule.firstConjRefl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
-		VerbRule.firstConjRefl("-sienos, -sienies,", "-sienas, pag. -sējos", "sieties"), //aizsieties
+		VerbRule.firstConjRefl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
+		VerbRule.firstConjRefl("-svelpjos, -svelpies,", "-svelpjas, pag. -svelpos", "svelpties"), //aizsvelpties
+		VerbRule.firstConjRefl("-svilpjos, -svilpies,", "-svilpjas, pag. -svilpos", "svilpties"), //aizsvilpties
+		VerbRule.firstConjRefl("-svilstos, -svilsties,", "-svilstas, pag. -svilos", "svilties"), //aizsvilties
+		// Š
+		VerbRule.firstConjRefl("-šņācos, -šņācies,", "-šņācas, pag. -šņācos","šņākties"), //aizšņākties
 		// T, U, V, Z
+		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
-		// Single-case rules.
+			// Single-case rules.
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A, B, C, D
 		ThirdPersVerbRule.firstConjRefl("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
@@ -448,6 +451,8 @@ public class DirectRules
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties"), //aizgulēties
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties"), //aizraudāties
 		VerbRule.thirdConjRefl("-sēžos, -sēdies,", "-sēžas, pag. -sēdējos", "sēdēties"), //aizsēdēties
+		VerbRule.thirdConjRefl("-svinos, -svinies,", "-svinas, pag. -svinējos", "svinēties"), //aizsvinēties
+		VerbRule.thirdConjRefl("-šņukstos, -šņuksties,", "-šņukstas, pag. -šņukstējos", "šņukstēties"), //aizšņukstēties
 
 		// Single-case rules.
 		// Generic ending rules.

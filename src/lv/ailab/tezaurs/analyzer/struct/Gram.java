@@ -395,6 +395,11 @@ public class Gram  implements HasToJSON
 		}
 		// Ārpus šīs klases formalizētie likumi:
 		// Darbības vārdi.
+		for (Rule s : DirectRules.directFirstConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
 		for (Rule s : DirectRules.directSecondConjVerb)
 		{
 			if (newBegin != -1) break;

@@ -328,6 +328,15 @@ public class DirectRules
 		SimpleRule.of("-ņa", ".*nis", 3,
 				new String[]{"Lietvārds", "Sieviešu dzimte"}, null), // abolainis
 	};
+	/**
+	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
+	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
+	 * Paradigm 15: Darbības vārdi 1. konjugācija tiešie
+	 */
+	public static final Rule[] directFirstConjVerb = {
+		VerbRule.firstConjDir("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
+		VerbRule.firstConjDir("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
+	};
 
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
@@ -356,6 +365,7 @@ public class DirectRules
 	public static final Rule[] directThirdConjVerb = {
 		// Rules for both all person and third-person-only cases.
 		VerbRule.thirdConjDir("-u, -i,", "-a, pag. -īju", "īt"), //aizsūtīt
+		VerbRule.thirdConjDir("-u, -i,", "-a; pag. -īju", "īt"), //apdurstīt
 		VerbRule.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt"), //aizsvilināt
 
 		// Single-case rules.
@@ -374,7 +384,9 @@ public class DirectRules
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A, B
 		VerbRule.firstConjRefl("-brēcos, -brēcies,", "-brēcas, pag. -brēcos", "brēkties"), //aizbrēkties
-		// C, D
+		// C
+		VerbRule.firstConjRefl("-cērpos, -cērpies,", "-cērpas, pag. -cirpos", "cirpties"), //apcirpties
+		// D
 		VerbRule.firstConjRefl("-degos, -dedzies,", "-degas, pag. -degos", "degties"), //aizdegties
 		// E
 		VerbRule.firstConjRefl("-elšos, -elsies,", "-elšas, pag. -elsos", "elsties"), //aizelsties

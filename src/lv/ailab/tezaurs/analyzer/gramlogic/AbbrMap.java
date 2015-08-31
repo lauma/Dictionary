@@ -165,7 +165,7 @@ public class AbbrMap {
 		res.put("lopk.", "Lopkopība");
 		res.put("mat.", "Matemātika");
 		res.put("matem.", "Matemātika");
-		res.put("materiālt.", "Materāltehnoloģija");		// ?
+		res.put("materiālt.", "Materiālzinātne");		// ?
 		res.put("med.", "Medicīna");
 		res.put("medn.", "Medniecība");
 		res.put("met.", "Meteoroloģija");

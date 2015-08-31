@@ -336,6 +336,7 @@ public class DirectRules
 	public static final Rule[] directFirstConjVerb = {
 		VerbRule.firstConjDir("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
 		VerbRule.firstConjDir("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
+		VerbRule.firstConjDir("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
 	};
 
 	/**

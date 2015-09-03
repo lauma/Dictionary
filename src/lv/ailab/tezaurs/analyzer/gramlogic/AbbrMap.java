@@ -45,7 +45,10 @@ public class AbbrMap {
 		res.put("part.", "Partikula");
 		res.put("pieder.", "Piederības vietniekvārds");
 		res.put("pried.", "Priedēklis"); // Specific processing needed.
+		res.put("prep.", "Prievārds");
 		res.put("priev.", "Prievārds");
+		res.put("saiklis.", "Saiklis");
+		res.put("saiklis", "Saiklis");
 		res.put("skait.", "Skaitļa vārds");
 		res.put("vietn.", "Vietniekvārds");
 		res.put("vietniekv.", "Vietniekvārds");	// ?
@@ -98,6 +101,7 @@ public class AbbrMap {
 		res.put("intrans.", "Nepārejošs");
 		res.put("intr.", "Nepārejošs");
 		res.put("trans.", "Pārejošs");
+		res.put("tr.", "Pārejošs");
 		// TODO vai šie vienmēr ir darbības vārdi?
 
 		res.put("konj.", "Konjugācija");
@@ -117,6 +121,7 @@ public class AbbrMap {
 		res.put("aeron.", "Aeronautika");
 		res.put("agr.", "Agronomija");
 		res.put("anat.", "Anatomija");
+		res.put("antr.", "Antropoloģija");
 		res.put("arheol.", "Arheoloģija");
 		res.put("arhit.", "Arhitektūra");
 		res.put("arh.", "Arhitektūra");
@@ -126,13 +131,16 @@ public class AbbrMap {
 		res.put("biškop.", "Biškopība");
 		res.put("bot.", "Botānika");
 		res.put("būvn.", "Būvniecība");
+		res.put("dārzk.", "Dārzkopība");
+		res.put("dzc.", "Dzelzceļš");
 		res.put("ek.", "Ekonomika");
 		res.put("ekol.", "Ekoloģija");
 		res.put("ekon.", "Ekonomika");
 		res.put("el.", "Elektrotehnika");
 		res.put("etn.", "Etnogrāfija");
 		res.put("farm.", "Farmakoloģija");
-		res.put("filoz.", "Filozofija");	
+		res.put("filol.", "Filoloģija");
+		res.put("filoz.", "Filozofija");
 		res.put("fin.", "Finanses");
 		res.put("fiz.", "Fizika");
 		res.put("fiziol.", "Fizioloģija");
@@ -150,9 +158,11 @@ public class AbbrMap {
 		res.put("inf.", "Informātika");
 		res.put("jur.", "Jurisprudence");
 		res.put("jūrn.", "Jūrniecība");
+		res.put("jūr.", "Jūrniecība");
 		res.put("kap.", "Attiecas uz kapitālistisko iekārtu, kapitālistisko sabiedrību");
 		res.put("kardioloģijā", "Kardioloģija");
 		res.put("kart.", "Kartogrāfija");
+		res.put("ker.", "Keramika");
 		res.put("kibern.", "Kibernētika");
 		res.put("kino", "Kinematogrāfija");
 		res.put("kokapstr.", "Kokapstrāde");
@@ -168,6 +178,7 @@ public class AbbrMap {
 		res.put("materiālt.", "Materiālzinātne");		// ?
 		res.put("med.", "Medicīna");
 		res.put("medn.", "Medniecība");
+		res.put("meh.", "Mehānika");
 		res.put("met.", "Meteoroloģija");
 		res.put("metal.", "Metalurģija");
 		res.put("metāl.", "Metālapstrāde");
@@ -175,14 +186,18 @@ public class AbbrMap {
 		res.put("mež.", "Mežniecība");
 		res.put("mežr.", "Mežrūpniecība");
 		res.put("mežs.", "Mežsaimniecība");
+		res.put("mēb.", "Mēbeles");
 		res.put("mil.", "Militārās zinātnes");
 		res.put("min.", "Mineraloģija");
 		res.put("mit.", "Mitoloģija");
 		res.put("mūz.", "Mūzika");
 		res.put("oftalmoloģijā", "Oftalmoloģija");
 		res.put("ornit.", "Ornitoloģija");
+		res.put("papīrr.", "Papīrrūpniecība");
+		res.put("pārt.", "Pārtika");
 		res.put("pol.", "Politika");
 		res.put("poligr.", "Poligrāfija");
+		res.put("polit.", "Politisks"); // ?
 		res.put("psih.", "Psiholoģija");
 		res.put("rel.", "Reliģija");
 		res.put("social.", "Socioloģija");
@@ -193,17 +208,24 @@ public class AbbrMap {
 		res.put("telev.", "Televīzija");
 		res.put("tekst.", "Tekstilrūpniecība");
 		res.put("tekstilr.", "Tekstilrūpniecība");
+		res.put("transp.", "Transports");
 		res.put("TV", "Televīzija");
 		res.put("val.", "Valodniecība");
 		res.put("vet.", "Veterinārija");
 		res.put("zool.", "Zooloģija");
 
+		res.put("angļu", "Angļu");
+		res.put("angļu", "Vārds svešvalodā");
 		res.put("angļu val.", "Angļu");
 		res.put("angļu val.", "Vārds svešvalodā");
 		res.put("arābu", "Arābu");
 		res.put("arābu", "Vārds svešvalodā");
+		res.put("arābu.", "Arābu");
+		res.put("arābu.", "Vārds svešvalodā");
 		res.put("arābu val.", "Arābu");
 		res.put("arābu val.", "Vārds svešvalodā");
+		res.put("ebr.", "Ebreju");
+		res.put("ebr.", "Vārds svešvalodā");
 		res.put("ig. val.", "Igauņu");
 		res.put("ig. val.", "Vārds svešvalodā");
 		res.put("krievu val.", "Krievu");
@@ -226,8 +248,16 @@ public class AbbrMap {
 		res.put("lat.", "Vārds svešvalodā");
 		res.put("liet.", "Lietuviešu");
 		res.put("liet.", "Vārds svešvalodā");
+		res.put("port.", "Portugāļu");
+		res.put("port.", "Vārds svešvalodā");
+		res.put("sanskr.", "Sanskrits");
+		res.put("sanskr.", "Vārds svešvalodā");
 		res.put("sengr.", "Sengrieķu");
 		res.put("sengr.", "Vārds svešvalodā");
+		res.put("sp.", "Spāņu");
+		res.put("sp.", "Vārds svešvalodā");
+		res.put("ung.", "Ungāru");
+		res.put("ung.", "Vārds svešvalodā");
 
 		res.put("bērnu val.", "Bērnu valoda");
 		res.put("parasti bērnu val.", "Bērnu valoda");
@@ -242,17 +272,22 @@ public class AbbrMap {
 		res.put("novec.", "Novecojis");		
 		res.put("neakt.", "Neaktuāls");
 		res.put("poēt.", "Poētiska stilistiskā nokrāsa");
+		res.put("mīlin.", "Mīlinājuma nokrāsa");
 		res.put("niev.", "Nievīga ekspresīvā nokrāsa");
 		res.put("iron.", "Ironiska ekspresīvā nokrāsa");
 		res.put("hum.", "Humoristiska ekspresīvā nokrāsa");
 		res.put("vienk.", "Vienkāršrunas stilistiskā nokrāsa");
 		res.put("pārn.", "Pārnestā nozīmē");
+		res.put("eif.", "Eifēmisms");
+		res.put("bibl.", "Biblisms");
 		res.put("nevēl.", "Nevēlams"); // TODO - nevēlamos, neliterāros un žargonus apvienot??
 		res.put("nelit.", "Neliterārs");
 		res.put("žarg.", "Žargonvārds");
 		res.put("sar.", "Sarunvaloda");
-		res.put("vulg.", "Vulgārisms");	// ?
-		
+		res.put("vulg.", "Vulgārisms");
+		res.put("barb.", "Barbarisms");
+		res.put("var.", "Variants");
+
 		//TODO - šos drīzāk kā atsevišķu komentāru lauku(s)
 		res.put("arī vsk.", "Arī vienskaitlī");		// Ļaunums.
 		res.put("parasti vsk.", "Parasti vienskaitlī");

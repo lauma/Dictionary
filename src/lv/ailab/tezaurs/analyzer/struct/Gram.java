@@ -696,7 +696,8 @@ public class Gram  implements HasToJSON
 		if (flags.contains("Apstākļa vārds")) paradigm.add(21);
 		if (flags.contains("Partikula")) paradigm.add(28);
 		if (flags.contains("Prievārds")) paradigm.add(26);
-		
+		if (flags.contains("Saiklis")) paradigm.add(27);
+
 		if (flags.contains("Izsauksmes vārds")) paradigm.add(29); // Hardcoded
 		if (flags.contains("Saīsinājums")) paradigm.add(29); // Hardcoded
 		if (flags.contains("Vārds svešvalodā")) paradigm.add(29);

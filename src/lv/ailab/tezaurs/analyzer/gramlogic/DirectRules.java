@@ -337,10 +337,15 @@ public class DirectRules
 		VerbRule.firstConjDir("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
 		VerbRule.firstConjDir("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
 		VerbRule.firstConjDir("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
+		VerbRule.firstConjDir("-saustu, -sausti,", "-saust, pag. -sausu", "saust"), //apsaust
+		VerbRule.firstConjDir("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //apšņurkt
+		VerbRule.firstConjDir("-trakstu, -traksti,", "-trakst, pag. -traku", "trakt"), //aptrakt
+		VerbRule.firstConjDir("-trulstu, -trulsti,", "-trulst, pag. -trulu", "trult"), //aptrult
 
-		SimpleRule.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"nikt\"", "Paralēlās formas"},
-				null), //apnikt
+		SimpleRule
+				.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
+						new String[]{"Darbības vārds", "Locīt kā \"nikt\"", "Paralēlās formas"},
+						null), //apnikt
 	};
 
 	/**
@@ -413,7 +418,9 @@ public class DirectRules
 		VerbRule.firstConjRefl("-svilstos, -svilsties,", "-svilstas, pag. -svilos", "svilties"), //aizsvilties
 		// Š
 		VerbRule.firstConjRefl("-šņācos, -šņācies,", "-šņācas, pag. -šņācos","šņākties"), //aizšņākties
-		// T, U, V, Z
+		// T, U, V
+		VerbRule.firstConjRefl("-vemjos, -vemies,", "-vemjas, pag. -vēmos","vemties"), //apvemties
+		// Z
 		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
 			// Single-case rules.

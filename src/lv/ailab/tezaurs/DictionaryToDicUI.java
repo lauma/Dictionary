@@ -64,6 +64,8 @@ public class DictionaryToDicUI
 	{
 		//entry = "VR " + entry.trim();
 		entry = entry.replaceAll(removePattern, "");
+		entry = entry.replaceAll("[\u2013\u2014]", "-"); // Aizstāj n-dash un m-dash ar parasto defisi u002D
+		entry = entry.replaceAll("[\u2018\u2019]", "'"); // Aizstāj ar apastrofu vienpēdiņas
 		entry = entry.replaceAll(" \\.(?!\\.)", ". ");
 		entry = entry.replaceAll("\\s\\s+", " ");
 		// Te tiek nodrošināts, ka, ja šķirkļa vārds sakrīt ar kādu no

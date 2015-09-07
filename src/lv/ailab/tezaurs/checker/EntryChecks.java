@@ -296,7 +296,11 @@ public class EntryChecks
 			bad.addNewEntry(entry, "Divi PN pēc kārtas, bez PI");
 
         if (entry.contents.matches(".*\\sPI\\s[.!?]?\\s*" + Markers.regexp + "\\s.*|\\s?"))
-            bad.addNewEntry(entry, "PN bez tekstuāla satura");
+            bad.addNewEntry(entry, "PI bez tekstuāla satura");
+		if (entry.contents.matches(".*\\sPN\\s[.!?]?\\s*" + Markers.regexp + "\\s.*|\\s?"))
+			bad.addNewEntry(entry, "PN bez tekstuāla satura");
+		if (entry.contents.matches(".*[^\u2013\u2014-]\\sPN\\s.*"))
+			bad.addNewEntry(entry, "Pirms PN nav defises");
 
 		if (entry.contents.matches(".*\\sPN\\s((?!" + Markers.regexp + ").)*?[^.!?](\\s" + Markers.regexp + "\\s.*|\\s?)"))
 			bad.addNewEntry(entry, "PN nebeidzas ar pieturzīmi");

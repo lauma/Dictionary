@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Rule that contains two verb-specific grammar string cases, each of them is
- * represented as SimpleRule. One case is grammar for all persons, other is for
- * third person only. Example: "-brāžu, -brāz, -brāž, pag. -brāzu" and
+ * Likums, kas apvieno divus SimpleRule - divus sdarbības vārdiem raksturīgos
+ * gadījumus: vienu visām personām, otru - tikai trešajai.
+ * Piemēram, "-brāžu, -brāz, -brāž, pag. -brāzu" un
  * "parasti 3. pers., -brāž, pag. -brāzu".
  * @author Lauma
  *
@@ -18,15 +18,16 @@ public class VerbRule implements Rule
 	protected ThirdPersVerbRule thirdPersonRule;
 	
 	/**
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @param paradigmId	paradigm ID to set if rule matched
-	 * @param positiveFlags	flags to set if rule patternText and lemma ending
-	 * 						matched
-	 * @param alwaysFlags	flags to set if rule patternText matched
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam
 	 */
 	public VerbRule(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
@@ -56,6 +57,18 @@ public class VerbRule implements Rule
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 	}
 
+	/**
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam
+	 */
 	public static VerbRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			String[] positiveFlags, String[] alwaysFlags)
@@ -66,14 +79,12 @@ public class VerbRule implements Rule
 	}
 
 	/**
-	 * Create simple VerbRule for 1st conjugation direct verbs without parallel
-	 * forms or infinitive homoforms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 15 and flag about conjugating.
+	 * Izveido VerbRule 1. konjugācijas tiešajam darbības vārdam bez paralēlajām
+	 * formām un nenoteiksmes homoformām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 15 un karodziņu par locīšanu
 	 * TODO add IDs from lexicon
 	 */
 	public static VerbRule firstConjDir(
@@ -82,48 +93,63 @@ public class VerbRule implements Rule
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
 				15, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
 	}
-	
+
 	/**
-	 * Create simple VerbRule for 2nd conjugation direct verbs without parallel
-	 * forms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 16
+	 * Izveido VerbRule 2. konjugācijas tiešajam darbības vārdam bez paralēlajām
+	 * formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 16
 	 */
 	public static VerbRule secondConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 16, null, null);
 	}
-	
-	/**
-	 * Create simple VerbRule for 3rd conjugation direct verbs without parallel
-	 * forms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 17
+
+/*	/**
+	 * Izveido VerbRule 3. konjugācijas tiešajam darbības vārdam bez paralēlajām
+	 * formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 17
 	 */
-	public static VerbRule thirdConjDir(
+/*	public static VerbRule thirdConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 17, null, null);
-	}
-	
+	}*/
+
 	/**
-	 * Create simple VerbRule for 1st conjugation reflexive verbs without
-	 * parallel forms or infinitive homoforms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 18 and flag about conjugating.
+	 * Izveido VerbRule 3. konjugācijas tiešajam darbības vārdam bez paralēlajām
+	 * formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return VerbRule ar paradigmu 17
+	 */
+	public static VerbRule thirdConjDir(
+			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		if (presentChange)
+			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
+					new String[] {"Tagadnes mija ir"}, null);
+		else
+			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
+					new String[] {"Tagadnes mijas nav"}, null);
+
+	}
+
+	/**
+	 * Izveido VerbRule 1. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * paralēlajām formām un nenoteiksmes homoformām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 18 un karodziņu par locīšanu
 	 * TODO add IDs from lexicon
 	 */
 	public static VerbRule firstConjRefl(
@@ -132,49 +158,67 @@ public class VerbRule implements Rule
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
 				18, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
 	}
-	
+
 	/**
-	 * Create simple VerbRule for 2nd conjugation reflexive verbs without
-	 * parallel forms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 19
+	 * Izveido VerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * paralēlajām formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 19
 	 */
 	public static VerbRule secondConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 19, null, null);
 	}
-	
-	/**
-	 * Create simple VerbRule for 3rd conjugation reflexive verbs without 
-	 * parallel forms.
-	 * @param patternBegin	part of the grammar string containing endings for
-	 * 						1st and 2nd person
-	 * @param patternEnd	part of the grammar string containing endings for
-	 * 						3rd parson in present and past
-	 * @param lemmaEnd		required ending for the lemma to apply this rule
-	 * @return VerbRule with Paradigm 20
+
+/*	/**
+	 * Izveido VerbRule 3. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * paralēlajām formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbRule ar paradigmu 20
 	 */
-	public static VerbRule thirdConjRefl(
+/*	public static VerbRule thirdConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return new VerbRule(patternBegin, patternEnd, lemmaEnd, 20, null, null);
-	}
-	
+	}*/
+
 	/**
-	 * Apply rule as-is - no magic whatsoever.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector	Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * Izveido VerbRule 3. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * paralēlajām formām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return VerbRule ar paradigmu 20
+	 */
+	public static VerbRule thirdConjRefl(
+			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		if (presentChange)
+			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
+					new String[] {"Tagadnes mija ir"}, null);
+		else
+			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
+					new String[] {"Tagadnes mijas nav"}, null);
+
+	}
+
+	/**
+	 * Piemērot likumu bez papildus maģijas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int applyDirect (
 			String gramText, String lemma,
@@ -186,17 +230,18 @@ public class VerbRule implements Rule
 			newBegin = allPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
 		return newBegin;
 	}
-	
+
 	/**
-	 * Apply rule, but hyperns in patternText are optional.
-	 * @param gramText			Grammar string currently being processed.
-	 * @param lemma				Lemma string for this header.
-	 * @param paradigmCollector	Map, where paradigm will be added, if rule
-	 * 							matches.
-	 * @param flagCollector		Map, where flags will be added, if rule
-	 * 							matches.
-	 * @return New beginning for gram string if one of these rules matched,
-	 * -1 otherwise.
+	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
+	 * @param gramText          apstrādājamā gramatika
+	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+	 *                          lemma
+	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+	 *                          gramatika un lemma atbilst šim likumam
+	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                          vismaz gramatika atbilst šim likumam
+	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int applyOptHyphens(
 			String gramText, String lemma,

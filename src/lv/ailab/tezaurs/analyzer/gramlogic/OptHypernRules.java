@@ -183,10 +183,12 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-mūku, -mūc,", "-mūk, pag. -muku", "mukt"), //aizmukt
 		VerbRule.firstConjDir("-mulstu, -mulsti,", "-mulst, pag. -mulsu", "mulst"), //apmulst
 		// N
+		VerbRule.firstConjDir("-nāku, -nāc,", "-nāk, pag. -nācu", "nākt"), //apnākt
 		VerbRule.firstConjDir("-nesu, -nes,", "-nes, pag. -nesu", "nest"), //aiznest
 		VerbRule.firstConjDir("-nirstu, -nirsti,", "-nirst, pag. -niru", "nirt"), //aiznirt
 		// Ņ
 		VerbRule.firstConjDir("-ņemu, -ņem,", "-ņem, pag. -ņēmu", "ņemt"), //aizņemt
+		VerbRule.firstConjDir("-ņirdzu, -ņirdz,", "-ņirdz, pag. -ņirdzu", "ņirgt"), //apņirgt
 		// O, P
 		VerbRule.firstConjDir("-pampstu, -pampsti,", "-pampst, pag. -pampu", "pampt"), //nopampt, aizpampt
 		VerbRule.firstConjDir("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
@@ -378,34 +380,36 @@ public class OptHypernRules
 		// Rules for both all person and third-person-only cases.
 		// Verb-specific rules ordered alphabetically by verb infinitive.
 		// A, B
-		VerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt"), //apbraucīt
+		VerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
 		// C, D
-		VerbRule.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt"), //apdraudēt
-		VerbRule.thirdConjDir("-dziedu, -dziedi,", "-dzied, pag. -dziedāju", "dziedāt"), //aizdziedāt
+		VerbRule.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt", false), //apdraudēt
+		VerbRule.thirdConjDir("-dziedu, -dziedi,", "-dzied, pag. -dziedāju", "dziedāt", false), //aizdziedāt
 		// E, F, G
-		VerbRule.thirdConjDir("-glūnu, -glūni,", "-glūn, pag. -glūnēju", "glūnēt"), //apglūnēt
-		VerbRule.thirdConjDir("-grabu, -grabi,", "-grab, pag. -grabēju", "grabēt"), //aizgrabēt
-		VerbRule.thirdConjDir("-guļu, -guli,", "-guļ, pag. -gulēju", "gulēt"), //aizgulēt
+		VerbRule.thirdConjDir("-glūnu, -glūni,", "-glūn, pag. -glūnēju", "glūnēt", false), //apglūnēt
+		VerbRule.thirdConjDir("-grabu, -grabi,", "-grab, pag. -grabēju", "grabēt", false), //aizgrabēt
+		VerbRule.thirdConjDir("-guļu, -guli,", "-guļ, pag. -gulēju", "gulēt", true), //aizgulēt
 		// H, I, J, K
-		VerbRule.thirdConjDir("-klabu, -klabi,", "-klab, pag. -klabēju", "klabēt"), //paklabēt, aizklabēt
-		VerbRule.thirdConjDir("-klimstu, -klimsti,", "-klimst, pag. -klimstēju", "klimstēt"), //aizklimstēt
-		VerbRule.thirdConjDir("-kustu, -kusti,", "-kust, pag. -kustēju", "kustēt"), //aizkustēt
-		VerbRule.thirdConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpēju", "kūpēt"), //apkūpēt, aizkūpēt
+		VerbRule.thirdConjDir("-klabu, -klabi,", "-klab, pag. -klabēju", "klabēt", false), //paklabēt, aizklabēt
+		VerbRule.thirdConjDir("-klimstu, -klimsti,", "-klimst, pag. -klimstēju", "klimstēt", false), //aizklimstēt
+		VerbRule.thirdConjDir("-kustu, -kusti,", "-kust, pag. -kustēju", "kustēt", false), //aizkustēt
+		VerbRule.thirdConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpēju", "kūpēt", false), //apkūpēt, aizkūpēt
 		// L
-		VerbRule.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt"), //aizlocīt
-		VerbRule.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt"), //aplūrēt
-		// M, N, O, P
-		VerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt"), //aizpeldēt
-		VerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt"), //appilēt, aizpilēt
-		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt"), //aizprecēt
-		VerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt"), //aizputēt, apputēt
+		VerbRule.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
+		VerbRule.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
+		// M
+		VerbRule.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
+			// N, O, P
+		VerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
+		VerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt", false), //appilēt, aizpilēt
+		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt", false), //aizprecēt
+		VerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt", false), //aizputēt, apputēt
 		// R, S
-		VerbRule.thirdConjDir("-slaku, -slaki,", "-slaka, pag. -slacīju", "slacīt"), //aizslacīt
-		VerbRule.thirdConjDir("-slauku, -slauki,", "-slauka, pag. slaucīju", "slaucīt"), //aizslaucīt
-		VerbRule.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt"), //aizstāvēt
+		VerbRule.thirdConjDir("-slaku, -slaki,", "-slaka, pag. -slacīju", "slacīt", true), //aizslacīt
+		VerbRule.thirdConjDir("-slauku, -slauki,", "-slauka, pag. slaucīju", "slaucīt", true), //aizslaucīt
+		VerbRule.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt", false), //aizstāvēt
 		// T
-		VerbRule.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt"), //aiztecēt
-		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt"), //aizturēt
+		VerbRule.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
+		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt", false), //aizturēt
 		// U, V, Z
 
 		// Single case rules.
@@ -413,46 +417,52 @@ public class OptHypernRules
 		SimpleRule.of(
 				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
 				".*mocīt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas"}, null), //aizmocīt
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //aizmocīt
+		SimpleRule.of(
+				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju",
+				".*murcīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //apmurcīt
 
 
 		SimpleRule.of("-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				".*slīdēt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas"}, null), // aizslīdēt
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"}, null), // aizslīdēt
 
 		// A, B
-		ThirdPersVerbRule.thirdConjDir("-blākš, pag. -blākšēja", "blākšēt"), //aizblākšēt
-		ThirdPersVerbRule.thirdConjDir("-blākšķ, pag. -blākšķēja", "blākšķēt"), //aizblākšķēt
+		ThirdPersVerbRule.thirdConjDir("-blākš, pag. -blākšēja", "blākšēt", false), //aizblākšēt
+		ThirdPersVerbRule.thirdConjDir("-blākšķ, pag. -blākšķēja", "blākšķēt", false), //aizblākšķēt
 		// C, Č
-		ThirdPersVerbRule.thirdConjDir("-čab, pag. -čabēja", "čabēt"), //aizčabēt
-		ThirdPersVerbRule.thirdConjDir("-čaukst, pag. -čaukstēja", "čaukstēt"), //aizčaukstēt
+		ThirdPersVerbRule.thirdConjDir("-čab, pag. -čabēja", "čabēt", false), //aizčabēt
+		ThirdPersVerbRule.thirdConjDir("-čaukst, pag. -čaukstēja", "čaukstēt", false), //aizčaukstēt
 		// D
-		ThirdPersVerbRule.thirdConjDir("-dārd, pag. -dārdēja", "dārdēt"), //aizdārdēt
-		ThirdPersVerbRule.thirdConjDir("-dimd, pag. -dimdēja", "dimdēt"), //aizdimdēt
-		ThirdPersVerbRule.thirdConjDir("-dip, pag. -dipēja", "dipēt"), //aizdipēt
-		ThirdPersVerbRule.thirdConjDir("-dun, pag. -dunēja", "dunēt"), //aizdunēt
-		ThirdPersVerbRule.thirdConjDir("-džinkst, pag. -džinkstēja", "džinkstēt"), //aizdžinkstēt
+		ThirdPersVerbRule.thirdConjDir("-dārd, pag. -dārdēja", "dārdēt", false), //aizdārdēt
+		ThirdPersVerbRule.thirdConjDir("-dimd, pag. -dimdēja", "dimdēt", false), //aizdimdēt
+		ThirdPersVerbRule.thirdConjDir("-dip, pag. -dipēja", "dipēt", false), //aizdipēt
+		ThirdPersVerbRule.thirdConjDir("-dun, pag. -dunēja", "dunēt", false), //aizdunēt
+		ThirdPersVerbRule.thirdConjDir("-džinkst, pag. -džinkstēja", "džinkstēt", false), //aizdžinkstēt
 		// E, F, G
-		ThirdPersVerbRule.thirdConjDir("-gurkst, pag. -gurkstēja", "gurkstēt"), //aizgurkstēt
+		ThirdPersVerbRule.thirdConjDir("-gurkst, pag. -gurkstēja", "gurkstēt", false), //aizgurkstēt
 		// H, I, J, K
-		ThirdPersVerbRule.thirdConjDir("-klakst, pag. -klakstēja", "klakstēt"), //aizklakstēt
-		ThirdPersVerbRule.thirdConjDir("-klaudz, pag. -klaudzēja", "klaudzēt"), //aizklaudzēt
+		ThirdPersVerbRule.thirdConjDir("-klakst, pag. -klakstēja", "klakstēt", false), //aizklakstēt
+		ThirdPersVerbRule.thirdConjDir("-klaudz, pag. -klaudzēja", "klaudzēt", false), //aizklaudzēt
 		// L, M, N, Ņ
-		ThirdPersVerbRule.thirdConjDir("-ņirb, pag. -ņirbēja", "ņirbēt"), //aizņirbēt
+		ThirdPersVerbRule.thirdConjDir("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
 		// O, P, R, S, T, U, V, Z
 
 		// Parallel forms.
 		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", ".*grandēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
 				new String[] {"Parasti 3. personā"}), //aizgrandēt
 		SimpleRule.of("parasti 3. pers., -gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", ".*gruzdēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
 				new String[] {"Parasti 3. personā"}), //aizgruzdēt
 		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", ".*mirdzēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
 				new String[] {"Parasti 3. personā"}), //aizmirdzēt
 		SimpleRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", ".*pelēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas"},
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
 				new String[] {"Parasti 3. personā"}), //aizpelēt
 	};
 
@@ -463,25 +473,32 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		ComplexRule.of("-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju", new Trio[]{
-					Trio.of(".*bedīt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*bedīt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // apbedīt
 		ComplexRule.of("-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju", new Trio[]{
-					Trio.of(".*cerēt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*cerēt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // apcerēt
 		ComplexRule.of("-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēsti, -dēstī, pag. -dēstīju", new Trio[]{
-					Trio.of(".*dēstīt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*dēstīt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // apdēstīt
 		ComplexRule.of("-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju", new Trio[]{
-					Trio.of(".*ķēzīt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*ķēzīt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // apķēzīt
 		ComplexRule.of("-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju", new Trio[]{
-					Trio.of(".*rotīt", new Integer[] {16, 17}, new String[]{"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*rotīt", new Integer[] {16, 17},
+							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizrotīt
 		ComplexRule.of("-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju", new Trio[]{
-				 	Trio.of(".*sargāt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+				 	Trio.of(".*sargāt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizsargāt
 		ComplexRule.of("-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju", new Trio[]{
-					Trio.of(".*vētīt", new Integer[] {16, 17}, new String[] {"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*vētīt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizvētīt
 	};
 
@@ -497,6 +514,9 @@ public class OptHypernRules
 		VerbRule.of("-aužos, -audies,", "-aužas, pag. -audos", "austies", 18,
 				new String[] {"Locīt kā \"austies\" (kā audumam)"},
 				null), //apausties
+		VerbRule.of("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties", 18,
+				new String[] {"Locīt kā \"dzīties\" (kā lopiem)"},
+				null), //aizdzīties
 		VerbRule.of("-iros, -iries,", "-iras, pag. -īros", "irties", 18,
 				new String[] {"Locīt kā \"irties\" (kā ar airiem)"},
 				null), //aizirties
@@ -638,24 +658,23 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflThirdConjVerb = {
 		// Rules for both all person and third-person-only cases.
-		VerbRule.thirdConjRefl("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties"), //aizdzīties
-		VerbRule.thirdConjRefl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties"), //aizkustēties
-		VerbRule.thirdConjRefl("-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties"), //aplāpīties
-		VerbRule.thirdConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
-		VerbRule.thirdConjRefl("-precos, -precies,", "-precas, pag. -precējos", "precēties"), //aizprecēties
+		VerbRule.thirdConjRefl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties", false), //aizkustēties
+		VerbRule.thirdConjRefl("-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties", false), //aplāpīties
+		VerbRule.thirdConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties", false), //aizpērties
+		VerbRule.thirdConjRefl("-precos, -precies,", "-precas, pag. -precējos", "precēties", false), //aizprecēties
 
 		// Single case rules.
-		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
-		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties"), //aizlocīties
+		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties", true), //aizlocīties
 
 		// Parallel forms.
 		ComplexRule.of("-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos", new Trio[]{
-					Trio.of(".*sargāties", new Integer[]{19, 20}, new String[]{"Darbības vārds", "Paralēlās formas"})},
+					Trio.of(".*sargāties", new Integer[]{19, 20},
+							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizsargāties
 		SimpleRule.of(
 				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos",
 				".*mocīties", 20,
-				new String[]{"Darbības vārds", "Paralēlās formas"},
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
 				null) //aizmocīties
 	};
 }

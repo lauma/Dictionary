@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Rule for patterns starting with "parasti 3. pers.," or  "tikai 3. pers.,"
+ * Likums šabloniem, kas sākas ar "parasti 3. pers.," vai  "tikai 3. pers.,"
  */
 public class ThirdPersVerbRule implements Rule
 {
@@ -14,14 +14,17 @@ public class ThirdPersVerbRule implements Rule
     protected SimpleRule thirdPersUsually;
 
     /**
-     * @param patternText   pattern text without "parasti/tikai 3. pers.," part.
-     * @param lemmaEnding   required ending for the lemma to apply this rule
-     * @param paradigmId	paradigm ID to set if rule matched
-     * @param positiveFlags	flags to set if rule patternText and lemma ending
-     * 						matched ("Darbības vārds" is added automatically).
-     * @param alwaysFlags	flags to set if rule patternText matched ("Parasti
-     *                      3. personā" is added automatically).
-     * @return	new ThirdPersVerbRule
+     * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
+     * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
+     *                      varētu piemērot
+     * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+     *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
+	 *                      pievieno automātiski)
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam ("Parasti 3. personā" pievieno
+	 *                      automātiski)
      */
     public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
             Set<String> positiveFlags, Set<String> alwaysFlags)
@@ -45,16 +48,17 @@ public class ThirdPersVerbRule implements Rule
     }
 
     /**
-     * Constructor method for convenience - make ThirdPersVerbRule if flags are
-     * given in arrays, not sets.
-     * @param patternText   pattern text without "parasti/tikai 3. pers.," part.
-     * @param lemmaEnding   required ending for the lemma to apply this rule
-     * @param paradigmId	paradigm ID to set if rule matched
-     * @param positiveFlags	flags to set if rule patternText and lemma ending
-     * 						matched ("Darbības vārds" is added automatically).
-     * @param alwaysFlags	flags to set if rule patternText matched ("Parasti
-     *                      3. personā" is added automatically).
-     * @return	new ThirdPersVerbRule
+     * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
+     * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
+     *                      varētu piemērot
+     * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+     *                      likumam
+     * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+     *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
+     *                      pievieno automātiski)
+     * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+     *                      likuma šablonam ("Parasti 3. personā" pievieno
+	 *                      automātiski)
      */
     public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
             int paradigmId, String[] positiveFlags, String[] alwaysFlags)
@@ -65,14 +69,13 @@ public class ThirdPersVerbRule implements Rule
     }
 
     /**
-     * Create ThirdPersVerbRule for 1st conjugation direct verbs without
-     * parallel forms or infinitive homoforms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 15 and flag about conjugating.
-     * TODO add IDs from lexicon
+	 * Izveido ThirdPersVerbRule 1. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajāmc formām un nenoteiksmes homoformām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 15 un karodziņu par locīšanu
+	 * TODO add IDs from lexicon
      */
     public static ThirdPersVerbRule firstConjDir(
             String pattern, String lemmaEnd)
@@ -82,13 +85,12 @@ public class ThirdPersVerbRule implements Rule
     }
 
     /**
-     * Create ThirdPersVerbRule for 2nd conjugation direct verbs without
-     * parallel forms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 16
+	 * Izveido ThirdPersVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajāmc formām.
+     * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+     * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+     * @return ThirdPersVerbRule ar paradigmu 16
      */
     public static ThirdPersVerbRule secondConjDir(
             String pattern, String lemmaEnd)
@@ -96,30 +98,48 @@ public class ThirdPersVerbRule implements Rule
         return new ThirdPersVerbRule(pattern, lemmaEnd, 16, null, null);
     }
 
-    /**
-     * Create ThirdPersVerbRule for 3rd conjugation direct verbs without
-     * parallel forms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 17
+/*    /**
+	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajāmc formām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 17
      */
-    public static ThirdPersVerbRule thirdConjDir(
+/*    public static ThirdPersVerbRule thirdConjDir(
             String pattern, String lemmaEnd)
     {
         return new ThirdPersVerbRule(pattern, lemmaEnd, 17, null, null);
-    }
+    }*/
+
+	/**
+	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajāmc formām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return ThirdPersVerbRule ar paradigmu 17
+	 */
+	public static ThirdPersVerbRule thirdConjDir(
+			String pattern, String lemmaEnd, boolean presentChange)
+	{
+		if (presentChange)
+			return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
+					new String[]{"Tagadnes mija ir"} , null);
+		else
+			return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
+					new String[]{"Tagadnes mijas nav"} , null);
+	}
 
     /**
-     * Create ThirdPersVerbRule for 1st conjugation reflexive verbs without
-     * parallel forms or infinitive homoforms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 18 and flag about conjugating.
-     * TODO add IDs from lexicon
+	 * Izveido ThirdPersVerbRule 1. konjugācijas atgriezeniskajam darbības
+	 * vārdam bez paralēlajāmc formām un nenoteiksmes homoformām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņu par locīšanu
+	 * TODO add IDs from lexicon
      */
     public static ThirdPersVerbRule firstConjRefl(
             String pattern, String lemmaEnd)
@@ -129,13 +149,12 @@ public class ThirdPersVerbRule implements Rule
     }
 
     /**
-     * Create ThirdPersVerbRule for 2nd conjugation reflexive verbs without
-     * parallel forms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 19
+	 * Izveido ThirdPersVerbRule 2. konjugācijas atgriezeniskajam darbības
+	 * vārdam bez paralēlajāmc formām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 19
      */
     public static ThirdPersVerbRule secondConjRefl(
             String pattern, String lemmaEnd)
@@ -143,32 +162,53 @@ public class ThirdPersVerbRule implements Rule
         return new ThirdPersVerbRule(pattern, lemmaEnd, 19, null, null);
     }
 
-    /**
-     * Create ThirdPersVerbRule for 3rd conjugation reflexive verbs without
-     * parallel forms.
-     * @param pattern	    part of the grammar string containing endings for
-     * 						3rd parson in present and past (without "parasti
-     * 						3.pers.," part)
-     * @param lemmaEnd		required ending for the lemma to apply this rule
-     * @return ThirdPersVerbRule with Paradigm 20
+/*    /**
+	 * Izveido ThirdPersVerbRule 3. konjugācijas atgriezeniskajam darbības
+	 * vārdam bez paralēlajāmc formām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 20
+
      */
-    public static ThirdPersVerbRule thirdConjRefl(
+/*	public static ThirdPersVerbRule thirdConjRefl(
             String pattern, String lemmaEnd)
     {
         return new ThirdPersVerbRule(pattern, lemmaEnd, 20, null, null);
-    }
+    }*/
+
+	/**
+	 * Izveido ThirdPersVerbRule 3. konjugācijas atgriezeniskajam darbības
+	 * vārdam bez paralēlajāmc formām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return ThirdPersVerbRule ar paradigmu 20
+
+	 */
+	public static ThirdPersVerbRule thirdConjRefl(
+			String pattern, String lemmaEnd, boolean presentChange)
+	{
+		if (presentChange)
+			return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
+					new String[]{"Tagadnes mija ir"} , null);
+		else
+			return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
+					new String[]{"Tagadnes mijas nav"} , null);
+	}
 
     /**
-     * Apply rule as-is - no magic whatsoever.
-     *
-     * @param gramText          Grammar string currently being processed.
-     * @param lemma             Lemma string for this header.
-     * @param paradigmCollector Map, where paradigm will be added, if rule
-     *                          matches.
-     * @param flagCollector     Map, where flags will be added, if rule
-     *                          matches.
-     * @return New beginning for gram string if one of these rules matched,
-     * -1 otherwise.
+     * Piemērot likumu bez papildus maģijas.
+     * @param gramText          apstrādājamā gramatika
+     * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+     *                          lemma
+     * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+     *                          gramatika un lemma atbilst šim likumam
+     * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+     *                          vismaz gramatika atbilst šim likumam
+     * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+     *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
     public int applyDirect(String gramText, String lemma,
@@ -183,16 +223,16 @@ public class ThirdPersVerbRule implements Rule
     }
 
     /**
-     * Apply rule, but hyperns in patternText are optional.
-     *
-     * @param gramText          Grammar string currently being processed.
-     * @param lemma             Lemma string for this header.
-     * @param paradigmCollector Map, where paradigm will be added, if rule
-     *                          matches.
-     * @param flagCollector     Map, where flags will be added, if rule
-     *                          matches.
-     * @return New beginning for gram string if one of these rules matched,
-     * -1 otherwise.
+     * Piemērot likumu tā, ka patternText defises ir neobligātas.
+     * @param gramText          apstrādājamā gramatika
+     * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
+     *                          lemma
+     * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
+     *                          gramatika un lemma atbilst šim likumam
+     * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
+     *                          vismaz gramatika atbilst šim likumam
+     * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+     *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
     public int applyOptHyphens(String gramText, String lemma,

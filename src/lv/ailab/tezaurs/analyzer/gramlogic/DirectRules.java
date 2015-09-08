@@ -334,6 +334,8 @@ public class DirectRules
 	 * Paradigm 15: Darbības vārdi 1. konjugācija tiešie
 	 */
 	public static final Rule[] directFirstConjVerb = {
+		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
+		// pēc nenoteiksmes.
 		VerbRule.firstConjDir("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
 		VerbRule.firstConjDir("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
 		VerbRule.firstConjDir("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
@@ -354,17 +356,19 @@ public class DirectRules
 	 * Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 	 */
 	public static final Rule[] directSecondConjVerb = {
-		// Rules for both all person and third-person-only cases.
+		// Galotņu šabloni.
 		VerbRule.secondConjDir("-āju, -ā,", "-ā, pag. -āju", "āt"), //aijāt, aizkābāt
 		VerbRule.secondConjDir("-ēju, -ē,", "-ē, pag. -ēju", "ēt"), //abonēt, adsorbēt
 		VerbRule.secondConjDir("-īju, -ī,", "-ī, pag. -īju", "īt"), //apšķibīt, aizdzirkstīt
 		VerbRule.secondConjDir("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
 
-		// Single-case rules.
 		SimpleRule.of("-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", ".*ēt", 16,
-				new String[] {"Darbības vārds"}, null), //adverbializēt, anamorfēt
+				new String[]{"Darbības vārds"}, null), //adverbializēt, anamorfēt
 		SimpleRule.of("-oju, -o, -o, -ojam, -ojat, pag. -oju; -ojām, -ojāt; pav. -o, -ojiet", ".*ot", 16,
-				new String[] {"Darbības vārds"}, null), //acot
+				new String[]{"Darbības vārds"}, null), //acot
+
+		// Darbības vārdu specifiskie likumi.
+		// Nav.
 	};
 
 	/**
@@ -373,14 +377,31 @@ public class DirectRules
 	 * Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 	 */
 	public static final Rule[] directThirdConjVerb = {
-		// Rules for both all person and third-person-only cases.
+
 		VerbRule.thirdConjDir("-u, -i,", "-a, pag. -īju", "īt", false), //aizsūtīt
 		VerbRule.thirdConjDir("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
 		VerbRule.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
 
-		// Single-case rules.
 		ThirdPersVerbRule.thirdConjDir("-ina, pag. -ināja", "ināt", false), //aizducināt
 
+		// Darbības vārdu specifiskie likumi.
+		VerbRule.thirdConjDir("-bildu, -bildi,", "-bild, pag. -bildēju", "bildēt", false), //atbildēt
+	};
+
+	/**
+	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
+	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
+	 * Vārdi ar vairāk kā vienu paradigmu
+	 */
+	public static final Rule[] directMultiConjVerb = {
+		// Galotņu šabloni.
+		ComplexRule.of("-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", new Trio[]{
+					Trio.of(".*īt", new Integer[]{16, 17},
+							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
+				null), // aprobīt
+
+		// Darbības vārdu specifiskie likumi.
+		// Nav.
 	};
 
 	/**
@@ -390,8 +411,9 @@ public class DirectRules
 	 * Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflFirstConjVerb = {
-		// Rules for both all person and third-person-only cases.
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
+		// pēc nenoteiksmes.
+		// Likumi, kam ir visu formu variants.
 		// A, B
 		VerbRule.firstConjRefl("-brēcos, -brēcies,", "-brēcas, pag. -brēcos", "brēkties"), //aizbrēkties
 		// C
@@ -423,8 +445,7 @@ public class DirectRules
 		// Z
 		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
-			// Single-case rules.
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// A, B, C, D
 		ThirdPersVerbRule.firstConjRefl("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
 		// E, F, G, H, I, J, K
@@ -441,19 +462,19 @@ public class DirectRules
 	 * Paradigm 19: Darbības vārdi 2. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflSecondConjVerb = {
-		// Rules for both all person and third-person-only cases.
+		// Galotņu šabloni.
 		VerbRule.secondConjRefl("-ojos, -ojies,", "-ojas, pag. -ojos", "oties"), //aiztuntuļoties, apgrēkoties
 		VerbRule.secondConjRefl("-ējos, -ējies,", "-ējas, pag. -ējos", "ēties"), //abstrahēties
 		VerbRule.secondConjRefl("-ājos, -ājies,", "-ājas, pag. -ājos", "āties"), //aizdomāties
 
-		// Single-case rules.
 		ThirdPersVerbRule.secondConjRefl("-ējas, pag. -ējās", "ēties"), //absorbēties
 		ThirdPersVerbRule.secondConjRefl("-ojas, pag. -ojās", "oties"), //daudzkāršoties
 
 		SimpleRule.of("-ējos, -ējies, -ējas, -ējamies, -ējaties, pag. -ējos, -ējāmies, -ējāties; pav. -ējies, -ējieties",
 				".*ēties", 19,
 				new String[] {"Darbības vārds"}, null), //adverbiēties
-
+		// Darbības vārdu specifiskie likumi.
+		// Nav.
 	};
 
 	/**
@@ -463,14 +484,18 @@ public class DirectRules
 	 * Paradigm 20: Darbības vārdi 3. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflThirdConjVerb = {
-		/* Rules in form "parasti 3. pers., -ās, pag. -ījās" and
-		 * "-os, -ies, -ās, pag. -ījos".
-		 */
-		// Rules for both all person and third-person-only cases.
+		// Galotņu šabloni.
 		VerbRule.thirdConjRefl("-os, -ies,", "-as, pag. -ējos", "ēties", false), //apkaunēties, aizņaudēties
 		VerbRule.thirdConjRefl("-inos, -inies,", "-inās, pag. -inājos", "ināties", false), //apklaušināties
 		VerbRule.thirdConjRefl("-os, -ies,", "-ās, pag. -ījos", "īties", false), //apklausīties
 
+		ThirdPersVerbRule.thirdConjRefl("-as, pag. -ējās", "ēties", false), //aizčiepstēties
+		ThirdPersVerbRule.thirdConjRefl("-inās, pag. -inājās", "ināties", false), //aizbubināties
+		ThirdPersVerbRule.thirdConjRefl("-ās, pag. -ījās", "īties", false), //aizbīdīties
+
+		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
+		// pēc nenoteiksmes.
+		// Likumi, kam ir visu formu variants.
 		VerbRule.thirdConjRefl("-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties", false), //aizdziedāties
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties", true), //aizgulēties
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
@@ -478,13 +503,7 @@ public class DirectRules
 		VerbRule.thirdConjRefl("-svinos, -svinies,", "-svinas, pag. -svinējos", "svinēties", false), //aizsvinēties
 		VerbRule.thirdConjRefl("-šņukstos, -šņuksties,", "-šņukstas, pag. -šņukstējos", "šņukstēties", false), //aizšņukstēties
 
-		// Single-case rules.
-		// Generic ending rules.
-		ThirdPersVerbRule.thirdConjRefl("-as, pag. -ējās", "ēties", false), //aizčiepstēties
-		ThirdPersVerbRule.thirdConjRefl("-inās, pag. -inājās", "ināties", false), //aizbubināties
-		ThirdPersVerbRule.thirdConjRefl("-ās, pag. -ījās", "īties", false), //aizbīdīties
-
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// A, B
 		ThirdPersVerbRule.thirdConjRefl("-brikšķas, pag. -brikšķējās", "brikšķēties", false), //aizbrikšķēties
 		ThirdPersVerbRule.thirdConjRefl("-brikšas, pag. -brikšējās", "brikšēties", false), //aizbrikšēties

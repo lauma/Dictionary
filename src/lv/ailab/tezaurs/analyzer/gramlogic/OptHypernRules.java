@@ -52,8 +52,8 @@ public class OptHypernRules
 	 * Paradigm 15: Darbības vārdi 1. konjugācija tiešie
 	 */
 	public static final Rule[] directFirstConjVerb = {
-		// Rules for both all person and third-person-only cases.
-		// Verbs with infinitive homoforms:
+		// Likumi, kam ir visu formu variants.
+		// Netoteiksmes homoformas.
 		VerbRule.of("-aužu, -aud,", "-auž, pag. -audu", "aust", 15,
 				new String[] {"Locīt kā \"aust\" (kā audumu)"}, null), //aizaust 2
 		VerbRule.of("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt", 15,
@@ -69,16 +69,47 @@ public class OptHypernRules
 		VerbRule.of("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
 				new String[] {"Locīt kā \"mīt\" (kā naudu)"}, null), //aizmīt 2
 
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Paralēlās formas.
+		SimpleRule.of("-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", ".*aut", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"aut\"", "Paralēlās formas"},
+				null), //apaut
+		SimpleRule.of("-gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu", ".*gult", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"gult\"", "Paralēlās formas"},
+				null), //aizgult
+		SimpleRule.of("-jaušu, -jaut, -jauš, pag. -jautu, arī -jaužu, -jaud, -jauž, pag. -jaudu", ".*jaust", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"jaust\"", "Paralēlās formas"},
+				null), //apjaust
+		SimpleRule.of("-jumju, -jum, -jumj, pag. -jūmu, arī -jumu", ".*jumt", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"jumt\"", "Paralēlās formas"},
+				null), //aizjumt
+		SimpleRule.of("-plešu, -plet, -pleš, pag. -pletu, arī -plētu", ".*plest", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"plest\"", "Paralēlās formas"},
+				null), //aizplest
+		SimpleRule.of("-skrienu, -skrien, -skrien, arī -skreju, -skrej, -skrej, pag. -skrēju", ".*skriet", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"skriet\"", "Paralēlās formas"},
+				null), //aizskriet
+		SimpleRule.of("-slienu, -slien, -slien, arī -sleju, -slej, -slej, pag. -sleju", ".*sliet", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"sliet\"", "Paralēlās formas"},
+				null), //aizsliet
+		SimpleRule.of("-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. spurdzu", ".*spurgt", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"spurgt\"", "Paralēlās formas"},
+				null), //aizsliet
+		SimpleRule.of("-tupstu, -tupsti, -tupst, pag. -tupu", ".*tupt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"tupt\"", "Paralēlās formas"},
+				null), //aiztupt
+
+		// Standartizētie.
 		// A
 		VerbRule.firstConjDir("-aru, -ar,", "-ar, pag. -aru", "art"), //aizart
 		VerbRule.firstConjDir("-augu, -audz,", "-aug, pag. -augu", "augt"), //ieaugt, aizaugt
 		// B
 		VerbRule.firstConjDir("-bāžu, -bāz,", "-bāž, pag. -bāzu", "bāzt"), //aizbāzt
+		VerbRule.firstConjDir("-beržu, -berz,", "-berž, pag. -berzu", "berzt"), //atberzt
 		VerbRule.firstConjDir("-bēgu, -bēdz,", "-bēg, pag. -bēgu", "bēgt"), //aizbēgt
 		VerbRule.firstConjDir("-beru, -ber,", "-ber, pag. -bēru", "bērt"), //aizbērt
 		VerbRule.firstConjDir("-bilstu, -bilsti,", "-bilst, pag. -bildu", "bilst"), //aizbilst
 		VerbRule.firstConjDir("-birstu, -birsti,", "-birst, pag. -biru", "birt"), //apbirt, aizbirt
+		VerbRule.firstConjDir("-bļauju, -bļauj,", "-bļauj, pag. -bļāvu", "bļaut"), //atbļaut
 		VerbRule.firstConjDir("-braucu, -brauc,", "-brauc, pag. -braucu", "braukt"), //aizbraukt
 		VerbRule.firstConjDir("-brāžu, -brāz,", "-brāž, pag. -brāzu", "brāzt"), //aizbrāzt
 		VerbRule.firstConjDir("-brienu, -brien,", "-brien, pag. -bridu", "brist"), //aizbrist
@@ -323,36 +354,19 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-žmiedzu, -žmiedz,", "-žmiedz, pag. -žmiedzu", "žmiegt"), // aizžmiegt
 		VerbRule.firstConjDir("-žņaudzu, -žņaudz,", "-žņaudz, pag. -žņaudzu", "žņaugt"), // aizžņaugt
 
-		// Single case rules.
-		// Verb specific rules ordered by type and alphabetically by verb infinitive.
-		SimpleRule.of("-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", ".*aut", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"aut\"", "Paralēlās formas"},
-				null), //apaut
-		SimpleRule.of("-gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu", ".*gult", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"gult\"", "Paralēlās formas"},
-				null), //aizgult
-		SimpleRule.of("-jaušu, -jaut, -jauš, pag. -jautu, arī -jaužu, -jaud, -jauž, pag. -jaudu", ".*jaust", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"jaust\"", "Paralēlās formas"},
-				null), //apjaust
-		SimpleRule.of("-jumju, -jum, -jumj, pag. -jūmu, arī -jumu", ".*jumt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"jumt\"", "Paralēlās formas"},
-				null), //aizjumt
-		SimpleRule.of("-plešu, -plet, -pleš, pag. -pletu, arī -plētu", ".*plest", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"plest\"", "Paralēlās formas"},
-				null), //aizplest
-		SimpleRule.of("-skrienu, -skrien, -skrien, arī -skreju, -skrej, -skrej, pag. -skrēju", ".*skriet", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"skriet\"", "Paralēlās formas"},
-				null), //aizskriet
-		SimpleRule.of("-slienu, -slien, -slien, arī -sleju, -slej, -slej, pag. -sleju", ".*sliet", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"sliet\"", "Paralēlās formas"},
-				null), //aizsliet
-		SimpleRule.of("-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. spurdzu", ".*spurgt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"spurgt\"", "Paralēlās formas"},
-				null), //aizsliet
-		SimpleRule.of("-tupstu, -tupsti, -tupst, pag. -tupu", ".*tupt", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"tupt\"", "Paralēlās formas"},
-				null), //aiztupt
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Nenoteiksmes homoformas.
+		SimpleRule.of("parasti 3. pers., -aust, pag. -ausa", ".*aust", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)"},
+				new String[]{"Parasti 3. personā"}), //aizaust 1
+		SimpleRule.of("parasti 3. pers., -dzīst, pag. -dzija", ".*dzīt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)"},
+				new String[]{"Parasti 3. personā"}), //aizdzīt 2
+		SimpleRule.of("parasti 3. pers., -irst, pag. -ira", ".*irt", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā audums)"},
+				new String[] {"Parasti 3. personā"}), //irt 2
 
+		// Standartizētie.
 		// A, B
 		ThirdPersVerbRule.firstConjDir("-brūk, pag. -bruka", "brukt"), //aizbrukt
 		// C, D
@@ -368,16 +382,7 @@ public class OptHypernRules
 		ThirdPersVerbRule.firstConjDir("-ņirb, pag. -ņirba", "ņirbt"), //aizņirbt
 		// O, P, R, S, Š, T, U, V, Z
 
-		// Parallel forms and nonstandard.
-		SimpleRule.of("parasti 3. pers., -aust, pag. -ausa", ".*aust", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)"},
-				new String[]{"Parasti 3. personā"}), //aizaust 1
-		SimpleRule.of("parasti 3. pers., -dzīst, pag. -dzija", ".*dzīt", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)"},
-				new String[]{"Parasti 3. personā"}), //aizdzīt 2
-		SimpleRule.of("parasti 3. pers., -irst, pag. -ira", ".*irt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā audums)"},
-				new String[] {"Parasti 3. personā"}), //irt 2
+		// Pilnīgs nestandarts.
 		SimpleRule.of("3. pers. -guldz, pag. -guldza", ".*gulgt", 15,
 				new String[]{"Darbības vārds", "Locīt kā \"gulgt\""},
 				new String[]{"Parasti 3. personā"}), //aizgulgt
@@ -390,14 +395,11 @@ public class OptHypernRules
 	 * Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 	 */
 	public static final Rule[] directSecondConjVerb = {
-		// Rules for both all person and third-person-only cases.
+		// Likumi, kam ir visu formu variants.
 		VerbRule.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
 
-		// Single case rules.
-		// Verb-specific rules.
-		ThirdPersVerbRule.secondConjDir("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
-		ThirdPersVerbRule.secondConjDir("-mirgo, pag. -mirgoja", "mirgot"), //aizmirgot
-		// Parallel forms.
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Paralēlās formas.
 		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
 		// galotne "-ē" - 3. konjugācijai būtu bez.
 		SimpleRule.of("parasti 3. pers., -ē, pag. -ēja (retāk -gluma, 1. konj.)", ".*glumēt", 16,
@@ -409,7 +411,9 @@ public class OptHypernRules
 				new String[]{"Darbības vārds", "Paralēlās formas"},
 				new String[]{"Parasti 3. personā"}), //izglumēt
 
-
+		// Standartizētie.
+		ThirdPersVerbRule.secondConjDir("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
+		ThirdPersVerbRule.secondConjDir("-mirgo, pag. -mirgoja", "mirgot"), //aizmirgot
 	};
 
 	/**
@@ -418,8 +422,30 @@ public class OptHypernRules
 	 * Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 	 */
 	public static final Rule[] directThirdConjVerb = {
-		// Rules for both all person and third-person-only cases.
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Likumi, kam ir visu formu variants.
+		// Paralēlās formas.
+		SimpleRule.of(
+				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
+				".*mocīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //aizmocīt
+		SimpleRule.of(
+				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju",
+				".*murcīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //apmurcīt
+		SimpleRule.of(
+				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju",
+				".*ņurcīt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //apmurcīt
+
+		SimpleRule.of("-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
+				".*slīdēt", 17,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
+				null), // aizslīdēt
+
+		// Standartizētie.
 		// A, B
 		VerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
 		// C, D
@@ -462,28 +488,22 @@ public class OptHypernRules
 		VerbRule.thirdConjDir("-zinu, -zini,", "-zina, pag. -zināju", "zināt", false), //apzināt
 		VerbRule.thirdConjDir("-zvēru, -zvēri,", "-zvēr, pag. -zvērēju", "zvērēt", false), //apzvērēt
 
-		// Single case rules.
-		// Verb specific rules ordered by type and alphabetically by verb infinitive.
-		SimpleRule.of(
-				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
-				".*mocīt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
-				null), //aizmocīt
-		SimpleRule.of(
-				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju",
-				".*murcīt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
-				null), //apmurcīt
-		SimpleRule.of(
-				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju",
-				".*ņurcīt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
-				null), //apmurcīt
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Paralēlās formas.
+		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", ".*grandēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
+				new String[] {"Parasti 3. personā"}), //aizgrandēt
+		SimpleRule.of("parasti 3. pers., -gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", ".*gruzdēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
+				new String[] {"Parasti 3. personā"}), //aizgruzdēt
+		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", ".*mirdzēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
+				new String[] {"Parasti 3. personā"}), //aizmirdzēt
+		SimpleRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", ".*pelēt", 17,
+				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
+				new String[] {"Parasti 3. personā"}), //aizpelēt
 
-		SimpleRule.of("-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
-				".*slīdēt", 17,
-				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"}, null), // aizslīdēt
-
+		// Standartizētie.
 		// A, B
 		ThirdPersVerbRule.thirdConjDir("-blākš, pag. -blākšēja", "blākšēt", false), //aizblākšēt
 		ThirdPersVerbRule.thirdConjDir("-blākšķ, pag. -blākšķēja", "blākšķēt", false), //aizblākšķēt
@@ -504,20 +524,6 @@ public class OptHypernRules
 		// L, M, N, Ņ
 		ThirdPersVerbRule.thirdConjDir("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
 		// O, P, R, S, T, U, V, Z
-
-		// Parallel forms.
-		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", ".*grandēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
-				new String[] {"Parasti 3. personā"}), //aizgrandēt
-		SimpleRule.of("parasti 3. pers., -gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", ".*gruzdēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
-				new String[] {"Parasti 3. personā"}), //aizgruzdēt
-		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", ".*mirdzēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
-				new String[] {"Parasti 3. personā"}), //aizmirdzēt
-		SimpleRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", ".*pelēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
-				new String[] {"Parasti 3. personā"}), //aizpelēt
 	};
 
 	/**
@@ -526,11 +532,7 @@ public class OptHypernRules
 	 * Vārdi ar vairāk kā vienu paradigmu
 	 */
 	public static final Rule[] directMultiConjVerb = {
-		ComplexRule.of("-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", new Trio[]{
-						Trio.of(".*īt", new Integer[] {16, 17},
-								new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aprobīt
-
+		// Likumi, kam ir visu formu variants.
 		ComplexRule.of("-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju", new Trio[]{
 					Trio.of(".*bedīt", new Integer[] {16, 17},
 							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
@@ -575,6 +577,8 @@ public class OptHypernRules
 					Trio.of(".*vētīt", new Integer[] {16, 17},
 							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizvētīt
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Nav.
 	};
 
 	/**
@@ -584,8 +588,8 @@ public class OptHypernRules
 	 * Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflFirstConjVerb = {
-		// Rules for both all person and third-person-only cases.
-		// Verbs with infinitive homoforms:
+		// Likumi, kam ir visu formu variants.
+		// Nenoteiksmes homoformas.
 		VerbRule.of("-aužos, -audies,", "-aužas, pag. -audos", "austies", 18,
 				new String[] {"Locīt kā \"austies\" (kā audumam)"},
 				null), //apausties
@@ -602,7 +606,33 @@ public class OptHypernRules
 				new String[]{"Locīt kā \"mīties\" (kā naudu)"},
 				null), //apmīties
 
-		// Verb-specific rules ordered alphabetically by verb infinitive.
+		// Paralēlās formas.
+		SimpleRule.of("-aujos, -aujies, -aujas, arī -aunos, -aunies, -aunas, pag. -āvos",
+				".*auties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"auties\"", "Paralēlās formas"},
+				null), //apauties
+		SimpleRule.of("-gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos",
+				".*gulties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"gulties\"", "Paralēlās formas"},
+				null), //aizgulties
+		SimpleRule.of("-plešos, -pleties, -plešas, pag. -pletos, arī -plētos",
+				".*plesties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
+				null), //ieplesties
+		SimpleRule.of("-sēžos, -sēdies, -sēžas, arī -sēstos, -sēsties, -sēstas, pag. -sēdos",
+				".*sēsties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"sēsties\"", "Paralēlās formas"},
+				null), //aizsēsties
+		SimpleRule.of("-slienos, -slienies, -slienas, arī -slejos, -slejies, -slejas, pag. -slējos",
+				".*slieties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"slieties\"", "Paralēlās formas"},
+				null), //aizslieties
+		SimpleRule.of("-tupstos, -tupsties, -tupstas, pag. -tupos",
+				".*tupties", 18,
+				new String[] {"Darbības vārds", "Locīt kā \"tupties\"", "Paralēlās formas"},
+				null), //aiztupties
+
+		// Standartizētie.
 		// A , B
 		VerbRule.firstConjRefl("-beros, -beries,", "-beras, pag. -bēros", "bērties"), //apbērties
 		VerbRule.firstConjRefl("-brāžos, -brāzies,", "-brāžas, pag. -brāzos", "brāzties"), //aizbrāzties
@@ -707,33 +737,8 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-zogos, -zodzies,", "-zogas, pag. -zagos", "zagties"), //aizzagties
 		VerbRule.firstConjRefl("-ziežos, -ziedies,", "-ziežas, pag. -ziedos", "ziesties"), //apziesties
 
-		// Single case rules.
-		// Paralel forms.
-		SimpleRule.of("-aujos, -aujies, -aujas, arī -aunos, -aunies, -aunas, pag. -āvos",
-				".*auties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"auties\"", "Paralēlās formas"},
-				null), //apauties
-		SimpleRule.of("-gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos",
-				".*gulties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"gulties\"", "Paralēlās formas"},
-				null), //aizgulties
-		SimpleRule.of("-plešos, -pleties, -plešas, pag. -pletos, arī -plētos",
-				".*plesties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
-				null), //ieplesties
-		SimpleRule.of("-sēžos, -sēdies, -sēžas, arī -sēstos, -sēsties, -sēstas, pag. -sēdos",
-				".*sēsties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"sēsties\"", "Paralēlās formas"},
-				null), //aizsēsties
-		SimpleRule.of("-slienos, -slienies, -slienas, arī -slejos, -slejies, -slejas, pag. -slējos",
-				".*slieties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"slieties\"", "Paralēlās formas"},
-				null), //aizslieties
-		SimpleRule.of("-tupstos, -tupsties, -tupstas, pag. -tupos",
-				".*tupties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"tupties\"", "Paralēlās formas"},
-				null), //aiztupties
-
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Paralēlās formas.
 		SimpleRule.of("parasti 3. pers., -plešas, pag. -pletās, arī -plētās",
 				".*plesties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
@@ -749,7 +754,16 @@ public class OptHypernRules
 	 * Paradigm 20: Darbības vārdi 3. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflThirdConjVerb = {
-		// Rules for both all person and third-person-only cases.
+		// Likumi, kam ir visu formu variants.
+		// Paralēlās formas.
+		SimpleRule.of(
+				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos",
+				".*mocīties", 20,
+				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
+				null), //aizmocīties
+
+		// Standartizētie.
+		VerbRule.thirdConjRefl("-braukos, -braukies,", "-braukās, pag. -braucījos", "braucīties", true), //atbraucīties
 		VerbRule.thirdConjRefl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties", false), //aizkustēties
 		VerbRule.thirdConjRefl("-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties", false), //aplāpīties
 		VerbRule.thirdConjRefl("-precos, -precies,", "-precas, pag. -precējos", "precēties", false), //aizprecēties
@@ -758,18 +772,25 @@ public class OptHypernRules
 		VerbRule.thirdConjRefl("-slaukos, -slaukies,", "-slaukās, pag. -slaucījos", "slaucīties", true), //apslaucīties
 		VerbRule.thirdConjRefl("-zinos, -zinies,", "-zinās, pag. -zinājos", "zināties", true), //apzināties
 
-		// Single case rules.
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		ThirdPersVerbRule.thirdConjRefl("-lokās, pag. -locījās", "locīties", true), //aizlocīties
 
-		// Parallel forms.
+	};
+
+	/**
+	 * Šeit ir izdalīti atsevišķi atgriezenisko darbības vārdu likumi, jo tie ir
+	 * gari, specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās
+	 * pirmos.
+	 * Vārdi ar vairāk kā vienu paradigmu
+	 */
+	public static final Rule[] reflMultiConjVerb = {
+		// Likumi, kam ir visu formu variants.
 		ComplexRule.of("-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos", new Trio[]{
 					Trio.of(".*sargāties", new Integer[]{19, 20},
 							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
 				null), // aizsargāties
-		SimpleRule.of(
-				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos",
-				".*mocīties", 20,
-				new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mija ir", "Tagadnes mijas nav"},
-				null) //aizmocīties
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Nav.
 	};
+
 }

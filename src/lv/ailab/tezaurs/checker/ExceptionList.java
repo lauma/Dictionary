@@ -11,16 +11,22 @@ package lv.ailab.tezaurs.checker; //Kopīga paka, kurā ir iekļautas visas klas
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 //bibliotēka *.doc failu apstrādei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 
 public class ExceptionList
 {
-	public static String[] exceptions;	// publisks klases mainīgais kas tiek
-										// izmantots neapskatāmo šķirkļu masīvam
-	
-	public static void getExceptData(String path) //metode lai iegūtu datus par izņēmumu šķirkļiem
+	/**
+	 * Izņēmumu saraksts.
+	 */
+	public static String[] exceptions;
+
+	/**
+	 * Izņēmumu saraksta ielādēšana no .doc faila.
+	 */
+	public static void loadExceptions(String path)
 	throws IOException
 	{
 
@@ -37,6 +43,15 @@ public class ExceptionList
 		// šoreiz viss saturs tiek likts masīvā,
 		//jo ir vairāki šķirkļi ar vienādu šķirkļa vārdu 
         exceptions = excepExtract.getParagraphText();
+	}
+
+	/**
+	 * Pārbauda, vai meklējamais šķirklis ir izņēmumu sarakstā.
+	 */
+	public static boolean isException (Dictionary.Entry query)
+	{
+		int index = Arrays.binarySearch(exceptions, query.fullText);
+		return index < 0;
 	}
 	
 }

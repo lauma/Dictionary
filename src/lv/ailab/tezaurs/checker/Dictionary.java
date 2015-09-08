@@ -91,7 +91,7 @@ public class Dictionary
 	}
 	
 	/**
-	 * Izpilda visas šķirkļu pārbaudes.
+	 * Izpilda visas šķirkļu pārbaudes visiem šķirkļiem.
 	 */
 	public void check() throws InvocationTargetException, IllegalAccessException
     {
@@ -100,64 +100,21 @@ public class Dictionary
 			//pārbaude vai šķirklis nav tukšs
 			if(!StringUtils.isEntryEmpty(this, i))
 			{
-				//progress = (((float)i/EntryLen)*100);
-				stats.wordCount += StringUtils.wordCount(entries[i].fullText);
-				stats.entryCount++;
 				Dictionary.Entry entry = entries[i];
+				stats.wordCount += StringUtils.wordCount(entry.fullText);
+				stats.entryCount++;
 
 				// pārbaude vai šķirkļa vārds ir labs
 				if(EntryPreChecks.isEntryNameGood(this, i))
 				{
 					//Metode statistikas datu par šķirkli ievākšanai
-					stats.collectStats(entries[i].fullText);
+					stats.collectStats(entry.fullText);
 					//paŗabaude vai nav izņēmums
-					if(!StringUtils.exclusion(ExceptionList.exceptions, entries[i].fullText))
+					if(!ExceptionList.isException(entry))
 					{
                         Method[] tests = EntryChecks.class.getDeclaredMethods();
                         for (Method test : tests)
                             test.invoke(null, this, i);
-
-                        /*
-						EntryChecks.hasContents(this, i);
-						//Metode, kās pārbauda simbolus šķirklī
-						EntryChecks.langChars(this, i);
-                        // Marķieru pareizrakstība
-                        EntryChecks.markerCase(this, i);
-						//Metode, kas pārbauda saīsinājumu un vietniekvārdu gramatiku
-						EntryChecks.grammar(this, i);
-						//Metode kas pārbauda vai aiz @ seko pareizs skaitlis
-						EntryChecks.at(this, i);
-						//Metode pārbauda vai ir visi nepieciešamie indikatori
-						EntryChecks.obligatoryMarkers(this, i);
-						//iekavu līdzsvars
-						EntryChecks.bracketing(this, i);
-
-						//pārbauda šķirkļus kas satur GR
-						EntryChecks.gr(this, i);
-						//pārbauda sķirkļus kas satur RU
-						EntryChecks.ru(this, i);
-						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz CD
-						EntryChecks.wordAfterCd(this, i);
-						//Pārbauda vai eksistē šķirkļa vārds kāds minēts aiz DN
-						EntryChecks.wordAfterDn(this, i);
-
-                        //Metode kas pārbauda likumsakarības ar IN 0 un IN 1
-                        EntryChecks.inNumber(this, i);
-                        // Pārbauda šķirkļu bez IN unigalitāti
-                        EntryChecks.notInUniquety(this, i);
-                        //Metode, kas pārbauda nozīmes - NS
-                        EntryChecks.nsNoNg(this, i);
-                        //Metode, kas pārbauda apakšnozīmes
-                        EntryChecks.an(this, i);
-                        //Metode, kas pārbauda piemērus -  PI
-                        EntryChecks.piPn(this, i);
-                        //Metode, kas pārbauda frazeoloģismus
-                        EntryChecks.fsFr(this, i);
-                        //Metode, kas pārbauda divdabjus
-                        EntryChecks.dsDe(this, i);
-                        //Metode, kas pārbauda atsauces - LI
-                        EntryChecks.li(this, i);
-                        //*/
 
                         // Papildina sastapto šķirkļu un indeksu "datubāzi".
                         int index = -1;

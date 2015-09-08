@@ -41,22 +41,6 @@ public class StringUtils
 		return Integer.parseInt(m.group(0));
 	}
 
-	// metode, kas pārbauda vai padotais škirklis ir exclusion sarakstā
-	public static boolean exclusion(String[] except, String entry)
-	{
-		boolean found = false;
-		//cikls iet pa except masīvu un salīdzina vai vārds ir atrodams
-		for (String exception : except)
-		{
-			if (exception.equals(entry))
-			{
-				found = true;
-				break;
-			}
-		}
-		return found;//tiek atgriezta atbilde vai atrasts
-	}
-
 	//metode, kas atrod nākamo vārdu aiz metodei padotā vārda
 	public static String wordAfter(String entryInf, String word)
 	{

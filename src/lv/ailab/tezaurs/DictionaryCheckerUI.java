@@ -1,18 +1,13 @@
 package lv.ailab.tezaurs;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 
 import lv.ailab.tezaurs.checker.Dictionary;
 import lv.ailab.tezaurs.checker.ExceptionList;
 import lv.ailab.tezaurs.checker.ReferenceList;
 import lv.ailab.tezaurs.io.XlsOutputer;
-
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
 
 /**
  * Programmas ārējā saskarne, no kuras FIXME daļu analīzes funkcionalitātes
@@ -54,7 +49,7 @@ public class DictionaryCheckerUI
 		XlsOutputer table = new XlsOutputer(inputDataPath + "vardusk.xls");
 
 		//Izveido sarakstu ar šķirkļiem ko navajag apskatīt
-		ExceptionList.getExceptData(settingsPath + "exceptions.doc");
+		ExceptionList.loadExceptions(settingsPath + "exceptions.doc");
 		//Izveido sarakstu ar visām atsaucēm
 		ReferenceList refList = new ReferenceList(settingsPath + "zLI.doc");
 

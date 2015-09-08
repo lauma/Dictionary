@@ -497,12 +497,21 @@ public class DirectRules
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
 		// Likumi, kam ir visu formu variants.
+		// A, B, C, D
 		VerbRule.thirdConjRefl("-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties", false), //aizdziedāties
+		// E, F, G
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties", true), //aizgulēties
+		// H, I, J, K
+		VerbRule.thirdConjRefl("-krekstos, -kreksties,", "-krekstas, pag. -krekstējos", "krekstēties", false), //atkrekstēties
+		VerbRule.thirdConjRefl("-krekšķos, -krekšķies,", "-krekšķas, pag. -krekšķējos", "krekšķēties", false), //atkrekšķēties
+		// L, M, N, O, P, R
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
+		// S
 		VerbRule.thirdConjRefl("-sēžos, -sēdies,", "-sēžas, pag. -sēdējos", "sēdēties", true), //aizsēdēties
 		VerbRule.thirdConjRefl("-svinos, -svinies,", "-svinas, pag. -svinējos", "svinēties", false), //aizsvinēties
+		// Š
 		VerbRule.thirdConjRefl("-šņukstos, -šņuksties,", "-šņukstas, pag. -šņukstējos", "šņukstēties", false), //aizšņukstēties
+		// T, U, V, Z
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// A, B

@@ -195,7 +195,9 @@ public class OptHypernRules
 		// Ķ
 		VerbRule.firstConjDir("-ķepu, -ķep,", "-ķep, pag. -ķepu", "ķept"), //apķept, aizķept
 		VerbRule.firstConjDir("-ķeru, -ķer,", "-ķer, pag. -ķēru", "ķert"), //aizķert
+		VerbRule.firstConjDir("-ķērcu, -ķērc,", "-ķērc, pag. -ķērcu", "ķērkt"), //atķērkt
 		// L
+		VerbRule.firstConjDir("-labstu, -labsti,", "-labst, pag. -labu", "labt"), //atlabt
 		VerbRule.firstConjDir("-laižu, -laid,", "-laiž, pag. -laidu", "laist"), //aizlaist
 		VerbRule.firstConjDir("-laužu, -lauz,", "-lauž, pag. -lauzu", "lauzt"), //aizlauzt
 		VerbRule.firstConjDir("-lencu, -lenc,", "-lenc, pag. -lencu", "lenkt"), //aplenkt
@@ -674,10 +676,13 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-jūdzos, -jūdzies,", "-jūdzas, pag. -jūdzos", "jūgties"), //aizjūgties
 		// K
 		VerbRule.firstConjRefl("-kampjos, -kampies,", "-kampjas, pag. -kampos", "kampties"), //apkampties
+		VerbRule.firstConjRefl("-kaujos, -kaujies,", "-kaujas, pag. -kāvos", "kauties"), //atkauties
+		VerbRule.firstConjRefl("-kāpjos, -kāpies,", "-kāpjas, pag. -kāpos", "kāpties"), //atkāpties
 		VerbRule.firstConjRefl("-karos, -karies,", "-karas, pag. -kāros", "kārties"), //apkārties
 		VerbRule.firstConjRefl("-klājos, -klājies,", "-klājas, pag. -klājos", "klāties"), //apklāties
 		VerbRule.firstConjRefl("-kļaujos, -kļaujies,", "-kļaujas, pag. -kļāvos", "kļauties"), //apkļauties
-		VerbRule.firstConjRefl("-kopjos, -kopies,", "-kopjas, pag. kopos", "kopties"), //apkopties
+		VerbRule.firstConjRefl("-kopjos, -kopies,", "-kopjas, pag. -kopos", "kopties"), //apkopties
+		VerbRule.firstConjRefl("-kožos, -kodies,", "-kožas, pag. -kodos", "kosties"), //atkosties
 		VerbRule.firstConjRefl("-kraujos, -kraujies,", "-kraujas, pag. -krāvos", "krauties"), //apkrauties
 		VerbRule.firstConjRefl("-krāpjos, -krāpies,", "-krāpjas, pag. -krāpos", "krāpties"), //apkrāpties
 		VerbRule.firstConjRefl("-kuļos, -kulies,", "-kuļas, pag. -kūlos", "kulties"), //aizkulties
@@ -686,6 +691,7 @@ public class OptHypernRules
 		// L
 		VerbRule.firstConjRefl("-laižos, -laidies,", "-laižas, pag. -laidos", "laisties"), //aizlaisties
 		VerbRule.firstConjRefl("-laužos, -lauzies,", "-laužas, pag. -lauzos", "lauzties"), //aizlauzties
+		VerbRule.firstConjRefl("-lecos, -lecies,", "-lecas, pag. -lēcos", "lēkties"), //atlēkties
 		VerbRule.firstConjRefl("-liedzos, -liedzies,", "-liedzas, pag. -liedzos", "liegties"), //aizliegties
 		VerbRule.firstConjRefl("-liecos, -liecies,", "-liecas, pag. -liecos", "liekties"), //aizliekties
 		VerbRule.firstConjRefl("-lējos, -lējies,", "-lejas, pag. -lējos", "lieties"), //aplieties

@@ -420,6 +420,7 @@ public class DirectRules
 		VerbRule.firstConjRefl("-cērpos, -cērpies,", "-cērpas, pag. -cirpos", "cirpties"), //apcirpties
 		// D
 		VerbRule.firstConjRefl("-degos, -dedzies,", "-degas, pag. -degos", "degties"), //aizdegties
+		VerbRule.firstConjRefl("-dusos, -dusies,", "-dusas, pag. -dusējos", "dusēties"), //atdusēties
 		// E
 		VerbRule.firstConjRefl("-elšos, -elsies,", "-elšas, pag. -elsos", "elsties"), //aizelsties
 		// F, G

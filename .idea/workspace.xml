@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ExceptionList.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ExceptionList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,8 +72,8 @@
       <file leaf-file-name="OptHypernRules.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.80655736">
-              <caret line="693" column="68" selection-start-line="693" selection-start-column="68" selection-end-line="693" selection-end-column="68" />
+            <state vertical-scroll-proportion="-0.89180326">
+              <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -142,9 +141,9 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/StringUtils.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/DirectRules.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ExceptionList.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java" />
       </list>
     </option>
   </component>
@@ -962,14 +961,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/DirectRules.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="499" column="21" selection-start-line="499" selection-start-column="21" selection-end-line="499" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31748727">
@@ -994,10 +985,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/DirectRules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="499" column="21" selection-start-line="499" selection-start-column="21" selection-end-line="499" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.80655736">
-          <caret line="693" column="68" selection-start-line="693" selection-start-column="68" selection-end-line="693" selection-end-column="68" />
+        <state vertical-scroll-proportion="-0.89180326">
+          <caret line="34" column="7" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
           <folding />
         </state>
       </provider>

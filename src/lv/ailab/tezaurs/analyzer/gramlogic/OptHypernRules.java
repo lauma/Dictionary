@@ -55,19 +55,19 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Netoteiksmes homoformas.
 		VerbRule.of("-aužu, -aud,", "-auž, pag. -audu", "aust", 15,
-				new String[] {"Locīt kā \"aust\" (kā audumu)"}, null), //aizaust 2
+				new String[] {"Locīt kā \"aust\" (kā audumu)", "Nenoteiksmes homoformas"}, null), //aizaust 2
 		VerbRule.of("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt", 15,
-				new String[] {"Locīt kā \"degt\" (kādu citu)"}, null), //aizdegt 1
+				new String[] {"Locīt kā \"degt\" (kādu citu)", "Nenoteiksmes homoformas"}, null), //aizdegt 1
 		VerbRule.of("-degu, -dedz,", "-deg, pag. -degu", "degt", 15,
-				new String[] {"Locīt kā \"degt\" (pašam)"}, null), //apdegt, aizdegt 2
+				new String[] {"Locīt kā \"degt\" (pašam)", "Nenoteiksmes homoformas"}, null), //apdegt, aizdegt 2
 		VerbRule.of("-dzenu, -dzen,", "-dzen, pag. -dzinu", "dzīt", 15,
-				new String[] {"Locīt kā \"dzīt\" (kā lopus)"}, null), //aizdzīt 1
+				new String[] {"Locīt kā \"dzīt\" (kā lopus)", "Nenoteiksmes homoformas"}, null), //aizdzīt 1
 		VerbRule.of("-iru, -ir,", "-ir, pag. -īru", "irt", 15,
-				new String[] {"Locīt kā \"irt\" (kā ar airiem)"}, null), //aizirt 1
+				new String[] {"Locīt kā \"irt\" (kā ar airiem)", "Nenoteiksmes homoformas"}, null), //aizirt 1
 		VerbRule.of("-minu, -min,", "-min, pag. -minu", "mīt", 15,
-				new String[] {"Locīt kā \"mīt\" (kā pedāļus)"}, null), //aizmīt 1
+				new String[] {"Locīt kā \"mīt\" (kā pedāļus)", "Nenoteiksmes homoformas"}, null), //aizmīt 1
 		VerbRule.of("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
-				new String[] {"Locīt kā \"mīt\" (kā naudu)"}, null), //aizmīt 2
+				new String[] {"Locīt kā \"mīt\" (kā naudu)", "Nenoteiksmes homoformas"}, null), //aizmīt 2
 
 		// Paralēlās formas.
 		SimpleRule.of("-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", ".*aut", 15,
@@ -367,13 +367,13 @@ public class OptHypernRules
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas.
 		SimpleRule.of("parasti 3. pers., -aust, pag. -ausa", ".*aust", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)"},
+				new String[]{"Darbības vārds", "Locīt kā \"aust\" (kā gaisma)", "Nenoteiksmes homoformas"},
 				new String[]{"Parasti 3. personā"}), //aizaust 1
 		SimpleRule.of("parasti 3. pers., -dzīst, pag. -dzija", ".*dzīt", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)"},
+				new String[]{"Darbības vārds", "Locīt kā \"dzīt\" (kā ievainojumi)", "Nenoteiksmes homoformas"},
 				new String[]{"Parasti 3. personā"}), //aizdzīt 2
 		SimpleRule.of("parasti 3. pers., -irst, pag. -ira", ".*irt", 15,
-				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā audums)"},
+				new String[] {"Darbības vārds", "Locīt kā \"irt\" (kā audums)", "Nenoteiksmes homoformas"},
 				new String[] {"Parasti 3. personā"}), //irt 2
 
 		// Standartizētie.
@@ -603,19 +603,19 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Nenoteiksmes homoformas.
 		VerbRule.of("-aužos, -audies,", "-aužas, pag. -audos", "austies", 18,
-				new String[] {"Locīt kā \"austies\" (kā audumam)"},
+				new String[] {"Locīt kā \"austies\" (kā audumam)", "Nenoteiksmes homoformas"},
 				null), //apausties
 		VerbRule.of("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties", 18,
-				new String[] {"Locīt kā \"dzīties\" (kā lopiem)"},
+				new String[] {"Locīt kā \"dzīties\" (kā lopiem)", "Nenoteiksmes homoformas"},
 				null), //aizdzīties
 		VerbRule.of("-iros, -iries,", "-iras, pag. -īros", "irties", 18,
-				new String[] {"Locīt kā \"irties\" (kā ar airiem)"},
+				new String[] {"Locīt kā \"irties\" (kā ar airiem)", "Nenoteiksmes homoformas"},
 				null), //aizirties
 		VerbRule.of("-minos, -minies,", "-minas, pag. -minos", "mīties", 18,
-				new String[]{"Locīt kā \"mīties\" (kā pedāļus)"},
+				new String[]{"Locīt kā \"mīties\" (kā pedāļus)", "Nenoteiksmes homoformas"},
 				null), //aizmīties
 		VerbRule.of("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties", 18,
-				new String[]{"Locīt kā \"mīties\" (kā naudu)"},
+				new String[]{"Locīt kā \"mīties\" (kā naudu)", "Nenoteiksmes homoformas"},
 				null), //apmīties
 
 		// Paralēlās formas.

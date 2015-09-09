@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 //bibliotēka *.doc failu apstrādei
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -19,7 +20,7 @@ import org.apache.poi.hwpf.extractor.WordExtractor;
 public class ExceptionList
 {
 	/**
-	 * Izņēmumu saraksts.
+	 * Izņēmumu saraksts. Tam jābūt sakārtotam.
 	 */
 	public static String[] exceptions;
 
@@ -42,16 +43,19 @@ public class ExceptionList
 		// faila saturs tiek ielikts izņēmumu sarakstā
 		// šoreiz viss saturs tiek likts masīvā,
 		//jo ir vairāki šķirkļi ar vienādu šķirkļa vārdu 
-        exceptions = excepExtract.getParagraphText();
+        exceptions = Arrays.stream(excepExtract.getParagraphText())
+				.map(e -> e.trim()).sorted().toArray(size -> new String[size]);
+		System.out.println(exceptions.length);
 	}
 
 	/**
-	 * Pārbauda, vai meklējamais šķirklis ir izņēmumu sarakstā.
+	 * Pārbauda, vai meklējamais šķirklis ir izņēmumu sarakstā, pieņemot, ka
+	 * izņēmumu saraksts ir sakārtots.
 	 */
 	public static boolean isException (Dictionary.Entry query)
 	{
 		int index = Arrays.binarySearch(exceptions, query.fullText);
-		return index < 0;
+		return index >= 0;
 	}
 	
 }

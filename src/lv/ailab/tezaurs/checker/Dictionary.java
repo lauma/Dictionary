@@ -104,28 +104,30 @@ public class Dictionary
 				stats.wordCount += StringUtils.wordCount(entry.fullText);
 				stats.entryCount++;
 
-				// pārbaude vai šķirkļa vārds ir labs
-				if(EntryPreChecks.isEntryNameGood(this, i))
+				// Pārbauda, vai šķirklis nav izņēmums, un ja nav, tad veic
+				// pārbaudes.
+				if(!ExceptionList.isException(entry))
 				{
-					//Metode statistikas datu par šķirkli ievākšanai
-					stats.collectStats(entry.fullText);
-					//paŗabaude vai nav izņēmums
-					if(!ExceptionList.isException(entry))
+					if (EntryPreChecks.isEntryNameGood(this, i))
 					{
-                        Method[] tests = EntryChecks.class.getDeclaredMethods();
-                        for (Method test : tests)
-                            test.invoke(null, this, i);
+						//Metode statistikas datu par šķirkli ievākšanai
+						stats.collectStats(entry.fullText);
 
-                        // Papildina sastapto šķirkļu un indeksu "datubāzi".
-                        int index = -1;
-						if (entry.contents.matches("^IN\\s.*$"))
-                        {
-                            String bezIn = entry.contents.substring(3).trim();
-                            index = StringUtils.findNumber(bezIn);
-                        }
-                        prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
+						Method[] tests = EntryChecks.class.getDeclaredMethods();
+						for (Method test : tests)
+							test.invoke(null, this, i);
 					}
 				}
+
+				// Papildina sastapto šķirkļu un indeksu "datubāzi".
+				int index = -1;
+				if (entry.contents.matches("^IN\\s.*$"))
+				{
+					String bezIn = entry.contents.substring(3).trim();
+					index = StringUtils.findNumber(bezIn);
+				}
+				prevIN.put(entry.name, Trio
+						.of(index, entry.fullText, entry.id));
 			}
             // Progresa izvade uz ekrāna
 			if (i % 50 == 0)

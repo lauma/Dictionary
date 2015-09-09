@@ -120,8 +120,6 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-cepu, -cep,", "-cep, pag. -cepu", "cept"), //apcept
 		VerbRule.firstConjDir("-cērpu, -cērp,", "-cērp, pag. -cirpu", "cirpt"), //apcirpt
 		VerbRule.firstConjDir("-cērtu, -cērt,", "-cērt, pag. -cirtu", "cirst"), //aizcirst
-		// Č
-		VerbRule.firstConjDir("-čukstu, -čuksti,", "-čukst, pag. -čukstēju", "čukstēt"), //atčukstēt
 		// D
 		VerbRule.firstConjDir("-diebju, -dieb,", "-diebj, pag. -diebu", "diebt"), //aizdiebt
 		VerbRule.firstConjDir("-diedzu, -diedz,", "-diedz, pag. -diedzu", "diegt"), //aizdiegt 1,2
@@ -208,14 +206,19 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-leju, -lej,", "-lej, pag. -lēju", "liet"), //aizliet
 		VerbRule.firstConjDir("-lieku, -liec,", "-liek, pag. -liku", "likt"), //aizlikt
 		VerbRule.firstConjDir("-līpu, -līpi,", "-līp, pag. -lipu", "lipt"), //aplipt, aizlipt
+		VerbRule.firstConjDir("-līgstu, -līgsti,", "-līgst, pag. -līgu", "līgt"), //atlīgt
 		VerbRule.firstConjDir("-līkstu, -līksti,", "-līkst, pag. -līku", "līkt"), //nolīkt, aizlīkt
 		VerbRule.firstConjDir("-lienu, -lien,", "-lien, pag. -līdu", "līst"), //aizlīst
 		VerbRule.firstConjDir("-līstu, -līsti,", "-līst, pag. -liju", "līt"), //aplīt, aizlīt
 		VerbRule.firstConjDir("-lobju, -lob,", "-lobj, pag. -lobu", "lobt"), //aizlobt
 		VerbRule.firstConjDir("-lūdzu, -lūdz,", "-lūdz, pag. -lūdzu", "lūgt"), //aizlūgt
 		VerbRule.firstConjDir("-lūstu, -lūsti,", "-lūst, pag. -lūzu", "lūzt"), //aizlūzt, aizlūzt
+		// Ļ
+		VerbRule.firstConjDir("-ļauju, -ļauj,", "-ļauj, pag. -ļāvu", "ļaut"), //atļaut
 		// M
+		VerbRule.firstConjDir("-maigstu, -maigsti,", "-maigst, pag. -maigu", "maigt"), //atmaigt
 		VerbRule.firstConjDir("-maļu, -mal,", "-maļ, pag. -malu", "malt"), //apmalt
+		VerbRule.firstConjDir("-māju, -māj,", "-māj, pag. -māju", "māt"), //atmāt
 		VerbRule.firstConjDir("-metu, -met,", "-met, pag. -metu", "mest"), //aizmest
 		VerbRule.firstConjDir("-mēžu, -mēz,", "-mēž, pag. -mēzu", "mēzt"), //aizmēzt
 		VerbRule.firstConjDir("-miedzu, -miedz,", "-miedz, pag. -miedzu", "miegt"), //aizmiegt
@@ -233,13 +236,14 @@ public class OptHypernRules
 		// O
 		VerbRule.firstConjDir("-ožu, -od,", "-ož, pag. -odu", "ost"), //apost
 		// P
-		VerbRule.firstConjDir("-pampstu, -pampsti,", "-pampst, pag. -pampu", "pampt"), //nopampt, aizpampt
+		VerbRule.firstConjDir("-pampstu, -pampsti,", "-pampst, pag. -pampu", "pampt"), //aizpampt
+		VerbRule.firstConjDir("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt"), //atpazīt
 		VerbRule.firstConjDir("-peru, -per,", "-per, pag. -pēru", "pērt"), //appērt
 		VerbRule.firstConjDir("-pērku, -pērc,", "-pērk, pag. -pirku", "pirkt"), //appirkt
 		VerbRule.firstConjDir("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
 		VerbRule.firstConjDir("-ploku, -ploc,", "-plok, pag. -plaku", "plakt"), //aizplakt
 		VerbRule.firstConjDir("-plaukstu, -plauksti,", "-plaukst, pag. -plauku", "plaukt"), //atplaukt, aizplaukt
-		VerbRule.firstConjDir("-plēšu, -plēs,", "-plēš, pag. plēsu", "plēst"), //aizplēst
+		VerbRule.firstConjDir("-plēšu, -plēs,", "-plēš, pag. -plēsu", "plēst"), //aizplēst
 		VerbRule.firstConjDir("-plīstu, -plīsti,", "-plīst, pag. -plīsu", "plīst"), //applīst, aizplīst
 		VerbRule.firstConjDir("-plūcu, -plūc,", "-plūc, pag. -plūcu", "plūkt"), //aizplūkt
 		VerbRule.firstConjDir("-plūstu, -plūsti,", "-plūst, pag. -plūdu", "plūst"), //applūst, aizplūst
@@ -254,6 +258,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-rauju, -rauj,", "-rauj, pag. -rāvu", "raut"), //aizraut
 		VerbRule.firstConjDir("-rāju, -rāj,", "-rāj, pag. -rāju", "rāt"), //aprāt
 		VerbRule.firstConjDir("-reibstu, -reibsti,", "-reibst, pag. -reibu", "reibt"), //apreibt
+		VerbRule.firstConjDir("-rēcu, -rēc,", "-rēc, pag. -rēcu", "rēkt"), //atrēkt
 		VerbRule.firstConjDir("-riebju, -rieb,", "-riebj, pag. -riebu", "riebt"), //aizriebt
 		VerbRule.firstConjDir("-reju, -rej,", "-rej, pag. -rēju", "riet"), //apriet
 		VerbRule.firstConjDir("-rimstu, -rimsti,", "-rimst, pag. -rimu", "rimt"), //aprimt
@@ -458,7 +463,9 @@ public class OptHypernRules
 		// Standartizētie.
 		// A, B
 		VerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
-		// C, D
+		// C, Č
+		VerbRule.thirdConjDir("-čukstu, -čuksti,", "-čukst, pag. -čukstēju", "čukstēt", false), //atčukstēt
+		// D
 		VerbRule.thirdConjDir("-dienu, -dieni,", "-dien, pag. -dienēju", "dienēt", false), //atdienēt
 		VerbRule.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt", false), //apdraudēt
 		VerbRule.thirdConjDir("-dusu, -dusi,", "-dus, pag. -dusēju", "dusēt", false), //atdusēt
@@ -476,10 +483,15 @@ public class OptHypernRules
 		VerbRule.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
 		VerbRule.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
 		// M
+		VerbRule.thirdConjDir("-minu, -mini,", "-min, pag. -minēju", "minēt", false), //atminēt
+		VerbRule.thirdConjDir("-muldu, -muldi,", "-muld, pag. -muldēju", "muldēt", false), //atmuldēt
 		VerbRule.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
-		// N, O, P
+		// N, Ņ
+		VerbRule.thirdConjDir("-ņurdu, -ņurdi,", "-ņurd, pag. -ņurdēju", "ņurdēt", false), //atņurdēt
+		// O, P
 		VerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
 		VerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt", false), //appilēt, aizpilēt
+		VerbRule.thirdConjDir("-pīkstu, -pīksti,", "-pīkst, pag. -pīkstēju", "pīkstēt", false), //atpīkstēt
 		VerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt", false), //aizprecēt
 		VerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt", false), //aizputēt, apputēt
 		// R
@@ -511,9 +523,6 @@ public class OptHypernRules
 		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", ".*mirdzēt", 17,
 				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
 				new String[] {"Parasti 3. personā"}), //aizmirdzēt
-		SimpleRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", ".*pelēt", 17,
-				new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"},
-				new String[] {"Parasti 3. personā"}), //aizpelēt
 
 		// Standartizētie.
 		// A, B
@@ -545,52 +554,51 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		ComplexRule.of("-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju", new Trio[]{
-					Trio.of(".*bedīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apbedīt
-		ComplexRule.of("-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju", new Trio[]{
-					Trio.of(".*cerēt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apcerēt
-		ComplexRule.of("-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju", new Trio[]{
-					Trio.of(".*dēstīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apdēstīt
-		ComplexRule.of("-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju", new Trio[]{
-					Trio.of(".*ķēzīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apķēzīt
-		ComplexRule.of("-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju", new Trio[]{
-					Trio.of(".*pētīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apķēzīt
-		ComplexRule.of("-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju", new Trio[]{
-					Trio.of(".*rotīt", new Integer[] {16, 17},
-							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aizrotīt
-		ComplexRule.of("-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju", new Trio[]{
-				 	Trio.of(".*sargāt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aizsargāt
-		ComplexRule.of("-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju", new Trio[]{
-					Trio.of(".*svētīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aizsargāt
-		ComplexRule.of("-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju", new Trio[]{
-					Trio.of(".*tašķīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aptašķīt
-		ComplexRule.of("-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju", new Trio[]{
-					Trio.of(".*veltīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // apveltīt
-		ComplexRule.of("-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju", new Trio[]{
-					Trio.of(".*vētīt", new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aizvētīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
+				".*bedīt", false), // apbedīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju",
+				".*cerēt", false), // apcerēt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju",
+				".*dēstīt", false), // apdēstīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
+				".*ķēzīt", false), // apķēzīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-mērīju, -mēri, -mēri, arī -mēru, -mēri, -mēra, pag. -mēriju",
+				".*mērīt", false), // atmērīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-pelnu, -pelni, -pelna, arī -pelnīju, -pelnī, -pelnī, pag. -pelnīju",
+					".*pelnīt", false), // atpelnīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju",
+				".*pētīt", false), // appētīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
+				".*rotīt", false), // aizrotīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju",
+				".*sargāt", false), // aizsargāt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju",
+				".*svētīt", false), // aizsargāt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju",
+				".*tašķīt", false), // aptašķīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju",
+				".*veltīt", false), // apveltīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
+				".*vētīt", false), // aizvētīt
+
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		// Nav.
+		ComplexRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new Trio[]{
+					Trio.of(".*pelēt", new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
+				new String[] {"Parasti 3. personā"}), // aizpelēt
 	};
 
 	/**
@@ -691,14 +699,17 @@ public class OptHypernRules
 		// L
 		VerbRule.firstConjRefl("-laižos, -laidies,", "-laižas, pag. -laidos", "laisties"), //aizlaisties
 		VerbRule.firstConjRefl("-laužos, -lauzies,", "-laužas, pag. -lauzos", "lauzties"), //aizlauzties
-		VerbRule.firstConjRefl("-lecos, -lecies,", "-lecas, pag. -lēcos", "lēkties"), //atlēkties
 		VerbRule.firstConjRefl("-liedzos, -liedzies,", "-liedzas, pag. -liedzos", "liegties"), //aizliegties
 		VerbRule.firstConjRefl("-liecos, -liecies,", "-liecas, pag. -liecos", "liekties"), //aizliekties
 		VerbRule.firstConjRefl("-lējos, -lējies,", "-lejas, pag. -lējos", "lieties"), //aplieties
 		VerbRule.firstConjRefl("-liekos, -liecies,", "-liekas, pag. -likos", "likties"), //aizlikties
+		VerbRule.firstConjRefl("-lūdzos, -lūdzies,", "-lūdzas, pag. -lūdzos", "lūgties"), //atlūgties
+		// Ļ
+		VerbRule.firstConjRefl("-ļaujos, -ļaujies,", "-ļaujas, pag. -ļāvos", "ļauties"), //atļauties
 		// M
 		VerbRule.firstConjRefl("-maļos, -malies,", "-maļas, pag. -mālos", "malties"), //apmalties
 		VerbRule.firstConjRefl("-metos, -meties,", "-metas, pag. -metos", "mesties"), //aizmesties
+		VerbRule.firstConjRefl("-mostos, -mosties,", "-mostas, pag. -modos", "mosties"), //atmosties
 		// N
 		VerbRule.firstConjRefl("-nesos, -nesies,", "-nesas, pag. -nesos", "nesties"), //aiznesties
 		// Ņ
@@ -707,13 +718,16 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 		VerbRule.firstConjRefl("-pērkos, -pērcies,", "-pērkas, pag. -pirkos", "pirkties"), // appirkties
 		VerbRule.firstConjRefl("-pļaujos, -pļaujies,", "-pļaujas, pag. -pļāvos", "pļauties"), // appļauties
+		VerbRule.firstConjRefl("-pūšos, -pūties,", "-pūšas, pag. -pūtos", "pūsties"), // atpūsties
 		// R
 		VerbRule.firstConjRefl("-rokos, -rocies,", "-rokas, pag. -rakos", "rakties"), // aizrakties
-		VerbRule.firstConjRefl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
+		VerbRule.firstConjRefl("-rodos, -rodies,", "-rodas, pag. -rados", "rasties"), // atrasties
 		VerbRule.firstConjRefl("-raušos, -rausies,", "-raušas, pag. -rausos", "rausties"), //aizrausties
 		VerbRule.firstConjRefl("-raujos, -raujies,", "-raujas, pag. -rāvos", "rauties"), //aizrauties
+		VerbRule.firstConjRefl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
 		VerbRule.firstConjRefl("-riebjos, -riebies,", "-riebjas, pag. -riebos", "riebties"), //apriebties
 		VerbRule.firstConjRefl("-riebjos, -riebies,", "-riebjas; pag. -riebos", "riebties"), //aizriebties
+		VerbRule.firstConjRefl("-rejos, -rejies,", "-rejas, pag. -rējos", "rieties"), //atrieties
 		VerbRule.firstConjRefl("-rimstos, -rimsties,", "-rimstas, pag. -rimos", "rimties"), //aprimties
 		VerbRule.firstConjRefl("-rijos, -rijies,", "-rijas, pag. -rijos", "rīties"), //aizrīties
 		// S
@@ -759,6 +773,10 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-zogos, -zodzies,", "-zogas, pag. -zagos", "zagties"), //aizzagties
 		VerbRule.firstConjRefl("-ziežos, -ziedies,", "-ziežas, pag. -ziedos", "ziesties"), //apziesties
 
+		// Vairāki lemmas varianti.
+		VerbRule.firstConjRefl("-lecos, -lecies,", "-lecas, pag. -lēcos", "l[eē]kties"), //atlēkties, izlekties
+
+
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.
 		SimpleRule.of("parasti 3. pers., -plešas, pag. -pletās, arī -plētās",
@@ -788,6 +806,8 @@ public class OptHypernRules
 		VerbRule.thirdConjRefl("-braukos, -braukies,", "-braukās, pag. -braucījos", "braucīties", true), //atbraucīties
 		VerbRule.thirdConjRefl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties", false), //aizkustēties
 		VerbRule.thirdConjRefl("-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties", false), //aplāpīties
+		VerbRule.thirdConjRefl("-lokos, -lokies,", "-lokās, pag. -locījos", "locīties", true), //atlocīties
+		VerbRule.thirdConjRefl("-minos, -minies,", "-minas, pag. -minējos", "minēties", true), //atminēties
 		VerbRule.thirdConjRefl("-precos, -precies,", "-precas, pag. -precējos", "precēties", false), //aizprecēties
 		VerbRule.thirdConjRefl("-raugos, -raugies,", "-raugās, pag. -raudzījos", "raudzīties", true), //apraudzīties
 		VerbRule.thirdConjRefl("-slakos, -slakies,", "-slakās, pag. -slacījos", "slacīties", true), //apslacīties
@@ -807,10 +827,9 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		ComplexRule.of("-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos", new Trio[]{
-					Trio.of(".*sargāties", new Integer[]{19, 20},
-							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aizsargāties
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
+				".*sargāties", false), // aizsargāties
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nav.
 	};

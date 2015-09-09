@@ -395,10 +395,10 @@ public class DirectRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Galotņu šabloni.
-		ComplexRule.of("-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", new Trio[]{
-					Trio.of(".*īt", new Integer[]{16, 17},
-							new String[]{"Darbības vārds", "Paralēlās formas", "Tagadnes mijas nav"})},
-				null), // aprobīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", ".*īt", false), // aprobīt
+		ComplexRule.secondThirdConjDirectAllPers(
+				"-u, -i, -a, arī -īju, -ī, -ī, pag. -īju", ".*īt", false), // atrotīt
 
 		// Darbības vārdu specifiskie likumi.
 		// Nav.
@@ -432,7 +432,9 @@ public class DirectRules
 		VerbRule.firstConjRefl("-krācos, -krācies,", "-krācas, pag. -krācos", "krākties"), //aizkrākties
 		// L, M
 		VerbRule.firstConjRefl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
-		// N, O, P, R
+		// N, Ņ
+		VerbRule.firstConjRefl("-ņirdzos, -ņirdzies,", "-ņirdzas, pag. -ņirdzos", "ņirgties"), //atņirgties
+		// O, P, R
 		VerbRule.firstConjRefl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
 		VerbRule.firstConjRefl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
@@ -467,6 +469,7 @@ public class DirectRules
 		VerbRule.secondConjRefl("-ojos, -ojies,", "-ojas, pag. -ojos", "oties"), //aiztuntuļoties, apgrēkoties
 		VerbRule.secondConjRefl("-ējos, -ējies,", "-ējas, pag. -ējos", "ēties"), //abstrahēties
 		VerbRule.secondConjRefl("-ājos, -ājies,", "-ājas, pag. -ājos", "āties"), //aizdomāties
+		VerbRule.secondConjRefl("-ījos, -ījies,", "-ījas, pag. -ījos", "īties"), //atpestīties
 
 		ThirdPersVerbRule.secondConjRefl("-ējas, pag. -ējās", "ēties"), //absorbēties
 		ThirdPersVerbRule.secondConjRefl("-ojas, pag. -ojās", "oties"), //daudzkāršoties

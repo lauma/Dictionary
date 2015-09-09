@@ -106,6 +106,26 @@ public class ComplexRule implements Rule
         return new ComplexRule(patternText, tmp,
                 alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
     }
+
+	/**
+	 * Metode īsumam.
+	 * Izveido ComplexRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
+	 * kuram dotas visu personu formas/galotnes.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @param presentChange		vai tagadnes formās ir līdzskaņu mija
+	 * @return SimpleRule ar 3. paradigmu
+	 */
+	public static ComplexRule secondThirdConjDirectAllPers(
+			String patternText, String lemmaRestrictions, boolean presentChange)
+	{
+		String flag = presentChange ? "Tagadnes mija ir" : "Tagadnes mijas nav";
+		return ComplexRule.of(patternText, new Trio[]{
+					Trio.of(lemmaRestrictions, new Integer[] {16, 17},
+							new String[] {"Darbības vārds", "Paralēlās formas", flag})},
+				null);
+	}
+
     /**
      * Piemērot likumu bez papildus maģijas.
      * @param gramText          apstrādājamā gramatika

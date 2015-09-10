@@ -104,7 +104,7 @@ public class EntryChecks
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entry.contents.matches(".*@[13467890].*"))
 			bad.addNewEntry(entry, "Aiz @ seko nepareizs cipars");
-		if (entry.contents.matches(".*[^\\s(]@.*"))
+		if (entry.contents.matches(".*[^\\s(]@\\d.*"))
 			bad.addNewEntry(entry, "Pirms @ neseko atstarpe vai iekava");
 		if (entry.contents.matches(".*@\\d[^\\s)].*"))
 			bad.addNewEntry(entry, "Pēc @ seko kas vairāk par vienu ciparu");
@@ -124,10 +124,10 @@ public class EntryChecks
         if (entry.contents.matches("((?!@2).)*\\s@5\\s.*"))
             bad.addNewEntry(entry, "Pirms @5 jābūt @2");
 
-		if (entry.contents.matches(".*@2\\s((?!@5).)*\\s" + Markers.regexp + "\\s.*"))
+		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s" + Markers.regexp + "\\s.*"))
 			bad.addNewEntry(entry, "Pēc @2 seko nākamais marķieris, nevis @5");
 
-        if (entry.contents.matches(".*(NG|AG|PG|FG)\\s(?!@2).*"))
+        if (entry.contents.matches(".*\\s(NG|AG|PG|FG)\\s(?!@2).*"))
             bad.addNewEntry(entry, "Aiz \"mazā\" gramatikas marķiera jābūt @2");
 	}
 
@@ -475,23 +475,35 @@ public class EntryChecks
     public static void markerCase(Dictionary dict, int entryIndex)
     {
         Dictionary.Entry entry = dict.entries[entryIndex];
+		// Izteiksme, kas meklē visu, kas aptuveni izskatās pēc tagiem.
         Matcher tagsInsens = Pattern.compile(
                 "(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
                 .matcher(entry.contents);
 
+		//... un kamēr kaut ko atrod...
         while (tagsInsens.find())
         {
             String potTag = tagsInsens.group().trim();
+			//... tikmēr pārbauda, vai tas tikai izskatās pēc taga vai arī ir
+			// tags (ir ar lieliem burtiem).
             if (!potTag.equals(potTag.toUpperCase()))
             {
-                if (potTag.equals("No") && tagsInsens.regionStart() >= 2
-                        && !potTag.substring(0, tagsInsens.regionStart()).matches("(.*\\s)?(NO|AN|PI|FR)\\s?"))
-                    dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+                if (potTag.equals("No"))
+				{
+					if(!entry.contents.substring(0, tagsInsens.start() + 1).matches(
+							"(.*\\s)?(NO|AN|PI|FR|[.!?])\\s?"))
+						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+				}
+				else if ((potTag.equals("in") || potTag.equals("an")))
+				{
+					if (!entry.contents.substring(0, tagsInsens.start() + 1).matches(
+							".*[\\s\\(](angļu|vācu)\\s\"[^\"]*"))
+						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+				}
                 else if (!potTag.equals("no") && !potTag.equals("de"))
                     dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
             }
         }
-
     }
 
 	/**

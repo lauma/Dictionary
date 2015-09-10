@@ -45,7 +45,6 @@ public class ExceptionList
 		//jo ir vairāki šķirkļi ar vienādu šķirkļa vārdu 
         exceptions = Arrays.stream(excepExtract.getParagraphText())
 				.map(e -> e.trim()).sorted().toArray(size -> new String[size]);
-		System.out.println(exceptions.length);
 	}
 
 	/**

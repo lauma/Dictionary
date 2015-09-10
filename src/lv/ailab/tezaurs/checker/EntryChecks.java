@@ -507,7 +507,7 @@ public class EntryChecks
     }
 
 	/**
-	 * Šķirkļa simbolu pārbaude.
+	 * Šķirkļa simbolu un tipogrāfisku kļūdu pārbaude.
 	 */
 	public static void langChars(Dictionary dict, int entryIndex)
     {
@@ -535,18 +535,23 @@ public class EntryChecks
 				&& !entry.contents.matches("^.*\\sRU\\s\\[.*\\].*$")
 				&& !entry.contents.matches("^.*\\sval.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
-		{
 			dict.bad.addNewEntry(entry, "Šķirklis satur ō, bet nav latg.|līb.");
-		}
 		//ja satur Ŗ pārbauda vai tas ir lībiešu vai latgļu vārds
 		if((entry.fullText.contains("ŗ") || entry.fullText.contains("Ŗ"))
 				&& !entry.contents.matches("^.*\\s(latg|līb)\\.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s.*$")
 				&& !entry.contents.matches("^.*\\sval\\.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
-		{
 			dict.bad.addNewEntry(entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
-		}
+
+		// Pārbauda specifiskas tipogrāfiskas kļūdas
+		if(entry.fullText.matches("\\*,\\s*,\\*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur divus secīgus komatus");
+		if(entry.fullText.matches("\\*,\\.\\*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur punktu tieši aiz komata");
+		if(entry.fullText.matches("\\*\\s,\\*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur atstarpi pirms komata");
+
 	}
 	
 	/**

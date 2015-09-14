@@ -108,7 +108,7 @@ public class Dictionary
 				// pārbaudes.
 				if(!ExceptionList.isException(entry))
 				{
-					if (EntryPreChecks.isEntryNameGood(this, i))
+					if (EntryPreChecks.hasHeaderWord(this, i))
 					{
 						//Metode statistikas datu par šķirkli ievākšanai
 						stats.collectStats(entry.fullText);

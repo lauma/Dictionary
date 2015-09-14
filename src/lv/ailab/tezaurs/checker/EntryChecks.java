@@ -50,48 +50,114 @@ public class EntryChecks
 		{
 			// kvadrātiekavas
 			if(entry.contents.charAt(i) == '[') // atverošās iekavas
-			{
-				// Ja iekava nav pēdiņās.
-				//if (!(i > 0 && i < entryInf.length() - 1 &&
-				//		entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
-					sqBrackets++; //skaitītājs palielinās par 1
-			}
+				sqBrackets++; //skaitītājs palielinās par 1
 			if(entry.contents.charAt(i) == ']') // aizverošās iekavas
 			{
-				// Ja iekava nav pēdiņās.
-				//if (!(i > 0 && i < entryInf.length() - 1 &&
-				//		entryInf.charAt(i + 1) == '"' && entryInf.charAt(i - 1) == '"'))
-				//{
-					sqBrackets--; //skaitītājs samazinās 1
-					if (sqBrackets < 0)
-						bad.addNewEntry(entry, "\']\' pirms atbilstošās \'[\'");
-				//}
+				sqBrackets--; //skaitītājs samazinās 1
+				if (sqBrackets < 0)
+					bad.addNewEntry(entry, "\']\' pirms atbilstošās \'[\'");
 			}
 
 			// apaļās iekavas
 			if(entry.contents.charAt(i) == '(') // atverošās iekavas
-			{
-				// Ja iekava nav pēdiņās.
-				//if (!(i > 0 && i < entry.contents.length() - 1 &&
-				//		entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
-					circBrackets++; //skaitītājs palielinās par 1
-			}
+				circBrackets++; //skaitītājs palielinās par 1
 			if(entry.contents.charAt(i) == ')') // aizverošās iekavas
 			{
-				// Ja iekava nav pēdiņās.
-				//if (!(i > 0 && i < entry.contents.length() - 1 &&
-				//		entry.contents.charAt(i + 1) == '"' && entry.contents.charAt(i - 1) == '"'))
-				//{
-					circBrackets--; //skaitītājs samazinās 1	
-					if (circBrackets < 0)
-						bad.addNewEntry(entry, "\')\' pirms atbilstošās \'(\'");
-				//}
+				circBrackets--; //skaitītājs samazinās 1
+				if (circBrackets < 0)
+					bad.addNewEntry(entry, "\')\' pirms atbilstošās \'(\'");
 			}
 		}
 		if(sqBrackets > 0) //ja nav līdzsvars
 			bad.addNewEntry(entry, "Neaizvērtas []");
 		if(circBrackets > 0) //ja nav līdzsvars
 			bad.addNewEntry(entry, "Neaizvērtas ()");
+	}
+
+	/**
+	 * Šeit ir pārbaudes par to, kuriem marķieriem vai to kombinācijām noteikti
+	 * ir jābūt.
+	 */
+	public static void obligatoryMarkers(Dictionary dict, int entryIndex)
+	{
+		Dictionary.Entry entry = dict.entries[entryIndex];
+		BadEntries bad = dict.bad;
+		if(!entry.contents.matches("(.*\\s)?(CD|DN)\\s.*"))
+		{
+			if(!entry.contents.matches("IN\\s.*"))
+				bad.addNewEntry(entry, "Nav IN indikatora");
+			if(!entry.contents.matches(".*\\sNS\\s.*"))
+				bad.addNewEntry(entry, "Nav NS indikatora");
+			if(!entry.contents.matches(".*\\sFS\\s.*"))
+				bad.addNewEntry(entry, "Nav FS indikatora");
+			if(!entry.contents.matches(".*\\sDS\\s.*"))
+				bad.addNewEntry(entry, "Nav DS indikatora");
+			if(!entry.contents.matches(".*\\sNO\\s.*"))
+				bad.addNewEntry(entry, "Nav neviena NO indikatora");
+		}
+		// pārbauda vai CD un DN nav vienlaicīgi
+		if (entry.contents.matches("(.*\\s)?CD\\s.*") && entry.contents.matches("(.*\\s)?DN\\s.*"))
+			bad.addNewEntry(entry, "DN un CD vienlaicīgi");
+
+		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
+		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
+			bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
+	}
+
+	/**
+	 * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.
+	 */
+	public static void markerCase(Dictionary dict, int entryIndex)
+	{
+		Dictionary.Entry entry = dict.entries[entryIndex];
+		// Izteiksme, kas meklē visu, kas aptuveni izskatās pēc tagiem.
+		Matcher tagsInsens = Pattern.compile(
+				"(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
+				.matcher(entry.contents);
+
+		//... un kamēr kaut ko atrod...
+		while (tagsInsens.find())
+		{
+			String potTag = tagsInsens.group().trim();
+			//... tikmēr pārbauda, vai tas tikai izskatās pēc taga vai arī ir
+			// tags (ir ar lieliem burtiem).
+			if (!potTag.equals(potTag.toUpperCase()))
+			{
+				if (potTag.equals("No"))
+				{
+					if(!entry.contents.substring(0, tagsInsens.start() + 1).matches(
+							"(.*\\s)?(NO|AN|PI|FR|[.!?])\\s?"))
+						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+				}
+				else if ((potTag.equals("in") || potTag.equals("an")))
+				{
+					if (!entry.contents.substring(0, tagsInsens.start() + 1).matches(
+							".*[\\s\\(](angļu|vācu|angl\\.|vāc\\.)\\s\"[^\"]*"))
+						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+				}
+				else if (!potTag.equals("no") && !potTag.equals("de"))
+					dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
+			}
+		}
+	}
+
+	/**
+	 * Visām gramatikām kopīgie testi: pārbauda, vai gramatika nesatur lielos
+	 * burtus.
+	 */
+	public static void grammar(Dictionary dict, int entryIndex)
+	{
+		Dictionary.Entry entry = dict.entries[entryIndex];
+		String grams = "(^|\\s)(GR|FG|NG|AG|PG)\\s";
+		Matcher m = Pattern.compile(grams + "(((?!\\s" + Markers.regexp + "\\s).)*)(\\s" + Markers.regexp + "\\s|$)")
+				.matcher(entry.contents);
+		while (m.find())
+		{
+			String gram = m.group(3);
+			if (gram.matches(".*\\p{Lu}.*"))
+				dict.bad.addNewEntry(entry, "Gramatika satur lielos burtus");
+		}
+
 	}
 
 	/**
@@ -440,73 +506,6 @@ public class EntryChecks
     }
 
 	/**
-	 * Šeit ir pārbaudes par to, kuriem marķieriem vai to kombinācijām noteikti
-	 * ir jābūt.
-	 */
-	public static void obligatoryMarkers(Dictionary dict, int entryIndex)
-    {
-        Dictionary.Entry entry = dict.entries[entryIndex];
-        BadEntries bad = dict.bad;
-		if(!entry.contents.matches("(.*\\s)?(CD|DN)\\s.*"))
-		{
-			if(!entry.contents.matches("IN\\s.*"))
-				bad.addNewEntry(entry, "Nav IN indikatora");
-			if(!entry.contents.matches(".*\\sNS\\s.*"))
-				bad.addNewEntry(entry, "Nav NS indikatora");
-			if(!entry.contents.matches(".*\\sFS\\s.*"))
-				bad.addNewEntry(entry, "Nav FS indikatora");
-			if(!entry.contents.matches(".*\\sDS\\s.*"))
-				bad.addNewEntry(entry, "Nav DS indikatora");
-			if(!entry.contents.matches(".*\\sNO\\s.*"))
-				bad.addNewEntry(entry, "Nav neviena NO indikatora");
-		}
-		// pārbauda vai CD un DN nav vienlaicīgi
-		if (entry.contents.matches("(.*\\s)?CD\\s.*") && entry.contents.matches("(.*\\s)?DN\\s.*"))
-			bad.addNewEntry(entry, "DN un CD vienlaicīgi");
-
-		// pārbauda vai CD vai DN nav vienlaicīgi ar NS un NO
-		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
-				bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
-	}
-
-    /**
-     * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.
-     */
-    public static void markerCase(Dictionary dict, int entryIndex)
-    {
-        Dictionary.Entry entry = dict.entries[entryIndex];
-		// Izteiksme, kas meklē visu, kas aptuveni izskatās pēc tagiem.
-        Matcher tagsInsens = Pattern.compile(
-                "(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
-                .matcher(entry.contents);
-
-		//... un kamēr kaut ko atrod...
-        while (tagsInsens.find())
-        {
-            String potTag = tagsInsens.group().trim();
-			//... tikmēr pārbauda, vai tas tikai izskatās pēc taga vai arī ir
-			// tags (ir ar lieliem burtiem).
-            if (!potTag.equals(potTag.toUpperCase()))
-            {
-                if (potTag.equals("No"))
-				{
-					if(!entry.contents.substring(0, tagsInsens.start() + 1).matches(
-							"(.*\\s)?(NO|AN|PI|FR|[.!?])\\s?"))
-						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
-				}
-				else if ((potTag.equals("in") || potTag.equals("an")))
-				{
-					if (!entry.contents.substring(0, tagsInsens.start() + 1).matches(
-							".*[\\s\\(](angļu|vācu)\\s\"[^\"]*"))
-						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
-				}
-                else if (!potTag.equals("no") && !potTag.equals("de"))
-                    dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
-            }
-        }
-    }
-
-	/**
 	 * Šķirkļa simbolu un tipogrāfisku kļūdu pārbaude.
 	 */
 	public static void langChars(Dictionary dict, int entryIndex)
@@ -616,11 +615,11 @@ public class EntryChecks
 
 		//Ja šķirkļa vārds beidzas ar punktu, tad vajadzētu pārbaudīt vai ir "GR @2 saīs. @5".
 		if(entry.name.charAt(entry.name.length() - 1) == '.'
-				&& !entry.contents.matches("^.*\\sGR\\s@2.*\\ssaīs\\..*\\s@5\\s.*$"))
+				&& !entry.contents.matches(".*\\sGR\\s@2.*\\ssaīs\\..*\\s@5\\s.*"))
 			bad.addNewEntry(entry, "Problēma ar saīs.");
 
 		//Ja vārds ir vietniekvārds tam jāsākās ar lielo burtu
-		if(entry.contents.matches("^.*\\sGR\\s@2\\vietv\\.\\s@5\\s.*$") && !Character.isUpperCase(entry.name.charAt(0)))
+		if(entry.contents.matches(".*\\sGR\\s@2\\s(((?!(" + Markers.regexp + "|@5|@2)).)+\\s)?vietv\\.\\s.*") && !Character.isUpperCase(entry.name.charAt(0)))
 			bad.addNewEntry(entry, "Šķirkļa vārds nesākas ar lielo burtu");
 	}
 
@@ -629,38 +628,19 @@ public class EntryChecks
     {
         Dictionary.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
-		if(entry.contents.matches("^.*\\sRU\\s.*$"))
+		if(entry.contents.matches(".*\\sRU\\s.*"))
 		{
 			Matcher ru = Pattern.compile("\\sRU(?=\\s)").matcher(entry.contents);
 			ru.find();
 			int RuPlace = ru.end(); //atrod kur beidzas RU
 			String AfterRU = entry.contents.substring(RuPlace).trim();
 			// Atsijaa tos, kam par daudz RU
-			if (AfterRU.matches("^.*\\sRU\\s.*$"))	
+			if (AfterRU.matches(".*\\sRU\\s.*"))
 				bad.addNewEntry(entry, "Pārāk daudzi RU");
 
 			// pārbauda vai RU ir pirms NS
-			if(!AfterRU.matches("^.*\\sNS\\s.*$"))
+			if(!AfterRU.matches(".*\\sNS\\s.*"))
 				bad.addNewEntry(entry, "RU jāatrodas pirms NS");
 		}
-	}
-
-	/**
-	 * Visām gramatikām kopīgie testi: pārbauda, vai gramatika nesatur lielos
-	 * burtus.
-	 */
-	public static void grammar(Dictionary dict, int entryIndex)
-    {
-        Dictionary.Entry entry = dict.entries[entryIndex];
-        String grams = "(^|\\s)(GR|FG|NG|AG|PG)\\s";
-		Matcher m = Pattern.compile(grams + "(((?!\\s" + Markers.regexp + "\\s).)*)(\\s" + Markers.regexp + "\\s|$)")
-				.matcher(entry.contents);
-		while (m.find())
-		{
-			String gram = m.group(3);
-			if (gram.matches(".*\\p{Lu}.*"))
-				dict.bad.addNewEntry(entry, "Gramatika satur lielos burtus");
-		}
-
 	}
 }

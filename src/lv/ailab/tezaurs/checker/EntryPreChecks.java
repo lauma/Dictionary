@@ -13,7 +13,7 @@ public class EntryPreChecks
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
-	public static boolean isEntryNameGood(Dictionary dict, int entryIndex)
+	public static boolean hasHeaderWord(Dictionary dict, int entryIndex)
 	{
         Dictionary.Entry entry = dict.entries[entryIndex];
 		if(entry.name.equals(""))

@@ -85,7 +85,9 @@ public class DictionaryToDicUI
 	{
 		for (String elem : entryElements)
 		{
-			out.write(elem.trim());
+			elem = elem.trim();
+			if (elem.length() == 2) elem = elem + " "; // Jo tukšiem elementiem aiz elementa idenentifikatora jāseko vienai atstarpei.
+			out.write(elem);
 			out.newLine();
 		}
 		out.newLine();

@@ -370,6 +370,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-žmaudzu, -žmaudz,", "-žmaudz, pag. -žmaudzu", "žmaugt"), // apžmaugt
 		VerbRule.firstConjDir("-žmiedzu, -žmiedz,", "-žmiedz, pag. -žmiedzu", "žmiegt"), // aizžmiegt
 		VerbRule.firstConjDir("-žņaudzu, -žņaudz,", "-žņaudz, pag. -žņaudzu", "žņaugt"), // aizžņaugt
+		VerbRule.firstConjDir("-žūstu, -žūsti,", "-žūst, pag. -žuvu", "žūt"), // apžūt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas.

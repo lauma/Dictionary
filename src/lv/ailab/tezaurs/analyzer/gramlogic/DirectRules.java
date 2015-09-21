@@ -275,8 +275,9 @@ public class DirectRules
 					Trio.of(".*ne", new Integer[] {9}, new String[] {"Lietvārds"}),
 					Trio.of(".*ņas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 					Trio.of(".*nes", new Integer[] {9}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
+					Trio.of(".*nis", new Integer[] {11}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),
 				},
-				new String[]{"Sieviešu dzimte"}), // acenes, iemaņas, balodene
+				new String[]{"Sieviešu dzimte"}), // acenes, iemaņas, balodene, robežugunis
 		ComplexRule.of("-šu, s.", new Trio[] {
 					Trio.of(".*te", new Integer[] {9}, new String[] {"Lietvārds"}),
 					Trio.of(".*šas", new Integer[] {7}, new String[] {"Lietvārds", "Šķirkļavārds daudzskaitlī"}),

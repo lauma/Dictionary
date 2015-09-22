@@ -85,6 +85,9 @@ public class OptHypernRules
 		SimpleRule.of("-plešu, -plet, -pleš, pag. -pletu, arī -plētu", ".*plest", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"plest\"", "Paralēlās formas"},
 				null), //aizplest
+		SimpleRule.of("-skārstu, -skārsti, -skārst, arī -skāršu, -skārt, -skārš, pag. -skārtu", ".*skārst", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"skārst\"", "Paralēlās formas"},
+				null), //apskārst
 		SimpleRule.of("-skrienu, -skrien, -skrien, arī -skreju, -skrej, -skrej, pag. -skrēju", ".*skriet", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"skriet\"", "Paralēlās formas"},
 				null), //aizskriet

@@ -15,7 +15,15 @@ public class DictionaryToDicUI
 	protected static String splitPattern =
 			"\\s(?=(GR|RU|NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
-	protected static String removePattern = "(?<=[\\s()])(@5|@2)((?=[\\s()])|$)";
+	protected static String[][] cleanupPatterns = {
+			{"(?<=[(\\[])\\s*(@5|@2)\\s", ""},
+			{"\\s(@5|@2)\\s*(?=[,.?!)\\]])", ""},
+			{"\\s(@5|@2)\\s", " "},
+			{"[\u2013\u2014]", "-"},	// Aizstāj n-dash un m-dash ar parasto defisi u002D
+			{"[\u2018\u2019]", "'"},	// Aizstāj ar apastrofu vienpēdiņas
+			{" \\.(?!\\.)", ". "},		// Pārvieto atstarpes aiz punkta
+			{"\\s\\s+", " "},
+	};	//"(?<=[\\s()])(@5|@2)(\\s|$)|\\s(@5|@2)((?=[\\s()])|$)";
 	
 	public static void main(String[] args)
 			throws IOException
@@ -63,11 +71,9 @@ public class DictionaryToDicUI
 	protected static String[] convertEntry(String entry)
 	{
 		//entry = "VR " + entry.trim();
-		entry = entry.replaceAll(removePattern, "");
-		entry = entry.replaceAll("[\u2013\u2014]", "-"); // Aizstāj n-dash un m-dash ar parasto defisi u002D
-		entry = entry.replaceAll("[\u2018\u2019]", "'"); // Aizstāj ar apastrofu vienpēdiņas
-		entry = entry.replaceAll(" \\.(?!\\.)", ". ");
-		entry = entry.replaceAll("\\s\\s+", " ");
+		for (String[] replPat : cleanupPatterns)
+			entry = entry.replaceAll(replPat[0], replPat[1]);
+
 		// Te tiek nodrošināts, ka, ja šķirkļa vārds sakrīt ar kādu no
 		// marķieriem, tas netiek atdalīts atsevšķā rindā no VR.
 		String[] rows = entry.split(splitPattern);

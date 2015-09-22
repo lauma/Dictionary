@@ -175,17 +175,17 @@ public class EntryChecks
 		if (entry.contents.matches(".*@\\d[^\\s)].*"))
 			bad.addNewEntry(entry, "Pēc @ seko kas vairāk par vienu ciparu");
 
-		if (entry.contents.matches(".*\\s@2[^\\p{L}]*@5\\s.*"))
+		if (entry.contents.matches(".*\\s@2[^\\p{L}]*@5(\\s.*)?"))
 			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
         if (entry.contents.matches(".*\\s@5[^\\p{L})]*@2\\s.*"))
             bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai iekavai");
 
 		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))
 			bad.addNewEntry(entry, "Divi @2 pēc kārtas, bez @5");
-		if (entry.contents.matches(".*\\s@5\\s((?!@2).)*\\s@5\\s.*"))
+		if (entry.contents.matches(".*\\s@5\\s((?!@2).)*\\s@5(\\s.*)?"))
 			bad.addNewEntry(entry, "Divi @5 pēc kārtas, bez @2");
 
-        if (entry.contents.matches(".*\\s@2\\s((?!@5).)*"))
+        if (entry.contents.matches(".*\\s@2\\s((?!\\s@5).)*"))
             bad.addNewEntry(entry, "Šķirkļa beigās jābūt @5");
         if (entry.contents.matches("((?!@2).)*\\s@5\\s.*"))
             bad.addNewEntry(entry, "Pirms @5 jābūt @2");
@@ -508,7 +508,7 @@ public class EntryChecks
 	/**
 	 * Šķirkļa simbolu un tipogrāfisku kļūdu pārbaude.
 	 */
-	public static void langChars(Dictionary dict, int entryIndex)
+	public static void characters(Dictionary dict, int entryIndex)
     {
         Dictionary.Entry entry = dict.entries[entryIndex];
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
@@ -542,6 +542,10 @@ public class EntryChecks
 				&& !entry.contents.matches("^.*\\sval\\.\\s.*$") 
 				&& !entry.contents.matches("^.*\\sRU\\s[.*]\\s.*$"))
 			dict.bad.addNewEntry(entry, "Šķirklis satur ŗ, bet nav latg.|līb.");
+
+		// Īpašā prasība.
+		if (entry.fullText.matches(".*?\\s"))
+			dict.bad.addNewEntry(entry, "Šķirklis beidzas ar tukšumsimbolu");
 
 		// Pārbauda specifiskas tipogrāfiskas kļūdas
 		if(entry.fullText.matches("\\*,\\s*,\\*"))

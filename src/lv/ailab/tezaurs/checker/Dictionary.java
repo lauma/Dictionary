@@ -186,11 +186,15 @@ public class Dictionary
 		public Entry (String fullEntry, int entryID)
 		{
 			id = entryID;
-			fullText = fullEntry.trim();
+			// Noņem no beigām enterus, bet atstāj pārējos tukšumus, jo uz
+			// citiem tukšumiem vēlāk ir jāpārbauda.
+			while (fullEntry.endsWith("\n") || fullEntry.endsWith("\r"))
+				fullEntry = fullEntry.substring(0, fullEntry.length() - 1);
+			fullText = fullEntry;
 			if (fullText.contains(" "))
 			{
 				name = fullText.substring(0, fullText.indexOf(' '));
-				contents = fullText.substring(fullText.indexOf(' ')).trim();
+				contents = fullText.substring(fullText.indexOf(' ') + 1);
 			} else
 			{
 				name = "";

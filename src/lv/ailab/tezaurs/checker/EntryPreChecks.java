@@ -11,6 +11,19 @@ package lv.ailab.tezaurs.checker;
 public class EntryPreChecks
 {
 	/**
+	 * Pārbaude, vai šķirklis nav tukšs.
+	 */
+	public static boolean isNotEmpty(Dictionary dict, int entryIndex)
+	{
+		Dictionary.Entry entry = dict.entries[entryIndex];
+		if (entry.fullText.trim().equals(""))
+		{
+			dict.bad.addNewEntry(entry, "Tukša rinda");
+			return false;
+		}
+		return true;
+	}
+	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
 	public static boolean hasHeaderWord(Dictionary dict, int entryIndex)

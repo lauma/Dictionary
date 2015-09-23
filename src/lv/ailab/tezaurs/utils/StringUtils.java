@@ -11,23 +11,6 @@ import lv.ailab.tezaurs.checker.Dictionary;
  */
 public class StringUtils
 {
-	// metode, kas pārbauda vai padotais šķirklis nav tukšs
-	public static boolean isEntryEmpty(Dictionary dict,
-			int entryID)//String entry, int entryID, BadEntries bad)
-	{
-		boolean notEmpty = true;
-		String entry = dict.entries[entryID].fullText;
-		//ja škirklis atmetot atstarpes ir tukšs 
-		if (entry.trim().isEmpty())
-		{
-			//škirklis tiek ierakstīts slikto sarakstā
-			dict.bad.addNewEntryFromString(entryID, entry, "Tukša rinda");
-		} else
-		{
-			notEmpty = false; // ja nav tukšs tad noimaina uz false
-		}
-		return notEmpty;
-	}
 
 	// metode, kas pārbauda kāds skaitlis ir atrodams aiz marķiera kuram to lieto
 	public static int findNumber(String s)

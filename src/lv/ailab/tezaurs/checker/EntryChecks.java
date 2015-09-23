@@ -202,8 +202,8 @@ public class EntryChecks
 		if (entry.contents.matches(".*@\\d[^\\s)].*"))
 			bad.addNewEntry(entry, "Pēc @ seko kas vairāk par vienu ciparu");
 
-		if (entry.contents.matches(".*\\s@2[^\\p{L}]*@5(\\s.*)?"))
-			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam");
+		if (entry.contents.matches(".*\\s@2((?!\\s+\\[\\s*\\]\\s+)[^\\p{L}])*@5(\\s.*)?"))
+			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam vai kvadrātiekavām");
         if (entry.contents.matches(".*\\s@5[^\\p{L})]*@2\\s.*"))
             bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai iekavai");
 

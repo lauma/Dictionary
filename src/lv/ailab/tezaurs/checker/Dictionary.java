@@ -94,42 +94,40 @@ public class Dictionary
 	 * Izpilda visas šķirkļu pārbaudes visiem šķirkļiem.
 	 */
 	public void check() throws InvocationTargetException, IllegalAccessException
-    {
-		for(int i=0; i < entries.length; i++)
+	{
+		for (int i = 0; i < entries.length; i++)
 		{
-			//pārbaude vai šķirklis nav tukšs
-			if(!StringUtils.isEntryEmpty(this, i))
+			Dictionary.Entry entry = entries[i];
+			stats.wordCount += StringUtils.wordCount(entry.fullText);
+			stats.entryCount++;
+
+			// Pārbauda, vai rinda nav tukša, un, ja ir, tad veic tālāku analīzi.
+			if (EntryPreChecks.isNotEmpty(this, i))
 			{
-				Dictionary.Entry entry = entries[i];
-				stats.wordCount += StringUtils.wordCount(entry.fullText);
-				stats.entryCount++;
+				//Metode statistikas datu par šķirkli ievākšanai
+				stats.collectInnerStats(entry.fullText);
 
 				// Pārbauda, vai šķirklis nav izņēmums, un ja nav, tad veic
 				// pārbaudes.
-				if(!ExceptionList.isException(entry))
+				if (!ExceptionList.isException(entry) &&
+						EntryPreChecks.hasHeaderWord(this, i))
 				{
-					if (EntryPreChecks.hasHeaderWord(this, i))
-					{
-						//Metode statistikas datu par šķirkli ievākšanai
-						stats.collectStats(entry.fullText);
-
-						Method[] tests = EntryChecks.class.getDeclaredMethods();
-						for (Method test : tests)
-							test.invoke(null, this, i);
-					}
+					Method[] tests = EntryChecks.class.getDeclaredMethods();
+					for (Method test : tests)
+						test.invoke(null, this, i);
 				}
-
-				// Papildina sastapto šķirkļu un indeksu "datubāzi".
-				int index = -1;
-				if (entry.contents.matches("^IN\\s.*$"))
-				{
-					String bezIn = entry.contents.substring(3).trim();
-					index = StringUtils.findNumber(bezIn);
-				}
-				prevIN.put(entry.name, Trio
-						.of(index, entry.fullText, entry.id));
 			}
-            // Progresa izvade uz ekrāna
+
+			// Papildina sastapto šķirkļu un indeksu "datubāzi".
+			int index = -1;
+			if (entry.contents.matches("^IN\\s.*$"))
+			{
+				String bezIn = entry.contents.substring(3).trim();
+				index = StringUtils.findNumber(bezIn);
+			}
+			prevIN.put(entry.name, Trio.of(index, entry.fullText, entry.id));
+
+			// Progresa izvade uz ekrāna
 			if (i % 50 == 0)
 			{
 				System.out.print(fileName + " [");

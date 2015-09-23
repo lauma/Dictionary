@@ -34,7 +34,7 @@ public class Stats
 	/**
 	 * Savāc statistikas datus par šķirkli.
 	 */
-	public void collectStats(String entry)
+	public void collectInnerStats(String entry)
 	{
 		// marķiera IN skaita ieguve
 		String entryInf = entry.substring(entry.indexOf(" ")).trim();

@@ -32,8 +32,11 @@ public class EntryChecks
 	public static void hasContents (Dictionary dict, int entryIndex)
     {
         Dictionary.Entry entry = dict.entries[entryIndex];
-		if (entry.contents.equals("") || entry.contents.length() < 4)
+		if (entry.contents.equals("") || entry.contents.length() < 5)
 			dict.bad.addNewEntry(entry, "Trūkst šķirkļa satura");
+		if (entry.fullText.matches(
+				"\\s*IN\\s+0\\s+GR\\s+@2\\s+[^@]*\\s+@5\\s+NS\\s+1\\s+NO\\s+\\.\\s+FS\\s+0\\s+DS\\s+0\\s+LI\\s+@2\\s*\\[[^\\]]*\\]\\s*@5\\s*"))
+			dict.bad.addNewEntry(entry, "Izskatās pēc neaizpildītas sagataves");
 	}
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
@@ -82,6 +85,10 @@ public class EntryChecks
 	{
 		Dictionary.Entry entry = dict.entries[entryIndex];
 		BadEntries bad = dict.bad;
+
+		if (!entry.contents.matches("\\s*(IN|GR|CD|DN)\\s.*"))
+			dict.bad.addNewEntry(entry, "Pēc šķirkļa vārda neseko ne IN, ne GR, CD vai DN");
+
 		if(!entry.contents.matches("(.*\\s)?(CD|DN)\\s.*"))
 		{
 			if(!entry.contents.matches("IN\\s.*"))

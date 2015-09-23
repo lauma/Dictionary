@@ -110,6 +110,26 @@ public class EntryChecks
 		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
 			bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
 	}
+	public static void doubleMarkers (Dictionary dict, int entryIndex)
+	{
+		Dictionary.Entry entry = dict.entries[entryIndex];
+		BadEntries bad = dict.bad;
+
+		Matcher doubleFinder = Pattern.compile(
+				"(\\s|^)" + Markers.regexp + "\\s+(\\.\\s+)?" + Markers.regexp + "(\\s|$)")
+				.matcher(entry.contents);
+		while (doubleFinder.find())
+		{
+			String match = doubleFinder.group().trim();
+			if (!match.equals("AN AG"))
+				bad.addNewEntry(entry, "Neatļauta identifikatoru virkne \"" + match + "\"");
+
+			// Uzstāda, ka nākamā meklēšana notiks nevis pēc atrastā beigām, bet
+			// tikai vienu simbolu pēc atrastā sākuma. Tas ļauj atrast kā kļūdu
+			// arī AN AG AG.
+			doubleFinder = doubleFinder.region(doubleFinder.start() + 1, doubleFinder.regionEnd());
+		}
+	}
 
 	/**
 	 * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.

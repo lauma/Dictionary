@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" />
     </list>
     <ignored path="Dictionary.iws" />
@@ -48,8 +49,8 @@
       <file leaf-file-name="DictionaryDic2Xml.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6409836">
-              <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.6967213">
+              <caret line="52" column="37" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -895,8 +896,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6409836">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.6967213">
+          <caret line="52" column="37" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

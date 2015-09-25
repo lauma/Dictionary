@@ -21,7 +21,8 @@ public class DictionaryDic2Xml
 	protected BufferedReader currentDicIn;
 	protected PrintWriter log;
 
-	protected String currentLine, pline, VR;
+	protected String currentLine, prevLine;
+	protected String entryName;
 	protected int NS;
 	protected boolean parcelts;
 
@@ -33,18 +34,15 @@ public class DictionaryDic2Xml
 			log = new PrintWriter(new OutputStreamWriter(new FileOutputStream(
 					outputDataPath + "dic2xml-log.txt"), "Windows-1257"), true);
 
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			doc = builder.newDocument();
 
 			fullEntries = doc.createElement("tezaurs");
 			refEntries = doc.createElement("sliktie");
 
-			fullEntries
-					.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			fullEntries
-					.setAttribute("xsi:noNamespaceSchemaLocation", "tezaurs.xsd");
+			fullEntries.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			fullEntries.setAttribute("xsi:noNamespaceSchemaLocation", "tezaurs.xsd");
 		} catch (IOException|ParserConfigurationException e)
 		{
 			e.printStackTrace(log);
@@ -53,16 +51,14 @@ public class DictionaryDic2Xml
 
 		// TODO tikt no šitā vaļā
 		doc.appendChild(fullEntries);
-
 		currentDicIn = null;
-
 	}
 
 	//Atgriež "true", ja vārdam ir nozīmju grupa (tas ir "labais" vārds)
 	protected boolean mkVR(Element s) throws IOException
 	{
 		boolean labais = false;
-		VR = currentLine.substring(3);
+		entryName = currentLine.substring(3);
 
 		String RU = null;
 		String IN = null;
@@ -88,7 +84,7 @@ public class DictionaryDic2Xml
 
 		Element vf = doc.createElement("vf");
 		if (RU != null) vf.setAttribute("ru", RU);
-		vf.setTextContent(VR);
+		vf.setTextContent(entryName);
 
 		Element gram = doc.createElement("gram");
 		if (GR != null) gram.setTextContent(GR);
@@ -99,7 +95,7 @@ public class DictionaryDic2Xml
 		{
 			v.appendChild(gram);
 		}
-		//else {System.err.println("Missing GR: " + VR);}
+		//else {System.err.println("Missing GR: " + entryName);}
 		s.appendChild(v);
 
 		NS = 0;
@@ -230,10 +226,10 @@ public class DictionaryDic2Xml
 
 			if (el == null)
 			{
-				pline = currentLine;
+				prevLine = currentLine;
 				currentLine = currentDicIn.readLine();
 				apst = true;
-				log.println("!!! " + pline + " " + VR);
+				log.println("!!! " + prevLine + " " + entryName);
 			}
 			if (apst)
 			{
@@ -241,8 +237,8 @@ public class DictionaryDic2Xml
 				if (currentLine.indexOf("PN ") == 0)
 				{
 					String temp = currentLine;
-					currentLine = pline;
-					pline = temp;
+					currentLine = prevLine;
+					prevLine = temp;
 					mkPG(el);
 				}
 				return;
@@ -252,7 +248,7 @@ public class DictionaryDic2Xml
 
 		if (el == null)
 		{
-			log.println("BAD!!! " + currentLine + " " + VR);
+			log.println("BAD!!! " + currentLine + " " + entryName);
 			return;
 		}
 
@@ -262,10 +258,10 @@ public class DictionaryDic2Xml
 			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
 		a.setTextContent(currentLine);
 		el.appendChild(a);
-		if (pline != null)
+		if (prevLine != null)
 		{
-			currentLine = pline;
-			pline = null;
+			currentLine = prevLine;
+			prevLine = null;
 		} else currentLine = currentDicIn.readLine();
 	}
 
@@ -299,10 +295,10 @@ public class DictionaryDic2Xml
 			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
 		a.setTextContent(currentLine);
 		b.appendChild(a);
-		if (pline != null)
+		if (prevLine != null)
 		{
-			currentLine = pline;
-			pline = null;
+			currentLine = prevLine;
+			prevLine = null;
 		} else currentLine = currentDicIn.readLine();
 		if (currentLine.indexOf("PG ") == 0) mkPG(b);
 		while (currentLine.indexOf("PN ") == 0) mkPN(b);
@@ -459,7 +455,7 @@ public class DictionaryDic2Xml
 				currentLine = currentDicIn.readLine();
 				if (currentLine == null) break;
 				currentLine = currentLine.trim();
-			} while (currentLine.indexOf("VR ") != 0);
+			} while (currentLine.indexOf("entryName ") != 0);
 
 			if (currentLine == null) break;
 
@@ -470,7 +466,7 @@ public class DictionaryDic2Xml
 			if (currentLine == null) break;
 			if (currentLine.length() > 0)
 			{
-				log.println(currentLine + "  " + VR);
+				log.println(currentLine + "  " + entryName);
 			}
 		}
 		currentDicIn = null;

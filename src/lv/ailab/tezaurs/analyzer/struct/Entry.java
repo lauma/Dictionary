@@ -166,7 +166,7 @@ public class Entry
 			String line;
 			while ((line = input.readLine()) != null)
 			{
-				//if (line.contains("<s>") || line.contains("</s>") || line.isEmpty())
+				//if (currentLine.contains("<s>") || currentLine.contains("</s>") || currentLine.isEmpty())
 				//	continue;
 				blist.add(line.trim());
 			}		

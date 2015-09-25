@@ -88,9 +88,9 @@ public class DictionaryToDic
 		}
 
 		// Te tiek nodrošināts, ka, ja šķirkļa vārds sakrīt ar kādu no
-		// marķieriem, tas netiek atdalīts atsevšķā rindā no VR.
+		// marķieriem, tas netiek atdalīts atsevšķā rindā no entryName.
 		if (rows.length > 0)
-			rows[0] = "VR " + rows[0];
+			rows[0] = "entryName " + rows[0];
 		return rows;
 	}
 	

@@ -1,3 +1,3 @@
 chcp 1257
-java -cp "./lib/*;." lv.ailab.tezaurs.DictionaryToDicUI
+java -cp "./lib/*;." lv.ailab.tezaurs.DictionaryToDic
 @pause

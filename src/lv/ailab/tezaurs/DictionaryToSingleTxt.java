@@ -10,7 +10,7 @@ import java.io.*;
  *
  * @author Lauma
  */
-public class DictionaryToSingleTxtUI
+public class DictionaryToSingleTxt
 {
 	public static String inputDataPath = "./dati/";
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 
-import lv.ailab.tezaurs.DictionaryCheckerUI;
+import lv.ailab.tezaurs.DictionaryChecker;
 import lv.ailab.tezaurs.io.DocLoader;
 import lv.ailab.tezaurs.io.XlsOutputer;
 import lv.ailab.tezaurs.utils.StringUtils;
@@ -154,7 +154,7 @@ public class Dictionary
 		table.sumTable();
 		table.flush();
 		// Kļūdaino šķirkļu izdrukāšana .klu failā.
-		if (!bad.isEmpty()) bad.printAll(DictionaryCheckerUI.inputDataPath + part1 + ".klu");
+		if (!bad.isEmpty()) bad.printAll(DictionaryChecker.inputDataPath + part1 + ".klu");
 	}
 	
 	/**

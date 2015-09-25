@@ -11,9 +11,10 @@ import java.util.regex.Pattern;
 import lv.ailab.tezaurs.checker.Markers;
 import lv.ailab.tezaurs.io.DocLoader;
 
-public class DictionaryToDicUI
+public class DictionaryToDic
 {
 	public static String inputDataPath = "./dati/";
+	public static String outputDataPath = "./dati/dic/";
 
 	protected static String splitPattern =
 			"\\s(?=(GR|RU|NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
@@ -40,8 +41,8 @@ public class DictionaryToDicUI
 			return;
 		}
 		
-		File dicFolder = new File(inputDataPath + "dic/");
-		if(!dicFolder.exists()) dicFolder.mkdirs();
+		File dicFolder = new File(outputDataPath);
+		if (!dicFolder.exists()) dicFolder.mkdirs();
 
 		File[] listOfFiles = folder.listFiles();
 		for (File f : listOfFiles)
@@ -50,8 +51,8 @@ public class DictionaryToDicUI
 			if (!fileName.endsWith(".doc"))
 				continue;
 			BufferedWriter dicOut = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(inputDataPath + "dic/" +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
-			
+					new FileOutputStream(outputDataPath +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
+
 			String[] entities = DocLoader.loadDictionary(inputDataPath + fileName);
 			for (String e : entities)
 			{

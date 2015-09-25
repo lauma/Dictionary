@@ -14,7 +14,7 @@ import lv.ailab.tezaurs.io.XlsOutputer;
  * vajadzētu izcelt ārā.
  * @author Lauma, Gunārs Danovskis
  */
-public class DictionaryCheckerUI
+public class DictionaryChecker
 {
 	public static String inputDataPath = "./dati/";
 	public static String settingsPath = "./saraksti/";

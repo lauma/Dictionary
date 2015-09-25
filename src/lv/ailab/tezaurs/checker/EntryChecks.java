@@ -204,7 +204,7 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\s@2((?!\\s+\\[\\s*\\]\\s+)[^\\p{L}])*@5(\\s.*)?"))
 			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam vai kvadrātiekavām");
-        if (entry.contents.matches(".*\\s@5[^\\p{L})]*@2\\s.*"))
+        if (entry.contents.matches(".*\\s@5[^\\p{L}()]*@2\\s.*"))
             bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai iekavai");
 
 		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))

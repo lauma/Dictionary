@@ -22,8 +22,6 @@ public class DictionaryDic2Xml
 	protected PrintWriter log;
 
 	protected String currentLine, prevLine;
-	protected String entryName;
-	protected int NS;
 	protected boolean parcelts;
 
 	public DictionaryDic2Xml()
@@ -52,65 +50,15 @@ public class DictionaryDic2Xml
 		currentDicIn = null;
 	}
 
-	//Atgriež "true", ja vārdam ir nozīmju grupa (tas ir "labais" vārds)
-	protected boolean mkVR(Element s) throws IOException
+	/**
+	 * Apstrādā šķirkli, sākot ar VR ... rindiņu.
+	 */
+	protected Entry processEntry() throws IOException
 	{
-		boolean labais = false;
-		entryName = currentLine.substring(3);
+		Entry res = new Entry();
 
-		String RU = null;
-		String IN = null;
-		String GR = null;
-
-		do
-		{
-			currentLine = currentDicIn.readLine();
-
-			if (currentLine.indexOf("IN ") == 0) IN = currentLine.substring(3);
-			if (currentLine.indexOf("RU ") == 0) RU = currentLine.substring(3);
-
-			if (currentLine.indexOf("GR ") == 0)
-			{
-				GR = currentLine.substring(3);
-				if (GR.charAt(GR.length() - 1) == '-')
-					GR = (GR.substring(0, GR.length() - 1)).trim();
-			}
-		} while ((currentLine.indexOf("GR ") == 0) || (currentLine
-				.indexOf("IN ") == 0) || (currentLine.indexOf("RU ") == 0));
-
-		if (IN != null) s.setAttribute("i", IN);
-
-		Element vf = doc.createElement("vf");
-		if (RU != null) vf.setAttribute("ru", RU);
-		vf.setTextContent(entryName);
-
-		Element gram = doc.createElement("gram");
-		if (GR != null) gram.setTextContent(GR);
-
-		Element v = doc.createElement("v");
-		v.appendChild(vf);
-		if (GR != null)
-		{
-			v.appendChild(gram);
-		}
-		//else {System.err.println("Missing GR: " + entryName);}
-		s.appendChild(v);
-
-		NS = 0;
-		if (currentLine.indexOf("NS ") == 0) currentLine = currentDicIn.readLine();
-
-		Element g_n = null;
-		while (currentLine.indexOf("NO ") == 0)
-		{
-			if (g_n == null) g_n = doc.createElement("g_n");
-			mkNO(g_n);
-		}
-
-		if (g_n != null)
-		{
-			s.appendChild(g_n);
-			labais = true;
-		}
+		processEntryHeader(res);
+		processSenses(res);
 
 		Element g_fraz = null;
 		Element g_de = null;
@@ -124,52 +72,116 @@ public class DictionaryDic2Xml
 		}
 
 		if (currentLine.indexOf("DS ") == 0) currentLine = currentDicIn.readLine();
-		if (currentLine == null) return labais;
 
-		while (currentLine.indexOf("DE ") == 0)
+		while (currentLine != null && currentLine.indexOf("DE ") == 0)
 		{
 			if (g_de == null) g_de = doc.createElement("g_de");
 			mkDE(g_de);
-			if (currentLine == null) return labais;
 		}
 
-		if (g_fraz != null) s.appendChild(g_fraz);
-		if (g_de != null) s.appendChild(g_de);
+		if (currentLine == null) return res;
+
+		if (g_fraz != null) res.sElem.appendChild(g_fraz);
+		if (g_de != null) res.sElem.appendChild(g_de);
 		if (currentLine.indexOf("DN ") == 0 || currentLine.indexOf("CD ") == 0)
 		{
-			makeLeaf("ref", currentLine, s);
+			makeLeaf("ref", currentLine, res.sElem);
 			currentLine = currentDicIn.readLine();
 		}
 		if (currentLine.indexOf("LI ") == 0)
 		{
-			makeLeaf("avots", currentLine, s);
+			makeLeaf("avots", currentLine, res.sElem);
 			currentLine = currentDicIn.readLine();
 		}
 
-		return labais;
+		return res;
 	}
 
-	protected void mkNO(Element g_n) throws IOException
+	/**
+	 * Apstrādā šķirkļa galvai atbilstošos datus - šķirkļa vārdu, izrunu,
+	 * galveno gramatiku un homonīmu indeksu - un izveido šķirkļa galvu - vf
+	 * elementu.
+	 * @param entry	šķirklis, kam pievienot jaunos elementus
+	 */
+	protected void processEntryHeader(Entry entry) throws IOException
 	{
-		NS++;
+		String inLine = null;
+		String ruLine = null;
+		String grLine = null;
+		entry.entryName = currentLine.substring(2).trim(); // Nocērt šķirkļa vārda VR
 
-		Element n = doc.createElement("n");
-		n.setAttribute("nr", String.valueOf(NS));
-		Element d = doc.createElement("d");
-		Element t = doc.createElement("t");
+		do
+		{
+			currentLine = currentDicIn.readLine();
+			if (currentLine.indexOf("IN ") == 0) inLine = currentLine;
+			if (currentLine.indexOf("RU ") == 0) ruLine = currentLine;
+			if (currentLine.indexOf("GR ") == 0) grLine = currentLine;
 
-		t.setTextContent((currentLine.substring(3)).trim());
-		d.appendChild(t);
+		} while ((currentLine.indexOf("GR ") == 0) || (currentLine
+				.indexOf("IN ") == 0) || (currentLine.indexOf("RU ") == 0));
 
+		if (inLine != null && inLine.length() > 2)
+			entry.sElem.setAttribute("i", inLine.substring(2).trim());
+
+		Element vfElem = doc.createElement("vf");
+		if (ruLine != null && ruLine.length() > 3)
+			vfElem.setAttribute("ru", ruLine.substring(2).trim());
+		vfElem.setTextContent(entry.entryName);
+
+		Element vElem = doc.createElement("v");
+		vElem.appendChild(vfElem);
+		if (grLine != null && grLine.length() > 3)
+			makeLeaf("gram", grLine, vElem, true);
+		entry.sElem.appendChild(vElem);
+	}
+
+	/**
+	 * Apstrādā nozīmju bloku, ja tāds ir.
+	 * @param entry	šķirklis, kam pievienot jaunos elementus
+	 * @return true, ja tika atrasts nozīmju bloks
+	 */
+	protected void processSenses(Entry entry) throws IOException
+	{
+		entry.senseNumber = 0;
+		if (currentLine.indexOf("NS ") == 0) currentLine = currentDicIn.readLine();
+
+		Element g_n = null;
+		while (currentLine.indexOf("NO ") == 0)
+		{
+			if (g_n == null) g_n = doc.createElement("g_n");
+			mkNO(g_n, entry);
+		}
+
+		if (g_n != null)
+		{
+			entry.sElem.appendChild(g_n);
+			return;
+		}
+		return;
+	}
+
+	//--------------------------------------------------------------------------
+
+	protected void mkNO(Element g_nElem, Entry entry) throws IOException
+	{
+		entry.senseNumber++;
+
+		Element nElem = doc.createElement("n");
+		nElem.setAttribute("nr", String.valueOf(entry.senseNumber));
+		Element dElem = doc.createElement("d");
+		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("NG ") == 0) mkNG(n);
 
-		n.appendChild(d);
+		if (currentLine.indexOf("NG ") == 0)
+		{
+			makeLeaf("gram", currentLine, nElem, true);
+			currentLine = currentDicIn.readLine();
+		}
 
-		Element g_piem = null;
-		Element g_an = null;
+		nElem.appendChild(dElem);
 
-		int is_bad = 0;
+		Element g_piemElem = null;
+		Element g_anElem = null;
 
 		while ((currentLine.indexOf("AN ") == 0) || (currentLine
 				.indexOf("PI ") == 0) || (currentLine
@@ -177,64 +189,49 @@ public class DictionaryDic2Xml
 		{
 			while (currentLine.indexOf("AN ") == 0)
 			{
-				if (g_an == null) g_an = doc.createElement("g_an");
-				mkAN(g_an);
+				if (g_anElem == null) g_anElem = doc.createElement("g_an");
+				mkAN(g_anElem, entry);
 			}
 
-			if (currentLine.indexOf("PG ") == 0) mkPG(null);
+			if (currentLine.indexOf("PG ") == 0) mkPG(null, entry);
 
 			while (currentLine.indexOf("PI ") == 0)
 			{
-				if (g_piem == null) g_piem = doc.createElement("g_piem");
-				mkPI(g_piem);
+				if (g_piemElem == null) g_piemElem = doc.createElement("g_piem");
+				mkPI(g_piemElem, entry);
 			}
 		}
 
-		if (g_piem != null) n.appendChild(g_piem);
-		if (g_an != null) n.appendChild(g_an);
-		g_n.appendChild(n);
+		if (g_piemElem != null) nElem.appendChild(g_piemElem);
+		if (g_anElem != null) nElem.appendChild(g_anElem);
+		g_nElem.appendChild(nElem);
 	}
 
-
-	protected void mkNG(Element n) throws IOException
+	protected void mkPN(Element piemElem) throws IOException
 	{
-		Element gram = doc.createElement("gram");
-		currentLine = (currentLine.substring(3)).trim();
-		if (currentLine.charAt(currentLine.length() - 1) == '-')
-			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
-
-		gram.setTextContent(currentLine);
-		n.appendChild(gram);
+		Element nElem = doc.createElement("n");
+		Element dElem = doc.createElement("d");
+		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
-	}
 
-	protected void mkPN(Element piem) throws IOException
-	{
-		Element n = doc.createElement("n");
-		Element d = doc.createElement("d");
-		Element t = doc.createElement("t");
-
-		t.setTextContent((currentLine.substring(3)).trim());
-		d.appendChild(t);
-		n.appendChild(d);
-		piem.appendChild(n);
-		currentLine = currentDicIn.readLine();
+		nElem.appendChild(dElem);
+		piemElem.appendChild(nElem);
 	}
 
 
-	//--------------------------------------------------------------------------------------------------
-	protected void mkPG(Element el) throws IOException
+	protected void mkPG(Element piemElem, Entry entry)
+	throws IOException
 	{
 		boolean apst = false;
 		if (!parcelts)
 		{
 
-			if (el == null)
+			if (piemElem == null)
 			{
 				prevLine = currentLine;
 				currentLine = currentDicIn.readLine();
 				apst = true;
-				log.println("!!! " + prevLine + " " + entryName);
+				log.println("!!! " + prevLine + " " + entry.entryName);
 			}
 			if (apst)
 			{
@@ -244,25 +241,20 @@ public class DictionaryDic2Xml
 					String temp = currentLine;
 					currentLine = prevLine;
 					prevLine = temp;
-					mkPG(el);
+					mkPG(piemElem, entry);
 				}
 				return;
 			}
 		}
 		parcelts = false;
 
-		if (el == null)
+		if (piemElem == null)
 		{
-			log.println("BAD!!! " + currentLine + " " + entryName);
+			log.println("BAD!!! " + currentLine + " " + entry.entryName);
 			return;
 		}
 
-		Element a = doc.createElement("gram");
-		currentLine = (currentLine.substring(3)).trim();
-		if (currentLine.charAt(currentLine.length() - 1) == '-')
-			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
-		a.setTextContent(currentLine);
-		el.appendChild(a);
+		makeLeaf("gram", currentLine, piemElem, true);
 		if (prevLine != null)
 		{
 			currentLine = prevLine;
@@ -270,28 +262,32 @@ public class DictionaryDic2Xml
 		} else currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkAN(Element el) throws IOException
+	protected void mkAN(Element g_anElem, Entry entry) throws IOException
 	{
-		Element nel = doc.createElement("n");
-		Element d = doc.createElement("d");
-		Element t = doc.createElement("t");
-		t.setTextContent((currentLine.substring(3)).trim());
-		d.appendChild(t);
+		Element nElem = doc.createElement("n");
+		Element dElem = doc.createElement("d");
+		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("AG ") == 0) mkNG(nel);
-		nel.appendChild(d);
-		if (currentLine.indexOf("PG ") == 0) mkPG(null);
+
+		if (currentLine.indexOf("AG ") == 0)
+		{
+			makeLeaf("gram", currentLine, nElem, true);
+			currentLine = currentDicIn.readLine();
+		}
+
+		nElem.appendChild(dElem);
+		if (currentLine.indexOf("PG ") == 0) mkPG(null, entry);
 		Element g_piem = null;
 		while (currentLine.indexOf("PI ") == 0)
 		{
 			if (g_piem == null) {g_piem = doc.createElement("g_piem");}
-			mkPI(g_piem);
+			mkPI(g_piem, entry);
 		}
-		if (g_piem != null) nel.appendChild(g_piem);
-		el.appendChild(nel);
+		if (g_piem != null) nElem.appendChild(g_piem);
+		g_anElem.appendChild(nElem);
 	}
 
-	protected void mkPI(Element el) throws IOException
+	protected void mkPI(Element g_piemElem, Entry entry) throws IOException
 	{
 		Element piemElem = doc.createElement("piem");
 		makeLeaf("t", currentLine, piemElem, true);
@@ -299,25 +295,32 @@ public class DictionaryDic2Xml
 		{
 			currentLine = prevLine;
 			prevLine = null;
-		} else currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("PG ") == 0) mkPG(piemElem);
+		}
+		else currentLine = currentDicIn.readLine();
+
+		if (currentLine.indexOf("PG ") == 0) mkPG(piemElem, entry);
 		while (currentLine.indexOf("PN ") == 0) mkPN(piemElem);
-		el.appendChild(piemElem);
+		g_piemElem.appendChild(piemElem);
 	}
 
-	protected void mkFR(Element el) throws IOException
+	protected void mkFR(Element g_frazElem) throws IOException
 	{
 		Element frazElem = doc.createElement("fraz");
 		makeLeaf("t", currentLine, frazElem, true);
 		currentLine = currentDicIn.readLine();
 
-		if (currentLine.indexOf("FG ") == 0) mkNG(frazElem);
+		if (currentLine.indexOf("FG ") == 0)
+		{
+			makeLeaf("gram", currentLine, frazElem, true);
+			currentLine = currentDicIn.readLine();
+		}
+
 		if (currentLine.indexOf("FP ") == 0) mkFP(frazElem, false);
 		while (currentLine.indexOf("FN ") == 0) mkFN(frazElem);
-		el.appendChild(frazElem);
+		g_frazElem.appendChild(frazElem);
 	}
 
-	protected void mkFN(Element parent) throws IOException
+	protected void mkFN(Element frazElem) throws IOException
 	{
 		Element nElem = doc.createElement("n");
 		Element dElem = doc.createElement("d");
@@ -325,7 +328,7 @@ public class DictionaryDic2Xml
 		currentLine = currentDicIn.readLine();
 		nElem.appendChild(dElem);
 		while (currentLine.indexOf("FP ") == 0) mkFP(nElem, true);
-		parent.appendChild(nElem);
+		frazElem.appendChild(nElem);
 	}
 
 	protected void mkFP(Element parent, boolean hasSenses)
@@ -351,7 +354,7 @@ public class DictionaryDic2Xml
 		currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkDE(Element parent)
+	protected void mkDE(Element g_deElem)
 	throws IOException
 	{
 		Element deElem = doc.createElement("de");
@@ -359,21 +362,30 @@ public class DictionaryDic2Xml
 		makeLeaf("vf", currentLine, vElem);
 		currentLine = currentDicIn.readLine();
 
-		if (currentLine.indexOf("DG ") == 0) mkNG(vElem);
+		if (currentLine.indexOf("DG ") == 0)
+		{
+			makeLeaf("gram", currentLine, vElem, true);
+			currentLine = currentDicIn.readLine();
+		}
+
 		deElem.appendChild(vElem);
 		while (currentLine.indexOf("DP ") == 0) mkDP(deElem);
-		parent.appendChild(deElem);
+		g_deElem.appendChild(deElem);
 	}
 
-	protected void mkDP(Element parent) throws IOException
+	protected void mkDP(Element deElem) throws IOException
 	{
 		Element piemElem = doc.createElement("piem");
 		makeLeaf("t", currentLine, piemElem);
 		currentLine = currentDicIn.readLine();
 
-		if (currentLine.indexOf("DA ") == 0) mkNG(piemElem);
+		if (currentLine.indexOf("DA ") == 0)
+		{
+			makeLeaf("gram", currentLine, piemElem, true);
+			currentLine = currentDicIn.readLine();
+		}
 		if (currentLine.indexOf("DD ") == 0) mkPN(piemElem);
-		parent.appendChild(piemElem);
+		deElem.appendChild(piemElem);
 	}
 //--------------------------------------------------------------------------------------------------
 
@@ -435,14 +447,15 @@ public class DictionaryDic2Xml
 
 			if (currentLine == null) break;
 
-			Element s = doc.createElement("s");
-			if (mkVR(s)) fullEntries.appendChild(s);
-			else refEntries.appendChild(s);
+
+			Entry entry = processEntry();
+			if (entry.senseNumber > 0) fullEntries.appendChild(entry.sElem);
+			else refEntries.appendChild(entry.sElem);
 
 			if (currentLine == null) break;
 			if (currentLine.length() > 0)
 			{
-				log.println(currentLine + "  " + entryName);
+				log.println(currentLine + "  " + entry.entryName);
 			}
 		}
 		currentDicIn = null;
@@ -513,5 +526,16 @@ public class DictionaryDic2Xml
 	protected void makeLeaf(String name, String line, Element parent)
 	{
 		makeLeaf(name, line, parent, false);
+	}
+
+	/**
+	 * Informācija par šobrīd apstrādājamo šķirkli.
+	 */
+	public class Entry
+	{
+		public Element sElem = doc.createElement("s");
+		public int senseNumber = 0;
+		protected String entryName;
+
 	}
 }

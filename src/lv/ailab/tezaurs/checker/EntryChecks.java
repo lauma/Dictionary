@@ -110,11 +110,17 @@ public class EntryChecks
 		if (entry.contents.matches("(.*\\s)?(CD|DN)\\s.*") && entry.contents.matches("(.*\\s)?(NS|NO)\\s.*"))
 			bad.addNewEntry(entry, " CD vai DN vienlaidīgi ar NS vai NO");
 	}
-	public static void doubleMarkers (Dictionary dict, int entryIndex)
+
+	/**
+	 * Pārbaudes, kas puslīdz vienādi attiecināmas uz visiem identifikatoriem.
+	 */
+	public static void universal(Dictionary dict, int entryIndex)
 	{
 		Dictionary.Entry entry = dict.entries[entryIndex];
 		BadEntries bad = dict.bad;
 
+		// Tukši identifikatori lielākoties nav pieļaujami, tipiska kļūda ir
+		// viena identifikatora atkārtošana divas reizes.
 		Matcher doubleFinder = Pattern.compile(
 				"(\\s|^)" + Markers.regexp + "\\s+(\\.\\s+)?" + Markers.regexp + "(\\s|$)")
 				.matcher(entry.contents);
@@ -128,6 +134,16 @@ public class EntryChecks
 			// tikai vienu simbolu pēc atrastā sākuma. Tas ļauj atrast kā kļūdu
 			// arī AN AG AG.
 			doubleFinder = doubleFinder.region(doubleFinder.start() + 1, doubleFinder.regionEnd());
+		}
+
+		//  Tieši pēc identifikatoriem nebūtu jābūt punktam vai komatam.
+		Matcher badBeginingFinder = Pattern.compile(
+				"(\\s|^)" + Markers.regexp + "\\s[.,;:]").matcher(entry.contents);
+		while (badBeginingFinder.find())
+		{
+			String marker = badBeginingFinder.group(2).trim();
+			bad.addNewEntry(entry,
+					"Tieši pēc identifikatora " + marker + " seko \'.\', \',\', \';\' vai \':\'");
 		}
 	}
 
@@ -206,6 +222,10 @@ public class EntryChecks
 			bad.addNewEntry(entry, "Starp @2 un @5 jābūt tekstam vai kvadrātiekavām");
         if (entry.contents.matches(".*\\s@5[^\\p{L}()]*@2\\s.*"))
             bad.addNewEntry(entry, "Starp @5 un @2 jābūt tekstam vai iekavai");
+		if (entry.contents.matches(".*@5\\s*[.,;:].*"))
+			bad.addNewEntry(entry, "Tieši pēc @5 seko \'.\', \',\', \';\' vai \':\'");
+		if (entry.contents.matches(".*@2\\s*[.,;:].*"))
+			bad.addNewEntry(entry, "Tieši pēc @2 seko \'.\', \',\', \';\' vai \':\'");
 
 		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))
 			bad.addNewEntry(entry, "Divi @2 pēc kārtas, bez @5");

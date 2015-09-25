@@ -455,7 +455,7 @@ public class DictionaryDic2Xml
 				currentLine = currentDicIn.readLine();
 				if (currentLine == null) break;
 				currentLine = currentLine.trim();
-			} while (currentLine.indexOf("entryName ") != 0);
+			} while (currentLine.indexOf("VR ") != 0);
 
 			if (currentLine == null) break;
 

@@ -50,6 +50,111 @@ public class DictionaryDic2Xml
 		currentDicIn = null;
 	}
 
+	public static void main(String[] args)
+	throws IOException, ParserConfigurationException, TransformerException
+	{
+		File folder = new File(inputDataPath);
+		if (!folder.exists())
+		{
+			System.out.println(
+					"Ups! Nevar atrast ieejas datu mapi \"" + inputDataPath + "\"!");
+			return;
+		}
+		File dicFolder = new File(outputDataPath);
+		if (!dicFolder.exists()) dicFolder.mkdirs();
+
+		DictionaryDic2Xml transformator = new DictionaryDic2Xml();
+
+		File[] listOfFiles = folder.listFiles();
+		for (File f : listOfFiles)
+		{
+			String fileName = f.getName();
+			if (!fileName.endsWith(".dic"))
+				continue;
+			try
+			{
+				BufferedReader in = new BufferedReader(new FileReader(inputDataPath + fileName));
+				transformator.addDicToXml(in);
+				System.out.println(fileName + " [Pabeigts]");
+			} catch (Exception e)
+			{
+				e.printStackTrace(System.err);
+				e.printStackTrace(transformator.log);
+				System.out.println(fileName + " [Problēma]");
+			}
+
+		}
+		transformator.writeEverything();
+		System.out.println("Viss pabeigts!");
+	}
+
+	/**
+	 * Izanalizē ieejas plūsmā (failā) dotos datus un pievieno tos DOM kokam.
+	 * @param reader .dic formāta plūsma
+	 */
+	public void addDicToXml(BufferedReader reader)
+			throws IOException
+	{
+		currentDicIn = reader;
+		while (true)
+		{
+			do
+			{
+				currentLine = currentDicIn.readLine();
+				if (currentLine == null) break;
+				currentLine = currentLine.trim();
+			} while (currentLine.indexOf("VR ") != 0);
+
+			if (currentLine == null) break;
+
+
+			Entry entry = processEntry();
+			if (entry.senseNumber > 0) fullEntries.appendChild(entry.sElem);
+			else refEntries.appendChild(entry.sElem);
+
+			if (currentLine == null) break;
+			if (currentLine.length() > 0)
+				log.println(currentLine + "  " + entry.entryName);
+		}
+		currentDicIn = null;
+	}
+
+	/**
+	 * Pabeidz apstrādes procesu, izdrukājot izveidotos XMLus un aizverot
+	 * logošanas plūsmu.
+	 */
+	public void writeEverything()
+			throws TransformerException, IOException
+	{
+		try
+		{
+			TransformerFactory transFactory = TransformerFactory.newInstance();
+			Transformer transformer = transFactory.newTransformer();
+
+			doc.appendChild(fullEntries);
+
+			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "entries.xml"), "UTF8")));
+			Source src = new DOMSource(doc);
+			Result target = new StreamResult(out);
+			transformer.transform(src, target);
+
+			doc.removeChild(fullEntries);
+			doc.appendChild(refEntries);
+
+			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "references.xml"), "UTF8")));
+			src = new DOMSource(doc);
+			target = new StreamResult(out);
+			transformer.transform(src, target);
+
+			log.close();
+		}
+		catch (TransformerException|IOException e)
+		{
+			e.printStackTrace(log);
+			throw e;
+		}
+	}
+
 	/**
 	 * Apstrādā šķirkli, sākot ar VR ... rindiņu.
 	 */
@@ -59,40 +164,7 @@ public class DictionaryDic2Xml
 
 		processEntryHeader(res);
 		processSenses(res);
-
-		Element g_fraz = null;
-		Element g_de = null;
-
-		if (currentLine.indexOf("FS ") == 0) currentLine = currentDicIn.readLine();
-
-		while (currentLine.indexOf("FR ") == 0)
-		{
-			if (g_fraz == null) g_fraz = doc.createElement("g_fraz");
-			mkFR(g_fraz);
-		}
-
-		if (currentLine.indexOf("DS ") == 0) currentLine = currentDicIn.readLine();
-
-		while (currentLine != null && currentLine.indexOf("DE ") == 0)
-		{
-			if (g_de == null) g_de = doc.createElement("g_de");
-			mkDE(g_de);
-		}
-
-		if (currentLine == null) return res;
-
-		if (g_fraz != null) res.sElem.appendChild(g_fraz);
-		if (g_de != null) res.sElem.appendChild(g_de);
-		if (currentLine.indexOf("DN ") == 0 || currentLine.indexOf("CD ") == 0)
-		{
-			makeLeaf("ref", currentLine, res.sElem);
-			currentLine = currentDicIn.readLine();
-		}
-		if (currentLine.indexOf("LI ") == 0)
-		{
-			makeLeaf("avots", currentLine, res.sElem);
-			currentLine = currentDicIn.readLine();
-		}
+		processEntryFooter(res);
 
 		return res;
 	}
@@ -136,9 +208,8 @@ public class DictionaryDic2Xml
 	}
 
 	/**
-	 * Apstrādā nozīmju bloku, ja tāds ir.
+	 * Apstrādā nozīmju bloku un frāžu bloku.
 	 * @param entry	šķirklis, kam pievienot jaunos elementus
-	 * @return true, ja tika atrasts nozīmju bloks
 	 */
 	protected void processSenses(Entry entry) throws IOException
 	{
@@ -151,13 +222,48 @@ public class DictionaryDic2Xml
 			if (g_n == null) g_n = doc.createElement("g_n");
 			mkNO(g_n, entry);
 		}
+		if (g_n != null) entry.sElem.appendChild(g_n);
 
-		if (g_n != null)
+		Element g_fraz = null;
+		if (currentLine.indexOf("FS ") == 0) currentLine = currentDicIn.readLine();
+		while (currentLine.indexOf("FR ") == 0)
 		{
-			entry.sElem.appendChild(g_n);
-			return;
+			if (g_fraz == null) g_fraz = doc.createElement("g_fraz");
+			mkFR(g_fraz);
 		}
+		if (g_fraz != null) entry.sElem.appendChild(g_fraz);
+
 		return;
+	}
+
+	/**
+	 * Apstrādā šķirkļa "apakšgalu" - atvasinājumus un atsucēm.
+	 * @param entry	šķirklis, kam pievienot jaunos elementus
+	 */
+	protected void processEntryFooter(Entry entry) throws IOException
+	{
+		Element g_de = null;
+		if (currentLine.indexOf("DS ") == 0) currentLine = currentDicIn.readLine();
+		while (currentLine != null && currentLine.indexOf("DE ") == 0)
+		{
+			if (g_de == null) g_de = doc.createElement("g_de");
+			mkDE(g_de);
+		}
+		if (g_de != null) entry.sElem.appendChild(g_de);
+
+		if (currentLine != null &&
+				(currentLine.indexOf("DN ") == 0 || currentLine.indexOf("CD ") == 0))
+		{
+			makeLeaf("ref", currentLine, entry.sElem);
+			currentLine = currentDicIn.readLine();
+		}
+
+		if (currentLine != null && currentLine.indexOf("LI ") == 0)
+		{
+			makeLeaf("avots", currentLine, entry.sElem);
+			currentLine = currentDicIn.readLine();
+		}
+
 	}
 
 	//--------------------------------------------------------------------------
@@ -389,113 +495,6 @@ public class DictionaryDic2Xml
 	}
 //--------------------------------------------------------------------------------------------------
 
-
-	public static void main(String[] args)
-	throws IOException, ParserConfigurationException, TransformerException
-	{
-		File folder = new File(inputDataPath);
-		if (!folder.exists())
-		{
-			System.out.println(
-					"Ups! Nevar atrast ieejas datu mapi \"" + inputDataPath + "\"!");
-			return;
-		}
-		File dicFolder = new File(outputDataPath);
-		if (!dicFolder.exists()) dicFolder.mkdirs();
-
-		DictionaryDic2Xml transformator = new DictionaryDic2Xml();
-
-		File[] listOfFiles = folder.listFiles();
-		for (File f : listOfFiles)
-		{
-			String fileName = f.getName();
-			if (!fileName.endsWith(".dic"))
-				continue;
-			try
-			{
-				BufferedReader in = new BufferedReader(new FileReader(inputDataPath + fileName));
-				transformator.addDicToXml(in);
-				System.out.println(fileName + " [Pabeigts]");
-			} catch (Exception e)
-			{
-				e.printStackTrace(System.err);
-				e.printStackTrace(transformator.log);
-				System.out.println(fileName + " [Problēma]");
-			}
-
-		}
-		transformator.writeEverything();
-		System.out.println("Viss pabeigts!");
-	}
-
-	/**
-	 * Izanalizē ieejas plūsmā (failā) dotos datus un pievieno tos DOM kokam.
-	 * @param reader .dic formāta plūsma
-	 */
-	public void addDicToXml(BufferedReader reader)
-	throws IOException
-	{
-		currentDicIn = reader;
-		while (true)
-		{
-			do
-			{
-				currentLine = currentDicIn.readLine();
-				if (currentLine == null) break;
-				currentLine = currentLine.trim();
-			} while (currentLine.indexOf("VR ") != 0);
-
-			if (currentLine == null) break;
-
-
-			Entry entry = processEntry();
-			if (entry.senseNumber > 0) fullEntries.appendChild(entry.sElem);
-			else refEntries.appendChild(entry.sElem);
-
-			if (currentLine == null) break;
-			if (currentLine.length() > 0)
-			{
-				log.println(currentLine + "  " + entry.entryName);
-			}
-		}
-		currentDicIn = null;
-	}
-
-	/**
-	 * Pabeidz apstrādes procesu, izdrukājot izveidotos XMLus un aizverot
-	 * logošanas plūsmu.
-	 */
-	public void writeEverything()
-	throws TransformerException, IOException
-	{
-		try
-		{
-			TransformerFactory transFactory = TransformerFactory.newInstance();
-			Transformer transformer = transFactory.newTransformer();
-
-			doc.appendChild(fullEntries);
-
-			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "entries.xml"), "UTF8")));
-			Source src = new DOMSource(doc);
-			Result target = new StreamResult(out);
-			transformer.transform(src, target);
-
-			doc.removeChild(fullEntries);
-			doc.appendChild(refEntries);
-
-			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "references.xml"), "UTF8")));
-			src = new DOMSource(doc);
-			target = new StreamResult(out);
-			transformer.transform(src, target);
-
-			log.close();
-		}
-		catch (TransformerException|IOException e)
-		{
-			e.printStackTrace(log);
-			throw e;
-		}
-	}
 
 	/**
 	 * Izveido jaunu elementu ar tekstuālu saturu.

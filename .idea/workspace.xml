@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +47,8 @@
       <file leaf-file-name="DictionaryDic2Xml.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.08688524">
-              <caret line="432" column="41" selection-start-line="432" selection-start-column="30" selection-end-line="432" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.7770492">
+              <caret line="502" column="5" selection-start-line="502" selection-start-column="5" selection-end-line="502" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -121,8 +120,8 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DIC2XML.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDicUI.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
       </list>
     </option>
   </component>
@@ -885,8 +884,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.08688524">
-          <caret line="432" column="41" selection-start-line="432" selection-start-column="30" selection-end-line="432" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.7770492">
+          <caret line="502" column="5" selection-start-line="502" selection-start-column="5" selection-end-line="502" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

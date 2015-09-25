@@ -49,8 +49,6 @@ public class DictionaryDic2Xml
 			throw e;
 		}
 
-		// TODO tikt no šitā vaļā
-		doc.appendChild(fullEntries);
 		currentDicIn = null;
 	}
 
@@ -479,18 +477,20 @@ public class DictionaryDic2Xml
 		{
 			TransformerFactory transFactory = TransformerFactory.newInstance();
 			Transformer transformer = transFactory.newTransformer();
+
+			doc.appendChild(fullEntries);
+
 			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "entries.xml"), "UTF8")));
 			Source src = new DOMSource(doc);
 			Result target = new StreamResult(out);
-
 			transformer.transform(src, target);
 
-			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "references.xml"), "UTF8")));
 			doc.removeChild(fullEntries);
 			doc.appendChild(refEntries);
+
+			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputDataPath + "references.xml"), "UTF8")));
 			src = new DOMSource(doc);
 			target = new StreamResult(out);
-
 			transformer.transform(src, target);
 
 			log.close();

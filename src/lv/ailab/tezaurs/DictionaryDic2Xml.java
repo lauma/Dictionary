@@ -21,7 +21,7 @@ public class DictionaryDic2Xml
 	protected BufferedReader currentDicIn;
 	protected PrintWriter log;
 
-	protected String line, pline, VR;
+	protected String currentLine, pline, VR;
 	protected int NS;
 	protected boolean parcelts;
 
@@ -59,10 +59,10 @@ public class DictionaryDic2Xml
 	}
 
 	//Atgriež "true", ja vārdam ir nozīmju grupa (tas ir "labais" vārds)
-	protected boolean mkVR(Element s) throws Exception
+	protected boolean mkVR(Element s) throws IOException
 	{
 		boolean labais = false;
-		VR = line.substring(3);
+		VR = currentLine.substring(3);
 
 		String RU = null;
 		String IN = null;
@@ -70,19 +70,19 @@ public class DictionaryDic2Xml
 
 		do
 		{
-			line = currentDicIn.readLine();
+			currentLine = currentDicIn.readLine();
 
-			if (line.indexOf("IN ") == 0) IN = line.substring(3);
-			if (line.indexOf("RU ") == 0) RU = line.substring(3);
+			if (currentLine.indexOf("IN ") == 0) IN = currentLine.substring(3);
+			if (currentLine.indexOf("RU ") == 0) RU = currentLine.substring(3);
 
-			if (line.indexOf("GR ") == 0)
+			if (currentLine.indexOf("GR ") == 0)
 			{
-				GR = line.substring(3);
+				GR = currentLine.substring(3);
 				if (GR.charAt(GR.length() - 1) == '-')
 					GR = (GR.substring(0, GR.length() - 1)).trim();
 			}
-		} while ((line.indexOf("GR ") == 0) || (line
-				.indexOf("IN ") == 0) || (line.indexOf("RU ") == 0));
+		} while ((currentLine.indexOf("GR ") == 0) || (currentLine
+				.indexOf("IN ") == 0) || (currentLine.indexOf("RU ") == 0));
 
 		if (IN != null) s.setAttribute("i", IN);
 
@@ -103,10 +103,10 @@ public class DictionaryDic2Xml
 		s.appendChild(v);
 
 		NS = 0;
-		if (line.indexOf("NS ") == 0) line = currentDicIn.readLine();
+		if (currentLine.indexOf("NS ") == 0) currentLine = currentDicIn.readLine();
 
 		Element g_n = null;
-		while (line.indexOf("NO ") == 0)
+		while (currentLine.indexOf("NO ") == 0)
 		{
 			if (g_n == null) g_n = doc.createElement("g_n");
 			mkNO(g_n);
@@ -121,34 +121,34 @@ public class DictionaryDic2Xml
 		Element g_fraz = null;
 		Element g_de = null;
 
-		if (line.indexOf("FS ") == 0) line = currentDicIn.readLine();
+		if (currentLine.indexOf("FS ") == 0) currentLine = currentDicIn.readLine();
 
-		while (line.indexOf("FR ") == 0)
+		while (currentLine.indexOf("FR ") == 0)
 		{
 			if (g_fraz == null) g_fraz = doc.createElement("g_fraz");
 			mkFR(g_fraz);
 		}
 
-		if (line.indexOf("DS ") == 0) line = currentDicIn.readLine();
-		if (line == null) return labais;
+		if (currentLine.indexOf("DS ") == 0) currentLine = currentDicIn.readLine();
+		if (currentLine == null) return labais;
 
-		while (line.indexOf("DE ") == 0)
+		while (currentLine.indexOf("DE ") == 0)
 		{
 			if (g_de == null) g_de = doc.createElement("g_de");
 			mkDE(g_de);
-			if (line == null) return labais;
+			if (currentLine == null) return labais;
 		}
 
 		if (g_fraz != null) s.appendChild(g_fraz);
 		if (g_de != null) s.appendChild(g_de);
-		if (line.indexOf("DN ") == 0) mkDN(s);
-		if (line.indexOf("CD ") == 0) mkDN(s);
-		if (line.indexOf("LI ") == 0) mkLI(s);
+		if (currentLine.indexOf("DN ") == 0) mkDN(s);
+		if (currentLine.indexOf("CD ") == 0) mkDN(s);
+		if (currentLine.indexOf("LI ") == 0) mkLI(s);
 
 		return labais;
 	}
 
-	protected void mkNO(Element g_n) throws Exception
+	protected void mkNO(Element g_n) throws IOException
 	{
 		NS++;
 
@@ -157,11 +157,11 @@ public class DictionaryDic2Xml
 		Element d = doc.createElement("d");
 		Element t = doc.createElement("t");
 
-		t.setTextContent((line.substring(3)).trim());
+		t.setTextContent((currentLine.substring(3)).trim());
 		d.appendChild(t);
 
-		line = currentDicIn.readLine();
-		if (line.indexOf("NG ") == 0) mkNG(n);
+		currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("NG ") == 0) mkNG(n);
 
 		n.appendChild(d);
 
@@ -170,18 +170,19 @@ public class DictionaryDic2Xml
 
 		int is_bad = 0;
 
-		while ((line.indexOf("AN ") == 0) || (line.indexOf("PI ") == 0) || (line
+		while ((currentLine.indexOf("AN ") == 0) || (currentLine
+				.indexOf("PI ") == 0) || (currentLine
 				.indexOf("PG ") == 0))
 		{
-			while (line.indexOf("AN ") == 0)
+			while (currentLine.indexOf("AN ") == 0)
 			{
 				if (g_an == null) g_an = doc.createElement("g_an");
 				mkAN(g_an);
 			}
 
-			if (line.indexOf("PG ") == 0) mkPG(null);
+			if (currentLine.indexOf("PG ") == 0) mkPG(null);
 
-			while (line.indexOf("PI ") == 0)
+			while (currentLine.indexOf("PI ") == 0)
 			{
 				if (g_piem == null) g_piem = doc.createElement("g_piem");
 				mkPI(g_piem);
@@ -194,34 +195,34 @@ public class DictionaryDic2Xml
 	}
 
 
-	protected void mkNG(Element n) throws Exception
+	protected void mkNG(Element n) throws IOException
 	{
 		Element gram = doc.createElement("gram");
-		line = (line.substring(3)).trim();
-		if (line.charAt(line.length() - 1) == '-')
-			line = (line.substring(0, line.length() - 1)).trim();
+		currentLine = (currentLine.substring(3)).trim();
+		if (currentLine.charAt(currentLine.length() - 1) == '-')
+			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
 
-		gram.setTextContent(line);
+		gram.setTextContent(currentLine);
 		n.appendChild(gram);
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkPN(Element piem) throws Exception
+	protected void mkPN(Element piem) throws IOException
 	{
 		Element n = doc.createElement("n");
 		Element d = doc.createElement("d");
 		Element t = doc.createElement("t");
 
-		t.setTextContent((line.substring(3)).trim());
+		t.setTextContent((currentLine.substring(3)).trim());
 		d.appendChild(t);
 		n.appendChild(d);
 		piem.appendChild(n);
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 	}
 
 
 	//--------------------------------------------------------------------------------------------------
-	protected void mkPG(Element el) throws Exception
+	protected void mkPG(Element el) throws IOException
 	{
 		boolean apst = false;
 		if (!parcelts)
@@ -229,18 +230,18 @@ public class DictionaryDic2Xml
 
 			if (el == null)
 			{
-				pline = line;
-				line = currentDicIn.readLine();
+				pline = currentLine;
+				currentLine = currentDicIn.readLine();
 				apst = true;
 				log.println("!!! " + pline + " " + VR);
 			}
 			if (apst)
 			{
 				parcelts = true;
-				if (line.indexOf("PN ") == 0)
+				if (currentLine.indexOf("PN ") == 0)
 				{
-					String temp = line;
-					line = pline;
+					String temp = currentLine;
+					currentLine = pline;
 					pline = temp;
 					mkPG(el);
 				}
@@ -251,36 +252,36 @@ public class DictionaryDic2Xml
 
 		if (el == null)
 		{
-			log.println("BAD!!! " + line + " " + VR);
+			log.println("BAD!!! " + currentLine + " " + VR);
 			return;
 		}
 
 		Element a = doc.createElement("gram");
-		line = (line.substring(3)).trim();
-		if (line.charAt(line.length() - 1) == '-')
-			line = (line.substring(0, line.length() - 1)).trim();
-		a.setTextContent(line);
+		currentLine = (currentLine.substring(3)).trim();
+		if (currentLine.charAt(currentLine.length() - 1) == '-')
+			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
+		a.setTextContent(currentLine);
 		el.appendChild(a);
 		if (pline != null)
 		{
-			line = pline;
+			currentLine = pline;
 			pline = null;
-		} else line = currentDicIn.readLine();
+		} else currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkAN(Element el) throws Exception
+	protected void mkAN(Element el) throws IOException
 	{
 		Element nel = doc.createElement("n");
 		Element d = doc.createElement("d");
 		Element t = doc.createElement("t");
-		t.setTextContent((line.substring(3)).trim());
+		t.setTextContent((currentLine.substring(3)).trim());
 		d.appendChild(t);
-		line = currentDicIn.readLine();
-		if (line.indexOf("AG ") == 0) mkNG(nel);
+		currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("AG ") == 0) mkNG(nel);
 		nel.appendChild(d);
-		if (line.indexOf("PG ") == 0) mkPG(null);
+		if (currentLine.indexOf("PG ") == 0) mkPG(null);
 		Element g_piem = null;
-		while (line.indexOf("PI ") == 0)
+		while (currentLine.indexOf("PI ") == 0)
 		{
 			if (g_piem == null) {g_piem = doc.createElement("g_piem");}
 			mkPI(g_piem);
@@ -289,62 +290,62 @@ public class DictionaryDic2Xml
 		el.appendChild(nel);
 	}
 
-	protected void mkPI(Element el) throws Exception
+	protected void mkPI(Element el) throws IOException
 	{
 		Element b = doc.createElement("piem");
 		Element a = doc.createElement("t");
-		line = (line.substring(3)).trim();
-		if (line.charAt(line.length() - 1) == '-')
-			line = (line.substring(0, line.length() - 1)).trim();
-		a.setTextContent(line);
+		currentLine = (currentLine.substring(3)).trim();
+		if (currentLine.charAt(currentLine.length() - 1) == '-')
+			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
+		a.setTextContent(currentLine);
 		b.appendChild(a);
 		if (pline != null)
 		{
-			line = pline;
+			currentLine = pline;
 			pline = null;
-		} else line = currentDicIn.readLine();
-		if (line.indexOf("PG ") == 0) mkPG(b);
-		while (line.indexOf("PN ") == 0) mkPN(b);
+		} else currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("PG ") == 0) mkPG(b);
+		while (currentLine.indexOf("PN ") == 0) mkPN(b);
 		el.appendChild(b);
 	}
 
-	protected void mkFR(Element el) throws Exception
+	protected void mkFR(Element el) throws IOException
 	{
 		Element fel = doc.createElement("fraz");
 		Element t = doc.createElement("t");
-		line = (line.substring(3)).trim();
-		if (line.charAt(line.length() - 1) == '-')
-			line = (line.substring(0, line.length() - 1)).trim();
-		t.setTextContent(line);
+		currentLine = (currentLine.substring(3)).trim();
+		if (currentLine.charAt(currentLine.length() - 1) == '-')
+			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
+		t.setTextContent(currentLine);
 		fel.appendChild(t);
-		line = currentDicIn.readLine();
-		if (line.indexOf("FG ") == 0) mkNG(fel);
-		if (line.indexOf("FP ") == 0) mkFP(fel, false);
-		while (line.indexOf("FN ") == 0) mkFN(fel);
+		currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("FG ") == 0) mkNG(fel);
+		if (currentLine.indexOf("FP ") == 0) mkFP(fel, false);
+		while (currentLine.indexOf("FN ") == 0) mkFN(fel);
 		el.appendChild(fel);
 	}
 
-	protected void mkFN(Element el) throws Exception
+	protected void mkFN(Element el) throws IOException
 	{
 		Element nel = doc.createElement("n");
 		Element d = doc.createElement("d");
 		Element t = doc.createElement("t");
-		t.setTextContent((line.substring(3)).trim());
+		t.setTextContent((currentLine.substring(3)).trim());
 		d.appendChild(t);
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 		nel.appendChild(d);
-		while (line.indexOf("FP ") == 0) mkFP(nel, true);
+		while (currentLine.indexOf("FP ") == 0) mkFP(nel, true);
 		el.appendChild(nel);
 	}
 
 	protected void mkFP(Element el, boolean labs)
-	throws Exception
+	throws IOException
 	{
 		if (labs)
 		{
 			Element b = doc.createElement("piem");
 			Element a = doc.createElement("t");
-			a.setTextContent((line.substring(3)).trim());
+			a.setTextContent((currentLine.substring(3)).trim());
 			b.appendChild(a);
 			el.appendChild(b);
 		} else
@@ -356,58 +357,57 @@ public class DictionaryDic2Xml
 			nel.appendChild(d);
 			Element b = doc.createElement("piem");
 			Element a = doc.createElement("t");
-			a.setTextContent((line.substring(3)).trim());
+			a.setTextContent((currentLine.substring(3)).trim());
 			b.appendChild(a);
 			nel.appendChild(b);
 			el.appendChild(nel);
 		}
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 	}
 
 	protected void mkDE(Element el)
-	throws Exception
+	throws IOException
 	{
 		Element fel = doc.createElement("de");
 		Element a = doc.createElement("v");
 		Element t = doc.createElement("vf");
-		t.setTextContent((line.substring(3)).trim());
+		t.setTextContent((currentLine.substring(3)).trim());
 		a.appendChild(t);
-		line = currentDicIn.readLine();
-		if (line.indexOf("DG ") == 0) mkNG(a);
+		currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("DG ") == 0) mkNG(a);
 		fel.appendChild(a);
-		while (line.indexOf("DP ") == 0) mkDP(fel);
+		while (currentLine.indexOf("DP ") == 0) mkDP(fel);
 		el.appendChild(fel);
 	}
 
-	protected void mkDP(Element el)
-	throws Exception
+	protected void mkDP(Element el) throws IOException
 	{
 		Element a = doc.createElement("piem");
 		Element b = doc.createElement("t");
-		b.setTextContent((line.substring(3)).trim());
+		b.setTextContent((currentLine.substring(3)).trim());
 		a.appendChild(b);
-		line = currentDicIn.readLine();
-		if (line.indexOf("DA ") == 0) mkNG(a);
-		if (line.indexOf("DD ") == 0) mkPN(a);
+		currentLine = currentDicIn.readLine();
+		if (currentLine.indexOf("DA ") == 0) mkNG(a);
+		if (currentLine.indexOf("DD ") == 0) mkPN(a);
 		el.appendChild(a);
 	}
 //--------------------------------------------------------------------------------------------------
 
 
-	protected void mkDN(Element s) throws Exception
+	protected void mkDN(Element s) throws IOException
 	{
 		Element ref = doc.createElement("ref");
-		ref.setTextContent((line.substring(3)).trim());
+		ref.setTextContent((currentLine.substring(3)).trim());
 		s.appendChild(ref);
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkLI(Element s) throws Exception
+	protected void mkLI(Element s) throws IOException
 	{
 		Element avots = doc.createElement("avots");
-		avots.setTextContent((line.substring(3)).trim());
+		avots.setTextContent((currentLine.substring(3)).trim());
 		s.appendChild(avots);
-		line = currentDicIn.readLine();
+		currentLine = currentDicIn.readLine();
 	}
 
 	public static void main(String[] args)
@@ -449,28 +449,28 @@ public class DictionaryDic2Xml
 	}
 
 	public void addDicToXml(BufferedReader reader)
-	throws Exception
+	throws IOException
 	{
 		currentDicIn = reader;
 		while (true)
 		{
 			do
 			{
-				line = currentDicIn.readLine();
-				if (line == null) break;
-				line = line.trim();
-			} while (line.indexOf("VR ") != 0);
+				currentLine = currentDicIn.readLine();
+				if (currentLine == null) break;
+				currentLine = currentLine.trim();
+			} while (currentLine.indexOf("VR ") != 0);
 
-			if (line == null) break;
+			if (currentLine == null) break;
 
 			Element s = doc.createElement("s");
 			if (mkVR(s)) fullEntries.appendChild(s);
 			else refEntries.appendChild(s);
 
-			if (line == null) break;
-			if (line.length() > 0)
+			if (currentLine == null) break;
+			if (currentLine.length() > 0)
 			{
-				log.println(line + "  " + VR);
+				log.println(currentLine + "  " + VR);
 			}
 		}
 		currentDicIn = null;

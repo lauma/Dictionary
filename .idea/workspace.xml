@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\!LaumasDoc\Git\Dictionary\src\lv\ailab\tezaurs\DIC2XML.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
-      <change type="MOVED" beforePath="C:\!LaumasDoc\Git\Dictionary\src\lv\ailab\tezaurs\DictionaryCheckerUI.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryChecker.java" />
-      <change type="MOVED" beforePath="C:\!LaumasDoc\Git\Dictionary\src\lv\ailab\tezaurs\DictionaryToDicUI.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" />
-      <change type="MOVED" beforePath="C:\!LaumasDoc\Git\Dictionary\src\lv\ailab\tezaurs\DictionaryToSingleTxtUI.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToSingleTxt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/TezaursChecker.bat" afterPath="$PROJECT_DIR$/resources/TezaursChecker.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/TezaursDic2Xml.bat" afterPath="$PROJECT_DIR$/resources/TezaursDic2Xml.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/TezaursDoc2Dic.bat" afterPath="$PROJECT_DIR$/resources/TezaursDoc2Dic.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/TezaursDoc2Txt.bat" afterPath="$PROJECT_DIR$/resources/TezaursDoc2Txt.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/TezaursXml2Json.bat" afterPath="$PROJECT_DIR$/resources/TezaursXml2Json.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,8 +48,8 @@
       <file leaf-file-name="DictionaryDic2Xml.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3590164">
-              <caret line="491" column="114" selection-start-line="491" selection-start-column="114" selection-end-line="491" selection-end-column="114" />
+            <state vertical-scroll-proportion="0.6409836">
+              <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -904,8 +895,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3590164">
-          <caret line="491" column="114" selection-start-line="491" selection-start-column="114" selection-end-line="491" selection-end-column="114" />
+        <state vertical-scroll-proportion="0.6409836">
+          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

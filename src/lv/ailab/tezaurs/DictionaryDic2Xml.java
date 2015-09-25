@@ -135,9 +135,16 @@ public class DictionaryDic2Xml
 
 		if (g_fraz != null) s.appendChild(g_fraz);
 		if (g_de != null) s.appendChild(g_de);
-		if (currentLine.indexOf("DN ") == 0) mkDN(s);
-		if (currentLine.indexOf("CD ") == 0) mkDN(s);
-		if (currentLine.indexOf("LI ") == 0) mkLI(s);
+		if (currentLine.indexOf("DN ") == 0 || currentLine.indexOf("CD ") == 0)
+		{
+			makeLeaf("ref", currentLine, s);
+			currentLine = currentDicIn.readLine();
+		}
+		if (currentLine.indexOf("LI ") == 0)
+		{
+			makeLeaf("avots", currentLine, s);
+			currentLine = currentDicIn.readLine();
+		}
 
 		return labais;
 	}
@@ -286,123 +293,90 @@ public class DictionaryDic2Xml
 
 	protected void mkPI(Element el) throws IOException
 	{
-		Element b = doc.createElement("piem");
-		Element a = doc.createElement("t");
-		currentLine = (currentLine.substring(3)).trim();
-		if (currentLine.charAt(currentLine.length() - 1) == '-')
-			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
-		a.setTextContent(currentLine);
-		b.appendChild(a);
+		Element piemElem = doc.createElement("piem");
+		makeLeaf("t", currentLine, piemElem, true);
 		if (prevLine != null)
 		{
 			currentLine = prevLine;
 			prevLine = null;
 		} else currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("PG ") == 0) mkPG(b);
-		while (currentLine.indexOf("PN ") == 0) mkPN(b);
-		el.appendChild(b);
+		if (currentLine.indexOf("PG ") == 0) mkPG(piemElem);
+		while (currentLine.indexOf("PN ") == 0) mkPN(piemElem);
+		el.appendChild(piemElem);
 	}
 
 	protected void mkFR(Element el) throws IOException
 	{
-		Element fel = doc.createElement("fraz");
-		Element t = doc.createElement("t");
-		currentLine = (currentLine.substring(3)).trim();
-		if (currentLine.charAt(currentLine.length() - 1) == '-')
-			currentLine = (currentLine.substring(0, currentLine.length() - 1)).trim();
-		t.setTextContent(currentLine);
-		fel.appendChild(t);
+		Element frazElem = doc.createElement("fraz");
+		makeLeaf("t", currentLine, frazElem, true);
 		currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("FG ") == 0) mkNG(fel);
-		if (currentLine.indexOf("FP ") == 0) mkFP(fel, false);
-		while (currentLine.indexOf("FN ") == 0) mkFN(fel);
-		el.appendChild(fel);
+
+		if (currentLine.indexOf("FG ") == 0) mkNG(frazElem);
+		if (currentLine.indexOf("FP ") == 0) mkFP(frazElem, false);
+		while (currentLine.indexOf("FN ") == 0) mkFN(frazElem);
+		el.appendChild(frazElem);
 	}
 
-	protected void mkFN(Element el) throws IOException
+	protected void mkFN(Element parent) throws IOException
 	{
-		Element nel = doc.createElement("n");
-		Element d = doc.createElement("d");
-		Element t = doc.createElement("t");
-		t.setTextContent((currentLine.substring(3)).trim());
-		d.appendChild(t);
+		Element nElem = doc.createElement("n");
+		Element dElem = doc.createElement("d");
+		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
-		nel.appendChild(d);
-		while (currentLine.indexOf("FP ") == 0) mkFP(nel, true);
-		el.appendChild(nel);
+		nElem.appendChild(dElem);
+		while (currentLine.indexOf("FP ") == 0) mkFP(nElem, true);
+		parent.appendChild(nElem);
 	}
 
-	protected void mkFP(Element el, boolean labs)
+	protected void mkFP(Element parent, boolean hasSenses)
 	throws IOException
 	{
-		if (labs)
+		if (hasSenses)
 		{
-			Element b = doc.createElement("piem");
-			Element a = doc.createElement("t");
-			a.setTextContent((currentLine.substring(3)).trim());
-			b.appendChild(a);
-			el.appendChild(b);
+			Element piemElem = doc.createElement("piem");
+			makeLeaf("t", currentLine, piemElem);
+			parent.appendChild(piemElem);
 		} else
 		{
-			Element nel = doc.createElement("n");
-			Element d = doc.createElement("d");
-			Element t = doc.createElement("t");
-			d.appendChild(t);
-			nel.appendChild(d);
-			Element b = doc.createElement("piem");
-			Element a = doc.createElement("t");
-			a.setTextContent((currentLine.substring(3)).trim());
-			b.appendChild(a);
-			nel.appendChild(b);
-			el.appendChild(nel);
+			Element nElem = doc.createElement("n");
+			Element dElem = doc.createElement("d");
+			Element tElem = doc.createElement("t");
+			Element piemElem = doc.createElement("piem");
+			makeLeaf("t", currentLine, piemElem);
+			dElem.appendChild(tElem);
+			nElem.appendChild(dElem);
+			nElem.appendChild(piemElem);
+			parent.appendChild(nElem);
 		}
 		currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkDE(Element el)
+	protected void mkDE(Element parent)
 	throws IOException
 	{
-		Element fel = doc.createElement("de");
-		Element a = doc.createElement("v");
-		Element t = doc.createElement("vf");
-		t.setTextContent((currentLine.substring(3)).trim());
-		a.appendChild(t);
+		Element deElem = doc.createElement("de");
+		Element vElem = doc.createElement("v");
+		makeLeaf("vf", currentLine, vElem);
 		currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("DG ") == 0) mkNG(a);
-		fel.appendChild(a);
-		while (currentLine.indexOf("DP ") == 0) mkDP(fel);
-		el.appendChild(fel);
+
+		if (currentLine.indexOf("DG ") == 0) mkNG(vElem);
+		deElem.appendChild(vElem);
+		while (currentLine.indexOf("DP ") == 0) mkDP(deElem);
+		parent.appendChild(deElem);
 	}
 
-	protected void mkDP(Element el) throws IOException
+	protected void mkDP(Element parent) throws IOException
 	{
-		Element a = doc.createElement("piem");
-		Element b = doc.createElement("t");
-		b.setTextContent((currentLine.substring(3)).trim());
-		a.appendChild(b);
+		Element piemElem = doc.createElement("piem");
+		makeLeaf("t", currentLine, piemElem);
 		currentLine = currentDicIn.readLine();
-		if (currentLine.indexOf("DA ") == 0) mkNG(a);
-		if (currentLine.indexOf("DD ") == 0) mkPN(a);
-		el.appendChild(a);
+
+		if (currentLine.indexOf("DA ") == 0) mkNG(piemElem);
+		if (currentLine.indexOf("DD ") == 0) mkPN(piemElem);
+		parent.appendChild(piemElem);
 	}
 //--------------------------------------------------------------------------------------------------
 
-
-	protected void mkDN(Element s) throws IOException
-	{
-		Element ref = doc.createElement("ref");
-		ref.setTextContent((currentLine.substring(3)).trim());
-		s.appendChild(ref);
-		currentLine = currentDicIn.readLine();
-	}
-
-	protected void mkLI(Element s) throws IOException
-	{
-		Element avots = doc.createElement("avots");
-		avots.setTextContent((currentLine.substring(3)).trim());
-		s.appendChild(avots);
-		currentLine = currentDicIn.readLine();
-	}
 
 	public static void main(String[] args)
 	throws IOException, ParserConfigurationException, TransformerException
@@ -442,6 +416,10 @@ public class DictionaryDic2Xml
 		System.out.println("Viss pabeigts!");
 	}
 
+	/**
+	 * Izanalizē ieejas plūsmā (failā) dotos datus un pievieno tos DOM kokam.
+	 * @param reader .dic formāta plūsma
+	 */
 	public void addDicToXml(BufferedReader reader)
 	throws IOException
 	{
@@ -470,6 +448,10 @@ public class DictionaryDic2Xml
 		currentDicIn = null;
 	}
 
+	/**
+	 * Pabeidz apstrādes procesu, izdrukājot izveidotos XMLus un aizverot
+	 * logošanas plūsmu.
+	 */
 	public void writeEverything()
 	throws TransformerException, IOException
 	{
@@ -500,5 +482,36 @@ public class DictionaryDic2Xml
 			e.printStackTrace(log);
 			throw e;
 		}
+	}
+
+	/**
+	 * Izveido jaunu elementu ar tekstuālu saturu.
+	 * @param name			izvedojamā elementa vārds
+	 * @param line			rindiņa, no kuras iegūt izveidojamā elementa saturu
+	 * @param parent		vecāks, kuram piestiprināt izveidoto elementu
+	 * @param removeDash	vai, ja elementa teksts beidzas ar defisi, to novākt?
+	 */
+	protected void makeLeaf(String name, String line, Element parent, boolean removeDash)
+	{
+		Element leaf = doc.createElement(name);
+		int startIndex = line.indexOf(" ");
+
+		String contents = startIndex >= 0 ?
+				line.substring(line.indexOf(" ")).trim() : "";
+		if (removeDash && contents.endsWith("-"))
+			contents = contents.substring(0, contents.length() - 1).trim();
+		leaf.setTextContent(contents);
+		parent.appendChild(leaf);
+	}
+
+	/**
+	 * Izveido jaunu elementu ar tekstuālu saturu.
+	 * @param name		izvedojamā elementa vārds
+	 * @param line		rindiņa, no kuras iegūt izveidojamā elementa saturu
+	 * @param parent	vecāks, kuram piestiprināt izveidoto elementu
+	 */
+	protected void makeLeaf(String name, String line, Element parent)
+	{
+		makeLeaf(name, line, parent, false);
 	}
 }

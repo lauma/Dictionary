@@ -56,13 +56,13 @@
 
   <target name="zip-all" depends="build" description="compress distribution files">
     <zip destfile="Dictionary.zip" basedir="${out.prod}"
-         excludes="dati/*.doc,dati/*.klu,dati/*.klu.etalons,dati/*.xls,dati/*.tmp,dati/*.xml"
+         excludes="dati/*.doc,dati/*.klu,dati/*.etalons,dati/*.xls,dati/*.tmp,dati/*.xml"
          whenempty="create"/>
   </target>
 
   <target name="zip-no-anal" depends="build" description="compress distribution files">
     <zip destfile="Dictionary.zip" basedir="${out.prod}"
-         excludes="dati/*.doc,dati/*.klu,dati/*.klu.etalons,dati/*.xls,dati/*.tmp,dati/*.xml,lv/ailab/tezaurs/analyzer/**,lv/ailab/tezaurs/DictionaryXmlToJsonUI.*,TezaursXml2Json.bat"
+         excludes="dati/*.doc,dati/*.klu,dati/*.etalons,dati/*.xls,dati/*.tmp,dati/*.xml,lv/ailab/tezaurs/analyzer/**,lv/ailab/tezaurs/DictionaryXmlToJsonUI.*,*TezaursXml2Json.bat"
          whenempty="create"/>
   </target>
 

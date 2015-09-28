@@ -37,10 +37,13 @@ public class DictionaryDic2Xml
 			doc = builder.newDocument();
 
 			fullEntries = doc.createElement("tezaurs");
-			refEntries = doc.createElement("sliktie");
-
 			fullEntries.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			fullEntries.setAttribute("xsi:noNamespaceSchemaLocation", "tezaurs.xsd");
+
+			refEntries = doc.createElement("tezaurs");
+			refEntries.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			refEntries.setAttribute("xsi:noNamespaceSchemaLocation", "tezaurs.xsd");
+
 		} catch (IOException|ParserConfigurationException e)
 		{
 			e.printStackTrace(log);

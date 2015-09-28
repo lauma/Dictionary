@@ -76,7 +76,15 @@ public class DictionaryToDic
 	protected static String[] convertEntry(String entry)
 	{
 		if (entry.trim().length() < 1) return new String[] {};
+
+		// Sadala
 		String[] rows = entry.split(splitPattern);
+		// Ja šito pieliek jau pēc sadalīšanas, tad nerodas problēma ar to, ka
+		// šķirkļa vārdu, kas sakrīt ar kādu no marķieriem, nodala jaunā rindā.
+		if (rows.length > 0)
+			rows[0] = "VR " + rows[0];
+
+		// Iztīrīt no rindiņām @-niekus.
 		for (int i = 0; i < rows.length; i++)
 		{
 			for (String[] replPat : cleanupPatterns)
@@ -87,10 +95,7 @@ public class DictionaryToDic
 				rows[i] = securityCheck.group(1) + " " + securityCheck.group(2);
 		}
 
-		// Te tiek nodrošināts, ka, ja šķirkļa vārds sakrīt ar kādu no
-		// marķieriem, tas netiek atdalīts atsevšķā rindā no entryName.
-		if (rows.length > 0)
-			rows[0] = "VR " + rows[0];
+
 		return rows;
 	}
 	

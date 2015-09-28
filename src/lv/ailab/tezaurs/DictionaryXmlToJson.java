@@ -28,7 +28,8 @@ import org.w3c.dom.Node;
 
 import lv.ailab.tezaurs.analyzer.struct.Entry;
 
-public class DictionaryXmlToJsonUI {
+public class DictionaryXmlToJson
+{
 
 	/**
 	 * Create file with all pronunciations.

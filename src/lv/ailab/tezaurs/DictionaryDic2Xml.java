@@ -133,6 +133,8 @@ public class DictionaryDic2Xml
 		{
 			TransformerFactory transFactory = TransformerFactory.newInstance();
 			Transformer transformer = transFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "1");
 
 			doc.appendChild(fullEntries);
 

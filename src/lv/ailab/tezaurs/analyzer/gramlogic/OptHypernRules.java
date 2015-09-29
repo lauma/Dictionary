@@ -100,9 +100,7 @@ public class OptHypernRules
 		SimpleRule.of("-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. spurdzu", ".*spurgt", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"spurgt\"", "Paralēlās formas"},
 				null), //aizsliet
-		SimpleRule.of("-tupstu, -tupsti, -tupst, pag. -tupu", ".*tupt", 15,
-				new String[]{"Darbības vārds", "Locīt kā \"tupt\"", "Paralēlās formas"},
-				null), //aiztupt
+
 
 		// Standartizētie.
 		// A
@@ -663,10 +661,6 @@ public class OptHypernRules
 				".*slieties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"slieties\"", "Paralēlās formas"},
 				null), //aizslieties
-		SimpleRule.of("-tupstos, -tupsties, -tupstas, pag. -tupos",
-				".*tupties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"tupties\"", "Paralēlās formas"},
-				null), //aiztupties
 
 		// Standartizētie.
 		// A , B

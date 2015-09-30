@@ -75,7 +75,7 @@ public class ComplexRule implements Rule
         this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
         this.alwaysFlags = alwaysFlags == null ? null : Collections.unmodifiableSet(alwaysFlags);
 
-        errorMessage = "Problem matching \"%s\" with paradigm " +
+        errorMessage = "Neizdodas \"%s\" ielikt kādā no paradigmām " +
                 lemmaLogic.stream().map(t -> t.second).flatMap(m -> m.stream())
                         .distinct().sorted().map(i -> i.toString())
                         .reduce((a, b) -> a + ", " + b).orElse("")+ "\n";

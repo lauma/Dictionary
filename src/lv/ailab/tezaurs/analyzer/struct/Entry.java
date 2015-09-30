@@ -81,7 +81,7 @@ public class Entry
 			if (fieldname.equals("v")) // word info
 			{
 				if (head != null)
-					System.err.printf("Entry \"%s\" contains more than one \'v\'\n", head.lemma.text);
+					System.err.printf("Šķirklis \"%s\" satur vairāk kā vienu \'v\'!\n", head.lemma.text);
 				head = new Header (field);
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
@@ -99,7 +99,7 @@ public class Entry
 			else if (fieldname.equals("g_de")) //derived forms
 				loadDerivs(field);
 			else
-				System.err.printf("Entry - s - field %s not processed\n", fieldname);
+				System.err.printf("Šķirklī \"%s\" lauks %s netiek apstrādāts!\n", head.lemma.text, fieldname);
 		}
 		
 		homId = ((org.w3c.dom.Element)sNode).getAttribute("i");
@@ -108,7 +108,7 @@ public class Entry
 		//if (inBlacklist()) return;
 		
 		if (head == null)
-			System.err.printf("Thesaurus entry without a lemma/header :(\n");	
+			System.err.printf("Šķirklis bez šķirkļa vārda / šķirkļa galvas:\n%s\n", sNode.toString());
 	}
 	
 	/**
@@ -133,13 +133,13 @@ public class Entry
 						derivs.add(new Header(derivSubNode));
 					else if (!derivSubNode.getNodeName().equals("#text")) // Text nodes here are ignored.
 						System.err.printf(
-							"g_de/de entry field %s not processed, expected only 'v'.\n",
+							"g_de/de lauks %s netiek apstrādāts, jo tiek sagaidīts 'v'.\n",
 							derivSubNode.getNodeName());
 				}
 			}
 			else if (!deriv.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
-					"g_de entry field %s not processed, expected only 'de'.\n",
+					"g_de lauks %s netiek apstrādāts, jo tiek sagaidīts 'de'.\n",
 					deriv.getNodeName());
 		}		
 	}	
@@ -173,7 +173,7 @@ public class Entry
 			input.close();
 		} catch (Exception e)
 		{
-			System.err.println("Blacklist was not loaded.");
+			System.err.println("Ignorējamo šķirkļu saraksts netiek lietots.");
 		} //TODO - any IO issues ignored
 		return blist;
 	}

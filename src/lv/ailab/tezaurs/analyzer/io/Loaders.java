@@ -49,7 +49,7 @@ public class Loaders
 				res.add(new Sense(sense, lemma));
 			else if (!sense.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
-					"%s entry field %s not processed, expected only 'n'.\n",
+					"%s lauks %s netiek apstrādāts, jo sagaida tikai 'n'.\n",
 					allSenses.getNodeName(), sense.getNodeName());
 		}
 		return res;
@@ -71,7 +71,7 @@ public class Loaders
 				res.add(new Phrase(phrase, lemma));
 			else if (!phrase.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
-					"%s entry field %s not processed, expected only '%s'.\n",
+					"%s lauks %s netiek apstrādāts, jo sagaida tikai '%s'.\n",
 					allPhrases.getNodeName(), phrase.getNodeName(), subElemName);
 		}
 		return res;

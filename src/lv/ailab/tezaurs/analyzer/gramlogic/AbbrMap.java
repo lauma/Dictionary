@@ -246,6 +246,8 @@ public class AbbrMap {
 		res.put("it.", "Vārds svešvalodā");
 		res.put("lat.", "Latīņu");
 		res.put("lat.", "Vārds svešvalodā");
+		res.put("latīņu val.", "Latīņu");
+		res.put("latīņu val.", "Vārds svešvalodā");
 		res.put("liet.", "Lietuviešu");
 		res.put("liet.", "Vārds svešvalodā");
 		res.put("port.", "Portugāļu");

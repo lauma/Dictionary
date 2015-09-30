@@ -420,6 +420,8 @@ public class DirectRules
 		// pēc nenoteiksmes.
 		// Likumi, kam ir visu formu variants.
 		// A, B
+		VerbRule.firstConjRefl("-bilstos, -bilsties,", "-bilstas, pag. -bildos", "bilsties"), //iebilsties
+		VerbRule.firstConjRefl("-bļaujos, -bļaujies,", "-bļaujas, pag. -bļāvos", "bļauties"), //iebļauties
 		VerbRule.firstConjRefl("-brēcos, -brēcies,", "-brēcas, pag. -brēcos", "brēkties"), //aizbrēkties
 		// C
 		VerbRule.firstConjRefl("-cērpos, -cērpies,", "-cērpas, pag. -cirpos", "cirpties"), //apcirpties
@@ -510,7 +512,9 @@ public class DirectRules
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
 		// Likumi, kam ir visu formu variants.
-		// A, B, C, D
+		// A, B
+		VerbRule.thirdConjRefl("-burkšķos, -burkšķies,", "-burkšķas, pag. -burkšķējos", "burkšķēties", false), //ieburkšķēties
+		// C, D
 		VerbRule.thirdConjRefl("-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties", false), //aizdziedāties
 		// E, F, G
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties", true), //aizgulēties

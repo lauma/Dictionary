@@ -182,7 +182,7 @@ public class SimpleRule implements Rule
 			}
 			else
 			{
-				System.err.printf("Neizdeodas \"%s\" ielikt paradigmā %s\n", lemma, paradigmId);
+				System.err.printf("Neizdodas \"%s\" ielikt paradigmā %s\n", lemma, paradigmId);
 				newBegin = 0;
 			}
 			if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);

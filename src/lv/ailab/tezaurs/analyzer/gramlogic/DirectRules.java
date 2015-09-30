@@ -98,6 +98,8 @@ public class DirectRules
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] fifthDeclNoun = {
+		SimpleRule.fifthDeclStd("-ķe, -es, dsk. ģen. -ķu", ".*ķe"), //ciniķe
+
 		// Standartizētie
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ču", ".*[cč]e"), //ābece, veče
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -ģu", ".*[ģ]e"), //aeroloģe
@@ -345,7 +347,7 @@ public class DirectRules
 		VerbRule.firstConjDir("-trakstu, -traksti,", "-trakst, pag. -traku", "trakt"), //aptrakt
 		VerbRule.firstConjDir("-trulstu, -trulsti,", "-trulst, pag. -trulu", "trult"), //aptrult
 		VerbRule.firstConjDir("-vēstu, -vēsti,", "-vēst, pag. -vēsu", "vēst"), //atvēst
-
+		VerbRule.firstConjDir("-žirbstu, -žirbsti,", "-žirbst, pag. -žirbu", "žirbt"), // atžirbt
 
 		SimpleRule.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
 				new String[]{"Darbības vārds", "Locīt kā \"nikt\"", "Paralēlās formas"},
@@ -361,6 +363,7 @@ public class DirectRules
 		// Galotņu šabloni.
 		VerbRule.secondConjDir("-āju, -ā,", "-ā, pag. -āju", "āt"), //aijāt, aizkābāt
 		VerbRule.secondConjDir("-ēju, -ē,", "-ē, pag. -ēju", "ēt"), //abonēt, adsorbēt
+		VerbRule.secondConjDir("-ēju, -ē,", "-ē; pag. -ēju", "ēt"), //dulburēt
 		VerbRule.secondConjDir("-īju, -ī,", "-ī, pag. -īju", "īt"), //apšķibīt, aizdzirkstīt
 		VerbRule.secondConjDir("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
 
@@ -451,6 +454,7 @@ public class DirectRules
 		VerbRule.firstConjRefl("-vemjos, -vemies,", "-vemjas, pag. -vēmos","vemties"), //apvemties
 		VerbRule.firstConjRefl("-vēžos, -vēzies,", "-vēžas, pag. -vēžos", "vēzties"), //atvēzties
 		// Z
+		VerbRule.firstConjRefl("-zīstos, -zīsties,", "-zīstas, pag. -zinos", "zīties"), //atzīties
 		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
@@ -559,4 +563,17 @@ public class DirectRules
 		// N, O, P, R, S, T, U, V, Z
 	};
 
+	/**
+	 * Šeit ir izdalīti atsevišķi atgriezenisko darbības vārdu likumi, jo tie ir gari,
+	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
+	 * Vārdi ar vairāk kā vienu paradigmu
+	 */
+	public static final Rule[] reflMultiConjVerb = {
+			// Galotņu šabloni.
+			ComplexRule.secondThirdConjReflAllPers(
+					"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
+
+			// Darbības vārdu specifiskie likumi.
+			// Nav.
+	};
 }

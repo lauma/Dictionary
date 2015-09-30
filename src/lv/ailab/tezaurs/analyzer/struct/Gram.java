@@ -395,6 +395,11 @@ public class Gram  implements HasToJSON
 		}
 		// Ārpus šīs klases formalizētie likumi:
 		// Darbības vārdi.
+		for (Rule s : DirectRules.directMultiConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
 		for (Rule s : DirectRules.directFirstConjVerb)
 		{
 			if (newBegin != -1) break;
@@ -410,7 +415,7 @@ public class Gram  implements HasToJSON
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : DirectRules.directMultiConjVerb)
+		for (Rule s : DirectRules.reflMultiConjVerb)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
@@ -431,6 +436,11 @@ public class Gram  implements HasToJSON
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
 
+		for (Rule s : OptHypernRules.directMultiConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
 		for (Rule s : OptHypernRules.directFirstConjVerb)
 		{
 			if (newBegin != -1) break;
@@ -446,7 +456,7 @@ public class Gram  implements HasToJSON
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : OptHypernRules.directMultiConjVerb)
+		for (Rule s : OptHypernRules.reflMultiConjVerb)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
@@ -457,11 +467,6 @@ public class Gram  implements HasToJSON
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
 		for (Rule s : OptHypernRules.reflThirdConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.reflMultiConjVerb)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);

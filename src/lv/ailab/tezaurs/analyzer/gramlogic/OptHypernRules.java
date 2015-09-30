@@ -97,9 +97,9 @@ public class OptHypernRules
 		SimpleRule.of("-slienu, -slien, -slien, arī -sleju, -slej, -slej, pag. -sleju", ".*sliet", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"sliet\"", "Paralēlās formas"},
 				null), //aizsliet
-		SimpleRule.of("-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. spurdzu", ".*spurgt", 15,
+		SimpleRule.of("-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. -spurdzu", ".*spurgt", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"spurgt\"", "Paralēlās formas"},
-				null), //aizsliet
+				null), //aizspurgt
 
 
 		// Standartizētie.
@@ -155,7 +155,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-gūstu, -gūsti,", "-gūst, pag. -guvu", "gūt"), //aizgūt
 		// Ģ
 		VerbRule.firstConjDir("-ģērbju, -ģērb,", "-ģērbj, pag. -ģērbu", "ģērbt"), //apģist
-		VerbRule.firstConjDir("-ģiedu, -ģied,", "-ģied, pag. -gidu", "ģist"), //apģist
+		VerbRule.firstConjDir("-ģiedu, -ģied,", "-ģied, pag. -ģidu", "ģist"), //apģist
 		// H, I
 		VerbRule.firstConjDir("-eju, -ej,", "-iet, pag. -gāju", "iet"), //apiet
 		VerbRule.firstConjDir("-iežu, -iez,", "-iež, pag. -iezu", "iezt"), //atiezt
@@ -313,6 +313,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-spirgstu, -spirgsti,", "-spirgst, pag. -spirgu", "spirgt"), //atspirgt
 		VerbRule.firstConjDir("-spļauju, -spļauj,", "-spļauj, pag. -spļāvu", "spļaut"), //aizspļaut
 		VerbRule.firstConjDir("-spraužu, -spraud,", "-sprauž, pag. -spraudu", "spraust"), //aizspraust
+		VerbRule.firstConjDir("-sprāgstu, -sprāgsti,", "-sprāgst, pag. -sprāgu", "sprāgt"), //atsprāgt
 		VerbRule.firstConjDir("-spriežu, -spried,", "-spriež, pag. -spriedu", "spriest"), //apspriest
 		VerbRule.firstConjDir("-spruku, -sprūc,", "-sprūk, pag. -spruku", "sprukt"), //aizsprukt
 		VerbRule.firstConjDir("-stāju, -stāj,", "-stāj, pag. -stāju", "stāt"), //aizstāt
@@ -326,10 +327,11 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-sveru, -sver,", "-sver, pag. -svēru", "svērt"), //apsvērt
 		VerbRule.firstConjDir("-sviežu, -svied,", "-sviež, pag. -sviedu", "sviest"), //aizsviest
 		VerbRule.firstConjDir("-svilstu, -svilsti,", "-svilst, pag. -svilu", "svilt"), //aizsvilt
+		VerbRule.firstConjDir("-svilpju, -svilp,", ",-svilpj, pag. -svilpu", "svilt"), //atsvilpt
 		// Š
 		VerbRule.firstConjDir("-šalcu, -šalc,", "-šalc, pag. -šalcu", "šalkt"), //pašalkt, aizšalkt
 		VerbRule.firstConjDir("-šauju, -šauj,", "-šauj, pag. -šāvu", "šaut"), //aizšaut
-		VerbRule.firstConjDir("-šķeļu, -šķel,", "-šķeļ, pag. šķēlu", "šķelt"), //aizšķelt
+		VerbRule.firstConjDir("-šķeļu, -šķel,", "-šķeļ, pag. -šķēlu", "šķelt"), //aizšķelt
 		VerbRule.firstConjDir("-šķiežu, -šķied,", "-šķiež, pag. -šķiedu", "šķiest"), //aizšķiest
 		VerbRule.firstConjDir("-šķiļu, -šķil,", "-šķiļ, pag. -šķīlu", "šķilt"), //aizšķilt
 		VerbRule.firstConjDir("-šķiru, -šķir,", "-šķir, pag. -šķīru", "šķirt"), //aizšķirt
@@ -338,9 +340,11 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-šļuku, -šļūc,", "-šļūk, pag. -šļuku", "šļukt"), //aizšļukt
 		VerbRule.firstConjDir("-šļūcu, -šļūc,", "-šļūc, pag. -šļūcu", "šļūkt"), //aizšļūkt
 		VerbRule.firstConjDir("-šmaucu, -šmauc,", "-šmauc, pag. -šmaucu", "šmaukt"), //aizšmaukt
+		VerbRule.firstConjDir("-šņācu, -šņāc,", "-šņāc, pag. -šņācu", "šņākt"), //atšņākt
 		VerbRule.firstConjDir("-šņāpju, -šņāp,", "-šņāpj, pag. -šņāpu", "šņāpt"), //apšņāpt
 		VerbRule.firstConjDir("-šuju, -šuj,", "-šuj, pag. -šuvu", "šūt"), //aizšūt
 		// T
+		VerbRule.firstConjDir("-topu, -topi,", "-top, pag. -tapu", "tapt"), //attapt
 		VerbRule.firstConjDir("-tērpju, -tērp,", "-tērpj, pag. -tērpu", "tērpt"), //aptērpt
 		VerbRule.firstConjDir("-tēšu, -tēs,", "-tēš, pag. -tēsu", "tēst"), //aptēst
 		VerbRule.firstConjDir("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt"), //aiztikt 1, 2
@@ -409,6 +413,9 @@ public class OptHypernRules
 		// O, P, R, S, Š, T, U, V, Z
 
 		// Pilnīgs nestandarts.
+		SimpleRule.of("-teicu, -teic, -teic (tagadnes formas parasti nelieto), pag. -teicu", ".*teikt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"teikt\""},
+				new String[]{"Parasti nelieto tagadnes formas"}), //atteikt
 		SimpleRule.of("3. pers. -guldz, pag. -guldza", ".*gulgt", 15,
 				new String[]{"Darbības vārds", "Locīt kā \"gulgt\""},
 				new String[]{"Parasti 3. personā"}), //aizgulgt
@@ -519,6 +526,8 @@ public class OptHypernRules
 		VerbRule.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt", false), //aizstāvēt
 		VerbRule.thirdConjDir("-strīdu, -strīdi,", "-strīd, pag. -strīdēju", "strīdēt", false), //apstrīdēt
 		VerbRule.thirdConjDir("-sūdzu, -sūdzi,", "-sūdz, pag. -sūdzēju", "sūdzēt", false), //apsūdzēt
+		// Š
+		VerbRule.thirdConjDir("-šļupstu, -šļupsti,", "-šļupst, pag. -šļupstēju", "šļupstēt", false), //atšļupstēt
 		// T
 		VerbRule.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
 		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt", false), //aizturēt
@@ -764,7 +773,9 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-sviežos, -sviedies,", "-sviežas, pag. -sviedos", "sviesties"), //aizsviesties
 		// Š
 		VerbRule.firstConjRefl("-šaujos, -šaujies,", "-šaujas, pag. -šāvos", "šauties"), //aizšauties
+		VerbRule.firstConjRefl("-šķeļos, -šķelies,", "-šķeļas, pag. -šķēlos", "šķelties"), //atšķelties
 		VerbRule.firstConjRefl("-šķiežos, -šķiedies,", "-šķiežas, pag. -šķiedos", "šķiesties"), //apsķiesties
+		VerbRule.firstConjRefl("-šķiros, -šķiries,", "-šķiras, pag. -šķīros", "šķirties"), //atšķirties
 		VerbRule.firstConjRefl("-šļācos, -šļācies,", "-šļācas, pag. -šļācos", "šļākties"), //apšļākties
 		VerbRule.firstConjRefl("-šmaucos, -šmaucies,", "-šmaucas, pag. -šmaucos", "šmaukties"), //apšmaukties
 		// T
@@ -794,10 +805,13 @@ public class OptHypernRules
 		// Paralēlās formas.
 		SimpleRule.of("parasti 3. pers., -plešas, pag. -pletās, arī -plētās",
 				".*plesties", 18,
-				new String[] {"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
-				new String[] {"Parasti 3. personā"}), //aizplesties
+				new String[]{"Darbības vārds", "Locīt kā \"plesties\"", "Paralēlās formas"},
+				new String[]{"Parasti 3. personā"}), //aizplesties
 
-
+		// Pilnīgs nestandarts.
+		SimpleRule.of("-teicos, -teicies, -teicas (tagadnes formas parasti nelieto), pag. -teicos", ".*teikties", 18,
+				new String[]{"Darbības vārds", "Locīt kā \"teikties\""},
+				new String[]{"Parasti nelieto tagadnes formas"}), //atteikties
 	};
 
 	/**

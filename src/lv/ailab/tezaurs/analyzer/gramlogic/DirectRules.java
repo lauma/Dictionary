@@ -444,7 +444,9 @@ public class DirectRules
 		VerbRule.firstConjRefl("-svilstos, -svilsties,", "-svilstas, pag. -svilos", "svilties"), //aizsvilties
 		// Š
 		VerbRule.firstConjRefl("-šņācos, -šņācies,", "-šņācas, pag. -šņācos","šņākties"), //aizšņākties
-		// T, U, V
+		// T
+		VerbRule.firstConjRefl("-topos, -topies,", "-topas, pag. -tapos","tapties"), //attapties
+		// U, V
 		VerbRule.firstConjRefl("-vemjos, -vemies,", "-vemjas, pag. -vēmos","vemties"), //apvemties
 		// Z
 		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties

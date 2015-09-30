@@ -191,7 +191,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-krītu, -krīti,", "-krīt, pag. -kritu", "krist"), //aizkrist
 		VerbRule.firstConjDir("-kuļu, -kul,", "-kuļ, pag. -kūlu", "kult"), //apkult
 		VerbRule.firstConjDir("-kuru, -kur,", "-kur, pag. -kūru", "kurt"), //aizkurt
-		VerbRule.firstConjDir("-kūstu, -kusti,", "-kūst, pag. -kusu", "kust"), //aizkust
+		VerbRule.firstConjDir("-kūstu, -kūsti,", "-kūst, pag. -kusu", "kust"), //aizkust
 		VerbRule.firstConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpu", "kūpt"), //apkūpt
 		VerbRule.firstConjDir("-kvēpstu, -kvēpsti,", "-kvēpst, pag. -kvēpu", "kvēpt"), //apkvēpt, aizkvēpt
 		// Ķ
@@ -531,7 +531,9 @@ public class OptHypernRules
 		// T
 		VerbRule.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
 		VerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt", false), //aizturēt
-		// U, V, Z
+		// U, V
+		VerbRule.thirdConjDir("-vēlu, -vēli,", "-vēl, pag. -vēlēju", "vēlēt", false), //atvēlēt
+		// Z
 		VerbRule.thirdConjDir("-zinu, -zini,", "-zina, pag. -zināju", "zināt", false), //apzināt
 		VerbRule.thirdConjDir("-zvēru, -zvēri,", "-zvēr, pag. -zvērēju", "zvērēt", false), //apzvērēt
 
@@ -782,6 +784,7 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-tērpjos, -tērpies,", "-tērpjas; pag. -tērpos", "tērpties"), //aptērpties
 		VerbRule.firstConjRefl("-tinos, -tinies,", "-tinas, pag. -tinos", "tīties"), //aiztīties
 		VerbRule.firstConjRefl("-traucos, -traucies,", "-traucas, pag. -traucos", "traukties"), //aiztraukties
+		VerbRule.firstConjRefl("-triecos, -triecies,", "-triecas, pag. -triecos", "triekties"), //attriekties
 		VerbRule.firstConjRefl("-triepjos, -triepies,", "-triepjas, pag. -triepos", "triepties"), //aptriepties
 		VerbRule.firstConjRefl("-tupstos, -tupsties,", "-tupstas, pag. -tupos", "tupties"), //aiztupties
 		// U
@@ -840,6 +843,8 @@ public class OptHypernRules
 		VerbRule.thirdConjRefl("-sakos, -sakies,", "-sakās, pag. -sacījos", "sacīties", true), //atsacīties
 		VerbRule.thirdConjRefl("-slakos, -slakies,", "-slakās, pag. -slacījos", "slacīties", true), //apslacīties
 		VerbRule.thirdConjRefl("-slaukos, -slaukies,", "-slaukās, pag. -slaucījos", "slaucīties", true), //apslaucīties
+		VerbRule.thirdConjRefl("-turos, -turies,", "-turas, pag. -turējos", "turēties", false), //atturēties
+		VerbRule.thirdConjRefl("-vēlos, -vēlies,", "-vēlas, pag. -vēlējos", "vēlēties", false), //atvēlēties
 		VerbRule.thirdConjRefl("-zinos, -zinies,", "-zinās, pag. -zinājos", "zināties", true), //apzināties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.

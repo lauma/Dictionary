@@ -344,11 +344,12 @@ public class DirectRules
 		VerbRule.firstConjDir("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //apšņurkt
 		VerbRule.firstConjDir("-trakstu, -traksti,", "-trakst, pag. -traku", "trakt"), //aptrakt
 		VerbRule.firstConjDir("-trulstu, -trulsti,", "-trulst, pag. -trulu", "trult"), //aptrult
+		VerbRule.firstConjDir("-vēstu, -vēsti,", "-vēst, pag. -vēsu", "vēst"), //atvēst
 
-		SimpleRule
-				.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
-						new String[]{"Darbības vārds", "Locīt kā \"nikt\"", "Paralēlās formas"},
-						null), //apnikt
+
+		SimpleRule.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
+				new String[]{"Darbības vārds", "Locīt kā \"nikt\"", "Paralēlās formas"},
+				null), //apnikt
 	};
 
 	/**
@@ -448,6 +449,7 @@ public class DirectRules
 		VerbRule.firstConjRefl("-topos, -topies,", "-topas, pag. -tapos","tapties"), //attapties
 		// U, V
 		VerbRule.firstConjRefl("-vemjos, -vemies,", "-vemjas, pag. -vēmos","vemties"), //apvemties
+		VerbRule.firstConjRefl("-vēžos, -vēzies,", "-vēžas, pag. -vēžos", "vēzties"), //atvēzties
 		// Z
 		VerbRule.firstConjRefl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 

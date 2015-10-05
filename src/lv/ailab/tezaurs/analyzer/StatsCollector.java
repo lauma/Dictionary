@@ -18,7 +18,7 @@ import java.util.TreeSet;
  */
 public class StatsCollector
 {
-    public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
+
     public TreeSet<String> flags = new TreeSet<>();
     // Counting entries with various properties:
     public int overallCount = 0;
@@ -28,6 +28,17 @@ public class StatsCollector
     public int hasLociitKaaFlag = 0;
     public int hasNoParadigm = 0;
     public int hasUnparsedGram = 0;
+	/**
+	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
+	 */
+	public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
+	/**
+	 * Darbības vārds, šķirkļavārds, šķirkļa homonīma indekss.
+	 */
+	public ArrayList<Trio<String, String, String>> firstConj = new ArrayList<>();
+	/**
+	 * Vārds, šķirkļavāds, homonīma indekss.
+	 */
     public ArrayList<Trio<String, String, String>> fifthDeclExceptions = new ArrayList<>();
 
     public void countEntry( Entry entry)
@@ -52,11 +63,14 @@ public class StatsCollector
             if (h.gram != null &&
                     h.gram.paradigm.contains(9) && h.gram.flags.contains("Locīt bez mijas"))
                 fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
+			if (h.gram != null &&
+					(h.gram.paradigm.contains(15) || h.gram.paradigm.contains(18)))
+				firstConj.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
         }
 
     }
 
-    public void printContents(BufferedWriter out)
+    public void printContents(BufferedWriter out, boolean printFifthDeclExc, boolean printFirstConj)
             throws IOException
     {
         out.write("{\n");
@@ -85,14 +99,26 @@ public class StatsCollector
                         .escape(t.second) + "\", \"" + JSONObject
                         .escape(t.third) + "\"]")
                 .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
-        out.write("\n],\n");
-
-        out.write(",\n\"5. deklinācijas izņēmumi\":[\n");
-        out.write(fifthDeclExceptions.stream().map(t ->
-                "\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
-                        .escape(t.second) + "\", \"" + JSONObject
-                        .escape(t.third) + "\"]")
-                .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+		if (printFifthDeclExc)
+		{
+			out.write("\n],\n");
+			out.write(",\n\"5. deklinācijas izņēmumi\":[\n");
+			out.write(fifthDeclExceptions.stream().map(t ->
+					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+							.escape(t.second) + "\", \"" + JSONObject
+							.escape(t.third) + "\"]")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+		}
+		if (printFirstConj)
+		{
+			out.write("\n],\n");
+			out.write(",\n\"1. konjugācija\":[\n");
+			out.write(firstConj.stream().map(t ->
+					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+							.escape(t.second) + "\", \"" + JSONObject
+							.escape(t.third) + "\"]")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+		}
         out.write("\n]\n");
 
         out.write("}\n");

@@ -31,10 +31,8 @@ import lv.ailab.tezaurs.analyzer.struct.Entry;
 public class DictionaryXmlToJson
 {
 
-	/**
-	 * Create file with all pronunciations.
-	 */
-	//public static boolean makePronunceList = true;
+	public static boolean PRINT_FIFTH_DECL_EXC = false;
+	public static boolean PRINT_FIRST_CONJ = false;
 
 	/**
 	 * 
@@ -103,7 +101,7 @@ public class DictionaryXmlToJson
 		System.out.println("Drukā statistiku...");
 		BufferedWriter statsOut  = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(statsFile), "UTF-8"));
-		sc.printContents(statsOut);
+		sc.printContents(statsOut, PRINT_FIFTH_DECL_EXC, PRINT_FIRST_CONJ);
 		statsOut.close();
 		//if (makePronunceList) statsOut.close();
 		System.out.println("Viss pabeigts!");

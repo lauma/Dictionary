@@ -366,6 +366,7 @@ public class DirectRules
 		VerbRule.secondConjDir("-ēju, -ē,", "-ē; pag. -ēju", "ēt"), //dulburēt
 		VerbRule.secondConjDir("-īju, -ī,", "-ī, pag. -īju", "īt"), //apšķibīt, aizdzirkstīt
 		VerbRule.secondConjDir("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
+		VerbRule.secondConjDir("-oju, -o,", "-o; pag. -oju", "ot"), //ielāgot
 
 		SimpleRule.of("-ēju, -ē, -ē, -ējam, -ējat, pag. -ēju, -ējām, -ējāt; pav. -ē, -ējiet", ".*ēt", 16,
 				new String[]{"Darbības vārds"}, null), //adverbializēt, anamorfēt
@@ -443,7 +444,11 @@ public class DirectRules
 		VerbRule.firstConjRefl("-kliedzos, -kliedzies,", "-kliedzas, pag. -kliedzos", "kliegties"), //aizkliegties
 		VerbRule.firstConjRefl("-krācos, -krācies,", "-krācas, pag. -krācos", "krākties"), //aizkrākties
 		VerbRule.firstConjRefl("-kaucos, -kaucies,", "-kaucas, pag. -kaucos", "kaukties"), //iekaukties
-		// L, M
+		// Ķ
+		VerbRule.firstConjRefl("-ķērcos, -ķērcies,", "-ķērcas, pag. -ķērcos", "ķērkties"), //ieķērkties
+		// L
+		VerbRule.firstConjRefl("-lokos, -locies,", "-lokās, pag. -lakos", "lakties"), //ielakties
+		// M
 		VerbRule.firstConjRefl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
 		// N, Ņ
 		VerbRule.firstConjRefl("-ņirdzos, -ņirdzies,", "-ņirdzas, pag. -ņirdzos", "ņirgties"), //atņirgties
@@ -538,6 +543,8 @@ public class DirectRules
 		VerbRule.thirdConjRefl("-krekstos, -kreksties,", "-krekstas, pag. -krekstējos", "krekstēties", false), //atkrekstēties
 		VerbRule.thirdConjRefl("-krekšos, -krekšies,", "-krekšas, pag. -krekšējos", "krekšēties", false), //iekrekšēties
 		VerbRule.thirdConjRefl("-krekšķos, -krekšķies,", "-krekšķas, pag. -krekšķējos", "krekšķēties", false), //atkrekšķēties
+		VerbRule.thirdConjRefl("-kunkstos, -kunksties,", "-kunkstas, pag. -kunkstējos", "kunkstēties", false), //iekunkstēties
+		VerbRule.thirdConjRefl("-kurnos, -kurnies,", "-kurnas, pag. -kurnējos", "kurnēties", false), //iekurnēties
 		// L, M, N, O, P, R
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
 		// S

@@ -396,7 +396,8 @@ public class DirectRules
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
-	 * Vārdi ar vairāk kā vienu paradigmu
+	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
+	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Galotņu šabloni.
@@ -416,9 +417,10 @@ public class DirectRules
 	 * Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 	 */
 	public static final Rule[] reflFirstConjVerb = {
-		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
-		// pēc nenoteiksmes.
 		// Likumi, kam ir visu formu variants.
+		// Netoteiksmes homoformas.
+
+		// Standartizētie.
 		// A, B
 		VerbRule.firstConjRefl("-bilstos, -bilsties,", "-bilstas, pag. -bildos", "bilsties"), //iebilsties
 		VerbRule.firstConjRefl("-bļaujos, -bļaujies,", "-bļaujas, pag. -bļāvos", "bļauties"), //iebļauties
@@ -427,16 +429,20 @@ public class DirectRules
 		VerbRule.firstConjRefl("-cērpos, -cērpies,", "-cērpas, pag. -cirpos", "cirpties"), //apcirpties
 		// D
 		VerbRule.firstConjRefl("-degos, -dedzies,", "-degas, pag. -degos", "degties"), //aizdegties
-		VerbRule.firstConjRefl("-dusos, -dusies,", "-dusas, pag. -dusējos", "dusēties"), //atdusēties
+		VerbRule.firstConjRefl("-dīcos, -dīcies,", "-dīcas, pag. -dīcos", "dīkties"), //iedīkties
+		VerbRule.firstConjRefl("-dūcos, -dūcies,", "-dūcas, pag. -dūcos", "dūkties"), //iedūkties
 		// E
 		VerbRule.firstConjRefl("-elšos, -elsies,", "-elšas, pag. -elsos", "elsties"), //aizelsties
 		// F, G
 		VerbRule.firstConjRefl("-gārdzos, -gārdzies,", "-gārdzas, pag. -gārdzos", "gārgties"), //aizgārgties
+		VerbRule.firstConjRefl("-grābjos, -grābies,", "-grābjas, pag. -grābos", "grābties"), //iegrābties
 		// Ģ,
 		VerbRule.firstConjRefl("-ģiedos, -ģiedies,", "-ģiedas, pag. -ģidos", "ģisties"), //apģisties
 		// H, I, J, K
+		VerbRule.firstConjRefl("-karstos, -karsties,", "-karstas, pag. -karsos", "karsties"), //iekarsties
 		VerbRule.firstConjRefl("-kliedzos, -kliedzies,", "-kliedzas, pag. -kliedzos", "kliegties"), //aizkliegties
 		VerbRule.firstConjRefl("-krācos, -krācies,", "-krācas, pag. -krācos", "krākties"), //aizkrākties
+		VerbRule.firstConjRefl("-kaucos, -kaucies,", "-kaucas, pag. -kaucos", "kaukties"), //iekaukties
 		// L, M
 		VerbRule.firstConjRefl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
 		// N, Ņ
@@ -514,12 +520,23 @@ public class DirectRules
 		// Likumi, kam ir visu formu variants.
 		// A, B
 		VerbRule.thirdConjRefl("-burkšķos, -burkšķies,", "-burkšķas, pag. -burkšķējos", "burkšķēties", false), //ieburkšķēties
-		// C, D
+		// C, Č
+		VerbRule.thirdConjRefl("-čerkstos, -čerksties,", "-čerkstas, pag. -čerkstējos", "čerkstēties", false), //iečerkstēties
+		VerbRule.thirdConjRefl("-čērkstos, -čērksties,", "-čērkstas, pag. -čērkstējos", "čērkstēties", false), //iečērkstēties
+		VerbRule.thirdConjRefl("-čiepstos, -čiepsties,", "-čiepstas, pag. -čiepstējos", "čiepstēties", false), //iečiepstēties
+		VerbRule.thirdConjRefl("-činkstos, -činksties,", "-činkstas, pag. -činkstējos", "činkstēties", false), //iečinkstēties
+		VerbRule.thirdConjRefl("-čīkstos, -čīksties,", "-čīkstas, pag. -čīkstējos", "čīkstēties", false), //iečīkstēties
+		// D
+		VerbRule.thirdConjRefl("-drebos, -drebies,", "-drebas, pag. -drebējos", "drebēties", false), //iedrebēties
+		VerbRule.thirdConjRefl("-drīkstos, -drīksties,", "-drīkstas, pag. -drīkstējos", "drīkstēties", false), //iedrīkstēties
+		VerbRule.thirdConjRefl("-dusos, -dusies,", "-dusas, pag. -dusējos", "dusēties", false), //atdusēties
 		VerbRule.thirdConjRefl("-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties", false), //aizdziedāties
 		// E, F, G
 		VerbRule.thirdConjRefl("-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties", true), //aizgulēties
 		// H, I, J, K
+		VerbRule.thirdConjRefl("-knukstos, -knuksties,", "-knukstas, pag. -knukstējos", "knukstēties", false), //ieknukstēties
 		VerbRule.thirdConjRefl("-krekstos, -kreksties,", "-krekstas, pag. -krekstējos", "krekstēties", false), //atkrekstēties
+		VerbRule.thirdConjRefl("-krekšos, -krekšies,", "-krekšas, pag. -krekšējos", "krekšēties", false), //iekrekšēties
 		VerbRule.thirdConjRefl("-krekšķos, -krekšķies,", "-krekšķas, pag. -krekšķējos", "krekšķēties", false), //atkrekšķēties
 		// L, M, N, O, P, R
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
@@ -570,7 +587,8 @@ public class DirectRules
 	/**
 	 * Šeit ir izdalīti atsevišķi atgriezenisko darbības vārdu likumi, jo tie ir gari,
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
-	 * Vārdi ar vairāk kā vienu paradigmu
+	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
+	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 			// Galotņu šabloni.

@@ -189,6 +189,7 @@ public class DirectRules
 	public static final Rule[] secondDeclNounRulesDirect = {
 		SimpleRule.secondDeclStd("-ņa, dsk. ģen. -ņu, v.", ".*nis"), //bizmanis
 		SimpleRule.secondDeclStd("-bja, v.", ".*bis"), //aizsargdambis
+		SimpleRule.secondDeclStd("-dža, v.", ".*dzis"), //algādzis
 		SimpleRule.secondDeclStd("-ķa, v.", ".*[kķ]is"), //agnostiķis
 		SimpleRule.secondDeclStd("-pja, v.", ".*pis"), //aitkopis
 		SimpleRule.secondDeclStd("-vja, v.", ".*vis"), //aizstāvis
@@ -545,7 +546,17 @@ public class DirectRules
 		VerbRule.thirdConjRefl("-krekšķos, -krekšķies,", "-krekšķas, pag. -krekšķējos", "krekšķēties", false), //atkrekšķēties
 		VerbRule.thirdConjRefl("-kunkstos, -kunksties,", "-kunkstas, pag. -kunkstējos", "kunkstēties", false), //iekunkstēties
 		VerbRule.thirdConjRefl("-kurnos, -kurnies,", "-kurnas, pag. -kurnējos", "kurnēties", false), //iekurnēties
-		// L, M, N, O, P, R
+		// L, M
+		VerbRule.thirdConjRefl("-murkšos, -murkšies,", "-murkšas, pag. -murkšējos", "murkšēties", false), //iemurkšēties
+		VerbRule.thirdConjRefl("-murkšķos, -murkšķies,", "-murkšķas, pag. -murkšķējos", "murkšķēties", false), //iemurkšķēties
+		// N, Ņ
+		VerbRule.thirdConjRefl("-ņerkstos, -ņerksties,", "-ņerkstas, pag. -ņerkstējos", "ņerkstēties", false), //ieņerkstēties
+		VerbRule.thirdConjRefl("-ņurdos, -ņurdies,", "-ņurdas, pag. -ņurdējos", "ņurdēties", true), //ieņurdēties
+		// O, P
+		VerbRule.thirdConjRefl("-pīkstos, -pīksties,", "-pīkstas, pag. -pīkstējos", "pīkstēties", false), //iepīkstēties
+		VerbRule.thirdConjRefl("-pinkšos, -pinkšies,", "-pinkšas, pag. -pinkšējos", "pinkšēties", false), //iepinkšēties
+		VerbRule.thirdConjRefl("-pinkšķos, -pinkšķies,", "-pinkšķas, pag. -pinkšķējos", "pinkšķēties", false), //iepinkšķēties
+		// R
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
 		// S
 		VerbRule.thirdConjRefl("-sēžos, -sēdies,", "-sēžas, pag. -sēdējos", "sēdēties", true), //aizsēdēties

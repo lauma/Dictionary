@@ -68,13 +68,23 @@ public class OptHypernRules
 				new String[] {"Locīt kā \"līst\" (kā zem galda)", "Nenoteiksmes homoformas"}, null), //aizlīst, ielīst 1
 		VerbRule.of("-līžu, -līd,", "-līž, pag. -līdu", "līst", 15,
 				new String[] {"Locīt kā \"līst\" (kā līdumu)", "Nenoteiksmes homoformas"}, null), //ielīst 2
-
+		VerbRule.of("-mītu, -mīti,", "-mīt, pag. -mitu", "mist", 15,
+				new String[] {"Locīt kā \"mist\" (kā mitināties)", "Nenoteiksmes homoformas"}, null), //iemist, izmist 2
+		VerbRule.of("-mistu, -misti,", "-mist, pag. -misu", "mist", 15,
+				new String[] {"Locīt kā \"mist\" (kā krist izmisumā)", "Nenoteiksmes homoformas"}, null), //izmist 1
 		VerbRule.of("-minu, -min,", "-min, pag. -minu", "mīt", 15,
 				new String[] {"Locīt kā \"mīt\" (kā pedāļus)", "Nenoteiksmes homoformas"}, null), //aizmīt 1
 		VerbRule.of("-miju, -mij,", "-mij, pag. -miju", "mīt", 15,
 				new String[] {"Locīt kā \"mīt\" (kā naudu)", "Nenoteiksmes homoformas"}, null), //aizmīt 2
+		VerbRule.of("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt", 15,
+				new String[] {"Locīt kā \"tikt\" (kā nokļūt kaut kur)", "Nenoteiksmes homoformas"}, null), //aiztikt 1, 2
+		VerbRule.of("-tīku, -tīc,", "-tīk, pag. -tiku", "tikt", 15,
+				new String[] {"Locīt kā \"tikt\" (kā patikt kādam)", "Nenoteiksmes homoformas"}, null), //patikt
+		// Izņēmuma izņēmums :/
+		VerbRule.of("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt", 15,
+				new String[] {"Locīt kā \"tikt\" (kā patikt kādam)", "Nenoteiksmes homoformas"}, null), //patikt
 
-		// Paralēlās formas.
+			// Paralēlās formas.
 		SimpleRule.of("-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", ".*aut", 15,
 				new String[] {"Darbības vārds", "Locīt kā \"aut\"", "Paralēlās formas"},
 				null), //apaut
@@ -112,6 +122,9 @@ public class OptHypernRules
 				new String[] {"Darbības vārds", "Locīt kā \"spurgt\"", "Paralēlās formas"},
 				null), //aizspurgt
 
+		// Izņēmums.
+		VerbRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
+				new String[] {"Locīt kā \"zīt\""}, null), //atpazīt
 
 		// Standartizētie.
 		// A
@@ -259,13 +272,13 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-miedzu, -miedz,", "-miedz, pag. -miedzu", "miegt"), //aizmiegt
 		VerbRule.firstConjDir("-miegu, -miedz,", "-mieg, pag. -migu", "migt"), //aizmigt
 		VerbRule.firstConjDir("-mirstu, -mirsti,", "-mirst, pag. -mirsu", "mirst"), //aizmirst
-		VerbRule.firstConjDir("-mītu, -mīti,", "-mīt, pag. -mitu", "mist"), //iemist
 		VerbRule.firstConjDir("-mūku, -mūc,", "-mūk, pag. -muku", "mukt"), //aizmukt
 		VerbRule.firstConjDir("-mulstu, -mulsti,", "-mulst, pag. -mulsu", "mulst"), //apmulst
 		// N
 		VerbRule.firstConjDir("-nāku, -nāc,", "-nāk, pag. -nācu", "nākt"), //apnākt
 		VerbRule.firstConjDir("-nesu, -nes,", "-nes, pag. -nesu", "nest"), //aiznest
 		VerbRule.firstConjDir("-nirstu, -nirsti,", "-nirst, pag. -niru", "nirt"), //aiznirt
+		VerbRule.firstConjDir("-nīstu, -nīsti,", "-nīst, pag. -nīdu", "nīst"), //ienīst
 		// Ņ
 		VerbRule.firstConjDir("-ņemu, -ņem,", "-ņem, pag. -ņēmu", "ņemt"), //aizņemt
 		VerbRule.firstConjDir("-ņirdzu, -ņirdz,", "-ņirdz, pag. -ņirdzu", "ņirgt"), //apņirgt
@@ -273,11 +286,13 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-ožu, -od,", "-ož, pag. -odu", "ost"), //apost
 		// P
 		VerbRule.firstConjDir("-pampstu, -pampsti,", "-pampst, pag. -pampu", "pampt"), //aizpampt
-		VerbRule.firstConjDir("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt"), //atpazīt
+		VerbRule.firstConjDir("-paužu, -paud,", "-pauž, pag. -paudu", "paust"), //iepaust
 		VerbRule.firstConjDir("-peru, -per,", "-per, pag. -pēru", "pērt"), //appērt
 		VerbRule.firstConjDir("-pērku, -pērc,", "-pērk, pag. -pirku", "pirkt"), //appirkt
+		VerbRule.firstConjDir("-pīkstu, -pīksti,", "-pīkst, pag. -pīku", "pīkt"), //iepīkt
 		VerbRule.firstConjDir("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
 		VerbRule.firstConjDir("-ploku, -ploc,", "-plok, pag. -plaku", "plakt"), //aizplakt
+		VerbRule.firstConjDir("-ploku, -ploc,", "-plok; pag. -plaku", "plakt"), //ieplakt
 		VerbRule.firstConjDir("-plaukstu, -plauksti,", "-plaukst, pag. -plauku", "plaukt"), //atplaukt, aizplaukt
 		VerbRule.firstConjDir("-plēšu, -plēs,", "-plēš, pag. -plēsu", "plēst"), //aizplēst
 		VerbRule.firstConjDir("-plīstu, -plīsti,", "-plīst, pag. -plīsu", "plīst"), //applīst, aizplīst
@@ -379,7 +394,6 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-topu, -topi,", "-top, pag. -tapu", "tapt"), //attapt
 		VerbRule.firstConjDir("-tērpju, -tērp,", "-tērpj, pag. -tērpu", "tērpt"), //aptērpt
 		VerbRule.firstConjDir("-tēšu, -tēs,", "-tēš, pag. -tēsu", "tēst"), //aptēst
-		VerbRule.firstConjDir("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt"), //aiztikt 1, 2
 		VerbRule.firstConjDir("-tinu, -tin,", "-tin, pag. -tinu", "tīt"), //aiztīt
 		VerbRule.firstConjDir("-traucu, -trauc,", "-trauc, pag. -traucu", "traukt"), //aiztraukt
 		VerbRule.firstConjDir("-trencu, -trenc,", "-trenc, pag. -trencu", "trenkt"), //aiztrenkt
@@ -706,6 +720,14 @@ public class OptHypernRules
 		VerbRule.of("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties", 18,
 				new String[]{"Locīt kā \"mīties\" (kā naudu)", "Nenoteiksmes homoformas"},
 				null), //apmīties
+		VerbRule.of("-tiekos, -tiecies,", "-tiekas, pag. -tikos", "tikties", 18,
+				new String[]{"Locīt kā \"tikties\" (kā satikties ar kādu)", "Nenoteiksmes homoformas"},
+				null), //satikties
+		// Izņēmuma izņēmums :/
+		VerbRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 18,
+				new String[]{"Locīt kā \"tikties\" (kā patikties kādam)", "Nenoteiksmes homoformas"},
+				null), //iepatikties
+
 
 		// Paralēlās formas.
 		SimpleRule.of("-aujos, -aujies, -aujas, arī -aunos, -aunies, -aunas, pag. -āvos",
@@ -728,6 +750,10 @@ public class OptHypernRules
 				".*slieties", 18,
 				new String[] {"Darbības vārds", "Locīt kā \"slieties\"", "Paralēlās formas"},
 				null), //aizslieties
+
+		// Izņēmums.
+		VerbRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
+				new String[] {"Locīt kā \"zīties\""}, null), //iepazīties
 
 		// Standartizētie.
 		// A
@@ -801,11 +827,13 @@ public class OptHypernRules
 		VerbRule.firstConjRefl("-mostos, -mosties,", "-mostas, pag. -modos", "mosties"), //atmosties
 		// N
 		VerbRule.firstConjRefl("-nesos, -nesies,", "-nesas, pag. -nesos", "nesties"), //aiznesties
+		VerbRule.firstConjRefl("-nirstos, -nirsties,", "-nirstas, pag. -niros", "nirties"), //ienirties
 		// Ņ
 		VerbRule.firstConjRefl("-ņemos, -ņemies,", "-ņemas, pag. -ņēmos", "ņemties"), //aizņemties
 		// O, P
 		VerbRule.firstConjRefl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 		VerbRule.firstConjRefl("-pērkos, -pērcies,", "-pērkas, pag. -pirkos", "pirkties"), // appirkties
+		VerbRule.firstConjRefl("-pinos, -pinies,", "-pinas, pag. -pinos", "pīties"), // iepīties
 		VerbRule.firstConjRefl("-pļaujos, -pļaujies,", "-pļaujas, pag. -pļāvos", "pļauties"), // appļauties
 		VerbRule.firstConjRefl("-pūšos, -pūties,", "-pūšas, pag. -pūtos", "pūsties"), // atpūsties
 		// R
@@ -874,6 +902,10 @@ public class OptHypernRules
 
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Nenoteiksmes homoformas
+		SimpleRule.of("parasti 3. pers., -tīkas, pag. -tikās", ".*tikties", 15,
+				new String[] {"Darbības vārds", "Locīt kā \"tikties\" (kā patikties kādam)", "Nenoteiksmes homoformas"},
+				new String[] {"Parasti 3. personā"}), //patikties
 		// Paralēlās formas.
 		SimpleRule.of("parasti 3. pers., -plešas, pag. -pletās, arī -plētās",
 				".*plesties", 18,

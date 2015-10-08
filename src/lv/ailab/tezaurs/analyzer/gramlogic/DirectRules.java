@@ -454,6 +454,7 @@ public class DirectRules
 		// N, Ņ
 		VerbRule.firstConjRefl("-ņirdzos, -ņirdzies,", "-ņirdzas, pag. -ņirdzos", "ņirgties"), //atņirgties
 		// O, P, R
+		VerbRule.firstConjRefl("-reibstos, -reibsties,", "-reibstas, pag. -reibos", "reibties"), //iereibties
 		VerbRule.firstConjRefl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
 		VerbRule.firstConjRefl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties

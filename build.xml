@@ -18,6 +18,8 @@
     </fileset>
   </path>
 
+
+
   <target name="init">
     <!-- Create the time stamp -->
     <tstamp/>
@@ -28,7 +30,7 @@
   <target name="compile" depends="init"
           description="compile the source " >
     <!-- Compile the java code from ${src} into ${out.build} -->
-    <javac encoding="UTF-8" includeantruntime="false" srcdir="${main.src}" destdir="${out.prod}">
+    <javac encoding="UTF-8" verbose="false" debug="true" includeantruntime="false" srcdir="${main.src}" destdir="${out.prod}">
       <classpath refid="project.class.path" />
   	</javac>
   	

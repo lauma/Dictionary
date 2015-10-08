@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.struct.Flags;
 import java.util.HashSet;
 
 /**
@@ -24,7 +25,7 @@ public interface Rule {
 	int applyDirect (
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector);
+			Flags flagCollector);
 	
 	/**
 	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
@@ -41,7 +42,7 @@ public interface Rule {
 	int applyOptHyphens(
 			String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector);
+			Flags flagCollector);
 	
 	
 }

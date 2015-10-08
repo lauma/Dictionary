@@ -156,9 +156,9 @@ public class Sense implements HasToJSON
 	/**
 	 * Get all flags used in this structure.
 	 */
-	public Set<String> getUsedFlags()
+	public Flags getUsedFlags()
 	{
-		HashSet<String> flags = new HashSet<>();
+		Flags flags = new Flags();
 		if (grammar != null && grammar.flags != null)
 			flags.addAll(grammar.flags);
 		if (examples != null) for (Phrase e : examples)

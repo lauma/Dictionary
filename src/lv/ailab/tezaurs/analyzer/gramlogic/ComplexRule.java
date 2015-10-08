@@ -1,6 +1,10 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Trio;
+import lv.ailab.tezaurs.utils.Tuple;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -36,12 +40,12 @@ public class ComplexRule implements Rule
      * karodziņu kopas, kas lietojami, ja attiecīgais lemmas ierobežojums
      * izpildās.
      */
-    protected final List<Trio<Pattern, Set<Integer>, Set<String>>> lemmaLogic;
+    protected final List<Trio<Pattern, Set<Integer>, Set<Tuple<Keys,String>>>> lemmaLogic;
     /**
      * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
      * šablonam.
      */
-    protected final Set<String> alwaysFlags;
+    protected final Set<Tuple<Keys,String>> alwaysFlags;
 
     /**
      * Šo izdrukā, kad liekas, ka likums varētu būt nepilnīgs - gramatikas
@@ -60,8 +64,8 @@ public class ComplexRule implements Rule
      *                      atbilst attiecīgajam šablonam.
      */
     public ComplexRule(String pattern,
-            List<Trio<Pattern, Set<Integer>, Set<String>>> lemmaLogic,
-            Set<String> alwaysFlags)
+            List<Trio<Pattern, Set<Integer>, Set<Tuple<Keys,String>>>> lemmaLogic,
+            Set<Tuple<Keys,String>> alwaysFlags)
 
     {
         if (lemmaLogic == null)
@@ -95,16 +99,17 @@ public class ComplexRule implements Rule
      * @return	jauns ComplexRule
      */
     public static ComplexRule of (String patternText,
-            Trio<String, Integer[], String[]>[] lemmaLogic,
-            String[] alwaysFlags)
+            Trio<String, Integer[], Tuple<Keys,String>[]>[] lemmaLogic,
+			Tuple<Keys,String>[] alwaysFlags)
     {
-        ArrayList<Trio<Pattern, Set<Integer>, Set<String>>> tmp = new ArrayList<>();
-        for (Trio<String, Integer[], String[]> t : lemmaLogic)
+        ArrayList<Trio<Pattern, Set<Integer>, Set<Tuple<Keys,String>>>> tmp = new ArrayList<>();
+        for (Trio<String, Integer[], Tuple<Keys,String>[]> t : lemmaLogic)
             tmp.add(Trio.of(Pattern.compile(t.first),
-                    Collections.unmodifiableSet(new HashSet<Integer>(Arrays.asList(t.second))),
-                    t.third == null ? null : Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(t.third)))));
+                    Collections.unmodifiableSet(new HashSet<>(Arrays.asList(t.second))),
+                    t.third == null ? null : Collections.unmodifiableSet(new HashSet<>(Arrays.asList(t.third)))));
         return new ComplexRule(patternText, tmp,
-                alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
+                alwaysFlags == null ? null :
+                        new HashSet<>(Arrays.asList(alwaysFlags)));
     }
 
 	/**
@@ -118,11 +123,15 @@ public class ComplexRule implements Rule
 	public static ComplexRule secondThirdConjDirectAllPers(
 			String patternText, String lemmaRestrictions, boolean presentChange)
 	{
-		String flag = presentChange ? "Tagadnes mija ir" : "Tagadnes mijas nav";
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
 		return ComplexRule.of(patternText, new Trio[]{
-					Trio.of(lemmaRestrictions, new Integer[] {16, 17},
-							new String[] {"Darbības vārds", "Paralēlās formas", flag})},
+						Trio.of(lemmaRestrictions, new Integer[] {16, 17}, new Tuple[] {
+								Tuple.of(Keys.POS, Values.VERB.s),
+								Tuple.of(Keys.INFLECTION_WEARDNES, Values.PARALLEL_FORMS.s),
+								Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)})},
 				null);
+
 	}
 
     /**
@@ -136,11 +145,14 @@ public class ComplexRule implements Rule
     public static ComplexRule secondThirdConjReflAllPers(
             String patternText, String lemmaRestrictions, boolean presentChange)
     {
-        String flag = presentChange ? "Tagadnes mija ir" : "Tagadnes mijas nav";
-        return ComplexRule.of(patternText, new Trio[]{
-                        Trio.of(lemmaRestrictions, new Integer[] {19, 20},
-                                new String[] {"Darbības vārds", "Paralēlās formas", flag})},
-                null);
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
+		return ComplexRule.of(patternText, new Trio[]{
+						Trio.of(lemmaRestrictions, new Integer[] {19, 20}, new Tuple[] {
+								Tuple.of(Keys.POS, Values.VERB.s),
+								Tuple.of(Keys.INFLECTION_WEARDNES, Values.PARALLEL_FORMS.s),
+								Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)})},
+				null);
     }
 
     /**
@@ -156,7 +168,7 @@ public class ComplexRule implements Rule
      */
     @Override
     public int applyDirect(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+            HashSet<Integer> paradigmCollector, Flags flagCollector)
     {
         return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
     }
@@ -174,7 +186,7 @@ public class ComplexRule implements Rule
      */
     @Override
     public int applyOptHyphens(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+            HashSet<Integer> paradigmCollector, Flags flagCollector)
     {
         return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector);
     }
@@ -195,8 +207,7 @@ public class ComplexRule implements Rule
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     protected int apply(Pattern gramPattern, String gramText, String lemma,
-            HashSet<Integer> paradigmCollector,
-            HashSet<String> flagCollector)
+            HashSet<Integer> paradigmCollector, Flags flagCollector)
     {
         int newBegin = -1;
         Matcher m = gramPattern.matcher(gramText);
@@ -204,13 +215,14 @@ public class ComplexRule implements Rule
         {
             newBegin = m.group(1).length();
             boolean matchedLemma = false;
-            for (Trio<Pattern, Set<Integer>, Set<String>> rule : this.lemmaLogic)
+            for (Trio<Pattern, Set<Integer>, Set<Tuple<Keys, String>>> rule : this.lemmaLogic)
             {
                 if (rule.first.matcher(lemma).matches())
                 {
                     paradigmCollector.addAll(rule.second);
                     if (rule.third != null)
-                        flagCollector.addAll(rule.third);
+						for (Tuple<Keys, String> t : rule.third)
+							flagCollector.add(t.first, t.second);
                     matchedLemma = true;
                     break;
                 }
@@ -220,7 +232,10 @@ public class ComplexRule implements Rule
                 System.err.printf(errorMessage, lemma);
                 newBegin = 0;
             }
-            if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);
+
+			if (alwaysFlags != null)
+				for (Tuple<Keys, String> t : alwaysFlags)
+					flagCollector.add(t.first, t.second);
         }
         return newBegin;
     }

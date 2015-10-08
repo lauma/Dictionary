@@ -1,7 +1,11 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.struct.Flags;
+import lv.ailab.tezaurs.utils.Tuple;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,23 +31,23 @@ public class ThirdPersVerbRule implements Rule
 	 *                      automātiski)
      */
     public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
-            Set<String> positiveFlags, Set<String> alwaysFlags)
+            Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
     {
         thirdPersUsually = new SimpleRule(
                 "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<String>() {{
-                        add("Darbības vārds");
+                new HashSet<Tuple<Keys, String>>() {{
+                        add(Tuple.of(Keys.POS, Values.VERB.s));
                         if (positiveFlags != null) addAll(positiveFlags); }},
-                new HashSet<String>() {{
-                        add("Parasti 3. personā");
+                new HashSet<Tuple<Keys,String>>() {{
+                        add(Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.THIRD_PERSON.s));
                         if (alwaysFlags != null) addAll(alwaysFlags); }});
         thirdPersOnly = new SimpleRule(
                 "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<String>() {{
-                    add("Darbības vārds");
+                new HashSet<Tuple<Keys,String>>() {{
+                    add(Tuple.of(Keys.POS, Values.VERB.s));
                     if (positiveFlags != null) addAll(positiveFlags); }},
-                new HashSet<String>() {{
-                    add("Tikai 3. personā");
+                new HashSet<Tuple<Keys,String>>() {{
+                    add(Tuple.of(Keys.USED_ONLY_IN_FORM, Values.THIRD_PERSON.s));
                     if (alwaysFlags != null) addAll(alwaysFlags); }});
     }
 
@@ -61,7 +65,7 @@ public class ThirdPersVerbRule implements Rule
 	 *                      automātiski)
      */
     public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
-            int paradigmId, String[] positiveFlags, String[] alwaysFlags)
+            int paradigmId, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
     {
         return new ThirdPersVerbRule(patternText, lemmaEnding, paradigmId,
                 positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
@@ -81,7 +85,7 @@ public class ThirdPersVerbRule implements Rule
             String pattern, String lemmaEnd)
     {
         return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                15, new String[]{"Locīt kā \"" + lemmaEnd + "\""}, null);
+                15, new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
     }
 
     /**
@@ -124,12 +128,12 @@ public class ThirdPersVerbRule implements Rule
 	public static ThirdPersVerbRule thirdConjDir(
 			String pattern, String lemmaEnd, boolean presentChange)
 	{
-		if (presentChange)
-			return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
-					new String[]{"Tagadnes mija ir"} , null);
-		else
-			return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
-					new String[]{"Tagadnes mijas nav"} , null);
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
+		return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
+				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
+				null);
+
 	}
 
     /**
@@ -145,7 +149,7 @@ public class ThirdPersVerbRule implements Rule
             String pattern, String lemmaEnd)
     {
         return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                18, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
+                18, new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
     }
 
     /**
@@ -190,12 +194,11 @@ public class ThirdPersVerbRule implements Rule
 	public static ThirdPersVerbRule thirdConjRefl(
 			String pattern, String lemmaEnd, boolean presentChange)
 	{
-		if (presentChange)
-			return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
-					new String[]{"Tagadnes mija ir"} , null);
-		else
-			return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
-					new String[]{"Tagadnes mijas nav"} , null);
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
+		return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
+				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
+				null);
 	}
 
     /**
@@ -212,7 +215,7 @@ public class ThirdPersVerbRule implements Rule
      */
     @Override
     public int applyDirect(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+            HashSet<Integer> paradigmCollector, Flags flagCollector)
     {
         int newBegin = thirdPersUsually.applyDirect(
                 gramText, lemma, paradigmCollector, flagCollector);
@@ -236,7 +239,7 @@ public class ThirdPersVerbRule implements Rule
      */
     @Override
     public int applyOptHyphens(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, HashSet<String> flagCollector)
+            HashSet<Integer> paradigmCollector, Flags flagCollector)
     {
         int newBegin = thirdPersUsually.applyOptHyphens(
                 gramText, lemma, paradigmCollector, flagCollector);

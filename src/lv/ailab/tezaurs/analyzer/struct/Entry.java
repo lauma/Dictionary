@@ -232,9 +232,9 @@ public class Entry
 	/**
 	 * Get all flags used in this structure.
 	 */
-	public Set<String> getUsedFlags()
+	public Flags getUsedFlags()
 	{
-		HashSet<String> flags = new HashSet<>();
+		Flags flags = new Flags();
 		if (head != null && head.gram != null && head.gram.flags != null)
 			flags.addAll(head.gram.flags);
 		if (senses != null) for (Sense s : senses)

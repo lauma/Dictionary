@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import org.w3c.dom.Node;
 import org.json.simple.JSONObject;
 
@@ -37,7 +40,7 @@ public class Gram  implements HasToJSON
 {
 
 	public String orig;
-	public HashSet<String> flags;
+	public Flags flags;
 	public LinkedList<LinkedList<String>> leftovers;
 	public HashSet<Integer> paradigm;
 	/**
@@ -46,12 +49,12 @@ public class Gram  implements HasToJSON
 	 * Flag set contains only flags for which alternate lemma differs from
 	 * general flags given in "flags" field in this grammar.
 	 */
-	public MappingSet<Integer, Tuple<Lemma, HashSet<String>>> altLemmas;
+	public MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas;
 
 	/**
 	 * Known abbreviations and their de-abbreviations.
 	 */
-	public static  MappingSet<String, String> knownAbbr = AbbrMap.getAbbrMap();
+	public static  AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
 	public Gram ()
 	{
@@ -68,7 +71,7 @@ public class Gram  implements HasToJSON
 	{
 		orig = gramNode.getTextContent();
 		leftovers = null;
-		flags = new HashSet<> ();
+		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
 		parseGram(lemma);
@@ -80,7 +83,7 @@ public class Gram  implements HasToJSON
 	{
 		orig = gramText;
 		leftovers = null;
-		flags = new HashSet<> ();
+		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
 		parseGram(lemma);
@@ -127,9 +130,8 @@ public class Gram  implements HasToJSON
 			{
 				gramElem = gramElem.trim();
 				// Meklē atbilstību zināmajiem saīsinājumiem.
-				if (knownAbbr.containsKey(gramElem))
-					flags.addAll(knownAbbr.getAll(gramElem));
-				else
+				boolean isFlag = knownAbbr.translate(gramElem, flags);
+				if (!isFlag)
 				{
 					// Meklē atbilstību regulārājām izteiksmēm.
 					gramElem = processWithNoCommaPatterns(gramElem, lemma);
@@ -173,13 +175,14 @@ public class Gram  implements HasToJSON
 		{
 			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2) + "ņš, -ņa, v.").length();
 			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "ņš");
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Šķirkļavārds vienskaitlī");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR);
 			altLemmas.put(2, new Tuple<>(altLemma, altParams));
 			paradigm.add(2);
-			flags.add("Vīriešu dzimte");
-			flags.add("Lietvārds");
-			flags.add("Šķirkļavārds daudzskaitlī");
+			flags.add(Keys.GENDER, Values.MASCULINE);
+			flags.add(Keys.POS, Values.NOUN);
+			flags.add(Keys.ENTRYWORD_WEARDNES, Values.PLURAL);
+
 		}
 		// Paradigm 3: Lietvārds 2. deklinācija -is
 		else if (lemma.endsWith("ņi") &&
@@ -189,13 +192,13 @@ public class Gram  implements HasToJSON
 		{
 			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2)+"nis, -ņa, v.").length();
 			Lemma altLemma = new Lemma(lemma.substring(0, lemma.length() - 2) + "nis");
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Šķirkļavārds vienskaitlī");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR);
 			altLemmas.put(3, new Tuple<>(altLemma, altParams));
 			paradigm.add(3);
-			flags.add("Vīriešu dzimte");
-			flags.add("Lietvārds");
-			flags.add("Šķirkļavārds daudzskaitlī");
+			flags.add(Keys.GENDER, Values.MASCULINE);
+			flags.add(Keys.POS, Values.NOUN);
+			flags.add(Keys.ENTRYWORD_WEARDNES, Values.PLURAL);
 		}
 		else if (lemma.endsWith("ņi") &&
 				gramText.startsWith("-ņu, vsk. "
@@ -204,26 +207,26 @@ public class Gram  implements HasToJSON
 		{
 			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 3)+"lnis, -ļņa, v.").length();
 			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "lnis");
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Šķirkļavārds vienskaitlī");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR);
 			altLemmas.put(3, new Tuple<>(altLemma, altParams));
 			paradigm.add(3);
-			flags.add("Vīriešu dzimte");
-			flags.add("Lietvārds");
-			flags.add("Šķirkļavārds daudzskaitlī");
+			flags.add(Keys.GENDER, Values.MASCULINE);
+			flags.add(Keys.POS, Values.NOUN);
+			flags.add(Keys.ENTRYWORD_WEARDNES, Values.PLURAL);
 		}
 		else if (lemma.endsWith("ji") &&
 				gramText.startsWith("-u, vsk. " + lemma + "s, -ja, v.")) // airkāji: -u, vsk. airkājis, -ja, v.
 		{
 			newBegin = ("-u, vsk. " + lemma + "s, -ja, v.").length();
 			Lemma altLemma = new Lemma (lemma + "s");
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Šķirkļavārds vienskaitlī");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR);
 			altLemmas.put(3, new Tuple<>(altLemma, altParams));
 			paradigm.add(3);
-			flags.add("Vīriešu dzimte");
-			flags.add("Lietvārds");
-			flags.add("Šķirkļavārds daudzskaitlī");
+			flags.add(Keys.GENDER, Values.MASCULINE);
+			flags.add(Keys.POS, Values.NOUN);
+			flags.add(Keys.ENTRYWORD_WEARDNES, Values.PLURAL);
 		}
 
 		// Paradigm 1: Lietvārds 1. deklinācija -s
@@ -234,13 +237,13 @@ public class Gram  implements HasToJSON
 		{
 			newBegin = ("-u, vsk. " + lemma.substring(0, lemma.length() - 1) + "s, -a, v.").length();
 			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "s");
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Šķirkļavārds vienskaitlī");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR);
 			altLemmas.put(1, new Tuple<>(altLemma, altParams));
 			paradigm.add(1);
-			flags.add("Vīriešu dzimte");
-			flags.add("Lietvārds");
-			flags.add("Šķirkļavārds daudzskaitlī");
+			flags.add(Keys.GENDER, Values.MASCULINE);
+			flags.add(Keys.POS, Values.NOUN);
+			flags.add(Keys.ENTRYWORD_WEARDNES, Values.PLURAL);
 		}
 
 		// Vēl viens lemmas variants tiek uzdots ar papildus galotņu palīdzību.
@@ -252,18 +255,18 @@ public class Gram  implements HasToJSON
 			if (lemma.endsWith("ts"))
 			{
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "e");
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Sieviešu dzimte");
-				altParams.add("Cita paradigma");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.FEMININE);
+				altParams.add(Values.CHANGED_PARADIGM);
 				altLemmas.put(9, new Tuple<>(altLemma, altParams));
 
 				paradigm.add(1);
-				flags.add("Lietvārds");
-				flags.add("Vīriešu dzimte");
+				flags.add(Keys.GENDER, Values.MASCULINE);
+				flags.add(Keys.POS, Values.NOUN);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 1 & 9\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 1 & 9\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -275,18 +278,18 @@ public class Gram  implements HasToJSON
 			if (lemma.endsWith("ķis"))
 			{
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Sieviešu dzimte");
-				altParams.add("Cita paradigma");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.FEMININE);
+				altParams.add(Values.CHANGED_PARADIGM);
 				altLemmas.put(9, new Tuple<>(altLemma, altParams));
 
 				paradigm.add(2);
-				flags.add("Lietvārds");
-				flags.add("Vīriešu dzimte");
+				flags.add(Keys.GENDER, Values.MASCULINE);
+				flags.add(Keys.POS, Values.NOUN);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 2 & 9\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 2 & 9\n", lemma);
 				newBegin = 0;
 			}
 		} else if (gramText.matches("-ša; s. -te, -šu([;.].*)?")) //aiolietis
@@ -295,18 +298,18 @@ public class Gram  implements HasToJSON
 			if (lemma.endsWith("tis"))
 			{
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Sieviešu dzimte");
-				altParams.add("Cita paradigma");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.FEMININE);
+				altParams.add(Values.CHANGED_PARADIGM);
 				altLemmas.put(9, new Tuple<>(altLemma, altParams));
 
 				paradigm.add(2);
-				flags.add("Lietvārds");
-				flags.add("Vīriešu dzimte");
+				flags.add(Keys.GENDER, Values.MASCULINE);
+				flags.add(Keys.POS, Values.NOUN);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 2 & 9\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 2 & 9\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -318,16 +321,16 @@ public class Gram  implements HasToJSON
 			if (lemma.matches(".*[^aeiouāēīōū]š"))
 			{
 				paradigm.add(14);
-				flags.add("Īpašības vārds");
+				flags.add(Keys.POS, Values.ADJECTIVE);
 			}
 			else if (lemma.matches(".*[^aeiouāēīōū]s"))
 			{
 				paradigm.add(13);
-				flags.add("Īpašības vārds");
+				flags.add(Keys.POS, Values.ADJECTIVE);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigms 13, 14\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 13, 14\n", lemma);
 				newBegin = 0;
 			}
 		} else if (gramText.matches("-ais[;,] s\\. -a, -ā([;,.].*)?")) //abējāds, acains, agāms
@@ -336,16 +339,16 @@ public class Gram  implements HasToJSON
 			if (lemma.matches(".*[^aeiouāēīōū]š"))
 			{
 				paradigm.add(14);
-				flags.add("Īpašības vārds");
+				flags.add(Keys.POS, Values.ADJECTIVE);
 			}
 			else if (lemma.matches(".*[^aeiouāēīōū]s"))
 			{
 				paradigm.add(13);
-				flags.add("Īpašības vārds");
+				flags.add(Keys.POS, Values.ADJECTIVE);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigms 13, 14\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 13, 14\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -357,18 +360,18 @@ public class Gram  implements HasToJSON
 			if (lemma.endsWith("dzis"))
 			{
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 4) + "gusi");
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Sieviešu dzimte");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.FEMININE);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 
 				paradigm.add(0);
-				flags.add("Divdabis");
-				flags.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
-				flags.add("Vīriešu dzimte");
+				flags.add(Keys.POS, Values.PARTICIPLE);
+				flags.add(Keys.POS, Values.PARTICIPLE_IS);
+				flags.add(Keys.GENDER, Values.MASCULINE);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 0 (Divdabis)\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt paradigmā 0 (Divdabis)\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -378,18 +381,18 @@ public class Gram  implements HasToJSON
 			if (lemma.matches(".*[cdjlmprstv]is"))
 			{
 				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "usi");
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Sieviešu dzimte");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.FEMININE);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 
 				paradigm.add(0);
-				flags.add("Divdabis");
-				flags.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
-				flags.add("Vīriešu dzimte");
+				flags.add(Keys.POS, Values.PARTICIPLE);
+				flags.add(Keys.POS, Values.PARTICIPLE_IS);
+				flags.add(Keys.GENDER, Values.MASCULINE);
 			}
 			else
 			{
-				System.err.printf("Problem matching \"%s\" with paradigm 0 (Divdabis)\n", lemma);
+				System.err.printf("Neizdodas \"%s\" ielikt paradigmā 0 (Divdabis)\n", lemma);
 				newBegin = 0;
 			}
 		}
@@ -561,37 +564,43 @@ public class Gram  implements HasToJSON
 			m.matches();
 			String newLemma = m.group(2);
 			Lemma altLemma = new Lemma (newLemma);
-			HashSet<String> altParams = new HashSet<> ();
-			altParams.add("Divdabis");
-			altParams.add("Cita paradigma");
+			Flags altParams = new Flags ();
+			altParams.add(Keys.POS, Values.PARTICIPLE);
+			altParams.add(Values.CHANGED_PARADIGM);
 			
 			newBegin = m.group(1).length();
 			if (newLemma.endsWith("ts")) // aizdzert->aizdzerts
 			{
-				altParams.add("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)");
+				altParams.add(Keys.POS, Values.PARTICIPLE_TS);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
-				flags.add("Darbības vārds");
-				flags.add("Parasti divdabja formā");
-				flags.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
+				flags.add(Keys.POS, Values.VERB);
+				//flags.binary.add("Parasti divdabja formā");
+				//flags.binary.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_TS);
 			}
 			else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizmakt->aizsmacis, pieriesties->pieriesies
 			{
-				altParams.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
+				altParams.add(Keys.POS, Values.PARTICIPLE_IS);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
-				flags.add("Darbības vārds");
-				flags.add("Parasti divdabja formā");
-				flags.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
+				flags.add(Keys.POS, Values.VERB);
+				//flags.binary.add("Parasti divdabja formā");
+				//flags.binary.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_IS);
 			}
 			else if (newLemma.endsWith("damies")) //aizvilkties->aizvilkdamies
 			{
-				altParams.add("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)");
+				altParams.add(Keys.POS, Values.PARTICIPLE_DAMS);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 				
-				flags.add("Darbības vārds");
-				flags.add("Parasti divdabja formā");
-				flags.add("Parasti daļēji lokāmā divdabja formā");
+				flags.add(Keys.POS, Values.VERB);
+				//flags.binary.add("Parasti divdabja formā");
+				//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+				flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_DAMS);
 			}
 			else
 			{
@@ -603,7 +612,8 @@ public class Gram  implements HasToJSON
 		{
 			Matcher m = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?").matcher(gramText);
 			newBegin = m.group(1).length();
-			flags.add("Bieži lokatīva formā");
+			//flags.binary.add("Bieži lokatīva formā");
+			flags.add(Keys.OFTEN_USED_IN_FORM, Values.LOCATIVE);
 		}
 		
 		if (newBegin > 0) gramText = gramText.substring(newBegin);
@@ -636,49 +646,59 @@ public class Gram  implements HasToJSON
 			for (String newLemma : newLemmas)
 			{
 				Lemma altLemma = new Lemma (newLemma);
-				HashSet<String> altParams = new HashSet<> ();
-				altParams.add("Divdabis");
-				altParams.add("Cita paradigma");
+				Flags altParams = new Flags ();
+				altParams.add(Keys.POS, Values.PARTICIPLE);
+				altParams.add(Keys.ENTRYWORD_WEARDNES, Values.CHANGED_PARADIGM);
 				
 				if (newLemma.endsWith("ts")) // noliegt->noliegts
 				{
-					altParams.add("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)");
+					altParams.add(Keys.POS, Values.PARTICIPLE_TS);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
-					flags.add("Darbības vārds");
-					flags.add("Parasti divdabja formā");
-					flags.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
+					flags.add(Keys.POS, Values.VERB);
+					//flags.binary.add("Parasti divdabja formā");
+					//flags.binary.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_TS);
 				}
 				else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizelsties->aizelsies
 				{
-					altParams.add("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)");
+					altParams.add(Keys.POS, Values.PARTICIPLE_IS);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
-					flags.add("Darbības vārds");
-					flags.add("Parasti divdabja formā");
-					flags.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
+					flags.add(Keys.POS, Values.VERB);
+					//flags.binary.add("Parasti divdabja formā");
+					//flags.binary.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_IS);
 				}
 				else if (newLemma.endsWith("ams") || newLemma.endsWith("āms")) // noliegt->noliedzams
 				{
-					altParams.add("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)");
+					altParams.add(Keys.POS, Values.PARTICIPLE_AMS);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
-					flags.add("Darbības vārds");
-					flags.add("Parasti divdabja formā");
-					flags.add("Parasti lokāmā ciešamās kārtas tagadnes divdabja formā");
+					flags.add(Keys.POS, Values.VERB);
+					//flags.binary.add("Parasti divdabja formā");
+					//flags.binary.add("Parasti lokāmā ciešamās kārtas tagadnes divdabja formā");
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_AMS);
+
 				}
 				else if (newLemma.endsWith("damies")) //aizelsties->aizelsdamies
 				{
-					altParams.add("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)");
+					altParams.add(Keys.POS, Values.PARTICIPLE_DAMS);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 					
-					flags.add("Darbības vārds");
-					flags.add("Parasti divdabja formā");
-					flags.add("Parasti daļēji lokāmā divdabja formā");
+					flags.add(Keys.POS, Values.VERB);
+					//flags.binary.add("Parasti divdabja formā");
+					//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE);
+					flags.add(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_DAMS);
+
 				}
 				else
 				{
-					System.err.printf("Problem matching \"%s\" in entry \"%s\" with paradigm 0 (Divdabis)\n",
+					System.err.printf("Neizdodas \"%s\" šķirklī \"%s\" ielikt paradigmā 0 (Divdabis)\n",
 							newLemma, lemma);
 					newBegin = 0;
 				}
@@ -695,38 +715,53 @@ public class Gram  implements HasToJSON
 	 */
 	private void paradigmFromFlags(String lemma)
 	{
-		if (flags.contains("Īpašības vārds") )
+		HashSet<String> pos = flags.getAll(Keys.POS);
+		if (pos != null)
 		{
-			if (lemma.endsWith("ais") || lemma.endsWith("ā")) paradigm.add(30);
-			else if (lemma.matches(".*[^aeiouāēīōū]s")) paradigm.add(13);
-			else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);				
+			if (pos.contains(Values.ADJECTIVE.s))
+			{
+				if (lemma.endsWith("ais") || lemma.endsWith("ā")) paradigm.add(30);
+				else if (lemma.matches(".*[^aeiouāēīōū]s")) paradigm.add(13);
+				else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);
+			}
+
+			if (pos.contains(Values.VERB.s))
+			{
+				if (lemma.endsWith("īt") || lemma.endsWith("ināt"))
+					paradigm.add(17);
+				if (lemma.endsWith("īties") || lemma.endsWith("ināties"))
+					paradigm.add(20);
+			}
+
+			if (pos.contains("Apstākļa vārds")) paradigm.add(21);
+			if (pos.contains("Partikula")) paradigm.add(28);
+			if (pos.contains("Prievārds")) paradigm.add(26);
+			if (pos.contains("Saiklis")) paradigm.add(27);
+
+			if (pos.contains("Izsauksmes vārds")) paradigm.add(29); // Hardcoded
+			if (pos.contains("Saīsinājums")) paradigm.add(29); // Hardcoded
+
+			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
+			if (pos.contains("Jautājamais vietniekvārds")) paradigm.add(25);
+			if (pos.contains("Noliedzamais vietniekvārds")) paradigm.add(25);
+			if (pos.contains("Norādāmais vietniekvārds")) paradigm.add(25);
+			if (pos.contains("Noteicamais vietniekvārds")) paradigm.add(25);
+			if (pos.contains("Piederības vietniekvārds")) paradigm.add(25);
+			if (pos.contains("Vispārināmais vietniekvārds")) paradigm.add(25);
+
+			if (pos.contains(Values.FOREIGN.s)) paradigm.add(29);
+
+			if (pos.contains("Priedēklis")) paradigm.add(0); //Prefixes are not words.
+			if (pos.contains("Salikteņu daļa")) paradigm.add(0); //Prefixes are not words.
 		}
-		
-		if (flags.contains("Darbības vārds"))
+
+		HashSet<String> binaryFlags = flags.binaryFlags();
+		HashSet<String> cases = flags.getAll(Keys.CASE);
+		if (binaryFlags != null)
 		{
-			if (lemma.endsWith("īt") || lemma.endsWith("ināt")) paradigm.add(17);
-			if (lemma.endsWith("īties") || lemma.endsWith("ināties")) paradigm.add(20);
+			if (binaryFlags.contains(Values.NON_INFLECTIVE.s) && cases != null && cases.size() > 0)
+				paradigm.add(29); // Sastingusi forma.
 		}
-		
-		if (flags.contains("Apstākļa vārds")) paradigm.add(21);
-		if (flags.contains("Partikula")) paradigm.add(28);
-		if (flags.contains("Prievārds")) paradigm.add(26);
-		if (flags.contains("Saiklis")) paradigm.add(27);
-
-		if (flags.contains("Izsauksmes vārds")) paradigm.add(29); // Hardcoded
-		if (flags.contains("Saīsinājums")) paradigm.add(29); // Hardcoded
-		if (flags.contains("Vārds svešvalodā")) paradigm.add(29);
-		
-		if (flags.contains("Vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Jautājamais vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Noliedzamais vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Norādāmais vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Noteicamais vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Piederības vietniekvārds")) paradigm.add(25);
-		if (flags.contains("Vispārināmais vietniekvārds")) paradigm.add(25);
-
-		if (flags.contains("Priedēklis")) paradigm.add(0); //Prefixes are not words.
-		if (flags.contains("Salikteņu daļa")) paradigm.add(0); //Prefixes are not words.
 	}
 	
 	/**
@@ -746,22 +781,8 @@ public class Gram  implements HasToJSON
 	private String correctOCRErrors(String gramText)
 	{
 		//Inconsequences in data
-				
-		//gramText = gramText.replaceAll("^māt\\.", "mat\\.");
-		//gramText = gramText.replace(" māt.", " mat.");
-		//gramText = gramText.replace("vsk..", "vsk.");
-		//gramText = gramText.replace("vsk .", "vsk.");
-		//gramText = gramText.replaceAll("^gen\\.", "ģen\\.");
-		//gramText = gramText.replace(" gen.", " ģen.");
-		//gramText = gramText.replaceAll("^trans;", "trans\\.;");
-		//gramText = gramText.replace(" trans;", " trans.;");
-		
-		//gramText = gramText.replace("-ais; s. -a: -ā;", "-ais; s. -a, -ā;"); //apgrēcīgs
-		
-		
 
 		return gramText;
-		
 	}
 
 	public String toJSON()
@@ -798,16 +819,17 @@ public class Gram  implements HasToJSON
 					res.append("\"");
 					res.append(JSONObject.escape(next.toString()));
 					res.append("\":[");
-					Iterator<Tuple<Lemma, HashSet<String>>> flagIt = altLemmas.getAll(next).iterator();
+					Iterator<Tuple<Lemma, Flags>> flagIt = altLemmas.getAll(next).iterator();
 					while (flagIt.hasNext())
 					{
-						Tuple<Lemma, HashSet<String>> alt = flagIt.next();
+						Tuple<Lemma, Flags> alt = flagIt.next();
 						res.append("{");
 						res.append(alt.first.toJSON());
-						if (alt.second != null && !alt.second.isEmpty())
+						if (alt.second != null && !alt.second.pairings.isEmpty())
 						{
-							res.append(", \"Flags\":");
-							res.append(JSONUtils.simplesToJSON(alt.second));
+							res.append(", ");
+							res.append("\"Flags\":");
+							res.append(JSONUtils.mappingSetToJSON(alt.second.pairings));
 						}
 						res.append("}");
 						if (flagIt.hasNext()) res.append(", ");
@@ -821,11 +843,12 @@ public class Gram  implements HasToJSON
 			hasPrev = true;
 		}
 		
-		if (flags != null && !flags.isEmpty())
+
+		if (flags != null && !flags.pairings.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"Flags\":");
-			res.append(JSONUtils.simplesToJSON(flags));
+			res.append(JSONUtils.mappingSetToJSON(flags.pairings));
 			hasPrev = true;
 		}
 		

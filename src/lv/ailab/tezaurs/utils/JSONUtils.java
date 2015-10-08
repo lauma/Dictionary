@@ -55,5 +55,24 @@ public class JSONUtils
 		res.append("]");			
 		return res.toString();
 	}
+
+	public static<K, V> String mappingSetToJSON(MappingSet<K, V> l)
+	{
+		if (l == null) return "{}";
+		StringBuilder res = new StringBuilder();
+		res.append("{");
+		Iterator<K> i = l.keySet().iterator();
+		while (i.hasNext())
+		{
+			K key = i.next();
+			res.append("\"");
+			res.append(JSONObject.escape(key.toString()));
+			res.append("\":");
+			res.append(JSONUtils.simplesToJSON(l.getAll(key)));
+			if (i.hasNext()) res.append(", ");
+		}
+		res.append("}");
+		return res.toString();
+	}
 	
 }

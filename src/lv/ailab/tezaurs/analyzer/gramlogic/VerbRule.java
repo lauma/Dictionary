@@ -1,5 +1,10 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.struct.Flags;
+import lv.ailab.tezaurs.utils.Tuple;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,12 +36,13 @@ public class VerbRule implements Rule
 	 */
 	public VerbRule(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Set<String> positiveFlags, Set<String> alwaysFlags)
+			Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
 	{
-		HashSet<String> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add("Darbības vārds");
+		HashSet<Tuple<Keys,String>> positiveFlagsFull = new HashSet<>();
+		positiveFlagsFull.add(Tuple.of(Keys.POS, Values.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<String> alwaysFlagsSet = alwaysFlags == null ? null : new HashSet<>(alwaysFlags);
+		HashSet<Tuple<Keys,String>> alwaysFlagsSet = alwaysFlags == null ?
+				null : new HashSet<>(alwaysFlags);
 
 		String begin = patternBegin.trim();
 		String end = patternEnd.trim();
@@ -71,7 +77,7 @@ public class VerbRule implements Rule
 	 */
 	public static VerbRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			String[] positiveFlags, String[] alwaysFlags)
+			Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
 	{
 		return new VerbRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
@@ -91,7 +97,7 @@ public class VerbRule implements Rule
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
-				15, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
+				15, new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
 	}
 
 	/**
@@ -134,13 +140,11 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		if (presentChange)
-			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
-					new String[] {"Tagadnes mija ir"}, null);
-		else
-			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
-					new String[] {"Tagadnes mijas nav"}, null);
-
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
+		return  VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
+				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
+				null);
 	}
 
 	/**
@@ -156,7 +160,7 @@ public class VerbRule implements Rule
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
-				18, new String[] {"Locīt kā \""+ lemmaEnd + "\""}, null);
+				18, new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
 	}
 
 	/**
@@ -199,13 +203,11 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		if (presentChange)
-			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
-					new String[] {"Tagadnes mija ir"}, null);
-		else
-			return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
-					new String[] {"Tagadnes mijas nav"}, null);
-
+		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
+				Values.NO_PRESENT_SOUNDCHANGE.s;
+		return  VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
+				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
+				null);
 	}
 
 	/**
@@ -220,10 +222,8 @@ public class VerbRule implements Rule
 	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
-	public int applyDirect (
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector)
+	public int applyDirect (String gramText, String lemma,
+			HashSet<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = thirdPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
 		if (newBegin == -1)
@@ -243,10 +243,8 @@ public class VerbRule implements Rule
 	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
-	public int applyOptHyphens(
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector)
+	public int applyOptHyphens(String gramText, String lemma,
+			HashSet<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = thirdPersonRule.applyOptHyphens(gramText, lemma,
 				paradigmCollector, flagCollector);

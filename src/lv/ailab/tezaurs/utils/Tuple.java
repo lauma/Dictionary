@@ -31,6 +31,10 @@ public class Tuple<E, F>
 		first = e;
 		second = f;
 	}
+
+	static public <E,F> Tuple<E,F> of(E first, F second){
+		return new Tuple<E,F>(first, second);
+	}
 	
 	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
 	@Override

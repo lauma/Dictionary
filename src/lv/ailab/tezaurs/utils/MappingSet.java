@@ -17,9 +17,7 @@
  *******************************************************************************/
 package lv.ailab.tezaurs.utils;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Limited use multimap. Incomplete interface, might need additional
@@ -27,17 +25,26 @@ import java.util.Set;
  */
 public class MappingSet<K, V>
 {
-	private HashMap<K, HashSet<V>> map = new HashMap<K, HashSet<V>>();
+	protected HashMap<K, HashSet<V>> map = new HashMap<>();
 	
 	public void put (K key, V value)
 	{
 		HashSet<V> values = new HashSet<V>();
-		if (map.containsKey(key))
-		{
-			values = map.get(key);
-		}
+		if (map.containsKey(key)) values = map.get(key);
 		values.add(value);
 		map.put(key, values);
+	}
+
+	/**
+	 * TODO šo aizstāt ar Iterable interfeisa realizāciju.
+	 */
+	public ArrayList<Tuple<K, V>> asList()
+	{
+		ArrayList<Tuple<K, V>> res = new ArrayList<>();
+		for (K k : map.keySet())
+			for (V v : map.get(k))
+				res.add(Tuple.of(k, v));
+		return res;
 	}
 	
 	public HashSet<V> getAll(K key)
@@ -59,5 +66,24 @@ public class MappingSet<K, V>
 	{
 		return map.keySet();
 	}
-	
+
+	public void putAll(Map<K, V> data)
+	{
+		for (K key : data.keySet())
+			put(key, data.get(key));
+	}
+
+	public void putAll(K key, Collection<V> values)
+	{
+		HashSet<V> valuesInPlace = new HashSet<V>();
+		if (map.containsKey(key)) valuesInPlace = map.get(key);
+		valuesInPlace.addAll(values);
+		map.put(key, valuesInPlace);
+	}
+
+	public void putAll(MappingSet<K, V> data)
+	{
+		for (K key: data.keySet())
+			putAll(key, data.getAll(key));
+	}
 }

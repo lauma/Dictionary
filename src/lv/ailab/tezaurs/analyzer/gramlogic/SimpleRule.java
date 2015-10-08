@@ -1,5 +1,10 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.struct.Flags;
+import lv.ailab.tezaurs.utils.Tuple;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,15 +44,15 @@ public class SimpleRule implements Rule
 	 * Šos karodziņus uzstāda, ja gan gramatikas teksts, gan lemma atbilst
 	 * attiecīgajiem šabloniem.
 	 */
-	protected final Set<String> positiveFlags;
+	protected final Set<Tuple<Keys,String>> positiveFlags;
 	/**
 	 * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
 	 * šablonam.
 	 */
-	protected final Set<String> alwaysFlags;
+	protected final Set<Tuple<Keys,String>> alwaysFlags;
 
 	public SimpleRule(String pattern, String lemmaRestrict, int paradigmId,
-			Set<String> positiveFlags, Set<String> alwaysFlags)
+			Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
 	{
 		this.patternText = pattern;
 		directPattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
@@ -74,11 +79,11 @@ public class SimpleRule implements Rule
 	 * @return	jauns SimpleRule
 	 */
 	public static SimpleRule of(String patternText, String lemmaRestrictions,
-			int paradigmId, String[] positiveFlags, String[] alwaysFlags)
+			int paradigmId, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
 	{
 		return new SimpleRule(patternText, lemmaRestrictions, paradigmId,
-				positiveFlags == null ? null : new HashSet<String>(Arrays.asList(positiveFlags)),
-				alwaysFlags == null ? null : new HashSet<String>(Arrays.asList(alwaysFlags)));
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
 
 	/**
@@ -92,7 +97,8 @@ public class SimpleRule implements Rule
 	public static SimpleRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return SimpleRule.of(patternText, lemmaRestrictions, 9,
-				new String[]{"Lietvārds", "Sieviešu dzimte"},
+				new Tuple[]{Tuple.of(Keys.POS, Values.NOUN.s),
+						Tuple.of(Keys.GENDER, Values.FEMININE.s)},
 				null);
 	}
 	/**
@@ -106,8 +112,8 @@ public class SimpleRule implements Rule
 	public static SimpleRule secondDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return SimpleRule.of(patternText, lemmaRestrictions, 3,
-				new String[]{"Lietvārds"},
-				new String[]{"Vīriešu dzimte"});
+				new Tuple[]{Tuple.of(Keys.POS, Values.NOUN.s)},
+				new Tuple[]{Tuple.of(Keys.GENDER, Values.MASCULINE.s)});
 	}
 
 	/**
@@ -122,10 +128,8 @@ public class SimpleRule implements Rule
 	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
-	public int applyDirect (
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector)
+	public int applyDirect (String gramText, String lemma,
+			HashSet<Integer> paradigmCollector, Flags flagCollector)
 	{
 		return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
 	}
@@ -142,10 +146,8 @@ public class SimpleRule implements Rule
 	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
-	public int applyOptHyphens(
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector)
+	public int applyOptHyphens(String gramText, String lemma,
+			HashSet<Integer> paradigmCollector, Flags flagCollector)
 	{
 		return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector);
 	}
@@ -166,8 +168,7 @@ public class SimpleRule implements Rule
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	protected int apply(Pattern gramPattern, String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			HashSet<String> flagCollector)
+			HashSet<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = -1;
 		Matcher m = gramPattern.matcher(gramText);
@@ -178,14 +179,17 @@ public class SimpleRule implements Rule
 			{
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)
-					flagCollector.addAll(positiveFlags);
+					for (Tuple<Keys, String> t : positiveFlags)
+						flagCollector.add(t.first, t.second);
 			}
 			else
 			{
 				System.err.printf("Neizdodas \"%s\" ielikt paradigmā %s\n", lemma, paradigmId);
 				newBegin = 0;
 			}
-			if (alwaysFlags != null) flagCollector.addAll(alwaysFlags);
+			if (alwaysFlags != null)
+				for (Tuple<Keys, String> t : alwaysFlags)
+					flagCollector.add(t.first, t.second);
 		}
 		return newBegin;
 	}

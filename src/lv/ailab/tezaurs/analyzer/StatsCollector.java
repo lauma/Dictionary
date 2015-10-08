@@ -1,14 +1,18 @@
 package lv.ailab.tezaurs.analyzer;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Entry;
+import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.analyzer.struct.Header;
 import lv.ailab.tezaurs.utils.Trio;
+import lv.ailab.tezaurs.utils.Tuple;
 import org.json.simple.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -19,7 +23,8 @@ import java.util.TreeSet;
 public class StatsCollector
 {
 
-    public TreeSet<String> flags = new TreeSet<>();
+    public TreeSet<String> binaryFlags = new TreeSet<>();
+    public TreeSet<String> pairingKeys = new TreeSet<>();
     // Counting entries with various properties:
     public int overallCount = 0;
     public int hasParadigm = 0;
@@ -49,20 +54,33 @@ public class StatsCollector
         if (entry.hasMultipleParadigms()) hasMultipleParadigms++;
         if (entry.hasUnparsedGram()) hasUnparsedGram++;
 
-        Set<String> entryFlags = entry.getUsedFlags();
-        if (entryFlags.contains("Neviennozīmīga paradigma"))
-            hasMultipleParadigmFlag++;
-        if (entryFlags.stream().filter(f -> f.startsWith("Locīt kā ")).count() > 0)
+        Flags entryFlags = entry.getUsedFlags();
+		HashSet<String> bf = entryFlags.binaryFlags();
+        if (bf != null)
+		{
+			if (bf.contains(Values.UNCLEAR_PARADIGM.s))
+				hasMultipleParadigmFlag++;
+			binaryFlags.addAll(bf);
+		}
+
+        if (entryFlags.getAll(Keys.INFLECT_AS) != null &&
+				entryFlags.getAll(Keys.INFLECT_AS).size() > 0)
             hasLociitKaaFlag++;
-        flags.addAll(entryFlags);
+        if (entryFlags.pairings != null)
+			for (Tuple<Keys, String> f : entryFlags.pairings.asList())
+				if (!f.first.equals(Keys.OTHER_FLAGS))
+					pairingKeys.add(f.first + ": " + f.second);
 
         for (String p : entry.collectPronunciations())
             pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
         for (Header h : entry.getAllHeaders())
         {
-            if (h.gram != null &&
-                    h.gram.paradigm.contains(9) && h.gram.flags.contains("Locīt bez mijas"))
-                fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
+            if (h.gram != null && h.gram.paradigm.contains(9))
+			{
+				HashSet<String> iw = h.gram.flags.getAll(Keys.INFLECTION_WEARDNES);
+				if (iw != null && iw.contains(Values.NO_SOUNDCHANGE.s))
+                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
+			}
 			if (h.gram != null &&
 					(h.gram.paradigm.contains(15) || h.gram.paradigm.contains(18)))
 				firstConj.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
@@ -82,16 +100,23 @@ public class StatsCollector
                 hasMultipleParadigmFlag);
         out.write(",\n\"Šķirkļi bez paradigmām\":" + hasNoParadigm);
         out.write(",\n\"Daļēji atpazīti šķirkļi\":" + hasUnparsedGram);
-        out.write(",\n\"Unikālo karodziņu skaits\":" + flags.size());
+        out.write(",\n\"Unikālo bināro karodziņu skaits\":" + binaryFlags.size());
         out.write(",\n\"Unikālu \\\"Locīt kā...\\\" karodziņu skaits\":" +
-                flags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
+                binaryFlags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
         out.write(",\n\"Šķirkļi ar \\\"Locīt kā...\\\" karodziņiem\":" + hasLociitKaaFlag);
+		out.write(",\n\"Unikālo pārīskarodziņu atslēgu skaits\":" + pairingKeys
+				.size());
         out.write(",\n\"Izrunas transkripciju kopskaits\":" + pronunciations.size());
 
-        out.write("\"Karodziņi\":[\n");
-        out.write(flags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
+        out.write("\"Binārie karodziņi\":[\n");
+        out.write(binaryFlags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
                 .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
         out.write("\n],\n");
+		out.write("\"Pārīškarodziņu atslēgas\":[\n");
+		out.write(pairingKeys.stream()
+				.map(f -> "\t\"" + JSONObject.escape(f) + "\"")
+				.reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
+		out.write("\n],\n");
 
         out.write(",\n\"Izrunas transkripcijas\":[\n");
         out.write(pronunciations.stream().map(t ->

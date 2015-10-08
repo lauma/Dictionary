@@ -556,6 +556,7 @@ public class DirectRules
 		VerbRule.thirdConjRefl("-pīkstos, -pīksties,", "-pīkstas, pag. -pīkstējos", "pīkstēties", false), //iepīkstēties
 		VerbRule.thirdConjRefl("-pinkšos, -pinkšies,", "-pinkšas, pag. -pinkšējos", "pinkšēties", false), //iepinkšēties
 		VerbRule.thirdConjRefl("-pinkšķos, -pinkšķies,", "-pinkšķas, pag. -pinkšķējos", "pinkšķēties", false), //iepinkšķēties
+		VerbRule.thirdConjRefl("-pukstos, -puksties,", "-pukstas, pag. -pukstējos", "pukstēties", false), //iepukstēties
 		// R
 		VerbRule.thirdConjRefl("-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
 		// S

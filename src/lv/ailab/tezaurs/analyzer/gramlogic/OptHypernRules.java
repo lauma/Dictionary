@@ -322,7 +322,7 @@ public class OptHypernRules
 		VerbRule.firstConjDir("-saucu, -sauc,", "-sauc, pag. -saucu", "saukt"), //aizsaukt
 		VerbRule.firstConjDir("-sāku, -sāc,", "-sāk, pag. -sāku", "sākt"), //aizsākt
 		VerbRule.firstConjDir("-sedzu, -sedz,", "-sedz, pag. -sedzu", "segt"), //aizsegt
-		VerbRule.firstConjDir("-sērsu, -sērs,", "-sērš, pag. -sērsu", "sērst"), //apsērst
+		VerbRule.firstConjDir("-sēršu, -sērs,", "-sērš, pag. -sērsu", "sērst"), //apsērst
 		VerbRule.firstConjDir("-seru, -ser,", "-ser, pag. -sēru", "sērt"), //aizsērt
 		VerbRule.firstConjDir("-sēstu, -sēsti,", "-sēst, pag. -sēdu", "sēst"), //aizsēst
 		VerbRule.firstConjDir("-sēju, -sēj,", "-sēj, pag. -sēju", "sēt"), //apsēt

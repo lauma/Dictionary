@@ -353,9 +353,8 @@ public class DirectRules
 		VerbRule.firstConjDir("-vēstu, -vēsti,", "-vēst, pag. -vēsu", "vēst"), //atvēst
 		VerbRule.firstConjDir("-žirbstu, -žirbsti,", "-žirbst, pag. -žirbu", "žirbt"), // atžirbt
 
-		SimpleRule.of("-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", ".*nikt", 15,
-				new Tuple[]{Features.POS__VERB, Tuple.of(Keys.INFLECT_AS, "nikt"),	Features.PARALLEL_FORMS},
-				null), //apnikt
+		SimpleRule.firstConjDirParallel(
+				"-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", "nikt"), //apnikt
 	};
 
 	/**

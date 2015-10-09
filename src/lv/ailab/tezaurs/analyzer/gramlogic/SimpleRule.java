@@ -116,6 +116,43 @@ public class SimpleRule implements Rule
 	}
 
 	/**
+	 * Izveido SimpleRule 1. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām, bet bez nenoteiksmes homoformām.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar paradigmu 15 un karodziņiem, ka tas ir darbības
+	 * 		   vārds ar paralēlajām formām
+	 * TODO extract stems
+	 */
+	public static SimpleRule firstConjDirParallel(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 15,
+				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
+						Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+			null);
+	}
+
+	/**
+	 * Izveido SimpleRule 1. konjugācijas atgriezeniskajam darbības vārdam ar
+	 * paralēlajām formām, bet bez nenoteiksmes homoformām.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar paradigmu 18 un karodziņiem, ka tas ir darbības
+	 * 		   vārds ar paralēlajām formām
+	 * TODO extract stems
+	 */
+	public static SimpleRule firstConjReflParallel(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 18,
+				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
+						Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				null);
+	}
+
+
+	/**
 	 * Piemērot likumu bez papildus maģijas.
 	 * @param gramText          apstrādājamā gramatika
 	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā

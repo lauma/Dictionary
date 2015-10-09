@@ -92,13 +92,34 @@ public class VerbRule implements Rule
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return VerbRule ar paradigmu 15 un karodziņu par locīšanu
-	 * TODO add IDs from lexicon
+	 * TODO add Stem1, Stem2, Stem3
 	 */
 	public static VerbRule firstConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
-				15, new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+				15, new Tuple[] {Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")}, null);
+	}
+
+	/**
+	 * Izveido VerbRule 1. konjugācijas tiešajam darbības vārdam bez paralēlajām
+	 * formām, bet ar  nenoteiksmes homoformām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return VerbRule ar paradigmu 15 un karodziņiem
+	 * TODO extract stems
+	 */
+	public static VerbRule firstConjDirHomof(
+			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
+	{
+
+		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
+				15, new Tuple[] {Tuple.of(Keys.INFLECT_AS, inflectAs),
+						Features.INFINITIVE_HOMOFORMS}, null);
 	}
 
 	/**
@@ -154,13 +175,34 @@ public class VerbRule implements Rule
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return VerbRule ar paradigmu 18 un karodziņu par locīšanu
-	 * TODO add IDs from lexicon
+	 * TODO extract stems
 	 */
 	public static VerbRule firstConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+				new Tuple[] {Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")}, null);
+	}
+
+	/**
+	 * Izveido VerbRule 1. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * paralēlajām formām, bet ar nenoteiksmes homoformām.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return VerbRule ar paradigmu 18 un karodziņiem
+	 * TODO extract stems
+	 */
+	public static VerbRule firstConjReflHomof(
+			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
+	{
+
+		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
+				18, new Tuple[] {Tuple.of(Keys.INFLECT_AS, inflectAs),
+						Features.INFINITIVE_HOMOFORMS}, null);
 	}
 
 	/**

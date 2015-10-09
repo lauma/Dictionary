@@ -20,6 +20,7 @@ public class Features
 	public static final Tuple<Keys, String> POS__PARTICIPLE_DAMS = Tuple.of(Keys.POS, Values.PARTICIPLE_DAMS.s);
 	public static final Tuple<Keys, String> POS__PRONOUN = Tuple.of(Keys.POS, Values.PRONOUN.s);
 	public static final Tuple<Keys, String> POS__NUMERAL = Tuple.of(Keys.POS, Values.NUMERAL.s);
+	public static final Tuple<Keys, String> POS__FOREIGN = Tuple.of(Keys.POS, Values.FOREIGN.s);
 
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);

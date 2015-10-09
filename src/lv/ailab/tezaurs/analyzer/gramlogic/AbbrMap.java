@@ -128,10 +128,13 @@ public class AbbrMap {
 		pairingFlags.put("kopdz.", Tuple.of(Keys.GENDER, Values.COGENDER.s));
 		
 		binaryFlags.put("intrans.", "Nepārejošs");
+		//pairingFlags.put("intrans.", Features.POS__VERB); // Kas ir ar divdabjiem?
 		binaryFlags.put("intr.", "Nepārejošs");
+		//pairingFlags.put("intr.", Features.POS__VERB);
 		binaryFlags.put("trans.", "Pārejošs");
+		//pairingFlags.put("trans.", Features.POS__VERB);
 		binaryFlags.put("tr.", "Pārejošs");
-		// TODO vai šie vienmēr ir darbības vārdi?
+		//pairingFlags.put("tr.", Features.POS__VERB);
 
 		/*binaryFlags.put("konj.", "Konjugācija");
 		binaryFlags.put("pers.", "Persona");*/
@@ -139,10 +142,11 @@ public class AbbrMap {
 		binaryFlags.put("dem.", "Deminutīvs");
 		binaryFlags.put("Dem.", "Deminutīvs");
 		binaryFlags.put("imperf.", "Imperfektīva forma"); //???
+		//pairingFlags.put("imperf.", Features.POS__VERB); // Kas ir ar divdabjiem?
 		binaryFlags.put("Nol.", "Noliegums"); // Check with other sources!
 		binaryFlags.put("refl.", "Refleksīvs");
-		//pairingFlags.put("refl.", Features.POS__VERB); // Atgriezeniskie lietvārdi
-		binaryFlags.put("Refl.", "Refleksīvs");
+		pairingFlags.put("refl.", Features.POS__VERB); // Laura sapētīja, ka pie lietvārdiem nav.
+		//binaryFlags.put("Refl.", "Refleksīvs");	// šis ir tikai šķirkļos, garmatikās nē, līdz ar to, īsti vajadzīgs nav.
 		//pairingFlags.put("Refl.", Features.POS__VERB);
 
 		// joma
@@ -243,53 +247,53 @@ public class AbbrMap {
 		pairingFlags.put("zool.", Tuple.of(Keys.DOMAIN, "Zooloģija"));
 
 		pairingFlags.put("angļu", Tuple.of(Keys.LANGUAGE, "Angļu"));
-		pairingFlags.put("angļu", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("angļu", Features.POS__FOREIGN);
 		pairingFlags.put("angļu val.", Tuple.of(Keys.LANGUAGE, "Angļu"));
-		pairingFlags.put("angļu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("angļu val.", Features.POS__FOREIGN);
 		pairingFlags.put("arābu", Tuple.of(Keys.LANGUAGE, "Arābu"));
-		pairingFlags.put("arābu", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("arābu", Features.POS__FOREIGN);
 		pairingFlags.put("arābu.", Tuple.of(Keys.LANGUAGE, "Arābu"));
-		pairingFlags.put("arābu.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("arābu.", Features.POS__FOREIGN);
 		pairingFlags.put("arābu val.", Tuple.of(Keys.LANGUAGE, "Arābu"));
-		pairingFlags.put("arābu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("arābu val.", Features.POS__FOREIGN);
 		pairingFlags.put("ebr.", Tuple.of(Keys.LANGUAGE, "Ebreju"));
-		pairingFlags.put("ebr.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("ebr.", Features.POS__FOREIGN);
 		pairingFlags.put("ig. val.", Tuple.of(Keys.LANGUAGE, "Igauņu"));
-		pairingFlags.put("ig. val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("ig. val.", Features.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(Keys.LANGUAGE, "Krievu"));
-		pairingFlags.put("krievu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("krievu val.", Features.POS__FOREIGN);
 		pairingFlags.put("poļu val.", Tuple.of(Keys.LANGUAGE, "Poļu"));
-		pairingFlags.put("poļu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("poļu val.", Features.POS__FOREIGN);
 		pairingFlags.put("turku val.", Tuple.of(Keys.LANGUAGE, "Turku"));
-		pairingFlags.put("turku val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("turku val.", Features.POS__FOREIGN);
 		pairingFlags.put("vācu val.", Tuple.of(Keys.LANGUAGE, "Vācu"));
-		pairingFlags.put("vācu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("vācu val.", Features.POS__FOREIGN);
 		pairingFlags.put("fr.", Tuple.of(Keys.LANGUAGE, "Franču"));
-		pairingFlags.put("fr.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("fr.", Features.POS__FOREIGN);
 		pairingFlags.put("grieķu", Tuple.of(Keys.LANGUAGE, "Grieķu"));
-		pairingFlags.put("grieķu", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("grieķu", Features.POS__FOREIGN);
 		pairingFlags.put("gr.", Tuple.of(Keys.LANGUAGE, "Grieķu"));
-		pairingFlags.put("gr.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("gr.", Features.POS__FOREIGN);
 		pairingFlags.put("gr. val.", Tuple.of(Keys.LANGUAGE, "Grieķu"));
-		pairingFlags.put("gr. val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("gr. val.", Features.POS__FOREIGN);
 		pairingFlags.put("it.", Tuple.of(Keys.LANGUAGE, "Itāļu/Itāliešu"));
-		pairingFlags.put("it.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("it.", Features.POS__FOREIGN);
 		pairingFlags.put("lat.", Tuple.of(Keys.LANGUAGE, "Latīņu"));
-		pairingFlags.put("lat.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("lat.", Features.POS__FOREIGN);
 		pairingFlags.put("latīņu val.", Tuple.of(Keys.LANGUAGE, "Latīņu"));
-		pairingFlags.put("latīņu val.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("latīņu val.", Features.POS__FOREIGN);
 		pairingFlags.put("liet.", Tuple.of(Keys.LANGUAGE, "Lietuviešu"));
-		pairingFlags.put("liet.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("liet.", Features.POS__FOREIGN);
 		pairingFlags.put("port.", Tuple.of(Keys.LANGUAGE, "Portugāļu"));
-		pairingFlags.put("port.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("port.", Features.POS__FOREIGN);
 		pairingFlags.put("sanskr.", Tuple.of(Keys.LANGUAGE, "Sanskrits"));
-		pairingFlags.put("sanskr.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("sanskr.", Features.POS__FOREIGN);
 		pairingFlags.put("sengr.", Tuple.of(Keys.LANGUAGE, "Sengrieķu"));
-		pairingFlags.put("sengr.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("sengr.", Features.POS__FOREIGN);
 		pairingFlags.put("sp.", Tuple.of(Keys.LANGUAGE, "Spāņu"));
-		pairingFlags.put("sp.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("sp.", Features.POS__FOREIGN);
 		pairingFlags.put("ung.", Tuple.of(Keys.LANGUAGE, "Ungāru"));
-		pairingFlags.put("ung.", Tuple.of(Keys.POS, Values.FOREIGN.s));
+		pairingFlags.put("ung.", Features.POS__FOREIGN);
 
 
 

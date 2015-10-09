@@ -80,14 +80,35 @@ public class ThirdPersVerbRule implements Rule
 	 *                  "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
 	 * @return ThirdPersVerbRule ar paradigmu 15 un karodziņu par locīšanu
-	 * TODO add IDs from lexicon
+	 * TODO izvilkt celmus
      */
     public static ThirdPersVerbRule firstConjDir(
             String pattern, String lemmaEnd)
     {
-        return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                15, new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+        return ThirdPersVerbRule.of(pattern, lemmaEnd, 15,
+                new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				null);
     }
+
+	/**
+	 * Izveido ThirdPersVerbRule 1. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajāmc formām, bet ar nenoteiksmes homoformām.
+	 * @param pattern		gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                  	bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return ThirdPersVerbRule ar paradigmu 15 un karodziņiem
+	 * TODO izvilkt celmus
+	 */
+	public static ThirdPersVerbRule firstConjDirHomof(
+			String pattern, String lemmaEnd, String inflectAs)
+	{
+		return ThirdPersVerbRule.of(pattern, lemmaEnd, 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				null);
+	}
 
     /**
 	 * Izveido ThirdPersVerbRule 2. konjugācijas tiešajam darbības vārdam bez
@@ -149,8 +170,45 @@ public class ThirdPersVerbRule implements Rule
             String pattern, String lemmaEnd)
     {
         return ThirdPersVerbRule.of(pattern, lemmaEnd, 18,
-                new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+                new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")}, null);
     }
+
+	/**
+	 * Izveido ThirdPersVerbRule 1. konjugācijas atgriezeniskajam darbības
+	 * vārdam ar paralēlajāmc formām, bet bez nenoteiksmes homoformām.
+	 * @param pattern	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
+	 * TODO add IDs from lexicon
+	 */
+	public static ThirdPersVerbRule firstConjReflParallel(
+			String pattern, String lemmaEnd)
+	{
+		return ThirdPersVerbRule.of(pattern, lemmaEnd, 18,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.PARALLEL_FORMS},
+				null);
+	}
+
+	/**
+	 * Izveido ThirdPersVerbRule 1. konjugācijas atgriezeniskajam darbības
+	 * vārdam bez paralēlajāmc formām, bet ar nenoteiksmes homoformām.
+	 * @param pattern		gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                  	bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
+	 * TODO izvilkt celmus
+	 */
+	public static ThirdPersVerbRule firstConjReflHomof(
+			String pattern, String lemmaEnd, String inflectAs)
+	{
+		return ThirdPersVerbRule.of(pattern, lemmaEnd, 18,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				null);
+	}
 
     /**
 	 * Izveido ThirdPersVerbRule 2. konjugācijas atgriezeniskajam darbības

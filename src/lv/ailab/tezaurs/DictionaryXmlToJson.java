@@ -33,6 +33,7 @@ public class DictionaryXmlToJson
 
 	public static boolean PRINT_FIFTH_DECL_EXC = false;
 	public static boolean PRINT_FIRST_CONJ = false;
+	public static boolean PRINT_NON_INFL = false;
 
 	/**
 	 * 
@@ -41,7 +42,8 @@ public class DictionaryXmlToJson
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		StatsCollector sc = new StatsCollector();
+		StatsCollector sc = new StatsCollector(
+				PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL);
 
 		// Initialize IO.
 		String thesaurusFile = args[0];
@@ -101,7 +103,7 @@ public class DictionaryXmlToJson
 		System.out.println("Drukā statistiku...");
 		BufferedWriter statsOut  = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(statsFile), "UTF-8"));
-		sc.printContents(statsOut, PRINT_FIFTH_DECL_EXC, PRINT_FIRST_CONJ);
+		sc.printContents(statsOut);
 		statsOut.close();
 		//if (makePronunceList) statsOut.close();
 		System.out.println("Viss pabeigts!");

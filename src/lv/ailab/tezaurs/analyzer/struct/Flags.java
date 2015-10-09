@@ -58,4 +58,27 @@ public class Flags
 		return pairings.getAll(key);
 	}
 
+	public boolean test (Keys key, String value)
+	{
+		HashSet<String> found = pairings.getAll(key);
+		if (found == null || found.size() < 1) return false;
+		return (found.contains(value));
+	}
+
+	public boolean test (Keys key, Values value)
+	{
+		return test(key, value.s);
+	}
+
+	public boolean test (Tuple<Keys, String> feature)
+	{
+		return test (feature.first, feature.second);
+	}
+
+	public boolean testKey (Keys key)
+	{
+		HashSet<String> found = pairings.getAll(key);
+		return !(found == null || found.size() < 1);
+	}
+
 }

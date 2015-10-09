@@ -756,13 +756,8 @@ public class Gram  implements HasToJSON
 			if (pos.contains("Salikteņu daļa")) paradigm.add(0); //Prefixes are not words.
 		}
 
-		HashSet<String> binaryFlags = flags.binaryFlags();
-		HashSet<String> cases = flags.getAll(Keys.CASE);
-		if (binaryFlags != null)
-		{
-			if (binaryFlags.contains(Values.NON_INFLECTIVE.s) && cases != null && cases.size() > 0)
-				paradigm.add(29); // Sastingusi forma.
-		}
+		if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
+			paradigm.add(29); // Sastingusi forma.
 	}
 	
 	/**

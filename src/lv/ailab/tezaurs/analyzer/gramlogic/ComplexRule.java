@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
@@ -123,13 +124,11 @@ public class ComplexRule implements Rule
 	public static ComplexRule secondThirdConjDirectAllPers(
 			String patternText, String lemmaRestrictions, boolean presentChange)
 	{
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+        Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return ComplexRule.of(patternText, new Trio[]{
 						Trio.of(lemmaRestrictions, new Integer[] {16, 17}, new Tuple[] {
-								Tuple.of(Keys.POS, Values.VERB.s),
-								Tuple.of(Keys.INFLECTION_WEARDNES, Values.PARALLEL_FORMS.s),
-								Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)})},
+                                Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
 				null);
 
 	}
@@ -145,13 +144,11 @@ public class ComplexRule implements Rule
     public static ComplexRule secondThirdConjReflAllPers(
             String patternText, String lemmaRestrictions, boolean presentChange)
     {
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return ComplexRule.of(patternText, new Trio[]{
 						Trio.of(lemmaRestrictions, new Integer[] {19, 20}, new Tuple[] {
-								Tuple.of(Keys.POS, Values.VERB.s),
-								Tuple.of(Keys.INFLECTION_WEARDNES, Values.PARALLEL_FORMS.s),
-								Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)})},
+                                Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
 				null);
     }
 

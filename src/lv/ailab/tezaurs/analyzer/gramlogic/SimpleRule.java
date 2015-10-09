@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
@@ -97,9 +98,7 @@ public class SimpleRule implements Rule
 	public static SimpleRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return SimpleRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{Tuple.of(Keys.POS, Values.NOUN.s),
-						Tuple.of(Keys.GENDER, Values.FEMININE.s)},
-				null);
+				new Tuple[]{Features.POS__NOUN, Features.GENDER__FEM}, null);
 	}
 	/**
 	 * Metode īsumam.
@@ -112,8 +111,8 @@ public class SimpleRule implements Rule
 	public static SimpleRule secondDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return SimpleRule.of(patternText, lemmaRestrictions, 3,
-				new Tuple[]{Tuple.of(Keys.POS, Values.NOUN.s)},
-				new Tuple[]{Tuple.of(Keys.GENDER, Values.MASCULINE.s)});
+				new Tuple[]{Features.POS__NOUN},
+				new Tuple[]{Features.GENDER__MASC});
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
@@ -36,18 +37,18 @@ public class ThirdPersVerbRule implements Rule
         thirdPersUsually = new SimpleRule(
                 "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
                 new HashSet<Tuple<Keys, String>>() {{
-                        add(Tuple.of(Keys.POS, Values.VERB.s));
+                        add(Features.POS__VERB);
                         if (positiveFlags != null) addAll(positiveFlags); }},
                 new HashSet<Tuple<Keys,String>>() {{
-                        add(Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.THIRD_PERSON.s));
+                        add(Features.USUALLY_USED__THIRD_PERS);
                         if (alwaysFlags != null) addAll(alwaysFlags); }});
         thirdPersOnly = new SimpleRule(
                 "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
                 new HashSet<Tuple<Keys,String>>() {{
-                    add(Tuple.of(Keys.POS, Values.VERB.s));
+                    add(Features.POS__VERB);
                     if (positiveFlags != null) addAll(positiveFlags); }},
                 new HashSet<Tuple<Keys,String>>() {{
-                    add(Tuple.of(Keys.USED_ONLY_IN_FORM, Values.THIRD_PERSON.s));
+                    add(Features.USED_ONLY__THIRD_PERS);
                     if (alwaysFlags != null) addAll(alwaysFlags); }});
     }
 
@@ -128,11 +129,10 @@ public class ThirdPersVerbRule implements Rule
 	public static ThirdPersVerbRule thirdConjDir(
 			String pattern, String lemmaEnd, boolean presentChange)
 	{
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+        Tuple<Keys, String> soundChange = presentChange ?
+                Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return ThirdPersVerbRule.of(pattern, lemmaEnd, 17,
-				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
-				null);
+				new Tuple[]{soundChange}, null);
 
 	}
 
@@ -148,8 +148,8 @@ public class ThirdPersVerbRule implements Rule
     public static ThirdPersVerbRule firstConjRefl(
             String pattern, String lemmaEnd)
     {
-        return ThirdPersVerbRule.of(pattern, lemmaEnd,
-                18, new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+        return ThirdPersVerbRule.of(pattern, lemmaEnd, 18,
+                new Tuple[]{Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
     }
 
     /**
@@ -194,11 +194,10 @@ public class ThirdPersVerbRule implements Rule
 	public static ThirdPersVerbRule thirdConjRefl(
 			String pattern, String lemmaEnd, boolean presentChange)
 	{
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return ThirdPersVerbRule.of(pattern, lemmaEnd, 20,
-				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
-				null);
+				new Tuple[]{soundChange}, null);
 	}
 
     /**

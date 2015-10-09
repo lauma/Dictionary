@@ -3,6 +3,7 @@ package lv.ailab.tezaurs.analyzer.struct;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.utils.MappingSet;
+import lv.ailab.tezaurs.utils.Tuple;
 
 import java.util.HashSet;
 
@@ -29,6 +30,10 @@ public class Flags
 	public void add(Keys key, String value)
 	{
 		pairings.put(key, value);
+	}
+	public void add(Tuple<Keys, String> feature)
+	{
+		pairings.put(feature.first, feature.second);
 	}
 	public void add(Keys key, Values value)
 	{

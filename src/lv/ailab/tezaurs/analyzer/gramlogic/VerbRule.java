@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
@@ -140,11 +141,10 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return  VerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
-				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
-				null);
+				new Tuple[]{soundChange}, null);
 	}
 
 	/**
@@ -159,8 +159,8 @@ public class VerbRule implements Rule
 	public static VerbRule firstConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return VerbRule.of(patternBegin, patternEnd, lemmaEnd,
-				18, new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
+		return VerbRule.of(patternBegin, patternEnd, lemmaEnd, 18,
+				new Tuple[] {Tuple.of(Keys.INFLECT_AS, lemmaEnd)}, null);
 	}
 
 	/**
@@ -203,11 +203,10 @@ public class VerbRule implements Rule
 	public static VerbRule thirdConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		String changeFlag = presentChange ? Values.HAS_PRESENT_SOUNDCHANGE.s :
-				Values.NO_PRESENT_SOUNDCHANGE.s;
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return  VerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
-				new Tuple[]{Tuple.of(Keys.INFLECTION_WEARDNES, changeFlag)},
-				null);
+				new Tuple[]{soundChange}, null);
 	}
 
 	/**

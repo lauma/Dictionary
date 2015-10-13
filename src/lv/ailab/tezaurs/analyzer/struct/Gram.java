@@ -757,7 +757,18 @@ public class Gram  implements HasToJSON
 		}
 
 		if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
+		{
+			if (paradigm.size() > 0)
+				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
+						paradigm.stream().map(t -> toString())
+								.reduce((t1, t2) -> t1 + ", " + t2).orElse("") + ".");
+			/*if (flags.testKey(Keys.POS))
+				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir vārdšķira " +
+						flags.getAll(Keys.POS).stream()
+								.reduce((t1, t2) -> t1 + ", " + t2).orElse("") + ".");
+								*/ // Vietvārdiem var gadīties.
 			paradigm.add(29); // Sastingusi forma.
+		}
 	}
 	
 	/**

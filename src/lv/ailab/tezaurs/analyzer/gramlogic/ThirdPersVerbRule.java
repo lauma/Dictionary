@@ -2,7 +2,6 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Tuple;
 

@@ -23,9 +23,29 @@ import java.util.TreeSet;
  */
 public class StatsCollector
 {
+	/**
+	 * Karodziņš, vai savākt 1. konjugāciju.
+	 */
 	public final boolean collectFirstConj;
+	/**
+	 * Karodziņš, vai savākt 5. deklinācijas izņēmumus.
+	 */
 	public final boolean collectFifthDeclExceptions;
+	/**
+	 * Karodziņš, vai savākt nelokāmos, kam norādīts locījums.
+	 */
 	public final boolean collectNonInflWithCase;
+	/**
+	 * Patvaļīgs atslēgas un vērtības pārītis, pēc kura atlasīt. (Ja te ir null,
+	 * tad kalpo kā karodziņš, ka nevajag šādi atlasīt).
+	 */
+	public final Tuple<Keys, String> collectWithFeature;
+	/**
+	 * Ar kādiem atslēgu/vērtību pārīšiem aprakstīt patvaļīgi atlasītos
+	 * rezultātus. Ja vērtība ir null, tad tiek drukātas visas vērtības ar tādu
+	 * atslēgu.
+	 */
+	public final ArrayList<Tuple<Keys, String>> describeWithFeatures;
 
     public TreeSet<String> binaryFlags = new TreeSet<>();
     public TreeSet<String> pairingKeys = new TreeSet<>();
@@ -53,14 +73,21 @@ public class StatsCollector
 	 * Vārds, šķirkļavāds, homonīma indekss.
 	 */
     public ArrayList<Trio<String, String, String>> fifthDeclExceptions = new ArrayList<>();
+	/**
+	 * Šķirkļavāds, homonīma indekss, karodziņi.
+	 */
+	public ArrayList<Trio<String, String, ArrayList<String>>> entriesWithSelectedFeature = new ArrayList<>();
 
 	public StatsCollector (
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
-			boolean collectNonInflWithCase)
+			boolean collectNonInflWithCase, Tuple<Keys, String> collectFeature,
+			ArrayList<Tuple<Keys, String>> descriptionFeatures)
 	{
 		this.collectFirstConj = collectFirstConj;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
 		this.collectNonInflWithCase = collectNonInflWithCase;
+		this.collectWithFeature = collectFeature;
+		this.describeWithFeatures = descriptionFeatures;
 	}
 
 
@@ -107,6 +134,24 @@ public class StatsCollector
 					h.gram.flags.test(Features.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
         }
+
+		if (collectWithFeature != null && entryFlags.test(collectWithFeature))
+		{
+			ArrayList<String> flags = new ArrayList<>();
+			if (describeWithFeatures != null)
+				for (Tuple<Keys, String> feature : describeWithFeatures)
+			{
+				if (feature.second == null)
+					flags.add(feature.first.str + " = " +
+							entryFlags.getAll(feature.first).stream().reduce((s1, s2) -> s1+" + "+s2));
+				else if (entryFlags.test(feature))
+					flags.add(feature.first.str + " = " + feature.second);
+				else flags.add(feature.first.str + " != " + feature.second);
+			}
+			entriesWithSelectedFeature.add(Trio.of(
+					entry.head.lemma.text, entry.homId,
+					flags));
+		}
 
     }
 
@@ -177,6 +222,21 @@ public class StatsCollector
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
 							.escape(t.second) + "\", \"" + JSONObject
 							.escape(t.third) + "\"]")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+			out.write("\n]");
+		}
+
+		if (collectWithFeature != null && entriesWithSelectedFeature != null
+				&& entriesWithSelectedFeature.size() > 0)
+		{
+			out.write(",\n\"" + collectWithFeature.first.str + " = "
+					+ collectWithFeature.second + " (šķirkļi)\":[\n");
+			out.write(entriesWithSelectedFeature.stream().map(t ->
+					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +
+							JSONObject.escape(t.second) + "\", \"" +
+							t.third.stream().map(f -> JSONObject.escape(f))
+									.reduce((f1, f2) -> f1 + "\", \"" + f2).orElse("") +
+							"\"]")
 					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
 			out.write("\n]");
 		}

@@ -92,7 +92,8 @@ public class AbbrMap {
 
 		pairingFlags.put("persv.", Features.POS__NOUN);
 		binaryFlags.put("persv.", "Personvārds");
-		pairingFlags.put("vietv.", Features.POS__NOUN); // jāuzmanās ar mazciemu "Siltais"
+		//pairingFlags.put("vietv.", Features.POS__NOUN); // jāuzmanās ar mazciemu "Siltais"
+														// Ko darīt ar sastingušajām formām?
 		binaryFlags.put("vietv.", "Vietvārds");
 
 		binaryFlags.put("nelok.", Values.NON_INFLECTIVE.s);
@@ -308,6 +309,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti bērnu val.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Bērnu valoda"));
 		pairingFlags.put("apv.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Apvidvārds"));
 		pairingFlags.put("vēst.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Vēsturisks"));
+		// TODO vēst. laikam ir domēns nevis ierobežojums!!!!!!!!!
 		pairingFlags.put("novec.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Novecojis"));
 		pairingFlags.put("neakt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Neaktuāls"));
 		pairingFlags.put("poēt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Poētiska stilistiskā nokrāsa"));

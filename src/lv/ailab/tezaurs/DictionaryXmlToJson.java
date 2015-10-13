@@ -19,11 +19,16 @@
 package lv.ailab.tezaurs;
 
 import java.io.*;
+import java.security.Key;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import lv.ailab.tezaurs.analyzer.StatsCollector;
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.io.StaxReader;
+import lv.ailab.tezaurs.utils.Tuple;
 import org.w3c.dom.Node;
 
 import lv.ailab.tezaurs.analyzer.struct.Entry;
@@ -34,7 +39,13 @@ public class DictionaryXmlToJson
 	public static boolean PRINT_FIFTH_DECL_EXC = false;
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
-
+	public static Tuple<Keys, String> PRINT_WITH_FEATURE = null;
+	//public static Tuple<Keys, String> PRINT_WITH_FEATURE = Tuple.of(Keys.USAGE_RESTRICTIONS, "Vēsturisks");
+	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
+	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+		add(Tuple.of(Keys.POS, Values.FOREIGN.s));
+		add(Tuple.of(Keys.OTHER_FLAGS, "Vietvārds"));
+	}};//*/
 	/**
 	 * 
 	 * @param args File name expected as first argument.
@@ -43,7 +54,8 @@ public class DictionaryXmlToJson
 	public static void main(String[] args) throws Exception
 	{
 		StatsCollector sc = new StatsCollector(
-				PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL);
+				PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
+				PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC);
 
 		// Initialize IO.
 		String thesaurusFile = args[0];

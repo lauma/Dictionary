@@ -10,7 +10,7 @@ public enum Keys
 	/**
 	 * Vārdšķiras, saīsinājumi, salikteņu daļas, priedēkļi, vārdi svešvalodā
 	 */
-	POS("Vārdšķira"),
+	POS("Kategorija"),
 	/**
 	 * Valoda, kurā ir šķirkļa vārds, ja tā nav latviešu
 	 */
@@ -107,15 +107,15 @@ public enum Keys
 	OTHER_FLAGS("Citi"),
 	;
 
-	public String str;
+	public String s;
 
 	Keys(String name)
 	{
-		this.str = name;
+		this.s = name;
 	}
 
 	public String toString()
 	{
-		return str;
+		return s;
 	}
 }

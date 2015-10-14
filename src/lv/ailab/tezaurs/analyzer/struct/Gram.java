@@ -147,6 +147,10 @@ public class Gram  implements HasToJSON
 		
 		// Mēģina izdomāt paradigmu no karodziņiem.
 		paradigmFromFlags(lemma);
+
+		// Skatoties uz visiem atpazītajiem karodziņiem, noteiktu karodziņu
+		// pielikšana vai noņemšana.
+		postprocessFlags();
 		
 		cleanupLeftovers();
 		// TODO cleanup altLemmas;
@@ -770,7 +774,19 @@ public class Gram  implements HasToJSON
 			paradigm.add(29); // Sastingusi forma.
 		}
 	}
-	
+
+	/**
+	 * Analizējot atpazītos karodziņus, pieliek vai noņem (varbūt arī to vēlāk
+	 * vajadzēs) karodziņus.
+	 */
+	private void postprocessFlags()
+	{
+		// Šis tiek darīts tāpēc, ka "vēst." oriģinālajā vārdnīcā nozīmē visu un neko.
+		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PERSON_NAME))
+			flags.add(Features.DOMAIN__HIST_PERSON);
+		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PLACE_NAME))
+			flags.add(Features.DOMAIN__HIST_PLACE);
+	}
 	/**
 	 * This should be called after something is removed from leftovers.
 	 */

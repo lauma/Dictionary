@@ -37,6 +37,13 @@ public enum Values
 	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),
 	PARTICIPLE_DAMS("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)"),
 
+	PLACE_NAME("Vietvārds"),
+	PERSON_NAME("Personvārds"),
+
+	HISTORICAL("Vēsturisks"),
+
+	HISTORICAL_PLACE("Vēsturisks vietvārds"),
+	HISTORICAL_PERSON("Vēsturisks personvārds"),
 
 	THIRD_PERSON("3. persona"),
 

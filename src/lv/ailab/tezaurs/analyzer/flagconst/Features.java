@@ -34,6 +34,11 @@ public class Features
 	public static final Tuple<Keys, String> USED_ONLY__THIRD_PERS = Tuple.of(Keys.USED_ONLY_IN_FORM, Values.THIRD_PERSON.s);
 	public static final Tuple<Keys, String> USED_ONLY__PLURAL = Tuple.of(Keys.USED_ONLY_IN_FORM, Values.PLURAL.s);
 
+	public static final Tuple<Keys, String> USAGE_RESTR__HISTORICAL = Tuple.of(Keys.USAGE_RESTRICTIONS, Values.HISTORICAL.s);
+
+	public static final Tuple<Keys, String> DOMAIN__HIST_PERSON = Tuple.of(Keys.DOMAIN, Values.HISTORICAL_PERSON.s);
+	public static final Tuple<Keys, String> DOMAIN__HIST_PLACE = Tuple.of(Keys.DOMAIN, Values.HISTORICAL_PLACE.s);
+
 	public static final Tuple<Keys, String> ENTRYWORD__PLURAL = Tuple.of(Keys.ENTRYWORD_WEARDNES, Values.PLURAL.s);
 	public static final Tuple<Keys, String> ENTRYWORD__SINGULAR = Tuple.of(Keys.ENTRYWORD_WEARDNES, Values.SINGULAR.s);
 	public static final Tuple<Keys, String> ENTRYWORD__FEM = Tuple.of(Keys.ENTRYWORD_WEARDNES, Values.FEMININE.s);
@@ -48,4 +53,8 @@ public class Features
 	public static final Tuple<Keys, String> UNCLEAR_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_PARADIGM.s);
 
 	public static final Tuple<Keys, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE.s);
+
+	public static final Tuple<Keys, String> PERSON_NAME = Tuple.of(Keys.OTHER_FLAGS, Values.PERSON_NAME.s);
+	public static final Tuple<Keys, String> PLACE_NAME = Tuple.of(Keys.OTHER_FLAGS, Values.PLACE_NAME.s);
+
 }

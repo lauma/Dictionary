@@ -188,6 +188,7 @@ public class AbbrMap {
 		pairingFlags.put("grāmatv.", Tuple.of(Keys.DOMAIN, "Grāmatvedība"));
 		pairingFlags.put("hidr.", Tuple.of(Keys.DOMAIN, "Hidroloģija"));
 		pairingFlags.put("hidrotehn.", Tuple.of(Keys.DOMAIN, "Hidrotehnika"));
+		pairingFlags.put("hist.", Tuple.of(Keys.DOMAIN, "Historigrāfija"));
 		pairingFlags.put("inf.", Tuple.of(Keys.DOMAIN, "Informātika"));
 		pairingFlags.put("jur.", Tuple.of(Keys.DOMAIN, "Jurisprudence"));
 		pairingFlags.put("jūrn.", Tuple.of(Keys.DOMAIN, "Jūrniecība"));
@@ -308,7 +309,7 @@ public class AbbrMap {
 		pairingFlags.put("bērnu val.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Bērnu valoda"));
 		pairingFlags.put("parasti bērnu val.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Bērnu valoda"));
 		pairingFlags.put("apv.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Apvidvārds"));
-		pairingFlags.put("vēst.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Vēsturisks"));
+		pairingFlags.put("vēst.", Tuple.of(Keys.USAGE_RESTRICTIONS, Values.HISTORICAL.s));
 		// TODO vēst. laikam ir domēns nevis ierobežojums!!!!!!!!!
 		pairingFlags.put("novec.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Novecojis"));
 		pairingFlags.put("neakt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Neaktuāls"));

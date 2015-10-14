@@ -24,6 +24,10 @@ import java.util.TreeSet;
 public class StatsCollector
 {
 	/**
+	 * Karodziņš, vai savākt izrunas.
+	 */
+	public final boolean collectPrononcations;
+	/**
 	 * Karodziņš, vai savākt 1. konjugāciju.
 	 */
 	public final boolean collectFirstConj;
@@ -78,11 +82,12 @@ public class StatsCollector
 	 */
 	public ArrayList<Trio<String, String, ArrayList<String>>> entriesWithSelectedFeature = new ArrayList<>();
 
-	public StatsCollector (
+	public StatsCollector ( boolean collectPrononcations,
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, Tuple<Keys, String> collectFeature,
 			ArrayList<Tuple<Keys, String>> descriptionFeatures)
 	{
+		this.collectPrononcations = collectPrononcations;
 		this.collectFirstConj = collectFirstConj;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
 		this.collectNonInflWithCase = collectNonInflWithCase;
@@ -116,8 +121,9 @@ public class StatsCollector
 				if (!f.first.equals(Keys.OTHER_FLAGS))
 					pairingKeys.add(f.first + ": " + f.second);
 
-        for (String p : entry.collectPronunciations())
-            pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
+		if (collectPrononcations)
+        	for (String p : entry.collectPronunciations())
+            	pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
         for (Header h : entry.getAllHeaders())
         {
 			if (h.gram == null) continue;
@@ -142,11 +148,11 @@ public class StatsCollector
 				for (Tuple<Keys, String> feature : describeWithFeatures)
 			{
 				if (feature.second == null)
-					flags.add(feature.first.str + " = " +
+					flags.add(feature.first.s + " = " +
 							entryFlags.getAll(feature.first).stream().reduce((s1, s2) -> s1+" + "+s2));
 				else if (entryFlags.test(feature))
-					flags.add(feature.first.str + " = " + feature.second);
-				else flags.add(feature.first.str + " != " + feature.second);
+					flags.add(feature.first.s + " = " + feature.second);
+				else flags.add(feature.first.s + " != " + feature.second);
 			}
 			entriesWithSelectedFeature.add(Trio.of(
 					entry.head.lemma.text, entry.homId,
@@ -179,20 +185,22 @@ public class StatsCollector
         out.write(binaryFlags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
                 .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
         out.write("\n]");
-		out.write(",\n\"Pārīškarodziņu atslēgas\":[\n");
+		out.write(",\n\"Pārīškarodziņi\":[\n");
 		out.write(pairingKeys.stream()
 				.map(f -> "\t\"" + JSONObject.escape(f) + "\"")
 				.reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
 		out.write("\n]");
 
-        out.write(",\n\"Izrunas transkripcijas\":[\n");
-        out.write(pronunciations.stream().map(t ->
-                "\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
-                        .escape(t.second) + "\", \"" + JSONObject
-                        .escape(t.third) + "\"]")
-                .reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
-		out.write("\n]");
-
+		if (collectPrononcations)
+		{
+			out.write(",\n\"Izrunas transkripcijas\":[\n");
+			out.write(pronunciations.stream().map(t ->
+					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+							.escape(t.second) + "\", \"" + JSONObject
+							.escape(t.third) + "\"]")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+			out.write("\n]");
+		}
 		if (collectFifthDeclExceptions && fifthDeclExceptions != null &&
 				fifthDeclExceptions.size() > 0)
 		{
@@ -229,7 +237,7 @@ public class StatsCollector
 		if (collectWithFeature != null && entriesWithSelectedFeature != null
 				&& entriesWithSelectedFeature.size() > 0)
 		{
-			out.write(",\n\"" + collectWithFeature.first.str + " = "
+			out.write(",\n\"" + collectWithFeature.first.s + " = "
 					+ collectWithFeature.second + " (šķirkļi)\":[\n");
 			out.write(entriesWithSelectedFeature.stream().map(t ->
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +

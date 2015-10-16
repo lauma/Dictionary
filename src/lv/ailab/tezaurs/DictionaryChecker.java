@@ -20,7 +20,7 @@ public class DictionaryChecker
 	public static String settingsPath = "./saraksti/";
 
 	public static void main(String[] args)
-    throws IOException, InvocationTargetException, IllegalAccessException
+    throws IOException
     {
 		// pārbaude vai ir izveidota datu failu mape.
 		File folder = new File(inputDataPath);
@@ -55,19 +55,19 @@ public class DictionaryChecker
 
 		File[] listOfFiles = folder.listFiles();
 
-		int allFileCount = listOfFiles.length;
 		// masīvs iet cauri visiem mapes "files"
-		for (int p = 0; p < allFileCount; p++)
+		if (listOfFiles!= null) for (File listOfFile : listOfFiles)
 		{
 			String ext = ""; // faila saīsinājums
-			fileName = listOfFiles[p].getName(); //iegūts faila nosaukums
+			fileName = listOfFile.getName(); //iegūts faila nosaukums
 			int s = fileName.lastIndexOf('.');
 			if (s > 0)
 			{
-				ext = listOfFiles[p].getName().substring(s+1);
+				ext = listOfFile.getName().substring(s + 1);
 			}
 			//tiek apstrādāti tikai tie faili kuriem galā ir saīsinājums doc
-			if (listOfFiles[p].isFile() && ext.equals("doc") && !fileName.startsWith("~"))
+			if (listOfFile.isFile() && ext.equals("doc") && !fileName
+					.startsWith("~"))
 			{
 				// Inicē.
 				Dictionary dictFile = Dictionary.loadFromFile(
@@ -75,7 +75,7 @@ public class DictionaryChecker
 
 				// Apstrādā.
 				dictFile.check();
-				
+
 				// Izdrukā rezultātus.
 				dictFile.printResults(table);
 			}

@@ -137,7 +137,7 @@ public class ComplexRule implements Rule
 			tmp.add(Trio.of(Pattern.compile(t.first),
 					Collections.unmodifiableSet(new HashSet<>(Arrays.asList(t.second))),
 					Collections.unmodifiableSet(new HashSet<Tuple<Keys,String>>() {{
-							addAll(Arrays.asList(t.third));
+							if (t.third != null) addAll(Arrays.asList(t.third));
 							add(Features.POS__NOUN);}})));
 		return new ComplexRule(patternText, tmp,
 				alwaysFlags == null ? null :

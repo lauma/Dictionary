@@ -168,8 +168,8 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam bez paralēlajām
-	 * formām tikai 3. personas formām.
+	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām tikai 3. personas formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -179,6 +179,21 @@ public class RegularVerbRule implements Rule
 			String lemmaEnd)
 	{
 		return new RegularVerbRule(patternEnd, lemmaEnd, 16, null, null);
+	}
+
+	/**
+	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām tikai 3. personas formām.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return RegularVerbRule ar paradigmu 16 un tikai 3.perosnas formām
+	 */
+	public static RegularVerbRule secondConjDir3PersParallel(String patternEnd,
+			String lemmaEnd)
+	{
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 16,
+				new Tuple[] {Features.PARALLEL_FORMS}, null);
 	}
 
 	/**
@@ -201,7 +216,7 @@ public class RegularVerbRule implements Rule
 
 	/**
 	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam bez
-	 * paralēlajāmc formām.
+	 * paralēlajām formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
 	 *                  "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
@@ -215,6 +230,25 @@ public class RegularVerbRule implements Rule
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 17,
 				new Tuple[]{soundChange}, null);
+
+	}
+
+	/**
+	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām, kam visām ir vienādas mijas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
+	 *                  "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return ThirdPersVerbRule ar paradigmu 17
+	 */
+	public static RegularVerbRule thirdConjDir3PersParallel(
+			String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 17,
+				new Tuple[]{Features.PARALLEL_FORMS, soundChange}, null);
 
 	}
 

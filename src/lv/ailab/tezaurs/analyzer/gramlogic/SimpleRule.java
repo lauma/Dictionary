@@ -88,6 +88,30 @@ public class SimpleRule implements Rule
 	}
 
 	/**
+	 * Metode īsumam - pie positiveFlags pieliek, ka vārdšķira ir lietvārds.
+	 * Izveido SimpleRule, ja karodziņi doti masīvos, nevis kopās.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @param paradigmId		paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem.
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                          atbilst attiecīgajam šablonam.
+	 * @return	jauns SimpleRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
+	 */
+	public static SimpleRule noun(String patternText, String lemmaRestrictions,
+			int paradigmId, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
+	{
+		HashSet<Tuple<Keys,String>> fullPosFlags = new HashSet<>();
+		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
+		fullPosFlags.add(Features.POS__NOUN);
+		return new SimpleRule(patternText, lemmaRestrictions, paradigmId, fullPosFlags,
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+	}
+
+	/**
 	 * Metode īsumam.
 	 * Izveido SimpleRule 5. deklinācijas sieviešu dzimtes lietvārdiem ar
 	 * šķirkļa vārdu vienskaitlī.
@@ -114,8 +138,6 @@ public class SimpleRule implements Rule
 				new Tuple[]{Features.POS__NOUN},
 				new Tuple[]{Features.GENDER__MASC});
 	}
-
-
 
 
 	/**

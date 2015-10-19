@@ -21,9 +21,9 @@ public class DirectRules
 	 */
 	public static final Rule[] other = {
 		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
-		SimpleRule.of("ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 0,
-				new Tuple[] {Features.POS__NOUN, Features.POS__REFL_NOUN},
-				new Tuple[] {Features.GENDER__FEM}), //aizbildināšanās
+		SimpleRule.noun(
+				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 0,
+				new Tuple[] {Features.POS__REFL_NOUN}, new Tuple[] {Features.GENDER__FEM}), //aizbildināšanās
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		ComplexRule.of("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", new Trio[] {
 					Trio.of(".*a", new Integer[] {7, 8}, new Tuple[] {Features.POS__NOUN})},
@@ -33,8 +33,7 @@ public class DirectRules
 		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
 		SimpleRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
 				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN}), // aerobs
-		SimpleRule.of("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1,
-				new Tuple[]{Features.POS__NOUN},
+		SimpleRule.noun("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
 				new Tuple[]{Features.GENDER__MASC, Tuple.of(Keys.NUMBER, Values.SINGULAR.s)}), // acteks
 
 		// Paradigmas: 7, 11
@@ -54,13 +53,11 @@ public class DirectRules
 				new Tuple[] {Features.GENDER__FEM}), // ādmine, bākuguns, bārkšsaknes
 
 		// Paradigma: 11 - 6. dekl.
-		SimpleRule.of("-ts, -šu", ".*ts", 11,
-				new Tuple[] {Features.POS__NOUN}, new Tuple[] {Features.GENDER__FEM}), //abonentpults
-		SimpleRule.of("-vs, -vju", ".*vs", 11,
-				new Tuple[] {Features.POS__NOUN}, new Tuple[] {Features.GENDER__FEM}), //adatzivs
+		SimpleRule.noun("-ts, -šu", ".*ts", 11, new Tuple[] {Features.GENDER__FEM}, null), //abonentpults
+		SimpleRule.noun("-vs, -vju", ".*vs", 11, new Tuple[] {Features.GENDER__FEM}, null), //adatzivs
 
-		SimpleRule.of("-žu, v.", ".*ļaudis", 11,
-				new Tuple[] {Features.POS__NOUN, Features.ENTRYWORD__PLURAL, Features.USED_ONLY__PLURAL},
+		SimpleRule.noun("-žu, v.", ".*ļaudis", 11,
+				new Tuple[] {Features.ENTRYWORD__PLURAL, Features.USED_ONLY__PLURAL},
 				new Tuple[] {Features.GENDER__MASC}), //ļaudis
 
 		// Paradigmas: 13, 14 - īpašības vārdi daudzskaitlī
@@ -77,12 +74,10 @@ public class DirectRules
 				new Tuple[] {Features.POS__PRONOUN}), //abi
 
 		// Paradigma: 30 - jaundzimušais, pēdējais
-		SimpleRule.of("-šā, v. -šās, s.", ".*ušais", 30,
-				new Tuple[] {Features.POS__ADJ, Features.POS__NOUN},
-				null), //iereibušais	//TODO vai te vajag alternatīvo lemmu?
-		SimpleRule.of("-ā, v.", ".*ais", 30,
-				new Tuple[] {Features.POS__ADJ, Features.POS__NOUN},
-				new Tuple[] {Features.GENDER__MASC}), //pirmdzimtais
+		SimpleRule.noun("-šā, v. -šās, s.", ".*ušais", 30,
+				new Tuple[] {Features.POS__ADJ}, null), //iereibušais	//TODO vai te vajag alternatīvo lemmu?
+		SimpleRule.noun("-ā, v.", ".*ais", 30,
+				new Tuple[] {Features.POS__ADJ}, new Tuple[] {Features.GENDER__MASC}), //pirmdzimtais
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
@@ -147,42 +142,41 @@ public class DirectRules
 		SimpleRule.fifthDeclStd("-es, dsk. ģen. -upju", ".*upe"), //dzirnavupe
 
 		// Nestandartīgie
-		SimpleRule.of("-es, s., dsk. ģen. -bju", ".*be", 9,
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM}), //acetilsalicilskābe
-		SimpleRule.of("-es, s. dsk. -es, -bju", ".*be", 9,
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM}), //astilbe
+		SimpleRule.noun("-es, s., dsk. ģen. -bju", ".*be", 9,
+				null, new Tuple[]{Features.GENDER__FEM}), //acetilsalicilskābe
+		SimpleRule.noun("-es, s. dsk. -es, -bju", ".*be", 9,
+				null, new Tuple[]{Features.GENDER__FEM}), //astilbe
 
-		SimpleRule.of("-ļu, s.", ".*les", 9,
-				new Tuple[]{Features.POS__NOUN, Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.GENDER__FEM}), //bailes
+		SimpleRule.noun("-ļu, s.", ".*les", 9,
+				new Tuple[]{Features.ENTRYWORD__PLURAL}, new Tuple[]{Features.GENDER__FEM}), //bailes
 
 		// Miju varianti
-		SimpleRule.of("-es, dsk. ģen. -stu, arī -šu", ".*ste", 9,
-				new Tuple[]{Features.POS__NOUN, Features.GENDER__FEM,
-						Tuple.of(Keys.INFLECTION_WEARDNES, "Miju varianti: -stu/-šu")},
+		SimpleRule.noun("-es, dsk. ģen. -stu, arī -šu", ".*ste", 9,
+				new Tuple[]{Features.GENDER__FEM, Tuple.of(
+						Keys.INFLECTION_WEARDNES, "Miju varianti: -stu/-šu")},
 				null), //dzeņaukste
 
 		// Bez mijām
-		SimpleRule.of("-es, dsk. ģen. -du", ".*de", 9,
-				new  Tuple[] {Features.POS__NOUN, Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
+		SimpleRule.noun("-es, dsk. ģen. -du", ".*de", 9,
+				new  Tuple[] {Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
 				null), // diplomande
-		SimpleRule.of("-es, dsk. ģen. -fu", ".*fe", 9,
-				new  Tuple[] {Features.POS__NOUN, Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
+		SimpleRule.noun("-es, dsk. ģen. -fu", ".*fe", 9,
+				new  Tuple[] {Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
 				null), //arheogrāfe
-		SimpleRule.of("-es, dsk. ģen. mufu", ".*mufe", 9,
-				new Tuple[] {Features.POS__NOUN, Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
+		SimpleRule.noun("-es, dsk. ģen. mufu", ".*mufe", 9,
+				new Tuple[] {Features.GENDER__FEM, Features.NO_SOUNDCHANGE},
 				null), //mufe
-		SimpleRule.of("-es, dsk. ģen. -pu", ".*pe", 9,
-				new Tuple[] {Features.POS__NOUN, Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
+		SimpleRule.noun("-es, dsk. ģen. -pu", ".*pe", 9,
+				new Tuple[] {Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
 				null), // filantrope
-		SimpleRule.of("-es, dsk. ģen. -su", ".*se", 9,
-				new  Tuple[] {Features.POS__NOUN, Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
+		SimpleRule.noun("-es, dsk. ģen. -su", ".*se", 9,
+				new  Tuple[] {Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
 				null), // bise
-		SimpleRule.of("-es, dsk. ģen. -tu", ".*te", 9,
-				new  Tuple[] {Features.POS__NOUN, Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
+		SimpleRule.noun("-es, dsk. ģen. -tu", ".*te", 9,
+				new  Tuple[] {Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
 				null), // antisemīte
-		SimpleRule.of("-es, dsk. ģen. -zu", ".*ze", 9,
-				new  Tuple[] {Features.POS__NOUN, Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
+		SimpleRule.noun("-es, dsk. ģen. -zu", ".*ze", 9,
+				new  Tuple[] {Features.NO_SOUNDCHANGE, Features.GENDER__FEM},
 				null), // autobāze
 	};
 
@@ -315,9 +309,8 @@ public class DirectRules
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
 		// Paradigma: 3 - Lietvārds 2. deklinācija -is
-		SimpleRule.of("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
-				new Tuple[]{Features.POS__NOUN, Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.GENDER__MASC}), //afroamerikāņi
+		SimpleRule.noun("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
+				new Tuple[]{Features.ENTRYWORD__PLURAL}, new Tuple[]{Features.GENDER__MASC}), //afroamerikāņi
 			// konflikts ar "bizmanis"
 
 		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
@@ -332,8 +325,8 @@ public class DirectRules
 					Trio.of(".*ņas", new Integer[] {7}, new Tuple[] {Features.POS__NOUN, Features.GENDER__FEM, Features.ENTRYWORD__PLURAL})},
 				null), // agrene, aizlaidnes
 		// Paradigma: 3
-		SimpleRule.of("-ņa", ".*nis", 3,
-				new Tuple[]{Features.POS__NOUN, Features.GENDER__FEM}, null), // abolainis
+		SimpleRule.noun("-ņa", ".*nis", 3,
+				new Tuple[]{Features.GENDER__FEM}, null), // abolainis
 	};
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
@@ -377,7 +370,12 @@ public class DirectRules
 				new Tuple[]{Features.POS__VERB}, null), //acot
 
 		// Darbības vārdu specifiskie likumi.
-		// Nav.
+		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Paralēlās formas.
+		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
+		// galotne "-ē" - 3. konjugācijai būtu bez.
+		RegularVerbRule.secondConjDir3PersParallel(
+				"-ē, pag. -ēja (retāk -gluma, 1. konj.)", "glumēt"), //aizglumēt
 	};
 
 	/**
@@ -386,17 +384,15 @@ public class DirectRules
 	 * Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 	 */
 	public static final Rule[] directThirdConjVerb = {
-
+		// Visām personām.
 		RegularVerbRule.thirdConjDir("-u, -i,", "-a, pag. -īju", "īt", false), //aizsūtīt
 		RegularVerbRule.thirdConjDir("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
-		RegularVerbRule
-				.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
-
+		RegularVerbRule.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
+		// Tikai trešajai personai.
 		RegularVerbRule.thirdConjDir3Pers("-ina, pag. -ināja", "ināt", false), //aizducināt
 
 		// Darbības vārdu specifiskie likumi.
-		RegularVerbRule
-				.thirdConjDir("-bildu, -bildi,", "-bild, pag. -bildēju", "bildēt", false), //atbildēt
+		RegularVerbRule.thirdConjDir("-bildu, -bildi,", "-bild, pag. -bildēju", "bildēt", false), //atbildēt
 	};
 
 	/**
@@ -494,16 +490,11 @@ public class DirectRules
 	 */
 	public static final Rule[] reflSecondConjVerb = {
 		// Galotņu šabloni.
-		RegularVerbRule
-				.secondConjRefl("-ojos, -ojies,", "-ojas, pag. -ojos", "oties"), //aiztuntuļoties, apgrēkoties
-		RegularVerbRule
-				.secondConjRefl("-ējos, -ējies,", "-ējas, pag. -ējos", "ēties"), //abstrahēties
-		RegularVerbRule
-				.secondConjRefl("-ājos, -ājies,", "-ājas, pag. -ājos", "āties"), //aizdomāties
-		RegularVerbRule
-				.secondConjRefl("-ījos, -ījies,", "-ījas, pag. -ījos", "īties"), //atpestīties
-		RegularVerbRule
-				.secondConjRefl("-inos, -inies,", "-inās, pag. -inājos", "ināties"), //atspirināties
+		RegularVerbRule.secondConjRefl("-ojos, -ojies,", "-ojas, pag. -ojos", "oties"), //aiztuntuļoties, apgrēkoties
+		RegularVerbRule.secondConjRefl("-ējos, -ējies,", "-ējas, pag. -ējos", "ēties"), //abstrahēties
+		RegularVerbRule.secondConjRefl("-ājos, -ājies,", "-ājas, pag. -ājos", "āties"), //aizdomāties
+		RegularVerbRule.secondConjRefl("-ījos, -ījies,", "-ījas, pag. -ījos", "īties"), //atpestīties
+		RegularVerbRule.secondConjRefl("-inos, -inies,", "-inās, pag. -inājos", "ināties"), //atspirināties
 
 		RegularVerbRule.secondConjRefl3Pers("-ējas, pag. -ējās", "ēties"), //absorbēties
 		RegularVerbRule.secondConjRefl3Pers("-ojas, pag. -ojās", "oties"), //daudzkāršoties

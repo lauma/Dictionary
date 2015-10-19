@@ -23,12 +23,12 @@ public class OptHypernRules
 		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
 		 * declension nouns.
 		 */
-		SimpleRule.of("-acs, dsk. ģen. -acu, s.", ".*acs", 11,
-				new Tuple[] {Features.POS__NOUN}, new Tuple[] {Features.GENDER__FEM}), //uzacs, acs
-		SimpleRule.of("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11,
-				new Tuple[] {Features.POS__NOUN}, new Tuple[] {Features.GENDER__FEM}), //aizkrāsns
-		SimpleRule.of("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11,
-				new Tuple[] {Features.POS__NOUN}, new Tuple[] {Features.GENDER__FEM}), //agrārvalsts
+		SimpleRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, null,
+				new Tuple[] {Features.GENDER__FEM}), //uzacs, acs
+		SimpleRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
+				new Tuple[] {Features.GENDER__FEM}), //aizkrāsns
+		SimpleRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
+				new Tuple[] {Features.GENDER__FEM}), //agrārvalsts
 
 		/* Paradigm 25: Pronouns
 		 */
@@ -59,7 +59,7 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Netoteiksmes homoformas.
 		FirstConjRule.directHomof("-aužu, -aud,", "-auž, pag. -audu", "aust",
-						"\"aust\" (audumu)"), //aizaust 2
+				"\"aust\" (audumu)"), //aizaust 2
 		FirstConjRule.directHomof("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt",
 				"\"degt\" (kādu citu)"), //aizdegt 1
 		FirstConjRule.directHomof("-degu, -dedz,", "-deg, pag. -degu", "degt",
@@ -115,9 +115,9 @@ public class OptHypernRules
 				"-spurdzu, -spurdz, -spurdz, arī -spurgst, pag. -spurdzu", "spurgt"), //aizspurgt
 
 		// Izņēmums.
-		RegularVerbRule
-				.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
-						new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīt\"")}, null), //atpazīt
+		FirstConjRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīt\"")}, null,
+				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
 
 		// Standartizētie.
 		// A
@@ -451,15 +451,14 @@ public class OptHypernRules
 		// O, P, R, S, Š, T, U, V, Z
 
 		// Pilnīgs nestandarts.
-		SimpleRule.of("-teicu, -teic, -teic (tagadnes formas parasti nelieto), pag. -teicu", ".*teikt", 15,
-				new Tuple[]{Features.POS__VERB,
-						Tuple.of(Keys.INFLECT_AS, "\"teikt\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")}), //atteikt
-		SimpleRule.of("3. pers. -guldz, pag. -guldza", ".*gulgt", 15,
-				new Tuple[]{Features.POS__VERB,
-						Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
-				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), //aizgulgt
-
+		FirstConjRule.of("-teicu, -teic, -teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikt\"")},
+				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")},
+				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
+		FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
+				new Tuple[]{Features.USUALLY_USED__THIRD_PERS},
+				new String[]{"gulg"}, new String[]{"guldz"}, new String[]{"guldz"}), //aizgulgt
 	};
 
 	/**
@@ -469,21 +468,14 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		RegularVerbRule
-				.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
+		RegularVerbRule.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.
 		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
 		// galotne "-ē" - 3. konjugācijai būtu bez.
-		SimpleRule.of("parasti 3. pers., -ē, pag. -ēja (retāk -gluma, 1. konj.)", ".*glumēt", 16,
-				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS},
-				new Tuple[] {Features.USUALLY_USED__THIRD_PERS}), //aizglumēt
-		SimpleRule.of(
-				"parasti 3. pers., -glumē, pag. -glumēja (retāk -gluma, 1. konj.)",
-				".*glumēt", 16,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS},
-				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), //izglumēt
+		RegularVerbRule.secondConjDir3PersParallel(
+				"-glumē, pag. -glumēja (retāk -gluma, 1. konj.)", "glumēt"), //izglumēt
 
 		// Standartizētie.
 		RegularVerbRule.secondConjDir3Pers("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
@@ -532,150 +524,93 @@ public class OptHypernRules
 
 		// Standartizētie.
 		// A, B
-		RegularVerbRule
-				.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
+		RegularVerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
 		// C, Č
-		RegularVerbRule
-				.thirdConjDir("-ceru, -ceri,", "-cer, pag. -cerēju", "cerēt", false), //iecerēt
-		RegularVerbRule
-				.thirdConjDir("-čukstu, -čuksti,", "-čukst, pag. -čukstēju", "čukstēt", false), //atčukstēt
+		RegularVerbRule.thirdConjDir("-ceru, -ceri,", "-cer, pag. -cerēju", "cerēt", false), //iecerēt
+		RegularVerbRule.thirdConjDir("-čukstu, -čuksti,", "-čukst, pag. -čukstēju", "čukstēt", false), //atčukstēt
 		// D
-		RegularVerbRule
-				.thirdConjDir("-dienu, -dieni,", "-dien, pag. -dienēju", "dienēt", false), //atdienēt
-		RegularVerbRule
-				.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt", false), //apdraudēt
-		RegularVerbRule
-				.thirdConjDir("-dusu, -dusi,", "-dus, pag. -dusēju", "dusēt", false), //atdusēt
-		RegularVerbRule
-				.thirdConjDir("-dziedu, -dziedi,", "-dzied, pag. -dziedāju", "dziedāt", false), //aizdziedāt
+		RegularVerbRule.thirdConjDir("-dienu, -dieni,", "-dien, pag. -dienēju", "dienēt", false), //atdienēt
+		RegularVerbRule.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt", false), //apdraudēt
+		RegularVerbRule.thirdConjDir("-dusu, -dusi,", "-dus, pag. -dusēju", "dusēt", false), //atdusēt
+		RegularVerbRule.thirdConjDir("-dziedu, -dziedi,", "-dzied, pag. -dziedāju", "dziedāt", false), //aizdziedāt
 		// E, F, G
-		RegularVerbRule
-				.thirdConjDir("-glūnu, -glūni,", "-glūn, pag. -glūnēju", "glūnēt", false), //apglūnēt
-		RegularVerbRule
-				.thirdConjDir("-grabu, -grabi,", "-grab, pag. -grabēju", "grabēt", false), //aizgrabēt
-		RegularVerbRule
-				.thirdConjDir("-gribu, -gribi,", "-grib, pag. -gribēju", "gribēt", false), //iegribēt
-		RegularVerbRule
-				.thirdConjDir("-guļu, -guli,", "-guļ, pag. -gulēju", "gulēt", true), //aizgulēt
+		RegularVerbRule.thirdConjDir("-glūnu, -glūni,", "-glūn, pag. -glūnēju", "glūnēt", false), //apglūnēt
+		RegularVerbRule.thirdConjDir("-grabu, -grabi,", "-grab, pag. -grabēju", "grabēt", false), //aizgrabēt
+		RegularVerbRule.thirdConjDir("-gribu, -gribi,", "-grib, pag. -gribēju", "gribēt", false), //iegribēt
+		RegularVerbRule.thirdConjDir("-guļu, -guli,", "-guļ, pag. -gulēju", "gulēt", true), //aizgulēt
 		// H, I, J, K
-		RegularVerbRule
-				.thirdConjDir("-klabu, -klabi,", "-klab, pag. -klabēju", "klabēt", false), //paklabēt, aizklabēt
-		RegularVerbRule
-				.thirdConjDir("-klimstu, -klimsti,", "-klimst, pag. -klimstēju", "klimstēt", false), //aizklimstēt
-		RegularVerbRule
-				.thirdConjDir("-kustu, -kusti,", "-kust, pag. -kustēju", "kustēt", false), //aizkustēt
-		RegularVerbRule
-				.thirdConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpēju", "kūpēt", false), //apkūpēt, aizkūpēt
+		RegularVerbRule.thirdConjDir("-klabu, -klabi,", "-klab, pag. -klabēju", "klabēt", false), //paklabēt, aizklabēt
+		RegularVerbRule.thirdConjDir("-klimstu, -klimsti,", "-klimst, pag. -klimstēju", "klimstēt", false), //aizklimstēt
+		RegularVerbRule.thirdConjDir("-kustu, -kusti,", "-kust, pag. -kustēju", "kustēt", false), //aizkustēt
+		RegularVerbRule.thirdConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpēju", "kūpēt", false), //apkūpēt, aizkūpēt
 		// L
-		RegularVerbRule
-				.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
-		RegularVerbRule
-				.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
+		RegularVerbRule.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
+		RegularVerbRule.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
 		// M
-		RegularVerbRule
-				.thirdConjDir("-minu, -mini,", "-min, pag. -minēju", "minēt", false), //atminēt
-		RegularVerbRule
-				.thirdConjDir("-mīlu, -mīli,", "-mīl, pag. -mīlēju", "mīlēt", false), //iemīlēt
-		RegularVerbRule
-				.thirdConjDir("-muldu, -muldi,", "-muld, pag. -muldēju", "muldēt", false), //atmuldēt
-		RegularVerbRule
-				.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
+		RegularVerbRule.thirdConjDir("-minu, -mini,", "-min, pag. -minēju", "minēt", false), //atminēt
+		RegularVerbRule.thirdConjDir("-mīlu, -mīli,", "-mīl, pag. -mīlēju", "mīlēt", false), //iemīlēt
+		RegularVerbRule.thirdConjDir("-muldu, -muldi,", "-muld, pag. -muldēju", "muldēt", false), //atmuldēt
+		RegularVerbRule.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
 		// N, Ņ
-		RegularVerbRule
-				.thirdConjDir("-ņurdu, -ņurdi,", "-ņurd, pag. -ņurdēju", "ņurdēt", false), //atņurdēt
+		RegularVerbRule.thirdConjDir("-ņurdu, -ņurdi,", "-ņurd, pag. -ņurdēju", "ņurdēt", false), //atņurdēt
 		// O, P
-		RegularVerbRule
-				.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
-		RegularVerbRule
-				.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt", false), //appilēt, aizpilēt
-		RegularVerbRule
-				.thirdConjDir("-pīkstu, -pīksti,", "-pīkst, pag. -pīkstēju", "pīkstēt", false), //atpīkstēt
-		RegularVerbRule
-				.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt", false), //aizprecēt
-		RegularVerbRule
-				.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt", false), //aizputēt, apputēt
+		RegularVerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
+		RegularVerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt", false), //appilēt, aizpilēt
+		RegularVerbRule.thirdConjDir("-pīkstu, -pīksti,", "-pīkst, pag. -pīkstēju", "pīkstēt", false), //atpīkstēt
+		RegularVerbRule.thirdConjDir("-precu, -preci,", "-prec, pag. -precēju", "precēt", false), //aizprecēt
+		RegularVerbRule.thirdConjDir("-putu, -puti,", "-put, pag. -putēju", "putēt", false), //aizputēt, apputēt
 		// R
-		RegularVerbRule
-				.thirdConjDir("-raudu, -raudi,", "-raud, pag. -raudāju", "raudāt", false), //apraudāt
-		RegularVerbRule
-				.thirdConjDir("-raugu, -raugi,", "-rauga, pag. -raudzīju", "raudzīt", true), //apraudāt
-		RegularVerbRule
-				.thirdConjDir("-redzu, -redzi,", "-redz, pag. -redzēju", "redzēt", false), //apredzēt
+		RegularVerbRule.thirdConjDir("-raudu, -raudi,", "-raud, pag. -raudāju", "raudāt", false), //apraudāt
+		RegularVerbRule.thirdConjDir("-raugu, -raugi,", "-rauga, pag. -raudzīju", "raudzīt", true), //apraudāt
+		RegularVerbRule.thirdConjDir("-redzu, -redzi,", "-redz, pag. -redzēju", "redzēt", false), //apredzēt
 		// S
-		RegularVerbRule
-				.thirdConjDir("-saku, -saki,", "-saka, pag. -sacīju", "sacīt", true), //atsacīt
-		RegularVerbRule
-				.thirdConjDir("-sēžu, -sēdi,", "-sēž, pag. -sēdēju", "sēdēt", true), //atsēdēt
-		RegularVerbRule
-				.thirdConjDir("-sīkstu, -sīksti,", "-sīkst, pag. -sīkstēju", "sīkstēt", false), //apsīkstēt
-		RegularVerbRule
-				.thirdConjDir("-slaku, -slaki,", "-slaka, pag. -slacīju", "slacīt", true), //aizslacīt
-		RegularVerbRule
-				.thirdConjDir("-slauku, -slauki,", "-slauka, pag. -slaucīju", "slaucīt", true), //aizslaucīt
-		RegularVerbRule
-				.thirdConjDir("-smīnu, -smīni,", "-smīn, pag. -smīnēju", "smīnēt", true), //atsmīnēt
-		RegularVerbRule
-				.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt", false), //aizstāvēt
-		RegularVerbRule
-				.thirdConjDir("-strīdu, -strīdi,", "-strīd, pag. -strīdēju", "strīdēt", false), //apstrīdēt
-		RegularVerbRule
-				.thirdConjDir("-sūdzu, -sūdzi,", "-sūdz, pag. -sūdzēju", "sūdzēt", false), //apsūdzēt
+		RegularVerbRule.thirdConjDir("-saku, -saki,", "-saka, pag. -sacīju", "sacīt", true), //atsacīt
+		RegularVerbRule.thirdConjDir("-sēžu, -sēdi,", "-sēž, pag. -sēdēju", "sēdēt", true), //atsēdēt
+		RegularVerbRule.thirdConjDir("-sīkstu, -sīksti,", "-sīkst, pag. -sīkstēju", "sīkstēt", false), //apsīkstēt
+		RegularVerbRule.thirdConjDir("-slaku, -slaki,", "-slaka, pag. -slacīju", "slacīt", true), //aizslacīt
+		RegularVerbRule.thirdConjDir("-slauku, -slauki,", "-slauka, pag. -slaucīju", "slaucīt", true), //aizslaucīt
+		RegularVerbRule.thirdConjDir("-smīnu, -smīni,", "-smīn, pag. -smīnēju", "smīnēt", true), //atsmīnēt
+		RegularVerbRule.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt", false), //aizstāvēt
+		RegularVerbRule.thirdConjDir("-strīdu, -strīdi,", "-strīd, pag. -strīdēju", "strīdēt", false), //apstrīdēt
+		RegularVerbRule.thirdConjDir("-sūdzu, -sūdzi,", "-sūdz, pag. -sūdzēju", "sūdzēt", false), //apsūdzēt
 		// Š
-		RegularVerbRule
-				.thirdConjDir("-šļupstu, -šļupsti,", "-šļupst, pag. -šļupstēju", "šļupstēt", false), //atšļupstēt
+		RegularVerbRule.thirdConjDir("-šļupstu, -šļupsti,", "-šļupst, pag. -šļupstēju", "šļupstēt", false), //atšļupstēt
 		// T
-		RegularVerbRule
-				.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
-		RegularVerbRule
-				.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt", false), //aizturēt
+		RegularVerbRule.thirdConjDir("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
+		RegularVerbRule.thirdConjDir("-turu, -turi,", "-tur, pag. -turēju", "turēt", false), //aizturēt
 		// U, V
-		RegularVerbRule
-				.thirdConjDir("-vēlu, -vēli,", "-vēl, pag. -vēlēju", "vēlēt", false), //atvēlēt
+		RegularVerbRule.thirdConjDir("-vēlu, -vēli,", "-vēl, pag. -vēlēju", "vēlēt", false), //atvēlēt
 		// Z
-		RegularVerbRule
-				.thirdConjDir("-zinu, -zini,", "-zina, pag. -zināju", "zināt", false), //apzināt
-		RegularVerbRule
-				.thirdConjDir("-zvēru, -zvēri,", "-zvēr, pag. -zvērēju", "zvērēt", false), //apzvērēt
+		RegularVerbRule.thirdConjDir("-zinu, -zini,", "-zina, pag. -zināju", "zināt", false), //apzināt
+		RegularVerbRule.thirdConjDir("-zvēru, -zvēri,", "-zvēr, pag. -zvērēju", "zvērēt", false), //apzvērēt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.
-		SimpleRule.of("parasti 3. pers., -grand, pag. -grandēja (retāk -granda, 1. konj.)", ".*grandēt", 17,
-				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.NO_PRESENT_SOUNDCHANGE},
-				new Tuple[] {Features.USUALLY_USED__THIRD_PERS}), //aizgrandēt
-		SimpleRule.of("parasti 3. pers., -gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", ".*gruzdēt", 17,
-				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.NO_PRESENT_SOUNDCHANGE},
-				new Tuple[] {Features.USUALLY_USED__THIRD_PERS}), //aizgruzdēt
-		SimpleRule.of("parasti 3. pers., -mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", ".*mirdzēt", 17,
-				new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.NO_PRESENT_SOUNDCHANGE},
-				new Tuple[] {Features.USUALLY_USED__THIRD_PERS}), //aizmirdzēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-grand, pag. -grandēja (retāk -granda, 1. konj.)", "grandēt", false), //aizgrandēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", "gruzdēt", false), //aizgruzdēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", "mirdzēt", false), //aizmirdzēt
 
 		// Standartizētie.
 		// A, B
 		RegularVerbRule.thirdConjDir3Pers("-blākš, pag. -blākšēja", "blākšēt", false), //aizblākšēt
-		RegularVerbRule
-				.thirdConjDir3Pers("-blākšķ, pag. -blākšķēja", "blākšķēt", false), //aizblākšķēt
+		RegularVerbRule.thirdConjDir3Pers("-blākšķ, pag. -blākšķēja", "blākšķēt", false), //aizblākšķēt
 		// C, Č
 		RegularVerbRule.thirdConjDir3Pers("-čab, pag. -čabēja", "čabēt", false), //aizčabēt
-		RegularVerbRule
-				.thirdConjDir3Pers("-čaukst, pag. -čaukstēja", "čaukstēt", false), //aizčaukstēt
+		RegularVerbRule.thirdConjDir3Pers("-čaukst, pag. -čaukstēja", "čaukstēt", false), //aizčaukstēt
 		// D
 		RegularVerbRule.thirdConjDir3Pers("-dārd, pag. -dārdēja", "dārdēt", false), //aizdārdēt
 		RegularVerbRule.thirdConjDir3Pers("-dimd, pag. -dimdēja", "dimdēt", false), //aizdimdēt
 		RegularVerbRule.thirdConjDir3Pers("-dip, pag. -dipēja", "dipēt", false), //aizdipēt
 		RegularVerbRule.thirdConjDir3Pers("-dun, pag. -dunēja", "dunēt", false), //aizdunēt
-		RegularVerbRule
-				.thirdConjDir3Pers("-džinkst, pag. -džinkstēja", "džinkstēt", false), //aizdžinkstēt
+		RegularVerbRule.thirdConjDir3Pers("-džinkst, pag. -džinkstēja", "džinkstēt", false), //aizdžinkstēt
 		// E, F, G
-		RegularVerbRule
-				.thirdConjDir3Pers("-gurkst, pag. -gurkstēja", "gurkstēt", false), //aizgurkstēt
+		RegularVerbRule.thirdConjDir3Pers("-gurkst, pag. -gurkstēja", "gurkstēt", false), //aizgurkstēt
 		// H, I, J, K
-		RegularVerbRule
-				.thirdConjDir3Pers("-klakst, pag. -klakstēja", "klakstēt", false), //aizklakstēt
-		RegularVerbRule
-				.thirdConjDir3Pers("-klaudz, pag. -klaudzēja", "klaudzēt", false), //aizklaudzēt
+		RegularVerbRule.thirdConjDir3Pers("-klakst, pag. -klakstēja", "klakstēt", false), //aizklakstēt
+		RegularVerbRule.thirdConjDir3Pers("-klaudz, pag. -klaudzēja", "klaudzēt", false), //aizklaudzēt
 		// L, M, N, Ņ
 		RegularVerbRule.thirdConjDir3Pers("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
 		// O, P, R, S, T, U, V, Z
@@ -786,10 +721,9 @@ public class OptHypernRules
 				"-slienos, -slienies, -slienas, arī -slejos, -slejies, -slejas, pag. -slējos", "slieties"), //aizslieties
 
 		// Izņēmums.
-		RegularVerbRule
-				.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
-						new Tuple[]{Tuple
-								.of(Keys.INFLECT_AS, "\"zīties\"")}, null), //iepazīties
+		FirstConjRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīties\"")}, null,
+				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //iepazīties
 
 		// Standartizētie.
 		// A
@@ -946,9 +880,10 @@ public class OptHypernRules
 		FirstConjRule.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 
 		// Pilnīgs nestandarts.
-		SimpleRule.of("-teicos, -teicies, -teicas (tagadnes formas parasti nelieto), pag. -teicos", ".*teikties", 18,
-				new Tuple[]{Features.POS__VERB, Tuple.of(Keys.INFLECT_AS, "\"teikties\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")}), //atteikties
+		FirstConjRule.of("-teicos, -teicies, -teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikties\"")},
+				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")},
+				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
 	};
 
 	/**

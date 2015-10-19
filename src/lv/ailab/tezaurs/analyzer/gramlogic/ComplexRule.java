@@ -114,6 +114,37 @@ public class ComplexRule implements Rule
     }
 
 	/**
+	 * Papildus petode īsumam - visām pozitīvo karodziņu kopām pieliek vārdšķiru
+	 * Lietvārds.
+	 * Izveido ComplexRule, ja lemmu nosacījumu doti masīvu struktūrā, nevis
+	 * sarakstos un kopās.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaLogic		nosacījumu saraksts, kurā katrs elements sastāv
+	 *                          no trijnieka: 1)lemmu aprakstoša šablona, 2)
+	 *                          paradigmām, ko lietot, ja lemma atbilst šim
+	 *                          šablonam, 3) karodziņiem, ko uzstādīt, ja lemma
+	 *                          atbilst šim šablonam.
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                          atbilst attiecīgajam šablonam.
+	 * @return	jauns ComplexRule
+	 */
+	public static ComplexRule noun (String patternText,
+			Trio<String, Integer[], Tuple<Keys,String>[]>[] lemmaLogic,
+			Tuple<Keys,String>[] alwaysFlags)
+	{
+		ArrayList<Trio<Pattern, Set<Integer>, Set<Tuple<Keys,String>>>> tmp = new ArrayList<>();
+		for (Trio<String, Integer[], Tuple<Keys,String>[]> t : lemmaLogic)
+			tmp.add(Trio.of(Pattern.compile(t.first),
+					Collections.unmodifiableSet(new HashSet<>(Arrays.asList(t.second))),
+					Collections.unmodifiableSet(new HashSet<Tuple<Keys,String>>() {{
+							addAll(Arrays.asList(t.third));
+							add(Features.POS__NOUN);}})));
+		return new ComplexRule(patternText, tmp,
+				alwaysFlags == null ? null :
+						new HashSet<>(Arrays.asList(alwaysFlags)));
+	}
+
+	/**
 	 * Metode īsumam.
 	 * Izveido ComplexRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
 	 * kuram dotas visu personu formas/galotnes.

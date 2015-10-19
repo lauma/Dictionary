@@ -490,36 +490,19 @@ public class OptHypernRules
 	public static final Rule[] directThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		SimpleRule.of(
-				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju",
-				".*mocīt", 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null), //aizmocīt
-		SimpleRule.of(
-				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju",
-				".*murcīt", 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null), //apmurcīt
-		SimpleRule.of(
-				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju",
-				".*ņurcīt", 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null), //apmurcīt
+		SimpleRule.thirdConjDirAllPersParallel(
+				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju", "mocīt"), //aizmocīt
+		SimpleRule.thirdConjDirAllPersParallel(
+				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju", "murcīt"), //apmurcīt
+		SimpleRule.thirdConjDirAllPersParallel(
+				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju", "ņurcīt"), //apmurcīt
 
-		SimpleRule.of("-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
-				".*slīdēt", 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.NO_PRESENT_SOUNDCHANGE},
-				null), // aizslīdēt
+		SimpleRule.thirdConjDirAllPersParallel(
+				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
+				"slīdēt", false), // aizslīdēt
 
-		SimpleRule.of("-guļu, -guli, -guļ (arī -gul), pag. -gulēju",
-				".*gulēt", 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null), // iegulēt
+		SimpleRule.thirdConjDirAllPersParallel(
+				"-guļu, -guli, -guļ (arī -gul), pag. -gulēju", "gulēt"), // iegulēt
 			//TODO kā norādīt miju + ko darīt ar otru, standartizēto gulēt?
 
 		// Standartizētie.
@@ -895,12 +878,8 @@ public class OptHypernRules
 	public static final Rule[] reflThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		SimpleRule.of(
-				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos",
-				".*mocīties", 20,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null), //aizmocīties
+		SimpleRule.thirdConjReflAllPersParallel(
+				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties"), //aizmocīties
 
 		// Standartizētie.
 		RegularVerbRule.thirdConjRefl(

@@ -139,6 +139,95 @@ public class SimpleRule implements Rule
 				new Tuple[]{Features.GENDER__MASC});
 	}
 
+	/**
+	 * Metode īsumam.
+	 * Izveido SimpleRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar 16. paradigmu
+	 */
+	public static SimpleRule secondConjDirAllPers(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 16,
+				new Tuple[]{Features.POS__VERB}, null);
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido SimpleRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams, ir paralēlās formas.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return SimpleRule ar 17. paradigmu
+	 */
+	public static SimpleRule thirdConjDirAllPersParallel(
+			String patternText, String lemmaEnd, boolean presentChange)
+	{
+		Tuple<Keys, String> soundChange = presentChange ?
+				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
+
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 17,
+				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS, soundChange},
+				null);
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido SimpleRule 3. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams, paralēlās formas ir gan ar miju, gan bez.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar 17. paradigmu
+	 */
+	public static SimpleRule thirdConjDirAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 17,
+				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
+						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
+				null);
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido SimpleRule 2. konjugācijas atgriezeniskajam darbības vārdam, kam
+	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar 19. paradigmu
+	 */
+	public static SimpleRule secondConjReflAllPers(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 19,
+				new Tuple[]{Features.POS__VERB}, null);
+	}
+
+
+	/**
+	 * Metode īsumam.
+	 * Izveido SimpleRule 3. konjugācijas darbības vārdam, kam dotas visas
+	 * formas, bet atvasināt tikai trešās personas formu likumu nav iespējams,
+	 * paralēlās formas ir gan ar miju, gan bez..
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return SimpleRule ar 20. paradigmu
+	 */
+	public static SimpleRule thirdConjReflAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		return SimpleRule.of(patternText, ".*" + lemmaEnd, 20,
+				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
+						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
+				null);
+	}
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.

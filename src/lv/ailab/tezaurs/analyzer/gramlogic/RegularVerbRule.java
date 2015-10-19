@@ -215,13 +215,13 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam bez
-	 * paralēlajām formām.
+	 * Izveido likumu 3. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām, tikai 3. personas formas
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
 	 *                  "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return ThirdPersVerbRule ar paradigmu 17
+	 * @return likums ar paradigmu 17
 	 */
 	public static RegularVerbRule thirdConjDir3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -234,13 +234,14 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido ThirdPersVerbRule 3. konjugācijas tiešajam darbības vārdam ar
-	 * paralēlajām formām, kam visām ir vienādas mijas.
-	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
-	 *                  "parasti 3.pers.,"
-	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * Izveido likumu 3. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām, kam visām ir vienādas mijas, un ir norādītas tikai
+	 * 3. personas formas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return ThirdPersVerbRule ar paradigmu 17
+	 * @return likums ar paradigmu 17
 	 */
 	public static RegularVerbRule thirdConjDir3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)

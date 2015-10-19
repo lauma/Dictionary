@@ -21,6 +21,14 @@ public class Trio<F,S,T>
 		return new Trio<F,S,T>(first, second, third);
 	}
 
+	static public <F,S,T> Trio<F,S,T> of(F first, Tuple<S,T> secondThird){
+		return new Trio<F,S,T>(first, secondThird.first, secondThird.second);
+	}
+
+	static public <F,S,T> Trio<F,S,T> of(Tuple<F,S> firstSecond, T third){
+		return new Trio<F,S,T>(firstSecond.first, firstSecond.second, third);
+	}
+
 	@Override
 	public boolean equals (Object o)
 	{

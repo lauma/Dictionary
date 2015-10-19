@@ -793,9 +793,7 @@ public class Gram  implements HasToJSON
 	public void cleanupLeftovers()
 	{
 		for (int i = leftovers.size() - 1; i >= 0; i--)
-		{
 			if (leftovers.get(i).isEmpty()) leftovers.remove(i);
-		}
 	}
 	
 	/**

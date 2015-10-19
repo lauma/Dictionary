@@ -101,6 +101,29 @@ public enum Keys
 	 * nenoteiksme. Nenoteiksmes homoformu gadījumā ar papildus paskaidrojumu.
 	 */
 	INFLECT_AS("Locīt kā"),
+
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
+	 * 1. konjugācijas darbības vārdiem - celms, ko veido no nenoteiksmes.
+	 */
+	INFINITY_STEM("Stem1"),
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
+	 * 1. konjugācijas darbības vārdiem - celms, ko veido no tagadnes
+	 * 3. personas.
+	 */
+	PRESENT_STEM("Stem2"),
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
+	 * 1. konjugācijas darbības vārdiem - celms, ko veido no pagātnes.
+	 */
+	PAST_STEM("Stem3"),
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
+	 * 1. konjugācijas darbības vārdiem - priedēkļi vai, salikteņu gadījumā,
+	 * vārda sākumdaļa, kas nelokās.
+	 */
+	VERB_PREFIX("Darbības vārda prefikss"),
 	/**
 	 * Binārie (jā/nē, piemīt/nepiemīt) karodziņi.
 	 */

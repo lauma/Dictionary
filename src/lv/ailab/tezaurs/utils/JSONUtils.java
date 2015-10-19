@@ -18,6 +18,8 @@
 package lv.ailab.tezaurs.utils;
 
 import java.util.Iterator;
+import java.util.TreeSet;
+
 import org.json.simple.JSONObject;
 
 public class JSONUtils
@@ -61,7 +63,7 @@ public class JSONUtils
 		if (l == null) return "{}";
 		StringBuilder res = new StringBuilder();
 		res.append("{");
-		Iterator<K> i = l.keySet().iterator();
+		Iterator<K> i = new TreeSet<K>(l.keySet()).iterator();
 		while (i.hasNext())
 		{
 			K key = i.next();

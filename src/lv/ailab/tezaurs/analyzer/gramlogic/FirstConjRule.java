@@ -724,7 +724,7 @@ public class FirstConjRule implements Rule
 			for (String stem : presentStems)
 				flagCollector.add(Keys.PRESENT_STEM, prefix + stem);
 			for (String stem : pastStems)
-				flagCollector.add(Keys.PRESENT_STEM, prefix + stem);
+				flagCollector.add(Keys.PAST_STEM, prefix + stem);
 
 		}
 		else System.err.printf(

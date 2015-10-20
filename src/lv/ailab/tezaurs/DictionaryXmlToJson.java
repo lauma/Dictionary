@@ -36,11 +36,11 @@ import lv.ailab.tezaurs.analyzer.struct.Entry;
 
 public class DictionaryXmlToJson
 {
-
 	public static boolean PRINT_PRONONCATIONS = false;
 	public static boolean PRINT_FIFTH_DECL_EXC = false;
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
+	public static String WORDLIST_FILE = "wordlist.txt";
 	public static Tuple<Keys, String> PRINT_WITH_FEATURE = null;
 	//public static Tuple<Keys, String> PRINT_WITH_FEATURE = Features.USAGE_RESTR__HISTORICAL;
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
@@ -58,9 +58,13 @@ public class DictionaryXmlToJson
 	 */
 	public static void main(String[] args) throws Exception
 	{
+		BufferedWriter wordlistOut = null;
+		if (WORDLIST_FILE != null && !WORDLIST_FILE.equals(""))
+			wordlistOut = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(WORDLIST_FILE), "UTF-8"));
 		StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
 				PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
-				PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC);
+				PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC, wordlistOut);
 
 		// Initialize IO.
 		String thesaurusFile = args[0];
@@ -116,6 +120,7 @@ public class DictionaryXmlToJson
 		noParadigmOut.close();
 		badOut.write("]");
 		badOut.close();
+		if (wordlistOut != null) wordlistOut.close();
 
 		System.out.println("Drukā statistiku...");
 		BufferedWriter statsOut  = new BufferedWriter(new OutputStreamWriter(

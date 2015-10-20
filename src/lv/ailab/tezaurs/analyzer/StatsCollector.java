@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeSet;
@@ -50,6 +51,11 @@ public class StatsCollector
 	 * atslēgu.
 	 */
 	public final ArrayList<Tuple<Keys, String>> describeWithFeatures;
+	/**
+	 * Plūsma, kurā rakstīt vārdu sarakstu. Ja null, tad pieņem, ka vārdu
+	 * sarakstu nevajag.
+	 */
+	public final Writer wordlistOut;
 
     public TreeSet<String> binaryFlags = new TreeSet<>();
     public TreeSet<String> pairingKeys = new TreeSet<>();
@@ -85,7 +91,8 @@ public class StatsCollector
 	public StatsCollector ( boolean collectPrononcations,
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, Tuple<Keys, String> collectFeature,
-			ArrayList<Tuple<Keys, String>> descriptionFeatures)
+			ArrayList<Tuple<Keys, String>> descriptionFeatures,
+			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
 		this.collectFirstConj = collectFirstConj;
@@ -93,11 +100,12 @@ public class StatsCollector
 		this.collectNonInflWithCase = collectNonInflWithCase;
 		this.collectWithFeature = collectFeature;
 		this.describeWithFeatures = descriptionFeatures;
+		this.wordlistOut = wordlistOutput;
 	}
 
 
-    public void countEntry( Entry entry)
-    {
+    public void countEntry( Entry entry) throws IOException
+	{
         overallCount++;
         if (entry.hasParadigm()) hasParadigm++;
         else hasNoParadigm ++;
@@ -159,7 +167,79 @@ public class StatsCollector
 					flags));
 		}
 
+		writeInWordlist(entry);
+
     }
+
+	protected void writeInWordlist(Entry entry) throws IOException
+	{
+		if (wordlistOut == null) return;
+		wordlistOut.write(entry.head.lemma.text);
+		wordlistOut.write("\t");
+		wordlistOut.write(entry.homId);
+		wordlistOut.write("\t");
+		if (entry.sources == null || entry.sources.isEmpty())
+			wordlistOut.write("NULL");
+		else wordlistOut.write(String.join(",", entry.sources.s));
+		wordlistOut.write("\t");
+		if (entry.head.paradigmCount() == 1)
+			// Nē, nu stulbi kaut kā taisīt mapošanu, ja objekts ir tikai viens
+			// Bet varbūt ka tā ir labāk nākotnei
+			wordlistOut.write(entry.head.gram.paradigm.stream()
+					.map(Object::toString).reduce((s1, s2)->s1 + "," + s2).orElse("NULL"));
+		else wordlistOut.write("NULL");
+		wordlistOut.write("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.POS))
+			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.POS)));
+		else wordlistOut.write("NULL");
+		wordlistOut.write("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.DOMAIN))
+			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.DOMAIN)));
+		else wordlistOut.write("NULL");
+		wordlistOut.write("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.USAGE_RESTRICTIONS))
+			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.USAGE_RESTRICTIONS)));
+		else wordlistOut.write("NULL");
+		wordlistOut.write("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				(entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH) ||
+						entry.head.gram.flags.testKey(Keys.CONTAMINATION) ||
+						entry.head.gram.flags.testKey(Keys.USUALLY_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(Keys.OFTEN_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(Keys.USED_ONLY_IN_FORM) ||
+						entry.head.gram.flags.testKey(Keys.ALSO_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(Keys.USED_IN_FORM)))
+		{
+			ArrayList<String> tmp = new ArrayList<>();
+			if (entry.head.gram.flags.testKey(Keys.CONTAMINATION))
+				for (String value : entry.head.gram.flags.getAll(Keys.CONTAMINATION))
+					tmp.add(Keys.CONTAMINATION.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.USED_ONLY_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(Keys.USED_ONLY_IN_FORM))
+					tmp.add(Keys.USED_ONLY_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.USUALLY_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(Keys.USUALLY_USED_IN_FORM))
+					tmp.add(Keys.USUALLY_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.OFTEN_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(Keys.OFTEN_USED_IN_FORM))
+					tmp.add(Keys.OFTEN_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.ALSO_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(Keys.ALSO_USED_IN_FORM))
+					tmp.add(Keys.ALSO_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(Keys.USED_IN_FORM))
+					tmp.add(Keys.USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH))
+				for (String value : entry.head.gram.flags.getAll(Keys.USED_TOGETHER_WITH))
+					tmp.add(Keys.USED_TOGETHER_WITH.s + " = " + value);
+			wordlistOut.write(String.join(",", tmp));
+		}
+		else wordlistOut.write("NULL");
+		wordlistOut.write("\n");
+	}
 
     public void printContents(BufferedWriter out)
             throws IOException

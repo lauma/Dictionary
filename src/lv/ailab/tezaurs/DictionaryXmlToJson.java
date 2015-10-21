@@ -36,11 +36,13 @@ import lv.ailab.tezaurs.analyzer.struct.Entry;
 
 public class DictionaryXmlToJson
 {
+	public static String[] XML_FILES = {"entries", "references"};
 	public static boolean PRINT_PRONONCATIONS = false;
 	public static boolean PRINT_FIFTH_DECL_EXC = false;
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
-	public static String WORDLIST_FILE = "wordlist.txt";
+	public static boolean PRINT_WORDLISTS = false;
+	//public static boolean PRINT_WORDLISTS = true;
 	public static Tuple<Keys, String> PRINT_WITH_FEATURE = null;
 	//public static Tuple<Keys, String> PRINT_WITH_FEATURE = Features.USAGE_RESTR__HISTORICAL;
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
@@ -58,76 +60,88 @@ public class DictionaryXmlToJson
 	 */
 	public static void main(String[] args) throws Exception
 	{
-		BufferedWriter wordlistOut = null;
-		if (WORDLIST_FILE != null && !WORDLIST_FILE.equals(""))
-			wordlistOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(WORDLIST_FILE), "UTF-8"));
-		StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
-				PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
-				PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC, wordlistOut);
-
-		// Initialize IO.
-		String thesaurusFile = args[0];
-		String goodOutputFile = "tezaurs-good.json";
-		String noParadigm = "tezaurs-noParadigm.json";
-		String badOutputFile = "tezaurs-bad.json";
-		String statsFile = "tezaurs-stats.txt";
-
-		StaxReader dicReader = new StaxReader(thesaurusFile);
-
-		BufferedWriter goodOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(goodOutputFile), "UTF-8"));
-		goodOut.write("[\n");
-		BufferedWriter noParadigmOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(noParadigm), "UTF-8"));
-		noParadigmOut.write("[\n");
-		BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(badOutputFile), "UTF-8"));
-		badOut.write("[\n");
-
-		System.out.println("Sāk apstrādāt.");
-		// Process each node.
-		int count = 0;
-		Node entryNode = dicReader.readNexEntry();
-		while (entryNode != null)
+		String path = args[0];
+		if (!path.endsWith("/") && !path.endsWith("\\"))
+			path = path + "\\";
+		for (String file : XML_FILES)
 		{
-			Entry entry = new Entry(entryNode);
-			sc.countEntry(entry);
+			System.out.println("Sāk apstrādāt failu " + file + ".xml.");
 
-			// Print out all pronunciations.
-			//if (makePronunceList)
-			//	for (String p : entry.collectPronunciations())
-			//		statsOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
+			// Initialize IO.
+			String inputFile = path + file + ".xml";;
+			String goodOutputFile = path + file + "-good.json";
+			String noParadigm = path + file + "-noParadigm.json";
+			String badOutputFile = path + file + "-bad.json";
+			String statsFile = path + file + "-stats.txt";
 
-			if (!entry.inBlacklist())	// Blacklisted entries are not included in output logs.
+			BufferedWriter wordlistOut = null;
+			if (PRINT_WORDLISTS)
 			{
-				if (entry.hasParadigm() && !entry.hasUnparsedGram())
-					goodOut.write(entry.toJSON() + ",\n");
-				else if (!entry.hasParadigm() && !entry.hasUnparsedGram())
-					noParadigmOut.write(entry.toJSON() + ",\n");
-				else
-					badOut.write(entry.toJSON() + ",\n");
+				String wordlistFile = path + file + "-wordlist.txt";
+				wordlistOut = new BufferedWriter(new OutputStreamWriter(
+						new FileOutputStream(wordlistFile), "UTF-8"));
 			}
-			entryNode = dicReader.readNexEntry();
-			count++;
-			if (count % 50 == 0)
-			System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");
-		}
-		System.out.println("Apstrādātie šķirkļi:\t" + count);
-		goodOut.write("]");
-		goodOut.close();
-		noParadigmOut.write("]");
-		noParadigmOut.close();
-		badOut.write("]");
-		badOut.close();
-		if (wordlistOut != null) wordlistOut.close();
+			StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
+					PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
+					PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC, wordlistOut);
 
-		System.out.println("Drukā statistiku...");
-		BufferedWriter statsOut  = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(statsFile), "UTF-8"));
-		sc.printContents(statsOut);
-		statsOut.close();
-		//if (makePronunceList) statsOut.close();
+
+			StaxReader dicReader = new StaxReader(inputFile);
+
+			BufferedWriter goodOut = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(goodOutputFile), "UTF-8"));
+			goodOut.write("[\n");
+			BufferedWriter noParadigmOut = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(noParadigm), "UTF-8"));
+			noParadigmOut.write("[\n");
+			BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(badOutputFile), "UTF-8"));
+			badOut.write("[\n");
+
+			// Process each node.
+			int count = 0;
+			Node entryNode = dicReader.readNexEntry();
+			while (entryNode != null)
+			{
+				Entry entry = new Entry(entryNode);
+				sc.countEntry(entry);
+
+				// Print out all pronunciations.
+				//if (makePronunceList)
+				//	for (String p : entry.collectPronunciations())
+				//		statsOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
+
+				if (!entry
+						.inBlacklist())    // Blacklisted entries are not included in output logs.
+				{
+					if (entry.hasParadigm() && !entry.hasUnparsedGram())
+						goodOut.write(entry.toJSON() + ",\n");
+					else if (!entry.hasParadigm() && !entry.hasUnparsedGram())
+						noParadigmOut.write(entry.toJSON() + ",\n");
+					else
+						badOut.write(entry.toJSON() + ",\n");
+				}
+				entryNode = dicReader.readNexEntry();
+				count++;
+				if (count % 50 == 0)
+					System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");
+			}
+			System.out.println("Apstrādātie šķirkļi:\t" + count);
+			goodOut.write("]");
+			goodOut.close();
+			noParadigmOut.write("]");
+			noParadigmOut.close();
+			badOut.write("]");
+			badOut.close();
+			if (wordlistOut != null) wordlistOut.close();
+
+			System.out.println("Drukā statistiku...");
+			BufferedWriter statsOut = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(statsFile), "UTF-8"));
+			sc.printContents(statsOut);
+			statsOut.close();
+			//if (makePronunceList) statsOut.close();
+		}
 		System.out.println("Viss pabeigts!");
 	}
 }

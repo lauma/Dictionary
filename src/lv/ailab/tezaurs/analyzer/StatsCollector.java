@@ -184,7 +184,10 @@ public class StatsCollector
 		else wordlistOut.write("0");
 		wordlistOut.write("\t");
 		if (entry.sources == null || entry.sources.isEmpty())
-			wordlistOut.write("NULL");
+		{
+			if (entry.hasReference()) wordlistOut.write("REF");
+			else wordlistOut.write("NULL");
+		}
 		else wordlistOut.write(String.join(",", entry.sources.s));
 		wordlistOut.write("\t");
 		if (entry.head.paradigmCount() == 1)

@@ -1,3 +1,3 @@
 chcp 1257
-java -Xmx4g -cp "./lib/*;." lv.ailab.tezaurs.DictionaryXmlToJson dati/entries.xml
+java -Xmx4g -cp "./lib/*;." lv.ailab.tezaurs.DictionaryXmlToJson dati/
 @pause

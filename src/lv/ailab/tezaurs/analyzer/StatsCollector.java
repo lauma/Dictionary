@@ -67,6 +67,8 @@ public class StatsCollector
     public int hasLociitKaaFlag = 0;
     public int hasNoParadigm = 0;
     public int hasUnparsedGram = 0;
+	public int referenceCount = 0;
+	public int contentEntryCount = 0;
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
 	 */
@@ -111,6 +113,8 @@ public class StatsCollector
         else hasNoParadigm ++;
         if (entry.hasMultipleParadigms()) hasMultipleParadigms++;
         if (entry.hasUnparsedGram()) hasUnparsedGram++;
+		if (entry.hasReference()) referenceCount ++;
+		if (entry.hasContents()) contentEntryCount++;
 
         Flags entryFlags = entry.getUsedFlags();
 		HashSet<String> bf = entryFlags.binaryFlags();
@@ -176,7 +180,8 @@ public class StatsCollector
 		if (wordlistOut == null) return;
 		wordlistOut.write(entry.head.lemma.text);
 		wordlistOut.write("\t");
-		wordlistOut.write(entry.homId);
+		if (entry.homId != null) wordlistOut.write(entry.homId);
+		else wordlistOut.write("0");
 		wordlistOut.write("\t");
 		if (entry.sources == null || entry.sources.isEmpty())
 			wordlistOut.write("NULL");
@@ -247,6 +252,8 @@ public class StatsCollector
         out.write("{\n");
 
         out.write("\"Šķirkļu kopskaits\":" + overallCount);
+        out.write(",\n\"Šķirkļi ar nozīmēm, frāzēm vai atvasinājumiem\":" + contentEntryCount);
+        out.write(",\n\"Šķirkļi ar referencēm\":" + referenceCount);
         out.write(",\n\"Šķirkļi ar vismaz vienu paradigmu\":" + hasParadigm);
         out.write(",\n\"Šķirkļi ar vairāk kā vienu paradigmu\":" + hasMultipleParadigms);
         out.write(",\n\"Šķirkļi ar karodziņu \\\"Neviennozīmīga paradigma\\\"\":" +

@@ -30,32 +30,33 @@ import lv.ailab.tezaurs.analyzer.io.Loaders;
 import lv.ailab.tezaurs.utils.JSONUtils;
 
 /**
- * Structured representation of entry header.
+ * Datu struktūra, kas apraksta vienu vārdnīcas šķirkli un visu, no kā tas
+ * sastāv.
  */
 public class Entry
 {
 	/**
-	 * i field.
+	 * Lauks: i.
 	 */
 	public String homId;
 
 	/**
-	 * avots field.
+	 * Lauks: avots.
 	 */
 	public Sources sources;
 
 	/**
-	 * Lemma and all-entry related grammar information.
+	 * Lemma un uz visu šķirkli attiecināmā gramatika.
 	 */
 	public Header head;
 
 	/**
-	 * g_n (nozīmju grupa) field.
+	 * Lauks: g_n (nozīmju grupa).
 	 */
 	public LinkedList<Sense> senses;
 	
 	/**
-	 * g_fraz (frazeoloģismu grupa) field.
+	 * Lauks: g_fraz (frazeoloģismu grupa).
 	 */
 	public LinkedList<Phrase> phrases;
 	
@@ -63,13 +64,23 @@ public class Entry
 	 * g_de (atvasinājumu grupa) field.
 	 */
 	public LinkedList<Header> derivs;
+
+	/**
+	 * Lauks: ref (atsauce uz šķirkli).
+	 */
+	public String reference;
 	
 	/**
-	 * Lemmas identifying entries currently ignored. See also inBlacklist().
+	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
+	 * Skatīt arī inBlacklist().
 	 */
 	private static HashSet<String> blacklist = initBlacklist();
 
-	// Reads data of a single thesaurus entry from the XML format
+	/**
+	 * No XML elementam "s" atbilstošā DOM izveido šķirkļa datu struktūru. Tas
+	 * ietver arī visu analīzi.
+	 * @param sNode XML DOM elements, kas atbilst "s"
+	 */
 	public Entry(Node sNode)
 	{
 		NodeList fields = sNode.getChildNodes();
@@ -78,35 +89,35 @@ public class Entry
 		{
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
-			if (fieldname.equals("v")) // word info
+			if (fieldname.equals("v")) // Šķirkļavārda informācija
 			{
 				if (head != null)
 					System.err.printf("Šķirklis \"%s\" satur vairāk kā vienu \'v\'!\n", head.lemma.text);
 				head = new Header (field);
 			}
-			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
+			else if (!fieldname.equals("#text")) // Teksta elementus ignorē, jo šajā vietā ir tikai atstarpjojums.
 				postponed.add(field);
 		}
 		for (Node field : postponed)
 		{
 			String fieldname = field.getNodeName();
-			if (fieldname.equals("avots")) // source
+			if (fieldname.equals("avots")) // avoti
 				sources = new Sources (field);
-			else if (fieldname.equals("g_n")) // all senses
+			else if (fieldname.equals("g_n")) // visas nozīmes
 				senses = Loaders.loadSenses(field, head.lemma.text);
-			else if (fieldname.equals("g_fraz")) //phraseological forms
+			else if (fieldname.equals("g_fraz")) //frazeoloģiskās vienības
 				phrases = Loaders.loadPhrases(field, head.lemma.text, "fraz");
-			else if (fieldname.equals("g_de")) //derived forms
+			else if (fieldname.equals("g_de")) //atvasinātās formas
 				loadDerivs(field);
+			else if (fieldname.equals("ref")) // atsauce uz citu šķirkli
+				reference = field.getTextContent();
 			else
 				System.err.printf("Šķirklī \"%s\" lauks %s netiek apstrādāts!\n", head.lemma.text, fieldname);
 		}
 		
 		homId = ((org.w3c.dom.Element)sNode).getAttribute("i");
 		if ("".equals(homId)) homId = null;
-		
-		//if (inBlacklist()) return;
-		
+
 		if (head == null)
 			System.err.printf("Šķirklis bez šķirkļa vārda / šķirkļa galvas:\n%s\n", sNode.toString());
 	}
@@ -209,6 +220,22 @@ public class Entry
 	public boolean hasMultipleParadigms()
 	{
 		return getAllMentionedParadigms().size() > 1;
+	}
+
+	/**
+	 * Vai šim šķirklim ir atsauce uz citu šķirkli?
+	 */
+	public boolean hasReference()
+	{
+		return (reference != null && reference.length() > 0);
+	}
+
+	/**
+	 * Vai šķirklim ir saturīgs saturs, kas nav reference.
+	 */
+	public boolean hasContents()
+	{
+		return (senses != null || phrases != null || derivs != null);
 	}
 
 	/*
@@ -332,7 +359,11 @@ public class Entry
 			s.append(", \"Derivatives\":");
 			s.append(JSONUtils.objectsToJSON(derivs));
 		}
-		
+		if (reference != null && reference.length() > 0)
+		{
+			s.append(",");
+			s.append(JSONObject.escape(reference));
+		}
 		if (sources != null && !sources.isEmpty())
 		{
 			s.append(",");
@@ -341,31 +372,5 @@ public class Entry
 		s.append('}');
 		return s.toString();
 	}
-	
-		
-	/**
-	 *  Formats a list of inflections as an JSON array.
-	 */
-/*	private static Object formatInflections(ArrayList<Wordform> inflections) {
-		StringBuilder s = new StringBuilder();
-		s.append('[');
-		
-		LinkedList<String> showAttrs = new LinkedList<String>();
-		showAttrs.add(AttributeNames.i_Word);
-		showAttrs.add(AttributeNames.i_Case);
-		showAttrs.add(AttributeNames.i_Number);
-		
-		Iterator<Wordform> i = inflections.iterator();
-		while (i.hasNext()) {
-			Wordform wf = i.next();
-			wf.filterAttributes(showAttrs);
-			s.append(wf.toJSON());
-			if (i.hasNext()) s.append(", ");
-		}
-		s.append(']');
-		return s.toString();
-	}//*/
-	
-
 
 }

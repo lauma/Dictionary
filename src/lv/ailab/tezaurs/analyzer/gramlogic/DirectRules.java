@@ -202,8 +202,10 @@ public class DirectRules
 		// Ar mijām
 		ComplexRule.noun("-ļa, v.", new Trio[]{
 						Trio.of(".*lis", new Integer[]{3}, null),
-						Trio.of(".*ls", new Integer[]{5}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // acumirklis, bacils, durkls
+				//		Trio.of(".*ls", new Integer[]{5}, null)
+				},
+				new Tuple[]{Features.GENDER__MASC}), // acumirklis, bacils, durkls=kļūda
+			// TODO!!!!!!!!!!!!!!!!!!!
 		ComplexRule.noun("-ņa, v.", new Trio[]{
 						Trio.of(".*ņš", new Integer[]{2}, null),
 						Trio.of(".*nis", new Integer[]{3}, null),
@@ -239,6 +241,7 @@ public class DirectRules
 				new Tuple[]{Features.GENDER__MASC}), // bretoņi
 		// Vispārīgā galotne, kas der visam un neder nekam
 		ComplexRule.noun("-u, v.", new Trio[]{
+						Trio.of(".*š", new Integer[]{2}, null),
 						Trio.of(".*(otāji|umi|anti|nieki|[aeiouāēīōū]īdi|isti|mēsli|svārki|plūdi|rati|vecāki|bērni|raksti|vidi|rīti|vakari|vārdi|kapi|augi|svētki|audi|laiki|putni|svari)",
 								new Integer[]{1}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
 						Trio.of(".*[bcdghklmnpstvz]i", new Integer[]{1}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
@@ -251,6 +254,7 @@ public class DirectRules
 						Trio.of(".*([ķr]|[aeiāē]j)i", new Integer[]{1, 2, 3, 4}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
 				},
 				new Tuple[]{Features.GENDER__MASC}),
+			// dededstiņš
 			// atgremotāji, apstādījumi, antikoagulanti, austrumnieki, eiropeīdi,
 				// leiboristi, amonijmēsli, apakšsvārki, asinsplūdi, atsperrati,
 				// audžuvecāki, bērnubērni, ciltsraksti, dienvidi, dienvidrīti,
@@ -314,17 +318,23 @@ public class DirectRules
 		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
 		// Paradigmas: 9, 7 - vienskaitlī un daudzskaitlī
 		ComplexRule.noun("-žu", new Trio[]{
+						Trio.of(".*ži", new Integer[]{1, 3}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL}),
 						Trio.of(".*[dz]e", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM}),
 						Trio.of(".*[dz]es", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL})},
-				null), // abioģenēze, ablumozes, akolāde, nematodes
+				null), // gliemeži, abioģenēze, ablumozes, akolāde, nematodes
 		ComplexRule.noun("-ņu", new Trio[]{
 						Trio.of(".*ne", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM}),
+						Trio.of(".suņi", new Integer[]{5}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
+						Trio.of(".*ņi", new Integer[]{1, 2, 3, 4}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
 						Trio.of(".*nes", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL}),
 						Trio.of(".*ņas", new Integer[]{7}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL})},
-				null), // agrene, aizlaidnes
-		// Paradigma: 3
-		SimpleRule.noun("-ņa", ".*nis", 3,
-				new Tuple[]{Features.GENDER__FEM}, null), // abolainis
+				null), // celtņi, agrene, aizlaidnes
+		// Paradigma: 2, 3
+		ComplexRule.noun("-ņa", new Trio[]{
+				Trio.of(".*akmens", new Integer[] {4}, new Tuple[]{Features.GENDER__MASC}),
+				Trio.of(".*ņš", new Integer[] {2}, new Tuple[]{Features.GENDER__MASC}),
+				Trio.of(".*nis", new Integer[] {3}, new Tuple[]{Features.GENDER__MASC})},
+				null), // abolainis, jūrakmens, ļautiņš
 	};
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,

@@ -574,7 +574,18 @@ public class Gram  implements HasToJSON
 			altParams.add(Values.CHANGED_PARADIGM);
 			
 			newBegin = m.group(1).length();
-			if (newLemma.endsWith("ts")) // aizdzert->aizdzerts
+			if (newLemma.endsWith("damies") || newLemma.endsWith("dams")) //aizvilkties->aizvilkdamies
+			{
+				altParams.add(Features.POS__PARTICIPLE_DAMS);
+				altLemmas.put(0, new Tuple<>(altLemma, altParams));
+
+				flags.add(Features.POS__VERB);
+				//flags.binary.add("Parasti divdabja formā");
+				//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
+				flags.add(Features.USUALLY_USED__PARTICIPLE);
+				flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
+			}
+			else if (newLemma.endsWith("ts")) // aizdzert->aizdzerts
 			{
 				altParams.add(Features.POS__PARTICIPLE_TS);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
@@ -595,17 +606,6 @@ public class Gram  implements HasToJSON
 				//flags.binary.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
 				flags.add(Features.USUALLY_USED__PARTICIPLE);
 				flags.add(Features.USUALLY_USED__PARTICIPLE_IS);
-			}
-			else if (newLemma.endsWith("damies")) //aizvilkties->aizvilkdamies
-			{
-				altParams.add(Features.POS__PARTICIPLE_DAMS);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-				
-				flags.add(Features.POS__VERB);
-				//flags.binary.add("Parasti divdabja formā");
-				//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
-				flags.add(Features.USUALLY_USED__PARTICIPLE);
-				flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
 			}
 			else
 			{
@@ -643,10 +643,10 @@ public class Gram  implements HasToJSON
 		// Alternative form processing.
 		if (gramText.matches("parasti divd\\. formā: (\\w+), (\\w+)")) //aizelsties->aizelsies, aizelsdamies
 		{
-			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+), (\\w+))([.;].*)?")
+			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+(, \\w+)+))([.;].*)?")
 					.matcher(gramText);
 			m.matches();
-			String[] newLemmas = {m.group(2), m.group(3)};
+			String[] newLemmas = m.group(2).split(", ");
 			newBegin = m.group(1).length();
 			for (String newLemma : newLemmas)
 			{
@@ -654,8 +654,20 @@ public class Gram  implements HasToJSON
 				Flags altParams = new Flags ();
 				altParams.add(Features.POS__PARTICIPLE);
 				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
-				
-				if (newLemma.endsWith("ts")) // noliegt->noliegts
+
+				if (newLemma.endsWith("dams") || newLemma.endsWith("damies")) //aizelsties->aizelsdamies
+				{
+					altParams.add(Features.POS__PARTICIPLE_DAMS);
+					altLemmas.put(0, new Tuple<>(altLemma, altParams));
+
+					flags.add(Features.POS__VERB);
+					//flags.binary.add("Parasti divdabja formā");
+					//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
+					flags.add(Features.USUALLY_USED__PARTICIPLE);
+					flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
+
+				}
+				else if (newLemma.endsWith("ts")) // noliegt->noliegts
 				{
 					altParams.add(Features.POS__PARTICIPLE_TS);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
@@ -687,18 +699,6 @@ public class Gram  implements HasToJSON
 					//flags.binary.add("Parasti lokāmā ciešamās kārtas tagadnes divdabja formā");
 					flags.add(Features.USUALLY_USED__PARTICIPLE);
 					flags.add(Features.USUALLY_USED__PARTICIPLE_AMS);
-
-				}
-				else if (newLemma.endsWith("damies")) //aizelsties->aizelsdamies
-				{
-					altParams.add(Features.POS__PARTICIPLE_DAMS);
-					altLemmas.put(0, new Tuple<>(altLemma, altParams));
-					
-					flags.add(Features.POS__VERB);
-					//flags.binary.add("Parasti divdabja formā");
-					//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
-					flags.add(Features.USUALLY_USED__PARTICIPLE);
-					flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
 
 				}
 				else

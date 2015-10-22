@@ -570,46 +570,22 @@ public class Gram  implements HasToJSON
 			String newLemma = m.group(2);
 			Lemma altLemma = new Lemma (newLemma);
 			Flags altParams = new Flags ();
-			altParams.add(Features.POS__PARTICIPLE);
-			altParams.add(Values.CHANGED_PARADIGM);
-			
-			newBegin = m.group(1).length();
-			if (newLemma.endsWith("damies") || newLemma.endsWith("dams")) //aizvilkties->aizvilkdamies
+
+			flags.add(Features.POS__VERB);
+			flags.add(Features.USUALLY_USED__PARTICIPLE);
+			flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
+			Boolean success = RulesAsFunctions.determineParticipleType(
+					newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
+			if (success)
 			{
-				altParams.add(Features.POS__PARTICIPLE_DAMS);
+				newBegin = m.group(1).length();
+				altParams.add(Features.POS__PARTICIPLE);
+				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
 				altLemmas.put(0, new Tuple<>(altLemma, altParams));
 
-				flags.add(Features.POS__VERB);
-				//flags.binary.add("Parasti divdabja formā");
-				//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
-				flags.add(Features.USUALLY_USED__PARTICIPLE);
-				flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
-			}
-			else if (newLemma.endsWith("ts")) // aizdzert->aizdzerts
+			} else
 			{
-				altParams.add(Features.POS__PARTICIPLE_TS);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-				
-				flags.add(Features.POS__VERB);
-				//flags.binary.add("Parasti divdabja formā");
-				//flags.binary.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
-				flags.add(Features.USUALLY_USED__PARTICIPLE);
-				flags.add(Features.USUALLY_USED__PARTICIPLE_TS);
-			}
-			else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizmakt->aizsmacis, pieriesties->pieriesies
-			{
-				altParams.add(Features.POS__PARTICIPLE_IS);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-				
-				flags.add(Features.POS__VERB);
-				//flags.binary.add("Parasti divdabja formā");
-				//flags.binary.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
-				flags.add(Features.USUALLY_USED__PARTICIPLE);
-				flags.add(Features.USUALLY_USED__PARTICIPLE_IS);
-			}
-			else
-			{
-				System.err.printf("Problem matching \"%s\" in entry \"%s\" with paradigm 0 (Divdabis)\n",
+				System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
 						newLemma, lemma);
 				newBegin = 0;
 			}
@@ -652,58 +628,22 @@ public class Gram  implements HasToJSON
 			{
 				Lemma altLemma = new Lemma (newLemma);
 				Flags altParams = new Flags ();
-				altParams.add(Features.POS__PARTICIPLE);
-				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
 
-				if (newLemma.endsWith("dams") || newLemma.endsWith("damies")) //aizelsties->aizelsdamies
+				flags.add(Features.POS__VERB);
+				flags.add(Features.USUALLY_USED__PARTICIPLE);
+				flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
+				Boolean success = RulesAsFunctions.determineParticipleType(
+						newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
+				if (success)
 				{
-					altParams.add(Features.POS__PARTICIPLE_DAMS);
+					newBegin = m.group(1).length();
+					altParams.add(Features.POS__PARTICIPLE);
+					altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
 					altLemmas.put(0, new Tuple<>(altLemma, altParams));
 
-					flags.add(Features.POS__VERB);
-					//flags.binary.add("Parasti divdabja formā");
-					//flags.binary.add("Parasti daļēji lokāmā divdabja formā");
-					flags.add(Features.USUALLY_USED__PARTICIPLE);
-					flags.add(Features.USUALLY_USED__PARTICIPLE_DAMS);
-
-				}
-				else if (newLemma.endsWith("ts")) // noliegt->noliegts
+				} else
 				{
-					altParams.add(Features.POS__PARTICIPLE_TS);
-					altLemmas.put(0, new Tuple<>(altLemma, altParams));
-					
-					flags.add(Features.POS__VERB);
-					//flags.binary.add("Parasti divdabja formā");
-					//flags.binary.add("Parasti lokāmā ciešamās kārtas pagātnes divdabja formā");
-					flags.add(Features.USUALLY_USED__PARTICIPLE);
-					flags.add(Features.USUALLY_USED__PARTICIPLE_TS);
-				}
-				else if (newLemma.endsWith("is") || newLemma.endsWith("ies")) // aizelsties->aizelsies
-				{
-					altParams.add(Features.POS__PARTICIPLE_IS);
-					altLemmas.put(0, new Tuple<>(altLemma, altParams));
-					
-					flags.add(Features.POS__VERB);
-					//flags.binary.add("Parasti divdabja formā");
-					//flags.binary.add("Parasti lokāmā darāmās kārtas pagātnes divdabja formā");
-					flags.add(Features.USUALLY_USED__PARTICIPLE);
-					flags.add(Features.USUALLY_USED__PARTICIPLE_IS);
-				}
-				else if (newLemma.endsWith("ams") || newLemma.endsWith("āms")) // noliegt->noliedzams
-				{
-					altParams.add(Features.POS__PARTICIPLE_AMS);
-					altLemmas.put(0, new Tuple<>(altLemma, altParams));
-					
-					flags.add(Features.POS__VERB);
-					//flags.binary.add("Parasti divdabja formā");
-					//flags.binary.add("Parasti lokāmā ciešamās kārtas tagadnes divdabja formā");
-					flags.add(Features.USUALLY_USED__PARTICIPLE);
-					flags.add(Features.USUALLY_USED__PARTICIPLE_AMS);
-
-				}
-				else
-				{
-					System.err.printf("Neizdodas \"%s\" šķirklī \"%s\" ielikt paradigmā 0 (Divdabis)\n",
+					System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
 							newLemma, lemma);
 					newBegin = 0;
 				}

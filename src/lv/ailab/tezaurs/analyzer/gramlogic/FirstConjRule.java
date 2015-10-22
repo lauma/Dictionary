@@ -562,6 +562,7 @@ public class FirstConjRule implements Rule
 	 * -auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu
 	 * -gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu
 	 * -jaušu, -jaut, -jauš, pag. -jautu, arī -jaužu, -jaud, -jauž, pag. -jaudu
+	 * -gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos
 	 * @return Pārītis, kur pirmais saraksts ir tagadnes celmu sarakst un otrais
 	 * - pagātnes.
 	 */

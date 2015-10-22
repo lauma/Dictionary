@@ -178,40 +178,45 @@ public class StatsCollector
 	protected void writeInWordlist(Entry entry) throws IOException
 	{
 		if (wordlistOut == null) return;
-		wordlistOut.write(entry.head.lemma.text);
-		wordlistOut.write("\t");
-		if (entry.homId != null) wordlistOut.write(entry.homId);
-		else wordlistOut.write("0");
-		wordlistOut.write("\t");
-		if (entry.sources == null || entry.sources.isEmpty())
-		{
-			if (entry.hasReference()) wordlistOut.write("REF");
-			else wordlistOut.write("NULL");
-		}
-		else wordlistOut.write(String.join(",", entry.sources.s));
-		wordlistOut.write("\t");
+		StringBuilder line = new StringBuilder();
+
+		line.append(entry.head.lemma.text);
+		line.append("\t");
+		if (entry.homId != null)line.append(entry.homId);
+		else line.append("0");
+		line.append("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.POS))
+			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.POS)));
+		else line.append("NULL");
+		line.append("\t");
 		if (entry.head.paradigmCount() == 1)
 			// Nē, nu stulbi kaut kā taisīt mapošanu, ja objekts ir tikai viens
 			// Bet varbūt ka tā ir labāk nākotnei
-			wordlistOut.write(entry.head.gram.paradigm.stream()
-					.map(Object::toString).reduce((s1, s2)->s1 + "," + s2).orElse("NULL"));
-		else wordlistOut.write("NULL");
-		wordlistOut.write("\t");
-		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.POS))
-			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.POS)));
-		else wordlistOut.write("NULL");
-		wordlistOut.write("\t");
+			line.append(entry.head.gram.paradigm.stream()
+					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
+					.orElse("NULL"));
+		else line.append("NULL");
+		line.append("\t");
+		if (entry.sources == null || entry.sources.isEmpty())
+		{
+			if (entry.hasReference()) line.append("REF");
+			else line.append("NULL");
+		}
+		else line.append(String.join(",", entry.sources.s));
+		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(Keys.DOMAIN))
-			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.DOMAIN)));
-		else wordlistOut.write("NULL");
-		wordlistOut.write("\t");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(Keys.DOMAIN)));
+		else line.append("NULL");
+		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(Keys.USAGE_RESTRICTIONS))
-			wordlistOut.write(String.join(",", entry.head.gram.flags.getAll(Keys.USAGE_RESTRICTIONS)));
-		else wordlistOut.write("NULL");
-		wordlistOut.write("\t");
+			line.append(String.join(",", entry.head.gram.flags
+					.getAll(Keys.USAGE_RESTRICTIONS)));
+		else line.append("NULL");
+		/*line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				(entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH) ||
 						entry.head.gram.flags.testKey(Keys.CONTAMINATION) ||
@@ -243,13 +248,14 @@ public class StatsCollector
 			if (entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH))
 				for (String value : entry.head.gram.flags.getAll(Keys.USED_TOGETHER_WITH))
 					tmp.add(Keys.USED_TOGETHER_WITH.s + " = " + value);
-			wordlistOut.write(String.join(",", tmp));
+			line.append(String.join(",", tmp));
 		}
-		else wordlistOut.write("NULL");
-		wordlistOut.write("\n");
+		else line.append("NULL");//*/
+		line.append("\n");
+		wordlistOut.write(line.toString().replace(" ", "_"));
 	}
 
-    public void printContents(BufferedWriter out)
+	public void printContents(BufferedWriter out)
             throws IOException
     {
         out.write("{\n");

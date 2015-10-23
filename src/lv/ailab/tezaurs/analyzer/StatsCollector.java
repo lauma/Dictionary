@@ -6,6 +6,7 @@ import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.struct.Entry;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.analyzer.struct.Header;
+import lv.ailab.tezaurs.utils.CountingSet;
 import lv.ailab.tezaurs.utils.Trio;
 import lv.ailab.tezaurs.utils.Tuple;
 import org.json.simple.JSONObject;
@@ -14,6 +15,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -59,6 +61,7 @@ public class StatsCollector
 
     public TreeSet<String> binaryFlags = new TreeSet<>();
     public TreeSet<String> pairingKeys = new TreeSet<>();
+	public CountingSet<Tuple<Keys,String>> flagCounts = new CountingSet<>();
     // Counting entries with various properties:
     public int overallCount = 0;
     public int hasParadigm = 0;
@@ -117,10 +120,12 @@ public class StatsCollector
 		if (entry.hasContents()) contentEntryCount++;
 
         Flags entryFlags = entry.getUsedFlags();
+		flagCounts.addAll(entry.getFlagCounts());
 		HashSet<String> bf = entryFlags.binaryFlags();
         if (bf != null)
 		{
 			if (bf.contains(Values.UNCLEAR_PARADIGM.s))
+		//if (entryFlags.test(Features.UNCLEAR_PARADIGM))
 				hasMultipleParadigmFlag++;
 			binaryFlags.addAll(bf);
 		}
@@ -277,7 +282,7 @@ public class StatsCollector
 				.size());
         out.write(",\n\"Izrunas transkripciju kopskaits\":" + pronunciations.size());
 
-        out.write(",\n\"Binārie karodziņi\":[\n");
+        /*out.write(",\n\"Binārie karodziņi\":[\n");
         out.write(binaryFlags.stream().map(f -> "\t\"" + JSONObject.escape(f) + "\"")
                 .reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
         out.write("\n]");
@@ -285,6 +290,22 @@ public class StatsCollector
 		out.write(pairingKeys.stream()
 				.map(f -> "\t\"" + JSONObject.escape(f) + "\"")
 				.reduce((f1, f2) -> f1 + ",\n" + f2).orElse(""));
+		out.write("\n]");*/
+
+		out.write(",\n\"Karodziņi\":[");
+		HashMap<Tuple<Keys, String>, Integer> counts = flagCounts.getCounts();
+		for (Tuple<Keys, String> feature : counts.keySet().stream().sorted(
+				(t1, t2) -> (t1.first != null && t1.first.equals(t2.first)) ?
+						t1.second.compareTo(t2.second) : t1.first.compareTo(t2.first)).toArray(i -> new Tuple[i]))
+		{
+			out.write("\n\t[\"");
+			out.write(feature.first.s);
+			out.write("\", \"");
+			out.write(feature.second);
+			out.write("\", \"");
+			out.write(counts.get(feature).toString());
+			out.write("\"],");
+		}
 		out.write("\n]");
 
 		if (collectPrononcations)

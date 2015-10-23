@@ -2,6 +2,7 @@ package lv.ailab.tezaurs.analyzer.struct;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.utils.CountingSet;
 import lv.ailab.tezaurs.utils.MappingSet;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -79,6 +80,22 @@ public class Flags
 	{
 		HashSet<String> found = pairings.getAll(key);
 		return !(found == null || found.size() < 1);
+	}
+
+	/**
+	 * Pieskaita karodziņus jau esošam karodziņu skaitīšanas objektam, vai, ja
+	 * padots null, tad izveido jaunu.
+	 * @param accumulator	karodziņu skaitīšanas objekts
+	 * @return karodziņu skaitīšanas objekts ar atjauninātu informāciju
+	 */
+	public CountingSet<Tuple<Keys, String>> count (
+			CountingSet<Tuple<Keys, String>> accumulator)
+	{
+		if( accumulator == null) accumulator = new CountingSet<>();
+
+		accumulator.addAll(pairings.asList());
+
+		return accumulator;
 	}
 
 }

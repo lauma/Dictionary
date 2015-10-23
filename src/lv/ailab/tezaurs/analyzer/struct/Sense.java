@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.utils.CountingSet;
+import lv.ailab.tezaurs.utils.Tuple;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.json.simple.JSONObject;
@@ -167,7 +170,24 @@ public class Sense implements HasToJSON
 			flags.addAll(s.getUsedFlags());
 		return flags;
 	}
-	
+
+	/**
+	 * Count all flags used in this structure.
+	 */
+	public CountingSet<Tuple<Keys, String>> getFlagCounts()
+	{
+		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
+
+		if (grammar != null && grammar.flags != null)
+			grammar.flags.count(counts);
+		if (examples != null) for (Phrase e : examples)
+			counts.addAll(e.getFlagCounts());
+		if (subsenses != null) for (Sense s : subsenses)
+			counts.addAll(s.getFlagCounts());
+		return counts;
+	}
+
+
 	public boolean hasUnparsedGram()
 	{
 		if (grammar != null && grammar.hasUnparsedGram()) return true;

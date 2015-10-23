@@ -22,6 +22,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.utils.CountingSet;
+import lv.ailab.tezaurs.utils.Tuple;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.json.simple.JSONObject;
@@ -272,6 +275,21 @@ public class Entry
 			if (d.gram != null && d.gram.flags != null)
 				flags.addAll(d.gram.flags);
 		return flags;
+	}
+
+	/**
+	 * Count all flags used in this structure.
+	 */
+	public CountingSet<Tuple<Keys, String>> getFlagCounts()
+	{
+		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
+		if (head != null && head.gram != null && head.gram.flags != null)
+			head.gram.flags.count(counts);
+
+		if (derivs != null) for (Header d : derivs)
+			if (d.gram != null && d.gram.flags != null)
+				d.gram.flags.count(counts);
+		return counts;
 	}
 
 	/**

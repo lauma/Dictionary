@@ -25,10 +25,7 @@ import java.util.regex.Pattern;
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
-import lv.ailab.tezaurs.analyzer.gramdata.AbbrMap;
-import lv.ailab.tezaurs.analyzer.gramdata.DirectRules;
-import lv.ailab.tezaurs.analyzer.gramdata.OptHypernRules;
-import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
+import lv.ailab.tezaurs.analyzer.gramdata.*;
 import org.w3c.dom.Node;
 import org.json.simple.JSONObject;
 
@@ -173,92 +170,21 @@ public class Gram  implements HasToJSON
 		gramText = gramText.trim();
 		int newBegin = -1;
 
+		for (AltLemmaRule r : AltLemmaRules.pluralToSingular)
+		{
+			if (newBegin != -1) break;
+			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
+		}
+
 		// Īpaši sarežģītie liekumi, kas nav formalizēti citur:
 		// Tiek dots vēl viens lemmas variants - kā pilns vārds.
 
-		// Paradigm 2: Lietvārds 1. deklinācija -š
-		if (lemma.endsWith("ņi") &&
-				gramText.startsWith("-ņu, vsk. "
-						+ lemma.substring(0, lemma.length() - 2)
-						+ "ņš, -ņa, v.")) // dižtauriņi: -ņu, vsk. dižtauriņš, -ņa, v.
-		{
-			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2) + "ņš, -ņa, v.").length();
-			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "ņš");
-			Flags altParams = new Flags ();
-			altParams.add(Features.ENTRYWORD__SINGULAR);
-			altLemmas.put(2, new Tuple<>(altLemma, altParams));
-			paradigm.add(2);
-			flags.add(Features.GENDER__MASC);
-			flags.add(Features.POS__NOUN);
-			flags.add(Features.ENTRYWORD__PLURAL);
 
-		}
-		// Paradigm 3: Lietvārds 2. deklinācija -is
-		else if (lemma.endsWith("ņi") &&
-				gramText.startsWith("-ņu, vsk. "
-						+ lemma.substring(0, lemma.length() - 2)
-						+ "nis, -ņa, v.")) // aizvirtņi: -ņu, vsk. aizvirtnis, -ņa, v.
-		{
-			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 2)+"nis, -ņa, v.").length();
-			Lemma altLemma = new Lemma(lemma.substring(0, lemma.length() - 2) + "nis");
-			Flags altParams = new Flags ();
-			altParams.add(Features.ENTRYWORD__SINGULAR);
-			altLemmas.put(3, new Tuple<>(altLemma, altParams));
-			paradigm.add(3);
-			flags.add(Features.GENDER__MASC);
-			flags.add(Features.POS__NOUN);
-			flags.add(Features.ENTRYWORD__PLURAL);
-		}
-		else if (lemma.endsWith("ņi") &&
-				gramText.startsWith("-ņu, vsk. "
-						+ lemma.substring(0, lemma.length() - 3)
-						+ "lnis, -ļņa, v.")) // starpviļņi: -ņu, vsk. starpvilnis, -ļņa, v.
-		{
-			newBegin = ("-ņu, vsk. "+ lemma.substring(0, lemma.length() - 3)+"lnis, -ļņa, v.").length();
-			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "lnis");
-			Flags altParams = new Flags ();
-			altParams.add(Features.ENTRYWORD__SINGULAR);
-			altLemmas.put(3, new Tuple<>(altLemma, altParams));
-			paradigm.add(3);
-			flags.add(Features.GENDER__MASC);
-			flags.add(Features.POS__NOUN);
-			flags.add(Features.ENTRYWORD__PLURAL);
-		}
-		else if (lemma.endsWith("ji") &&
-				gramText.startsWith("-u, vsk. " + lemma + "s, -ja, v.")) // airkāji: -u, vsk. airkājis, -ja, v.
-		{
-			newBegin = ("-u, vsk. " + lemma + "s, -ja, v.").length();
-			Lemma altLemma = new Lemma (lemma + "s");
-			Flags altParams = new Flags ();
-			altParams.add(Features.ENTRYWORD__SINGULAR);
-			altLemmas.put(3, new Tuple<>(altLemma, altParams));
-			paradigm.add(3);
-			flags.add(Features.GENDER__MASC);
-			flags.add(Features.POS__NOUN);
-			flags.add(Features.ENTRYWORD__PLURAL);
-		}
-
-		// Paradigm 1: Lietvārds 1. deklinācija -s
-		else if (lemma.endsWith("i") &&
-				gramText.startsWith("-u, vsk. "
-						+ lemma.substring(0, lemma.length() - 1)
-						+ "s, -a, v.")) // aizkari: -u, vsk. aizkars, -a, v.
-		{
-			newBegin = ("-u, vsk. " + lemma.substring(0, lemma.length() - 1) + "s, -a, v.").length();
-			Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "s");
-			Flags altParams = new Flags ();
-			altParams.add(Features.ENTRYWORD__SINGULAR);
-			altLemmas.put(1, new Tuple<>(altLemma, altParams));
-			paradigm.add(1);
-			flags.add(Features.GENDER__MASC);
-			flags.add(Features.POS__NOUN);
-			flags.add(Features.ENTRYWORD__PLURAL);
-		}
 
 		// Vēl viens lemmas variants tiek uzdots ar papildus galotņu palīdzību.
 		// Paradigm 1: Lietvārds 1. deklinācija -s
 		// Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
-		else if (gramText.matches("s\\. -te, -šu([;.].*)?")) //abstinents
+		if (gramText.matches("s\\. -te, -šu([;.].*)?")) //abstinents
 		{
 			newBegin = "s. -te, -šu".length();
 			if (lemma.endsWith("ts"))

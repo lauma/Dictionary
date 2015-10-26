@@ -293,7 +293,7 @@ public class SimpleRule implements Rule
 				paradigmCollector.add(paradigmId);
 				if (positiveFlags != null)
 					for (Tuple<Keys, String> t : positiveFlags)
-						flagCollector.add(t.first, t.second);
+						flagCollector.add(t);
 			}
 			else
 			{
@@ -302,7 +302,7 @@ public class SimpleRule implements Rule
 			}
 			if (alwaysFlags != null)
 				for (Tuple<Keys, String> t : alwaysFlags)
-					flagCollector.add(t.first, t.second);
+					flagCollector.add(t);
 		}
 		return newBegin;
 	}

@@ -19,7 +19,7 @@ public interface Rule {
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyDirect (
@@ -36,7 +36,7 @@ public interface Rule {
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyOptHyphens(

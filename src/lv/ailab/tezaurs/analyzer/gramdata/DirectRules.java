@@ -1,8 +1,9 @@
-package lv.ailab.tezaurs.analyzer.gramlogic;
+package lv.ailab.tezaurs.analyzer.gramdata;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.tezaurs.utils.Trio;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -23,10 +24,10 @@ public class DirectRules
 		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
 		SimpleRule.noun(
 				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 0,
-				new Tuple[] {Features.POS__REFL_NOUN}, new Tuple[] {Features.GENDER__FEM}), //aizbildināšanās
+				new Tuple[]{Features.POS__REFL_NOUN}, new Tuple[]{Features.GENDER__FEM}), //aizbildināšanās
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		ComplexRule.noun("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.",
-				new Trio[] {Trio.of(".*a", new Integer[] {7, 8}, null)},
+				new Trio[]{Trio.of(".*a", new Integer[]{7, 8}, null)},
 				new Tuple[]{Tuple.of(Keys.GENDER, Values.COGENDER.s)}), // aitasgalva, aizmārša
 
 		// Paradigmas: 1, 2 - 1. deklinācija
@@ -344,7 +345,8 @@ public class DirectRules
 	public static final Rule[] directFirstConjVerb = {
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
-		FirstConjRule.direct("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
+		FirstConjRule
+				.direct("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
 		FirstConjRule.direct("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
 		FirstConjRule.direct("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
 		FirstConjRule.direct("-saustu, -sausti,", "-saust, pag. -sausu", "saust"), //apsaust

@@ -25,6 +25,10 @@ import java.util.regex.Pattern;
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.gramdata.AbbrMap;
+import lv.ailab.tezaurs.analyzer.gramdata.DirectRules;
+import lv.ailab.tezaurs.analyzer.gramdata.OptHypernRules;
+import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import org.w3c.dom.Node;
 import org.json.simple.JSONObject;
 
@@ -55,7 +59,7 @@ public class Gram  implements HasToJSON
 	/**
 	 * Known abbreviations and their de-abbreviations.
 	 */
-	public static  AbbrMap knownAbbr = AbbrMap.getAbbrMap();
+	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
 	public Gram ()
 	{

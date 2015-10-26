@@ -1,4 +1,4 @@
-package lv.ailab.tezaurs.analyzer.gramlogic;
+package lv.ailab.tezaurs.analyzer.gramdata;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;

@@ -1,7 +1,8 @@
-package lv.ailab.tezaurs.analyzer.gramlogic;
+package lv.ailab.tezaurs.analyzer.gramdata;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.tezaurs.utils.Trio;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -24,7 +25,7 @@ public class OptHypernRules
 		 * declension nouns.
 		 */
 		SimpleRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, null,
-				new Tuple[] {Features.GENDER__FEM}), //uzacs, acs
+				new Tuple[]{Features.GENDER__FEM}), //uzacs, acs
 		SimpleRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
 				new Tuple[] {Features.GENDER__FEM}), //aizkrāsns
 		SimpleRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
@@ -468,7 +469,8 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		RegularVerbRule.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
+		RegularVerbRule
+				.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.

@@ -52,12 +52,22 @@ public class SimpleRule implements Rule
 	 */
 	protected final Set<Tuple<Keys,String>> alwaysFlags;
 
-	public SimpleRule(String pattern, String lemmaRestrict, int paradigmId,
+	/**
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai (tiks eskeipots)
+	 * @param lemmaRestrict	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      (netiks eskeipota)
+	 * @param paradigmId	paradigmas ID, ko uzstādīt, ja likums ir piemērojams
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja gan gramatikas teksts,
+	 *                      gan lemma atbilst attiecīgajiem šabloniem
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts atbilst
+	 *                      attiecīgajam šablonam
+	 */
+	public SimpleRule(String patternText, String lemmaRestrict, int paradigmId,
 			Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
 	{
-		this.patternText = pattern;
-		directPattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
-		String regExpPattern = patternText.replace("-", "\\E-?\\Q");
+		this.patternText = patternText;
+		directPattern = Pattern.compile("(\\Q" + this.patternText + "\\E)([;,.].*)?");
+		String regExpPattern = this.patternText.replace("-", "\\E-?\\Q");
 		optHyphenPattern = Pattern.compile("(\\Q" + regExpPattern + "\\E)([;,.].*)?");
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		this.paradigmId = paradigmId;
@@ -74,9 +84,9 @@ public class SimpleRule implements Rule
 	 *                          piemērojams
 	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
 	 *                          teksts, gan lemma atbilst attiecīgajiem
-	 *                          šabloniem.
+	 *                          šabloniem
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
-	 *                          atbilst attiecīgajam šablonam.
+	 *                          atbilst attiecīgajam šablonam
 	 * @return	jauns SimpleRule
 	 */
 	public static SimpleRule of(String patternText, String lemmaRestrictions,

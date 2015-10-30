@@ -170,87 +170,24 @@ public class Gram  implements HasToJSON
 		gramText = gramText.trim();
 		int newBegin = -1;
 
+		// Likumi, kuros tiek dots vēl viens lemmas variants - kā pilns vārds
+		// vai ar papildus galotņu palīdzību.
 		for (AltLemmaRule r : AltLemmaRules.pluralToSingular)
+		{
+			if (newBegin != -1) break;
+			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
+		}
+		for (AltLemmaRule r : AltLemmaRules.mascToFem)
 		{
 			if (newBegin != -1) break;
 			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
 		}
 
 		// Īpaši sarežģītie liekumi, kas nav formalizēti citur:
-		// Tiek dots vēl viens lemmas variants - kā pilns vārds.
-
-
-
 		// Vēl viens lemmas variants tiek uzdots ar papildus galotņu palīdzību.
-		// Paradigm 1: Lietvārds 1. deklinācija -s
-		// Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
-		if (gramText.matches("s\\. -te, -šu([;.].*)?")) //abstinents
-		{
-			newBegin = "s. -te, -šu".length();
-			if (lemma.endsWith("ts"))
-			{
-				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 1) + "e");
-				Flags altParams = new Flags ();
-				altParams.add(Features.ENTRYWORD__FEM);
-				altParams.add(Values.CHANGED_PARADIGM);
-				altLemmas.put(9, new Tuple<>(altLemma, altParams));
-
-				paradigm.add(1);
-				flags.add(Features.GENDER__MASC);
-				flags.add(Features.POS__NOUN);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 1 & 9\n", lemma);
-				newBegin = 0;
-			}
-		}
-		// Paradigm 3: Lietvārds 2. deklinācija -is
-		// Paradigm 9: Lietvārds 5. deklinācija -e siev. dz.
-		else if (gramText.matches("-ķa; s\\. -ķe -ķu([;.].*)?")) //agonistiķis
-		{
-			newBegin = "-ķa; s. -ķe -ķu".length();
-			if (lemma.endsWith("ķis"))
-			{
-				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-				Flags altParams = new Flags ();
-				altParams.add(Features.ENTRYWORD__FEM);
-				altParams.add(Values.CHANGED_PARADIGM);
-				altLemmas.put(9, new Tuple<>(altLemma, altParams));
-
-				paradigm.add(2);
-				flags.add(Features.GENDER__MASC);
-				flags.add(Features.POS__NOUN);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 2 & 9\n", lemma);
-				newBegin = 0;
-			}
-		} else if (gramText.matches("-ša; s. -te, -šu([;.].*)?")) //aiolietis
-		{
-			newBegin = "-ša; s. -te, -šu".length();
-			if (lemma.endsWith("tis"))
-			{
-				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 2) + "e");
-				Flags altParams = new Flags ();
-				altParams.add(Features.ENTRYWORD__FEM);
-				altParams.add(Values.CHANGED_PARADIGM);
-				altLemmas.put(9, new Tuple<>(altLemma, altParams));
-
-				paradigm.add(2);
-				flags.add(Features.GENDER__MASC);
-				flags.add(Features.POS__NOUN);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 2 & 9\n", lemma);
-				newBegin = 0;
-			}
-		}
 		// Paradigm 13: Īpašības vārdi ar -s
 		// Paradigm 14: Īpašības vārdi ar -š
-		else if (gramText.matches("īp\\. v\\. -ais; s\\. -a, -ā([;,.].*)?")) //aerobs
+		if (gramText.matches("īp\\. v\\. -ais; s\\. -a, -ā([;,.].*)?")) //aerobs
 		{
 			newBegin = "īp. v. -ais; s. -a, -ā".length();
 			if (lemma.matches(".*[^aeiouāēīōū]š"))
@@ -288,49 +225,6 @@ public class Gram  implements HasToJSON
 			}
 		}
 
-		// Paradigm Unknown: Divdabis
-		else if (gramText.matches("-gušais; s\\. -gusi, -gusī([.;].*)?")) //aizdudzis
-		{
-			newBegin = "-gušais; s. -gusi, -gusī".length();
-			if (lemma.endsWith("dzis"))
-			{
-				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 4) + "gusi");
-				Flags altParams = new Flags ();
-				altParams.add(Features.ENTRYWORD__FEM);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-
-				paradigm.add(0);
-				flags.add(Features.POS__PARTICIPLE);
-				flags.add(Features.POS__PARTICIPLE_IS);
-				flags.add(Features.GENDER__MASC);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt paradigmā 0 (Divdabis)\n", lemma);
-				newBegin = 0;
-			}
-		}
-		else if (gramText.matches("-ušais; s. -usi, -usī([.;].*)?")) //aizkūpis
-		{
-			newBegin = "-ušais; s. -usi, -usī".length();
-			if (lemma.matches(".*[cdjlmprstv]is"))
-			{
-				Lemma altLemma = new Lemma (lemma.substring(0, lemma.length() - 3) + "usi");
-				Flags altParams = new Flags ();
-				altParams.add(Features.ENTRYWORD__FEM);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-
-				paradigm.add(0);
-				flags.add(Features.POS__PARTICIPLE);
-				flags.add(Features.POS__PARTICIPLE_IS);
-				flags.add(Features.GENDER__MASC);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt paradigmā 0 (Divdabis)\n", lemma);
-				newBegin = 0;
-			}
-		}
 		// Ārpus šīs klases formalizētie likumi:
 		// Darbības vārdi.
 		for (Rule s : DirectRules.directMultiConjVerb)

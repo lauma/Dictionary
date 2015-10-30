@@ -52,6 +52,8 @@ public class Features
 
 	public static final Tuple<Keys, String> UNCLEAR_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_PARADIGM.s);
 
+	public static final Tuple<Keys, String> CHANGED_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.CHANGED_PARADIGM.s);
+
 	public static final Tuple<Keys, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE.s);
 
 	public static final Tuple<Keys, String> PERSON_NAME = Tuple.of(Keys.OTHER_FLAGS, Values.PERSON_NAME.s);

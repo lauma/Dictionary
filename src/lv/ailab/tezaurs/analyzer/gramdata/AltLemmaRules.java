@@ -1,5 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramdata;
 
+import lv.ailab.tezaurs.analyzer.gramlogic.SimpleAltEndingRule;
 import lv.ailab.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 
@@ -21,13 +22,33 @@ public class AltLemmaRules
 	 */
 	public static final AltLemmaRule[] pluralToSingular = {
 		// 2. paradigma: Lietvārds 1. deklinācija -š
-		AltFullLemmaRule.pluralToSingularMasc("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
+		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
 		// 3. paradigma: Lietvārds 2. deklinācija -is
-		AltFullLemmaRule.pluralToSingularMasc("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
-		AltFullLemmaRule.pluralToSingularMasc("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
-		AltFullLemmaRule.pluralToSingularMasc("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
+		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
+		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
+		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
 		// 1. paradigma: Lietvārds 1. deklinācija -s
-		AltFullLemmaRule.pluralToSingularMasc("-u, vsk.", "s, -a, v.", "i", 1), // aizkars
+		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
+	};
+
+	/**
+	 * Likumi formā:
+	 * -ķa; s. -ķe -ķu
+	 *
+	 */
+	public static final AltLemmaRule[] mascToFem = {
+		SimpleAltEndingRule
+				.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
+
+		SimpleAltEndingRule
+				.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
+		SimpleAltEndingRule
+				.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
+
+		SimpleAltEndingRule
+				.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
+		SimpleAltEndingRule
+				.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
 	};
 
 }

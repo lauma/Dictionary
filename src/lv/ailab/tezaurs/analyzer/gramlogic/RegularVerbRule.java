@@ -23,7 +23,7 @@ import java.util.Set;
  */
 public class RegularVerbRule implements Rule
 {
-	protected SimpleRule allPersonRule;
+	protected BaseRule allPersonRule;
 	protected ThirdPersVerbRule thirdPersonRule;
 	
 	/**
@@ -68,7 +68,7 @@ public class RegularVerbRule implements Rule
 						.printf("Neizdevās izveidot \"parasti 3. pers.\" likumu gramatikas šablonam \"%s\"\n", allPersonPattern);
 				thirdPersonPattern = allPersonPattern;
 			}
-			allPersonRule = new SimpleRule(allPersonPattern,
+			allPersonRule = BaseRule.simple(allPersonPattern,
 					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
 					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);

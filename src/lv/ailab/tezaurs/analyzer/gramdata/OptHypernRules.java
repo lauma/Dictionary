@@ -3,7 +3,6 @@ package lv.ailab.tezaurs.analyzer.gramdata;
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.gramlogic.*;
-import lv.ailab.tezaurs.utils.Trio;
 import lv.ailab.tezaurs.utils.Tuple;
 
 /**
@@ -24,17 +23,18 @@ public class OptHypernRules
 		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
 		 * declension nouns.
 		 */
-		SimpleRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, null,
+		BaseRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, null,
 				new Tuple[]{Features.GENDER__FEM}), //uzacs, acs
-		SimpleRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
-				new Tuple[] {Features.GENDER__FEM}), //aizkrāsns
-		SimpleRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
-				new Tuple[] {Features.GENDER__FEM}), //agrārvalsts
+		BaseRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
+				new Tuple[]{Features.GENDER__FEM}), //aizkrāsns
+		BaseRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
+				new Tuple[]{Features.GENDER__FEM}), //agrārvalsts
 
 		/* Paradigm 25: Pronouns
 		 */
-		SimpleRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
-				new Tuple[] {Features.POS__PRONOUN, Tuple.of(Keys.INFLECT_AS, "\"kas\"")},
+		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
+				new Tuple[]{Features.POS__PRONOUN, Tuple
+						.of(Keys.INFLECT_AS, "\"kas\"")},
 				null), //daudzkas
 	};
 	/**
@@ -42,13 +42,13 @@ public class OptHypernRules
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] fifthDeclNoun = {
-		SimpleRule.fifthDeclStd("-upes, dsk. ģen. -upju", ".*upe"), //upe
+		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju", ".*upe"), //upe
 	};
 	/**
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
 	public static final Rule[] secondDeclNoun = {
-			SimpleRule.secondDeclStd("-tēta, v.", ".*tētis"), //tētis
+			BaseRule.secondDeclStd("-tēta, v.", ".*tētis"), //tētis
 	};
 
 	/**
@@ -492,18 +492,18 @@ public class OptHypernRules
 	public static final Rule[] directThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		SimpleRule.thirdConjDirAllPersParallel(
+		BaseRule.thirdConjDirAllPersParallel(
 				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju", "mocīt"), //aizmocīt
-		SimpleRule.thirdConjDirAllPersParallel(
+		BaseRule.thirdConjDirAllPersParallel(
 				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju", "murcīt"), //apmurcīt
-		SimpleRule.thirdConjDirAllPersParallel(
+		BaseRule.thirdConjDirAllPersParallel(
 				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju", "ņurcīt"), //apmurcīt
 
-		SimpleRule.thirdConjDirAllPersParallel(
+		BaseRule.thirdConjDirAllPersParallel(
 				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				"slīdēt", false), // aizslīdēt
 
-		SimpleRule.thirdConjDirAllPersParallel(
+		BaseRule.thirdConjDirAllPersParallel(
 				"-guļu, -guli, -guļ (arī -gul), pag. -gulēju", "gulēt"), // iegulēt
 			//TODO kā norādīt miju + ko darīt ar otru, standartizēto gulēt?
 
@@ -609,61 +609,61 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
 				".*bedīt", false), // apbedīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju",
 				".*cerēt", false), // apcerēt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-cienu, -cieni, -ciena, arī -cienīju, -cienī, -cienī, pag. -cienīju",
 				".*cienīt", false), // iecienīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju",
 				".*dēstīt", false), // apdēstīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-kristīju, -kristī, -kristī, arī -kristu, -kristi, -krista, pag. -kristīju",
 				".*kristīt", false), // iekristīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-krustīju, -krusti, -krusti, arī -krustu, -krusti, -krusta, pag. -krustīju",
 				".*krustīt", false), // iekrustīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
 				".*ķēzīt", false), // apķēzīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-mērīju, -mērī, -mērī, arī -mēru, -mēri, -mēra, pag. -mērīju",
 				".*mērīt", false), // atmērīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-pelnu, -pelni, -pelna, arī -pelnīju, -pelnī, -pelnī, pag. -pelnīju",
-					".*pelnīt", false), // atpelnīt
-		ComplexRule.secondThirdConjDirectAllPers(
+				".*pelnīt", false), // atpelnīt
+		BaseRule.secondThirdConjDirectAllPers(
 				"-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju",
 				".*pētīt", false), // appētīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
 				".*rotīt", false), // aizrotīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju",
 				".*sargāt", false), // aizsargāt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju",
 				".*svētīt", false), // aizsargāt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju",
 				".*tašķīt", false), // aptašķīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju",
 				".*veltīt", false), // apveltīt
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
 				".*vētīt", false), // aizvētīt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		ComplexRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new Trio[]{
-					Trio.of(".*pelēt", new Integer[] {16, 17},
-							new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS,
-									Features.NO_PRESENT_SOUNDCHANGE})},
-				new Tuple[] {Features.USUALLY_USED__THIRD_PERS}), // aizpelēt
+		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SubRule[]{
+						SubRule.of(".*pelēt", new Integer[]{16, 17},
+								new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
+										Features.NO_PRESENT_SOUNDCHANGE})},
+				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), // aizpelēt
 	};
 
 	/**
@@ -880,7 +880,7 @@ public class OptHypernRules
 	public static final Rule[] reflThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		SimpleRule.thirdConjReflAllPersParallel(
+		BaseRule.thirdConjReflAllPersParallel(
 				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties"), //aizmocīties
 
 		// Standartizētie.
@@ -935,10 +935,10 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
 				".*gailēties", false), // iegailēties
-		ComplexRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPers(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
 				".*sargāties", false), // aizsargāties
 		// Likumi, kam ir tikai "parasti 3. pers." variants.

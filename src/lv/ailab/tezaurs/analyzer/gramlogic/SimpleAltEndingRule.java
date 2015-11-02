@@ -16,6 +16,9 @@ import java.util.regex.Pattern;
 
 /**
  * Likumi, kas tikai ar galotnēm norāda, ka jāizveido alternatīvā lemma.
+ * Vienākāršais likums - gramatikas šablonam atbilst viens galotnes šablons,
+ * viena pamata paradigma ar vienu alternatīvo lemmu, kurai atkal ir viena
+ * paradigma.
  * Izveidots 2015-10-26.
  *
  * @author Lauma

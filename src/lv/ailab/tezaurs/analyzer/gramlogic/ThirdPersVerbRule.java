@@ -14,8 +14,8 @@ import java.util.Set;
  */
 public class ThirdPersVerbRule implements Rule
 {
-    protected SimpleRule thirdPersOnly;
-    protected SimpleRule thirdPersUsually;
+    protected BaseRule thirdPersOnly;
+    protected BaseRule thirdPersUsually;
 
     /**
      * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
@@ -33,22 +33,30 @@ public class ThirdPersVerbRule implements Rule
     public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
             Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
     {
-        thirdPersUsually = new SimpleRule(
+        thirdPersUsually = BaseRule.simple(
                 "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<Tuple<Keys, String>>() {{
+                new HashSet<Tuple<Keys, String>>()
+                {{
                         add(Features.POS__VERB);
-                        if (positiveFlags != null) addAll(positiveFlags); }},
-                new HashSet<Tuple<Keys,String>>() {{
+                        if (positiveFlags != null) addAll(positiveFlags);
+                    }},
+                new HashSet<Tuple<Keys, String>>()
+                {{
                         add(Features.USUALLY_USED__THIRD_PERS);
-                        if (alwaysFlags != null) addAll(alwaysFlags); }});
-        thirdPersOnly = new SimpleRule(
+                        if (alwaysFlags != null) addAll(alwaysFlags);
+                    }});
+        thirdPersOnly = BaseRule.simple(
                 "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<Tuple<Keys,String>>() {{
-                    add(Features.POS__VERB);
-                    if (positiveFlags != null) addAll(positiveFlags); }},
-                new HashSet<Tuple<Keys,String>>() {{
-                    add(Features.USED_ONLY__THIRD_PERS);
-                    if (alwaysFlags != null) addAll(alwaysFlags); }});
+                new HashSet<Tuple<Keys, String>>()
+                {{
+                        add(Features.POS__VERB);
+                        if (positiveFlags != null) addAll(positiveFlags);
+                    }},
+                new HashSet<Tuple<Keys, String>>()
+                {{
+                        add(Features.USED_ONLY__THIRD_PERS);
+                        if (alwaysFlags != null) addAll(alwaysFlags);
+                    }});
     }
 
     /**

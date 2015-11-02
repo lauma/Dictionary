@@ -21,7 +21,7 @@ import java.util.*;
  */
 public class FirstConjRule implements Rule
 {
-	protected SimpleRule allPersonRule;
+	protected BaseRule allPersonRule;
 	protected ThirdPersVerbRule thirdPersonRule;
 	// Celmus glabā atsevišķi, nevis jau kā gatavus karodziņus tāpēc, ka
 	// karodziņam jāsatur arī "priedēklis", bet šobrīd tas nav zināms.
@@ -95,7 +95,7 @@ public class FirstConjRule implements Rule
 				thirdPersonPattern = allPersonPattern;
 			}
 
-			allPersonRule = new SimpleRule(allPersonPattern,
+			allPersonRule = BaseRule.simple(allPersonPattern,
 					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
 					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
@@ -106,7 +106,7 @@ public class FirstConjRule implements Rule
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternBegin != null && patternBegin.trim().length() > 0)
 		{
-			allPersonRule = new SimpleRule(patternBegin,
+			allPersonRule = BaseRule.simple(patternBegin,
 					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = null;
 		}

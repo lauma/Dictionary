@@ -5,7 +5,6 @@ import lv.ailab.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 
 /**
- * /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * Gram.processBeginingWithPatterns(String, String)
  * Likumi, kas veido alternatīvās formas.
@@ -37,18 +36,13 @@ public class AltLemmaRules
 	 *
 	 */
 	public static final AltLemmaRule[] mascToFem = {
-		SimpleAltEndingRule
-				.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
+		SimpleAltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
 
-		SimpleAltEndingRule
-				.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
-		SimpleAltEndingRule
-				.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
+		SimpleAltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
+		SimpleAltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
-		SimpleAltEndingRule
-				.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
-		SimpleAltEndingRule
-				.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
+		SimpleAltEndingRule.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
+		SimpleAltEndingRule.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
 	};
 
 }

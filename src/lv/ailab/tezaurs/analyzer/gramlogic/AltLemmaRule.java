@@ -8,7 +8,8 @@ import lv.ailab.tezaurs.utils.Tuple;
 import java.util.HashSet;
 
 /**
- * Interfeiss likumiem, kuru lietošanas rezultātā jāveido jauna forma.
+ * Gramatiku apstrādes likums, kurš var ne tikai radīt jaunus karodziņus un
+ * paradigmas, bet arī jaunas formas un visu ar to saistīto.
  * Izveidots 2015-10-26.
  *
  * @author Lauma

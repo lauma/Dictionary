@@ -1,6 +1,6 @@
 package lv.ailab.tezaurs.analyzer.gramdata;
 
-import lv.ailab.tezaurs.analyzer.gramlogic.SimpleAltEndingRule;
+import lv.ailab.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 
@@ -36,13 +36,13 @@ public class AltLemmaRules
 	 *
 	 */
 	public static final AltLemmaRule[] mascToFem = {
-		SimpleAltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
+		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
 
-		SimpleAltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
-		SimpleAltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
+		AltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
+		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
-		SimpleAltEndingRule.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
-		SimpleAltEndingRule.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
+		AltEndingRule.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
+		AltEndingRule.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
 	};
 
 }

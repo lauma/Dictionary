@@ -659,8 +659,8 @@ public class OptHypernRules
 				".*vētīt", false), // aizvētīt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SubRule[]{
-						SubRule.of(".*pelēt", new Integer[]{16, 17},
+		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
+						SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
 								new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
 										Features.NO_PRESENT_SOUNDCHANGE})},
 				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), // aizpelēt

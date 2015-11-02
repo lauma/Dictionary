@@ -7,6 +7,8 @@ import lv.ailab.tezaurs.utils.MappingSet;
 import lv.ailab.tezaurs.utils.Tuple;
 
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Datu struktūra karodziņu uzturēšanai.
@@ -26,6 +28,18 @@ public class Flags
 	{
 		if (others.pairings != null)
 			pairings.putAll(others.pairings);
+	}
+
+	public void addAll(Map<Keys, String> others)
+	{
+		if (others != null)
+			pairings.putAll(others);
+	}
+
+	public void addAll(Set<Tuple<Keys, String>> others)
+	{
+		for (Tuple<Keys, String> t : others)
+			pairings.put(t.first, t.second);
 	}
 
 	public void add(Keys key, String value)

@@ -4,7 +4,7 @@ import lv.ailab.tezaurs.analyzer.struct.Flags;
 import java.util.HashSet;
 
 /**
- * Gramatiku apstrādes likums.
+ * Gramatiku apstrādes likums, kurš var dot jaunus karodziņus un paradigmas.
  * @author Lauma
  *
  */

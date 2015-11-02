@@ -19,10 +19,11 @@ import java.util.regex.Pattern;
  *
  * @author Lauma
  */
-public class SubRule
+public class SimpleSubRule
 {
 	/**
-	 * Lai likums būtu piemērojams, lemmai jāatbilst šim šablonam.
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
 	 */
 	public final Pattern lemmaRestrict;
 	/**
@@ -36,7 +37,8 @@ public class SubRule
 	 */
 	public final Set<Tuple<Keys,String>> positiveFlags;
 
-	public SubRule(String lemmaRestrict, Set<Integer>paradigms, Set<Tuple<Keys,String>> positiveFlags)
+	public SimpleSubRule(String lemmaRestrict, Set<Integer> paradigms,
+			Set<Tuple<Keys, String>> positiveFlags)
 	{
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		//this.paradigms = paradigms;
@@ -47,7 +49,8 @@ public class SubRule
 				Collections.unmodifiableSet(positiveFlags);
 	}
 
-	public SubRule(Pattern lemmaRestrict, Set<Integer>paradigms, Set<Tuple<Keys,String>> positiveFlags)
+	public SimpleSubRule(Pattern lemmaRestrict, Set<Integer> paradigms,
+			Set<Tuple<Keys, String>> positiveFlags)
 	{
 		this.lemmaRestrict = lemmaRestrict;
 		//this.paradigms = paradigms;
@@ -58,21 +61,21 @@ public class SubRule
 				Collections.unmodifiableSet(positiveFlags);
 	}
 
-	public static SubRule of(String lemmaRestrict, Integer[] paradigms, Tuple<Keys,String>[] positiveFlags)
+	public static SimpleSubRule of(String lemmaRestrict, Integer[] paradigms, Tuple<Keys,String>[] positiveFlags)
 	{
-		return new SubRule(lemmaRestrict,
+		return new SimpleSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
 	}
 
 	/**
-	 * Make copy of this SubRule and add given feature to the new SubRule.
+	 * Make copy of this SimpleSubRule and add given feature to the new SimpleSubRule.
 	 */
-	public SubRule cloneWithFeature(Tuple<Keys, String> feature)
+	public SimpleSubRule cloneWithFeature(Tuple<Keys, String> feature)
 	{
 		Set <Tuple<Keys, String>> pFlags = new HashSet<>();
 		if (positiveFlags != null) pFlags.addAll(positiveFlags);
 		pFlags.add(feature);
-		return new SubRule(this.lemmaRestrict, this.paradigms, pFlags);
+		return new SimpleSubRule(this.lemmaRestrict, this.paradigms, pFlags);
 	}
 }

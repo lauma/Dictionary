@@ -33,55 +33,26 @@ public class AltFullLemmaRule implements AltLemmaRule
 	 * specifiskās daļas, lai šis likums būtu piemērojams.
 	 */
 	protected final String patternTextEnding;
+
 	/**
-	 * Lai likums būtu piemērojams, lemmai jāatbilst šim šablonam.
+	 * Likuma "otrā puse" - lemmas nosacījumi, piešķiramās paradigmas un
+	 * karodziņi, kā arī alternatīvās lemmas veidošanas dati un tai piešķiramie
+	 * karodziņi.
 	 */
-	protected final Pattern lemmaRestrict;
-	/**
-	 * Simbolu skaits, kas tiks noņemts no dotās lemmas beigām, to izmantojot
-	 * gramatikas šablona viedošanai.
-	 */
-	protected final int lemmaEndingCutLength;
-	/**
-	 * Teksta virkne kuru izmantos kā izskaņu, veidojot papildus lemmu.
-	 */
-	protected final String altLemmaEnding;
-	/**
-	 * Paradigmas ID, ko lieto, ja likums ir piemērojams (gan gramatikas teksts,
-	 * gan lemma atbilst attiecīgajiem šabloniem).
-	 */
-	protected final int paradigmId;
-	/**
-	 * Paradigmas ID, ko lieto papildus izveidotajai lemmai.
-	 */
-	protected final int altParadigmId;
-	/**
-	 * Šos karodziņus uzstāda pamata karodziņu savācējam, ja gan gramatikas
-	 * teksts, gan lemma atbilst attiecīgajiem šabloniem.
-	 */
-	protected final Set<Tuple<Keys,String>> positiveFlags;
-	/**
-	 * Šos karodziņus uzstāda papildu pamatformai, nevis pamatvārdam, ja gan
-	 * gramatikas teksts, gan lemma atbilst attiecīgajiem šabloniem.
-	 */
-	protected final Set<Tuple<Keys,String>> altLemmaFlags;
+	protected final AltLemmaSubRule lemmaLogic;
 
 
 	public AltFullLemmaRule(
 			String patternBegin, String patternEnding, String lemmaRestrict,
-			String altLemmaEnding, int lemmaEndingCutLength, int paradigmId,
-			int altParadigmId, Set<Tuple<Keys, String>> positiveFlags,
+			String altLemmaEnding, int lemmaEndingCutLength, int paradigm,
+			int altLemmaParadigm, Set<Tuple<Keys, String>> positiveFlags,
 			Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		this.patternTextBegin = patternBegin;
 		this.patternTextEnding = patternEnding;
-		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
-		this.lemmaEndingCutLength = lemmaEndingCutLength;
-		this.altLemmaEnding = altLemmaEnding;
-		this.paradigmId = paradigmId;
-		this.altParadigmId = altParadigmId;
-		this.positiveFlags = positiveFlags == null? null : Collections.unmodifiableSet(positiveFlags);
-		this.altLemmaFlags = altLemmaFlags == null? null : Collections.unmodifiableSet(altLemmaFlags);
+		this.lemmaLogic = new AltLemmaSubRule(lemmaRestrict,
+				new HashSet<Integer>(){{add(paradigm);}}, positiveFlags,
+				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm, altLemmaFlags);
 	}
 
 	public static AltFullLemmaRule of(
@@ -145,23 +116,23 @@ public class AltFullLemmaRule implements AltLemmaRule
 			HashSet<Integer> paradigmCollector, Flags flagCollector,
 			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector)
 	{
-		if (!lemmaRestrict.matcher(lemma).matches()) return -1;
+		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
 		int newBegin = -1;
 
-		String lemmaStub = lemma.substring(0, lemma.length() - lemmaEndingCutLength);
+		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
 		String pattern = patternTextBegin + lemmaStub + patternTextEnding;
 		if (gramText.startsWith(pattern))
 		{
 			newBegin = pattern.length();
-			Lemma altLemma = new Lemma(lemmaStub + altLemmaEnding);
+			Lemma altLemma = new Lemma(lemmaStub + lemmaLogic.altLemmaEnding);
 			Flags altParams = new Flags();
-			if (altLemmaFlags != null)
-				for (Tuple<Keys, String> t : altLemmaFlags) altParams.add(t);
-			altLemmasCollector.put(altParadigmId, new Tuple<>(altLemma, altParams));
+			if (lemmaLogic.altLemmaFlags != null)
+				for (Tuple<Keys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
+			altLemmasCollector.put(lemmaLogic.altLemmaParadigm, new Tuple<>(altLemma, altParams));
 
-			paradigmCollector.add(paradigmId);
-			if (positiveFlags != null)
-				for (Tuple<Keys, String> t : positiveFlags) flagCollector.add(t);
+			paradigmCollector.addAll(lemmaLogic.paradigms);
+			if (lemmaLogic.positiveFlags != null)
+				for (Tuple<Keys, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
 			return newBegin;
 		}
 		else return -1;

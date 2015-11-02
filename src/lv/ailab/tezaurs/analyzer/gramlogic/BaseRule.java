@@ -44,7 +44,7 @@ public class BaseRule implements Rule
      * karodziņu kopas, kas lietojami, ja attiecīgais lemmas ierobežojums
      * izpildās.
      */
-    protected final List<SubRule> lemmaLogic;
+    protected final List<SimpleSubRule> lemmaLogic;
     /**
      * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
      * šablonam.
@@ -67,7 +67,7 @@ public class BaseRule implements Rule
      * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts
      *                      atbilst attiecīgajam šablonam.
      */
-    public BaseRule(String pattern, List<SubRule> lemmaLogic,
+    public BaseRule(String pattern, List<SimpleSubRule> lemmaLogic,
 			Set<Tuple<Keys, String>> alwaysFlags)
     {
         if (lemmaLogic == null)
@@ -107,8 +107,8 @@ public class BaseRule implements Rule
 			int paradigmId,	Set<Tuple<Keys, String>> positiveFlags,
 			Set<Tuple<Keys, String>> alwaysFlags)
 	{
-		return new BaseRule(patternText, new ArrayList<SubRule>() {{
-						add(new SubRule(lemmaRestrict, new HashSet<Integer>(){{
+		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
+						add(new SimpleSubRule(lemmaRestrict, new HashSet<Integer>(){{
 							add(paradigmId);}}, positiveFlags));}},
 				alwaysFlags);
 	}
@@ -129,8 +129,8 @@ public class BaseRule implements Rule
 			Set<Integer> paradigms,	Set<Tuple<Keys, String>> positiveFlags,
 			Set<Tuple<Keys, String>> alwaysFlags)
 	{
-		return new BaseRule(patternText, new ArrayList<SubRule>() {{
-			add(new SubRule(lemmaRestrict, paradigms, positiveFlags));}},
+		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
+			add(new SimpleSubRule(lemmaRestrict, paradigms, positiveFlags));}},
 				alwaysFlags);
 	}
 
@@ -148,7 +148,7 @@ public class BaseRule implements Rule
 	 *                          atbilst attiecīgajam šablonam.
 	 * @return	jauns BaseRule
 	 */
-	public static BaseRule of(String patternText, SubRule[] lemmaLogic,
+	public static BaseRule of(String patternText, SimpleSubRule[] lemmaLogic,
 			Tuple<Keys,String>[] alwaysFlags)
 	{
 		return new BaseRule(patternText,
@@ -175,8 +175,9 @@ public class BaseRule implements Rule
 			Tuple<Keys, String>[] positiveFlags,
 			Tuple<Keys, String>[] alwaysFlags)
 	{
-		return BaseRule.of(patternText, new SubRule[]{
-						SubRule.of(lemmaRestrict, new Integer[]{paradigmId}, positiveFlags)},
+		return BaseRule.of(patternText, new SimpleSubRule[]{
+						SimpleSubRule
+								.of(lemmaRestrict, new Integer[]{paradigmId}, positiveFlags)},
 				alwaysFlags);
 	}
 
@@ -196,8 +197,9 @@ public class BaseRule implements Rule
 			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
 			Tuple<Keys, String>[] alwaysFlags)
 	{
-		return BaseRule.of(patternText, new SubRule[]{
-						SubRule.of(lemmaRestrict, paradigms, positiveFlags)},
+		return BaseRule.of(patternText, new SimpleSubRule[]{
+						SimpleSubRule
+								.of(lemmaRestrict, paradigms, positiveFlags)},
 				alwaysFlags);
 	}
 
@@ -216,11 +218,11 @@ public class BaseRule implements Rule
 	 *                          atbilst attiecīgajam šablonam.
 	 * @return	jauns BaseRule
 	 */
-	public static BaseRule noun (String patternText, SubRule[] lemmaLogic,
+	public static BaseRule noun (String patternText, SimpleSubRule[] lemmaLogic,
 			Tuple<Keys,String>[] alwaysFlags)
 	{
-		ArrayList<SubRule> tmp = new ArrayList<>();
-		for (SubRule r : lemmaLogic)
+		ArrayList<SimpleSubRule> tmp = new ArrayList<>();
+		for (SimpleSubRule r : lemmaLogic)
 			tmp.add(r.cloneWithFeature(Features.POS__NOUN));
 		return new BaseRule(patternText, tmp,
 				alwaysFlags == null ? null :
@@ -415,9 +417,10 @@ public class BaseRule implements Rule
 	{
         Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-		return BaseRule.of(patternText, new SubRule[]{
-						SubRule.of(lemmaRestrictions, new Integer[]{16, 17}, new Tuple[]{
-								Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
+		return BaseRule.of(patternText, new SimpleSubRule[]{
+						SimpleSubRule
+								.of(lemmaRestrictions, new Integer[]{16, 17}, new Tuple[]{
+										Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
 				null);
 
 	}
@@ -435,9 +438,10 @@ public class BaseRule implements Rule
     {
 		Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-		return BaseRule.of(patternText, new SubRule[]{
-						SubRule.of(lemmaRestrictions, new Integer[]{19, 20}, new Tuple[]{
-								Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
+		return BaseRule.of(patternText, new SimpleSubRule[]{
+						SimpleSubRule
+								.of(lemmaRestrictions, new Integer[]{19, 20}, new Tuple[]{
+										Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
 				null);
     }
 
@@ -501,14 +505,13 @@ public class BaseRule implements Rule
         {
             newBegin = m.group(1).length();
             boolean matchedLemma = false;
-            for (SubRule rule : this.lemmaLogic)
+            for (SimpleSubRule rule : this.lemmaLogic)
             {
                 if (rule.lemmaRestrict.matcher(lemma).matches())
                 {
                     paradigmCollector.addAll(rule.paradigms);
                     if (rule.positiveFlags != null)
-						for (Tuple<Keys, String> t : rule.positiveFlags)
-							flagCollector.add(t.first, t.second);
+						flagCollector.addAll(rule.positiveFlags);
                     matchedLemma = true;
                     break;
                 }

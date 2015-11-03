@@ -32,6 +32,7 @@ public enum Values
 	FOREIGN("Vārds svešvalodā"),
 
 	PARTICIPLE("Divdabis"),
+	PARTICIPLE_OSS("Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)"),
 	PARTICIPLE_IS("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)"),
 	PARTICIPLE_AMS("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)"),
 	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),

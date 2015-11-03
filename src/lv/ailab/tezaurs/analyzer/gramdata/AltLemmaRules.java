@@ -26,6 +26,8 @@ public class AltLemmaRules
 		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
 		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
+			// -u; vsk. abrazīvs, -a, v.
+		AltFullLemmaRule.nounPluralToSingularMasc("-u; vsk.", "vs, -a, v.", "vi", 1), // abrazīvi
 		// 1. paradigma: Lietvārds 1. deklinācija -s
 		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
 	};

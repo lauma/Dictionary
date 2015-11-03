@@ -14,6 +14,7 @@ public class Features
 	public static final Tuple<Keys, String> POS__VERB = Tuple.of(Keys.POS, Values.VERB.s);
 	public static final Tuple<Keys, String> POS__ADJ = Tuple.of(Keys.POS, Values.ADJECTIVE.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE = Tuple.of(Keys.POS, Values.PARTICIPLE.s);
+	public static final Tuple<Keys, String> POS__PARTICIPLE_OSS = Tuple.of(Keys.POS, Values.PARTICIPLE_OSS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_IS = Tuple.of(Keys.POS, Values.PARTICIPLE_IS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_TS = Tuple.of(Keys.POS, Values.PARTICIPLE_TS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_AMS = Tuple.of(Keys.POS, Values.PARTICIPLE_AMS.s);

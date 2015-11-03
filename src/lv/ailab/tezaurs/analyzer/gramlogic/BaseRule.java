@@ -315,24 +315,37 @@ public class BaseRule implements Rule
 	/**
 	 * Metode īsumam.
 	 * Izveido BaseRule īpašības vārdiem šabloniem formā:
-	 * īp. v. -ais; s. -a, -ā	un
 	 * -ais; s. -a, -ā
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @return BaseRule ar 13 un 14. paradigmu divdabju karodziņiem
+	 * TODO likt šeit tās dzimtes vai nelikt?
+	 */
+	public static BaseRule adjectiveParticiple (String patternText)
+	{
+		return BaseRule.of(patternText, new SimpleSubRule[] {
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.POS__ADJ}),
+						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*ams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ})},
+				new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM});
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule īpašības vārdiem šabloniem formā:
+	 * īp. v. -ais; s. -a, -ā
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @return BaseRule ar 13 un 14. paradigmu divdabju karodziņiem
 	 * TODO likt šeit tās dzimtes vai nelikt?
 	 */
 	public static BaseRule adjective (String patternText)
 	{
-		if (patternText.matches("(^|.* )īp\\. v\\..*"))
-			return BaseRule.of(patternText, new SimpleSubRule[] {
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM}),
-						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM})},
-				new Tuple[] {Features.POS__ADJ});
-		else
-			return BaseRule.of(patternText, new SimpleSubRule[] {
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM}),
-						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM})},
-				null);
+		return BaseRule.of(patternText, new SimpleSubRule[] {
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, null),
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, null)},
+				new Tuple[] {Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM});
 	}
 
 	/**

@@ -353,24 +353,27 @@ public class Gram  implements HasToJSON
 		gramText = gramText.trim();
 		int newBegin = -1;
 
-		// Alternative form processing.
-		if (gramText.matches("parasti divd\\. formā: (\\w+), (\\w+)")) //aizelsties->aizelsies, aizelsdamies
+		//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
+		Matcher m = Pattern.compile("((parasti |bieži |)divd\\. formā: (\\p{Ll}+(, \\p{Ll}+)?))([,;].*)?")
+				.matcher(gramText);
+		if (m.matches())
 		{
-			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+(, \\w+)+))([.;].*)?")
-					.matcher(gramText);
-			m.matches();
-			String[] newLemmas = m.group(2).split(", ");
+			String[] newLemmas = m.group(3).split(", ");
 			newBegin = m.group(1).length();
+			String indicator = m.group(2).trim();
+			Keys usedType = Keys.USED_IN_FORM;
+			if (indicator.equals("parasti")) usedType = Keys.USUALLY_USED_IN_FORM;
+			else if (indicator.equals("bieži")) usedType = Keys.OFTEN_USED_IN_FORM;
 			for (String newLemma : newLemmas)
 			{
 				Lemma altLemma = new Lemma (newLemma);
 				Flags altParams = new Flags ();
 
 				flags.add(Features.POS__VERB);
-				flags.add(Features.USUALLY_USED__PARTICIPLE);
-				flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
+				flags.add(usedType, Values.PARTICIPLE);
+				flags.add(usedType, "\"" + newLemma  + "\"");
 				Boolean success = RulesAsFunctions.determineParticipleType(
-						newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
+						newLemma, flags, altParams, usedType);
 				if (success)
 				{
 					newBegin = m.group(1).length();
@@ -385,6 +388,19 @@ public class Gram  implements HasToJSON
 					newBegin = 0;
 				}
 			}
+		} else
+		m = Pattern.compile("((parasti |bieži |)savienojumā (\"\\p{L}+(,? \\p{L}+)?\"))([.,;].*)?")
+				.matcher(gramText);
+		if (m.matches())
+		{
+			newBegin = m.group(1).length();
+			String indicator = m.group(2).trim();
+			Keys usedType = Keys.USED_IN_FORM;
+			if (indicator.equals("parasti")) usedType = Keys.USUALLY_USED_IN_FORM;
+			else if (indicator.equals("bieži")) usedType = Keys.OFTEN_USED_IN_FORM;
+			String phrase = m.group(3);
+			flags.add(usedType, Values.PHRASE);
+			flags.add(usedType, phrase);
 		}
 
 		if (newBegin > 0) gramText = gramText.substring(newBegin);
@@ -407,7 +423,7 @@ public class Gram  implements HasToJSON
 		int newBegin = -1;
 		
 		// Alternative form processing.
-		if (gramText.matches("parasti divd\\. formā: (\\w+)")) //aizdzert->aizdzerts
+		/*if (gramText.matches("parasti divd\\. formā: (\\w+)([.;].*)?")) //aizdzert->aizdzerts
 		{
 			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+))([.;].*)?")
 					.matcher(gramText);
@@ -434,7 +450,8 @@ public class Gram  implements HasToJSON
 						newLemma, lemma);
 				newBegin = 0;
 			}
-		} else if (gramText.matches("bieži lok\\.: (\\w+)")) // agrums->agrumā
+		} else*/
+		if (gramText.matches("bieži lok\\.: (\\w+)")) // agrums->agrumā
 		{
 			Matcher m = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?").matcher(gramText);
 			newBegin = m.group(1).length();

@@ -31,12 +31,15 @@ public enum Values
 
 	FOREIGN("Vārds svešvalodā"),
 
+	PHRASE("Vārdu savienojums"),
+
 	PARTICIPLE("Divdabis"),
 	PARTICIPLE_OSS("Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)"),
 	PARTICIPLE_IS("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)"),
 	PARTICIPLE_AMS("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)"),
 	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),
 	PARTICIPLE_DAMS("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)"),
+	PARTICIPLE_OT("Nelokāmais divdabis (-ot, -oties)"),
 
 	PLACE_NAME("Vietvārds"),
 	PERSON_NAME("Personvārds"),

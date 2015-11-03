@@ -33,8 +33,14 @@ public class DirectRules
 		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
 				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN}), // aerobs
 		BaseRule.noun("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{Features.GENDER__MASC, Tuple
-						.of(Keys.NUMBER, Values.SINGULAR.s)}), // acteks
+				new Tuple[]{Features.GENDER__MASC, Tuple.of(Keys.NUMBER, Values.SINGULAR.s)}), // acteks
+		BaseRule.noun("-a, vsk.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{Features.GENDER__MASC}),
+						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{Features.GENDER__MASC}),
+						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{Features.GENDER__MASC}),
+						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{Features.GENDER__MASC}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{Features.GENDER__MASC})},
+				null), // aizkars, cīsiņš, sakņkājis
 
 		// Nedefinēta paradigma: divdabji
 		BaseRule.participleIs("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis

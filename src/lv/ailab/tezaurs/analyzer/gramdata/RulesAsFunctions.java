@@ -46,10 +46,14 @@ public class RulesAsFunctions
 			partType = Values.PARTICIPLE_DAMS;
 		else if (form.endsWith("ams") || form.endsWith("āms"))
 			partType = Values.PARTICIPLE_AMS;
+		else if (form.endsWith("ošs")) // garāmbraucošs
+			partType = Values.PARTICIPLE_OSS;
 		else if (form.endsWith("ts")) // aizdzert->aizdzerts
 			partType = Values.PARTICIPLE_TS;
 		else if (form.endsWith("is") || form.endsWith("ies")) // aizmakt->aizsmacis, pieriesties->pieriesies
 			partType = Values.PARTICIPLE_IS;
+		else if (form.endsWith("ot") || form.endsWith("oties")) // ievērojot
+			partType = Values.PARTICIPLE_OT;
 		else
 			return false;
 

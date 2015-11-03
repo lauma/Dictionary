@@ -69,13 +69,13 @@ public class AltEndingRule implements AltLemmaRule
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			Set<Integer> paradigms, Set<Tuple<Keys, String>> positiveFlags,
-			int lemmaEndingCutLength, String altLemmaEnding,
+			int lemmaEndCutLength, String altLemmaEnd,
 			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
 					add( new AltLemmaSubRule(lemmaRestrictions, paradigms,
-							positiveFlags, lemmaEndingCutLength, altLemmaEnding,
+							positiveFlags, lemmaEndCutLength, altLemmaEnd,
 							altLemmaParadigm, altLemmaFlags));}});
 	}
 
@@ -85,14 +85,14 @@ public class AltEndingRule implements AltLemmaRule
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			int paradigm, Set<Tuple<Keys, String>> positiveFlags,
-			int lemmaEndingCutLength, String altLemmaEnding,
+			int lemmaEndCutLength, String altLemmaEnd,
 			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
 					add( new AltLemmaSubRule(lemmaRestrictions,
 							new HashSet<Integer>(){{add(paradigm);}},
-							positiveFlags, lemmaEndingCutLength, altLemmaEnding,
+							positiveFlags, lemmaEndCutLength, altLemmaEnd,
 							altLemmaParadigm, altLemmaFlags));}});
 	}
 
@@ -104,7 +104,7 @@ public class AltEndingRule implements AltLemmaRule
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
 			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
-			int lemmaEndingCutLength, String altLemmaEnding,
+			int lemmaEndCutLength, String altLemmaEnd,
 			int altLemmaParadigm, Tuple<Keys, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions,
@@ -112,7 +112,7 @@ public class AltEndingRule implements AltLemmaRule
 						.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm,
+				lemmaEndCutLength, altLemmaEnd, altLemmaParadigm,
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
 						.asList(altLemmaFlags)));
 	}
@@ -135,33 +135,39 @@ public class AltEndingRule implements AltLemmaRule
 	/**
 	 * Speciālgadījums lietvārdiem, kam pamatforma ir 1. deklinācijā un
 	 * papildforma - 5. Pirmās deklinācijas paradigmu (1 vai 2) nosaka
-	 * automātiski pēc lemmaEnding pēdējā simbola.
+	 * automātiski pēc lemmaEnd pēdējā simbola.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
 	 */
 	public static AltEndingRule mascFirstDeclToFemFifthDecl(
-			String patternText, String lemmaEnding, String altLemmaEnding)
+			String patternText, String lemmaEnd, String altLemmaEnd)
 	{
 		int paradigm = 1;
-		if (lemmaEnding.endsWith("s")) paradigm = 1;
-		else if (lemmaEnding.endsWith("š")) paradigm = 2;
+		if (lemmaEnd.endsWith("s")) paradigm = 1;
+		else if (lemmaEnd.endsWith("š")) paradigm = 2;
 		else System.err.printf(
 				"Neizdodas pēc galotnes \"%s\" noteikt paradigmu likumam \"%s\"\n",
-				lemmaEnding, patternText);
-		return AltEndingRule.of(patternText, ".*" + lemmaEnding, paradigm,
+				lemmaEnd, patternText);
+		return AltEndingRule.of(patternText, ".*" + lemmaEnd, paradigm,
 				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN},
-				lemmaEnding.length(), altLemmaEnding, 9,
+				lemmaEnd.length(), altLemmaEnd, 9,
 				new Tuple[]{Features.ENTRYWORD__FEM, Features.CHANGED_PARADIGM});
 	}
 
 	/**
 	 * Speciālgadījums lietvārdiem, kam pamatforma ir 2. deklinācijā
 	 * (3. paradigma) un papildforma - 5.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
 	 */
 	public static AltEndingRule mascSeconDeclToFemFifthDecl(
-			String patternText, String lemmaEnding, String altLemmaEnding)
+			String patternText, String lemmaEnd, String altLemmaEnd)
 	{
-		return AltEndingRule.of(patternText, ".*" + lemmaEnding, 3,
+		return AltEndingRule.of(patternText, ".*" + lemmaEnd, 3,
 				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN},
-				lemmaEnding.length(), altLemmaEnding, 9,
+				lemmaEnd.length(), altLemmaEnd, 9,
 				new Tuple[]{Features.ENTRYWORD__FEM, Features.CHANGED_PARADIGM});
 	}
 

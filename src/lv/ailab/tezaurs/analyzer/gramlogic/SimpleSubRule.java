@@ -69,7 +69,7 @@ public class SimpleSubRule
 	}
 
 	/**
-	 * Make copy of this SimpleSubRule and add given feature to the new SimpleSubRule.
+	 * Uztaisa šīs objekta kopiju un pievieno tam vēl arī doto karodziņu.
 	 */
 	public SimpleSubRule cloneWithFeature(Tuple<Keys, String> feature)
 	{

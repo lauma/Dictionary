@@ -32,8 +32,7 @@ public class AltLemmaRules
 
 	/**
 	 * Likumi formā:
-	 * -ķa; s. -ķe -ķu
-	 *
+	 * -ķa; s. -ķe, -ķu
 	 */
 	public static final AltLemmaRule[] mascToFem = {
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
@@ -41,8 +40,6 @@ public class AltLemmaRules
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
-		AltEndingRule.participleIsMascToFem("-gušais; s. -gusi, -gusī", "dzis", "gusi"), // aizdudzis
-		AltEndingRule.participleIsMascToFem("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is", "usi", 3), // aizkūpis
 	};
 
 }

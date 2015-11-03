@@ -94,21 +94,24 @@ public class BaseRule implements Rule
 	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
 	 * nosacījums ar tikai vienu paradigmu. (Agrāk šis gadījums bija izdalīts
 	 * atsevišķā klasē).
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai (tiks eskeipots)
-	 * @param lemmaRestrict	regulā izteiksme, kas nosaka lemmas īpatnības
-	 *                      (netiks eskeipota)
-	 * @param paradigmId	paradigmas ID, ko uzstādīt, ja likums ir piemērojams
-	 * @param positiveFlags	karodziņi, ko uzstādīt, ja gan gramatikas teksts,
-	 *                      gan lemma atbilst attiecīgajiem šabloniem
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts atbilst
-	 *                      attiecīgajam šablonam
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigmId		paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      	atbilst attiecīgajam šablonam
 	 */
-	public static BaseRule simple(String patternText, String lemmaRestrict,
+	public static BaseRule simple(String patternText, String lemmaRestrictions,
 			int paradigmId,	Set<Tuple<Keys, String>> positiveFlags,
 			Set<Tuple<Keys, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
-						add(new SimpleSubRule(lemmaRestrict, new HashSet<Integer>(){{
+						add(new SimpleSubRule(lemmaRestrictions, new HashSet<Integer>(){{
 							add(paradigmId);}}, positiveFlags));}},
 				alwaysFlags);
 	}
@@ -116,21 +119,24 @@ public class BaseRule implements Rule
 	/**
 	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
 	 * nosacījums ar vairākām paradigmām.
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai (tiks eskeipots)
-	 * @param lemmaRestrict	regulā izteiksme, kas nosaka lemmas īpatnības
-	 *                      (netiks eskeipota)
-	 * @param paradigms		paradigmas ID, ko uzstādīt, ja likums ir piemērojams
-	 * @param positiveFlags	karodziņi, ko uzstādīt, ja gan gramatikas teksts,
-	 *                      gan lemma atbilst attiecīgajiem šabloniem
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts atbilst
-	 *                      attiecīgajam šablonam
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigms			paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      	atbilst attiecīgajam šablonam
 	 */
-	public static BaseRule simple(String patternText, String lemmaRestrict,
+	public static BaseRule simple(String patternText, String lemmaRestrictions,
 			Set<Integer> paradigms,	Set<Tuple<Keys, String>> positiveFlags,
 			Set<Tuple<Keys, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
-			add(new SimpleSubRule(lemmaRestrict, paradigms, positiveFlags));}},
+			add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags));}},
 				alwaysFlags);
 	}
 
@@ -161,45 +167,49 @@ public class BaseRule implements Rule
 	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
 	 * nosacījums ar tikai vienu paradigmu. (Agrāk šis gadījums bija izdalīts
 	 * atsevišķā klasē).
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai (tiks eskeipots)
-	 * @param lemmaRestrict	regulā izteiksme, kas nosaka lemmas īpatnības
-	 *                      (netiks eskeipota)
-	 * @param paradigmId	paradigmas ID, ko uzstādīt, ja likums ir piemērojams
-	 * @param positiveFlags	karodziņi, ko uzstādīt, ja gan gramatikas teksts,
-	 *                      gan lemma atbilst attiecīgajiem šabloniem
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts atbilst
-	 *                      attiecīgajam šablonam
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigmId		paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                      	teksts, gan lemma atbilst attiecīgajiem
+	 *                      	šabloniem
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      	atbilst attiecīgajam šablonam
 	 */
-	public static BaseRule of(String patternText, String lemmaRestrict,
+	public static BaseRule of(String patternText, String lemmaRestrictions,
 			int paradigmId,
 			Tuple<Keys, String>[] positiveFlags,
 			Tuple<Keys, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule
-								.of(lemmaRestrict, new Integer[]{paradigmId}, positiveFlags)},
+						SimpleSubRule.of(lemmaRestrictions, new Integer[]{paradigmId}, positiveFlags)},
 				alwaysFlags);
 	}
 
 	/**
 	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
 	 * nosacījums ar vairākām paradigmām.
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai (tiks eskeipots)
-	 * @param lemmaRestrict	regulā izteiksme, kas nosaka lemmas īpatnības
-	 *                      (netiks eskeipota)
-	 * @param paradigms	paradigmas ID, ko uzstādīt, ja likums ir piemērojams
-	 * @param positiveFlags	karodziņi, ko uzstādīt, ja gan gramatikas teksts,
-	 *                      gan lemma atbilst attiecīgajiem šabloniem
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts atbilst
-	 *                      attiecīgajam šablonam
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigms			paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      	atbilst attiecīgajam šablonam
 	 */
-	public static BaseRule of(String patternText, String lemmaRestrict,
+	public static BaseRule of(String patternText, String lemmaRestrictions,
 			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
 			Tuple<Keys, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule
-								.of(lemmaRestrict, paradigms, positiveFlags)},
+						SimpleSubRule.of(lemmaRestrictions, paradigms, positiveFlags)},
 				alwaysFlags);
 	}
 
@@ -245,7 +255,8 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
+			Integer[] paradigms, Tuple<Keys,String>[] positiveFlags,
+			Tuple<Keys,String>[] alwaysFlags)
 	{
 		HashSet<Tuple<Keys,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
@@ -274,7 +285,8 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
+			int paradigm, Tuple<Keys,String>[] positiveFlags,
+			Tuple<Keys,String>[] alwaysFlags)
 	{
 		HashSet<Tuple<Keys,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
@@ -284,6 +296,43 @@ public class BaseRule implements Rule
 				{{add(paradigm);}}, fullPosFlags,
 				alwaysFlags == null ? null : new HashSet<>(Arrays
 						.asList(alwaysFlags)));
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule divdabjiem ar izskaņām -is, -usi, -ies, -usies.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 0. paradigmu un divdabju karodziņiem
+	 * TODO likt šeit tās dzimtes vai nelikt?
+	 */
+	public static BaseRule participleIs(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 0,
+				new Tuple[]{Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC, Features.GENDER__FEM},
+				null);
+	}
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule īpašības vārdiem šabloniem formā:
+	 * īp. v. -ais; s. -a, -ā	un
+	 * -ais; s. -a, -ā
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @return BaseRule ar 13 un 14. paradigmu divdabju karodziņiem
+	 * TODO likt šeit tās dzimtes vai nelikt?
+	 */
+	public static BaseRule adjective (String patternText)
+	{
+		if (patternText.matches("(^|.* )īp\\. v\\..*"))
+			return BaseRule.of(patternText, new SimpleSubRule[] {
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM})},
+				new Tuple[] {Features.POS__ADJ});
+		else
+			return BaseRule.of(patternText, new SimpleSubRule[] {
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM})},
+				null);
 	}
 
 	/**

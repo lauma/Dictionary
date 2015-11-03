@@ -1,19 +1,3 @@
-/*******************************************************************************
- * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- * 
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- * 
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.tezaurs.analyzer.struct;
 
 import java.util.HashSet;
@@ -36,25 +20,53 @@ import lv.ailab.tezaurs.utils.JSONUtils;
 import lv.ailab.tezaurs.analyzer.gramlogic.*;
 
 /**
- * g (gramatika) field.
+ * g (gramatika) lauka ielasīšana un apstrāde.
+ * Gramatikas apstrāde notiek šādos, secīgos etapos:
+ * 1) apstrādā gramatikas sākumu atbilstoši gramdata likumu masīvos dotajiem
+ * likumiem,
+ * 2) sadala pāri palikušo (vēl neapstrādāto) gramatiku pa semikoliem un
+ * apstrādā katru iegūto fragmentu atsevišķi,
+ * 3) sadala pāri palikušos gramatikas gabalus pa komatiem un apstrādā katru
+ * iegūto fragmentu atsevišķi, izmantojot gan šablonus, gan salīdzinot ar
+ * saīsinājumu sarakstu,
+ * 4) piešķir paradigmu, vadoties pēc atpazītajiem karodziņiem, ja tas ir
+ * iespējams,
+ * 5) piešķir papildus karodziņus, kas izsecināmi no gramatikas teksta apstrādes
+ * laikā iegūtajiem karodziņiem (piemēram, ja vārdam ir bijis gan saīsinājums
+ * vēst., gan vietv., tad šajā solī pieliek jaunu karodziņu "Vēsturisks
+ * vietvārds").
  */
 public class Gram  implements HasToJSON
 {
 
+	/**
+	 * Gramatikas teksts kāds tas ir vārdnīcā.
+	 */
 	public String orig;
+	/**
+	 * No gramatikas izgūtie karodziņi.
+	 */
 	public Flags flags;
+	/**
+	 * Neatpazītas / neizparsētās gramatikas teksta daļas.
+	 */
 	public LinkedList<LinkedList<String>> leftovers;
+	/**
+	 * No šīs gramatikas izsecinātās paradigmas.
+	 */
 	public HashSet<Integer> paradigm;
 	/**
-	 * If grammar contains additional information about lemmas, it is
-	 * collected here. Mapping from paradigms to lemma-flagset tuples.
-	 * Flag set contains only flags for which alternate lemma differs from
-	 * general flags given in "flags" field in this grammar.
+	 * Struktūra, kurā tiek savākta papildus informāciju par citiem šķirkļu
+	 * vārdiem / pamatformām (kodā daudzviet saukti par alternatīvajām lemmām),
+	 * ja gramatika tādu satur.
+	 * Kartējums no paradigmas uz lemmas/karodziņu kopas pārīšiem. Karodziņu
+	 * kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai" atšķiras
+	 * no pamata lemmas.
 	 */
 	public MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas;
 
 	/**
-	 * Known abbreviations and their de-abbreviations.
+	 * Zināmie saīsinājumi un to atšifrējumi.
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
@@ -67,7 +79,7 @@ public class Gram  implements HasToJSON
 		altLemmas = null;
 	}
 	/**
-	 * @param lemma is used for grammar parsing.
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
 	public Gram (Node gramNode, String lemma)
 	{
@@ -79,7 +91,7 @@ public class Gram  implements HasToJSON
 		parseGram(lemma);
 	}
 	/**
-	 * @param lemma is used for grammar parsing.
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
 	public void set (String gramText, String lemma)
 	{
@@ -98,16 +110,18 @@ public class Gram  implements HasToJSON
 	}
 	
 	/**
-	 * Only works correctly, if cleanupLeftovers is used, when needed.
+	 * Šitais strādā pareizi tikai tad, ja cleanupLeftovers tiek izsaukts katru
+	 * reizi, kad vajag.
 	 */
 	public boolean hasUnparsedGram()
 	{
-		//cleanupLeftovers();		// What is better - unexpected side effects or not working, when used incorrectly?
+		//cleanupLeftovers();		// Kas ir labāk - nagaidīti blakusefekti vai tas, ka nestrādā, ja lieto nepareizi?
 		return !leftovers.isEmpty();
 	}
 	
 	/**
-	 * @param lemma is used for grammar parsing.
+	 * Gramatikas teksta analīzes virsmetode.
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
 	private void parseGram(String lemma)
 	{
@@ -158,12 +172,11 @@ public class Gram  implements HasToJSON
 	}
 	
 	/**
-	 * This method contains collection of ending patterns, found in data.
-	 * These patterns are meant for using on the beginning of the
-	 * unsegmented grammar string.
-	 * Thus,e.g., if there was no plural-only nouns with ending -ļas, then
-	 * there is no rule for processing such words (at least in most cases).
-	 * @param lemma is used for grammar parsing.
+	 * Gramatikas apstrādes pirmais etaps - sākumdaļas salīdzināšana ar
+	 * atbilstošajiem likumiem gramdata pakā un apstrāde.
+	 * @param gramText	gramatikas teksts, ko vajag apstrādāt
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
+	 * @return pāri palikusī, neapstrādātā gramatikas daļa
 	 */
 	private String processBeginingWithPatterns(String gramText, String lemma)
 	{
@@ -183,49 +196,7 @@ public class Gram  implements HasToJSON
 			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
 		}
 
-		// Īpaši sarežģītie liekumi, kas nav formalizēti citur:
-		// Vēl viens lemmas variants tiek uzdots ar papildus galotņu palīdzību.
-		// Paradigm 13: Īpašības vārdi ar -s
-		// Paradigm 14: Īpašības vārdi ar -š
-		if (gramText.matches("īp\\. v\\. -ais; s\\. -a, -ā([;,.].*)?")) //aerobs
-		{
-			newBegin = "īp. v. -ais; s. -a, -ā".length();
-			if (lemma.matches(".*[^aeiouāēīōū]š"))
-			{
-				paradigm.add(14);
-				flags.add(Features.POS__ADJ);
-			}
-			else if (lemma.matches(".*[^aeiouāēīōū]s"))
-			{
-				paradigm.add(13);
-				flags.add(Features.POS__ADJ);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 13, 14\n", lemma);
-				newBegin = 0;
-			}
-		} else if (gramText.matches("-ais[;,] s\\. -a, -ā([;,.].*)?")) //abējāds, acains, agāms
-		{
-			newBegin = "-ais; s. -a, -ā".length();
-			if (lemma.matches(".*[^aeiouāēīōū]š"))
-			{
-				paradigm.add(14);
-				flags.add(Features.POS__ADJ);
-			}
-			else if (lemma.matches(".*[^aeiouāēīōū]s"))
-			{
-				paradigm.add(13);
-				flags.add(Features.POS__ADJ);
-			}
-			else
-			{
-				System.err.printf("Neizdodas \"%s\" ielikt kādā no paradigmām 13, 14\n", lemma);
-				newBegin = 0;
-			}
-		}
-
-		// Ārpus šīs klases formalizētie likumi:
+		// Likumi, kuros citu lemmu variantu nav.
 		// Darbības vārdi.
 		for (Rule s : DirectRules.directMultiConjVerb)
 		{
@@ -368,78 +339,20 @@ public class Gram  implements HasToJSON
 		if (gramText.matches("[.,;].*")) gramText = gramText.substring(1);
 		return gramText;
 	}
-	
-	
-	/**
-	 * This method contains collection of patterns with no commas in them -
-	 * these patterns can be applied to any segmented grammar substring, not
-	 * only on the beginning of the grammar. Only patterns found in data are
-	 * given. Thus,e.g., if there was no plural-only nouns with ending -ļas,
-	 * then there is no rule for processing such words (at least in most
-	 * cases).
-	 * @param lemma is used for grammar parsing.
-	 * @return leftovers (unprocessed part of string)
-	 */
-	private String processWithNoCommaPatterns(String gramText, String lemma)
-	{
-		gramText = gramText.trim();
-		int newBegin = -1;
-		
-		// Alternative form processing.
-		if (gramText.matches("parasti divd\\. formā: (\\w+)")) //aizdzert->aizdzerts
-		{
-			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+))([.;].*)?")
-					.matcher(gramText);
-			m.matches();
-			String newLemma = m.group(2);
-			Lemma altLemma = new Lemma (newLemma);
-			Flags altParams = new Flags ();
 
-			flags.add(Features.POS__VERB);
-			flags.add(Features.USUALLY_USED__PARTICIPLE);
-			flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
-			Boolean success = RulesAsFunctions.determineParticipleType(
-					newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
-			if (success)
-			{
-				newBegin = m.group(1).length();
-				altParams.add(Features.POS__PARTICIPLE);
-				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-
-			} else
-			{
-				System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
-						newLemma, lemma);
-				newBegin = 0;
-			}
-		} else if (gramText.matches("bieži lok\\.: (\\w+)")) // agrums->agrumā
-		{
-			Matcher m = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?").matcher(gramText);
-			newBegin = m.group(1).length();
-			//flags.binary.add("Bieži lokatīva formā");
-			flags.add(Keys.OFTEN_USED_IN_FORM, Values.LOCATIVE);
-		}
-		
-		if (newBegin > 0) gramText = gramText.substring(newBegin);
-		return gramText;
-	}
-	
 	/**
-	 * This method contains collection of patterns with no semicolon in them -
-	 * these patterns can be applied to grammar segmented on ';', but not
-	 * segmented on ','. Only patterns found in data are
-	 * given. Thus,e.g., if there was no plural-only nouns with ending -ļas,
-	 * then there is no rule for processing such words (at least in most
-	 * cases).
-	 * @param lemma is used for grammar parsing.
-	 * @return leftovers (unprocessed part of string)
+	 * Gramatikas teksta apstrādes otrais etaps - katras ar semikolu atdalītās
+	 * daļas analīze un apstrāde.
+	 * @param gramText	gramatikas teksta fragmens, ko vajag apstrādāt - bez
+	 *                  semikoliem
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
+	 * @return pāri palikusī, neapstrādātā gramatikas daļa
 	 */
 	private String processWithNoSemicolonPatterns(String gramText, String lemma)
 	{
 		gramText = gramText.trim();
 		int newBegin = -1;
-		
+
 		// Alternative form processing.
 		if (gramText.matches("parasti divd\\. formā: (\\w+), (\\w+)")) //aizelsties->aizelsies, aizelsdamies
 		{
@@ -478,9 +391,66 @@ public class Gram  implements HasToJSON
 		return gramText;
 	}
 
+
+
 	/**
-	 * @param lemma is used for paradigm detection in cases where endings
-	 * matter.
+	 * Gramatikas teksta apstrādes trešais etaps - katras ar semikolu atdalītās
+	 * daļas analīze un apstrāde.
+	 * @param gramText	gramatikas teksta fragmens, ko vajag apstrādāt - bez
+	 *                  semikoliem un komatiem
+	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
+	 * @return pāri palikusī, neapstrādātā gramatikas daļa
+	 */
+	private String processWithNoCommaPatterns(String gramText, String lemma)
+	{
+		gramText = gramText.trim();
+		int newBegin = -1;
+		
+		// Alternative form processing.
+		if (gramText.matches("parasti divd\\. formā: (\\w+)")) //aizdzert->aizdzerts
+		{
+			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+))([.;].*)?")
+					.matcher(gramText);
+			m.matches();
+			String newLemma = m.group(2);
+			Lemma altLemma = new Lemma (newLemma);
+			Flags altParams = new Flags ();
+
+			flags.add(Features.POS__VERB);
+			flags.add(Features.USUALLY_USED__PARTICIPLE);
+			flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
+			Boolean success = RulesAsFunctions.determineParticipleType(
+					newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
+			if (success)
+			{
+				newBegin = m.group(1).length();
+				altParams.add(Features.POS__PARTICIPLE);
+				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
+				altLemmas.put(0, new Tuple<>(altLemma, altParams));
+
+			} else
+			{
+				System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
+						newLemma, lemma);
+				newBegin = 0;
+			}
+		} else if (gramText.matches("bieži lok\\.: (\\w+)")) // agrums->agrumā
+		{
+			Matcher m = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?").matcher(gramText);
+			newBegin = m.group(1).length();
+			flags.add(Keys.OFTEN_USED_IN_FORM, Values.LOCATIVE);
+		}
+		
+		if (newBegin > 0) gramText = gramText.substring(newBegin);
+		return gramText;
+	}
+	
+
+	/**
+	 * Gramatikas apstrādes ceturtais etaps - paradigmu izsecināšana no
+	 * karodziņiem.
+	 * @param lemma		lemmu skatās gadījumos, kad galotnes/izskaņas palīdz
+	 *                  noteikt paradigmu.
 	 */
 	private void paradigmFromFlags(String lemma)
 	{
@@ -540,8 +510,9 @@ public class Gram  implements HasToJSON
 	}
 
 	/**
-	 * Analizējot atpazītos karodziņus, pieliek vai noņem (varbūt arī to vēlāk
-	 * vajadzēs) karodziņus.
+	 * Gramatikas analīzes piektais etaps - analizējot no gramatikas teksta
+	 * izgūtos karodziņus, pieliek vai noņem (varbūt arī to vēlāk vajadzēs)
+	 * karodziņus.
 	 */
 	private void postprocessFlags()
 	{
@@ -552,7 +523,7 @@ public class Gram  implements HasToJSON
 			flags.add(Features.DOMAIN__HIST_PLACE);
 	}
 	/**
-	 * This should be called after something is removed from leftovers.
+	 * Šo jāizsauc katru reizi, kad kaut ko izņem no leftovers.
 	 */
 	public void cleanupLeftovers()
 	{
@@ -561,21 +532,32 @@ public class Gram  implements HasToJSON
 	}
 	
 	/**
-	 * Hopefully, this method will be empty for final data ;)
+	 * Priekšapstrāde pirms gramatikas teksta analīzes. Programmas galaversijā
+	 * šai metodei jādara pilnīgi neko, jo šādas kļūdas tiek labotas datos.
 	 */
+	@Deprecated
 	private String correctOCRErrors(String gramText)
 	{
-		//Inconsequences in data
+		//Datu nekonsekvences
 
 		return gramText;
 	}
 
+	/**
+	 * Gramatikas struktūras JSON reprezentācija, kas iekļauj arī sākotnējo
+	 * gramatikas tekstu.
+	 */
 	public String toJSON()
 	{
 		return toJSON(true);
 	}
-	
-	// In case of speed problems StringBuilder can be returned.
+
+	/**
+	 * Izveido JSON reprezentāciju.
+	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
+	 * atgriešanu.
+	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
+	 */
 	public String toJSON (boolean printOrig)
 	{
 		StringBuilder res = new StringBuilder();

@@ -67,14 +67,14 @@ public class AltEndingRule implements AltLemmaRule
 	 * Konstruktors īsumam - gadījumiem, kad likums apskata tikai vienu lemmas
 	 * nosacījumu.
 	 */
-	public static AltEndingRule simple(String patternText, String lemmaRestrict,
+	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			Set<Integer> paradigms, Set<Tuple<Keys, String>> positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
 			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
-					add( new AltLemmaSubRule(lemmaRestrict, paradigms,
+					add( new AltLemmaSubRule(lemmaRestrictions, paradigms,
 							positiveFlags, lemmaEndingCutLength, altLemmaEnding,
 							altLemmaParadigm, altLemmaFlags));}});
 	}
@@ -83,14 +83,14 @@ public class AltEndingRule implements AltLemmaRule
 	 * Konstruktors īsumam - gadījumiem, kad likums apskata tikai vienu lemmas
 	 * nosacījumu ar vienu paradigmu.
 	 */
-	public static AltEndingRule simple(String patternText, String lemmaRestrict,
+	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			int paradigm, Set<Tuple<Keys, String>> positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
 			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
-					add( new AltLemmaSubRule(lemmaRestrict,
+					add( new AltLemmaSubRule(lemmaRestrictions,
 							new HashSet<Integer>(){{add(paradigm);}},
 							positiveFlags, lemmaEndingCutLength, altLemmaEnding,
 							altLemmaParadigm, altLemmaFlags));}});
@@ -102,12 +102,12 @@ public class AltEndingRule implements AltLemmaRule
 				lemmaLogic == null ? null : Arrays.asList(lemmaLogic));
 	}
 
-	public static AltEndingRule of(String patternText, String lemmaRestrict,
+	public static AltEndingRule of(String patternText, String lemmaRestrictions,
 			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
 			int altLemmaParadigm, Tuple<Keys, String>[] altLemmaFlags)
 	{
-		return simple(patternText, lemmaRestrict,
+		return simple(patternText, lemmaRestrictions,
 				paradigms == null ? null : new HashSet<>(Arrays
 						.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays
@@ -117,12 +117,12 @@ public class AltEndingRule implements AltLemmaRule
 						.asList(altLemmaFlags)));
 	}
 
-	public static AltEndingRule of(String patternText, String lemmaRestrict,
+	public static AltEndingRule of(String patternText, String lemmaRestrictions,
 			int paradigm, Tuple<Keys, String>[] positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
 			int altLemmaParadigm, Tuple<Keys, String>[] altLemmaFlags)
 	{
-		return simple(patternText, lemmaRestrict, paradigm,
+		return simple(patternText, lemmaRestrictions, paradigm,
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
 				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm,
@@ -165,11 +165,11 @@ public class AltEndingRule implements AltLemmaRule
 				new Tuple[]{Features.ENTRYWORD__FEM, Features.CHANGED_PARADIGM});
 	}
 
-	/**
+	/*
 	 * Speciālgadījums divdabjiem no is/usi grupas. Lemmas ierobešojums ir
 	 * regulārā izteiksme, kas netiek nekā papildināta.
 	 */
-	public static AltEndingRule participleIsMascToFem(
+/*	public static AltEndingRule participleIsMascToFem(
 			String patternText, String lemmaRestrict, String altLemmaEnding,
 			int lemmaEndingCutLength)
 	{
@@ -177,22 +177,20 @@ public class AltEndingRule implements AltLemmaRule
 				new Tuple[]{Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC},
 				lemmaEndingCutLength, altLemmaEnding, 0,
 				new Tuple[]{Features.ENTRYWORD__FEM});
-	}
+	}*
 
-	/**
+	/*
 	 * Speciālgadījums divdabjiem no is/usi grupas. Lemmas ierobešojums ir
 	 * vārda izskaņa, kas par regulāro izteiksmi tiek pārveidota automātiski.
 	 */
-	public static AltEndingRule participleIsMascToFem(
+/*	public static AltEndingRule participleIsMascToFem(
 			String patternText, String lemmaEnding, String altLemmaEnding)
 	{
 		return AltEndingRule
 				.participleIsMascToFem(patternText, ".*" + lemmaEnding,
 						altLemmaEnding, lemmaEnding.length());
 
-	}
-
-
+	}*/
 
 	/**
 	 * Likuma piemērošana.

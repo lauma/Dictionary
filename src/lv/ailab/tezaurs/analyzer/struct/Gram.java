@@ -3,8 +3,6 @@ package lv.ailab.tezaurs.analyzer.struct;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
@@ -351,59 +349,32 @@ public class Gram  implements HasToJSON
 	private String processWithNoSemicolonPatterns(String gramText, String lemma)
 	{
 		gramText = gramText.trim();
-		int newBegin = -1;
-
-		//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
-		Matcher m = Pattern.compile("((parasti |bieži |)divd\\. formā: (\\p{Ll}+(, \\p{Ll}+)?))([,;].*)?")
-				.matcher(gramText);
-		if (m.matches())
+		if (gramText.length() < 1) return gramText;
+		boolean found = false;
+		do
 		{
-			String[] newLemmas = m.group(3).split(", ");
-			newBegin = m.group(1).length();
-			String indicator = m.group(2).trim();
-			Keys usedType = Keys.USED_IN_FORM;
-			if (indicator.equals("parasti")) usedType = Keys.USUALLY_USED_IN_FORM;
-			else if (indicator.equals("bieži")) usedType = Keys.OFTEN_USED_IN_FORM;
-			for (String newLemma : newLemmas)
+			found = false;
+			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
+			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
+					gramText, flags, altLemmas);
+			// aijā - savienojumā "aijā, žūžū"
+			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
+					gramText, flags);
+			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
+					gramText, flags);
+
+			if (newBegin > 0)
 			{
-				Lemma altLemma = new Lemma (newLemma);
-				Flags altParams = new Flags ();
-
-				flags.add(Features.POS__VERB);
-				flags.add(usedType, Values.PARTICIPLE);
-				flags.add(usedType, "\"" + newLemma  + "\"");
-				Boolean success = RulesAsFunctions.determineParticipleType(
-						newLemma, flags, altParams, usedType);
-				if (success)
-				{
-					newBegin = m.group(1).length();
-					altParams.add(Features.POS__PARTICIPLE);
-					altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
-					altLemmas.put(0, new Tuple<>(altLemma, altParams));
-
-				} else
-				{
-					System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
-							newLemma, lemma);
-					newBegin = 0;
-				}
+				gramText = gramText.substring(newBegin);
+				if (gramText.startsWith(".") || gramText.startsWith(","))
+					gramText = gramText.substring(1);
+				gramText = gramText.trim();
+				found = true;
 			}
-		} else
-		m = Pattern.compile("((parasti |bieži |)savienojumā (\"\\p{L}+(,? \\p{L}+)?\"))([.,;].*)?")
-				.matcher(gramText);
-		if (m.matches())
-		{
-			newBegin = m.group(1).length();
-			String indicator = m.group(2).trim();
-			Keys usedType = Keys.USED_IN_FORM;
-			if (indicator.equals("parasti")) usedType = Keys.USUALLY_USED_IN_FORM;
-			else if (indicator.equals("bieži")) usedType = Keys.OFTEN_USED_IN_FORM;
-			String phrase = m.group(3);
-			flags.add(usedType, Values.PHRASE);
-			flags.add(usedType, phrase);
-		}
+			//System.out.println(lemma + " " + newBegin + " " + gramText);
+		} while (found && gramText.length() > 0);
 
-		if (newBegin > 0) gramText = gramText.substring(newBegin);
 		return gramText;
 	}
 
@@ -420,45 +391,36 @@ public class Gram  implements HasToJSON
 	private String processWithNoCommaPatterns(String gramText, String lemma)
 	{
 		gramText = gramText.trim();
-		int newBegin = -1;
-		
-		// Alternative form processing.
-		/*if (gramText.matches("parasti divd\\. formā: (\\w+)([.;].*)?")) //aizdzert->aizdzerts
+		if (gramText.length() < 1) return gramText;
+		boolean found = false;
+		do
 		{
-			Matcher m = Pattern.compile("(parasti divd\\. formā: (\\w+))([.;].*)?")
-					.matcher(gramText);
-			m.matches();
-			String newLemma = m.group(2);
-			Lemma altLemma = new Lemma (newLemma);
-			Flags altParams = new Flags ();
-
-			flags.add(Features.POS__VERB);
-			flags.add(Features.USUALLY_USED__PARTICIPLE);
-			flags.add(Keys.USUALLY_USED_IN_FORM, "\"" + newLemma  + "\"");
-			Boolean success = RulesAsFunctions.determineParticipleType(
-					newLemma, flags, altParams, Keys.USUALLY_USED_IN_FORM);
-			if (success)
+			found = false;
+			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
+			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
+					gramText, flags, altLemmas);
+			// aijā - savienojumā "aijā, žūžū"
+			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
+					gramText, flags);
+			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
+					gramText, flags);
+			// aizbļaut - savienojumā ar "ausis"
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithQuotFlag(
+					gramText, flags);
+			// agrums->agrumā
+			if(newBegin == -1) newBegin = RulesAsFunctions.processUsuallyInCaseFlag(
+					gramText, flags);
+			if (newBegin > 0)
 			{
-				newBegin = m.group(1).length();
-				altParams.add(Features.POS__PARTICIPLE);
-				altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
-				altLemmas.put(0, new Tuple<>(altLemma, altParams));
-
-			} else
-			{
-				System.err.printf("Neizdodas ielikt formu \"%s\" no šķirkļa \"%s\" paradigmā 0 (Divdabis)\n",
-						newLemma, lemma);
-				newBegin = 0;
+				gramText = gramText.substring(newBegin);
+				if (gramText.startsWith("."))
+					gramText = gramText.substring(1);
+				gramText = gramText.trim();
+				found = true;
 			}
-		} else*/
-		if (gramText.matches("bieži lok\\.: (\\w+)")) // agrums->agrumā
-		{
-			Matcher m = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?").matcher(gramText);
-			newBegin = m.group(1).length();
-			flags.add(Keys.OFTEN_USED_IN_FORM, Values.LOCATIVE);
-		}
-		
-		if (newBegin > 0) gramText = gramText.substring(newBegin);
+		} while (found && gramText.length() > 0);
+
 		return gramText;
 	}
 	
@@ -489,15 +451,16 @@ public class Gram  implements HasToJSON
 					paradigm.add(20);
 			}
 
-			if (pos.contains("Apstākļa vārds")) paradigm.add(21);
-			if (pos.contains("Partikula")) paradigm.add(28);
-			if (pos.contains("Prievārds")) paradigm.add(26);
-			if (pos.contains("Saiklis")) paradigm.add(27);
+			if (pos.contains(Values.ADVERB.s)) paradigm.add(21);
+			if (pos.contains(Values.PARTICLE.s)) paradigm.add(28);
+			if (pos.contains(Values.PREPOSITION.s)) paradigm.add(26);
+			if (pos.contains(Values.CONJUNCTION.s)) paradigm.add(27);
 
-			if (pos.contains("Izsauksmes vārds")) paradigm.add(29); // Hardcoded
+			if (pos.contains(Values.INTERJECTION.s)) paradigm.add(29); // Hardcoded
 			if (pos.contains("Saīsinājums")) paradigm.add(29); // Hardcoded
 
 			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
+			if (pos.contains(Values.PERSONAL_PRONOUN.s)) paradigm.add(25);
 			if (pos.contains("Jautājamais vietniekvārds")) paradigm.add(25);
 			if (pos.contains("Noliedzamais vietniekvārds")) paradigm.add(25);
 			if (pos.contains("Norādāmais vietniekvārds")) paradigm.add(25);
@@ -507,7 +470,7 @@ public class Gram  implements HasToJSON
 
 			if (pos.contains(Values.FOREIGN.s)) paradigm.add(29);
 
-			if (pos.contains("Priedēklis")) paradigm.add(0); //Prefixes are not words.
+			if (pos.contains(Values.PREFIX.s)) paradigm.add(0); //Prefixes are not words.
 			if (pos.contains("Salikteņu daļa")) paradigm.add(0); //Prefixes are not words.
 		}
 

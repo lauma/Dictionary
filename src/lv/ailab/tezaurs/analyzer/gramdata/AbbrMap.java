@@ -7,6 +7,8 @@ import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.MappingSet;
 import lv.ailab.tezaurs.utils.Tuple;
 
+import java.util.HashSet;
+
 /**
  * Singletonklase, kas satur visus zināmos saīsinājumus, tos atšifrējumus, kā
  * arī visus citus karodziņus, kas veidojami no fiksētām teksta virknēm.
@@ -44,36 +46,83 @@ public class AbbrMap {
 				pairingFlags.containsKey(gramSegment));
 	}
 
+	/**
+	 * Atšifrēt gramatikas fragmentu, meklējot tikai vārdšķirās un tikai, ja ir
+	 * pieejams tieši viens atšifrējums.
+	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš
+	 * @return	vārdšķira, ja gramatikas fragmentam ir piekārtota tieši viens
+	 * 			karodziņš un tas ir POS tipa, vai null pārējos gadījumos
+	 */
+	public HashSet<String> translatePos(String gramSegment)
+	{
+		HashSet<Tuple<Keys, String>> found = pairingFlags.getAll(gramSegment);
+		if (found == null) return null;
+		HashSet<String> result = new HashSet<>();
+		for (Tuple<Keys, String> feature : found)
+			if (feature.first.equals(Keys.POS))
+				result.add(feature.second);
+		if (result.size() < 1) return null;
+		return result;
+	}
+
+	/**
+	 * Atšifrēt gramatikas fragmentu, meklējot tikai locījumos un tikai, ja ir
+	 * pieejams tieši viens atšifrējums.
+	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš
+	 * @return	vārdšķira, ja gramatikas fragmentam ir piekārtota tieši viens
+	 * 			karodziņš un tas ir POS tipa, vai null pārējos gadījumos
+	 */
+	public String translateCase(String gramSegment)
+	{
+		HashSet<Tuple<Keys, String>> found = pairingFlags.getAll(gramSegment);
+		if (found == null || found.size() != 1) return null;
+		Tuple<Keys, String> feature = found.iterator().next();
+		if (!feature.first.equals(Keys.CASE)) return null;
+		return feature.second;
+	}
+
 	protected AbbrMap()
 	{
 		binaryFlags = new MappingSet<>();
 		pairingFlags = new MappingSet<>();
 
 		pairingFlags.put("adj.", Features.POS__ADJ);
-		pairingFlags.put("adv.", Tuple.of(Keys.POS, "Apstākļa vārds"));
-		pairingFlags.put("apst.", Tuple.of(Keys.POS, "Apstākļa vārds"));
+		pairingFlags.put("adv.", Tuple.of(Keys.POS, Values.ADVERB.s));
+		pairingFlags.put("apst.", Tuple.of(Keys.POS, Values.ADVERB.s));
 		pairingFlags.put("divd.", Features.POS__PARTICIPLE);
 		pairingFlags.put("Divd.", Features.POS__PARTICIPLE);
-		pairingFlags.put("interj.", Tuple.of(Keys.POS, "Izsauksmes vārds"));
+		pairingFlags.put("interj.", Tuple.of(Keys.POS, Values.INTERJECTION.s));
 		pairingFlags.put("īp. v.", Features.POS__ADJ);
 		pairingFlags.put("īp.", Features.POS__ADJ);
-		pairingFlags.put("izsauk.", Tuple.of(Keys.POS, "Izsauksmes vārds"));
+		pairingFlags.put("izsauk.", Tuple.of(Keys.POS, Values.INTERJECTION.s));
 		pairingFlags.put("jaut.", Tuple.of(Keys.POS, "Jautājamais vietniekvārds"));
 		pairingFlags.put("lietv.", Features.POS__NOUN);
+		pairingFlags.put("subst.", Features.POS__NOUN);
 		pairingFlags.put("noliedz.", Tuple.of(Keys.POS, "Noliedzamais vietniekvārds"));
-		pairingFlags.put("norād.", Tuple.of(Keys.POS, "Norādāmais vietniekvārds"));
+		pairingFlags.put("noliedz.", Features.POS__PRONOUN);
+		pairingFlags.put("norād.", Features.POS__DEM_PRONOUN);
+		pairingFlags.put("norād.", Features.POS__PRONOUN);
+		pairingFlags.put("norād. vietn.", Features.POS__DEM_PRONOUN);
+		pairingFlags.put("norād. vietn.", Features.POS__PRONOUN);
 		pairingFlags.put("noteic.", Tuple.of(Keys.POS, "Noteicamais vietniekvārds"));
-		pairingFlags.put("part.", Tuple.of(Keys.POS, "Partikula"));
+		pairingFlags.put("noteic.", Features.POS__PRONOUN);
+		pairingFlags.put("part.", Features.POS__PARTICLE);
+		pairingFlags.put("pers. vietn.", Features.POS__PERS_PRONOUN);
+		pairingFlags.put("pers. vietn.", Features.POS__PRONOUN);
 		pairingFlags.put("pieder.", Tuple.of(Keys.POS, "Piederības vietniekvārds"));
-		pairingFlags.put("pried.", Tuple.of(Keys.POS, "Priedēklis")); // Vēlāk vajadzēs specifisku apstrādi?
-		pairingFlags.put("prep.", Tuple.of(Keys.POS, "Prievārds"));
-		pairingFlags.put("priev.", Tuple.of(Keys.POS, "Prievārds"));
-		pairingFlags.put("saiklis.", Tuple.of(Keys.POS, "Saiklis"));
-		pairingFlags.put("saiklis", Tuple.of(Keys.POS, "Saiklis"));
+		pairingFlags.put("pieder.", Features.POS__PRONOUN);
+		pairingFlags.put("pieder. vietn.", Tuple.of(Keys.POS, "Piederības vietniekvārds"));
+		pairingFlags.put("pieder. vietn.", Features.POS__PRONOUN);
+		pairingFlags.put("pried.", Features.POS__PREFIX);
+		pairingFlags.put("prep.", Features.POS__PREPOSITION);
+		pairingFlags.put("priev.", Features.POS__PREPOSITION);
+		pairingFlags.put("saiklis.", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
+		pairingFlags.put("saiklis", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("skait.", Features.POS__NUMERAL);
 		pairingFlags.put("vietn.", Features.POS__PRONOUN);
 		pairingFlags.put("vietniekv.", Features.POS__PRONOUN);	// ?
-		pairingFlags.put("vispārin.", Tuple.of(Keys.POS, "Vispārināmais vietniekvārds"));
+		pairingFlags.put("vispārin.", Features.POS__GEN_PRONOUN);
+		pairingFlags.put("vispārin.", Features.POS__PRONOUN);
 		pairingFlags.put("saīs.", Tuple.of(Keys.POS, "Saīsinājums"));
 		pairingFlags.put("simb.", Tuple.of(Keys.POS, "Saīsinājums"));	// ?
 		pairingFlags.put("salikteņu pirmā daļa.", Tuple.of(Keys.POS, "Salikteņu daļa"));
@@ -103,7 +152,7 @@ public class AbbrMap {
 		pairingFlags.put("ģen.", Tuple.of(Keys.CASE, Values.GENITIVE.s));
 		pairingFlags.put("instr.", Tuple.of(Keys.CASE, "Instrumentālis"));
 		pairingFlags.put("lok.", Tuple.of(Keys.CASE, Values.LOCATIVE.s));
-		pairingFlags.put("nom.", Tuple.of(Keys.CASE, "Nominatīvs"));
+		pairingFlags.put("nom.", Tuple.of(Keys.CASE, Values.NOMINATIVE.s));
 
 		//binaryFlags.put("dsk. ģen.", "Daudzskaitļa ģenitīvs"); // Daudzskaitlinieks?
 		pairingFlags.put("dsk. ģen.", Tuple.of(Keys.CASE, Values.GENITIVE.s));
@@ -113,7 +162,7 @@ public class AbbrMap {
 		pairingFlags.put("vsk. ģen.", Tuple.of(Keys.NUMBER, Values.SINGULAR.s));
 
 
-		pairingFlags.put("divsk.", Tuple.of(Keys.NUMBER, "Divskaitlis")); // Mums tiešām tādi ir?
+		pairingFlags.put("divsk.", Tuple.of(Keys.NUMBER, Values.DUAL.s)); // Mums tiešām tādi ir?
 		pairingFlags.put("dsk.", Tuple.of(Keys.NUMBER, Values.PLURAL.s));
 		pairingFlags.put("vsk.", Tuple.of(Keys.NUMBER, Values.SINGULAR.s));
 		
@@ -362,9 +411,22 @@ public class AbbrMap {
 		pairingFlags.put("retāk", Tuple.of(Keys.USAGE_FREQUENCY, "Retāk"));
 
 		// Kontaminācija
-		pairingFlags.put("subst. noz.", Tuple.of(Keys.CONTAMINATION, "Lietvārda nozīmē"));
-		pairingFlags.put("lietv. nozīmē.", Tuple.of(Keys.CONTAMINATION, "Lietvārda nozīmē"));
-		pairingFlags.put("īp. nozīmē.", Tuple.of(Keys.CONTAMINATION, "Īpašības vārda nozīmē"));
+		pairingFlags.put("subst. noz.", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
+		pairingFlags.put("substantīva nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
+		pairingFlags.put("lietv. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
+		pairingFlags.put("lietv. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
+		pairingFlags.put("adj. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
+		pairingFlags.put("adj. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
+		pairingFlags.put("īp. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
+		pairingFlags.put("īp. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
+		pairingFlags.put("apst. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.ADVERB.s));
+		pairingFlags.put("apst. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.ADVERB.s));
+		pairingFlags.put("izsauk. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.INTERJECTION.s));
+		pairingFlags.put("izsauk. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.INTERJECTION.s));
+		pairingFlags.put("izsauksmes vārda nozīmē", Tuple.of(Keys.CONTAMINATION, Values.INTERJECTION.s));
+		pairingFlags.put("saikļa nozīmē", Tuple.of(Keys.CONTAMINATION, Values.CONJUNCTION.s));
+		pairingFlags.put("saikļa nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.CONJUNCTION.s));
+		pairingFlags.put("skait. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NUMERAL.s));
 
 		binaryFlags.put("var.", "Variants");
 		binaryFlags.put("hip.", "Hipotēze");

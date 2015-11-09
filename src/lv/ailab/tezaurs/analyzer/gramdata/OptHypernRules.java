@@ -919,7 +919,7 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjRefl(
 				"-vēlos, -vēlies,", "-vēlas, pag. -vēlējos", "vēlēties", false), //atvēlēties
 		RegularVerbRule.thirdConjRefl(
-				"-zinos, -zinies,", "-zinās, pag. -zinājos", "zināties", true), //apzināties
+				"-zinos, -zinies,", "-zinās, pag. -zinājos", "zināties", false), //apzināties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		RegularVerbRule.thirdConjRefl3Pers("-lokās, pag. -locījās", "locīties", true), //aizlocīties

@@ -20,8 +20,15 @@ public class Features
 	public static final Tuple<Keys, String> POS__PARTICIPLE_AMS = Tuple.of(Keys.POS, Values.PARTICIPLE_AMS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_DAMS = Tuple.of(Keys.POS, Values.PARTICIPLE_DAMS.s);
 	public static final Tuple<Keys, String> POS__PRONOUN = Tuple.of(Keys.POS, Values.PRONOUN.s);
+	public static final Tuple<Keys, String> POS__PERS_PRONOUN = Tuple.of(Keys.POS, Values.PERSONAL_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__DEM_PRONOUN = Tuple.of(Keys.POS, Values.DEMONSTRATIVE_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__INDEF_PRONOUN = Tuple.of(Keys.POS, Values.INDEFINITE_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__GEN_PRONOUN = Tuple.of(Keys.POS, Values.GENRERIC_PRONOUN.s);
 	public static final Tuple<Keys, String> POS__NUMERAL = Tuple.of(Keys.POS, Values.NUMERAL.s);
+	public static final Tuple<Keys, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE.s);
+	public static final Tuple<Keys, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION.s);
 	public static final Tuple<Keys, String> POS__FOREIGN = Tuple.of(Keys.POS, Values.FOREIGN.s);
+	public static final Tuple<Keys, String> POS__PREFIX = Tuple.of(Keys.POS, Values.PREFIX.s);
 
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);
@@ -56,6 +63,8 @@ public class Features
 	public static final Tuple<Keys, String> CHANGED_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.CHANGED_PARADIGM.s);
 
 	public static final Tuple<Keys, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE.s);
+
+	public static final Tuple<Keys, String> ORIGINAL_NEEDED = Tuple.of(Keys.OTHER_FLAGS, Values.ORIGINAL_NEEDED.s);
 
 	public static final Tuple<Keys, String> PERSON_NAME = Tuple.of(Keys.OTHER_FLAGS, Values.PERSON_NAME.s);
 	public static final Tuple<Keys, String> PLACE_NAME = Tuple.of(Keys.OTHER_FLAGS, Values.PLACE_NAME.s);

@@ -628,7 +628,7 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl(
 				"-ņerkstos, -ņerksties,", "-ņerkstas, pag. -ņerkstējos", "ņerkstēties", false), //ieņerkstēties
 		RegularVerbRule.thirdConjRefl(
-				"-ņurdos, -ņurdies,", "-ņurdas, pag. -ņurdējos", "ņurdēties", true), //ieņurdēties
+				"-ņurdos, -ņurdies,", "-ņurdas, pag. -ņurdējos", "ņurdēties", false), //ieņurdēties
 		// O, P
 		RegularVerbRule.thirdConjRefl(
 				"-pīkstos, -pīksties,", "-pīkstas, pag. -pīkstējos", "pīkstēties", false), //iepīkstēties

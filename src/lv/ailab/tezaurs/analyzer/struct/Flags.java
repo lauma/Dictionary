@@ -12,7 +12,15 @@ import java.util.Set;
 
 /**
  * Datu struktūra karodziņu uzturēšanai.
- * Created on 2015-10-08.
+ *
+ * NB!
+ * Par karodziņiem viena objekta ietvaros tiek uzskatīts, ka ja divi karodziņi
+ * ir savstarpēji izslēdzoši, tad tos saista loģiskais VAI - sieviešu vai
+ * vīriešu dzimte, mija var gan būt gan nebūt. Ja karodziņi nav savstarpēji
+ * izslēdzoši, tad tie ir spēkā abi (loģiskais UN) vai arī viens no tiem precizē
+ * otru.
+ *
+ * Izveidots 2015-10-08.
  * @author Lauma
  */
 public class Flags

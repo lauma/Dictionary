@@ -23,6 +23,14 @@ public enum Keys
 	 */
 	USED_TOGETHER_WITH("Lieto kopā ar"),
 	/**
+	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
+	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobešojumiem pēc iespējas
+	 * nepieciešams lietot jau definētās Values. Konkrētus vārdus jāliek
+	 * pēdiņās.
+	 * Šis variants ir gadījumiem, kad vārdnīcā ir "parasti savienojumā ar".
+	 */
+	USUALLY_USED_TOGETHER_WITH("Parasti lieto kopā ar"),
+	/**
 	 * Mežrūpniecība, zvejniecība, utt.
 	 */
 	DOMAIN("Joma"),

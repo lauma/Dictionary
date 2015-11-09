@@ -139,14 +139,17 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("(savienojumā ar (\"\\p{L}+\"))([.,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |) savienojumā ar (\"\\p{L}+\"))([.,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches()) // aizbļaut - savienojumā ar "ausis"
 		{
 			newBegin = m.group(1).length();
-			String phrase = m.group(2);
-			flagCollector.add(Keys.USED_TOGETHER_WITH, phrase);
+			String modifier = m.group(2).trim();
+			Keys key = Keys.USED_TOGETHER_WITH;
+			if (modifier.equals("parasti")) key = Keys.USUALLY_USED_TOGETHER_WITH;
+			String phrase = m.group(3);
+			flagCollector.add(key, phrase);
 		}
 		return newBegin;
 	}
@@ -167,15 +170,18 @@ public class RulesAsFunctions
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
-				Pattern.compile("(savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)+))") :
-				Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
+				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)+))") :
+				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
 		if (m.matches())
 		{
 			newBegin = m.group(1).length();
-			String flagValueRaw = m.group(2);
+			String modifier = m.group(2).trim();
+			Keys key = Keys.USED_TOGETHER_WITH;
+			if (modifier.equals("parasti")) key = Keys.USUALLY_USED_TOGETHER_WITH;
+			String flagValueRaw = m.group(3);
 			ArrayList<String> flagValues = new ArrayList<>();
 			String deabbrCase = AbbrMap.getAbbrMap().translateCase(flagValueRaw);
 			Set<String> deabbrPos = AbbrMap.getAbbrMap().translatePos(flagValueRaw);
@@ -447,7 +453,7 @@ public class RulesAsFunctions
 			}
 
 			if (flagValues.size() > 0) for (String fv: flagValues)
-				flagCollector.add(Keys.USED_TOGETHER_WITH, fv);
+				flagCollector.add(key, fv);
 			else
 			{
 				System.err.printf("Neizdevās atšifrēt karodziņu \"%s\"\n", m

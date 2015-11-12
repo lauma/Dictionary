@@ -157,6 +157,7 @@ public class RulesAsFunctions
 	/**
 	 * Izanalizē gramatikas virknes formā:
 	 * savienojumā ar ...
+	 * parasti savienojumā ar ...
 	 * TODO
 	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
 	 * @param gramText		analizējamais gramatikas teksta fragments
@@ -488,13 +489,19 @@ public class RulesAsFunctions
 				flagValues.add(Values.NEGATIVE_VERB.s);
 				flagValues.add(Values.ADVERB_AND_NEGVERB.s);
 			}
+			else if (flagValueRaw.matches("lietv\\., skait\\. vai skait\\. un lietv\\."))
+			{
+				flagValues.add(Values.NOUN.s);
+				flagValues.add(Values.NUMERAL.s);
+				flagValues.add(Values.ORIGINAL_NEEDED.s);
+			}
 			else if (flagValueRaw.matches("lietv\\. lok\\. vai lietv\\. un priev\\."))
 			{
 				flagValues.add(Values.NOUN.s);
 				flagValues.add(Values.PREPOSITION.s);
 				flagValues.add(Values.ORIGINAL_NEEDED.s);
 			}
-			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\., divsk\\. nom\\., akuz\\.)?"))
+			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\., (akuz\\., )?divsk\\. nom\\., akuz\\.)?"))
 			{
 				flagValues.add(Values.NOUN.s);
 				flagValues.add(Values.NUMERAL.s);

@@ -125,6 +125,10 @@ public class Gram  implements HasToJSON
 	{
 		String correctedGram = correctOCRErrors(orig);
 		altLemmas = new MappingSet<>();
+
+		// Salikteņu daļām, galotnēm un izskaņām.
+		if (lemma.startsWith("-") || lemma.endsWith("-"))
+			flags.add(Features.POS__PART);
 		
 		// Vispirms apstrādā galotņu šablonus (tie parasti ir gramatikas sākumā).
 		correctedGram = processBeginingWithPatterns(correctedGram, lemma);
@@ -350,7 +354,7 @@ public class Gram  implements HasToJSON
 	{
 		gramText = gramText.trim();
 		if (gramText.length() < 1) return gramText;
-		boolean found = false;
+		boolean found;
 		do
 		{
 			found = false;
@@ -457,34 +461,21 @@ public class Gram  implements HasToJSON
 			if (pos.contains(Values.CONJUNCTION.s)) paradigm.add(27);
 
 			if (pos.contains(Values.INTERJECTION.s)) paradigm.add(29); // Hardcoded
-			if (pos.contains("Saīsinājums")) paradigm.add(29); // Hardcoded
+			if (pos.contains(Values.ABBREVIATION.s)) paradigm.add(29); // Hardcoded
 
 			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
-			if (pos.contains(Values.PERSONAL_PRONOUN.s)) paradigm.add(25);
-			if (pos.contains("Jautājamais vietniekvārds")) paradigm.add(25);
-			if (pos.contains("Noliedzamais vietniekvārds")) paradigm.add(25);
-			if (pos.contains("Norādāmais vietniekvārds")) paradigm.add(25);
-			if (pos.contains("Noteicamais vietniekvārds")) paradigm.add(25);
-			if (pos.contains("Piederības vietniekvārds")) paradigm.add(25);
-			if (pos.contains("Vispārināmais vietniekvārds")) paradigm.add(25);
 
 			if (pos.contains(Values.FOREIGN.s)) paradigm.add(29);
 
-			if (pos.contains(Values.PREFIX.s)) paradigm.add(0); //Prefixes are not words.
-			if (pos.contains("Salikteņu daļa")) paradigm.add(0); //Prefixes are not words.
+			if (pos.contains(Values.PART_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
 		if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
 		{
 			if (paradigm.size() > 0)
 				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
-						paradigm.stream().map(t -> toString())
-								.reduce((t1, t2) -> t1 + ", " + t2).orElse("") + ".");
-			/*if (flags.testKey(Keys.POS))
-				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir vārdšķira " +
-						flags.getAll(Keys.POS).stream()
-								.reduce((t1, t2) -> t1 + ", " + t2).orElse("") + ".");
-								*/ // Vietvārdiem var gadīties.
+						(paradigm.stream().map(t -> toString())
+								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
 			paradigm.add(29); // Sastingusi forma.
 		}
 	}

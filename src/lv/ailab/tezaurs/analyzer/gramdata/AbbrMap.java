@@ -96,6 +96,7 @@ public class AbbrMap {
 		pairingFlags.put("īp.", Features.POS__ADJ);
 		pairingFlags.put("izsauk.", Tuple.of(Keys.POS, Values.INTERJECTION.s));
 		pairingFlags.put("jaut.", Tuple.of(Keys.POS, "Jautājamais vietniekvārds"));
+		pairingFlags.put("jaut.", Features.POS__PRONOUN);
 		pairingFlags.put("lietv.", Features.POS__NOUN);
 		pairingFlags.put("subst.", Features.POS__NOUN);
 		pairingFlags.put("noliedz.", Tuple.of(Keys.POS, "Noliedzamais vietniekvārds"));
@@ -114,33 +115,47 @@ public class AbbrMap {
 		pairingFlags.put("pieder. vietn.", Tuple.of(Keys.POS, "Piederības vietniekvārds"));
 		pairingFlags.put("pieder. vietn.", Features.POS__PRONOUN);
 		pairingFlags.put("pried.", Features.POS__PREFIX);
+		pairingFlags.put("pried.", Features.POS__PART);
 		pairingFlags.put("prep.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev.", Features.POS__PREPOSITION);
 		pairingFlags.put("saiklis.", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("saiklis", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("skait.", Features.POS__NUMERAL);
 		pairingFlags.put("vietn.", Features.POS__PRONOUN);
-		pairingFlags.put("vietniekv.", Features.POS__PRONOUN);	// ?
+		pairingFlags.put("vietniekv.", Features.POS__PRONOUN);
 		pairingFlags.put("vispārin.", Features.POS__GEN_PRONOUN);
 		pairingFlags.put("vispārin.", Features.POS__PRONOUN);
-		pairingFlags.put("saīs.", Tuple.of(Keys.POS, "Saīsinājums"));
-		pairingFlags.put("simb.", Tuple.of(Keys.POS, "Saīsinājums"));	// ?
-		pairingFlags.put("salikteņu pirmā daļa.", Tuple.of(Keys.POS, "Salikteņu daļa"));
-		pairingFlags.put("salikteņu pirmā daļa", Tuple.of(Keys.POS, "Salikteņu daļa"));
-		pairingFlags.put("salikteņa pirmā daļa.", Tuple.of(Keys.POS, "Salikteņu daļa"));
-		pairingFlags.put("salikteņa pirmā daļa", Tuple.of(Keys.POS, "Salikteņu daļa"));
-		pairingFlags.put("salikteņu daļa.", Tuple.of(Keys.POS, "Salikteņu daļa"));
-		pairingFlags.put("salikteņu daļa", Tuple.of(Keys.POS, "Salikteņu daļa"));
+		pairingFlags.put("saīs.", Features.POS__ABBR);
+		pairingFlags.put("simb.",Features.POS__ABBR);
+		pairingFlags.put("salikteņu otrā daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu otrā daļa", Features.POS__COMPOUND_LAST);
+		pairingFlags.put("salikteņu otrā daļa", Features.POS__PART);
+		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__PART);
+		pairingFlags.put("salikteņu pirmā daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu pirmā daļa", Features.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņu pirmā daļa", Features.POS__PART);
+		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__PART);
+		pairingFlags.put("salikteņa pirmā daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņa pirmā daļa", Features.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņa pirmā daļa", Features.POS__PART);
+		pairingFlags.put("salikteņu daļa.", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu daļa.", Features.POS__PART);
+		pairingFlags.put("salikteņu daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu daļa", Features.POS__PART);
 
-		pairingFlags.put("priev. ar ģen.", Tuple.of(Keys.POS, "Prievārds"));
+		pairingFlags.put("priev. ar ģen.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev. ar ģen.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.GENITIVE.s));
-		pairingFlags.put("ar ģen.", Tuple.of(Keys.POS, "Prievārds")); // Šķiet, ka bez papildus komentāriem to raksta tikai pie prievārdiem.
+		pairingFlags.put("ar ģen.", Features.POS__PREPOSITION); // Šķiet, ka bez papildus komentāriem to raksta tikai pie prievārdiem.
 		pairingFlags.put("ar ģen.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.GENITIVE.s));
-		pairingFlags.put("priev. ar dat.", Tuple.of(Keys.POS, "Prievārds"));
+		pairingFlags.put("priev. ar dat.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev. ar dat.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.DATIVE.s));
 
 		pairingFlags.put("persv.", Features.POS__NOUN);
-		binaryFlags.put("persv.", "Personvārds");
+		binaryFlags.put("persv.", Values.PERSON_NAME.s);
 		//pairingFlags.put("vietv.", Features.POS__NOUN); // jāuzmanās ar mazciemu "Siltais"
 														// Ko darīt ar sastingušajām formām?
 		binaryFlags.put("vietv.", "Vietvārds");
@@ -154,15 +169,13 @@ public class AbbrMap {
 		pairingFlags.put("lok.", Tuple.of(Keys.CASE, Values.LOCATIVE.s));
 		pairingFlags.put("nom.", Tuple.of(Keys.CASE, Values.NOMINATIVE.s));
 
-		//binaryFlags.put("dsk. ģen.", "Daudzskaitļa ģenitīvs"); // Daudzskaitlinieks?
 		pairingFlags.put("dsk. ģen.", Tuple.of(Keys.CASE, Values.GENITIVE.s));
 		pairingFlags.put("dsk. ģen.", Tuple.of(Keys.NUMBER, Values.PLURAL.s));
-		//binaryFlags.put("vsk. ģen.", "Vienskaitļa ģenitīvs");
 		pairingFlags.put("vsk. ģen.", Tuple.of(Keys.CASE, Values.GENITIVE.s));
 		pairingFlags.put("vsk. ģen.", Tuple.of(Keys.NUMBER, Values.SINGULAR.s));
 
 
-		pairingFlags.put("divsk.", Tuple.of(Keys.NUMBER, Values.DUAL.s)); // Mums tiešām tādi ir?
+		pairingFlags.put("divsk.", Tuple.of(Keys.NUMBER, Values.DUAL.s));
 		pairingFlags.put("dsk.", Tuple.of(Keys.NUMBER, Values.PLURAL.s));
 		pairingFlags.put("vsk.", Tuple.of(Keys.NUMBER, Values.SINGULAR.s));
 		
@@ -258,7 +271,7 @@ public class AbbrMap {
 		pairingFlags.put("lopk.", Tuple.of(Keys.DOMAIN, "Lopkopība"));
 		pairingFlags.put("mat.", Tuple.of(Keys.DOMAIN, "Matemātika"));
 		pairingFlags.put("matem.", Tuple.of(Keys.DOMAIN, "Matemātika"));
-		pairingFlags.put("materiālt.", Tuple.of(Keys.DOMAIN, "Materiālzinātne"));		// ?
+		pairingFlags.put("materiālt.", Tuple.of(Keys.DOMAIN, "Materiālzinātne"));
 		pairingFlags.put("med.", Tuple.of(Keys.DOMAIN, "Medicīna"));
 		pairingFlags.put("medn.", Tuple.of(Keys.DOMAIN, "Medniecība"));
 		pairingFlags.put("meh.", Tuple.of(Keys.DOMAIN, "Mehānika"));
@@ -391,7 +404,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti saliktajos laikos", Features.POS__VERB);
 		pairingFlags.put("parasti saliktajos laikos.", Tuple.of(Keys.USUALLY_USED_IN_FORM, "Saliktie laiki"));
 		pairingFlags.put("parasti saliktajos laikos.", Features.POS__VERB);
-		pairingFlags.put("parasti nenoteiksmē", Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nenoteiksme"));
+		pairingFlags.put("parasti nenoteiksmē", Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.INFINITIVE.s));
 		pairingFlags.put("parasti nenoteiksmē", Features.POS__VERB);
 		pairingFlags.put("parasti pavēles formā", Tuple.of(Keys.USUALLY_USED_IN_FORM, "Pavēles izteiksme"));
 		pairingFlags.put("parasti pavēles formā", Features.POS__VERB);

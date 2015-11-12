@@ -34,24 +34,33 @@ public enum Values
 	NUMERAL("Skaitļa vārds"),
 	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
 	CARDINAL_NUMERAL("Pamata skaitļa vārds"),
+
 	PRONOUN("Vietniekvārds"),
 	PERSONAL_PRONOUN("Personas vietniekvārds"),
 	DEMONSTRATIVE_PRONOUN("Norādāmais vietniekvārds"),
 	INDEFINITE_PRONOUN("Nenoteiktais vietniekvārds"),
 	GENRERIC_PRONOUN("Vispārināmais vietniekvārds"),
+
 	VERB("Darbības vārds"),
 	PREFIX_VERB("Ddarbības vārds ar priedēkli"),
 	PREFIXLESS_VERB("Darbības vārds bez priedēkļa"),
 	NEGATIVE_VERB("Noliegts darbības vārds"),
+
 	ADVERB("Apstākļa vārds"),
 	PLACE_ADVERB("Vietas apstākļa vārds"),
+
 	INTERJECTION("Izsauksmes vārds"),
 	CONJUNCTION("Saiklis"),
 	PARTICLE("Partikula"),
 	PREPOSITION("Prievārds"),
 
+	ABBREVIATION("Saīsinājums"),
 	FOREIGN("Vārds svešvalodā"),
+	PART_OF_WORD("Vārda daļa"),
 	PREFIX("Priedēklis"),
+	COMPOUND_PART("Salikteņu daļa"),
+	COMPOUND_FIRST_PART("Salikteņu pirmā daļa"),
+	COMPOUND_LAST_PART("Salikteņu pēdējā daļa"),
 
 	PHRASE("Vārdu savienojums"),
 

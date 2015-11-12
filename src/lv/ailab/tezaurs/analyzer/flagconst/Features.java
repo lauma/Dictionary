@@ -27,8 +27,13 @@ public class Features
 	public static final Tuple<Keys, String> POS__NUMERAL = Tuple.of(Keys.POS, Values.NUMERAL.s);
 	public static final Tuple<Keys, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE.s);
 	public static final Tuple<Keys, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION.s);
+	public static final Tuple<Keys, String> POS__ABBR = Tuple.of(Keys.POS, Values.ABBREVIATION.s);
 	public static final Tuple<Keys, String> POS__FOREIGN = Tuple.of(Keys.POS, Values.FOREIGN.s);
+	public static final Tuple<Keys, String> POS__PART = Tuple.of(Keys.POS, Values.PART_OF_WORD.s);
 	public static final Tuple<Keys, String> POS__PREFIX = Tuple.of(Keys.POS, Values.PREFIX.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_PART = Tuple.of(Keys.POS, Values.COMPOUND_PART.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_FIRST = Tuple.of(Keys.POS, Values.COMPOUND_FIRST_PART.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_LAST = Tuple.of(Keys.POS, Values.COMPOUND_LAST_PART.s);
 
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);

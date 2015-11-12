@@ -158,7 +158,6 @@ public class RulesAsFunctions
 	 * Izanalizē gramatikas virknes formā:
 	 * savienojumā ar ...
 	 * parasti savienojumā ar ...
-	 * TODO
 	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
 	 * @param gramText		analizējamais gramatikas teksta fragments
 	 * @param flagCollector kolekcija, kurā pielikt karodziņus gadījumā, ja

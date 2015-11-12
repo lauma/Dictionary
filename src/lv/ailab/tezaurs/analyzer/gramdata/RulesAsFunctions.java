@@ -170,7 +170,7 @@ public class RulesAsFunctions
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
-				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)+))") :
+				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
 				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
 
 		int newBegin = -1;
@@ -205,6 +205,7 @@ public class RulesAsFunctions
 			else if (flagValueRaw.matches(
 					"daudzskaitliniekiem vai pāra priekšmetu apzīmējumiem\\.?"))
 				flagValues.add(Values.MULTI_TINGY_NAME.s);
+			else if (flagValueRaw.matches("personvārdu\\.?")) flagValues.add(Values.PERSON_NAME.s);
 			else if (flagValueRaw.matches("uzvārdu vīriešu vai sieviešu dzimtē vai savienojumā ar vārdu\\.?"))
 				// TODO: Laurai pārbaudīt
 				flagValues.add(Values.PERSON_NAME.s);
@@ -274,7 +275,7 @@ public class RulesAsFunctions
 				flagValues.add(Values.TIME_TERM.s);
 				flagValues.add(Values.REPETITION.s);
 			}
-			else if (flagValueRaw.matches("lietv\\. lokatīvā\\.?"))
+			else if (flagValueRaw.matches("lietv\\. (lokatīvā\\.?|lok\\.)"))
 			{
 				flagValues.add(Values.NOUN.s);
 				flagValues.add(Values.LOCATIVE.s);
@@ -335,11 +336,22 @@ public class RulesAsFunctions
 				flagValues.add(Values.PARTICIPLE.s);
 				flagValues.add(Values.PARTICIPLE_TS.s);
 			}
+			else if (flagValueRaw.matches("citām līdzīgām interjekcijām\\.?"))
+			{
+				flagValues.add(Values.INTERJECTION.s);
+				flagValues.add(Values.ORIGINAL_NEEDED.s);
+			}
 
 			else if (flagValueRaw.matches("adj\\. vai apst\\.|apst\\. vai adj\\.|adjektīvu vai adverbu\\.?"))
 			{
 				flagValues.add(Values.ADJECTIVE.s);
 				flagValues.add(Values.ADVERB.s);
+			}
+			else if (flagValueRaw.matches("adj\\. vai apst\\. pārāk(ajā|o) pakāp(ē|i)\\.?"))
+			{
+				flagValues.add(Values.ADJECTIVE.s);
+				flagValues.add(Values.ADVERB.s);
+				flagValues.add(Values.COMPARATIVE_DEGREE.s);
 			}
 			else if (flagValueRaw.matches("adj\\. vai divd\\."))
 			{
@@ -359,11 +371,23 @@ public class RulesAsFunctions
 				flagValues.add(Values.NOUN.s);
 				flagValues.add(Values.PRONOUN.s);
 			}
-			else if (flagValueRaw.matches("pers. vietn\\. vai lietv."))
+			else if (flagValueRaw.matches("pers\\. vietn\\. vai lietv."))
 			{
 				flagValues.add(Values.NOUN.s);
 				flagValues.add(Values.PRONOUN.s);
 				flagValues.add(Values.PERSONAL_PRONOUN.s);
+			}
+			else if (flagValueRaw.matches("skait\\. vai nenot\\. vietn\\."))
+			{
+				flagValues.add(Values.NUMERAL.s);
+				flagValues.add(Values.PRONOUN.s);
+				flagValues.add(Values.INDEFINITE_PRONOUN.s);
+			}
+			else if (flagValueRaw.matches("subst\\. vai pron\\. dat\\."))
+			{
+				flagValues.add(Values.NOUN.s);
+				flagValues.add(Values.PRONOUN.s);
+				flagValues.add(Values.DATIVE.s);
 			}
 			else if (flagValueRaw.matches("pers. vietn\\. vai lietv., kas apzīmē personu\\.?"))
 			{
@@ -435,6 +459,12 @@ public class RulesAsFunctions
 				flagValues.add(Values.DATIVE_AND_ADVERB.s); // man palika žēl
 															// palika silts
 			}
+			else if (flagValueRaw.matches("lok\\. vai nenoteiksmi\\.?"))
+			{
+				flagValues.add(Values.VERB.s);
+				flagValues.add(Values.INFINITIVE.s);
+				flagValues.add(Values.LOCATIVE.s);
+			}
 			else if (flagValueRaw.matches("vietas nosaukumu lok\\."))
 			{
 				flagValues.add(Values.PLACE_NAME.s);
@@ -450,6 +480,25 @@ public class RulesAsFunctions
 				flagValues.add(Values.DUAL.s);
 				flagValues.add(Values.ACUSATIVE.s);
 				flagValues.add(Values.NOMINATIVE.s);
+			}
+			else if (flagValueRaw.matches("apst\\. un noliegtu verbu\\.?"))
+			{
+				flagValues.add(Values.ADVERB.s);
+				flagValues.add(Values.VERB.s);
+				flagValues.add(Values.NEGATIVE_VERB.s);
+				flagValues.add(Values.ADVERB_AND_NEGVERB.s);
+			}
+			else if (flagValueRaw.matches("lietv\\. lok\\. vai lietv\\. un priev\\."))
+			{
+				flagValues.add(Values.NOUN.s);
+				flagValues.add(Values.PREPOSITION.s);
+				flagValues.add(Values.ORIGINAL_NEEDED.s);
+			}
+			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\., divsk\\. nom\\., akuz\\.)?"))
+			{
+				flagValues.add(Values.NOUN.s);
+				flagValues.add(Values.NUMERAL.s);
+				flagValues.add(Values.ORIGINAL_NEEDED.s);
 			}
 
 			if (flagValues.size() > 0) for (String fv: flagValues)

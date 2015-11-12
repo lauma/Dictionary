@@ -346,8 +346,6 @@ public class AbbrMap {
 		pairingFlags.put("ung.", Tuple.of(Keys.LANGUAGE, "Ungāru"));
 		pairingFlags.put("ung.", Features.POS__FOREIGN);
 
-
-
 		// Dialekti un izloksnes (tie ir arī lietojuma ierobežojumi)
 		pairingFlags.put("dial. (augšzemnieku)", Tuple.of(Keys.DIALECT_FEATURES, "Agušzemnieku"));	// Unikāls.
 		pairingFlags.put("dial. (augšzemnieku)", Tuple.of(Keys.USAGE_RESTRICTIONS, "Dialektisms"));	// Unikāls.
@@ -361,7 +359,7 @@ public class AbbrMap {
 		pairingFlags.put("vēst.", Tuple.of(Keys.USAGE_RESTRICTIONS, Values.HISTORICAL.s));
 		// TODO vēst. laikam ir domēns nevis ierobežojums!!!!!!!!!
 		pairingFlags.put("novec.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Novecojis"));
-		pairingFlags.put("neakt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Neaktuāls"));
+		pairingFlags.put("neakt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Neaktuāls")); // Historicismi
 		pairingFlags.put("poēt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Poētiska stilistiskā nokrāsa"));
 		pairingFlags.put("mīlin.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Mīlinājuma nokrāsa"));
 		pairingFlags.put("niev.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Nievīga ekspresīvā nokrāsa"));

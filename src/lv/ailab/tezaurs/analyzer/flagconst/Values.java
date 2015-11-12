@@ -118,6 +118,7 @@ public enum Values
 	PLACE_ADVERB_CONTAMINATION("Vietas apstākļa vārda nozīmē lietots vārds"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
 	REPETITION("Atkārtots vienas un tās pašas saknes vārds"),
 	DATIVE_AND_ADVERB("Vārds datīvā un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
+	ADVERB_AND_NEGVERB("Apstākļa vārds un noliegts darbības vārds"), // Iesaistīšanās divu nosacījumu grupā.
 
 	;
 	public String s;

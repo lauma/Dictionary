@@ -473,6 +473,7 @@ public class Gram  implements HasToJSON
 						(paradigm.stream().map(t -> toString())
 								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
 			paradigm.add(29); // Sastingusi forma.
+			flags.add(Features.UNCLEAR_POS);
 		}
 	}
 

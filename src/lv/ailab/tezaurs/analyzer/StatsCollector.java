@@ -192,8 +192,16 @@ public class StatsCollector
 		else line.append("0");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.POS))
+				entry.head.gram.flags.testKey(Keys.POS) &&
+				entry.head.gram.flags.test(Features.UNCLEAR_POS))
+		{
+			line.append(Values.UNCLEAR_POS.s);
+			line.append(",");
 			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.POS)));
+		}
+		else if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.test(Features.UNCLEAR_POS))
+			line.append(Values.UNCLEAR_POS.s);
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.paradigmCount() == 1)

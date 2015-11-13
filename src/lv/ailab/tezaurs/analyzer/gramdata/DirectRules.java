@@ -10,8 +10,10 @@ import lv.ailab.tezaurs.utils.Tuple;
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * Gram.processBeginingWithPatterns(String, String)
  * Likumi kas jālieto ar Rule.applyDirect().
- * Šobrīd šeit ir formas ziņā vienkāršākie likumi, vēl daži ir
- * Gram.processBeginingWithPatterns()
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
  * @author Lauma
  */
 public class DirectRules
@@ -193,8 +195,7 @@ public class DirectRules
 
 		// Miju varianti
 		BaseRule.noun("-es, dsk. ģen. -stu, arī -šu", ".*ste", 9,
-				new Tuple[]{Features.GENDER__FEM, Tuple.of(
-						Keys.INFLECTION_WEARDNES, "Miju varianti: -stu/-šu")},
+				new Tuple[]{Features.GENDER__FEM, Tuple.of(Keys.INFLECTION_WEARDNES, Values.STU_SHU_CHANGE.s)},
 				null), //dzeņaukste
 
 		// Bez mijām

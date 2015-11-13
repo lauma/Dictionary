@@ -12,6 +12,10 @@ import java.util.HashSet;
 /**
  * Singletonklase, kas satur visus zināmos saīsinājumus, tos atšifrējumus, kā
  * arī visus citus karodziņus, kas veidojami no fiksētām teksta virknēm.
+ *
+ * Lielais mērķis ir panākt, ka visas tekstuālās vērtību konstantes ir tikai
+ * šeit un Values klasē, lai kaut ko pamainot, nav jadzenās pakaļ pa daudzām
+ * klasēm.
  * @author Lauma
  *
  */

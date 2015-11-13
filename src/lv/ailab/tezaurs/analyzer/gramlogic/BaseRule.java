@@ -18,6 +18,10 @@ import java.util.regex.Pattern;
  * tā, kādam šablonam atbilst lemma, tiek piekārtotas paradigmas un karodziņi.
  * Atbilstība lemmu šabloniem tiek pārbaudīta secīgi un, kad pirmā atbilsme ir
  * atrasta, tālāk nepārbauda (tātad uzdošanās kārtība ir svarīga).
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
  * Izveidots 2015-10-26.
  * @author Lauma
  */

@@ -11,6 +11,11 @@ import java.util.Set;
 
 /**
  * Likums šabloniem, kas sākas ar "parasti 3. pers.," vai  "tikai 3. pers.,"
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
+ * @author Lauma
  */
 public class ThirdPersVerbRule implements Rule
 {

@@ -16,8 +16,10 @@ import java.util.regex.Pattern;
 /**
  * Te būs likumi, ko neizdodas izlikt smukajos, parametrizējamajos Rule
  * objektos, bet tā vietā tie palikuši kā atsevišķas funkcijas.
- * Created on 2015-10-22.
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
  *
+ * Izveidots 2015-10-22.
  * @author Lauma
  */
 public class RulesAsFunctions

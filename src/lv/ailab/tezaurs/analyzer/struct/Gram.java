@@ -33,6 +33,9 @@ import lv.ailab.tezaurs.analyzer.gramlogic.*;
  * laikā iegūtajiem karodziņiem (piemēram, ja vārdam ir bijis gan saīsinājums
  * vēst., gan vietv., tad šajā solī pieliek jaunu karodziņu "Vēsturisks
  * vietvārds").
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
  */
 public class Gram  implements HasToJSON
 {

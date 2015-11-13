@@ -16,8 +16,11 @@ import java.util.regex.Pattern;
  * Vienākāršais likums - gramatikas šablonam atbilst viens galotnes šablons,
  * viena pamata paradigma ar vienu alternatīvo lemmu, kurai atkal ir viena
  * paradigma.
- * Izveidots 2015-10-26.
  *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
+ * Izveidots 2015-10-26.
  * @author Lauma
  */
 public class AltEndingRule implements AltLemmaRule

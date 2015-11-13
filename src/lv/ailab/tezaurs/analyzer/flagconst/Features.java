@@ -4,7 +4,11 @@ import lv.ailab.tezaurs.utils.Tuple;
 
 /**
  * Atslēgu un vērtību pārīši, ko lietot, lai likumus pierakstīt ir īsāk.
- * Created on 2015-10-09.
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
+ * Izveidots 2015-10-09.
  * @author Lauma
  */
 public class Features

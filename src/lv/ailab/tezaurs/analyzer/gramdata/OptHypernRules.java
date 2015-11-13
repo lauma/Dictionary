@@ -2,6 +2,7 @@ package lv.ailab.tezaurs.analyzer.gramdata;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -9,8 +10,11 @@ import lv.ailab.tezaurs.utils.Tuple;
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * Gram.processBeginingWithPatterns(String, String)
  * Likumi kas jālieto ar Rule.applyOptHyphens().
- * Šobrīd šeit ir formas ziņā vienkāršākie likumi, vēl daži ir
- * Gram.processBeginingWithPatterns()
+ *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā, vai konkrēti
+ * vārdi.
+ *
  * @author Lauma
  */
 public class OptHypernRules
@@ -454,7 +458,7 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicu, -teic, -teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikt\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")},
+				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS.s)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
 		FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
@@ -867,7 +871,7 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicos, -teicies, -teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikties\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, "Nelieto tagadnes formas")},
+				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
 	};
 

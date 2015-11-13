@@ -17,8 +17,11 @@ import java.util.regex.Pattern;
 /**
  * Likumi gramatikām, kas satur pilnu alternatīvo lemmu, nevis tikai galdotnes,
  * kas to norāda, piemēram, šķirklī dižtauriņi: -ņu, vsk. dižtauriņš, -ņa, v.
- * Izveidots 2015-10-26.
  *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
+ * Izveidots 2015-10-26.
  * @author Lauma
  */
 public class AltFullLemmaRule implements AltLemmaRule

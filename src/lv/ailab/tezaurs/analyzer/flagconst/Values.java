@@ -107,8 +107,13 @@ public enum Values
 	NO_PRESENT_SOUNDCHANGE("Tagadnes mijas nav"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
 	NO_SOUNDCHANGE("Mijas nav"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā nav mijas
 
-	// Sevišķi retās vērtības.
-	// "Savienojumā ar" apstrādei.
+	// Sevišķi retās vērtības:
+
+	//// Galotņu šabloniem.
+	STU_SHU_CHANGE("Miju varianti: -stu/-šu"),
+	NOT_PRESENT_FORMS("Nelieto tagadnes formas"),
+
+	//// "Savienojumā ar" apstrādei.
 	ILLNESS_NAME("Slimības izraisītāja mikroorganisma, arī slimības nosaukums"),
 	TIME_UNIT_NAME("Laika mērvienības nosaukums"),
 	CLOTHING_UNIT_NAME("Apģērba gabala nosaukums"),

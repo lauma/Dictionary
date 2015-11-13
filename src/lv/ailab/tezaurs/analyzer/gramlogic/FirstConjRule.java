@@ -15,8 +15,11 @@ import java.util.*;
  * b) tikai trešās personas formu šablons,
  * c) visu personu formu šablons, no kura kaut kādu iemeslu dēļ nav iespējams
  * atvasināt trešās personas formu šablonu (sarežģītas paralēlformas).
- * Created on 2015-10-16.
  *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
+ * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ *
+ * Izveidots 2015-10-16.
  * @author Lauma
  */
 public class FirstConjRule implements Rule

@@ -22,9 +22,9 @@ public class DirectRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
+		// 34. paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.noun(
-				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 0,
+				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 34,
 				new Tuple[]{Features.POS__REFL_NOUN}, new Tuple[]{Features.GENDER__FEM}), //aizbildināšanās
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		BaseRule.noun("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
@@ -108,9 +108,9 @@ public class DirectRules
 				new Tuple[]{Features.GENDER__MASC}), //pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
-		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
+		// 34 paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.of("-ās, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*šanās", new Integer[]{0},
+						SimpleSubRule.of(".*šanās", new Integer[]{34},
 								new Tuple[]{Features.POS__REFL_NOUN}),
 						SimpleSubRule.of(".*tā", new Integer[]{30, 0},
 								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),

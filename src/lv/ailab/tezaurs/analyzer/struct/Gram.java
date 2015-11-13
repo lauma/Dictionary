@@ -27,12 +27,13 @@ import lv.ailab.tezaurs.analyzer.gramlogic.*;
  * 3) sadala pāri palikušos gramatikas gabalus pa komatiem un apstrādā katru
  * iegūto fragmentu atsevišķi, izmantojot gan šablonus, gan salīdzinot ar
  * saīsinājumu sarakstu,
- * 4) piešķir paradigmu, vadoties pēc atpazītajiem karodziņiem, ja tas ir
- * iespējams,
- * 5) piešķir papildus karodziņus, kas izsecināmi no gramatikas teksta apstrādes
+ * 4) piešķir papildus karodziņus, kas izsecināmi no gramatikas teksta apstrādes
  * laikā iegūtajiem karodziņiem (piemēram, ja vārdam ir bijis gan saīsinājums
  * vēst., gan vietv., tad šajā solī pieliek jaunu karodziņu "Vēsturisks
- * vietvārds").
+ * vietvārds", vai arī konkrētu divdabju gadījumā piešķir vispārīgo divdabja
+ * karodziņu),
+ * 5) piešķir paradigmu, vadoties pēc atpazītajiem karodziņiem, ja tas ir
+ * iespējams.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
@@ -164,13 +165,13 @@ public class Gram  implements HasToJSON
 
 			leftovers.add(toDo);
 		}
-		
-		// Mēģina izdomāt paradigmu no karodziņiem.
-		paradigmFromFlags(lemma);
 
 		// Skatoties uz visiem atpazītajiem karodziņiem, noteiktu karodziņu
 		// pielikšana vai noņemšana.
 		postprocessFlags();
+
+		// Mēģina izdomāt paradigmu no karodziņiem.
+		paradigmFromFlags(lemma);
 		
 		cleanupLeftovers();
 		// TODO cleanup altLemmas;
@@ -406,10 +407,10 @@ public class Gram  implements HasToJSON
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
 					gramText, flags, altLemmas);
-			// aijā - savienojumā "aijā, žūžū"
+			//
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);
-			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
+			// savienojumā ar ...
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
 					gramText, flags);
 			// aizbļaut - savienojumā ar "ausis"
@@ -450,14 +451,6 @@ public class Gram  implements HasToJSON
 				else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);
 			}
 
-			if (pos.contains(Values.VERB.s))
-			{
-				if (lemma.endsWith("īt") || lemma.endsWith("ināt"))
-					paradigm.add(17);
-				if (lemma.endsWith("īties") || lemma.endsWith("ināties"))
-					paradigm.add(20);
-			}
-
 			if (pos.contains(Values.ADVERB.s)) paradigm.add(21);
 			if (pos.contains(Values.PARTICLE.s)) paradigm.add(28);
 			if (pos.contains(Values.PREPOSITION.s)) paradigm.add(26);
@@ -495,6 +488,25 @@ public class Gram  implements HasToJSON
 			flags.add(Features.DOMAIN__HIST_PERSON);
 		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PLACE_NAME))
 			flags.add(Features.DOMAIN__HIST_PLACE);
+
+		// Tālāk sekojošais ir shortcut, lai nebūtu dažāda mēroga karodziņiem
+		// jānorāda visi, pietiktu ar konkrētāku. Populārākie gadījumi.
+		// TODO - papildināt. Te šobrīd noteikti nav viss, tikai tas, ko ātrumā pamanīju likumu failā.
+		if (flags.test(Features.POS__PARTICIPLE_AMS) ||
+				flags.test(Features.POS__PARTICIPLE_DAMS) ||
+				flags.test(Features.POS__PARTICIPLE_IS) ||
+				flags.test(Features.POS__PARTICIPLE_OSS) ||
+				flags.test(Features.POS__PARTICIPLE_OT) ||
+				flags.test(Features.POS__PARTICIPLE_TS))
+			flags.add(Features.POS__PARTICIPLE);
+
+		if (flags.test(Features.POS__PARTICIPLE))
+			flags.add(Features.POS__VERB);
+		if (flags.test(Features.POS__REFL_NOUN))
+			flags.add(Features.POS__NOUN);
+		if (flags.test(Features.POS__REFL_NOUN))
+			flags.add(Features.POS__NOUN);
+
 	}
 	/**
 	 * Šo jāizsauc katru reizi, kad kaut ko izņem no leftovers.

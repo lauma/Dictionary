@@ -20,7 +20,8 @@ import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
- * Created on 2015-08-04.
+ * Paralēli tēzaura apstrādei var šo to saskaitīt.
+ * Created 2015-08-04.
  *
  * @author Lauma
  */
@@ -220,6 +221,11 @@ public class StatsCollector
 				entry.head.gram.flags.testKey(Keys.USAGE_RESTRICTIONS))
 			line.append(String.join(",", entry.head.gram.flags
 					.getAll(Keys.USAGE_RESTRICTIONS)));
+		else line.append("NULL");
+		line.append("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.LANGUAGE))
+			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.LANGUAGE)));
 		else line.append("NULL");
 		/*line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&

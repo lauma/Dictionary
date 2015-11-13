@@ -80,11 +80,11 @@ public class DirectRules
 		BaseRule.adjectiveParticiple("-ais; s. -a, -ā"), // abējāds, acains, agāms
 		BaseRule.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_OSS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*dami", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_DAMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*[aā]mi", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*uši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*dami", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*[aā]mi", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*uši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_IS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*i", new Integer[]{13, 14}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM})},
 				new Tuple[]{Features.USED_ONLY__PLURAL, Features.GENDER__MASC, Features.GENDER__FEM}), // abēji 1
@@ -96,42 +96,42 @@ public class DirectRules
 		// Paradigma: 30 - jaundzimušais, pēdējais
 		//BaseRule.noun("-šā, v. -šās, s.", ".*ušais", new Integer[] {30, 0},
 		//		new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.UNCLEAR_PARADIGM}, null), //iereibušais	//TODO vai te vajag alternatīvo lemmu?
-		BaseRule.noun("-ā, v.", new SimpleSubRule[]{
+		BaseRule.of("-ā, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*tais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ušais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_IS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ais", new Integer[] {30},
-								new Tuple[]{Features.POS__ADJ})},
+								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN})},
 				new Tuple[]{Features.GENDER__MASC}), //pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// Nedefinēta paradigma: Atgriezeniskie lietvārdi -šanās
-		BaseRule.noun("-ās, s.", new SimpleSubRule[]{
+		BaseRule.of("-ās, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*šanās", new Integer[]{0},
 								new Tuple[]{Features.POS__REFL_NOUN}),
 						SimpleSubRule.of(".*tā", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ošā", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mā", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ā", new Integer[]{30},
-								new Tuple[]{Features.POS__ADJ})},
+								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN})},
 				new Tuple[]{Features.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
 
 		// Paradigmas: 22, 30, 0
 		BaseRule.of("s. -ā", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ošais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*tais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM}),
+								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ais", new Integer[]{22, 30},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.UNCLEAR_PARADIGM})},
+								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS})},
 				new Tuple[]{Features.GENDER__FEM, Features.GENDER__MASC}) // agrākais, pirmais, aiznākošais	//TODO vai te vajag alternatīvo lemmu?
 	};
 
@@ -245,11 +245,8 @@ public class DirectRules
 		// Vienskaitlis, vīriešu dzimte
 		// Ar mijām
 		BaseRule.noun("-ļa, v.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*lis", new Integer[]{3}, null),
-						//		SimpleSubRule.of(".*ls", new Integer[]{5}, null)
-				},
-				new Tuple[]{Features.GENDER__MASC}), // acumirklis, bacils, durkls=kļūda
-			// TODO!!!!!!!!!!!!!!!!!!!
+						SimpleSubRule.of(".*lis", new Integer[]{3}, null)},
+				new Tuple[]{Features.GENDER__MASC}), // acumirklis, (bacils, durkls=kļūda)
 		BaseRule.noun("-ņa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ņš", new Integer[]{2}, null),
 						SimpleSubRule.of(".*nis", new Integer[]{3}, null),

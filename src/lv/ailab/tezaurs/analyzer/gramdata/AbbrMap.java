@@ -426,10 +426,10 @@ public class AbbrMap {
 		pairingFlags.put("retāk", Tuple.of(Keys.USAGE_FREQUENCY, "Retāk"));
 
 		// Kontaminācija
-		pairingFlags.put("subst. noz.", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
-		pairingFlags.put("substantīva nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
-		pairingFlags.put("lietv. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
-		pairingFlags.put("lietv. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.NOUN.s));
+		pairingFlags.put("subst. noz.", Features.CONTAMINATION__NOUN);
+		pairingFlags.put("substantīva nozīmē", Features.CONTAMINATION__NOUN);
+		pairingFlags.put("lietv. nozīmē", Features.CONTAMINATION__NOUN);
+		pairingFlags.put("lietv. nozīmē.", Features.CONTAMINATION__NOUN);
 		pairingFlags.put("adj. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
 		pairingFlags.put("adj. nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));
 		pairingFlags.put("īp. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.ADJECTIVE.s));

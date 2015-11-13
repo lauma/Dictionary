@@ -100,6 +100,7 @@ public enum Values
 
 	CHANGED_PARADIGM("Cita paradigma"), // Paredzēts morfoimporta atvieglošanai
 	UNCLEAR_PARADIGM("Neviennozīmīga paradigma"), // Paredzēts morfoimporta atvieglošanai
+	UNCLEAR_POS("Neviennozīmīga vārdšķira vai kategorija"), // Paredzēts morfoimporta atvieglošanai
 
 	PARALLEL_FORMS("Paralēlās formas"), // Paredzēts morfoimporta atvieglošanai, šobrīd tikai darbības vārdiem
 	INFINITIVE_HOMOFORMS("Nenoteiksmes homoformas"), // Paredzēts morfoimporta atvieglošanai

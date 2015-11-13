@@ -19,6 +19,7 @@ public class Features
 	public static final Tuple<Keys, String> POS__ADJ = Tuple.of(Keys.POS, Values.ADJECTIVE.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE = Tuple.of(Keys.POS, Values.PARTICIPLE.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_OSS = Tuple.of(Keys.POS, Values.PARTICIPLE_OSS.s);
+	public static final Tuple<Keys, String> POS__PARTICIPLE_OT = Tuple.of(Keys.POS, Values.PARTICIPLE_OT.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_IS = Tuple.of(Keys.POS, Values.PARTICIPLE_IS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_TS = Tuple.of(Keys.POS, Values.PARTICIPLE_TS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_AMS = Tuple.of(Keys.POS, Values.PARTICIPLE_AMS.s);
@@ -38,6 +39,8 @@ public class Features
 	public static final Tuple<Keys, String> POS__COMPOUND_PART = Tuple.of(Keys.POS, Values.COMPOUND_PART.s);
 	public static final Tuple<Keys, String> POS__COMPOUND_FIRST = Tuple.of(Keys.POS, Values.COMPOUND_FIRST_PART.s);
 	public static final Tuple<Keys, String> POS__COMPOUND_LAST = Tuple.of(Keys.POS, Values.COMPOUND_LAST_PART.s);
+
+	public static final Tuple<Keys, String> CONTAMINATION__NOUN = Tuple.of(Keys.CONTAMINATION, Values.NOUN.s);
 
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);
@@ -68,6 +71,7 @@ public class Features
 	public static final Tuple<Keys, String> NO_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_SOUNDCHANGE.s);
 
 	public static final Tuple<Keys, String> UNCLEAR_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_PARADIGM.s);
+	public static final Tuple<Keys, String> UNCLEAR_POS = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_POS.s);
 
 	public static final Tuple<Keys, String> CHANGED_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.CHANGED_PARADIGM.s);
 

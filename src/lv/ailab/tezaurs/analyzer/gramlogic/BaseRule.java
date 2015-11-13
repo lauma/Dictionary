@@ -313,7 +313,7 @@ public class BaseRule implements Rule
 	public static BaseRule participleIs(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 0,
-				new Tuple[]{Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC, Features.GENDER__FEM},
+				new Tuple[]{Features.POS__VERB, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC, Features.GENDER__FEM},
 				null);
 	}
 	/**
@@ -328,10 +328,10 @@ public class BaseRule implements Rule
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[] {
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.POS__ADJ}),
-						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*ams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ})},
 				new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM});
 	}

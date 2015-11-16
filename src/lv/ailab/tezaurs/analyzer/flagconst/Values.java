@@ -3,12 +3,13 @@ package lv.ailab.tezaurs.analyzer.flagconst;
 /**
  * Populārākās karodziņu vērtības - iznestas šeit, lai mazinātu pārakstīšanās
  * risku.
- * Lielais mērķis ir panākt, ka visas tekstuālās vērtību konstantes ir tikai
- * šeit un AbbrMap klasē, lai kaut ko pamainot, nav jadzenās pakaļ pa daudzām
- * klasēm.
+ *
+ * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un Values
+ * klasē - citās klasēs jālieto atsauces uz Values klasē definētajām, lai kaut
+ * ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
  *
  * @author Lauma
- */ // TODO papildināt
+ */
 public enum Values
 {
 	SINGULAR("Vienskaitlis"),
@@ -96,7 +97,7 @@ public enum Values
 
 	DEFINITE_ENDING("Noteiktā galotne"),
 
-	ORIGINAL_NEEDED("Oriģinālā gramatika satur pārāk specifiskas nianses"), // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
+	ORIGINAL_NEEDED("Oriģinālā gramatika satur karodziņos neatšifrētas nianses"), // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
 
 	CHANGED_PARADIGM("Cita paradigma"), // Paredzēts morfoimporta atvieglošanai
 	UNCLEAR_PARADIGM("Neviennozīmīga paradigma"), // Paredzēts morfoimporta atvieglošanai

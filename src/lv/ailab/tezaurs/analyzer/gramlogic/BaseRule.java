@@ -2,6 +2,7 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -412,9 +413,11 @@ public class BaseRule implements Rule
 		Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
 
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS, soundChange},
-				null);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
+		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17, posFlags, null);
 	}
 
 	/**
@@ -429,10 +432,11 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE};
+		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE, Features.ORIGINAL_NEEDED};
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17, posFlags, null);
 	}
 
 	/**
@@ -463,10 +467,12 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjReflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-						Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE},
-				null);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE};
+		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE, Features.ORIGINAL_NEEDED};
+
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 20, posFlags, null);
 	}
 
 
@@ -483,10 +489,14 @@ public class BaseRule implements Rule
 	{
         Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
+
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
+		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule
-								.of(lemmaRestrictions, new Integer[]{16, 17}, new Tuple[]{
-										Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
+						SimpleSubRule.of(lemmaRestrictions, new Integer[]{16, 17}, posFlags)},
 				null);
 
 	}
@@ -504,10 +514,13 @@ public class BaseRule implements Rule
     {
 		Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
+		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule
-								.of(lemmaRestrictions, new Integer[]{19, 20}, new Tuple[]{
-										Features.POS__VERB, Features.PARALLEL_FORMS, soundChange})},
+						SimpleSubRule.of(lemmaRestrictions, new Integer[]{19, 20}, posFlags)},
 				null);
     }
 

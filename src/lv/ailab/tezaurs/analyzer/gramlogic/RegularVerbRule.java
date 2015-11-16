@@ -3,6 +3,7 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -195,8 +196,11 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjDir3PersParallel(String patternEnd,
 			String lemmaEnd)
 	{
-		return RegularVerbRule.of(patternEnd, lemmaEnd, 16,
-				new Tuple[] {Features.PARALLEL_FORMS}, null);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {Features.PARALLEL_FORMS};
+		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Features.ORIGINAL_NEEDED};
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 16, posFlags, null);
 	}
 
 	/**
@@ -251,8 +255,11 @@ public class RegularVerbRule implements Rule
 	{
 		Tuple<Keys, String> soundChange = presentChange ?
 				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-		return RegularVerbRule.of(patternEnd, lemmaEnd, 17,
-				new Tuple[]{Features.PARALLEL_FORMS, soundChange}, null);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {Features.PARALLEL_FORMS, soundChange};
+		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 17, posFlags, null);
 
 	}
 

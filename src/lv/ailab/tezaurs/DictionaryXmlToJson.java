@@ -52,9 +52,10 @@ public class DictionaryXmlToJson
 		add(Features.DOMAIN__HIST_PLACE);
 		add(Features.DOMAIN__HIST_PERSON);
 	}};//*/
+
 	/**
-	 * 
-	 * @param args File name expected as first argument.
+	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
+	 *             faili
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception

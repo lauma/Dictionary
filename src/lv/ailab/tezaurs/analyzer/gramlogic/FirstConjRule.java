@@ -3,6 +3,7 @@ package lv.ailab.tezaurs.analyzer.gramlogic;
 import lv.ailab.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Tuple;
 
@@ -310,8 +311,11 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
 				extractPPStemsAllPersParallel(patternText);
-		return FirstConjRule.of(patternText, null, lemmaEnd, 15,
-				new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+		return FirstConjRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
 				stems.second.toArray(new String[stems.second.size()]));
@@ -435,8 +439,11 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
 				extractPPStemsThirdPersParallel(patternEnd);
-		return FirstConjRule.of(patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.PARALLEL_FORMS},
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+		return FirstConjRule.of(patternEnd, lemmaEnd, 18, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
 				stems.second.toArray(new String[stems.second.size()]));
@@ -456,8 +463,11 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
 				extractPPStemsAllPersParallel(patternText);
-		return FirstConjRule.of(patternText, null, lemmaEnd, 18,
-				new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+		return FirstConjRule.of(patternText, null, lemmaEnd, 18, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
 				stems.second.toArray(new String[stems.second.size()]));
@@ -735,5 +745,4 @@ public class FirstConjRule implements Rule
 				"Neizdodas noteikt prefiksu 1. konj. vārdam \"%s\" ar nenoteiksmes celmu \"%s\"\n",
 				lemma, infinityStems.stream().reduce((s1, s2)-> s1 + "\", \"" + s2).orElse(""));
 	}
-
 }

@@ -79,6 +79,21 @@ public class RulesAsFunctions
 	}
 
 	/**
+	 * Pārbauda, vai gramatikas teksts (pieņemot, ka tā ir verba gramatika)
+	 * satur tikai norādes par formām vai arī vēl papildus info par to, kuras no
+	 * dotajām formām ir biežākas/retākas,
+	 * @param gramTExt	analizējamais gramatikas teksts
+	 * @return	true, ja gramatikas teksts satur tikai formas; false, ja
+	 * 			gramatikas teksts satur norādes par to, kuri celmi lietojami
+	 * 			retāk un kuri - biežāk.
+	 */
+	public static boolean containsFormsOnly(String gramTExt)
+	{
+		return !gramTExt.matches(".*(, | \\()retāk .*");
+	}
+
+
+	/**
 	 * Izanalizē gramatikas virknes formā:
 	 * parasti savienojumā "X, Y".
 	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
@@ -141,7 +156,7 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |) savienojumā ar (\"\\p{L}+\"))([.,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojumā ar (\"\\p{L}+\"))([.,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches()) // aizbļaut - savienojumā ar "ausis"
@@ -172,7 +187,7 @@ public class RulesAsFunctions
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
-				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
+				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \"?\\p{L}+\\.?\"?)*?))(, adj. nozīmē\\.?)?") :
 				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
 
 		int newBegin = -1;

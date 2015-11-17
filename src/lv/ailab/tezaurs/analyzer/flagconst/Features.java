@@ -14,9 +14,10 @@ import lv.ailab.tezaurs.utils.Tuple;
 public class Features
 {
 	public static final Tuple<Keys, String> POS__NOUN = Tuple.of(Keys.POS, Values.NOUN.s);
-	public static final Tuple<Keys, String> POS__REFL_NOUN = Tuple.of(Keys.POS, Values.REFL_NOUN.s);
+	public static final Tuple<Keys, String> POS__REFL_NOUN = Tuple.of(Keys.POS, Values.REFLEXIVE_NOUN.s);
 	public static final Tuple<Keys, String> POS__VERB = Tuple.of(Keys.POS, Values.VERB.s);
 	public static final Tuple<Keys, String> POS__ADJ = Tuple.of(Keys.POS, Values.ADJECTIVE.s);
+
 	public static final Tuple<Keys, String> POS__PARTICIPLE = Tuple.of(Keys.POS, Values.PARTICIPLE.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_OSS = Tuple.of(Keys.POS, Values.PARTICIPLE_OSS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_OT = Tuple.of(Keys.POS, Values.PARTICIPLE_OT.s);
@@ -24,21 +25,28 @@ public class Features
 	public static final Tuple<Keys, String> POS__PARTICIPLE_TS = Tuple.of(Keys.POS, Values.PARTICIPLE_TS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_AMS = Tuple.of(Keys.POS, Values.PARTICIPLE_AMS.s);
 	public static final Tuple<Keys, String> POS__PARTICIPLE_DAMS = Tuple.of(Keys.POS, Values.PARTICIPLE_DAMS.s);
+
 	public static final Tuple<Keys, String> POS__PRONOUN = Tuple.of(Keys.POS, Values.PRONOUN.s);
 	public static final Tuple<Keys, String> POS__PERS_PRONOUN = Tuple.of(Keys.POS, Values.PERSONAL_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__POSS_PRONOUN = Tuple.of(Keys.POS, Values.POSSESIVE_PRONOUN.s);
 	public static final Tuple<Keys, String> POS__DEM_PRONOUN = Tuple.of(Keys.POS, Values.DEMONSTRATIVE_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__DEF_PRONOUN = Tuple.of(Keys.POS, Values.DEFINITE_PRONOUN.s);
 	public static final Tuple<Keys, String> POS__INDEF_PRONOUN = Tuple.of(Keys.POS, Values.INDEFINITE_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__REFL_PRONOUN = Tuple.of(Keys.POS, Values.REFLEXIVE_PRONOUN.s);
 	public static final Tuple<Keys, String> POS__GEN_PRONOUN = Tuple.of(Keys.POS, Values.GENRERIC_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__INTERROG_PRONOUN = Tuple.of(Keys.POS, Values.INTERROGATIVE_PRONOUN.s);
+	public static final Tuple<Keys, String> POS__NEG_PRONOUN = Tuple.of(Keys.POS, Values.NEGATIVE_PRONOUN.s);
+
 	public static final Tuple<Keys, String> POS__NUMERAL = Tuple.of(Keys.POS, Values.NUMERAL.s);
 	public static final Tuple<Keys, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE.s);
 	public static final Tuple<Keys, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION.s);
 	public static final Tuple<Keys, String> POS__ABBR = Tuple.of(Keys.POS, Values.ABBREVIATION.s);
 	public static final Tuple<Keys, String> POS__FOREIGN = Tuple.of(Keys.POS, Values.FOREIGN.s);
-	public static final Tuple<Keys, String> POS__PART = Tuple.of(Keys.POS, Values.PART_OF_WORD.s);
+	public static final Tuple<Keys, String> POS__PIECE = Tuple.of(Keys.POS, Values.PIECE_OF_WORD.s);
 	public static final Tuple<Keys, String> POS__PREFIX = Tuple.of(Keys.POS, Values.PREFIX.s);
-	public static final Tuple<Keys, String> POS__COMPOUND_PART = Tuple.of(Keys.POS, Values.COMPOUND_PART.s);
-	public static final Tuple<Keys, String> POS__COMPOUND_FIRST = Tuple.of(Keys.POS, Values.COMPOUND_FIRST_PART.s);
-	public static final Tuple<Keys, String> POS__COMPOUND_LAST = Tuple.of(Keys.POS, Values.COMPOUND_LAST_PART.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_PIECE = Tuple.of(Keys.POS, Values.COMPOUND_PIECE.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_FIRST = Tuple.of(Keys.POS, Values.COMPOUND_FIRST_PIECE.s);
+	public static final Tuple<Keys, String> POS__COMPOUND_LAST = Tuple.of(Keys.POS, Values.COMPOUND_LAST_PIECE.s);
 
 	public static final Tuple<Keys, String> CONTAMINATION__NOUN = Tuple.of(Keys.CONTAMINATION, Values.NOUN.s);
 

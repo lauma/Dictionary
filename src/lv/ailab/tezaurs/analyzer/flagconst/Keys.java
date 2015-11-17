@@ -17,14 +17,14 @@ public enum Keys
 	LANGUAGE("Valoda"),
 	/**
 	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
-	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobešojumiem pēc iespējas
+	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
 	 * nepieciešams lietot jau definētās Values. Konkrētus vārdus jāliek
 	 * pēdiņās.
 	 */
 	USED_TOGETHER_WITH("Lieto kopā ar"),
 	/**
 	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
-	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobešojumiem pēc iespējas
+	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
 	 * nepieciešams lietot jau definētās Values. Konkrētus vārdus jāliek
 	 * pēdiņās.
 	 * Šis variants ir gadījumiem, kad vārdnīcā ir "parasti savienojumā ar".

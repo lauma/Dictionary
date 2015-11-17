@@ -99,57 +99,55 @@ public class AbbrMap {
 		pairingFlags.put("īp. v.", Features.POS__ADJ);
 		pairingFlags.put("īp.", Features.POS__ADJ);
 		pairingFlags.put("izsauk.", Tuple.of(Keys.POS, Values.INTERJECTION.s));
-		pairingFlags.put("jaut.", Tuple.of(Keys.POS, "Jautājamais vietniekvārds"));
-		pairingFlags.put("jaut.", Features.POS__PRONOUN);
 		pairingFlags.put("lietv.", Features.POS__NOUN);
 		pairingFlags.put("subst.", Features.POS__NOUN);
-		pairingFlags.put("noliedz.", Tuple.of(Keys.POS, "Noliedzamais vietniekvārds"));
-		pairingFlags.put("noliedz.", Features.POS__PRONOUN);
-		pairingFlags.put("norād.", Features.POS__DEM_PRONOUN);
-		pairingFlags.put("norād.", Features.POS__PRONOUN);
-		pairingFlags.put("norād. vietn.", Features.POS__DEM_PRONOUN);
-		pairingFlags.put("norād. vietn.", Features.POS__PRONOUN);
-		pairingFlags.put("noteic.", Tuple.of(Keys.POS, "Noteicamais vietniekvārds"));
-		pairingFlags.put("noteic.", Features.POS__PRONOUN);
 		pairingFlags.put("part.", Features.POS__PARTICLE);
-		pairingFlags.put("pers. vietn.", Features.POS__PERS_PRONOUN);
-		pairingFlags.put("pers. vietn.", Features.POS__PRONOUN);
-		pairingFlags.put("pieder.", Tuple.of(Keys.POS, "Piederības vietniekvārds"));
-		pairingFlags.put("pieder.", Features.POS__PRONOUN);
-		pairingFlags.put("pieder. vietn.", Tuple.of(Keys.POS, "Piederības vietniekvārds"));
-		pairingFlags.put("pieder. vietn.", Features.POS__PRONOUN);
-		pairingFlags.put("pried.", Features.POS__PREFIX);
-		pairingFlags.put("pried.", Features.POS__PART);
 		pairingFlags.put("prep.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev.", Features.POS__PREPOSITION);
 		pairingFlags.put("saiklis.", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("saiklis", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("skait.", Features.POS__NUMERAL);
-		pairingFlags.put("vietn.", Features.POS__PRONOUN);
-		pairingFlags.put("vietniekv.", Features.POS__PRONOUN);
-		pairingFlags.put("vispārin.", Features.POS__GEN_PRONOUN);
-		pairingFlags.put("vispārin.", Features.POS__PRONOUN);
 		pairingFlags.put("saīs.", Features.POS__ABBR);
 		pairingFlags.put("simb.",Features.POS__ABBR);
-		pairingFlags.put("salikteņu otrā daļa", Features.POS__COMPOUND_PART);
+
+		pairingFlags.put("vietn.", Features.POS__PRONOUN);
+		pairingFlags.put("vietniekv.", Features.POS__PRONOUN);
+		pairingFlags.put("atgriez. vietn.", Features.POS__REFL_PRONOUN);
+		pairingFlags.put("jaut.", Features.POS__INTERROG_PRONOUN);
+		pairingFlags.put("jaut. vietn.", Features.POS__INTERROG_PRONOUN);
+		pairingFlags.put("nenot. vietn.", Features.POS__INDEF_PRONOUN);
+		pairingFlags.put("noliedz.",Features.POS__NEG_PRONOUN);
+		pairingFlags.put("noliedz. vietn.",Features.POS__NEG_PRONOUN);
+		pairingFlags.put("norād.", Features.POS__DEM_PRONOUN);
+		pairingFlags.put("norād. vietn.", Features.POS__DEM_PRONOUN);
+		pairingFlags.put("noteic.", Features.POS__DEF_PRONOUN);
+		pairingFlags.put("pers. vietn.", Features.POS__PERS_PRONOUN);
+		pairingFlags.put("pieder.", Features.POS__POSS_PRONOUN);
+		pairingFlags.put("pieder. vietn.", Features.POS__POSS_PRONOUN);
+		pairingFlags.put("vispārin.", Features.POS__GEN_PRONOUN);
+
+		pairingFlags.put("pried.", Features.POS__PREFIX);
+		pairingFlags.put("pried.", Features.POS__PIECE);
+
+		pairingFlags.put("salikteņu otrā daļa", Features.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu otrā daļa", Features.POS__COMPOUND_LAST);
-		pairingFlags.put("salikteņu otrā daļa", Features.POS__PART);
-		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu otrā daļa", Features.POS__PIECE);
+		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__COMPOUND_FIRST);
-		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__PART);
-		pairingFlags.put("salikteņu pirmā daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu pirmā daļa.", Features.POS__PIECE);
+		pairingFlags.put("salikteņu pirmā daļa", Features.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu pirmā daļa", Features.POS__COMPOUND_FIRST);
-		pairingFlags.put("salikteņu pirmā daļa", Features.POS__PART);
-		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņu pirmā daļa", Features.POS__PIECE);
+		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__COMPOUND_FIRST);
-		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__PART);
-		pairingFlags.put("salikteņa pirmā daļa", Features.POS__COMPOUND_PART);
+		pairingFlags.put("salikteņa pirmā daļa.", Features.POS__PIECE);
+		pairingFlags.put("salikteņa pirmā daļa", Features.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņa pirmā daļa", Features.POS__COMPOUND_FIRST);
-		pairingFlags.put("salikteņa pirmā daļa", Features.POS__PART);
-		pairingFlags.put("salikteņu daļa.", Features.POS__COMPOUND_PART);
-		pairingFlags.put("salikteņu daļa.", Features.POS__PART);
-		pairingFlags.put("salikteņu daļa", Features.POS__COMPOUND_PART);
-		pairingFlags.put("salikteņu daļa", Features.POS__PART);
+		pairingFlags.put("salikteņa pirmā daļa", Features.POS__PIECE);
+		pairingFlags.put("salikteņu daļa.", Features.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu daļa.", Features.POS__PIECE);
+		pairingFlags.put("salikteņu daļa", Features.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu daļa", Features.POS__PIECE);
 
 		pairingFlags.put("priev. ar ģen.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev. ar ģen.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.GENITIVE.s));
@@ -423,6 +421,7 @@ public class AbbrMap {
 		pairingFlags.put("pareti", Tuple.of(Keys.USAGE_FREQUENCY, "Pareti"));
 		pairingFlags.put("reti.", Tuple.of(Keys.USAGE_FREQUENCY, "Reti"));
 		pairingFlags.put("reti", Tuple.of(Keys.USAGE_FREQUENCY, "Reti"));
+		pairingFlags.put("retāk.", Tuple.of(Keys.USAGE_FREQUENCY, "Retāk"));
 		pairingFlags.put("retāk", Tuple.of(Keys.USAGE_FREQUENCY, "Retāk"));
 
 		// Kontaminācija
@@ -443,7 +442,7 @@ public class AbbrMap {
 		pairingFlags.put("saikļa nozīmē.", Tuple.of(Keys.CONTAMINATION, Values.CONJUNCTION.s));
 		pairingFlags.put("skait. nozīmē", Tuple.of(Keys.CONTAMINATION, Values.NUMERAL.s));
 
-		binaryFlags.put("var.", "Variants");
+		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.
 		binaryFlags.put("hip.", "Hipotēze");
 	}
 

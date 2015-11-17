@@ -187,7 +187,7 @@ public class RulesAsFunctions
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
-				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \"?\\p{L}+\\.?\"?)*?))(, adj. nozīmē\\.?)?") :
+				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
 				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
 
 		int newBegin = -1;
@@ -524,8 +524,181 @@ public class RulesAsFunctions
 				flagValues.add(Values.ORIGINAL_NEEDED.s);
 			}
 
+			// TODO: salabot, ka pa tiešo liek pārīšus iekšā flags?
 			if (flagValues.size() > 0) for (String fv: flagValues)
-				flagCollector.add(key, fv);
+				if (fv.equals(Values.ORIGINAL_NEEDED.s))
+					flagCollector.add(Features.ORIGINAL_NEEDED);
+				else flagCollector.add(key, fv);
+			else
+			{
+				System.err.printf("Neizdevās atšifrēt karodziņu \"%s\"\n", m
+						.group(1));
+				newBegin = 0;
+			}
+		}
+		return newBegin;
+	}
+
+	/**
+	 * Izanalizē gramatikas virknes formā:
+	 * savienojumā ar ... " ... " ...
+	 * parasti savienojumā ar ... " ... " ...
+	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
+	 * @param gramText		analizējamais gramatikas teksta fragments
+	 * @param flagCollector kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                      gramatikas fragments atbilst šim likumam
+	 * @return	indekss neapstrādātās gramatikas daļas sākumam
+	 */
+	public static int processTogetherWithGenQuotFlag(
+			String gramText, Flags flagCollector)
+	{
+		boolean hasComma = gramText.contains(",");
+		Pattern flagPattern = hasComma ?
+				Pattern.compile("((parasti |)savienojumā ar ([\\p{L}()]+\\.?(,? \"?[\\p{L}()]+\\.?\"?)*\\.?))") :
+				Pattern.compile("((parasti |)savienojumā ar ([\\p{L}()]+\\.?( \"?[\\p{L}()]+\\.?\"?)*\\.?))");
+
+		int newBegin = -1;
+		Matcher m = flagPattern.matcher(gramText);
+		if (m.matches())
+		{
+			newBegin = m.group(1).length();
+			String modifier = m.group(2).trim();
+			Keys key = Keys.USED_TOGETHER_WITH;
+			if (modifier.equals("parasti")) key = Keys.USUALLY_USED_TOGETHER_WITH;
+			String flagValueRaw = m.group(3);
+			//ArrayList<String> flagValues = new ArrayList<>();
+
+			Matcher specificVerb1 = Pattern.compile("verb[ua] (\"\\p{L}+(\\(ies\\))?\"(, (retāk )?\"\\p{L}+(\\(ies\\))?\")*)( formām)?\\.?").matcher(flagValueRaw);
+			Matcher specificVerb2 = Pattern.compile("verbiem (\"\\p{L}+\"(, \"\\p{L}+\")*) u\\. tml\\.").matcher(flagValueRaw);
+			Matcher specificVerbDeriv = Pattern.compile("verbu (\"\\p{L}+\") (un|vai) atvasinājumiem no tā\\.?").matcher(flagValueRaw);
+			Matcher specificVerbNeg = Pattern.compile("verba (\"\\p{L}+\") noliegt(aj)?ām formām\\.?").matcher(flagValueRaw);
+			Matcher specificOne = Pattern.compile("(prievārd(?:u|iem)|apst\\.|lietvārdu|jaut\\. part\\.) (\"\\p{L}+\"(, \"\\p{L}+\")*)\\.?").matcher(flagValueRaw);
+			Matcher specificTwo = Pattern.compile("(lietv\\. un priev\\.|adj\\., retāk vietn\\.|adj\\., kam ir not\\. galotne, vai skait\\.) (\"\\p{L}+\")\\.?").matcher(flagValueRaw);
+			if (specificVerb1.matches())
+			{
+				String verbStr = specificVerb1.group(1);
+				if (verbStr.contains(", retāk "))
+				{
+					flagCollector.add(Features.ORIGINAL_NEEDED);
+					verbStr = verbStr.replace(", retāk ", ", ");
+				}
+				String[] verbs = verbStr.split(",");
+
+				flagCollector.add(key, Values.VERB.s);
+				for (String v : verbs)
+				if (v.endsWith("(ies)\""))
+				{
+					flagCollector.add(key, v.replace("(ies)", ""));
+					flagCollector.add(key, v.replace("(", "").replace(")", ""));
+				}
+				else flagCollector.add(key, v.trim());
+			}
+			else if (specificVerb2.matches())
+			{
+				String[] verbs = specificVerb2.group(1).split(",");
+
+				flagCollector.add(key, Values.VERB.s);
+				flagCollector.add(Features.ORIGINAL_NEEDED);
+				for (String v : verbs)
+					flagCollector.add(key, v.trim());
+			}
+			else  if (specificVerbDeriv.matches())
+			{
+				flagCollector.add(Features.ORIGINAL_NEEDED);
+				flagCollector.add(key, Values.VERB.s);
+				flagCollector.add(key, specificVerbDeriv.group(1));
+			}
+			else  if (specificVerbNeg.matches())
+			{
+				flagCollector.add(key, Values.VERB.s);
+				flagCollector.add(key, Values.NEGATIVE_VERB.s);
+				flagCollector.add(key, specificVerbNeg.group(1));
+			}
+			else if (specificOne.matches())
+			{
+				String[] prepositions = specificOne.group(2).split(",");
+				for (String v : prepositions)
+					flagCollector.add(key, v.trim());
+				String pos = specificOne.group(1);
+				if (pos.matches("prievārd(u|iem)"))
+					flagCollector.add(key, Values.PREPOSITION.s);
+				else if (pos.matches("apst\\."))
+					flagCollector.add(key, Values.ADVERB.s);
+				else if (pos.equals("lietvārdu"))
+					flagCollector.add(key, Values.NOUN.s);
+				else if (pos.equals("jaut. part."))
+				{
+					flagCollector.add(key, Values.PARTICLE.s);
+					flagCollector.add(key, Values.INTERROGATIVE_PARTICLE.s);
+				}
+			}
+			else  if (specificTwo.matches())
+			{
+				flagCollector.add(key, specificTwo.group(2));
+				String poses = specificTwo.group(1);
+				if (poses.equals("lietv. un priev."))
+				{
+					flagCollector.add(key, Values.NOUN.s);
+					flagCollector.add(key, Values.PREPOSITION.s);
+					flagCollector.add(key, Values.NOUN_WITH_PREPOSITION.s);
+				} else if (poses.equals("adj., retāk vietn."))
+				{
+					flagCollector.add(Features.ORIGINAL_NEEDED);
+					flagCollector.add(key, Values.ADJECTIVE.s);
+					flagCollector.add(key, Values.PRONOUN.s);
+				}
+				else if (poses.equals("adj., kam ir not. galotne, vai skait."))
+				{
+					flagCollector.add(key, Values.ADJECTIVE.s);
+					flagCollector.add(key, Values.DEFINITE_ENDING.s);
+					flagCollector.add(key, Values.NUMERAL.s);
+				}
+			}
+
+			else if (flagValueRaw.matches("vietn\\. \"tu\"\\.?"))
+			{
+				flagCollector.add(key, Values.PRONOUN.s);
+				flagCollector.add(key, Values.PERSONAL_PRONOUN.s);
+				flagCollector.add(key, "\"tu\"");
+			}
+			else if (flagValueRaw.matches("atgriez.\\ vietn\\. \"sevis\"\\.?"))
+			{
+				flagCollector.add(key, Values.PRONOUN.s);
+				flagCollector.add(key, Values.REFLEXIVE_PRONOUN.s);
+				flagCollector.add(key, "\"sevis\"");
+			}
+			else if (flagValueRaw.matches("verbu pavēles izteiksmes formā \\(parasti aiz šīs verba formas\\)\\.?"))
+			{
+				flagCollector.add(Features.ORIGINAL_NEEDED);
+				flagCollector.add(key, Values.VERB.s);
+				flagCollector.add(key, Values.IMPERATIVE.s);
+			}
+			else if (flagValueRaw.matches("verbu \\(parasti divd\\. formā\\)\\.?"))
+			{
+				flagCollector.add(key, Values.VERB.s);
+				flagCollector.add(Keys.USUALLY_USED_TOGETHER_WITH, Values.VERB.s);
+				flagCollector.add(Keys.USUALLY_USED_TOGETHER_WITH, Values.PARTICIPLE.s);
+			}
+			else if (flagValueRaw.matches("skait\\. un \\(parasti\\) adj\\. vai apst\\. pārāko pakāpi\\.?"))
+			{
+				flagCollector.add(Features.ORIGINAL_NEEDED);
+				flagCollector.add(key, Values.NUMERAL.s);
+				flagCollector.add(key, Values.ADJECTIVE.s);
+				flagCollector.add(key, Values.ADVERB.s);
+				flagCollector.add(key, Values.COMPARATIVE_DEGREE.s);
+				flagCollector.add(key, Values.NUMERAL_AND_ADJECTIVE.s);
+				flagCollector.add(key, Values.NUMERAL_AND_ADVERB.s);
+			}
+			else if (flagValueRaw.matches("jaut\\. part\\. \"vai\", jaut\\. vietn\\. vai jaut\\. apst\\."))
+			{
+				flagCollector.add(key, Values.PARTICLE.s);
+				flagCollector.add(key, Values.INTERROGATIVE_PARTICLE.s);
+				flagCollector.add(key, "\"vai\"");
+				flagCollector.add(key, Values.PRONOUN.s);
+				flagCollector.add(key, Values.INTERROGATIVE_PRONOUN.s);
+				flagCollector.add(key, Values.ADVERB.s);
+				flagCollector.add(key, Values.INTEROGATIVE_ADVERB.s);
+			}
 			else
 			{
 				System.err.printf("Neizdevās atšifrēt karodziņu \"%s\"\n", m

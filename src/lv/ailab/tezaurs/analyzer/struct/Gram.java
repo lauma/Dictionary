@@ -132,7 +132,7 @@ public class Gram  implements HasToJSON
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))
-			flags.add(Features.POS__PART);
+			flags.add(Features.POS__PIECE);
 		
 		// Vispirms apstrādā galotņu šablonus (tie parasti ir gramatikas sākumā).
 		correctedGram = processBeginingWithPatterns(correctedGram, lemma);
@@ -371,6 +371,9 @@ public class Gram  implements HasToJSON
 			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
 					gramText, flags);
+			// parasti savienojumā ar verbu "saukt", "dēvēt" formām
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
+					gramText, flags);
 
 			if (newBegin > 0)
 			{
@@ -415,6 +418,9 @@ public class Gram  implements HasToJSON
 					gramText, flags);
 			// aizbļaut - savienojumā ar "ausis"
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithQuotFlag(
+					gramText, flags);
+			// parasti savienojumā ar verba "nevarēt" formām
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
 					gramText, flags);
 			// agrums->agrumā
 			if(newBegin == -1) newBegin = RulesAsFunctions.processUsuallyInCaseFlag(
@@ -463,7 +469,7 @@ public class Gram  implements HasToJSON
 
 			if (pos.contains(Values.FOREIGN.s)) paradigm.add(29);
 
-			if (pos.contains(Values.PART_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
+			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
 		if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
@@ -507,6 +513,17 @@ public class Gram  implements HasToJSON
 			flags.add(Features.POS__NOUN);
 		if (flags.test(Features.POS__REFL_NOUN))
 			flags.add(Features.POS__NOUN);
+
+		if (flags.test(Features.POS__REFL_PRONOUN) ||
+				flags.test(Features.POS__INTERROG_PRONOUN) ||
+				flags.test(Features.POS__INDEF_PRONOUN) ||
+				flags.test(Features.POS__DEF_PRONOUN) ||
+				flags.test(Features.POS__NEG_PRONOUN) ||
+				flags.test(Features.POS__DEM_PRONOUN) ||
+				flags.test(Features.POS__PERS_PRONOUN) ||
+				flags.test(Features.POS__POSS_PRONOUN) ||
+				flags.test(Features.POS__GEN_PRONOUN))
+			flags.add(Features.POS__PRONOUN);
 
 	}
 	/**

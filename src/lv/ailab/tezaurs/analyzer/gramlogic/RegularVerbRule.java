@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Likums, kas apvieno divus SimpleRule - divus sdarbības vārdiem raksturīgos
+ * Likums, kas apvieno divus SimpleRule - divus darbības vārdiem raksturīgos
  * gadījumus: vienu visām personām, otru - tikai trešajai.
  * Piemēram, "-brāžu, -brāz, -brāž, pag. -brāzu" un
  * "parasti 3. pers., -brāž, pag. -brāzu".
@@ -36,7 +36,7 @@ public class RegularVerbRule implements Rule
 	 *                      (var būt null, tad izveido tikai trešās personas
 	 *                      likumu)
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
 	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
@@ -89,7 +89,7 @@ public class RegularVerbRule implements Rule
 	 * Konstruktors likumam, kur norādītas tikai 3. personas formas.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
 	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
@@ -117,7 +117,7 @@ public class RegularVerbRule implements Rule
 	 * Konstruktors pilnam likumam.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
 	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
@@ -139,7 +139,7 @@ public class RegularVerbRule implements Rule
 	 * Konstruktors likumam, kur norādītas tikai 3. personas formas.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
 	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam

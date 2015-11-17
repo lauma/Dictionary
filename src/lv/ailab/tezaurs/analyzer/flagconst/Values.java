@@ -4,7 +4,7 @@ package lv.ailab.tezaurs.analyzer.flagconst;
  * Populārākās karodziņu vērtības - iznestas šeit, lai mazinātu pārakstīšanās
  * risku.
  *
- * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un Values
+ * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un AbbrMap
  * klasē - citās klasēs jālieto atsauces uz Values klasē definētajām, lai kaut
  * ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
  *
@@ -12,6 +12,66 @@ package lv.ailab.tezaurs.analyzer.flagconst;
  */
 public enum Values
 {
+	NOUN("Lietvārds"),
+	REFLEXIVE_NOUN("Atgriezeniskais lietvārds"),
+	PROPER("Īpašvārds"),
+	ADJECTIVE("Īpašības vārds"),
+	NUMERAL("Skaitļa vārds"),
+	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
+	CARDINAL_NUMERAL("Pamata skaitļa vārds"),
+
+	// Prievārdu nosaukumi pamatā no LLVV.
+	PRONOUN("Vietniekvārds"),
+	PERSONAL_PRONOUN("Personas vietniekvārds"),
+	POSSESIVE_PRONOUN("Piederības vietniekvārds"),
+	DEMONSTRATIVE_PRONOUN("Norādāmais vietniekvārds"),
+	DEFINITE_PRONOUN("Noteicamais vietniekvārds"),
+	INDEFINITE_PRONOUN("Nenoteiktais vietniekvārds"),
+	GENRERIC_PRONOUN("Vispārināmais vietniekvārds"),
+	REFLEXIVE_PRONOUN("Atgriezeniskais vietniekvārds"),
+	INTERROGATIVE_PRONOUN("Jautājamais vietniekvārds"),
+	NEGATIVE_PRONOUN("Noliedzamais vietniekvārds"),
+
+	VERB("Darbības vārds"),
+	PREFIX_VERB("Ddarbības vārds ar priedēkli"),
+	PREFIXLESS_VERB("Darbības vārds bez priedēkļa"),
+	NEGATIVE_VERB("Noliegts darbības vārds"),
+
+	ADVERB("Apstākļa vārds"),
+	PLACE_ADVERB("Vietas apstākļa vārds"),
+	INTEROGATIVE_ADVERB("Jautājamais apstākļa vārds"),
+
+	INTERJECTION("Izsauksmes vārds"),
+	CONJUNCTION("Saiklis"),
+	PARTICLE("Partikula"),
+	INTERROGATIVE_PARTICLE("Jautājamā partikula"),
+
+	PREPOSITION("Prievārds"),
+
+	ABBREVIATION("Saīsinājums"),
+	FOREIGN("Vārds svešvalodā"),
+	PIECE_OF_WORD("Vārda daļa"),
+	PREFIX("Priedēklis"),
+	COMPOUND_PIECE("Salikteņu daļa"),
+	COMPOUND_FIRST_PIECE("Salikteņu pirmā daļa"),
+	COMPOUND_LAST_PIECE("Salikteņu pēdējā daļa"),
+
+	PHRASE("Vārdu savienojums"),
+
+	PARTICIPLE("Divdabis"),
+	PARTICIPLE_OSS("Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)"),
+	PARTICIPLE_IS("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)"),
+	PARTICIPLE_AMS("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)"),
+	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),
+	PARTICIPLE_DAMS("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)"),
+	PARTICIPLE_OT("Nelokāmais divdabis (-ot, -oties)"),
+
+	PLACE_NAME("Vietvārds"),
+	PERSON_NAME("Personvārds"),
+	HISTORICAL("Vēsturisks"),
+	HISTORICAL_PLACE("Vēsturisks vietvārds"),
+	HISTORICAL_PERSON("Vēsturisks personvārds"),
+
 	SINGULAR("Vienskaitlis"),
 	DUAL("Divskaitlis"),
 	PLURAL("Daudzskaitlis"),
@@ -28,74 +88,22 @@ public enum Values
 
 	NON_INFLECTIVE("Nelokāms vārds"),
 
-	NOUN("Lietvārds"),
-	REFL_NOUN("Atgriezeniskais lietvārds"),
-	PROPER("Īpašvārds"),
-	ADJECTIVE("Īpašības vārds"),
-	NUMERAL("Skaitļa vārds"),
-	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
-	CARDINAL_NUMERAL("Pamata skaitļa vārds"),
-
-	PRONOUN("Vietniekvārds"),
-	PERSONAL_PRONOUN("Personas vietniekvārds"),
-	DEMONSTRATIVE_PRONOUN("Norādāmais vietniekvārds"),
-	INDEFINITE_PRONOUN("Nenoteiktais vietniekvārds"),
-	GENRERIC_PRONOUN("Vispārināmais vietniekvārds"),
-
-	VERB("Darbības vārds"),
-	PREFIX_VERB("Ddarbības vārds ar priedēkli"),
-	PREFIXLESS_VERB("Darbības vārds bez priedēkļa"),
-	NEGATIVE_VERB("Noliegts darbības vārds"),
-
-	ADVERB("Apstākļa vārds"),
-	PLACE_ADVERB("Vietas apstākļa vārds"),
-
-	INTERJECTION("Izsauksmes vārds"),
-	CONJUNCTION("Saiklis"),
-	PARTICLE("Partikula"),
-	PREPOSITION("Prievārds"),
-
-	ABBREVIATION("Saīsinājums"),
-	FOREIGN("Vārds svešvalodā"),
-	PART_OF_WORD("Vārda daļa"),
-	PREFIX("Priedēklis"),
-	COMPOUND_PART("Salikteņu daļa"),
-	COMPOUND_FIRST_PART("Salikteņu pirmā daļa"),
-	COMPOUND_LAST_PART("Salikteņu pēdējā daļa"),
-
-	PHRASE("Vārdu savienojums"),
-
-	PARTICIPLE("Divdabis"),
-	PARTICIPLE_OSS("Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)"),
-	PARTICIPLE_IS("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)"),
-	PARTICIPLE_AMS("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)"),
-	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),
-	PARTICIPLE_DAMS("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)"),
-	PARTICIPLE_OT("Nelokāmais divdabis (-ot, -oties)"),
-
-	PLACE_NAME("Vietvārds"),
-	PERSON_NAME("Personvārds"),
-
-	ATTRIBUTE("Apzīmētājs"),
-	//ADVERBIAL_MOD("Apstāklis"),
-	//ADVERBIAL_PLACE_MOD("Vietas apstāklis"),
-
-	HISTORICAL("Vēsturisks"),
-
-	HISTORICAL_PLACE("Vēsturisks vietvārds"),
-	HISTORICAL_PERSON("Vēsturisks personvārds"),
-
+	INFINITIVE("Nenoteiksme"),
 	THIRD_PERSON("3. persona"),
 	PERSON_FORM("Personas forma"), // Tipiski darbības vārdiem
 	PASSIVE_VOICE("Ciešamā kārta"), // Ciešamās kārtas forma
-	MAIN_VERB("Patstāvīgs darbības vārds"),
+	IMPERATIVE("Pavēles izteiksme"), // Pavēles izteiksmes forma
 
-	INFINITIVE("Nenoteiksme"),
+	MAIN_VERB("Patstāvīgs darbības vārds"),
 
 	COMPARATIVE_DEGREE("Pārākā pakāpe"),
 	SUPERLATIVE_DEGREE("Vispārākā pakāpe"),
 
 	DEFINITE_ENDING("Noteiktā galotne"),
+
+	ATTRIBUTE("Apzīmētājs"),
+	//ADVERBIAL_MOD("Apstāklis"),
+	//ADVERBIAL_PLACE_MOD("Vietas apstāklis"),
 
 	ORIGINAL_NEEDED("Oriģinālā gramatika satur karodziņos neatšifrētas nianses"), // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
 
@@ -127,6 +135,7 @@ public enum Values
 	ADVERBIAL_TERM("Daudzuma, masas, lieluma vai ilguma apzīmējums"),
 	TIME_TERM("Vārds ar laika nozīmi"),
 	DISTRUCTION_NAME("Vārds, kas apzīmē bojāšanu, iznīcināšanu"),
+	//VERB_WITH_DERIVS("Dotais darbības vārds un tā atvasinājumi"),
 	// Slikti, ka nākamos trijus arī vajag :/
 	NOUN_CONTAMINATION("Lietvārda nozīmē lietots vārds"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
 	NOUN_CONTAMINATION_ADJ_COMP("Lietvārda nozīmē lietots īpašības vārds ar pārāko pakāpi"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
@@ -135,6 +144,9 @@ public enum Values
 	REPETITION("Atkārtots vienas un tās pašas saknes vārds"),
 	DATIVE_AND_ADVERB("Vārds datīvā un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
 	ADVERB_AND_NEGVERB("Apstākļa vārds un noliegts darbības vārds"), // Iesaistīšanās divu nosacījumu grupā.
+	NUMERAL_AND_ADVERB("Skaitļa vārds un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
+	NUMERAL_AND_ADJECTIVE("Skaitļa vārds un īpašības vārds"), // Iesaistīšanās divu nosacījumu grupā.
+	NOUN_WITH_PREPOSITION("Lietvārds un prievārds"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
 
 	;
 	public String s;

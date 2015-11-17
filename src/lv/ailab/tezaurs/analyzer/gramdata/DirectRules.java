@@ -269,9 +269,10 @@ public class DirectRules
 				new Tuple[]{Features.NO_SOUNDCHANGE},
 				new Tuple[]{Features.GENDER__MASC}), // stereotālskatis
 		// Vispārīgā galotne, kas der visam un neder nekam
+		// TODO: "viņš" ari ir šāda galotne
 		BaseRule.noun("-a, v.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, null),
-						SimpleSubRule.of(".*š", new Integer[]{2}, null),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1, 25}, new Tuple[]{Features.POS__PRONOUN, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*š", new Integer[]{2, 25}, new Tuple[]{Features.POS__PRONOUN, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
 				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis//, sparguļi, skostiņi
 

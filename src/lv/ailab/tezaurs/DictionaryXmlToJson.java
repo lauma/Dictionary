@@ -41,7 +41,7 @@ public class DictionaryXmlToJson
 	public static boolean PRINT_FIFTH_DECL_EXC = false;
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
-	public static boolean PRINT_WORDLISTS = false;
+	public static boolean PRINT_WORDLISTS = true;
 	public static Tuple<Keys, String> PRINT_WITH_FEATURE = null;
 	//public static Tuple<Keys, String> PRINT_WITH_FEATURE = Features.USAGE_RESTR__HISTORICAL;
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;

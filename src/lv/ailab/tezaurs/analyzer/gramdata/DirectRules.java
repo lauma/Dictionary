@@ -454,9 +454,9 @@ public class DirectRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Galotņu šabloni.
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", ".*īt", false), // aprobīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-u, -i, -a, arī -īju, -ī, -ī, pag. -īju", ".*īt", false), // atrotīt
 
 		// Darbības vārdu specifiskie likumi.
@@ -506,6 +506,7 @@ public class DirectRules
 		FirstConjRule.refl("-ņirdzos, -ņirdzies,", "-ņirdzas, pag. -ņirdzos", "ņirgties"), //atņirgties
 		// O, P, R
 		FirstConjRule.refl("-reibstos, -reibsties,", "-reibstas, pag. -reibos", "reibties"), //iereibties
+		FirstConjRule.refl("-rēcos, -rēcies,", "-rēcas, pag. -rēcos", "rēkties"), //ierēkties
 		FirstConjRule.refl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
 		FirstConjRule.refl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
@@ -722,7 +723,7 @@ public class DirectRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 			// Galotņu šabloni.
-			BaseRule.secondThirdConjReflAllPers(
+			BaseRule.secondThirdConjReflAllPersParallel(
 					"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
 
 			// Darbības vārdu specifiskie likumi.

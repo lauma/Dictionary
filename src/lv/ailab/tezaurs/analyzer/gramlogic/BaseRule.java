@@ -402,6 +402,8 @@ public class BaseRule implements Rule
 	 * Izveido BaseRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
 	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, ir paralēlās formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
@@ -410,14 +412,19 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<Keys, String> soundChange = presentChange ?
-				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
-		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17, posFlags, null);
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.POS__VERB);
+		posFlags.add(Features.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(Features.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**
@@ -425,6 +432,8 @@ public class BaseRule implements Rule
 	 * Izveido BaseRule 3. konjugācijas tiešajam darbības vārdam, kam dotas
 	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, paralēlās formas ir gan ar miju, gan bez.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return BaseRule ar 17. paradigmu
@@ -432,11 +441,17 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE};
-		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE, Features.ORIGINAL_NEEDED};
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17, posFlags, null);
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.POS__VERB);
+		posFlags.add(Features.PARALLEL_FORMS);
+		posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(Features.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**
@@ -459,7 +474,9 @@ public class BaseRule implements Rule
 	 * Metode īsumam.
 	 * Izveido BaseRule 3. konjugācijas darbības vārdam, kam dotas visas
 	 * formas, bet atvasināt tikai trešās personas formu likumu nav iespējams,
-	 * paralēlās formas ir gan ar miju, gan bez..
+	 * paralēlās formas ir gan ar miju, gan bez.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return BaseRule ar 20. paradigmu
@@ -467,12 +484,17 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjReflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE};
-		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, Features.HAS_PRESENT_SOUNDCHANGE, Features.NO_PRESENT_SOUNDCHANGE, Features.ORIGINAL_NEEDED};
-
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 20, posFlags, null);
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.POS__VERB);
+		posFlags.add(Features.PARALLEL_FORMS);
+		posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(Features.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 
@@ -480,23 +502,29 @@ public class BaseRule implements Rule
 	 * Metode īsumam.
 	 * Izveido BaseRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
 	 * kuram dotas visu personu formas/galotnes.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
 	 * @param presentChange		vai tagadnes formās ir līdzskaņu mija
 	 */
-	public static BaseRule secondThirdConjDirectAllPers(
+	public static BaseRule secondThirdConjDirectAllPersParallel(
 			String patternText, String lemmaRestrictions, boolean presentChange)
 	{
-        Tuple<Keys, String> soundChange = presentChange ?
-				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
-		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.POS__VERB);
+		posFlags.add(Features.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(Features.ORIGINAL_NEEDED);
 
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule.of(lemmaRestrictions, new Integer[]{16, 17}, posFlags)},
+					SimpleSubRule.of(lemmaRestrictions, new Integer[]{16, 17}, posFlags.toArray(new Tuple[posFlags.size()]))},
 				null);
 
 	}
@@ -505,22 +533,29 @@ public class BaseRule implements Rule
      * Metode īsumam.
      * Izveido BaseRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
      * kuram dotas visu personu formas/galotnes.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
      * @param patternText		teksts, ar kuru jāsākas gramatikai
      * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
      * @param presentChange		vai tagadnes formās ir līdzskaņu mija
      */
-    public static BaseRule secondThirdConjReflAllPers(
+    public static BaseRule secondThirdConjReflAllPersParallel(
             String patternText, String lemmaRestrictions, boolean presentChange)
     {
-		Tuple<Keys, String> soundChange = presentChange ?
-				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange};
-		else posFlags = new Tuple[] {Features.POS__VERB, Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.POS__VERB);
+		posFlags.add(Features.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(Features.ORIGINAL_NEEDED);
 
 		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule.of(lemmaRestrictions, new Integer[]{19, 20}, posFlags)},
+					SimpleSubRule.of(lemmaRestrictions, new Integer[]{19, 20}, posFlags.toArray(new Tuple[posFlags.size()]))},
 				null);
     }
 
@@ -577,34 +612,41 @@ public class BaseRule implements Rule
      */
     protected int apply(Pattern gramPattern, String gramText, String lemma,
             HashSet<Integer> paradigmCollector, Flags flagCollector)
-    {
-        int newBegin = -1;
-        Matcher m = gramPattern.matcher(gramText);
-        if (m.matches())
-        {
-            newBegin = m.group(1).length();
-            boolean matchedLemma = false;
-            for (SimpleSubRule rule : this.lemmaLogic)
-            {
-                if (rule.lemmaRestrict.matcher(lemma).matches())
-                {
-                    paradigmCollector.addAll(rule.paradigms);
-                    if (rule.positiveFlags != null)
-						flagCollector.addAll(rule.positiveFlags);
-                    matchedLemma = true;
-                    break;
-                }
-            }
-            if (!matchedLemma)
-            {
-                System.err.printf(errorMessage, lemma);
-                newBegin = 0;
-            }
+	{
+		try
+		{
+			int newBegin = -1;
+			Matcher m = gramPattern.matcher(gramText);
+			if (m.matches())
+			{
+				newBegin = m.group(1).length();
+				boolean matchedLemma = false;
+				for (SimpleSubRule rule : this.lemmaLogic)
+				{
+					if (rule.lemmaRestrict.matcher(lemma).matches())
+					{
+						paradigmCollector.addAll(rule.paradigms);
+						if (rule.positiveFlags != null)
+							flagCollector.addAll(rule.positiveFlags);
+						matchedLemma = true;
+						break;
+					}
+				}
+				if (!matchedLemma)
+				{
+					System.err.printf(errorMessage, lemma);
+					newBegin = 0;
+				}
 
-			if (alwaysFlags != null)
-				for (Tuple<Keys, String> t : alwaysFlags)
-					flagCollector.add(t.first, t.second);
-        }
-        return newBegin;
+				if (alwaysFlags != null)
+					for (Tuple<Keys, String> t : alwaysFlags)
+						flagCollector.add(t.first, t.second);
+			}
+			return newBegin;
+		} catch (Exception e)
+		{
+			System.err.println("BaseRule:" + patternText);
+			throw e;
+		}
     }
 }

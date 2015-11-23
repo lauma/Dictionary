@@ -111,7 +111,8 @@ public enum Values
 	UNCLEAR_PARADIGM("Neviennozīmīga paradigma"), // Paredzēts morfoimporta atvieglošanai
 	UNCLEAR_POS("Neviennozīmīga vārdšķira vai kategorija"), // Paredzēts morfoimporta atvieglošanai
 
-	PARALLEL_FORMS("Paralēlās formas"), // Paredzēts morfoimporta atvieglošanai, šobrīd tikai darbības vārdiem
+	PARALLEL_FORMS("Paralēlās formas"), // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
+	FIRST_CONJ_PARALLELFORM("1. konjugācijas paralēlforma"), // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	INFINITIVE_HOMOFORMS("Nenoteiksmes homoformas"), // Paredzēts morfoimporta atvieglošanai
 	HAS_PRESENT_SOUNDCHANGE("Tagadnes mija ir"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
 	NO_PRESENT_SOUNDCHANGE("Tagadnes mijas nav"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.

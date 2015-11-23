@@ -92,6 +92,17 @@ public class RulesAsFunctions
 		return !gramTExt.matches(".*(, | \\()retāk .*");
 	}
 
+	/**
+	 * Pārbauda, vai gramatikas teksts (pieņemot, ka tā ir verba gramatika)
+	 * satur 1. konjugācijas paralēlformas.
+	 * @param gramTExt	analizējamais gramatikas teksts
+	 * @return	true, ja gramatikas teksts satur "1. konj.".
+	 */
+	public static boolean containsFirstConj(String gramTExt)
+	{
+		return gramTExt.matches(".*\\b1\\.\\s*konj\\..*");
+	}
+
 
 	/**
 	 * Izanalizē gramatikas virknes formā:

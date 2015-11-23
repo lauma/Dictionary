@@ -74,6 +74,7 @@ public class Features
 
 	public static final Tuple<Keys, String> INFINITIVE_HOMOFORMS = Tuple.of(Keys.INFLECTION_WEARDNES, Values.INFINITIVE_HOMOFORMS.s);
 	public static final Tuple<Keys, String> PARALLEL_FORMS = Tuple.of(Keys.INFLECTION_WEARDNES, Values.PARALLEL_FORMS.s);
+	public static final Tuple<Keys, String> FIRST_CONJ_PARALLELFORM = Tuple.of(Keys.INFLECTION_WEARDNES, Values.FIRST_CONJ_PARALLELFORM.s);
 	public static final Tuple<Keys, String> HAS_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.HAS_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_SOUNDCHANGE.s);

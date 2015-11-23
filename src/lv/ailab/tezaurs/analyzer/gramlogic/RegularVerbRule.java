@@ -7,6 +7,7 @@ import lv.ailab.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.tezaurs.analyzer.struct.Flags;
 import lv.ailab.tezaurs.utils.Tuple;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -188,6 +189,8 @@ public class RegularVerbRule implements Rule
 	/**
 	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām tikai 3. personas formām.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -196,11 +199,14 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjDir3PersParallel(String patternEnd,
 			String lemmaEnd)
 	{
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternEnd))
-			posFlags = new Tuple[] {Features.PARALLEL_FORMS};
-		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Features.ORIGINAL_NEEDED};
-		return RegularVerbRule.of(patternEnd, lemmaEnd, 16, posFlags, null);
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.PARALLEL_FORMS);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(Features.ORIGINAL_NEEDED);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 16,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**
@@ -244,6 +250,8 @@ public class RegularVerbRule implements Rule
 	 * Izveido likumu 3. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām, kam visām ir vienādas mijas, un ir norādītas tikai
 	 * 3. personas formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -253,14 +261,18 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjDir3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<Keys, String> soundChange = presentChange ?
-				Features.HAS_PRESENT_SOUNDCHANGE : Features.NO_PRESENT_SOUNDCHANGE;
-		Tuple[] posFlags;
-		if (RulesAsFunctions.containsFormsOnly(patternEnd))
-			posFlags = new Tuple[] {Features.PARALLEL_FORMS, soundChange};
-		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, soundChange, Features.ORIGINAL_NEEDED};
-		return RegularVerbRule.of(patternEnd, lemmaEnd, 17, posFlags, null);
-
+		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
+		posFlags.add(Features.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(Features.ORIGINAL_NEEDED);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**

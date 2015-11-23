@@ -109,6 +109,8 @@ public class OptHypernRules
 		FirstConjRule.directAllPersParallel(
 				"-plešu, -plet, -pleš, pag. -pletu, arī -plētu", "plest"), //aizplest
 		FirstConjRule.directAllPersParallel(
+				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest"), //ieriest 2
+		FirstConjRule.directAllPersParallel(
 				"-skārstu, -skārsti, -skārst, arī -skāršu, -skārt, -skārš, pag. -skārtu", "skārst"), //apskārst
 		FirstConjRule.directAllPersParallel(
 				"-skrienu, -skrien, -skrien, arī -skreju, -skrej, -skrej, pag. -skrēju", "skriet"), //aizskriet
@@ -310,6 +312,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-rēcu, -rēc,", "-rēc, pag. -rēcu", "rēkt"), //atrēkt
 		FirstConjRule.direct("-riebju, -rieb,", "-riebj, pag. -riebu", "riebt"), //aizriebt
 		FirstConjRule.direct("-reju, -rej,", "-rej, pag. -rēju", "riet"), //apriet
+		FirstConjRule.direct("-riežu, -riez,", "-riež, pag. -riezu", "riezt"), //ieriezt
 		FirstConjRule.direct("-rimstu, -rimsti,", "-rimst, pag. -rimu", "rimt"), //aprimt
 		FirstConjRule.direct("-riju, -rij,", "-rij, pag. -riju", "rīt"), //aizrīt
 		FirstConjRule.direct("-rūcu, -rūc,", "-rūc, pag. -rūcu", "rūkt"), //atrūkt
@@ -455,14 +458,14 @@ public class OptHypernRules
 		// O, P, R, S, Š, T, U, V, Z
 
 		// Pilnīgs nestandarts.
-		FirstConjRule.of("-teicu, -teic, -teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
+		FirstConjRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikt\"")},
 				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS.s)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
-		FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
-				new Tuple[]{Features.USUALLY_USED__THIRD_PERS},
-				new String[]{"gulg"}, new String[]{"guldz"}, new String[]{"guldz"}), //aizgulgt
+		//FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
+		//		new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
+		//		new Tuple[]{Features.USUALLY_USED__THIRD_PERS},
+		//		new String[]{"gulg"}, new String[]{"guldz"}, new String[]{"guldz"}), //aizgulgt
 	};
 
 	/**
@@ -612,60 +615,64 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
 				".*bedīt", false), // apbedīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju",
 				".*cerēt", false), // apcerēt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-cienu, -cieni, -ciena, arī -cienīju, -cienī, -cienī, pag. -cienīju",
 				".*cienīt", false), // iecienīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju",
 				".*dēstīt", false), // apdēstīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-kristīju, -kristī, -kristī, arī -kristu, -kristi, -krista, pag. -kristīju",
 				".*kristīt", false), // iekristīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-krustīju, -krusti, -krusti, arī -krustu, -krusti, -krusta, pag. -krustīju",
 				".*krustīt", false), // iekrustīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
 				".*ķēzīt", false), // apķēzīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-mērīju, -mērī, -mērī, arī -mēru, -mēri, -mēra, pag. -mērīju",
 				".*mērīt", false), // atmērīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-pelnu, -pelni, -pelna, arī -pelnīju, -pelnī, -pelnī, pag. -pelnīju",
 				".*pelnīt", false), // atpelnīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju",
 				".*pētīt", false), // appētīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
 				".*rotīt", false), // aizrotīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju",
 				".*sargāt", false), // aizsargāt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju",
 				".*svētīt", false), // aizsargāt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju",
 				".*tašķīt", false), // aptašķīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju",
 				".*veltīt", false), // apveltīt
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
 				".*vētīt", false), // aizvētīt
+		// Paralēlformu paralēlforma.
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
+				".*rūsēt", false), // ierūsēt
 
+			// TODO - vai tiešām šis nav kaut kur jāiesistematizē?
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
 						SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
-								new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS,
-										Features.NO_PRESENT_SOUNDCHANGE})},
+								new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS, Features.NO_PRESENT_SOUNDCHANGE})},
 				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), // aizpelēt
 	};
 
@@ -868,9 +875,9 @@ public class OptHypernRules
 		FirstConjRule.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 
 		// Pilnīgs nestandarts.
-		FirstConjRule.of("-teicos, -teicies, -teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
+		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikties\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS)},
+				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS.s)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
 	};
 
@@ -938,10 +945,10 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
 				".*gailēties", false), // iegailēties
-		BaseRule.secondThirdConjDirectAllPers(
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
 				".*sargāties", false), // aizsargāties
 		// Likumi, kam ir tikai "parasti 3. pers." variants.

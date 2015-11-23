@@ -145,8 +145,12 @@ public class RulesAsFunctions
 
 	/**
 	 * Izanalizē gramatikas virknes formā:
-	 * savienojumā ar "...:
-	 * Metode pielāgota tikai gramatiku fragmentiem bez komatiem.
+	 * savienojumā ar "..."
+	 * savienojumā ar "...", "..." u. tml.
+	 * Piemēri:
+	 * aizbļaut - savienojumā ar "ausis"
+	 * aizliegt - savienojumā ar "zona", "josla", "teritorija", "ūdeņi" u. tml.
+	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
 	 * @param gramText		analizējamais gramatikas teksta fragments
 	 * @param flagCollector kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                      gramatikas fragments atbilst šim likumam
@@ -156,17 +160,24 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |)savienojumā ar (\"\\p{L}+\"))([.,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojumā ar (\"\\p{L}+\"(, \"\\p{L}+\")*( u\\. tml\\.)?)\\.?)([,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
-		if (m.matches()) // aizbļaut - savienojumā ar "ausis"
+		if (m.matches())
 		{
 			newBegin = m.group(1).length();
 			String modifier = m.group(2).trim();
 			Keys key = Keys.USED_TOGETHER_WITH;
 			if (modifier.equals("parasti")) key = Keys.USUALLY_USED_TOGETHER_WITH;
 			String phrase = m.group(3);
-			flagCollector.add(key, phrase);
+			if (phrase.endsWith(" u. tml."))
+			{
+				phrase = phrase.substring(0, phrase.length() - " u. tml.".length());
+				flagCollector.add(Features.ORIGINAL_NEEDED);
+			}
+			String[] words = phrase.split("(?<=\"), (?=\")");
+			for (String w : words)
+				flagCollector.add(key, w.trim());
 		}
 		return newBegin;
 	}

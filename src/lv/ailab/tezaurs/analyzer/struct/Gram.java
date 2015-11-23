@@ -371,6 +371,9 @@ public class Gram  implements HasToJSON
 			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
 					gramText, flags);
+			// aizliegt - savienojumā ar "zona", "josla", "teritorija", "ūdeņi" u. tml.
+			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithQuotFlag(
+					gramText, flags);
 			// parasti savienojumā ar verbu "saukt", "dēvēt" formām
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
 					gramText, flags);

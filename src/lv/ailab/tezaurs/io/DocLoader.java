@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 
 /**
  * Object for reading .doc files with dictionary data.
@@ -23,8 +24,11 @@ public class DocLoader
 			throws IOException
 	{
 		File entryFile = new File(path);
-		FileInputStream fis = new FileInputStream(entryFile.getAbsolutePath());
-		WordExtractor entryExtract = new WordExtractor(new HWPFDocument(fis));
+		//FileInputStream fis = new FileInputStream(entryFile.getAbsolutePath());
+		NPOIFSFileSystem fs = new NPOIFSFileSystem(entryFile);
+		HWPFDocument doc = new HWPFDocument(fs.getRoot());
+		WordExtractor entryExtract = new WordExtractor(doc);
+		//WordExtractor entryExtract = new WordExtractor(new HWPFDocument(fis));
 		String[] entries = entryExtract.getParagraphText();
 		return entries;
 	}

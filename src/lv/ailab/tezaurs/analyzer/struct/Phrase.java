@@ -17,9 +17,7 @@
  *******************************************************************************/
 package lv.ailab.tezaurs.analyzer.struct;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 import lv.ailab.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.tezaurs.utils.CountingSet;
@@ -74,7 +72,42 @@ public class Phrase implements HasToJSON
 			else if (fieldname.equals("n"))
 			{
 				if (subsenses == null) subsenses = new LinkedList<>();
-				subsenses.add(new Sense (field, lemma));
+				Sense newMade = new Sense (field, lemma);
+				if (newMade.gloss.text.matches("\\(a\\).*?\\(b\\).*"))
+				{
+					if (!newMade.glossOnly())
+						System.err.println("Trying to seperate piem gloss in multiple senses despite nonempty other fields.");
+					String text = newMade.gloss.text;
+					Integer nextOrd = 1;
+					String ids = "abcdefghijklmnop";
+					while(text.startsWith("(" + ids.charAt(0) + ")") &&
+							text.contains("(" + ids.charAt(1) + ")"))
+					{
+						newMade.ordNumber = nextOrd.toString();
+						// Te principā varētu pārtaisīt pirmo burtu uz lielo,
+						// bet es neriskēju - ja nu ir kas specifisks?
+						// Saīsinājums vai kas tāds?
+						newMade.gloss = new Gloss(
+								text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim());
+						subsenses.add(newMade);
+						text = text.substring(text.indexOf("(" + ids.charAt(1) + ")"));
+						newMade = new Sense();
+						nextOrd++;
+						ids = ids.substring(1);
+					}
+					// Te principā varētu pārtaisīt pirmo burtu uz lielo, bet es
+					// neriskēju - ja nu ir kas specifisks? Saīsinājums vai kas
+					// tāds?
+					newMade.gloss = new Gloss(text.substring(3).trim());
+					newMade.ordNumber = nextOrd.toString();
+					subsenses.add(newMade);
+
+				} else subsenses.add(newMade);
+
+				//if (newMade.grammar != null)
+				//	System.out.println("Ir gramatika! " + field.toString());
+				//if (newMade.examples != null)
+				//	System.out.println("Ir piemēri! " + field.toString());
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
 				System.err.printf("piem entry field %s not processed\n", fieldname);
@@ -159,7 +192,7 @@ public class Phrase implements HasToJSON
 	{
 		StringBuilder res = new StringBuilder();
 		
-		res.append("\"Phrase\":{");
+		//res.append("\"Phrase\":{");
 		boolean hasPrev = false;
 		
 		if (text != null)
@@ -186,7 +219,7 @@ public class Phrase implements HasToJSON
 			hasPrev = true;
 		}
 		
-		res.append("}");			
+		//res.append("}");
 		return res.toString();
 	}
 }

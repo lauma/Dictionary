@@ -50,7 +50,7 @@ public class Sources implements HasToJSON
 	
 	public boolean isEmpty()
 	{
-		return s == null;
+		return s == null || s.isEmpty();
 	}
 	
 	/**

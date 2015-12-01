@@ -36,7 +36,11 @@ public class Gloss implements HasToJSON
 	{
 		text = dNode.getTextContent();
 	}
-	
+	public Gloss (String text)
+	{
+		this.text = text;
+	}
+
 	public String toJSON()
 	{
 		return String.format("\"Gloss\":\"%s\"", JSONObject.escape(text));			

@@ -18,6 +18,7 @@
 package lv.ailab.tezaurs.analyzer.struct;
 
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -100,6 +101,24 @@ public class Header implements HasToJSON
 			res.append(gram.toJSON());
 		}
 		
+		res.append("}");
+		return res.toString();
+	}
+
+	/**
+	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā Header.
+	 * @param addTitle vai sākumā pielikt "\"Header\":"
+	 */
+	public static String toJSON(Lemma lemma, int paradigm, Flags flags, boolean addTitle)
+	{
+		StringBuilder res = new StringBuilder();
+
+		if (addTitle) res.append("\"Header\":");
+		res.append("{");
+		res.append(lemma.toJSON());
+		res.append(", ");
+		res.append(Gram.toJSON(new HashSet<Integer>(){{add(paradigm);}}, flags));
+
 		res.append("}");
 		return res.toString();
 	}

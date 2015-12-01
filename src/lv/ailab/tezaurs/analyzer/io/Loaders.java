@@ -46,7 +46,12 @@ public class Loaders
 			// We're ignoring the number of the senses - it's in "nr" field, we
 			//assume (not tested) that it matches the order in file
 			if (sense.getNodeName().equals("n"))
-				res.add(new Sense(sense, lemma));
+			{
+				Sense newSense = new Sense(sense, lemma);
+				res.add(newSense);
+				//if (newSense.gloss == null)
+				//	System.out.println ("Nav gloss! "+ lemma);
+			}
 			else if (!sense.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
 					"%s lauks %s netiek apstrādāts, jo sagaida tikai 'n'.\n",

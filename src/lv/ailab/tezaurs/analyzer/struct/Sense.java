@@ -132,6 +132,14 @@ public class Sense implements HasToJSON
 		//return false;
 	}
 
+	public boolean glossOnly()
+	{
+		return gloss != null && grammar == null &&
+				(ordNumber == null || ordNumber.equals("")) &&
+				(examples == null || examples.isEmpty()) &&
+				(subsenses == null || subsenses.isEmpty());
+	}
+
 	/**
 	 * Not sure if this is the best way to treat paradigms.
 	 */

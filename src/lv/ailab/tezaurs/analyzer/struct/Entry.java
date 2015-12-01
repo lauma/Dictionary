@@ -362,9 +362,12 @@ public class Entry
 			s.append(JSONObject.escape(homId));
 			s.append("\"");
 		}
-		
-		s.append(", \"Senses\":");
-		s.append(JSONUtils.objectsToJSON(senses));
+
+		if (senses != null && !senses.isEmpty())
+		{
+			s.append(", \"Senses\":");
+			s.append(JSONUtils.objectsToJSON(senses));
+		}
 		
 		if (phrases != null)
 		{
@@ -379,8 +382,9 @@ public class Entry
 		}
 		if (reference != null && reference.length() > 0)
 		{
-			s.append(",");
+			s.append(", \"Reference\":\"");
 			s.append(JSONObject.escape(reference));
+			s.append("\"");
 		}
 		if (sources != null && !sources.isEmpty())
 		{

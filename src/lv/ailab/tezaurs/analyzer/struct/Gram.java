@@ -64,6 +64,7 @@ public class Gram  implements HasToJSON
 	 * Kartējums no paradigmas uz lemmas/karodziņu kopas pārīšiem. Karodziņu
 	 * kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai" atšķiras
 	 * no pamata lemmas.
+	 * TODO: pāriet uz List<Header>
 	 */
 	public MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas;
 
@@ -567,6 +568,30 @@ public class Gram  implements HasToJSON
 	 */
 	public String toJSON (boolean printOrig)
 	{
+		return toJSON(paradigm, altLemmas, flags, leftovers, orig, printOrig);
+	}
+
+	/**
+	 * Izveido JSON reprezentāciju Gram elementa stilā no datiem, kas padoti no
+	 * ārpuses.
+	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
+	 * atgriešanu.
+	 */
+	public static String toJSON (HashSet<Integer> paradigm, Flags flags)
+	{
+		return toJSON(paradigm, null, flags, null, "", false);
+	}
+	/**
+	 * Izveido JSON reprezentāciju Gram elementa stilā no padotiem datiem.
+	 * Iekšējai lietošanai.
+	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
+	 * atgriešanu.
+	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
+	 */
+	protected static String toJSON (
+			HashSet<Integer> paradigm, MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas,
+			Flags flags, LinkedList<LinkedList<String>> leftovers, String orig, boolean printOrig)
+	{
 		StringBuilder res = new StringBuilder();
 		
 		res.append("\"Gram\":{");
@@ -597,15 +622,17 @@ public class Gram  implements HasToJSON
 					while (flagIt.hasNext())
 					{
 						Tuple<Lemma, Flags> alt = flagIt.next();
-						res.append("{");
-						res.append(alt.first.toJSON());
+						//res.append("{");
+						//res.append(alt.first.toJSON());
 						if (alt.second != null && !alt.second.pairings.isEmpty())
 						{
-							res.append(", ");
-							res.append("\"Flags\":");
-							res.append(JSONUtils.mappingSetToJSON(alt.second.pairings));
+							res.append(Header.toJSON(alt.first, next, alt.second, false));
+
+							//res.append(", ");
+							//res.append("\"Flags\":");
+							//res.append(JSONUtils.mappingSetToJSON(alt.second.pairings));
 						}
-						res.append("}");
+						//res.append("}");
 						if (flagIt.hasNext()) res.append(", ");
 					}
 					

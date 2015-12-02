@@ -44,10 +44,11 @@ public class StatsCollector
 	 */
 	public final boolean collectNonInflWithCase;
 	/**
-	 * Patvaļīgs atslēgas un vērtības pārītis, pēc kura atlasīt. (Ja te ir null,
-	 * tad kalpo kā karodziņš, ka nevajag šādi atlasīt).
+	 * Saraksts ar atslēgas un vērtības pārīšiem, pēc kuriem atlasīt. Karodziņus
+	 * saista ar loģisko UN.(Ja te ir null, tad kalpo kā norāde, ka nevajag šādi
+	 * atlasīt).
 	 */
-	public final Tuple<Keys, String> collectWithFeature;
+	public final ArrayList<Tuple<Keys, String>> collectWithFeature;
 	/**
 	 * Ar kādiem atslēgu/vērtību pārīšiem aprakstīt patvaļīgi atlasītos
 	 * rezultātus. Ja vērtība ir null, tad tiek drukātas visas vērtības ar tādu
@@ -96,7 +97,7 @@ public class StatsCollector
 
 	public StatsCollector ( boolean collectPrononcations,
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
-			boolean collectNonInflWithCase, Tuple<Keys, String> collectFeature,
+			boolean collectNonInflWithCase, ArrayList<Tuple<Keys, String>> collectFeature,
 			ArrayList<Tuple<Keys, String>> descriptionFeatures,
 			Writer wordlistOutput)
 	{
@@ -159,13 +160,16 @@ public class StatsCollector
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
         }
 
-		if (collectWithFeature != null && entryFlags.test(collectWithFeature))
+		if (collectWithFeature != null &&
+				collectWithFeature.stream().map(f->entryFlags.test(f)).reduce(true, (a, b) -> a && b))
 		{
 			ArrayList<String> flags = new ArrayList<>();
 			if (describeWithFeatures != null)
 				for (Tuple<Keys, String> feature : describeWithFeatures)
 			{
-				if (feature.second == null)
+				if (feature.second == null && entryFlags.getAll(feature.first) == null)
+					flags.add(feature.first.s + " = NULL");
+				else if (feature.second == null)
 					flags.add(feature.first.s + " = " +
 							entryFlags.getAll(feature.first).stream().reduce((s1, s2) -> s1+" + "+s2));
 				else if (entryFlags.test(feature))
@@ -368,8 +372,11 @@ public class StatsCollector
 		if (collectWithFeature != null && entriesWithSelectedFeature != null
 				&& entriesWithSelectedFeature.size() > 0)
 		{
-			out.write(",\n\"" + collectWithFeature.first.s + " = "
-					+ collectWithFeature.second + " (šķirkļi)\":[\n");
+			out.write(",\n\"");
+			out.write(collectWithFeature.stream()
+					.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
+					.reduce("", (a, b) -> a + ", " + b));
+			out.write(" (šķirkļi)\":[\n");
 			out.write(entriesWithSelectedFeature.stream().map(t ->
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +
 							JSONObject.escape(t.second) + "\", \"" +

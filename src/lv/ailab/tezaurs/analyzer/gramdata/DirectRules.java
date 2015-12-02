@@ -271,10 +271,12 @@ public class DirectRules
 		// Vispārīgā galotne, kas der visam un neder nekam
 		// TODO: "viņš" ari ir šāda galotne
 		BaseRule.noun("-a, v.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*(desmit|simt|miljon|miljard|biljard)s", new Integer[]{1, 23}, new Tuple[]{Features.POS__NUMERAL, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*(vien|otr)s", new Integer[]{1, 23, 25}, new Tuple[]{Features.POS__NUMERAL, Features.POS__PRONOUN, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1, 25}, new Tuple[]{Features.POS__PRONOUN, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*š", new Integer[]{2, 25}, new Tuple[]{Features.POS__PRONOUN, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis//, sparguļi, skostiņi
+				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis//, sparguļi, skostiņi, viens
 
 		// Daudzkaitlis, vīriešu dzimte
 		// Ar mijām

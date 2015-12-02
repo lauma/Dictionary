@@ -150,6 +150,7 @@ public enum Values
 	NOUN_WITH_PREPOSITION("Lietvārds un prievārds"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
 
 	;
+
 	public String s;
 
 	Values(String name)

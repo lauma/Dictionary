@@ -42,16 +42,30 @@ public class DictionaryXmlToJson
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
 	public static boolean PRINT_WORDLISTS = false;
-	public static Tuple<Keys, String> PRINT_WITH_FEATURE = null;
-	//public static Tuple<Keys, String> PRINT_WITH_FEATURE = Features.USAGE_RESTR__HISTORICAL;
-	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+
+	// Stindzeņu izgūšana ar plašāku aprakstu.
+	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
+		add(new Tuple<Keys, String>(Keys.CASE, null));
+		add(Features.NON_INFLECTIVE);
+	}};
+	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+		add(new Tuple<Keys, String>(Keys.CASE, null));
+		add(new Tuple<Keys, String>(Keys.DOMAIN, null));
+	}};//*/
+	// Vēsturisko izgūšana.
+	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
+		add(Features.USAGE_RESTR__HISTORICAL);
+	}};
+	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.POS__FOREIGN);
 		add(Features.PLACE_NAME);
 		add(Features.PERSON_NAME);
 		add(Features.DOMAIN__HIST_PLACE);
 		add(Features.DOMAIN__HIST_PERSON);
 	}};//*/
+	// Neitrālais: neizgūt neko papildus.
+	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
+	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
 
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML

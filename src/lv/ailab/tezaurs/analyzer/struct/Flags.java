@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * Datu struktūra karodziņu uzturēšanai.
+ * Null vērtības nav pieļaujamas.
  *
  * NB!
  * Par karodziņiem viena objekta ietvaros tiek uzskatīts, ka ja divi karodziņi
@@ -34,41 +35,48 @@ public class Flags
 
 	public void addAll(Flags others)
 	{
+		// Šeit nav vērts pārbaudīt uz null values, jo tas jau ir Flags objekts.
 		if (others.pairings != null)
 			pairings.putAll(others.pairings);
 	}
 
 	public void addAll(Map<Keys, String> others)
 	{
-		if (others != null)
-			pairings.putAll(others);
+		if (others != null) for (Keys k : others.keySet())
+			add(k, others.get(k));
 	}
 
 	public void addAll(Set<Tuple<Keys, String>> others)
 	{
 		for (Tuple<Keys, String> t : others)
-			pairings.put(t.first, t.second);
+			add(t.first, t.second);
 	}
 
 	public void add(Keys key, String value)
 	{
+		if (value == null) throw new IllegalArgumentException(
+					"Flags cannot contain null as an atribute value!");
 		pairings.put(key, value);
 	}
 	public void add(Tuple<Keys, String> feature)
 	{
-		pairings.put(feature.first, feature.second);
+		add(feature.first, feature.second);
 	}
 	public void add(Keys key, Values value)
 	{
-		pairings.put(key, value.s);
+		if (value == null) throw new IllegalArgumentException(
+				"Flags cannot contain null as an atribute value!");
+		add(key, value.s);
 	}
 	public void add(String value)
 	{
-		pairings.put(Keys.OTHER_FLAGS, value);
+		add(Keys.OTHER_FLAGS, value);
 	}
 	public void add(Values value)
 	{
-		pairings.put(Keys.OTHER_FLAGS, value.s);
+		if (value == null) throw new IllegalArgumentException(
+				"Flags cannot contain null as an atribute value!");
+		add(Keys.OTHER_FLAGS, value.s);
 	}
 
 	public HashSet<String> binaryFlags()
@@ -81,18 +89,33 @@ public class Flags
 		return pairings.getAll(key);
 	}
 
+	/**
+	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
+	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
+	 */
 	public boolean test (Keys key, String value)
 	{
+		if (value == null) return testKey(key);
 		HashSet<String> found = pairings.getAll(key);
 		if (found == null || found.size() < 1) return false;
 		return (found.contains(value));
 	}
 
+	/**
+	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
+	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
+	 */
 	public boolean test (Keys key, Values value)
 	{
+		if (value == null) return testKey(key);
 		return test(key, value.s);
 	}
 
+	/**
+	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
+	 * Ja vērtība (pāra otrais elements) ir null, pārbauda, vai satur šādu
+	 * atslēgu.
+	 */
 	public boolean test (Tuple<Keys, String> feature)
 	{
 		return test (feature.first, feature.second);

@@ -161,7 +161,7 @@ public class StatsCollector
         }
 
 		if (collectWithFeature != null &&
-				collectWithFeature.stream().map(f->entryFlags.test(f)).reduce(true, (a, b) -> a && b))
+				collectWithFeature.stream().map(entryFlags::test).reduce(true, (a, b) -> a && b))
 		{
 			ArrayList<String> flags = new ArrayList<>();
 			if (describeWithFeatures != null)
@@ -171,7 +171,7 @@ public class StatsCollector
 					flags.add(feature.first.s + " = NULL");
 				else if (feature.second == null)
 					flags.add(feature.first.s + " = " +
-							entryFlags.getAll(feature.first).stream().reduce((s1, s2) -> s1+" + "+s2));
+							entryFlags.getAll(feature.first).stream().reduce((s1, s2) -> s1+" + "+s2).orElse("NULL"));
 				else if (entryFlags.test(feature))
 					flags.add(feature.first.s + " = " + feature.second);
 				else flags.add(feature.first.s + " != " + feature.second);
@@ -375,8 +375,8 @@ public class StatsCollector
 			out.write(",\n\"");
 			out.write(collectWithFeature.stream()
 					.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
-					.reduce("", (a, b) -> a + ", " + b));
-			out.write(" (šķirkļi)\":[\n");
+					.reduce((a, b) -> a + ", " + b).orElse("Atlasītie šķirkļi"));
+			out.write(" (šķirkļu uzskaitījums)\":[\n");
 			out.write(entriesWithSelectedFeature.stream().map(t ->
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +
 							JSONObject.escape(t.second) + "\", \"" +

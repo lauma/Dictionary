@@ -123,12 +123,20 @@ public class OptHypernRules
 		FirstConjRule.directAllPersParallel(
 				"-spurdzu, -spurdz, -spurdz, pag. -spurdzu, retāk -spurgstu, -spurgsti, -spurgst, pag. -spurgu", "spurgt"), //iespurgt
 		FirstConjRule.directAllPersParallel(
+				"-spurstu, -spursti, -spurst, pag. -spuru, arī -spūru", "spurt"), //izspurt
+		FirstConjRule.directAllPersParallel(
 				"-strēdzu, -strēdz, -strēdz, pag. -strēdzu, arī -strēgstu, -strēgsti, -strēgst, pag. -strēgu", "strēgt"), //iestrēgt
 		FirstConjRule.directAllPersParallel(
 				"-tilpstu, -tilpsti, -tilpst, retāk -telpu, telpi, -telp, pag. -tilpu", "tilpt"), //ietilpt
 
 
 		// Izņēmums.
+		FirstConjRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "pārdot", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"dot\"")}, null,
+				new String[]{"do"}, new String[]{"dod"}, new String[]{"dev"}), //izpārdot
+		FirstConjRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "palikt", 15,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"likt\"")}, null,
+				new String[]{"lik"}, new String[]{"liek"}, new String[]{"lik"}), //izpalikt
 		FirstConjRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
 				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīt\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
@@ -140,6 +148,7 @@ public class OptHypernRules
 		// B
 		FirstConjRule.direct("-baru, -bar,", "-bar, pag. -bāru", "bārt"), //iebārt
 		FirstConjRule.direct("-bāžu, -bāz,", "-bāž, pag. -bāzu", "bāzt"), //aizbāzt
+		FirstConjRule.direct("-beidzu, -beidz,", "-beidz, pag. -beidzu", "beigt"), //izbeigt
 		FirstConjRule.direct("-belžu, -belz,", "-belž, pag. -belzu", "belzt"), //iebelzt
 		FirstConjRule.direct("-beržu, -berz,", "-berž, pag. -berzu", "berzt"), //atberzt
 		FirstConjRule.direct("-bēgu, -bēdz,", "-bēg, pag. -bēgu", "bēgt"), //aizbēgt
@@ -147,6 +156,8 @@ public class OptHypernRules
 		FirstConjRule.direct("-bilstu, -bilsti,", "-bilst, pag. -bildu", "bilst"), //aizbilst
 		FirstConjRule.direct("-birstu, -birsti,", "-birst, pag. -biru", "birt"), //apbirt, aizbirt
 		FirstConjRule.direct("-bliežu, -bliez,", "-bliež, pag. -bliezu", "bliezt"), //iebliezt
+		FirstConjRule.direct("-blīstu, -blīsti,", "-blīst, pag. -blīdu", "blīst"), //izblīst
+		FirstConjRule.direct("-blīstu, -blīsti,", "-blīst, pag. -blīzu", "blīzt"), //izblīzt
 		FirstConjRule.direct("-bļauju, -bļauj,", "-bļauj, pag. -bļāvu", "bļaut"), //atbļaut
 		FirstConjRule.direct("-braucu, -brauc,", "-brauc, pag. -braucu", "braukt"), //aizbraukt
 		FirstConjRule.direct("-brāžu, -brāz,", "-brāž, pag. -brāzu", "brāzt"), //aizbrāzt
@@ -157,12 +168,18 @@ public class OptHypernRules
 		// C
 		FirstConjRule.direct("-ceļu, -cel,", "-ceļ, pag. -cēlu", "celt"), //aizcelt
 		FirstConjRule.direct("-cepu, -cep,", "-cep, pag. -cepu", "cept"), //apcept
+		FirstConjRule.direct("-ciešu, -ciet,", "-cieš, pag. -cietu", "ciest"), //izciest
 		FirstConjRule.direct("-cērpu, -cērp,", "-cērp, pag. -cirpu", "cirpt"), //apcirpt
 		FirstConjRule.direct("-cērtu, -cērt,", "-cērt, pag. -cirtu", "cirst"), //aizcirst
+		// Č
+		FirstConjRule.direct("-čiepju, -čiep,", "-čiepj, pag. -čiepu", "čiept"), //izčiept
 		// D
+		FirstConjRule.direct("-dēju, -dēj,", "-dēj, pag. -dēju", "dēt"), //izdēt
 		FirstConjRule.direct("-diebju, -dieb,", "-diebj, pag. -diebu", "diebt"), //aizdiebt
 		FirstConjRule.direct("-diedzu, -diedz,", "-diedz, pag. -diedzu", "diegt"), //aizdiegt 1,2
+		FirstConjRule.direct("-deju, -dej,", "-dej, pag. -deju", "diet"), //izdiet
 		FirstConjRule.direct("-dilstu, -dilsti,", "-dilst, pag. -dilu", "dilt"), //apdilt
+		FirstConjRule.direct("-dīcu, -dīc,", "-dīc, pag. -dīcu", "dīkt"), //idīkt
 		FirstConjRule.direct("-dobju, -dob,", "-dobj, pag. -dobu", "dobt"), //iedobt
 		FirstConjRule.direct("-dodu, -dod,", "-dod, pag. -devu", "dot"), //aizdot
 		FirstConjRule.direct("-drāžu, -drāz,", "-drāž, pag. -drāzu", "drāzt"), //aizdrāzt
@@ -173,14 +190,18 @@ public class OptHypernRules
 		FirstConjRule.direct("-dzeru, -dzer,", "-dzer, pag. -dzēru", "dzert"), //aizdzert
 		FirstConjRule.direct("-dzēšu, -dzēs,", "-dzēš, pag. -dzēsu", "dzēst"), //apdzēst
 		FirstConjRule.direct("-dzimstu, -dzimsti,", "-dzimst, pag. -dzimu", "dzimt"), //atdzimt
+		FirstConjRule.direct("-dzirstu, -dzirsti,", "-dzirst, pag. -dzirdu", "dzirst"), //izdzirst
 		FirstConjRule.direct("-dziestu, -dziesti,", "-dziest, pag. -dzisu", "dzist"), //atdzist
 		// E
 		FirstConjRule.direct("-elšu, -els,", "-elš, pag. -elsu", "elst"), //atelst
 		// Ē
 		FirstConjRule.direct("-ēdu, -ēd,", "-ēd, pag. -ēdu", "ēst"), //aizēst
 		// F, G
+		FirstConjRule.direct("-gaistu, -gaisti,", "-gaist, pag. -gaisu", "gaist"), //izgaist
+		FirstConjRule.direct("-gārdzu, -gārdz,", "-gārdz, pag. -gārdzu", "gārgt"), //izgārgt
 		FirstConjRule.direct("-gāžu, -gāz,", "-gāž, pag. -gāzu", "gāzt"), //aizgāzt
 		FirstConjRule.direct("-glaužu, -glaud,", "-glauž, pag. -glaudu", "glaust"), //aizglaust
+		FirstConjRule.direct("-glābju, -glāb,", "-glābj, pag. -glābu", "glābt"), //izglābt
 		FirstConjRule.direct("-grauju, -grauj,", "-grauj, pag. -grāvu", "graut"), //iegraut
 		FirstConjRule.direct("-graužu, -grauz,", "-grauž, pag. -grauzu", "grauzt"), //aizgrauzt
 		FirstConjRule.direct("-grābju, -grāb,", "-grābj, pag. -grābu", "grābt"), //aizgrābt
@@ -192,8 +213,10 @@ public class OptHypernRules
 		FirstConjRule.direct("-gumstu, -gumsti,", "-gumst, pag. -gumu", "gumt"), //iegumt
 		FirstConjRule.direct("-gurstu, -gursti,", "-gurst, pag. -guru", "gurt"), //apgurt
 		FirstConjRule.direct("-gūstu, -gūsti,", "-gūst, pag. -guvu", "gūt"), //aizgūt
+		FirstConjRule.direct("-gvelžu, -gvelz,", "-gvelž, pag. -gvelzu", "gvelzt"), //izgvelzt
 		// Ģ
 		FirstConjRule.direct("-ģērbju, -ģērb,", "-ģērbj, pag. -ģērbu", "ģērbt"), //apģist
+		FirstConjRule.direct("-ģinstu, -ģinsti,", "-ģinst, pag. -ģindu", "ģinst"), //izģinst
 		FirstConjRule.direct("-ģiedu, -ģied,", "-ģied, pag. -ģidu", "ģist"), //apģist
 		// H, I
 		FirstConjRule.direct("-eju, -ej,", "-iet, pag. -gāju", "iet"), //apiet
@@ -205,6 +228,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-jēdzu, -jēdz,", "-jēdz, pag. -jēdzu", "jēgt"), //apjēgt
 		FirstConjRule.direct("-jožu, -joz,", "-jož, pag. -jozu", "jozt"), //aizjozt 1, 2
 		FirstConjRule.direct("-jūku, -jūc,", "-jūk, pag. -juku", "jukt"), //apjukt
+		FirstConjRule.direct("-jūtu, -jūti,", "-jūt, pag. -jutu", "just"), //izjust
 		FirstConjRule.direct("-jūdzu, -jūdz,", "-jūdz, pag. -jūdzu", "jūgt"), //aizjūgt
 		// K
 		FirstConjRule.direct("-kalstu, -kalsti,", "-kalst, pag. -kaltu", "kalst"), //aizkalst
@@ -215,10 +239,12 @@ public class OptHypernRules
 		FirstConjRule.direct("-kaucu, -kauc,", "-kauc, pag. -kaucu", "kaukt"), //izkaukt, aizkaukt
 		FirstConjRule.direct("-kauju, -kauj,", "-kauj, pag. -kāvu", "kaut"), //apkaut
 		FirstConjRule.direct("-kāpju, -kāp,", "-kāpj, pag. -kāpu", "kāpt"), //aizkāpt
+		FirstConjRule.direct("-kāršu, -kārs,", "-kārš, pag. -kārsu", "kārst"), //izkārt
 		FirstConjRule.direct("-karu, -kar,", "-kar, pag. -kāru", "kārt"), //aizkārt
 		FirstConjRule.direct("-kāšu, -kās,", "-kāš, pag. -kāsu", "kāst"), //iekāst
 		FirstConjRule.direct("-klāju, -klāj,", "-klāj, pag. -klāju", "klāt"), //apklāt
 		FirstConjRule.direct("-kliedzu, -kliedz,", "-kliedz, pag. -kliedzu", "kliegt"), //aizkliegt
+		FirstConjRule.direct("-kliežu, -klied,", "-kliež, pag. -kliedu", "kliest"), //izkliest
 		FirstConjRule.direct("-klimstu, -klimsti,", "-klimst, pag. -klimtu", "klimst"), //aizklimst
 		FirstConjRule.direct("-klīstu, -klīsti,", "-klīst, pag. -klīdu", "klīst"), //aizklīst
 		FirstConjRule.direct("-klūpu, -klūpi,", "-klūp, pag. -klupu", "klupt"), //ieklupt
@@ -250,7 +276,9 @@ public class OptHypernRules
 		FirstConjRule.direct("-laižu, -laid,", "-laiž, pag. -laidu", "laist"), //aizlaist
 		FirstConjRule.direct("-loku, -loc,", "-lok, pag. -laku", "lakt"), //ielakt
 		FirstConjRule.direct("-laužu, -lauz,", "-lauž, pag. -lauzu", "lauzt"), //aizlauzt
+		FirstConjRule.direct("-lemju, -lem,", "-lemj, pag. -lēmu", "lemt"), //izlemt
 		FirstConjRule.direct("-lencu, -lenc,", "-lenc, pag. -lencu", "lenkt"), //aplenkt
+		FirstConjRule.direct("-lepu, -lep,", "-lep, pag. -lepu", "lept"), //izlept
 		FirstConjRule.direct("-lecu, -lec,", "-lec, pag. -lēcu", "lēkt"), //aizlēkt
 		FirstConjRule.direct("-lēšu, -lēs,", "-lēš, pag. -lēsu", "lēst"), //aplēst
 		FirstConjRule.direct("-liedzu, -liedz,", "-liedz, pag. -liedzu", "liegt"), //aizliegt
@@ -278,6 +306,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-mēžu, -mēz,", "-mēž, pag. -mēzu", "mēzt"), //aizmēzt
 		FirstConjRule.direct("-miedzu, -miedz,", "-miedz, pag. -miedzu", "miegt"), //aizmiegt
 		FirstConjRule.direct("-miegu, -miedz,", "-mieg, pag. -migu", "migt"), //aizmigt
+		FirstConjRule.direct("-mirkstu, -mirksti,", "-mirkst, pag. -mirku", "mirkt"), //imirkt
 		FirstConjRule.direct("-mirstu, -mirsti,", "-mirst, pag. -mirsu", "mirst"), //aizmirst
 		FirstConjRule.direct("-mūku, -mūc,", "-mūk, pag. -muku", "mukt"), //aizmukt
 		FirstConjRule.direct("-mulstu, -mulsti,", "-mulst, pag. -mulsu", "mulst"), //apmulst
@@ -285,6 +314,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-nāku, -nāc,", "-nāk, pag. -nācu", "nākt"), //apnākt
 		FirstConjRule.direct("-nesu, -nes,", "-nes, pag. -nesu", "nest"), //aiznest
 		FirstConjRule.direct("-nirstu, -nirsti,", "-nirst, pag. -niru", "nirt"), //aiznirt
+		FirstConjRule.direct("-nīkstu, -nīksti,", "-nīkst, pag. -nīku", "nīkt"), //iznīkt
 		FirstConjRule.direct("-nīstu, -nīsti,", "-nīst, pag. -nīdu", "nīst"), //ienīst
 		// Ņ
 		FirstConjRule.direct("-ņemu, -ņem,", "-ņem, pag. -ņēmu", "ņemt"), //aizņemt
@@ -299,13 +329,14 @@ public class OptHypernRules
 		FirstConjRule.direct("-pīkstu, -pīksti,", "-pīkst, pag. -pīku", "pīkt"), //iepīkt
 		FirstConjRule.direct("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
 		FirstConjRule.direct("-ploku, -ploc,", "-plok, pag. -plaku", "plakt"), //aizplakt
-		FirstConjRule.direct("-ploku, -ploc,", "-plok; pag. -plaku", "plakt"), //ieplakt
 		FirstConjRule.direct("-plaukstu, -plauksti,", "-plaukst, pag. -plauku", "plaukt"), //atplaukt, aizplaukt
+		FirstConjRule.direct("-plāju, -plāj,", "-plāj, pag. -plāju", "plāt"), //izplāt
 		FirstConjRule.direct("-plēšu, -plēs,", "-plēš, pag. -plēsu", "plēst"), //aizplēst
 		FirstConjRule.direct("-plīstu, -plīsti,", "-plīst, pag. -plīsu", "plīst"), //applīst, aizplīst
 		FirstConjRule.direct("-plūcu, -plūc,", "-plūc, pag. -plūcu", "plūkt"), //aizplūkt
 		FirstConjRule.direct("-plūstu, -plūsti,", "-plūst, pag. -plūdu", "plūst"), //applūst, aizplūst
 		FirstConjRule.direct("-pļauju, -pļauj,", "-pļauj, pag. -pļāvu", "pļaut"), //aizpļaut
+		FirstConjRule.direct("-protu, -proti,", "-prot, pag. -pratu", "prast"), //izprast
 		FirstConjRule.direct("-pūšu, -pūt,", "-pūš, pag. -pūtu", "pūst"), //aizpūst
 		FirstConjRule.direct("-pūstu, -pūsti,", "-pūst, pag. -puvu", "pūt"), //aizpūt, pūt
 		// R
@@ -422,7 +453,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-triepju, -triep,", "-triepj, pag. -triepu", "triept"), //aiztriept
 		FirstConjRule.direct("-trinu, -trin,", "-trin, pag. -trinu", "trīt"), //ietrīt
 		FirstConjRule.direct("-tupstu, -tupsti,", "-tupst, pag. -tupu", "tupt"), //aiztupt
-		FirstConjRule.direct("-tūkstu, -tūksti,", "-tūkst; pag. -tūku", "tūkt"), //aptūkt, aiztūkt
+		FirstConjRule.direct("-tūkstu, -tūksti,", "-tūkst, pag. -tūku", "tūkt"), //aptūkt, aiztūkt
 		FirstConjRule.direct("-tveru, -tver,", "-tver, pag. -tvēru", "tvert"), //aiztvert
 		FirstConjRule.direct("-tvīkstu, -tvīksti,", "-tvīkst, pag. -tvīku", "tvīkt"), //ietvīkt
 		// U
@@ -532,6 +563,9 @@ public class OptHypernRules
 				"-sēžu, -sēdi, -sēž, arī -sēdu, -sēdi, -sēd, pag. -sēdēju", "sēdēt"), //iesēdēt
 
 		BaseRule.thirdConjDirAllPersParallel(
+				"-dzirdu, -dzirdi, -dzird, pag. -dzirdu (1. konj.), arī -dzirdēju",
+				"dzirdēt", false), //izdzirdēt
+		BaseRule.thirdConjDirAllPersParallel(
 				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				"slīdēt", false), // aizslīdēt
 
@@ -541,11 +575,18 @@ public class OptHypernRules
 
 		// Standartizētie.
 		// A, B
-		RegularVerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", false), //apbraucīt
-		// C, Č
+		RegularVerbRule.thirdConjDir("-brauku, -brauki,", "-brauka, pag. -braucīju", "braucīt", true), //apbraucīt
+		RegularVerbRule.thirdConjDir("-burkšu, -burkši,", "-burkš, pag. -burkšēju", "burkšēt", false), //izburkšēt
+		RegularVerbRule.thirdConjDir("-burkšķu, -burkšķi,", "-burkšķ, pag. -burkšķēju", "burkšķēt", false), //izburkšķēt
+		// C
 		RegularVerbRule.thirdConjDir("-ceru, -ceri,", "-cer, pag. -cerēju", "cerēt", false), //iecerēt
+		// Č
+		RegularVerbRule.thirdConjDir("-čiepstu, -čiepsti,", "-čiepst, pag. -čiepstēju", "čiepstēt", false), //iečiepstēt
+		RegularVerbRule.thirdConjDir("-činkstu, -činksti,", "-činkst, pag. -činkstēju", "činkstēt", false), //izčinkstēt
+		RegularVerbRule.thirdConjDir("-čīkstu, -čīksti,", "-čīkst, pag. -čīkstēju", "čīkstēt", false), //izčīkstēt
 		RegularVerbRule.thirdConjDir("-čukstu, -čuksti,", "-čukst, pag. -čukstēju", "čukstēt", false), //atčukstēt
 		// D
+		RegularVerbRule.thirdConjDir("-dēdu, -dēdi,", "-dēd, pag. -dēdēju", "dēdēt", false), //izdēdēt
 		RegularVerbRule.thirdConjDir("-dienu, -dieni,", "-dien, pag. -dienēju", "dienēt", false), //atdienēt
 		RegularVerbRule.thirdConjDir("-draudu, -draudi,", "-draud, pag. -draudēju", "draudēt", false), //apdraudēt
 		RegularVerbRule.thirdConjDir("-dusu, -dusi,", "-dus, pag. -dusēju", "dusēt", false), //atdusēt
@@ -558,17 +599,25 @@ public class OptHypernRules
 		// H, I, J, K
 		RegularVerbRule.thirdConjDir("-klabu, -klabi,", "-klab, pag. -klabēju", "klabēt", false), //paklabēt, aizklabēt
 		RegularVerbRule.thirdConjDir("-klimstu, -klimsti,", "-klimst, pag. -klimstēju", "klimstēt", false), //aizklimstēt
+		RegularVerbRule.thirdConjDir("-kunkstu, -kunksti,", "-kunkst, pag. -kunkstēju", "kunkstēt", false), //izkunkstēt
 		RegularVerbRule.thirdConjDir("-kustu, -kusti,", "-kust, pag. -kustēju", "kustēt", false), //aizkustēt
 		RegularVerbRule.thirdConjDir("-kūpu, -kūpi,", "-kūp, pag. -kūpēju", "kūpēt", false), //apkūpēt, aizkūpēt
+		RegularVerbRule.thirdConjDir("-kvēlu, -kvēli,", "-kvēl, pag. -kvēlēju", "kvēlēt", false), //izkvēlēt
 		// L
+		RegularVerbRule.thirdConjDir("-līdzu, -līdzi,", "-līdz, pag. -līdzēju", "līdzēt", false), //izlīdzēt
+		RegularVerbRule.thirdConjDir("-palīdzu, -palīdzi,", "-palīdz, pag. -palīdzēju", "palīdzēt", false), //izpalīdzēt
 		RegularVerbRule.thirdConjDir("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
 		RegularVerbRule.thirdConjDir("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
+		// Ļ
+		RegularVerbRule.thirdConjDir("-ļogu, -ļogi,", "-ļoga, pag. -ļodzīju", "ļodzīt", true), //izļodzīt
 		// M
 		RegularVerbRule.thirdConjDir("-minu, -mini,", "-min, pag. -minēju", "minēt", false), //atminēt
 		RegularVerbRule.thirdConjDir("-mīlu, -mīli,", "-mīl, pag. -mīlēju", "mīlēt", false), //iemīlēt
+		RegularVerbRule.thirdConjDir("-mīstu, -mīsti,", "-mīsta, pag. -mīstīju", "mīstīt", false), //izmīstīt
 		RegularVerbRule.thirdConjDir("-muldu, -muldi,", "-muld, pag. -muldēju", "muldēt", false), //atmuldēt
 		RegularVerbRule.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
 		// N, Ņ
+		RegularVerbRule.thirdConjDir("-ņaudu, -ņaudi,", "-ņaud, pag. -ņaudēju", "ņaudēt", false), //izņaudēt
 		RegularVerbRule.thirdConjDir("-ņurdu, -ņurdi,", "-ņurd, pag. -ņurdēju", "ņurdēt", false), //atņurdēt
 		// O, P
 		RegularVerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
@@ -582,13 +631,17 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjDir("-redzu, -redzi,", "-redz, pag. -redzēju", "redzēt", false), //apredzēt
 		// S
 		RegularVerbRule.thirdConjDir("-saku, -saki,", "-saka, pag. -sacīju", "sacīt", true), //atsacīt
+		RegularVerbRule.thirdConjDir("-sāpu, -sāpi,", "-sāp, pag. -sāpēju", "sāpēt", false), //izsāpēt
 		RegularVerbRule.thirdConjDir("-sēžu, -sēdi,", "-sēž, pag. -sēdēju", "sēdēt", true), //atsēdēt
 		RegularVerbRule.thirdConjDir("-sīkstu, -sīksti,", "-sīkst, pag. -sīkstēju", "sīkstēt", false), //apsīkstēt
 		RegularVerbRule.thirdConjDir("-slaku, -slaki,", "-slaka, pag. -slacīju", "slacīt", true), //aizslacīt
 		RegularVerbRule.thirdConjDir("-slauku, -slauki,", "-slauka, pag. -slaucīju", "slaucīt", true), //aizslaucīt
 		RegularVerbRule.thirdConjDir("-slogu, -slogi,", "-sloga, pag. -slodzīju", "slodzīt", true), //ieslodzīt
 		RegularVerbRule.thirdConjDir("-smīnu, -smīni,", "-smīn, pag. -smīnēju", "smīnēt", true), //atsmīnēt
+		RegularVerbRule.thirdConjDir("-snaikos, -snaikies,", "-snaikās, pag. -snaicījos", "snaicīties", true), //izsnaicīties
 		RegularVerbRule.thirdConjDir("-stāvu, -stāvi,", "-stāv, pag. -stāvēju", "stāvēt", false), //aizstāvēt
+		RegularVerbRule.thirdConjDir("-stenu, -steni,", "-sten, pag. -stenēju", "stenēt", false), //izstenēt
+		RegularVerbRule.thirdConjDir("-stīdzu, -stīdzi,", "-stīdz, pag. -stīdzēju", "stīdzēt", false), //izstīdzēt
 		RegularVerbRule.thirdConjDir("-strīdu, -strīdi,", "-strīd, pag. -strīdēju", "strīdēt", false), //apstrīdēt
 		RegularVerbRule.thirdConjDir("-sūdzu, -sūdzi,", "-sūdz, pag. -sūdzēju", "sūdzēt", false), //apsūdzēt
 		// Š
@@ -720,6 +773,8 @@ public class OptHypernRules
 				"\"dzīties\" (kā lopiem)"), //aizdzīties
 		FirstConjRule.reflHomof("-iros, -iries,", "-iras, pag. -īros", "irties",
 				"\"irties\" (kā ar airiem)"), //aizirties
+		FirstConjRule.reflHomof("-mistos, -misties,", "-mistas, pag. -misos", "misties",
+				"\"mist\" (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
 		FirstConjRule.reflHomof("-minos, -minies,", "-minas, pag. -minos", "mīties",
 				"\"mīties\" (kā pedāļus)"), //aizmīties
 		FirstConjRule.reflHomof("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties",
@@ -757,26 +812,38 @@ public class OptHypernRules
 		// A
 		FirstConjRule.refl("-aros, -aries,", "-aras, pag. -aros", "arties"), //iearties
 		// B
-		FirstConjRule.refl("-bāžos, -bāzies,", "-bāžas, pag. -bāžos", "bāzties"), //iebāzties
+		FirstConjRule.refl("-baros, -baries,", "-baras, pag. -bāros", "bārties"), //izbārties
+		FirstConjRule.refl("-bāžos, -bāzies,", "-bāžas, pag. -bāzos", "bāzties"), //iebāzties
+		FirstConjRule.refl("-beidzos, -beidzies,", "-beidzas, pag. -beidzos", "beigties"), //izbeigties
+		FirstConjRule.refl("-beržos, -berzies,", "-beržas, pag. -berzos", "berzties"), //izberzties
 		FirstConjRule.refl("-beros, -beries,", "-beras, pag. -bēros", "bērties"), //apbērties
+		FirstConjRule.refl("-bīstos, -bīsties,", "-bīstas, pag. -bijos", "bīties"), //izbīties
+		FirstConjRule.refl("-braucos, -braucies,", "-braucas, pag. -braucos", "braukties"), //izbraukties
 		FirstConjRule.refl("-brāžos, -brāzies,", "-brāžas, pag. -brāzos", "brāzties"), //aizbrāzties
 		FirstConjRule.refl("-brienos, -brienies,", "-brienas, pag. -bridos", "bristies"), //atbristies
+		FirstConjRule.refl("-būros, -buries,", "-buras, pag. -būros", "burties"), //izburties
 		// C
 		FirstConjRule.refl("-ceļos, -celies,", "-ceļas, pag. -cēlos", "celties"), //apcelties
 		FirstConjRule.refl("-ceros, -ceries,", "-ceras, pag. -cerējos", "cerēties"), //atcerēties
 		FirstConjRule.refl("-ciešos, -cieties,", "-ciešas, pag. -cietos", "ciesties"), //aizciesties
 		FirstConjRule.refl("-cērtos, -cērties,", "-cērtas, pag. -cirtos", "cirsties"), //aizcirsties
 		// D
+		FirstConjRule.refl("-dejos, -dejies,", "-dejas, pag. -dējos", "dieties"), //izdieties
 		FirstConjRule.refl("-dodos, -dodies,", "-dodas, pag. -devos", "doties"), //atdoties
 		FirstConjRule.refl("-drāžos, -drāzies,", "-drāžas, pag. -drāzos", "drāzties"), //aizdrāzties
 		FirstConjRule.refl("-duros, -duries,", "-duras, pag. -dūros", "durties"), //aizdurties
 		FirstConjRule.refl("-dzeros, -dzeries,", "-dzeras, pag. -dzēros", "dzerties"), //apdzerties
+		FirstConjRule.refl("-dzēšos, -dzēsies,", "-dzēšas, pag. -dzēsos", "dzēsties"), //izdzēsties
 		// E
 		FirstConjRule.refl("-ēdos, -ēdies,", "-ēdas, pag. -ēdos", "ēsties"), //atēsties
 		// F, G
+		FirstConjRule.refl("-gaužos, -gaudies,", "-gaužas, pag. -gaudos", "gausties"), //izgausties
 		FirstConjRule.refl("-gāžos, -gāzies,", "-gāžas, pag. -gāzos", "gāzties"), //apgāzties, aizgāzties
 		FirstConjRule.refl("-glaužos, -glaudies,", "-glaužas, pag. -glaudos", "glausties"), //ieglausties
+		FirstConjRule.refl("-glābjos, -glābies,", "-glābjas, pag. -glābos", "glābties"), //izglābties
 		FirstConjRule.refl("-graužos, -grauzies,", "-graužas, pag. -grauzos", "grauzties"), //izgrauzties, aizgrauzties
+		FirstConjRule.refl("-gremžos, -gremdies,", "-gremžas, pag. -gremdos", "gremsties"), //izgremsties
+		FirstConjRule.refl("-gremžos, -gremzies,", "-gremžas, pag. -gremzos", "gremzties"), //izgremzties
 		FirstConjRule.refl("-griežos, -griezies,", "-griežas, pag. -griezos", "griezties"), //aizgriezties 1, 2
 		FirstConjRule.refl("-gružos, -grūdies,", "-grūžas, pag. -grūdos", "grūsties"), //atgrūsties
 		FirstConjRule.refl("-gūstos, -gūsties,", "-gūstas, pag. -guvos", "gūties"), //aizgūties
@@ -788,6 +855,7 @@ public class OptHypernRules
 		FirstConjRule.refl("-īdos, -īdies,", "-īdas, pag. -īdējos", "īdēties"), //ieīdēties
 		// J
 		FirstConjRule.refl("-jaucos, -jaucies,", "-jaucas, pag. -jaucos", "jaukties"), //iejaukties
+		FirstConjRule.refl("-jājos, -jājies,", "-jājas, pag. -jājos", "jāties"), //izjāties
 		FirstConjRule.refl("-jožos, -jozies,", "-jožas, pag. -jozos", "jozties"), //apjozties
 		FirstConjRule.refl("-jūtos, -jūties,", "-jūtas, pag. -jutos", "justies"), //iejusties
 		FirstConjRule.refl("-jūdzos, -jūdzies,", "-jūdzas, pag. -jūdzos", "jūgties"), //aizjūgties
@@ -805,6 +873,7 @@ public class OptHypernRules
 		FirstConjRule.refl("-kraujos, -kraujies,", "-kraujas, pag. -krāvos", "krauties"), //apkrauties
 		FirstConjRule.refl("-krāpjos, -krāpies,", "-krāpjas, pag. -krāpos", "krāpties"), //apkrāpties
 		FirstConjRule.refl("-krājos, -krājies,", "-krājas, pag. -krājos", "krāties"), //iekrāties
+		FirstConjRule.refl("-krītos, -krities,", "-krītas, pag. -kritos", "kristies"), //izkristies
 		FirstConjRule.refl("-kuļos, -kulies,", "-kuļas, pag. -kūlos", "kulties"), //aizkulties
 		// Ķ
 		FirstConjRule.refl("-ķēros, -ķeries,", "-ķeras, pag. -ķēros", "ķerties"), //aizķerties
@@ -820,18 +889,25 @@ public class OptHypernRules
 		FirstConjRule.refl("-ļaujos, -ļaujies,", "-ļaujas, pag. -ļāvos", "ļauties"), //atļauties
 		// M
 		FirstConjRule.refl("-maļos, -malies,", "-maļas, pag. -mālos", "malties"), //apmalties
+			// TODO -maļos, -malies, -maļas, pag. -malos
+		FirstConjRule.refl("-maucos, -maucies,", "-maucas, pag. -maucos", "maukties"), //izmaukties
+		FirstConjRule.refl("-melšos, -melsies,", "-melšas, pag. -melsos", "melsties"), //izmelsties
 		FirstConjRule.refl("-metos, -meties,", "-metas, pag. -metos", "mesties"), //aizmesties
 		FirstConjRule.refl("-mērcos, -mērcies,", "-mērcas, pag. -mērcos", "mērkties"), //iemērkties
 		FirstConjRule.refl("-mostos, -mosties,", "-mostas, pag. -modos", "mosties"), //atmosties
 		// N
+		FirstConjRule.refl("-nākos, -nācies,", "-nākas, pag. -nācos", "nākties"), //iznākties
 		FirstConjRule.refl("-nesos, -nesies,", "-nesas, pag. -nesos", "nesties"), //aiznesties
 		FirstConjRule.refl("-nirstos, -nirsties,", "-nirstas, pag. -niros", "nirties"), //ienirties
+		FirstConjRule.refl("-nīkstos, -nīksties,", "-nīkstas, pag. -nīkos", "nīkties"), //iznīkties
 		// Ņ
 		FirstConjRule.refl("-ņemos, -ņemies,", "-ņemas, pag. -ņēmos", "ņemties"), //aizņemties
 		// O, P
 		FirstConjRule.refl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 		FirstConjRule.refl("-pērkos, -pērcies,", "-pērkas, pag. -pirkos", "pirkties"), // appirkties
 		FirstConjRule.refl("-pinos, -pinies,", "-pinas, pag. -pinos", "pīties"), // iepīties
+		FirstConjRule.refl("-plēšos, -plēsies,", "-plēšas, pag. -plēsos", "plēsties"), // izplēsties
+		FirstConjRule.refl("-plūcos, -plūcies,", "-plūcas, pag. -plūcos", "plūkties"), // izplūkties
 		FirstConjRule.refl("-pļaujos, -pļaujies,", "-pļaujas, pag. -pļāvos", "pļauties"), // appļauties
 		FirstConjRule.refl("-pūšos, -pūties,", "-pūšas, pag. -pūtos", "pūsties"), // atpūsties
 		// R
@@ -840,6 +916,8 @@ public class OptHypernRules
 		FirstConjRule.refl("-raušos, -rausies,", "-raušas, pag. -rausos", "rausties"), //aizrausties
 		FirstConjRule.refl("-raujos, -raujies,", "-raujas, pag. -rāvos", "rauties"), //aizrauties
 		FirstConjRule.refl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
+		FirstConjRule.refl("-rājos, -rājies,", "-rājas, pag. -rājos", "rāties"), // izrāties
+		FirstConjRule.refl("-redzos, -redzies,", "-redzas, pag. -redzējos", "redzēties"), // izredzēties
 		FirstConjRule.refl("-riebjos, -riebies,", "-riebjas, pag. -riebos", "riebties"), //apriebties
 		FirstConjRule.refl("-riebjos, -riebies,", "-riebjas; pag. -riebos", "riebties"), //aizriebties
 		FirstConjRule.refl("-rejos, -rejies,", "-rejas, pag. -rējos", "rieties"), //atrieties
@@ -848,6 +926,8 @@ public class OptHypernRules
 		// S
 		FirstConjRule.refl("-saucos, -saucies,", "-saucas, pag. -saucos", "saukties"), //aizsaukties
 		FirstConjRule.refl("-sedzos, -sedzies,", "-sedzas, pag. -sedzos", "segties"), //aizsegties
+		FirstConjRule.refl("-sēršos, -sērsies,", "-sēršas, pag. -sērsos", "sērsties"), //izsērsties
+		FirstConjRule.refl("-sējos, -sējies,", "-sējas, pag. -sējos", "sēties"), //izsēties
 		FirstConjRule.refl("-sienos, -sienies,", "-sienas, pag. -sējos", "sieties"), //aizsieties
 		FirstConjRule.refl("-sitos, -sities,", "-sitas, pag. -sitos", "sisties"), //aizsisties
 		FirstConjRule.refl("-skaišos, -skaisties,", "-skaišas, pag. -skaitos", "skaisties"), //apskaisties
@@ -878,7 +958,7 @@ public class OptHypernRules
 		FirstConjRule.refl("-šļācos, -šļācies,", "-šļācas, pag. -šļācos", "šļākties"), //apšļākties
 		FirstConjRule.refl("-šmaucos, -šmaucies,", "-šmaucas, pag. -šmaucos", "šmaukties"), //apšmaukties
 		// T
-		FirstConjRule.refl("-tērpjos, -tērpies,", "-tērpjas; pag. -tērpos", "tērpties"), //aptērpties
+		FirstConjRule.refl("-tērpjos, -tērpies,", "-tērpjas, pag. -tērpos", "tērpties"), //aptērpties
 		FirstConjRule.refl("-tiecos, -tiecies,", "-tiecas, pag. -tiecos", "tiekties"), //ietiekties
 		FirstConjRule.refl("-tiepjos, -tiepies,", "-tiepjas, pag. -tiepos", "tiepties"), //ietiepties
 		FirstConjRule.refl("-tinos, -tinies,", "-tinas, pag. -tinos", "tīties"), //aiztīties
@@ -938,30 +1018,47 @@ public class OptHypernRules
 				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties"), //aizmocīties
 
 		// Standartizētie.
+		// A, B
 		RegularVerbRule.thirdConjRefl(
 				"-braukos, -braukies,", "-braukās, pag. -braucījos", "braucīties", true), //atbraucīties
+		// C, Č
 		RegularVerbRule.thirdConjRefl(
 				"-čabinos, -čabinies,", "-čabinās, pag. -čabinājos", "čabināties", false), //iečabināties
 		RegularVerbRule.thirdConjRefl(
 				"-čukstos, -čuksties,", "-čukstas, pag. -čukstējos", "čukstēties", false), //iečukstēties
+		// D
 		RegularVerbRule.thirdConjRefl(
 				"-deros, -deries,", "-deras, pag. -derējos", "derēties", false), //iederēties
+		// E, F, G
+		RegularVerbRule.thirdConjRefl(
+				"-gribos, -gribies,", "-gribas, pag. -gribējos", "gribēties", false), //izgribēties
+		// H, I, J, K
 		RegularVerbRule.thirdConjRefl(
 				"-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties", false), //aizkustēties
+		// L
 		RegularVerbRule.thirdConjRefl(
 				"-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties", false), //aplāpīties
 		RegularVerbRule.thirdConjRefl(
 				"-lokos, -lokies,", "-lokās, pag. -locījos", "locīties", true), //atlocīties
+		// Ļ
+		RegularVerbRule.thirdConjRefl(
+				"-ļogos, -ļogies,", "-ļogās, pag. -ļodzījos", "ļodzīties", true), //izļodzīties
+		// M
 		RegularVerbRule.thirdConjRefl(
 				"-minos, -minies,", "-minas, pag. -minējos", "minēties", false), //atminēties
 		RegularVerbRule.thirdConjRefl(
 				"-mīlos, -mīlies,", "-mīlas, pag. -mīlējos", "mīlēties", false), //iemīlēties
 		RegularVerbRule.thirdConjRefl(
 				"-muldos, -muldies,", "-muldas, pag. -muldējos", "muldēties", false), //iemuldēties 1, 2
+		// N, O, P
+		RegularVerbRule.thirdConjRefl(
+				"-peldos, -peldies,", "-peldas, pag. -peldējos", "peldēties", false), //izpeldēties
 		RegularVerbRule.thirdConjRefl(
 				"-precos, -precies,", "-precas, pag. -precējos", "precēties", false), //aizprecēties
+		// R
 		RegularVerbRule.thirdConjRefl(
 				"-raugos, -raugies,", "-raugās, pag. -raudzījos", "raudzīties", true), //apraudzīties
+		// S
 		RegularVerbRule.thirdConjRefl(
 				"-sakos, -sakies,", "-sakās, pag. -sacījos", "sacīties", true), //atsacīties
 		RegularVerbRule.thirdConjRefl(
@@ -970,10 +1067,13 @@ public class OptHypernRules
 				"-slaukos, -slaukies,", "-slaukās, pag. -slaucījos", "slaucīties", true), //apslaucīties
 		RegularVerbRule.thirdConjRefl(
 				"-slogos, -slogies,", "-slogās, pag. -slodzījos", "slodzīties", true), //ieslodzīties
+		// T
 		RegularVerbRule.thirdConjRefl(
 				"-turos, -turies,", "-turas, pag. -turējos", "turēties", false), //atturēties
+		// U, V
 		RegularVerbRule.thirdConjRefl(
 				"-vēlos, -vēlies,", "-vēlas, pag. -vēlējos", "vēlēties", false), //atvēlēties
+		// Z
 		RegularVerbRule.thirdConjRefl(
 				"-zinos, -zinies,", "-zinās, pag. -zinājos", "zināties", false), //apzināties
 
@@ -994,6 +1094,12 @@ public class OptHypernRules
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
 				".*gailēties", false), // iegailēties
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-mērījos, -mērījies, -mērījas, arī -mēros, -mēries, -mērās, pag. -mērījos",
+				".*mērīties", false), // izmērīties
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-pelnos, -pelnies, -pelnās, arī -pelnījos, -pelnījies, -pelnījās, pag. -pelnījos",
+				".*pelnīties", false), //izpelnīties
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
 				".*sargāties", false), // aizsargāties

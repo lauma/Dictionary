@@ -388,8 +388,7 @@ public class DirectRules
 	public static final Rule[] directFirstConjVerb = {
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
-		FirstConjRule
-				.direct("-dullstu, -dullsti,", "-dullst; pag. -dullu", "dullt"), //apdullt
+		FirstConjRule.direct("-dullstu, -dullsti,", "-dullst, pag. -dullu", "dullt"), //apdullt
 		FirstConjRule.direct("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
 		FirstConjRule.direct("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
 		FirstConjRule.direct("-saustu, -sausti,", "-saust, pag. -sausu", "saust"), //apsaust
@@ -401,6 +400,8 @@ public class DirectRules
 
 		FirstConjRule.directAllPersParallel(
 				"-nīku, -nīc, -nīk, retāk -nīkstu, -nīksti, -nīkst, pag. -niku", "nikt"), //apnikt
+		FirstConjRule.directAllPersParallel(
+				"-purstu, -pursti, -purst, pag. -puru, arī -pūru", "purt"), //izpurt
 	};
 
 	/**
@@ -475,7 +476,8 @@ public class DirectRules
 		// Likumi, kam ir visu formu variants.
 		// Netoteiksmes homoformas.
 
-		// Standartizētie.
+
+			// Standartizētie.
 		// A, B
 		FirstConjRule.refl("-bilstos, -bilsties,", "-bilstas, pag. -bildos", "bilsties"), //iebilsties
 		FirstConjRule.refl("-bļaujos, -bļaujies,", "-bļaujas, pag. -bļāvos", "bļauties"), //iebļauties
@@ -495,6 +497,7 @@ public class DirectRules
 		FirstConjRule.refl("-ģiedos, -ģiedies,", "-ģiedas, pag. -ģidos", "ģisties"), //apģisties
 		// H, I, J, K
 		FirstConjRule.refl("-karstos, -karsties,", "-karstas, pag. -karsos", "karsties"), //iekarsties
+		FirstConjRule.refl("-kāršos, -kārsies,", "-kāršas, pag. -kārsos", "kārsties"), //izkārsties
 		FirstConjRule.refl("-kliedzos, -kliedzies,", "-kliedzas, pag. -kliedzos", "kliegties"), //aizkliegties
 		FirstConjRule.refl("-krācos, -krācies,", "-krācas, pag. -krācos", "krākties"), //aizkrākties
 		FirstConjRule.refl("-kaucos, -kaucies,", "-kaucas, pag. -kaucos", "kaukties"), //iekaukties
@@ -502,8 +505,10 @@ public class DirectRules
 		FirstConjRule.refl("-ķērcos, -ķērcies,", "-ķērcas, pag. -ķērcos", "ķērkties"), //ieķērkties
 		// L
 		FirstConjRule.refl("-lokos, -locies,", "-lokās, pag. -lakos", "lakties"), //ielakties
+		FirstConjRule.refl("-līstos, -līsties,", "-līstas, pag. -lijos", "līties"), //izlīties
 		// M
 		FirstConjRule.refl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
+		FirstConjRule.refl("-mirstos, -mirsties,", "-mirstas, pag. -miros", "mirties"), //izmirties
 		// N, Ņ
 		FirstConjRule.refl("-ņirdzos, -ņirdzies,", "-ņirdzas, pag. -ņirdzos", "ņirgties"), //atņirgties
 		// O, P, R
@@ -511,6 +516,7 @@ public class DirectRules
 		FirstConjRule.refl("-rēcos, -rēcies,", "-rēcas, pag. -rēcos", "rēkties"), //ierēkties
 		FirstConjRule.refl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
+		FirstConjRule.refl("-salstos, -salsties,", "-salstās, pag. -salos", "salties"), //izsalties
 		FirstConjRule.refl("-sēcos, -sēcies,", "-sēcas, pag. -sēcos", "sēkties"), //iesēkties
 		FirstConjRule.refl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
 		FirstConjRule.refl("-spiedzos, -spiedzies,", "-spiedzas, pag. -spiedzos", "spiegties"), //iespiegties
@@ -601,6 +607,12 @@ public class DirectRules
 				"-čīkstos, -čīksties,", "-čīkstas, pag. -čīkstējos", "čīkstēties", false), //iečīkstēties
 		// D
 		RegularVerbRule.thirdConjRefl(
+				"-dienos, -dienies,", "-dienas, pag. -dienējos", "dienēties", false), //izdienēties
+		RegularVerbRule.thirdConjRefl(
+				"-dirnos, -dirnies,", "-dirnas, pag. -dirnējos", "dirnēties", false), //izdirnēties
+		RegularVerbRule.thirdConjRefl(
+				"-draudos, -draudies,", "-draudas, pag. -draudējos", "draudēties", false), //izdraudēties
+		RegularVerbRule.thirdConjRefl(
 				"-drebos, -drebies,", "-drebas, pag. -drebējos", "drebēties", false), //iedrebēties
 		RegularVerbRule.thirdConjRefl(
 				"-drīkstos, -drīksties,", "-drīkstas, pag. -drīkstējos", "drīkstēties", false), //iedrīkstēties
@@ -609,6 +621,8 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl(
 				"-dziedos, -dziedies,", "-dziedas, pag. -dziedājos", "dziedāties", false), //aizdziedāties
 		// E, F, G
+		RegularVerbRule.thirdConjRefl(
+				"-glūnos, -glūnies,", "-glūnas, pag. -glūnējos", "glūnēties", false), //izglūnēties
 		RegularVerbRule.thirdConjRefl(
 				"-guļos, -gulies,", "-guļas, pag. -gulējos", "gulēties", true), //aizgulēties
 		// H, I, J, K
@@ -626,10 +640,16 @@ public class DirectRules
 				"-kurnos, -kurnies,", "-kurnas, pag. -kurnējos", "kurnēties", false), //iekurnēties
 		// L, M
 		RegularVerbRule.thirdConjRefl(
+				"-līdzos, -līdzies,", "-līdzas, pag. -līdzējos", "līdzēties", false), //izlīdzēties
+		RegularVerbRule.thirdConjRefl(
+				"-palīdzos, -palīdzies,", "-palīdzas, pag. -palīdzējos", "palīdzēties", false), //izpalīdzēties
+		RegularVerbRule.thirdConjRefl(
 				"-murkšos, -murkšies,", "-murkšas, pag. -murkšējos", "murkšēties", false), //iemurkšēties
 		RegularVerbRule.thirdConjRefl(
 				"-murkšķos, -murkšķies,", "-murkšķas, pag. -murkšķējos", "murkšķēties", false), //iemurkšķēties
 		// N, Ņ
+		RegularVerbRule.thirdConjRefl(
+				"-ņaudos, -ņaudies,", "-ņaudas, pag. -ņaudējos", "ņaudēties", false), //izņaudēties
 		RegularVerbRule.thirdConjRefl(
 				"-ņerkstos, -ņerksties,", "-ņerkstas, pag. -ņerkstējos", "ņerkstēties", false), //ieņerkstēties
 		RegularVerbRule.thirdConjRefl(
@@ -655,6 +675,8 @@ public class DirectRules
 				"-spurkšos, -spurkšies,", "-spurkšas, pag. -spurkšējos", "spurkšēties", false), //iespurkšēties
 		RegularVerbRule.thirdConjRefl(
 				"-spurkšķos, -spurkšķies,", "-spurkšķas, pag. -spurkšķējos", "spurkšķēties", false), //iespurkšķēties
+		RegularVerbRule.thirdConjRefl(
+				"-stāvos, -stāvies,", "-stāvas, pag. -stāvējos", "stāvēties", false), //izstāvēties
 		RegularVerbRule.thirdConjRefl(
 				"-stenos, -stenies,", "-stenas, pag. -stenējos", "stenēties", false), //iestenēties
 		RegularVerbRule.thirdConjRefl(

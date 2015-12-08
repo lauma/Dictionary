@@ -63,7 +63,7 @@ public class DictionaryXmlToJson
 		add(Features.DOMAIN__HIST_PLACE);
 		add(Features.DOMAIN__HIST_PERSON);
 	}};//*/
-	// Neitrālais: neizgūt neko papildus.
+	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
 

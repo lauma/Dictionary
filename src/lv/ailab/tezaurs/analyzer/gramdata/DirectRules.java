@@ -395,6 +395,7 @@ public class DirectRules
 		FirstConjRule.direct("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //apšņurkt
 		FirstConjRule.direct("-trakstu, -traksti,", "-trakst, pag. -traku", "trakt"), //aptrakt
 		FirstConjRule.direct("-trulstu, -trulsti,", "-trulst, pag. -trulu", "trult"), //aptrult
+		FirstConjRule.direct("-velbju, -velb,", "-velbj, pag. -velbu", "velbt"), //izvelbt
 		FirstConjRule.direct("-vēstu, -vēsti,", "-vēst, pag. -vēsu", "vēst"), //atvēst
 		FirstConjRule.direct("-žirbstu, -žirbsti,", "-žirbst, pag. -žirbu", "žirbt"), // atžirbt
 
@@ -522,14 +523,19 @@ public class DirectRules
 		FirstConjRule.refl("-spiedzos, -spiedzies,", "-spiedzas, pag. -spiedzos", "spiegties"), //iespiegties
 		FirstConjRule.refl("-spurcos, -spurcies,", "-spurcas, pag. -spurcos", "spurkties"), //iespurkties
 		FirstConjRule.refl("-strebjos, -strebies,", "-strebjas, pag. -strēbos", "strēbties"), //iestrēbties
+		FirstConjRule.refl("-sūtos, -sūties,", "-sūtas, pag. -sutos", "susties"), //izsusties
 		FirstConjRule.refl("-svelpjos, -svelpies,", "-svelpjas, pag. -svelpos", "svelpties"), //aizsvelpties
 		FirstConjRule.refl("-svilpjos, -svilpies,", "-svilpjas, pag. -svilpos", "svilpties"), //aizsvilpties
 		FirstConjRule.refl("-svilstos, -svilsties,", "-svilstas, pag. -svilos", "svilties"), //aizsvilties
+		FirstConjRule.refl("-svīstos, -svīsties,", "-svīstas, pag. -svīdos", "svīsties"), //izsvīsties
 		// Š
+		FirstConjRule.refl("-šņaucos, -šņaucies,", "-šņaucas, pag. -šņaucos", "šņaukties"), //izšņaukties
 		FirstConjRule.refl("-šņācos, -šņācies,", "-šņācas, pag. -šņācos", "šņākties"), //aizšņākties
 		// T
 		FirstConjRule.refl("-topos, -topies,", "-topas, pag. -tapos", "tapties"), //attapties
+		FirstConjRule.refl("-tvīkstos, -tvīksties,", "-tvīkstas, pag. -tvīkos", "tvīkties"), //iztvīkties
 		// U, V
+		FirstConjRule.refl("-vārgstos, -vārgsties,", "-vārgstas, pag. -vārgos", "vārgties"), //izvārgties
 		FirstConjRule.refl("-vemjos, -vemies,", "-vemjas, pag. -vēmos", "vemties"), //apvemties
 		FirstConjRule.refl("-vēžos, -vēzies,", "-vēžas, pag. -vēžos", "vēzties"), //atvēzties
 		// Z

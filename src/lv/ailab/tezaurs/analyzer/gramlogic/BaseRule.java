@@ -332,7 +332,7 @@ public class BaseRule implements Rule
 						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*ams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+						SimpleSubRule.of(".*[āa]ms", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ})},
 				new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM});
 	}

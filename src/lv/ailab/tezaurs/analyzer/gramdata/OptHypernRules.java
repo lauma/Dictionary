@@ -93,9 +93,9 @@ public class OptHypernRules
 		FirstConjRule.directHomof("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt",
 				"\"tikt\" (patikt kādam)"), //patikt
 		FirstConjRule.directHomof("-vēršu, -vērs,", "-vērš, pag. -vērsu", "vērst",
-				"\"vērst\" (pavērsos)"), //aizvērst, izvērst 1
+				"\"vērst\" (mainīt virzienu)"), //aizvērst, izvērst 1
 		FirstConjRule.directHomof("-vēršu, -vērs,", "-vērš, pag. -vērtu", "vērst",
-				"\"vērst\" (pārvērtos)"), //izvērst 2
+				"\"vērst\" (mainīt būtību)"), //izvērst 2
 
 
 			// Paralēlās formas.
@@ -504,9 +504,9 @@ public class OptHypernRules
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas.
-		FirstConjRule.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (kā gaisma)"), //aizaust 1
-		FirstConjRule.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (kā ievainojumi)"), //aizdzīt 2
-		FirstConjRule.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (kā audums)"), //irt 2
+		FirstConjRule.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (gaismai)"), //aizaust 1
+		FirstConjRule.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (ievainojumam)"), //aizdzīt 2
+		FirstConjRule.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
 
 		// Standartizētie.
 		// A, B
@@ -786,26 +786,26 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Nenoteiksmes homoformas.
 		FirstConjRule.reflHomof("-aužos, -audies,", "-aužas, pag. -audos", "austies",
-				"\"austies\" (kā audumam)"), //apausties
+				"\"austies\" (audumam)"), //apausties
 		FirstConjRule.reflHomof("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties",
-				"\"dzīties\" (kā lopiem)"), //aizdzīties
+				"\"dzīties\" (lopiem)"), //aizdzīties
 		FirstConjRule.reflHomof("-iros, -iries,", "-iras, pag. -īros", "irties",
-				"\"irties\" (kā ar airiem)"), //aizirties
+				"\"irties\" (ar airiem)"), //aizirties
 		FirstConjRule.reflHomof("-mistos, -misties,", "-mistas, pag. -misos", "misties",
 				"\"mist\" (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
 		FirstConjRule.reflHomof("-minos, -minies,", "-minas, pag. -minos", "mīties",
-				"\"mīties\" (kā pedāļus)"), //aizmīties
+				"\"mīties\" (pedāļus)"), //aizmīties
 		FirstConjRule.reflHomof("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties",
-				"\"mīties\" (kā naudu)"), //apmīties
+				"\"mīties\" (mainīt naudu)"), //apmīties
 		FirstConjRule.reflHomof("-tiekos, -tiecies,", "-tiekas, pag. -tikos", "tikties",
-				"\"tikties\" (kā satikties ar kādu)"), //satikties
+				"\"tikties\" (satikties ar kādu)"), //satikties
 		// Izņēmuma izņēmums :/
 		FirstConjRule.reflHomof("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties",
-				"\"tikties\" (kā patikties kādam)"), //iepatikties
+				"\"tikties\" (patikties kādam)"), //iepatikties
 		FirstConjRule.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērsos", "vērsties",
-					"\"vērsties\" (pavērsos)"), //aizvērsties, izvērsties 1
+					"\"vērsties\" (mainīt virzienu)"), //aizvērsties, izvērsties 1
 		FirstConjRule.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērtos", "vērsties",
-					"\"vērsties\" (pārvērtos)"), //izvērsties 2
+					"\"vērsties\" (mainīt būtību)"), //izvērsties 2
 
 
 		// Paralēlās formas.
@@ -1018,7 +1018,7 @@ public class OptHypernRules
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas
 		FirstConjRule.refl3PersHomof("-tīkas, pag. -tikās", "tikties",
-				"\"tikties\" (kā patikties kādam)"), //patikties
+				"\"tikties\" (patikties kādam)"), //patikties
 		// Paralēlās formas.
 		FirstConjRule.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 

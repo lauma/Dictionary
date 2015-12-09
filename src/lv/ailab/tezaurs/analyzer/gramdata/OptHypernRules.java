@@ -802,9 +802,9 @@ public class OptHypernRules
 		// Izņēmuma izņēmums :/
 		FirstConjRule.reflHomof("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties",
 				"\"tikties\" (kā patikties kādam)"), //iepatikties
-		FirstConjRule.reflHomof("-vēršu, -vērs,", "-vērš, pag. -vērsu", "vērst",
+		FirstConjRule.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērsos", "vērsties",
 					"\"vērsties\" (pavērsos)"), //aizvērsties, izvērsties 1
-		FirstConjRule.reflHomof("-vēršu, -vērs,", "-vērš, pag. -vērtu", "vērst",
+		FirstConjRule.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērtos", "vērsties",
 					"\"vērsties\" (pārvērtos)"), //izvērsties 2
 
 

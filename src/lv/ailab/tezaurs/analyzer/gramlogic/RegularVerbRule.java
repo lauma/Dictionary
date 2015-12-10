@@ -52,7 +52,7 @@ public class RegularVerbRule implements Rule
 			Set<Tuple<Keys, String>> alwaysFlags)
 	{
 		HashSet<Tuple<Keys,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(Keys.POS, Values.VERB.s));
+		positiveFlagsFull.add(Features.POS__VERB);
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
 		HashSet<Tuple<Keys,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);

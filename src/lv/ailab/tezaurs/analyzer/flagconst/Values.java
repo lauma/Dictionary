@@ -148,6 +148,7 @@ public enum Values
 	NUMERAL_AND_ADVERB("Skaitļa vārds un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
 	NUMERAL_AND_ADJECTIVE("Skaitļa vārds un īpašības vārds"), // Iesaistīšanās divu nosacījumu grupā.
 	NOUN_WITH_PREPOSITION("Lietvārds un prievārds"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
+	PLURAL_OR_THIRD_PERS("Daudzskaitlis vai 3. persona"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
 
 	;
 

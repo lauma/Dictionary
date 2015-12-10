@@ -442,6 +442,7 @@ public class DirectRules
 		// Visām personām.
 		RegularVerbRule.thirdConjDir("-u, -i,", "-a, pag. -īju", "īt", false), //aizsūtīt
 		RegularVerbRule.thirdConjDir("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
+		RegularVerbRule.thirdConjDir("-u, -i,", "-a, pag. -āju", "āt", false), //līcināt
 		RegularVerbRule.thirdConjDir("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
 		// Tikai trešajai personai.
 		RegularVerbRule.thirdConjDir3Pers("-ina, pag. -ināja", "ināt", false), //aizducināt
@@ -462,6 +463,8 @@ public class DirectRules
 				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", ".*īt", false), // aprobīt
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-u, -i, -a, arī -īju, -ī, -ī, pag. -īju", ".*īt", false), // atrotīt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-u, -i, -a, retāk -īju, -ī, -ī, pag. -īju", ".*īt", false), // matīt
 
 		// Darbības vārdu specifiskie likumi.
 		// Nav.
@@ -489,6 +492,7 @@ public class DirectRules
 		FirstConjRule.refl("-degos, -dedzies,", "-degas, pag. -degos", "degties"), //aizdegties
 		FirstConjRule.refl("-dīcos, -dīcies,", "-dīcas, pag. -dīcos", "dīkties"), //iedīkties
 		FirstConjRule.refl("-dūcos, -dūcies,", "-dūcas, pag. -dūcos", "dūkties"), //iedūkties
+		FirstConjRule.refl("-dvešos, -dvesies,", "-dvešas, pag. -dvesos", "dvesties"), //nodvesties
 		// E
 		FirstConjRule.refl("-elšos, -elsies,", "-elšas, pag. -elsos", "elsties"), //aizelsties
 		// F, G
@@ -571,6 +575,13 @@ public class DirectRules
 		BaseRule.secondConjReflAllPers(
 				"-ējos, -ējies, -ējas, -ējamies, -ējaties, pag. -ējos, -ējāmies, -ējāties; pav. -ējies, -ējieties",
 				"ēties"), //adverbiēties
+		BaseRule.of(
+				"parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies",
+				".*ēties", 19,
+				new Tuple[] {Features.POS__VERB},
+				new Tuple[]{Features.USUALLY_USED__PLURAL, Features.USUALLY_USED__THIRD_PERS,
+							Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL_OR_THIRD_PERS.s)}), //konstituēties
+			//parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies
 		// Darbības vārdu specifiskie likumi.
 		// Nav.
 	};
@@ -776,6 +787,8 @@ public class DirectRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 			// Galotņu šabloni.
+			BaseRule.secondThirdConjReflAllPersParallel(
+					"-os, -ies, -as, arī -ējos, -ējies, -ējas, pag. -ējos", ".*ēties", false), // mīlēties
 			BaseRule.secondThirdConjReflAllPersParallel(
 					"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
 

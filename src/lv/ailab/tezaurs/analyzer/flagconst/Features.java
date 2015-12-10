@@ -53,6 +53,7 @@ public class Features
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);
 
+	public static final Tuple<Keys, String> USUALLY_USED__PLURAL = Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL.s);
 	public static final Tuple<Keys, String> USUALLY_USED__THIRD_PERS = Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.THIRD_PERSON.s);
 	public static final Tuple<Keys, String> USUALLY_USED__PARTICIPLE = Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE.s);
 	public static final Tuple<Keys, String> USUALLY_USED__PARTICIPLE_IS = Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_IS.s);

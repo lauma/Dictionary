@@ -347,6 +347,7 @@ public class OptHypernRules
 		// P
 		FirstConjRule.direct("-pampstu, -pampsti,", "-pampst, pag. -pampu", "pampt"), //aizpampt
 		FirstConjRule.direct("-paužu, -paud,", "-pauž, pag. -paudu", "paust"), //iepaust
+		FirstConjRule.direct("-peļu, -pel,", "-peļ, pag. -pēlu", "pelt"), //nopelt
 		FirstConjRule.direct("-peru, -per,", "-per, pag. -pēru", "pērt"), //appērt
 		FirstConjRule.direct("-pērku, -pērc,", "-pērk, pag. -pirku", "pirkt"), //appirkt
 		FirstConjRule.direct("-pīkstu, -pīksti,", "-pīkst, pag. -pīku", "pīkt"), //iepīkt
@@ -564,6 +565,7 @@ public class OptHypernRules
 		RegularVerbRule.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
 		RegularVerbRule.secondConjDir("-klusēju, -klusē,", "-klusē, pag. -klusēju", "klusēt"), //noklusēt
 		RegularVerbRule.secondConjDir("-lāsoju, -lāso,", "-lāso, pag. -lāsoju", "lāsot"), //nolāsot
+		RegularVerbRule.secondConjDir("-ņurīju, -ņurī,", "-ņurī, pag. -ņurīju", "noņurīt"), //noņurīt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.
@@ -662,10 +664,18 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjDir("-muldu, -muldi,", "-muld, pag. -muldēju", "muldēt", false), //atmuldēt
 		RegularVerbRule.thirdConjDir("-murdu, -murdi,", "-murd, pag. -murdēju", "murdēt", false), //nomurdēt
 		RegularVerbRule.thirdConjDir("-murdzu, -murdzi,", "-murdza, pag. -murdzīju", "murdzīt", false), //apmurdzīt
+		RegularVerbRule.thirdConjDir("-murkšu, -murkši,", "-murkš, pag. -murkšēju", "murkšēt", false), //nomurkšēt
+		RegularVerbRule.thirdConjDir("-murkšķu, -murkšķi,", "-murkšķ, pag. -murkšķēju", "murkšķēt", false), //nomurkšķēt
 		// N, Ņ
 		RegularVerbRule.thirdConjDir("-ņaudu, -ņaudi,", "-ņaud, pag. -ņaudēju", "ņaudēt", false), //izņaudēt
+		RegularVerbRule.thirdConjDir("-ņerkstu, -ņerksti,", "-ņerkst, pag. -ņerkstēju", "ņerkstēt", false), //noņerkstēt
 		RegularVerbRule.thirdConjDir("-ņurdu, -ņurdi,", "-ņurd, pag. -ņurdēju", "ņurdēt", false), //atņurdēt
+		RegularVerbRule.thirdConjDir("-ņurkstu, -ņurksti,", "-ņurkst, pag. -ņurkstēju", "ņurkstēt", false), //noņurkstēt
+		RegularVerbRule.thirdConjDir("-ņurkšu, -ņurkši,", "-ņurkš, pag. -ņurkšēju", "ņurkšēt", false), //noņurkšēt
+		RegularVerbRule.thirdConjDir("-ņurkšķu, -ņurkšķi,", "-ņurkšķ, pag. -ņurkšķēju", "ņurkšķēt", false), //noņurkšķēt
 		// O, P
+		RegularVerbRule.thirdConjDir("-parkšu, -parkši,", "-parkš, pag. -parkšēju", "parkšēt", false), //noparkšēt
+		RegularVerbRule.thirdConjDir("-parkšķu, -parkšķi,", "-parkšķ, pag. -parkšķēju", "parkšķēt", false), //noparkšķēt
 		RegularVerbRule.thirdConjDir("-peldu, -peldi,", "-peld, pag. -peldēju", "peldēt", false), //aizpeldēt
 		RegularVerbRule.thirdConjDir("-pilu, -pili,", "-pil, pag. -pilēju", "pilēt", false), //appilēt, aizpilēt
 		RegularVerbRule.thirdConjDir("-pīkstu, -pīksti,", "-pīkst, pag. -pīkstēju", "pīkstēt", false), //atpīkstēt
@@ -1088,7 +1098,7 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
 		BaseRule.thirdConjReflAllPersParallel(
-				"ļogos, -ļogies, -ļogās, retāk -ļodzos, -ļodzies, -ļodzās, pag. -ļodzījos", "ļodzīties"), //noļodzīties
+				"-ļogos, -ļogies, -ļogās, retāk -ļodzos, -ļodzies, -ļodzās, pag. -ļodzījos", "ļodzīties"), //noļodzīties
 		BaseRule.thirdConjReflAllPersParallel(
 				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties"), //aizmocīties
 

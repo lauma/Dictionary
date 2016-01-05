@@ -15,6 +15,7 @@ public class Features
 {
 	public static final Tuple<Keys, String> POS__NOUN = Tuple.of(Keys.POS, Values.NOUN.s);
 	public static final Tuple<Keys, String> POS__REFL_NOUN = Tuple.of(Keys.POS, Values.REFLEXIVE_NOUN.s);
+	public static final Tuple<Keys, String> POS__GEN_ONLY = Tuple.of(Keys.POS, Values.GEN_ONLY.s);
 	public static final Tuple<Keys, String> POS__VERB = Tuple.of(Keys.POS, Values.VERB.s);
 	public static final Tuple<Keys, String> POS__ADJ = Tuple.of(Keys.POS, Values.ADJECTIVE.s);
 
@@ -79,6 +80,7 @@ public class Features
 	public static final Tuple<Keys, String> HAS_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.HAS_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_SOUNDCHANGE.s);
+	public static final Tuple<Keys, String> FROZEN = Tuple.of(Keys.INFLECTION_WEARDNES, Values.FROZEN_FORM.s);
 
 	public static final Tuple<Keys, String> UNCLEAR_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_PARADIGM.s);
 	public static final Tuple<Keys, String> UNCLEAR_POS = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_POS.s);

@@ -169,7 +169,7 @@ public class Gram  implements HasToJSON
 
 		// Skatoties uz visiem atpazītajiem karodziņiem, noteiktu karodziņu
 		// pielikšana vai noņemšana.
-		postprocessFlags();
+		postprocessFlags(lemma);
 
 		// Mēģina izdomāt paradigmu no karodziņiem.
 		paradigmFromFlags(lemma);
@@ -476,15 +476,7 @@ public class Gram  implements HasToJSON
 			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
-		if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
-		{
-			if (paradigm.size() > 0)
-				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
-						(paradigm.stream().map(t -> toString())
-								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
-			paradigm.add(29); // Sastingusi forma.
-			flags.add(Features.UNCLEAR_POS);
-		}
+
 	}
 
 	/**
@@ -492,7 +484,7 @@ public class Gram  implements HasToJSON
 	 * izgūtos karodziņus, pieliek vai noņem (varbūt arī to vēlāk vajadzēs)
 	 * karodziņus.
 	 */
-	private void postprocessFlags()
+	private void postprocessFlags(String lemma)
 	{
 		// Šis tiek darīts tāpēc, ka "vēst." oriģinālajā vārdnīcā nozīmē visu un neko.
 		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PERSON_NAME))
@@ -528,6 +520,28 @@ public class Gram  implements HasToJSON
 				flags.test(Features.POS__POSS_PRONOUN) ||
 				flags.test(Features.POS__GEN_PRONOUN))
 			flags.add(Features.POS__PRONOUN);
+
+		if (flags.test(Keys.CASE, Values.GENITIVE) && flags.test(Features.NON_INFLECTIVE))
+		{
+			flags.add(Features.POS__GEN_ONLY);
+			if (lemma.endsWith("u"))
+				flags.add(Keys.NUMBER, Values.PLURAL);
+			else if (lemma.endsWith("a") || lemma.endsWith("s"))
+				flags.add(Keys.NUMBER, Values.SINGULAR);
+			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
+			flags.add(Features.UNCLEAR_PARADIGM);
+			flags.add(Features.UNCLEAR_POS);
+			flags.add(Features.FROZEN);
+		}
+		else if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
+		{
+			if (paradigm.size() > 0)
+				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
+						(paradigm.stream().map(t -> toString())
+								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
+			//paradigm.add(29); // Sastingusi forma.
+			flags.add(Features.FROZEN);
+		}
 
 	}
 	/**

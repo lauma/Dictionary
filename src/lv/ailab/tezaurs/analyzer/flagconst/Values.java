@@ -15,6 +15,7 @@ public enum Values
 	NOUN("Lietvārds"),
 	REFLEXIVE_NOUN("Atgriezeniskais lietvārds"),
 	PROPER("Īpašvārds"),
+	GEN_ONLY("Ģenetīvenis"),
 	ADJECTIVE("Īpašības vārds"),
 	NUMERAL("Skaitļa vārds"),
 	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
@@ -112,6 +113,7 @@ public enum Values
 	UNCLEAR_POS("Neviennozīmīga vārdšķira vai kategorija"), // Paredzēts morfoimporta atvieglošanai
 
 	PARALLEL_FORMS("Paralēlās formas"), // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
+	FROZEN_FORM("Sastingusi forma"), // Paredzēts morfoimporta atvieglošanai, cerams, ka pabeidzot darbu ar tēzauru, šis vairs nebūs vajadzīgs
 	FIRST_CONJ_PARALLELFORM("1. konjugācijas paralēlforma"), // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	INFINITIVE_HOMOFORMS("Nenoteiksmes homoformas"), // Paredzēts morfoimporta atvieglošanai
 	HAS_PRESENT_SOUNDCHANGE("Tagadnes mija ir"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.

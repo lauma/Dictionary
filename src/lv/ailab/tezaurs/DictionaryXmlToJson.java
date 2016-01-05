@@ -42,6 +42,7 @@ public class DictionaryXmlToJson
 	public static boolean PRINT_FIRST_CONJ = false;
 	public static boolean PRINT_NON_INFL = false;
 	public static boolean PRINT_WORDLISTS = false;
+	public static String PRINT_WITH_REGEXP = ".*fe";
 
 	// Stindzeņu izgūšana ar plašāku aprakstu.
 	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
@@ -97,6 +98,7 @@ public class DictionaryXmlToJson
 			}
 			StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
 					PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
+					PRINT_WITH_REGEXP,
 					PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC, wordlistOut);
 
 

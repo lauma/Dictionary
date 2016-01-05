@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * Paralēli tēzaura apstrādei var šo to saskaitīt.
@@ -43,6 +44,11 @@ public class StatsCollector
 	 * Karodziņš, vai savākt nelokāmos, kam norādīts locījums.
 	 */
 	public final boolean collectNonInflWithCase;
+	/**
+	 * Karodziņš, vai savākt šķirkļavārdus/atvasinājumus, kas atbilst noteiktai
+	 * regulārai izteiksmei.
+	 */
+	public final Pattern collectWithRegexp;
 	/**
 	 * Saraksts ar atslēgas un vērtības pārīšiem, pēc kuriem atlasīt. Karodziņus
 	 * saista ar loģisko UN.(Ja te ir null, tad kalpo kā norāde, ka nevajag šādi
@@ -97,7 +103,8 @@ public class StatsCollector
 
 	public StatsCollector ( boolean collectPrononcations,
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
-			boolean collectNonInflWithCase, ArrayList<Tuple<Keys, String>> collectFeature,
+			boolean collectNonInflWithCase, String collectWithRegexp,
+			ArrayList<Tuple<Keys, String>> collectFeature,
 			ArrayList<Tuple<Keys, String>> descriptionFeatures,
 			Writer wordlistOutput)
 	{
@@ -105,6 +112,8 @@ public class StatsCollector
 		this.collectFirstConj = collectFirstConj;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
 		this.collectNonInflWithCase = collectNonInflWithCase;
+		this.collectWithRegexp = collectWithRegexp == null ?
+				null : Pattern.compile(collectWithRegexp);
 		this.collectWithFeature = collectFeature;
 		this.describeWithFeatures = descriptionFeatures;
 		this.wordlistOut = wordlistOutput;
@@ -159,6 +168,24 @@ public class StatsCollector
 					h.gram.flags.test(Features.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
         }
+		if (collectWithRegexp != null)
+		{
+			for (Header h : entry.getAllHeaders())
+			{
+				if (collectWithRegexp.matcher(h.lemma.text).matches())
+				{
+					ArrayList<String> flags = new ArrayList<>();
+					flags.add("Vārds = " + h.lemma.text);
+					if (entryFlags.getAll(Keys.POS) == null)
+						flags.add(Keys.POS.s + " = NULL");
+					else flags.add(Keys.POS.s + " = " +
+							entryFlags.getAll(Keys.POS).stream()
+									.reduce((s1, s2) -> s1 + " + " + s2).orElse("NULL"));
+					entriesWithSelectedFeature.add(
+							Trio.of(entry.head.lemma.text, entry.homId, flags));
+				}
+			}
+		}
 
 		if (collectWithFeature != null &&
 				collectWithFeature.stream().map(entryFlags::test).reduce(true, (a, b) -> a && b))
@@ -369,14 +396,23 @@ public class StatsCollector
 			out.write("\n]");
 		}
 
-		if (collectWithFeature != null && entriesWithSelectedFeature != null
+		if ((collectWithFeature != null || collectWithRegexp != null) && entriesWithSelectedFeature != null
 				&& entriesWithSelectedFeature.size() > 0)
 		{
 			out.write(",\n\"");
-			out.write(collectWithFeature.stream()
-					.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
-					.reduce((a, b) -> a + ", " + b).orElse("Atlasītie šķirkļi"));
-			out.write(" (šķirkļu uzskaitījums)\":[\n");
+			String title = "";
+			if (collectWithFeature != null)
+				title = collectWithFeature.stream()
+						.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
+						.reduce((a, b) -> a + ", " + b).orElse("");
+			if (collectWithRegexp != null)
+			{
+				if (title.length() > 0) title = title + ", ";
+				title = title + "Šķirkļavārda izteiksme = " + collectWithRegexp.pattern();
+			}
+			if (title.length() < 1) title = "Apkopotie šķirkļi";
+			out.write(JSONObject.escape(title));
+			out.write("\":[\n");
 			out.write(entriesWithSelectedFeature.stream().map(t ->
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +
 							JSONObject.escape(t.second) + "\", \"" +

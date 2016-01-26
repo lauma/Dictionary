@@ -1,3 +1,3 @@
 chcp 1257
-java -Xmx4g -cp "./lib/*;." lv.ailab.tezaurs.DictionaryToSingleTxt
+java -Xmx4g -cp "./lib/*;." lv.ailab.dict.tezaurs.DictionaryToSingleTxt
 @pause

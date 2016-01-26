@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
+ * Author: Lauma Pretkalniņa
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import java.util.HashSet;
@@ -5,6 +22,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
@@ -40,49 +58,18 @@ import lv.ailab.dict.utils.JSONUtils;
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
  */
-public class TGram implements HasToJSON
+public class TGram extends Gram
 {
-
-	/**
-	 * Gramatikas teksts kāds tas ir vārdnīcā.
-	 */
-	public String orig;
-	/**
-	 * No gramatikas izgūtie karodziņi.
-	 */
-	public Flags flags;
 	/**
 	 * Neatpazītas / neizparsētās gramatikas teksta daļas.
 	 */
 	public LinkedList<LinkedList<String>> leftovers;
-	/**
-	 * No šīs gramatikas izsecinātās paradigmas.
-	 */
-	public HashSet<Integer> paradigm;
-	/**
-	 * Struktūra, kurā tiek savākta papildus informāciju par citiem šķirkļu
-	 * vārdiem / pamatformām (kodā daudzviet saukti par alternatīvajām lemmām),
-	 * ja gramatika tādu satur.
-	 * Kartējums no paradigmas uz lemmas/karodziņu kopas pārīšiem. Karodziņu
-	 * kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai" atšķiras
-	 * no pamata lemmas.
-	 * TODO: pāriet uz List<THeader>
-	 */
-	public MappingSet<Integer, Tuple<TLemma, Flags>> altLemmas;
 
 	/**
 	 * Zināmie saīsinājumi un to atšifrējumi.
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
-
-	public TGram()
-	{
-		orig = null;
-		flags = null;
-		leftovers = null;
-		paradigm = null;
-		altLemmas = null;
-	}
+	
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
@@ -571,6 +558,7 @@ public class TGram implements HasToJSON
 	 * Gramatikas struktūras JSON reprezentācija, kas iekļauj arī sākotnējo
 	 * gramatikas tekstu.
 	 */
+	@Override
 	public String toJSON()
 	{
 		return toJSON(true);
@@ -584,121 +572,26 @@ public class TGram implements HasToJSON
 	 */
 	public String toJSON (boolean printOrig)
 	{
-		return toJSON(paradigm, altLemmas, flags, leftovers, orig, printOrig);
-	}
-
-	/**
-	 * Izveido JSON reprezentāciju TGram elementa stilā no datiem, kas padoti no
-	 * ārpuses.
-	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
-	 * atgriešanu.
-	 */
-	public static String toJSON (HashSet<Integer> paradigm, Flags flags)
-	{
-		return toJSON(paradigm, null, flags, null, "", false);
-	}
-	/**
-	 * Izveido JSON reprezentāciju TGram elementa stilā no padotiem datiem.
-	 * Iekšējai lietošanai.
-	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
-	 * atgriešanu.
-	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
-	 */
-	protected static String toJSON (
-			HashSet<Integer> paradigm, MappingSet<Integer, Tuple<TLemma, Flags>> altLemmas,
-			Flags flags, LinkedList<LinkedList<String>> leftovers, String orig, boolean printOrig)
-	{
-		StringBuilder res = new StringBuilder();
-		
-		res.append("\"Gram\":{");
-		boolean hasPrev = false;
-		
-		if (paradigm != null && !paradigm.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Paradigm\":");
-			res.append(JSONUtils.simplesToJSON(paradigm));
-			hasPrev = true;
-		}
-		
-		if (altLemmas != null && !altLemmas.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"AltLemmas\":{");
-			Iterator<Integer> it = altLemmas.keySet().iterator();
-			while (it.hasNext())
-			{
-				Integer next = it.next();
-				if (!altLemmas.getAll(next).isEmpty())
-				{
-					res.append("\"");
-					res.append(JSONObject.escape(next.toString()));
-					res.append("\":[");
-					Iterator<Tuple<TLemma, Flags>> flagIt = altLemmas.getAll(next).iterator();
-					while (flagIt.hasNext())
-					{
-						Tuple<TLemma, Flags> alt = flagIt.next();
-						//res.append("{");
-						//res.append(alt.first.toJSON());
-						if (alt.second != null && !alt.second.pairings.isEmpty())
-						{
-							res.append(THeader.toJSON(alt.first, next, alt.second, false));
-
-							//res.append(", ");
-							//res.append("\"Flags\":");
-							//res.append(JSONUtils.mappingSetToJSON(alt.second.pairings));
-						}
-						//res.append("}");
-						if (flagIt.hasNext()) res.append(", ");
-					}
-					
-					res.append("]");
-					if (it.hasNext()) res.append(", ");
-				}
-			}
-			res.append("}");
-			hasPrev = true;
-		}
-		
-
-		if (flags != null && !flags.pairings.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Flags\":");
-			res.append(JSONUtils.mappingSetToJSON(flags.pairings));
-			hasPrev = true;
-		}
-		
 		if (leftovers != null && leftovers.size() > 0)
 		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Leftovers\":[");
-			
+			StringBuilder additional = new StringBuilder();
+			additional.append("\"Leftovers\":[");
 			Iterator<LinkedList<String>> it = leftovers.iterator();
 			while (it.hasNext())
 			{
 				LinkedList<String> next = it.next();
 				if (!next.isEmpty())
 				{
-					res.append(JSONUtils.simplesToJSON(next));
-					if (it.hasNext()) res.append(", ");
+					additional.append(JSONUtils.simplesToJSON(next));
+					if (it.hasNext()) additional.append(", ");
 				}
 			}
-			res.append("]");
-			hasPrev = true;
+			additional.append("]");
+			return toJSON(paradigm, altLemmas, flags, orig, printOrig, additional.toString());
 		}
-		
-		if (printOrig && orig != null && orig.length() > 0)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Original\":\"");
-			res.append(JSONObject.escape(orig));
-			res.append("\"");
-			hasPrev = true;
-		}
-		
-		res.append("}");
-		return res.toString();
+		else return toJSON(paradigm, altLemmas, flags, orig, printOrig, null);
+
 	}
+
 	
 }

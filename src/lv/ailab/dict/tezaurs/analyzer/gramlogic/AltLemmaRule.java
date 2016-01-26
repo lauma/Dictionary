@@ -1,6 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
+import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
@@ -33,5 +33,5 @@ public interface AltLemmaRule
 	public int apply(String gramText, String lemma,
 			HashSet<Integer> paradigmCollector,
 			Flags flagCollector,
-			MappingSet<Integer, Tuple<TLemma, Flags>> altLemmasCollector);
+			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector);
 }

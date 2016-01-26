@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToJSON;
@@ -35,18 +36,18 @@ import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 /**
  * n (nozīme / nozīmes nianse) field.
  */
-public class Sense implements HasToJSON
+public class TSense implements HasToJSON
 {
 	
 	/**
 	 * gram field  is optional here.
 	 */
-	public Gram grammar;
+	public TGram grammar;
 	
 	/**
 	 * d (definīcija) field.
 	 */
-	public Gloss gloss;
+	public TGloss gloss;
 	
 	/**
 	 * id field.
@@ -57,13 +58,13 @@ public class Sense implements HasToJSON
 	 * g_piem (piemēru grupa) field, optional here.
 	 */
 	
-	public LinkedList<Phrase> examples = null;
+	public LinkedList<TPhrase> examples = null;
 	/**
 	 * g_an (apakšnozīmju grupa) field, optional here.
 	 */
-	public LinkedList<Sense> subsenses = null;
+	public LinkedList<TSense> subsenses = null;
 			
-	public Sense ()
+	public TSense()
 	{
 		grammar = null;
 		gloss = null;
@@ -75,7 +76,7 @@ public class Sense implements HasToJSON
 	/**
 	 * @param lemma is used for grammar parsing.
 	 */
-	public Sense (Node nNode, String lemma)
+	public TSense(Node nNode, String lemma)
 	{
 		NodeList fields = nNode.getChildNodes(); 
 		for (int i = 0; i < fields.getLength(); i++)
@@ -83,7 +84,7 @@ public class Sense implements HasToJSON
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram"))
-				grammar = new Gram (field, lemma);
+				grammar = new TGram(field, lemma);
 			else if (fieldname.equals("d"))
 			{
 				NodeList glossFields = field.getChildNodes();
@@ -95,7 +96,7 @@ public class Sense implements HasToJSON
 					{
 						if (gloss != null)
 							System.err.println("d entry contains more than one \'t\'");
-						gloss = new Gloss (glossField);
+						gloss = new TGloss(glossField);
 					}
 					else if (!glossFieldname.equals("#text")) // Text nodes here are ignored.
 						System.err.printf("d entry field %s not processed\n", glossFieldname);
@@ -121,11 +122,11 @@ public class Sense implements HasToJSON
 		if (grammar == null) return false;
 		return grammar.paradigmCount() > 0;
 		//if (grammar.hasParadigm()) return true;
-		//for (Phrase e : examples)
+		//for (TPhrase e : examples)
 		//{
 		//	if (e.hasParadigm()) return true;
 		//}
-		//for (Sense s : subsenses)
+		//for (TSense s : subsenses)
 		//{
 		//	if (s.hasParadigm()) return true;
 		//}
@@ -157,9 +158,9 @@ public class Sense implements HasToJSON
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (grammar!= null && grammar.paradigmCount() > 0)
 			paradigms.addAll(grammar.paradigm);
-		if (examples != null) for (Phrase e : examples)
+		if (examples != null) for (TPhrase e : examples)
 			paradigms.addAll(e.getAllMentionedParadigms());
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			paradigms.addAll(s.getAllMentionedParadigms());
 		return paradigms;
 	}
@@ -172,9 +173,9 @@ public class Sense implements HasToJSON
 		Flags flags = new Flags();
 		if (grammar != null && grammar.flags != null)
 			flags.addAll(grammar.flags);
-		if (examples != null) for (Phrase e : examples)
+		if (examples != null) for (TPhrase e : examples)
 			flags.addAll(e.getUsedFlags());
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			flags.addAll(s.getUsedFlags());
 		return flags;
 	}
@@ -188,9 +189,9 @@ public class Sense implements HasToJSON
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);
-		if (examples != null) for (Phrase e : examples)
+		if (examples != null) for (TPhrase e : examples)
 			counts.addAll(e.getFlagCounts());
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			counts.addAll(s.getFlagCounts());
 		return counts;
 	}
@@ -199,11 +200,11 @@ public class Sense implements HasToJSON
 	public boolean hasUnparsedGram()
 	{
 		if (grammar != null && grammar.hasUnparsedGram()) return true;
-		if (examples != null) for (Phrase e : examples)
+		if (examples != null) for (TPhrase e : examples)
 		{
 			if (e.hasUnparsedGram()) return true;
 		}
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 		{
 			if (s.hasUnparsedGram()) return true;
 		}			

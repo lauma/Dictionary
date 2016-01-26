@@ -8,7 +8,7 @@ import lv.ailab.dict.utils.Tuple;
 
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
- * Gram.processBeginingWithPatterns(String, String)
+ * TGram.processBeginingWithPatterns(String, String)
  * Likumi kas jālieto ar Rule.applyDirect().
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek

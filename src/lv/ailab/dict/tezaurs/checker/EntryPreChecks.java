@@ -34,7 +34,7 @@ public class EntryPreChecks
 			dict.bad.addNewEntry(entry, "Trūkst šķirkļa vārda");
 			return false;
 		}
-		if (!entry.fullText.contains(" ")) // Šis normāli neizpildās, ja nav kļūdas Entry konstruktorā?
+		if (!entry.fullText.contains(" ")) // Šis normāli neizpildās, ja nav kļūdas TEntry konstruktorā?
 		{
 			dict.bad.addNewEntry(entry, "Trūkst šķirkļa vārda / šķirklī nav nevienas atstarpes");
 			return false;

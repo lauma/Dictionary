@@ -3,10 +3,10 @@ package lv.ailab.dict.tezaurs.analyzer;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
-import lv.ailab.dict.tezaurs.analyzer.struct.Entry;
-import lv.ailab.dict.tezaurs.analyzer.struct.Header;
+import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
+import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.tezaurs.analyzer.struct.Flags;
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Trio;
 import lv.ailab.dict.utils.Tuple;
 import org.json.simple.JSONObject;
@@ -120,7 +120,7 @@ public class StatsCollector
 	}
 
 
-    public void countEntry( Entry entry) throws IOException
+    public void countEntry( TEntry entry) throws IOException
 	{
         overallCount++;
         if (entry.hasParadigm()) hasParadigm++;
@@ -152,7 +152,7 @@ public class StatsCollector
 		if (collectPrononcations)
         	for (String p : entry.collectPronunciations())
             	pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
-        for (Header h : entry.getAllHeaders())
+        for (THeader h : entry.getAllHeaders())
         {
 			if (h.gram == null) continue;
 			if (collectFirstConj &&
@@ -170,7 +170,7 @@ public class StatsCollector
         }
 		if (collectWithRegexp != null)
 		{
-			for (Header h : entry.getAllHeaders())
+			for (THeader h : entry.getAllHeaders())
 			{
 				if (collectWithRegexp.matcher(h.lemma.text).matches())
 				{
@@ -219,7 +219,7 @@ public class StatsCollector
 
     }
 
-	protected void writeInWordlist(Entry entry) throws IOException
+	protected void writeInWordlist(TEntry entry) throws IOException
 	{
 		if (wordlistOut == null) return;
 		StringBuilder line = new StringBuilder();

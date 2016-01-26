@@ -4,7 +4,7 @@ import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
-import lv.ailab.dict.tezaurs.analyzer.struct.Flags;
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;

@@ -24,18 +24,18 @@ import org.json.simple.JSONObject;
 /**
  * d (definīcija) field.
  */
-public class Gloss implements HasToJSON
+public class TGloss implements HasToJSON
 {
 	/**
 	 * t (teksts) field.
 	 */
 	public String text = null;
 	
-	public Gloss (Node dNode)
+	public TGloss(Node dNode)
 	{
 		text = dNode.getTextContent();
 	}
-	public Gloss (String text)
+	public TGloss(String text)
 	{
 		this.text = text;
 	}

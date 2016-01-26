@@ -6,7 +6,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
- * Gram.processBeginingWithPatterns(String, String)
+ * TGram.processBeginingWithPatterns(String, String)
  * Likumi, kas veido alternatīvās formas.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek

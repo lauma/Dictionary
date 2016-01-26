@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.StatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
+import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
-
-import lv.ailab.dict.tezaurs.analyzer.struct.Entry;
 
 public class DictionaryXmlToJson
 {
@@ -127,7 +126,7 @@ public class DictionaryXmlToJson
 			Node entryNode = dicReader.readNexEntry();
 			while (entryNode != null)
 			{
-				Entry entry = new Entry(entryNode);
+				TEntry entry = new TEntry(entryNode);
 				sc.countEntry(entry);
 
 				// Print out all pronunciations.

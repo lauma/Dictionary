@@ -3,8 +3,8 @@ package lv.ailab.dict.tezaurs.analyzer.gramdata;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
-import lv.ailab.dict.tezaurs.analyzer.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.struct.Lemma;
+import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
@@ -745,7 +745,7 @@ public class RulesAsFunctions
 	 */
 	public static int processInParticipleFormFlag(String gramText,
 			Flags flagCollector, MappingSet<Integer,
-						Tuple<Lemma, Flags>> altLemmasCollector)
+						Tuple<TLemma, Flags>> altLemmasCollector)
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
@@ -767,7 +767,7 @@ public class RulesAsFunctions
 				usedType = Keys.OFTEN_USED_IN_FORM;
 			for (String newLemma : newLemmas)
 			{
-				Lemma altLemma = new Lemma(newLemma);
+				TLemma altLemma = new TLemma(newLemma);
 				Flags altParams = new Flags();
 
 				flagCollector.add(Features.POS__VERB);

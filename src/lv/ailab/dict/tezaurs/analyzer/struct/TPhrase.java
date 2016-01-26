@@ -19,6 +19,7 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import java.util.*;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToJSON;
@@ -31,7 +32,7 @@ import org.json.simple.JSONObject;
 /**
  * piem (piemērs) and fraz (frazeoloģisms) fields.
  */
-public class Phrase implements HasToJSON
+public class TPhrase implements HasToJSON
 {
 	/**
 	 * t (teksts) field.
@@ -41,21 +42,21 @@ public class Phrase implements HasToJSON
 	/**
 	 * gram field  is optional here.
 	 */
-	public Gram grammar;
+	public TGram grammar;
 
 	/**
 	 * n field is optional here.
 	 */
-	public LinkedList<Sense> subsenses;
+	public LinkedList<TSense> subsenses;
 	
-	public Phrase()
+	public TPhrase()
 	{
 		text = null;
 		grammar = null;
 		subsenses = null;
 	}
 
-	public Phrase (Node piemNode, String lemma)
+	public TPhrase(Node piemNode, String lemma)
 	{
 		text = null;
 		grammar = null;
@@ -67,11 +68,11 @@ public class Phrase implements HasToJSON
 			if (fieldname.equals("t"))
 				text = field.getTextContent();
 			else if (fieldname.equals("gram"))
-				grammar = new Gram (field, lemma);
+				grammar = new TGram(field, lemma);
 			else if (fieldname.equals("n"))
 			{
 				if (subsenses == null) subsenses = new LinkedList<>();
-				Sense newMade = new Sense (field, lemma);
+				TSense newMade = new TSense(field, lemma);
 				if (newMade.gloss.text.matches("\\(a\\).*?\\(b\\).*"))
 				{
 					if (!newMade.glossOnly())
@@ -86,18 +87,18 @@ public class Phrase implements HasToJSON
 						// Te principā varētu pārtaisīt pirmo burtu uz lielo,
 						// bet es neriskēju - ja nu ir kas specifisks?
 						// Saīsinājums vai kas tāds?
-						newMade.gloss = new Gloss(
+						newMade.gloss = new TGloss(
 								text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim());
 						subsenses.add(newMade);
 						text = text.substring(text.indexOf("(" + ids.charAt(1) + ")"));
-						newMade = new Sense();
+						newMade = new TSense();
 						nextOrd++;
 						ids = ids.substring(1);
 					}
 					// Te principā varētu pārtaisīt pirmo burtu uz lielo, bet es
 					// neriskēju - ja nu ir kas specifisks? Saīsinājums vai kas
 					// tāds?
-					newMade.gloss = new Gloss(text.substring(3).trim());
+					newMade.gloss = new TGloss(text.substring(3).trim());
 					newMade.ordNumber = nextOrd.toString();
 					subsenses.add(newMade);
 
@@ -121,7 +122,7 @@ public class Phrase implements HasToJSON
 	public boolean hasParadigm()
 	{
 		if (grammar != null && grammar.paradigmCount() > 0) return true;
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 		{
 			if (s.hasParadigm()) return true;
 		}
@@ -145,7 +146,7 @@ public class Phrase implements HasToJSON
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (grammar != null && grammar.paradigmCount() > 0)
 			paradigms.addAll(grammar.paradigm);
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			paradigms.addAll(s.getAllMentionedParadigms());
 		return paradigms;
 	}
@@ -158,7 +159,7 @@ public class Phrase implements HasToJSON
 		Flags flags = new Flags();
 		if (grammar != null && grammar.flags != null)
 			flags.addAll(grammar.flags);
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			flags.addAll(s.getUsedFlags());
 		return flags;
 	}
@@ -172,7 +173,7 @@ public class Phrase implements HasToJSON
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 			counts.addAll(s.getFlagCounts());
 		return counts;
 	}
@@ -180,7 +181,7 @@ public class Phrase implements HasToJSON
 	public boolean hasUnparsedGram()
 	{
 		if (grammar != null && grammar.hasUnparsedGram()) return true;
-		if (subsenses != null) for (Sense s : subsenses)
+		if (subsenses != null) for (TSense s : subsenses)
 		{
 			if (s.hasUnparsedGram()) return true;
 		}			

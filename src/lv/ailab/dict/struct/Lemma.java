@@ -1,27 +1,29 @@
 /*******************************************************************************
- * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma Pretkalniņa
- * 
+ *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     This program is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *******************************************************************************/
-package lv.ailab.dict.tezaurs.analyzer.struct;
+package lv.ailab.dict.struct;
 
+/**
+ * Vārdforma (vf Tēzaura XML).
+ * @author Lauma
+ */
 import lv.ailab.dict.utils.HasToJSON;
 
 import org.json.simple.JSONObject;
-import org.w3c.dom.Node;
-
 import java.util.ArrayList;
 
 /**
@@ -34,52 +36,37 @@ public class Lemma implements HasToJSON
 	 * ru (runa) field, optional here.
 	 */
 	public String[] pronunciation;
-	
-	public Lemma ()
+
+	public Lemma()
 	{
 		text = null;
 		pronunciation = null;
 	}
-	public Lemma (String lemma)
+	public Lemma(String lemma)
 	{
 		text = lemma;
 		pronunciation = null;
-	}		
-	public Lemma (Node vfNode)
-	{
-		text = vfNode.getTextContent();
-
-		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		if ("".equals(pronString)) return;
-		if (pronString.contains(", arī "))
-			pronunciation = pronString.split(", arī ");
-		else if (pronString.contains(","))
-			pronunciation = pronString.split(",");
-		else pronunciation = new String[] {pronString};
-		for (int i = 0; i < pronunciation.length; i++)
-		{
-			pronunciation[i] = pronunciation[i].trim();
-			if (pronunciation[i].startsWith("["))
-				pronunciation[i] = pronunciation[i].substring(1);
-			if (pronunciation[i].endsWith("]"))
-				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
-		}
-
 	}
-	
+
+	public Lemma(String lemma, String[] pronunciation)
+	{
+		text = lemma;
+		this.pronunciation = pronunciation;
+	}
+
 	/**
-	 *  Set lemma and check if the information isn't already filled, to
-	 *  detect possible overwritten data.
+	 *  Uzstāda lemmu un pārbauda, vai tā jau nav bijusi uzstādīta, par to
+	 *  pabrīdinot.
 	 */
 	public void set(String lemmaText) {
 		if (text != null)
 			System.err.printf(
-				"Duplicate info for field 'lemma' : '%s' and '%s'", text,
-				lemmaText);
+					"Duplicēts saturs laukam 'lemma' : '%s' un '%s'", text,
+					lemmaText);
 		text = lemmaText;
 	}
-	
-	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
+
+	// Šo vajag, lai lemmas liktu hash struktūrās (hasmap, hashset).
 	@Override
 	public boolean equals (Object o)
 	{
@@ -90,15 +77,15 @@ public class Lemma implements HasToJSON
 				&& (pronunciation == null && ((Lemma) o).pronunciation == null
 				|| pronunciation != null && pronunciation.equals(((Lemma) o).pronunciation));
 	}
-	
-	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
+
+	// Šo vajag, lai lemmas liktu hash struktūrās (hasmap, hashset).
 	@Override
 	public int hashCode()
 	{
 		return 1721 *(text == null ? 1 : text.hashCode())
 				+ (pronunciation == null ? 1 : pronunciation.hashCode());
 	}
-	
+
 	public String toJSON()
 	{
 		StringBuilder res = new StringBuilder();

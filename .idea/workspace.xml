@@ -2,115 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryChecker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToSingleTxt.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryXmlToJson.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/AbbrMap.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/AltLemmaRules.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/DirectRules.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/RulesAsFunctions.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltLemmaSubRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/BaseRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/FirstConjRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/RegularVerbRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleSubRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/Loaders.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Flags.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gloss.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Header.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Lemma.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Phrase.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Sense.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Sources.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/BadEntries.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ExceptionList.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/GlobalChecks.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Markers.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ReferenceList.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Stats.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/io/XlsOutputer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/CountingSet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/HasToJSON.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/JSONUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/MappingSet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/StringUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/Trio.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/Tuple.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryChecker.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryChecker.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryDic2Xml.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryDic2Xml.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToDic.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryToDic.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryToSingleTxt.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryToSingleTxt.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryXmlToJson.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/Features.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Features.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/Keys.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Keys.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/Values.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/AbbrMap.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AbbrMap.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/AltLemmaRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/DirectRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/OptHypernRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/OptHypernRules.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/RulesAsFunctions.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramdata/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltEndingRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltLemmaRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltLemmaSubRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaSubRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/BaseRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/BaseRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/FirstConjRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FirstConjRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/RegularVerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/RegularVerbRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/Rule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/Rule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/SimpleSubRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/SimpleSubRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/Loaders.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/Loaders.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/StaxReader.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/StaxReader.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/ThesaurusReadingException.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/ThesaurusReadingException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Entry.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Flags.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Flags.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gloss.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gloss.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gram.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Header.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Header.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Lemma.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Lemma.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Phrase.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Phrase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Sense.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sense.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/Sources.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sources.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/BadEntries.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/BadEntries.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Dictionary.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/Dictionary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryChecks.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/EntryChecks.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/EntryPreChecks.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/EntryPreChecks.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ExceptionList.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/ExceptionList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/GlobalChecks.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/GlobalChecks.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Markers.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/Markers.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/ReferenceList.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/ReferenceList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/checker/Stats.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/Stats.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/io/DocLoader.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/io/DocLoader.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/io/XlsOutputer.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/io/XlsOutputer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/package-info.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/package-info.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/CountingSet.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/CountingSet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/HasToJSON.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/HasToJSON.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/JSONUtils.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/JSONUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/MappingSet.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/MappingSet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/StringUtils.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/StringUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/Trio.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/Trio.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/Tuple.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/utils/Tuple.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Lemma.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Flags.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Flags.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gloss.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGloss.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Header.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Lemma.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TLemma.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Phrase.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TPhrase.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sense.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSense.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sources.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSources.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AbbrMap.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AbbrMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/OptHypernRules.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/OptHypernRules.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/BaseRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/BaseRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FirstConjRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FirstConjRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/RegularVerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/RegularVerbRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/Rule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/Rule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/ThirdPersVerbRule.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/Loaders.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/Loaders.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/EntryPreChecks.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/EntryPreChecks.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,84 +50,13 @@
     <favorites_list name="Dictionary" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DictionaryXmlToJson.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4974093">
-              <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Values.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StatsCollector.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="213" column="20" selection-start-line="213" selection-start-column="20" selection-end-line="213" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Entry.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Entry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="358" column="17" selection-start-line="358" selection-start-column="12" selection-end-line="358" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Keys.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Keys.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="24" selection-start-line="137" selection-start-column="24" selection-end-line="137" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbbrMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AbbrMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="364" column="73" selection-start-line="364" selection-start-column="73" selection-end-line="364" selection-end-column="73" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Features.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Features.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="68" column="65" selection-start-line="68" selection-start-column="65" selection-end-line="68" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="package-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -218,15 +66,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/VerbRule.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/JSONUtils.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/OptHypernRules.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/DirectRules.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/ParticipleLogic.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/RulesAsFunctions.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/CountingMap.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/utils/CountingSet.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/flagconst/package-info.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/io/package-info.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/struct/package-info.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/gramlogic/AltNounNomLemmaRule.java" />
@@ -269,6 +108,15 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/analyzer/StatsCollector.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/tezaurs/DictionaryXmlToJson.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSources.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSense.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TPhrase.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGloss.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TLemma.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Lemma.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Flags.java" />
       </list>
     </option>
   </component>
@@ -383,6 +231,84 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tezaurs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dict" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tezaurs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dict" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tezaurs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="struct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dict" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="struct" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -692,7 +618,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="1" width="1282" height="767" extended-state="1" />
+    <frame x="0" y="1" width="1282" height="767" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -704,6 +630,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.168" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20373377" sideWeight="0.73675764" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25361156" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20373377" sideWeight="0.26324236" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11282468" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -716,7 +643,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2544" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -753,13 +679,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/utils/Tuple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22071308">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.67840374">
@@ -949,45 +868,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Phrase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="47" selection-start-line="95" selection-start-column="47" selection-end-line="95" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gloss.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Lemma.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5572917">
-          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/io/Loaders.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7336683">
           <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sources.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028475711">
-          <caret line="52" column="39" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Sense.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028475711">
-          <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
         </state>
       </provider>
     </entry>
@@ -1011,13 +895,6 @@
         <state vertical-scroll-proportion="0.05782313">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Flags.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -1049,7 +926,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Gram.java">
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="171" column="30" selection-start-line="171" selection-start-column="30" selection-end-line="171" selection-end-column="30" />
@@ -1081,34 +958,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AbbrMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="364" column="73" selection-start-line="364" selection-start-column="73" selection-end-line="364" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.642487">
-          <caret line="111" column="48" selection-start-line="111" selection-start-column="48" selection-end-line="111" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/Entry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="358" column="17" selection-start-line="358" selection-start-column="12" selection-end-line="358" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1121,11 +974,105 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23488773">
+          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+          <folding>
+            <element signature="e#1605#1606#0" expanded="true" />
+            <element signature="e#1643#1644#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4974093">
           <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028333334">
+          <caret line="75" column="17" selection-start-line="75" selection-start-column="17" selection-end-line="75" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSense.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0033333">
+          <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TPhrase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9833333">
+          <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.55">
+          <caret line="111" column="48" selection-start-line="111" selection-start-column="48" selection-end-line="111" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028333334">
+          <caret line="358" column="8" selection-start-line="358" selection-start-column="8" selection-end-line="358" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGloss.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53833336">
+          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+          <folding>
+            <element signature="e#1356#1357#0" expanded="true" />
+            <element signature="e#1379#1380#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Flags.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48166665">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Lemma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48166665">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TLemma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="81" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1238#1239#0" expanded="true" />
+            <element signature="e#1257#1258#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

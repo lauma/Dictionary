@@ -19,8 +19,8 @@ package lv.ailab.dict.tezaurs.analyzer.io;
 
 import java.util.LinkedList;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.Phrase;
-import lv.ailab.dict.tezaurs.analyzer.struct.Sense;
+import lv.ailab.dict.tezaurs.analyzer.struct.TPhrase;
+import lv.ailab.dict.tezaurs.analyzer.struct.TSense;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -34,10 +34,10 @@ public class Loaders
 	 * reconcile.
 	 * @param lemma is used for grammar parsing.
 	 */
-	public static LinkedList<Sense> loadSenses(Node allSenses, String lemma)
+	public static LinkedList<TSense> loadSenses(Node allSenses, String lemma)
 	{
-		//if (senses == null) senses = new LinkedList<Sense>();
-		LinkedList<Sense> res = new LinkedList<>();
+		//if (senses == null) senses = new LinkedList<TSense>();
+		LinkedList<TSense> res = new LinkedList<>();
 		NodeList senseNodes = allSenses.getChildNodes(); 
 		for (int i = 0; i < senseNodes.getLength(); i++)
 		{
@@ -47,7 +47,7 @@ public class Loaders
 			//assume (not tested) that it matches the order in file
 			if (sense.getNodeName().equals("n"))
 			{
-				Sense newSense = new Sense(sense, lemma);
+				TSense newSense = new TSense(sense, lemma);
 				res.add(newSense);
 				//if (newSense.gloss == null)
 				//	System.out.println ("Nav gloss! "+ lemma);
@@ -64,16 +64,16 @@ public class Loaders
 	 * Load contents of g_fraz or g_piem field into LinkedList.
 	 * @param lemma is used for grammar parsing.
 	 */
-	public static LinkedList<Phrase> loadPhrases(
+	public static LinkedList<TPhrase> loadPhrases(
 			Node allPhrases, String lemma, String subElemName)
 	{
-		LinkedList<Phrase> res = new LinkedList<>();
+		LinkedList<TPhrase> res = new LinkedList<>();
 		NodeList phraseNodes = allPhrases.getChildNodes(); 
 		for (int i = 0; i < phraseNodes.getLength(); i++)
 		{
 			Node phrase = phraseNodes.item(i);
 			if (phrase.getNodeName().equals(subElemName))
-				res.add(new Phrase(phrase, lemma));
+				res.add(new TPhrase(phrase, lemma));
 			else if (!phrase.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
 					"%s lauks %s netiek apstrādāts, jo sagaida tikai '%s'.\n",

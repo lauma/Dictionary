@@ -21,6 +21,7 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.HasToJSON;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,25 +29,25 @@ import org.w3c.dom.NodeList;
 /**
  * v (vārds) field.
  */
-public class Header implements HasToJSON
+public class THeader implements HasToJSON
 {
 	/**
 	 * vf (vārdforma) field.
 	 */
-	public Lemma lemma;
+	public TLemma lemma;
 	/**
 	 * gram (gamatika) field, optional here.
 	 */
-	public Gram gram;
+	public TGram gram;
 	
 	
-	public Header ()
+	public THeader()
 	{
 		lemma = null;
 		gram = null;
 	}
 	
-	public Header (Node vNode)
+	public THeader(Node vNode)
 	{
 		NodeList fields = vNode.getChildNodes();
 		LinkedList<Node> postponed = new LinkedList<>();
@@ -58,7 +59,7 @@ public class Header implements HasToJSON
 			{
 				if (lemma != null)
 					System.err.printf("vf with lemma \"%s\" contains more than one \'vf\'\n", lemma.text);
-				lemma = new Lemma(field);
+				lemma = new TLemma(field);
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
 				postponed.add(field);
@@ -70,7 +71,7 @@ public class Header implements HasToJSON
 		{
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram")) // grammar
-				gram = new Gram (field, lemma.text);
+				gram = new TGram(field, lemma.text);
 			else System.err.printf(
 					"v entry field %s not processed\n", fieldname);				
 		}				
@@ -106,10 +107,10 @@ public class Header implements HasToJSON
 	}
 
 	/**
-	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā Header.
+	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā THeader.
 	 * @param addTitle vai sākumā pielikt "\"Header\":"
 	 */
-	public static String toJSON(Lemma lemma, int paradigm, Flags flags, boolean addTitle)
+	public static String toJSON(TLemma lemma, int paradigm, Flags flags, boolean addTitle)
 	{
 		StringBuilder res = new StringBuilder();
 
@@ -117,7 +118,7 @@ public class Header implements HasToJSON
 		res.append("{");
 		res.append(lemma.toJSON());
 		res.append(", ");
-		res.append(Gram.toJSON(new HashSet<Integer>(){{add(paradigm);}}, flags));
+		res.append(TGram.toJSON(new HashSet<Integer>(){{add(paradigm);}}, flags));
 
 		res.append("}");
 		return res.toString();

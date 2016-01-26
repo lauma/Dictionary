@@ -29,17 +29,17 @@ import org.w3c.dom.Node;
 /**
  * avots field.
  */
-public class Sources implements HasToJSON
+public class TSources implements HasToJSON
 {
 	public String orig;
 	public LinkedList<String> s;
 	
-	public Sources ()
+	public TSources()
 	{
 		orig = null; s = null;
 	}
 	
-	public Sources (Node avotsNode)
+	public TSources(Node avotsNode)
 	{
 		orig = avotsNode.getTextContent();
 		s = parseSources(orig);

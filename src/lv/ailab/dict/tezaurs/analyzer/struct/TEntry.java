@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.Tuple;
@@ -36,7 +37,7 @@ import lv.ailab.dict.utils.JSONUtils;
  * Datu struktūra, kas apraksta vienu vārdnīcas šķirkli un visu, no kā tas
  * sastāv.
  */
-public class Entry
+public class TEntry
 {
 	/**
 	 * Lauks: i.
@@ -46,27 +47,27 @@ public class Entry
 	/**
 	 * Lauks: avots.
 	 */
-	public Sources sources;
+	public TSources sources;
 
 	/**
 	 * Lemma un uz visu šķirkli attiecināmā gramatika.
 	 */
-	public Header head;
+	public THeader head;
 
 	/**
 	 * Lauks: g_n (nozīmju grupa).
 	 */
-	public LinkedList<Sense> senses;
+	public LinkedList<TSense> senses;
 	
 	/**
 	 * Lauks: g_fraz (frazeoloģismu grupa).
 	 */
-	public LinkedList<Phrase> phrases;
+	public LinkedList<TPhrase> phrases;
 	
 	/**
 	 * g_de (atvasinājumu grupa) field.
 	 */
-	public LinkedList<Header> derivs;
+	public LinkedList<THeader> derivs;
 
 	/**
 	 * Lauks: ref (atsauce uz šķirkli).
@@ -84,7 +85,7 @@ public class Entry
 	 * ietver arī visu analīzi.
 	 * @param sNode XML DOM elements, kas atbilst "s"
 	 */
-	public Entry(Node sNode)
+	public TEntry(Node sNode)
 	{
 		NodeList fields = sNode.getChildNodes();
 		LinkedList<Node> postponed = new LinkedList<>();
@@ -96,7 +97,7 @@ public class Entry
 			{
 				if (head != null)
 					System.err.printf("Šķirklis \"%s\" satur vairāk kā vienu \'v\'!\n", head.lemma.text);
-				head = new Header (field);
+				head = new THeader(field);
 			}
 			else if (!fieldname.equals("#text")) // Teksta elementus ignorē, jo šajā vietā ir tikai atstarpjojums.
 				postponed.add(field);
@@ -105,7 +106,7 @@ public class Entry
 		{
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("avots")) // avoti
-				sources = new Sources (field);
+				sources = new TSources(field);
 			else if (fieldname.equals("g_n")) // visas nozīmes
 				senses = Loaders.loadSenses(field, head.lemma.text);
 			else if (fieldname.equals("g_fraz")) //frazeoloģiskās vienības
@@ -144,7 +145,7 @@ public class Entry
 				{
 					Node derivSubNode = derivSubNodes.item(j);
 					if (derivSubNode.getNodeName().equals("v"))
-						derivs.add(new Header(derivSubNode));
+						derivs.add(new THeader(derivSubNode));
 					else if (!derivSubNode.getNodeName().equals("#text")) // Text nodes here are ignored.
 						System.err.printf(
 							"g_de/de lauks %s netiek apstrādāts, jo tiek sagaidīts 'v'.\n",
@@ -201,16 +202,16 @@ public class Entry
 	{
 		boolean res = head.paradigmCount() > 0;
 		//if (head.hasParadigm()) return true;
-		if (senses != null) for (Sense s : senses)
+		if (senses != null) for (TSense s : senses)
 		{
 			if (s != null && s.hasParadigm()) res = true; //return true;
 		}
-		//for (Phrase e : phrases)
+		//for (TPhrase e : phrases)
 		//{
 		//	if (e.hasParadigm()) return true;
 		//}
 		
-		if (derivs != null) for (Header d : derivs)
+		if (derivs != null) for (THeader d : derivs)
 		{
 			if (d.paradigmCount() <= 0) res = false;
 		}
@@ -250,11 +251,11 @@ public class Entry
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (head != null && head.paradigmCount() > 0)
 			paradigms.addAll(head.gram.paradigm);
-		if (senses != null) for (Sense s : senses)
+		if (senses != null) for (TSense s : senses)
 			paradigms.addAll(s.getAllMentionedParadigms());
-		if (phrases != null) for (Phrase p : phrases)
+		if (phrases != null) for (TPhrase p : phrases)
 			paradigms.addAll(p.getAllMentionedParadigms());
-		if (derivs != null) for (Header d : derivs)
+		if (derivs != null) for (THeader d : derivs)
 			if (d.paradigmCount() > 0) paradigms.addAll(d.gram.paradigm);
 		return paradigms;
 	}
@@ -267,11 +268,11 @@ public class Entry
 		Flags flags = new Flags();
 		if (head != null && head.gram != null && head.gram.flags != null)
 			flags.addAll(head.gram.flags);
-		if (senses != null) for (Sense s : senses)
+		if (senses != null) for (TSense s : senses)
 			flags.addAll(s.getUsedFlags());
-		if (phrases != null) for (Phrase p : phrases)
+		if (phrases != null) for (TPhrase p : phrases)
 			flags.addAll(p.getUsedFlags());
-		if (derivs != null) for (Header d : derivs)
+		if (derivs != null) for (THeader d : derivs)
 			if (d.gram != null && d.gram.flags != null)
 				flags.addAll(d.gram.flags);
 		return flags;
@@ -286,7 +287,7 @@ public class Entry
 		if (head != null && head.gram != null && head.gram.flags != null)
 			head.gram.flags.count(counts);
 
-		if (derivs != null) for (Header d : derivs)
+		if (derivs != null) for (THeader d : derivs)
 			if (d.gram != null && d.gram.flags != null)
 				d.gram.flags.count(counts);
 		return counts;
@@ -295,9 +296,9 @@ public class Entry
 	/**
 	 * Get all headers - main header + derivatives
 	 */
-	public ArrayList<Header> getAllHeaders()
+	public ArrayList<THeader> getAllHeaders()
 	{
-		ArrayList<Header> res = new ArrayList<>();
+		ArrayList<THeader> res = new ArrayList<>();
 		res.add(head);
 		if (derivs != null) res.addAll(derivs);
 		return res;
@@ -306,15 +307,15 @@ public class Entry
 	public boolean hasUnparsedGram()
 	{
 		if (head != null && head.hasUnparsedGram()) return true;
-		if (senses != null) for (Sense s : senses)
+		if (senses != null) for (TSense s : senses)
 		{
 			if (s.hasUnparsedGram()) return true;
 		}
-		if (phrases != null) for (Phrase e : phrases)
+		if (phrases != null) for (TPhrase e : phrases)
 		{
 			if (e.hasUnparsedGram()) return true;
 		}
-		if (derivs != null) for (Header h : derivs)
+		if (derivs != null) for (THeader h : derivs)
 		{
 			if (h.hasUnparsedGram()) return true;
 		}
@@ -330,7 +331,7 @@ public class Entry
 		if (head.lemma.pronunciation != null)
 			res.addAll(Arrays.asList(head.lemma.pronunciation));
 		if (derivs == null || derivs.isEmpty()) return res;
-		for (Header h : derivs)
+		for (THeader h : derivs)
 		{
 			if (h.lemma.pronunciation != null)
 				res.addAll(Arrays.asList(h.lemma.pronunciation));

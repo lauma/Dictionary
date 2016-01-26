@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
@@ -39,7 +40,7 @@ import lv.ailab.dict.utils.JSONUtils;
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
  */
-public class Gram implements HasToJSON
+public class TGram implements HasToJSON
 {
 
 	/**
@@ -65,16 +66,16 @@ public class Gram implements HasToJSON
 	 * Kartējums no paradigmas uz lemmas/karodziņu kopas pārīšiem. Karodziņu
 	 * kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai" atšķiras
 	 * no pamata lemmas.
-	 * TODO: pāriet uz List<Header>
+	 * TODO: pāriet uz List<THeader>
 	 */
-	public MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas;
+	public MappingSet<Integer, Tuple<TLemma, Flags>> altLemmas;
 
 	/**
 	 * Zināmie saīsinājumi un to atšifrējumi.
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
-	public Gram ()
+	public TGram()
 	{
 		orig = null;
 		flags = null;
@@ -85,7 +86,7 @@ public class Gram implements HasToJSON
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
-	public Gram (Node gramNode, String lemma)
+	public TGram(Node gramNode, String lemma)
 	{
 		orig = gramNode.getTextContent();
 		leftovers = null;
@@ -587,7 +588,7 @@ public class Gram implements HasToJSON
 	}
 
 	/**
-	 * Izveido JSON reprezentāciju Gram elementa stilā no datiem, kas padoti no
+	 * Izveido JSON reprezentāciju TGram elementa stilā no datiem, kas padoti no
 	 * ārpuses.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
@@ -597,14 +598,14 @@ public class Gram implements HasToJSON
 		return toJSON(paradigm, null, flags, null, "", false);
 	}
 	/**
-	 * Izveido JSON reprezentāciju Gram elementa stilā no padotiem datiem.
+	 * Izveido JSON reprezentāciju TGram elementa stilā no padotiem datiem.
 	 * Iekšējai lietošanai.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
 	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
 	 */
 	protected static String toJSON (
-			HashSet<Integer> paradigm, MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas,
+			HashSet<Integer> paradigm, MappingSet<Integer, Tuple<TLemma, Flags>> altLemmas,
 			Flags flags, LinkedList<LinkedList<String>> leftovers, String orig, boolean printOrig)
 	{
 		StringBuilder res = new StringBuilder();
@@ -633,15 +634,15 @@ public class Gram implements HasToJSON
 					res.append("\"");
 					res.append(JSONObject.escape(next.toString()));
 					res.append("\":[");
-					Iterator<Tuple<Lemma, Flags>> flagIt = altLemmas.getAll(next).iterator();
+					Iterator<Tuple<TLemma, Flags>> flagIt = altLemmas.getAll(next).iterator();
 					while (flagIt.hasNext())
 					{
-						Tuple<Lemma, Flags> alt = flagIt.next();
+						Tuple<TLemma, Flags> alt = flagIt.next();
 						//res.append("{");
 						//res.append(alt.first.toJSON());
 						if (alt.second != null && !alt.second.pairings.isEmpty())
 						{
-							res.append(Header.toJSON(alt.first, next, alt.second, false));
+							res.append(THeader.toJSON(alt.first, next, alt.second, false));
 
 							//res.append(", ");
 							//res.append("\"Flags\":");

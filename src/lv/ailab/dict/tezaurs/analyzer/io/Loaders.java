@@ -19,6 +19,8 @@ package lv.ailab.dict.tezaurs.analyzer.io;
 
 import java.util.LinkedList;
 
+import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.struct.TPhrase;
 import lv.ailab.dict.tezaurs.analyzer.struct.TSense;
 
@@ -34,10 +36,10 @@ public class Loaders
 	 * reconcile.
 	 * @param lemma is used for grammar parsing.
 	 */
-	public static LinkedList<TSense> loadSenses(Node allSenses, String lemma)
+	public static LinkedList<Sense> loadSenses(Node allSenses, String lemma)
 	{
 		//if (senses == null) senses = new LinkedList<TSense>();
-		LinkedList<TSense> res = new LinkedList<>();
+		LinkedList<Sense> res = new LinkedList<>();
 		NodeList senseNodes = allSenses.getChildNodes(); 
 		for (int i = 0; i < senseNodes.getLength(); i++)
 		{
@@ -64,10 +66,10 @@ public class Loaders
 	 * Load contents of g_fraz or g_piem field into LinkedList.
 	 * @param lemma is used for grammar parsing.
 	 */
-	public static LinkedList<TPhrase> loadPhrases(
+	public static LinkedList<Phrase> loadPhrases(
 			Node allPhrases, String lemma, String subElemName)
 	{
-		LinkedList<TPhrase> res = new LinkedList<>();
+		LinkedList<Phrase> res = new LinkedList<>();
 		NodeList phraseNodes = allPhrases.getChildNodes(); 
 		for (int i = 0; i < phraseNodes.getLength(); i++)
 		{

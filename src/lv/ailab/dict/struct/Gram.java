@@ -20,7 +20,6 @@ package lv.ailab.dict.struct;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import lv.ailab.dict.utils.HasToJSON;
 import org.json.simple.JSONObject;

@@ -1,10 +1,10 @@
 package lv.ailab.dict.tezaurs.analyzer;
 
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
-import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Trio;
@@ -152,7 +152,7 @@ public class StatsCollector
 		if (collectPrononcations)
         	for (String p : entry.collectPronunciations())
             	pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
-        for (THeader h : entry.getAllHeaders())
+        for (Header h : entry.getAllHeaders())
         {
 			if (h.gram == null) continue;
 			if (collectFirstConj &&
@@ -170,7 +170,7 @@ public class StatsCollector
         }
 		if (collectWithRegexp != null)
 		{
-			for (THeader h : entry.getAllHeaders())
+			for (Header h : entry.getAllHeaders())
 			{
 				if (collectWithRegexp.matcher(h.lemma.text).matches())
 				{

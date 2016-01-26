@@ -77,17 +77,12 @@ public class THeader extends Header
 	
 	public boolean hasUnparsedGram()
 	{
-		if (gram == null) return false;
-		// Interesanti, vai ar refleksiju šis triks būtu ātrāks?
-		try
-		{
-			TGram tg = (TGram)gram;
-			return tg.hasUnparsedGram();
-		} catch (ClassCastException e)
-		{
-			return false;
-		}
-
+		return THeader.hasUnparsedGram(this);
+	}
+	public static boolean hasUnparsedGram(Header header)
+	{
+		if (header == null || header.gram == null) return false;
+		return TGram.hasUnparsedGram(header.gram);
 	}
 	
 	public String toJSON()

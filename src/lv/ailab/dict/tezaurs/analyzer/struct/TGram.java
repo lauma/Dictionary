@@ -70,6 +70,7 @@ public class TGram extends Gram
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
+
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
@@ -107,8 +108,26 @@ public class TGram extends Gram
 	 */
 	public boolean hasUnparsedGram()
 	{
+		return TGram.hasUnparsedGram(this);
+	}
+
+	/**
+	 * Šitais strādā pareizi tikai tad, ja cleanupLeftovers tiek izsaukts katru
+	 * reizi, kad vajag.
+	 */
+	public static boolean hasUnparsedGram(Gram gram)
+	{
 		//cleanupLeftovers();		// Kas ir labāk - nagaidīti blakusefekti vai tas, ka nestrādā, ja lieto nepareizi?
-		return !leftovers.isEmpty();
+		if (gram == null) return false;
+		try
+		{
+			// Interesanti, vai ar refleksiju šis triks būtu ātrāks?
+			return !((TGram) gram).leftovers.isEmpty();
+		}
+		catch (ClassCastException e)
+		{
+			return false;
+		}
 	}
 	
 	/**

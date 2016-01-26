@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma Pretkalniņa
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -19,48 +19,19 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import java.util.*;
 
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
+import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.json.simple.JSONObject;
 
 /**
- * piem (piemērs) and fraz (frazeoloģisms) fields.
+ * piem (piemērs) un fraz (frazeoloģisms) lauki Tēzaura XML.
  */
-public class TPhrase implements HasToJSON
+public class TPhrase extends Phrase
 {
-	/**
-	 * t (teksts) field.
-	 */
-	public String text;		
-
-	/**
-	 * gram field  is optional here.
-	 */
-	public TGram grammar;
-
-	/**
-	 * n field is optional here.
-	 */
-	public LinkedList<TSense> subsenses;
-	
-	public TPhrase()
-	{
-		text = null;
-		grammar = null;
-		subsenses = null;
-	}
-
 	public TPhrase(Node piemNode, String lemma)
 	{
-		text = null;
-		grammar = null;
-		subsenses = null;
+		super();
 		NodeList fields = piemNode.getChildNodes(); 
 		for (int i = 0; i < fields.getLength(); i++) {
 			Node field = fields.item(i);
@@ -76,7 +47,7 @@ public class TPhrase implements HasToJSON
 				if (newMade.gloss.text.matches("\\(a\\).*?\\(b\\).*"))
 				{
 					if (!newMade.glossOnly())
-						System.err.println("Trying to seperate piem gloss in multiple senses despite nonempty other fields.");
+						System.err.println("Cenšas sadalīt \'piem\' skaidrojumu vairākās apakšnozīmēs, lai gan citi lauki  nav tukši.");
 					String text = newMade.gloss.text;
 					Integer nextOrd = 1;
 					String ids = "abcdefghijklmnop";
@@ -113,113 +84,24 @@ public class TPhrase implements HasToJSON
 				System.err.printf("piem entry field %s not processed\n", fieldname);
 		}			
 	}
-	
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 * Currently to trigger true, paradigm must be set for either header or
-	 * at least one sense.
-	 */
-	public boolean hasParadigm()
-	{
-		if (grammar != null && grammar.paradigmCount() > 0) return true;
-		if (subsenses != null) for (TSense s : subsenses)
-		{
-			if (s.hasParadigm()) return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 */
-	public boolean hasMultipleParadigms()
-	{
-		return getAllMentionedParadigms().size() > 1;
-	}
-
-	/*
-	 * For statistical use only. Collects all paradigm numbers mentioned in this
- 	 * structure
- 	 */
-	protected Set<Integer> getAllMentionedParadigms()
-	{
-		HashSet<Integer> paradigms = new HashSet<>();
-		if (grammar != null && grammar.paradigmCount() > 0)
-			paradigms.addAll(grammar.paradigm);
-		if (subsenses != null) for (TSense s : subsenses)
-			paradigms.addAll(s.getAllMentionedParadigms());
-		return paradigms;
-	}
-
-	/**
-	 * Get all flags used in this structure.
-	 */
-	public Flags getUsedFlags()
-	{
-		Flags flags = new Flags();
-		if (grammar != null && grammar.flags != null)
-			flags.addAll(grammar.flags);
-		if (subsenses != null) for (TSense s : subsenses)
-			flags.addAll(s.getUsedFlags());
-		return flags;
-	}
-
-	/**
-	 * Count all flags used in this structure.
-	 */
-	public CountingSet<Tuple<Keys, String>> getFlagCounts()
-	{
-		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
-
-		if (grammar != null && grammar.flags != null)
-			grammar.flags.count(counts);
-		if (subsenses != null) for (TSense s : subsenses)
-			counts.addAll(s.getFlagCounts());
-		return counts;
-	}
 
 	public boolean hasUnparsedGram()
 	{
-		if (grammar != null && grammar.hasUnparsedGram()) return true;
-		if (subsenses != null) for (TSense s : subsenses)
+		return hasUnparsedGram(this);
+	}
+
+	public static boolean hasUnparsedGram(Phrase phrase)
+	{
+		if (phrase == null) return false;
+		if (phrase.grammar != null && TGram.hasUnparsedGram(phrase.grammar))
+			return true;
+
+		if (phrase.subsenses != null) for (Sense s : phrase.subsenses)
 		{
-			if (s.hasUnparsedGram()) return true;
-		}			
+			if (TSense.hasUnparsedGram(s)) return true;
+		}
+
 		return false;
 	}
-	
-	public String toJSON()
-	{
-		StringBuilder res = new StringBuilder();
-		
-		//res.append("\"Phrase\":{");
-		boolean hasPrev = false;
-		
-		if (text != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Text\":\"");
-			res.append(JSONObject.escape(text));
-			res.append("\"");
-			hasPrev = true;
-		}	
-		
-		if (grammar != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append(grammar.toJSON());
-			hasPrev = true;
-		}
-		
-		if (subsenses != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Senses\":");
-			res.append(JSONUtils.objectsToJSON(subsenses));
-			hasPrev = true;
-		}
-		
-		//res.append("}");
-		return res.toString();
-	}
+
 }

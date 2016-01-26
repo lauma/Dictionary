@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma Pretkalniņa
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -17,60 +17,22 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.json.simple.JSONObject;
 
-import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 
 /**
  * n (nozīme / nozīmes nianse) field.
  */
-public class TSense implements HasToJSON
+public class TSense extends Sense
 {
-	
-	/**
-	 * gram field  is optional here.
-	 */
-	public TGram grammar;
-	
-	/**
-	 * d (definīcija) field.
-	 */
-	public TGloss gloss;
-	
-	/**
-	 * id field.
-	 */
-	public String ordNumber;
-	
-	/**
-	 * g_piem (piemēru grupa) field, optional here.
-	 */
-	
-	public LinkedList<TPhrase> examples = null;
-	/**
-	 * g_an (apakšnozīmju grupa) field, optional here.
-	 */
-	public LinkedList<TSense> subsenses = null;
-			
 	public TSense()
 	{
-		grammar = null;
-		gloss = null;
-		examples = null;
-		subsenses = null;
-		ordNumber = null;
+		super();
 	}
 	
 	/**
@@ -95,11 +57,11 @@ public class TSense implements HasToJSON
 					if (glossFieldname.equals("t"))
 					{
 						if (gloss != null)
-							System.err.println("d entry contains more than one \'t\'");
+							System.err.println("\'d\' elements satur vairāk kā vienu \'t\'");
 						gloss = new TGloss(glossField);
 					}
 					else if (!glossFieldname.equals("#text")) // Text nodes here are ignored.
-						System.err.printf("d entry field %s not processed\n", glossFieldname);
+						System.err.printf("\'d\' elements \'%s\' netiek apstrādāts\n", glossFieldname);
 				}
 			}
 			else if (fieldname.equals("g_piem"))
@@ -107,154 +69,32 @@ public class TSense implements HasToJSON
 			else if (fieldname.equals("g_an"))
 				subsenses = Loaders.loadSenses(field, lemma);
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
-				System.err.printf("n entry field %s not processed\n", fieldname);
+				System.err.printf("\'n\' elements \'%s\' netiek apstrādāts\n", fieldname);
 		}
 		ordNumber = ((org.w3c.dom.Element)nNode).getAttribute("nr");
 		if ("".equals(ordNumber)) ordNumber = null;
 	}
-	
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 * Currently only grammar paradigm is considered.
-	 */
-	public boolean hasParadigm()
-	{
-		if (grammar == null) return false;
-		return grammar.paradigmCount() > 0;
-		//if (grammar.hasParadigm()) return true;
-		//for (TPhrase e : examples)
-		//{
-		//	if (e.hasParadigm()) return true;
-		//}
-		//for (TSense s : subsenses)
-		//{
-		//	if (s.hasParadigm()) return true;
-		//}
-		//return false;
-	}
-
-	public boolean glossOnly()
-	{
-		return gloss != null && grammar == null &&
-				(ordNumber == null || ordNumber.equals("")) &&
-				(examples == null || examples.isEmpty()) &&
-				(subsenses == null || subsenses.isEmpty());
-	}
-
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 */
-	public boolean hasMultipleParadigms()
-	{
-		return getAllMentionedParadigms().size() > 1;
-	}
-
-	/*
-	 * For statistical use only. Collects all paradigm numbers mentioned in this
-	 * structure
-	 */
-	protected Set<Integer> getAllMentionedParadigms()
-	{
-		HashSet<Integer> paradigms = new HashSet<>();
-		if (grammar!= null && grammar.paradigmCount() > 0)
-			paradigms.addAll(grammar.paradigm);
-		if (examples != null) for (TPhrase e : examples)
-			paradigms.addAll(e.getAllMentionedParadigms());
-		if (subsenses != null) for (TSense s : subsenses)
-			paradigms.addAll(s.getAllMentionedParadigms());
-		return paradigms;
-	}
-
-	/**
-	 * Get all flags used in this structure.
-	 */
-	public Flags getUsedFlags()
-	{
-		Flags flags = new Flags();
-		if (grammar != null && grammar.flags != null)
-			flags.addAll(grammar.flags);
-		if (examples != null) for (TPhrase e : examples)
-			flags.addAll(e.getUsedFlags());
-		if (subsenses != null) for (TSense s : subsenses)
-			flags.addAll(s.getUsedFlags());
-		return flags;
-	}
-
-	/**
-	 * Count all flags used in this structure.
-	 */
-	public CountingSet<Tuple<Keys, String>> getFlagCounts()
-	{
-		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
-
-		if (grammar != null && grammar.flags != null)
-			grammar.flags.count(counts);
-		if (examples != null) for (TPhrase e : examples)
-			counts.addAll(e.getFlagCounts());
-		if (subsenses != null) for (TSense s : subsenses)
-			counts.addAll(s.getFlagCounts());
-		return counts;
-	}
-
 
 	public boolean hasUnparsedGram()
 	{
-		if (grammar != null && grammar.hasUnparsedGram()) return true;
-		if (examples != null) for (TPhrase e : examples)
+		return hasUnparsedGram(this);
+	}
+
+	public static boolean hasUnparsedGram(Sense sense)
+	{
+		if (sense == null) return false;
+		if (sense.grammar != null && TGram.hasUnparsedGram(sense.grammar))
+			return true;
+
+		if (sense.examples != null) for (Phrase e : sense.examples)
 		{
-			if (e.hasUnparsedGram()) return true;
+			if (TPhrase.hasUnparsedGram(e)) return true;
 		}
-		if (subsenses != null) for (TSense s : subsenses)
+		if (sense.subsenses != null) for (Sense s : sense.subsenses)
 		{
-			if (s.hasUnparsedGram()) return true;
+			if (TSense.hasUnparsedGram(s)) return true;
 		}			
 		return false;
 	}
-	
-	public String toJSON()
-	{
-		StringBuilder res = new StringBuilder();
-		
-		boolean hasPrev = false;
-		
-		if (ordNumber != null)
-		{
-			res.append("\"SenseID\":\"");
-			res.append(JSONObject.escape(ordNumber));
-			res.append("\"");
-			hasPrev = true;
-		}
-		
-		if (grammar != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append(grammar.toJSON());
-			hasPrev = true;
-		}
-		
-		if (gloss != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append(gloss.toJSON());
-			hasPrev = true;
-		}
-		
-		if (examples != null && !examples.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Examples\":");
-			res.append(JSONUtils.objectsToJSON(examples));
-			hasPrev = true;
-		}
-		
-		if (subsenses != null && !subsenses.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Senses\":");
-			res.append(JSONUtils.objectsToJSON(subsenses));
-			hasPrev = true;
-		}
-		
-		return res.toString();
-	}
+
 }

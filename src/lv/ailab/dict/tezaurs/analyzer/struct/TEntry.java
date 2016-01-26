@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013-2015 Institute of Mathematics and Computer Science, University of Latvia
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -17,63 +17,23 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
+import lv.ailab.dict.struct.*;
+import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.json.simple.JSONObject;
-
-import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
-import lv.ailab.dict.utils.JSONUtils;
 
 /**
- * Datu struktūra, kas apraksta vienu vārdnīcas šķirkli un visu, no kā tas
- * sastāv.
+ * Tēzaura šķirklis, papildināts ar ielādēšanas/apstrādes mehānismiem un
+ * melnajiem sarakstiem.
  */
-public class TEntry
+public class TEntry extends Entry
 {
-	/**
-	 * Lauks: i.
-	 */
-	public String homId;
-
-	/**
-	 * Lauks: avots.
-	 */
-	public TSources sources;
-
-	/**
-	 * Lemma un uz visu šķirkli attiecināmā gramatika.
-	 */
-	public THeader head;
-
-	/**
-	 * Lauks: g_n (nozīmju grupa).
-	 */
-	public LinkedList<TSense> senses;
-	
-	/**
-	 * Lauks: g_fraz (frazeoloģismu grupa).
-	 */
-	public LinkedList<TPhrase> phrases;
-	
-	/**
-	 * g_de (atvasinājumu grupa) field.
-	 */
-	public LinkedList<THeader> derivs;
-
-	/**
-	 * Lauks: ref (atsauce uz šķirkli).
-	 */
-	public String reference;
-	
 	/**
 	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
 	 * Skatīt arī inBlacklist().
@@ -192,208 +152,28 @@ public class TEntry
 		} //TODO - any IO issues ignored
 		return blist;
 	}
-	
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 * Currently to trigger true, paradigm must be set for all derivatives and
-	 * either for header or at least one sense.
-	 */
-	public boolean hasParadigm()
-	{
-		boolean res = head.paradigmCount() > 0;
-		//if (head.hasParadigm()) return true;
-		if (senses != null) for (TSense s : senses)
-		{
-			if (s != null && s.hasParadigm()) res = true; //return true;
-		}
-		//for (TPhrase e : phrases)
-		//{
-		//	if (e.hasParadigm()) return true;
-		//}
-		
-		if (derivs != null) for (THeader d : derivs)
-		{
-			if (d.paradigmCount() <= 0) res = false;
-		}
-		return res;
-	}
-
-	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 */
-	public boolean hasMultipleParadigms()
-	{
-		return getAllMentionedParadigms().size() > 1;
-	}
-
-	/**
-	 * Vai šim šķirklim ir atsauce uz citu šķirkli?
-	 */
-	public boolean hasReference()
-	{
-		return (reference != null && reference.length() > 0);
-	}
-
-	/**
-	 * Vai šķirklim ir saturīgs saturs, kas nav reference.
-	 */
-	public boolean hasContents()
-	{
-		return (senses != null || phrases != null || derivs != null);
-	}
-
-	/*
-	 * For statistical use only. Collects all paradigm numbers mentioned in this
- 	 * structure
- 	 */
-	protected Set<Integer> getAllMentionedParadigms()
-	{
-		HashSet<Integer> paradigms = new HashSet<>();
-		if (head != null && head.paradigmCount() > 0)
-			paradigms.addAll(head.gram.paradigm);
-		if (senses != null) for (TSense s : senses)
-			paradigms.addAll(s.getAllMentionedParadigms());
-		if (phrases != null) for (TPhrase p : phrases)
-			paradigms.addAll(p.getAllMentionedParadigms());
-		if (derivs != null) for (THeader d : derivs)
-			if (d.paradigmCount() > 0) paradigms.addAll(d.gram.paradigm);
-		return paradigms;
-	}
-
-	/**
-	 * Get all flags used in this structure.
-	 */
-	public Flags getUsedFlags()
-	{
-		Flags flags = new Flags();
-		if (head != null && head.gram != null && head.gram.flags != null)
-			flags.addAll(head.gram.flags);
-		if (senses != null) for (TSense s : senses)
-			flags.addAll(s.getUsedFlags());
-		if (phrases != null) for (TPhrase p : phrases)
-			flags.addAll(p.getUsedFlags());
-		if (derivs != null) for (THeader d : derivs)
-			if (d.gram != null && d.gram.flags != null)
-				flags.addAll(d.gram.flags);
-		return flags;
-	}
-
-	/**
-	 * Count all flags used in this structure.
-	 */
-	public CountingSet<Tuple<Keys, String>> getFlagCounts()
-	{
-		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
-		if (head != null && head.gram != null && head.gram.flags != null)
-			head.gram.flags.count(counts);
-
-		if (derivs != null) for (THeader d : derivs)
-			if (d.gram != null && d.gram.flags != null)
-				d.gram.flags.count(counts);
-		return counts;
-	}
-
-	/**
-	 * Get all headers - main header + derivatives
-	 */
-	public ArrayList<THeader> getAllHeaders()
-	{
-		ArrayList<THeader> res = new ArrayList<>();
-		res.add(head);
-		if (derivs != null) res.addAll(derivs);
-		return res;
-	}
 
 	public boolean hasUnparsedGram()
 	{
-		if (head != null && head.hasUnparsedGram()) return true;
-		if (senses != null) for (TSense s : senses)
+		return TEntry.hasUnparsedGram(this);
+	}
+	public static boolean hasUnparsedGram(Entry entry)
+	{
+		if (entry == null) return false;
+		if (THeader.hasUnparsedGram(entry.head)) return true;
+		if (entry.senses != null) for (Sense s : entry.senses)
 		{
-			if (s.hasUnparsedGram()) return true;
+			if (TSense.hasUnparsedGram(s)) return true;
 		}
-		if (phrases != null) for (TPhrase e : phrases)
+		if (entry.phrases != null) for (Phrase p : entry.phrases)
 		{
-			if (e.hasUnparsedGram()) return true;
+			if (TPhrase.hasUnparsedGram(p)) return true;
 		}
-		if (derivs != null) for (THeader h : derivs)
+		if (entry.derivs != null) for (Header h : entry.derivs)
 		{
-			if (h.hasUnparsedGram()) return true;
+			if (THeader.hasUnparsedGram(h)) return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * Collects all pronunciations elements from lemmas and derivatives.
-	 */
-	public ArrayList<String> collectPronunciations()
-	{
-		ArrayList<String> res = new ArrayList<> ();
-		if (head.lemma.pronunciation != null)
-			res.addAll(Arrays.asList(head.lemma.pronunciation));
-		if (derivs == null || derivs.isEmpty()) return res;
-		for (THeader h : derivs)
-		{
-			if (h.lemma.pronunciation != null)
-				res.addAll(Arrays.asList(h.lemma.pronunciation));
-		}
-		return res;
-	}
-		
-	/**
-	 * Build a JSON representation, designed to load in Tezaurs2 webapp well.
-	 * @return JSON representation
-	 */
-	public String toJSON()
-	{
-		StringBuilder s = new StringBuilder();
-		s.append('{');
-		s.append(head.toJSON());
-		/*if (paradigm != 0) {
-			s.append(String.format(",\"Paradigm\":%d", paradigm));
-			if (analyzer != null) {
-				// generate a list of inflected wordforms and format them as JSON array
-				ArrayList<Wordform> inflections = analyzer.generateInflections(lemma.l, paradigm);
-				s.append(String.format(",\"Inflections\":%s", formatInflections(inflections) )); 
-			}
-		}//*/
-		
-		if (homId != null)
-		{
-			s.append(", \"ID\":\"");
-			s.append(JSONObject.escape(homId));
-			s.append("\"");
-		}
-
-		if (senses != null && !senses.isEmpty())
-		{
-			s.append(", \"Senses\":");
-			s.append(JSONUtils.objectsToJSON(senses));
-		}
-		
-		if (phrases != null)
-		{
-			s.append(", \"Phrases\":");
-			s.append(JSONUtils.objectsToJSON(phrases));
-		}
-		
-		if (derivs != null)
-		{
-			s.append(", \"Derivatives\":");
-			s.append(JSONUtils.objectsToJSON(derivs));
-		}
-		if (reference != null && reference.length() > 0)
-		{
-			s.append(", \"Reference\":\"");
-			s.append(JSONObject.escape(reference));
-			s.append("\"");
-		}
-		if (sources != null && !sources.isEmpty())
-		{
-			s.append(",");
-			s.append(sources.toJSON());
-		}		
-		s.append('}');
-		return s.toString();
 	}
 
 }

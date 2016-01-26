@@ -69,7 +69,7 @@ public class TGram extends Gram
 	 * Zināmie saīsinājumi un to atšifrējumi.
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
-	
+
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */

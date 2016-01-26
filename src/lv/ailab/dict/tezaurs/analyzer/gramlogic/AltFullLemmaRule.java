@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
@@ -116,7 +117,7 @@ public class AltFullLemmaRule implements AltLemmaRule
 	@Override
 	public int apply(String gramText, String lemma,
 			HashSet<Integer> paradigmCollector, Flags flagCollector,
-			MappingSet<Integer, Tuple<TLemma, Flags>> altLemmasCollector)
+			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector)
 	{
 		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
 		int newBegin = -1;
@@ -126,7 +127,7 @@ public class AltFullLemmaRule implements AltLemmaRule
 		if (gramText.startsWith(pattern))
 		{
 			newBegin = pattern.length();
-			TLemma altLemma = new TLemma(lemmaStub + lemmaLogic.altLemmaEnding);
+			Lemma altLemma = new TLemma(lemmaStub + lemmaLogic.altLemmaEnding);
 			Flags altParams = new Flags();
 			if (lemmaLogic.altLemmaFlags != null)
 				for (Tuple<Keys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);

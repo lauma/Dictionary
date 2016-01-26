@@ -2,8 +2,9 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
+import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
@@ -219,7 +220,7 @@ public class AltEndingRule implements AltLemmaRule
 	@Override
 	public int apply(String gramText, String lemma,
 			HashSet<Integer> paradigmCollector, Flags flagCollector,
-			MappingSet<Integer, Tuple<TLemma, Flags>> altLemmasCollector)
+			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector)
 	{
 		int newBegin = -1;
 		Matcher m = pattern.matcher(gramText);
@@ -233,7 +234,7 @@ public class AltEndingRule implements AltLemmaRule
 						&& lemma.length() >= rule.lemmaEndingCutLength)
 				{
 					String lemmaStub = lemma.substring(0, lemma.length() - rule.lemmaEndingCutLength);
-					TLemma altLemma = new TLemma(lemmaStub + rule.altLemmaEnding);
+					Lemma altLemma = new TLemma(lemmaStub + rule.altLemmaEnding);
 					Flags altParams = new Flags();
 					if (rule.altLemmaFlags != null)
 						altParams.addAll(rule.altLemmaFlags);

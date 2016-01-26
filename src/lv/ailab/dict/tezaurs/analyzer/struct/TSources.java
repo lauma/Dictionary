@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2013, 2014 Institute of Mathematics and Computer Science, University of Latvia
+ * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma Pretkalniņa
  * 
  *     This program is free software: you can redistribute it and/or modify
@@ -19,26 +19,17 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-
-
 import org.w3c.dom.Node;
 
+import lv.ailab.dict.struct.Sources;
+
 /**
- * avots field.
+ * Avotu saraksts (lauks avots Tēzaura XML).
  */
-public class TSources implements HasToJSON
+public class TSources extends Sources
 {
 	public String orig;
-	public LinkedList<String> s;
-	
-	public TSources()
-	{
-		orig = null; s = null;
-	}
-	
+
 	public TSources(Node avotsNode)
 	{
 		orig = avotsNode.getTextContent();
@@ -47,15 +38,10 @@ public class TSources implements HasToJSON
 			System.err.printf(
 				"Field 'sources' '%s' can't be parsed!\n", orig);
 	}
-	
-	public boolean isEmpty()
-	{
-		return s == null || s.isEmpty();
-	}
-	
+
 	/**
-	 *  Parse sources from string and check if the information isn't already
-	 *  filled, to detect possible overwritten data.
+	 *  Izvelk avotus no teksta un pārbauda, vai šis lauks jau nav ticis
+	 *  aizpildīts iepriekš.
 	 */
 	public void set(String sourcesText)
 	{
@@ -70,19 +56,7 @@ public class TSources implements HasToJSON
 			System.err.printf(
 				"Field 'sources' '%s' can't be parsed!\n", orig);
 	}
-	
-	// In case of speed problems StringBuilder can be returned.
-	public String toJSON()
-	{
-		StringBuilder res = new StringBuilder();
-		if (s != null)
-		{
-			res.append("\"Sources\":");
-			res.append(JSONUtils.simplesToJSON(s));
-		}
-		return res.toString();
-	}
-	
+
 	private static LinkedList<String> parseSources (String sourcesText)
 	{
 		if (sourcesText.startsWith("["))

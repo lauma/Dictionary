@@ -17,17 +17,14 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-/**
- * Vārdforma (vf Tēzaura XML).
- * @author Lauma
- */
 import lv.ailab.dict.utils.HasToJSON;
 
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * vf (vārdforma) field.
+ * Vārdforma (vf Tēzaura XML).
+ * @author Lauma
  */
 public class Lemma implements HasToJSON
 {
@@ -53,7 +50,6 @@ public class Lemma implements HasToJSON
 		text = lemma;
 		this.pronunciation = pronunciation;
 	}
-
 	/**
 	 *  Uzstāda lemmu un pārbauda, vai tā jau nav bijusi uzstādīta, par to
 	 *  pabrīdinot.

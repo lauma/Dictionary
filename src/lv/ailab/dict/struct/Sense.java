@@ -18,11 +18,11 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
+import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -32,7 +32,7 @@ import java.util.Set;
  * Nozīmes, nozīmes nianses vai skaidrojuma lauks.
  * @author Lauma
  */
-public class Sense implements HasToJSON
+public class Sense implements HasToJSON, HasToXML
 {
 	/**
 	 * Gramatikas lauks nav obligāts.
@@ -197,6 +197,38 @@ public class Sense implements HasToJSON
 		}
 
 		return res.toString();
+	}
+
+	/**
+	 * Nozīmes numuru iekļauj kā atribūtu, pārējo kā elementus.
+	 */
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node senseN = doc.createElement("sense");
+		if (ordNumber != null)
+		{
+			Attr ordAttr = doc.createAttribute("senseID");
+			ordAttr.setValue(ordNumber);
+			senseN.appendChild(ordAttr);
+		}
+
+		if (grammar != null) grammar.toXML(senseN);
+		if (gloss != null) gloss.toXML(senseN);
+		if (examples != null && !examples.isEmpty())
+		{
+			Node exContN = doc.createElement("examples");
+			for (Phrase e : examples) e.toXML(exContN);
+			senseN.appendChild(exContN);
+		}
+
+		if (subsenses != null && !subsenses.isEmpty())
+		{
+			Node subsContN = doc.createElement("subsenses");
+			for (Sense subs : subsenses) subs.toXML(subsContN);
+			senseN.appendChild(subsContN);
+		}
+		parent.appendChild(senseN);
 	}
 
 }

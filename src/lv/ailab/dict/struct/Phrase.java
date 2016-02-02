@@ -18,21 +18,20 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
+import lv.ailab.dict.utils.*;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Frāžu un piemēru skaidrojumi.
  * @author Lauma
  */
-public class Phrase implements HasToJSON
+public class Phrase implements HasToJSON, HasToXML
 {
 	/**
 	 * Skaidrojamā frāze.
@@ -120,6 +119,10 @@ public class Phrase implements HasToJSON
 		return counts;
 	}
 
+	/**
+	 * Ja text ir "", tad to vienalga izdrukā.
+	 * TODO vai tā ir labi?
+	 */
 	public String toJSON()
 	{
 		StringBuilder res = new StringBuilder();
@@ -153,5 +156,30 @@ public class Phrase implements HasToJSON
 
 		//res.append("}");
 		return res.toString();
+	}
+
+	/**
+	 * Ja text ir "", tad to vienalga izdrukā.
+	 * TODO vai tā ir labi?
+	 */
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node phraseN = doc.createElement("phrase");
+
+		if (text != null)
+		{
+			Node textN = doc.createElement("text");
+			textN.appendChild(doc.createTextNode(text));
+			phraseN.appendChild(textN);
+		}
+		if (grammar != null) grammar.toXML(phraseN);
+		if (subsenses != null)
+		{
+			Node sensesContN = doc.createElement("senses");
+			for (Sense s : subsenses) s.toXML(sensesContN);
+			phraseN.appendChild(sensesContN);
+		}
+		parent.appendChild(phraseN);
 	}
 }

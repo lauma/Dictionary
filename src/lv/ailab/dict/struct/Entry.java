@@ -18,12 +18,12 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.utils.HasToJSON;
-import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
+import lv.ailab.dict.utils.*;
 
 import org.json.simple.JSONObject;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ import java.util.*;
  * Datu struktūra, kas apraksta vienu vārdnīcas šķirkli un visu, no kā tas
  * sastāv.
  */
-public class Entry implements HasToJSON
+public class Entry implements HasToJSON, HasToXML
 {
 	/**
 	 * Homonīma indekss (Tezaura XML - i)
@@ -229,13 +229,13 @@ public class Entry implements HasToJSON
 			s.append(JSONUtils.objectsToJSON(senses));
 		}
 
-		if (phrases != null)
+		if (phrases != null && !phrases.isEmpty())
 		{
 			s.append(", \"Phrases\":");
 			s.append(JSONUtils.objectsToJSON(phrases));
 		}
 
-		if (derivs != null)
+		if (derivs != null && !derivs.isEmpty())
 		{
 			s.append(", \"Derivatives\":");
 			s.append(JSONUtils.objectsToJSON(derivs));
@@ -253,6 +253,52 @@ public class Entry implements HasToJSON
 		}
 		s.append('}');
 		return s.toString();
+	}
+
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node entryN = toXML(doc);
+		parent.appendChild(entryN);
+	}
+
+	public Node toXML(Document doc)
+	{
+		Node entryN = doc.createElement("Emtry");
+
+		if (homId != null)
+		{
+			Attr homAttr = doc.createAttribute("ID");
+			homAttr.setValue(homId);
+			entryN.appendChild(homAttr);
+		}
+		if (senses != null && !senses.isEmpty())
+		{
+			Node sensesContN = doc.createElement("senses");
+			for (Sense s : senses) s.toXML(sensesContN);
+			entryN.appendChild(sensesContN);
+		}
+		if (phrases != null && !phrases.isEmpty())
+		{
+			Node phrasesContN = doc.createElement("phrases");
+			for (Phrase p : phrases) p.toXML(phrasesContN);
+			entryN.appendChild(phrasesContN);
+		}
+		if (derivs != null && !derivs.isEmpty())
+		{
+			Node derivContN = doc.createElement("derivatives");
+			for (Header d : derivs) d.toXML(derivContN);
+			entryN.appendChild(derivContN);
+		}
+		if (reference != null && reference.length() > 0)
+		{
+			Node refN = doc.createElement("reference");
+			refN.appendChild(doc.createTextNode(reference));
+			entryN.appendChild(refN);
+		}
+		if (sources != null && !sources.isEmpty()) sources.toXML(entryN);
+
+		return entryN;
 	}
 
 }

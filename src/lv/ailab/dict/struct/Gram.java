@@ -20,19 +20,20 @@ package lv.ailab.dict.struct;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
-import lv.ailab.dict.utils.HasToJSON;
+import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
-
-import lv.ailab.dict.utils.MappingSet;
-import lv.ailab.dict.utils.Tuple;
-import lv.ailab.dict.utils.JSONUtils;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Gramatikas lauks.
  * @author Lauma
  */
-public class Gram implements HasToJSON
+public class Gram implements HasToJSON, HasToXML
 {
 
 	/**
@@ -105,7 +106,7 @@ public class Gram implements HasToJSON
 		return toJSON(paradigm, null, flags, "", false, null);
 	}
 	/**
-	 * Izveido JSON reprezentāciju TGram elementa stilā no padotiem datiem.
+	 * Izveido JSON reprezentāciju Gram elementa stilā no padotiem datiem.
 	 * Iekšējai lietošanai.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
@@ -132,7 +133,7 @@ public class Gram implements HasToJSON
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"AltLemmas\":{");
-			Iterator<Integer> it = altLemmas.keySet().iterator();
+			Iterator<Integer> it = altLemmas.keySet().stream().sorted().iterator();
 			while (it.hasNext())
 			{
 				Integer next = it.next();
@@ -193,6 +194,74 @@ public class Gram implements HasToJSON
 		res.append("}");
 		return res.toString();
 	}
+
+	public void toXML(Node parent)
+	{
+		toXML(parent, paradigm, altLemmas, flags, orig,
+				true);
+	}
+
+	/**
+	 * Izveido no dotajiem datiem tādu XML elementu, kā veidotu no Gram ar
+	 * šādiem datiem.
+	 */
+	public static void toXML (Node parent, HashSet<Integer> paradigm, Flags flags)
+	{
+		toXML(parent, paradigm, null, flags, null,
+				false);
+	}
+
+	/**
+	 * Iekšējai lietošanai - reālā XML izveidošanas metode, ko no ārpuses sauc,
+	 * dažus parametrus aizpildot automatiski.
+	 * @param printOrig - vai izdrukāt oriģinālo tekstu, ja tāds ir dots?
+	 */
+	protected static void toXML(
+			Node parent, HashSet<Integer> paradigm,
+			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas, Flags flags,
+			String orig, boolean printOrig)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node gramN = doc.createElement("gram");
+
+		if (paradigm != null && !paradigm.isEmpty())
+		{
+			Node paradigmContN = doc.createElement("paradigms");
+			for (Integer p : paradigm.stream().sorted().collect(Collectors.toList()))
+			{
+				Node paradigmN = doc.createElement("paradigm");
+				paradigmN.appendChild(doc.createTextNode(p.toString()));
+				paradigmContN.appendChild(paradigmN);
+			}
+			gramN.appendChild(paradigmContN);
+		}
+
+		if (altLemmas != null && !altLemmas.isEmpty())
+		{
+			Node altLemmasContN = doc.createElement("altLemmas");
+
+			for (Integer p : altLemmas.keySet().stream().sorted().collect(Collectors.toList()))
+				for (Tuple<Lemma, Flags> al : altLemmas.getAll(p))
+			{
+				Node altLemmaN = doc.createElement("altLemma");
+				Header.toXML(parent, al.first, p, al.second);
+				altLemmasContN.appendChild(altLemmaN);
+			}
+			gramN.appendChild(altLemmasContN);
+		}
+
+		if (flags != null) flags.toXML(gramN);
+
+		if (printOrig && orig != null && !orig.isEmpty())
+		{
+			Node origN = doc.createElement("original");
+			origN.appendChild(doc.createTextNode(orig));
+			gramN.appendChild(origN);
+		}
+
+		parent.appendChild(gramN);
+	}
+
 
 }
 

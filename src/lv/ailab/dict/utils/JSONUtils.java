@@ -19,6 +19,7 @@ package lv.ailab.dict.utils;
 
 import java.util.Iterator;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.json.simple.JSONObject;
 
@@ -70,7 +71,7 @@ public class JSONUtils
 			res.append("\"");
 			res.append(JSONObject.escape(key.toString()));
 			res.append("\":");
-			res.append(JSONUtils.simplesToJSON(l.getAll(key)));
+			res.append(JSONUtils.simplesToJSON(l.getAll(key).stream().sorted().collect(Collectors.toList())));
 			if (i.hasNext()) res.append(", ");
 		}
 		res.append("}");

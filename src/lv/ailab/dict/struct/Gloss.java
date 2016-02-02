@@ -19,13 +19,16 @@ package lv.ailab.dict.struct;
 
 import lv.ailab.dict.utils.HasToJSON;
 
+import lv.ailab.dict.utils.HasToXML;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Vārda skaidrojums (šobrīd tikai teksts).
  * @author Lauma
  */
-public class Gloss implements HasToJSON
+public class Gloss implements HasToJSON, HasToXML
 {
 	/**
 	 * Definīcijas teksts
@@ -37,8 +40,26 @@ public class Gloss implements HasToJSON
 		this.text = text;
 	}
 
+	/**
+	 * Gloss ir viens no retajiem elementiem, ko drukā arī, ja tas ir tukšs.
+	 * TODO vai tā ir pareizi?
+	 */
 	public String toJSON()
 	{
+		if (text == null)
+			return String.format("\"Gloss\":\"\"");
 		return String.format("\"Gloss\":\"%s\"", JSONObject.escape(text));
+	}
+
+	/**
+	 * Gloss ir viens no retajiem elementiem, ko drukā arī, ja tas ir tukšs.
+	 * TODO vai tā ir pareizi?
+	 */
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node glossN = doc.createElement("gloss");
+		if (text != null) glossN.appendChild(doc.createTextNode(text));
+		parent.appendChild(glossN);
 	}
 }

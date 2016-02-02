@@ -20,12 +20,16 @@ package lv.ailab.dict.struct;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
 import lv.ailab.dict.utils.CountingSet;
+import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Datu struktūra karodziņu uzturēšanai.
@@ -41,7 +45,7 @@ import java.util.Set;
  * Izveidots 2015-10-08.
  * @author Lauma
  */
-public class Flags
+public class Flags implements HasToXML
 {
 	public MappingSet<Keys, String> pairings;
 
@@ -158,6 +162,29 @@ public class Flags
 		accumulator.addAll(pairings.asList());
 
 		return accumulator;
+	}
+
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		if (pairings != null && !pairings.isEmpty())
+		{
+			Node flagsContN = doc.createElement("Flags");
+			for (Keys key : pairings.keySet().stream().filter(this::testKey).sorted()
+					.collect(Collectors.toList()))
+				for (String value : getAll(key).stream().sorted().collect(Collectors.toList()))
+				{
+					Node flagN = doc.createElement("flag");
+					Node keyN = doc.createElement("key");
+					keyN.appendChild(doc.createTextNode(key.toString()));
+					flagN.appendChild(keyN);
+					Node valN = doc.createElement("value");
+					valN.appendChild(doc.createTextNode(value));
+					flagN.appendChild(valN);
+					flagsContN.appendChild(flagN);
+				}
+			parent.appendChild(flagsContN);
+		}
 	}
 
 }

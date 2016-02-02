@@ -8,7 +8,7 @@ import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
 /**
- * @author Lauma, Valters Rostoks
+ * @author Lauma
  */
 public class DictionaryDic2Xml
 {
@@ -72,8 +72,7 @@ public class DictionaryDic2Xml
 		for (File f : listOfFiles)
 		{
 			String fileName = f.getName();
-			if (!fileName.endsWith(".dic"))
-				continue;
+			if (!fileName.endsWith(".dic")) continue;
 			try
 			{
 				BufferedReader in = new BufferedReader(new FileReader(inputDataPath + fileName));

@@ -19,14 +19,18 @@ package lv.ailab.dict.struct;
 
 import lv.ailab.dict.utils.HasToJSON;
 
+import lv.ailab.dict.utils.HasToXML;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 
 /**
  * Vārdforma (vf Tēzaura XML).
  * @author Lauma
  */
-public class Lemma implements HasToJSON
+public class Lemma implements HasToJSON, HasToXML
 {
 	public String text;
 	/**
@@ -86,7 +90,7 @@ public class Lemma implements HasToJSON
 	{
 		StringBuilder res = new StringBuilder();
 		res.append(String.format("\"Lemma\":\"%s\"", JSONObject.escape(text)));
-		if (pronunciation != null)
+		if (pronunciation != null && pronunciation.length > 0)
 		{
 			res.append(", \"Pronunciation\":[\"");
 			ArrayList<String> escaped = new ArrayList<>();
@@ -96,5 +100,29 @@ public class Lemma implements HasToJSON
 			res.append("\"]");
 		}
 		return res.toString();
+	}
+
+	/**
+	 * Izrunas un lemma ir atsevišķi elementi.
+	 * TODO vai tā ir labi?
+	 */
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node lemmaN = doc.createElement("lemma");
+		lemmaN.appendChild(doc.createTextNode(text));
+		parent.appendChild(lemmaN);
+		if (pronunciation != null && pronunciation.length > 0)
+		{
+			Node pronContN = doc.createElement("pronunciations");
+			for (String pron : pronunciation)
+			{
+				Node pronN = doc.createElement("pronunciation");
+				pronN.appendChild(doc.createTextNode(pron));
+				pronContN.appendChild(pronN);
+			}
+			parent.appendChild(pronContN);
+		}
+
 	}
 }

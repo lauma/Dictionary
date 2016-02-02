@@ -20,12 +20,15 @@ package lv.ailab.dict.struct;
 import java.util.HashSet;
 
 import lv.ailab.dict.utils.HasToJSON;
+import lv.ailab.dict.utils.HasToXML;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Šķirkļa "galva" - vārds + gramatika
  * @author Lauma
  */
-public class Header implements HasToJSON
+public class Header implements HasToJSON, HasToXML
 {
 	/**
 	 * Vārdforma
@@ -67,7 +70,7 @@ public class Header implements HasToJSON
 	}
 
 	/**
-	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā THeader.
+	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā Header.
 	 * @param addTitle vai sākumā pielikt "\"Header\":"
 	 */
 	public static String toJSON(Lemma lemma, int paradigm, Flags flags, boolean addTitle)
@@ -84,6 +87,25 @@ public class Header implements HasToJSON
 		return res.toString();
 	}
 
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node headerN = doc.createElement("header");
+		lemma.toXML(headerN);
+		gram.toXML(headerN);
+		parent.appendChild(headerN);
+	}
 
+	/**
+	 * Noformē dotos datus līdzīgā stilā, kā parasti formē Header.
+	 */
+	public static void toXML (Node parent, Lemma lemma, int paradigm, Flags flags)
+	{
+		Document doc = parent.getOwnerDocument();
+		Node headerN = doc.createElement("header");
+		lemma.toXML(headerN);
+		Gram.toXML(headerN, new HashSet<Integer>(){{add(paradigm);}}, flags);
+		parent.appendChild(headerN);
+	}
 
 }

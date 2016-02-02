@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
@@ -10,6 +11,7 @@ import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,25 +85,25 @@ public class RulesAsFunctions
 	 * Pārbauda, vai gramatikas teksts (pieņemot, ka tā ir verba gramatika)
 	 * satur tikai norādes par formām vai arī vēl papildus info par to, kuras no
 	 * dotajām formām ir biežākas/retākas,
-	 * @param gramTExt	analizējamais gramatikas teksts
+	 * @param gramText	analizējamais gramatikas teksts
 	 * @return	true, ja gramatikas teksts satur tikai formas; false, ja
 	 * 			gramatikas teksts satur norādes par to, kuri celmi lietojami
 	 * 			retāk un kuri - biežāk.
 	 */
-	public static boolean containsFormsOnly(String gramTExt)
+	public static boolean containsFormsOnly(String gramText)
 	{
-		return !gramTExt.matches(".*(, | \\()retāk .*");
+		return !gramText.matches(".*(, | \\()retāk .*");
 	}
 
 	/**
 	 * Pārbauda, vai gramatikas teksts (pieņemot, ka tā ir verba gramatika)
 	 * satur 1. konjugācijas paralēlformas.
-	 * @param gramTExt	analizējamais gramatikas teksts
+	 * @param gramText	analizējamais gramatikas teksts
 	 * @return	true, ja gramatikas teksts satur "1. konj.".
 	 */
-	public static boolean containsFirstConj(String gramTExt)
+	public static boolean containsFirstConj(String gramText)
 	{
-		return gramTExt.matches(".*\\b1\\.\\s*konj\\..*");
+		return gramText.matches(".*\\b1\\.\\s*konj\\..*");
 	}
 
 
@@ -745,8 +747,7 @@ public class RulesAsFunctions
 	 * @return	indekss neapstrādātās gramatikas daļas sākumam
 	 */
 	public static int processInParticipleFormFlag(String gramText,
-			Flags flagCollector, MappingSet<Integer,
-						Tuple<Lemma, Flags>> altLemmasCollector)
+			Flags flagCollector, List<Header> altLemmasCollector)
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
@@ -781,7 +782,7 @@ public class RulesAsFunctions
 					newBegin = m.group(1).length();
 					altParams.add(Features.POS__PARTICIPLE);
 					altParams.add(Features.ENTRYWORD__CHANGED_PARADIGM);
-					altLemmasCollector.put(0, new Tuple<>(altLemma, altParams));
+					altLemmasCollector.add(new Header(altLemma, 0, altParams));
 
 				} else
 				{

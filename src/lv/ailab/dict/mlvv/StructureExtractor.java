@@ -17,7 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.mlvv;
 
-import lv.ailab.dict.mlvv.analyzer.Extractor;
+import lv.ailab.dict.mlvv.analyzer.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.Normalizer;
 import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.struct.Entry;
@@ -58,7 +58,7 @@ public class StructureExtractor
 				String line = in.readLine();
 				while (line != null)
 				{
-					Entry e = Extractor.extractFromString(Normalizer.normalizeLine(line));
+					Entry e = MLVVEntry.extractFromString(Normalizer.normalizeLine(line));
 					if (e != null) dict.entries.add(e);
 					line = in.readLine();
 				}

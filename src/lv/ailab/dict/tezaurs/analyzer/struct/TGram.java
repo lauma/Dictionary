@@ -17,6 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -137,7 +138,7 @@ public class TGram extends Gram
 	private void parseGram(String lemma)
 	{
 		String correctedGram = correctOCRErrors(orig);
-		altLemmas = new MappingSet<>();
+		altLemmas = new ArrayList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))

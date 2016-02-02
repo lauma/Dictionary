@@ -45,6 +45,13 @@ public class Header implements HasToJSON, HasToXML
 		lemma = null;
 		gram = null;
 	}
+	public Header(Lemma lemma, int paradigm, Flags flags)
+	{
+		this.lemma = lemma;
+		gram = new Gram();
+		gram.flags= flags;
+		gram.paradigm = new HashSet<Integer>(){{add(paradigm);}};
+	}
 
 	public int paradigmCount()
 	{

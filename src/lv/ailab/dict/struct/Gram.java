@@ -18,8 +18,7 @@
 package lv.ailab.dict.struct;
 
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
@@ -53,12 +52,11 @@ public class Gram implements HasToJSON, HasToXML
 	 * Struktūra, kurā tiek savākta papildus informāciju par citiem šķirkļu
 	 * vārdiem / pamatformām (kodā daudzviet saukti par alternatīvajām lemmām),
 	 * ja gramatika tādu satur.
-	 * Kartējums no paradigmas uz lemmas/karodziņu kopas pārīšiem. Karodziņu
-	 * kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai" atšķiras
-	 * no pamata lemmas.
-	 * TODO: pāriet uz List<Header>
+	 * Karodziņu kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai"
+	 * atšķiras no pamata lemmas.
+	 * TODO: filtrēt vienādos.
 	 */
-	public MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas;
+	public ArrayList<Header> altLemmas;
 
 
 	public Gram()
@@ -113,8 +111,8 @@ public class Gram implements HasToJSON, HasToXML
 	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
 	 */
 	protected static String toJSON (
-			HashSet<Integer> paradigm, MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas,
-			Flags flags, String orig, boolean printOrig, String additional)
+			Set<Integer> paradigm, List<Header> altLemmas, Flags flags, String orig,
+			boolean printOrig, String additional)
 	{
 		StringBuilder res = new StringBuilder();
 
@@ -132,11 +130,12 @@ public class Gram implements HasToJSON, HasToXML
 		if (altLemmas != null && !altLemmas.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"AltLemmas\":{");
-			Iterator<Integer> it = altLemmas.keySet().stream().sorted().iterator();
+			res.append("\"AltLemmas\":");
+			res.append(JSONUtils.objectsToJSON(altLemmas));
+			/*Iterator<Header> it = altLemmas.iterator();
 			while (it.hasNext())
 			{
-				Integer next = it.next();
+				Header next = it.next();
 				if (!altLemmas.getAll(next).isEmpty())
 				{
 					res.append("\"");
@@ -163,7 +162,7 @@ public class Gram implements HasToJSON, HasToXML
 					if (it.hasNext()) res.append(", ");
 				}
 			}
-			res.append("}");
+			res.append("}");*/
 			hasPrev = true;
 		}
 
@@ -217,8 +216,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * @param printOrig - vai izdrukāt oriģinālo tekstu, ja tāds ir dots?
 	 */
 	protected static void toXML(
-			Node parent, HashSet<Integer> paradigm,
-			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmas, Flags flags,
+			Node parent, Set<Integer> paradigm, List<Header> altLemmas, Flags flags,
 			String orig, boolean printOrig)
 	{
 		Document doc = parent.getOwnerDocument();
@@ -239,15 +237,8 @@ public class Gram implements HasToJSON, HasToXML
 		if (altLemmas != null && !altLemmas.isEmpty())
 		{
 			Node altLemmasContN = doc.createElement("altLemmas");
-
-			for (Integer p : altLemmas.keySet().stream().sorted().collect(Collectors.toList()))
-				for (Tuple<Lemma, Flags> al : altLemmas.getAll(p))
-			{
-				Node altLemmaN = doc.createElement("altLemma");
-				Header.toXML(parent, al.first, p, al.second);
-				altLemmasContN.appendChild(altLemmaN);
-			}
-			gramN.appendChild(altLemmasContN);
+			for (Header al: altLemmas)
+				al.toXML(altLemmasContN);
 		}
 
 		if (flags != null) flags.toXML(gramN);

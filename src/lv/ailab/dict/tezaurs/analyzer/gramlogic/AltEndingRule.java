@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.struct.Lemma;
@@ -219,8 +220,8 @@ public class AltEndingRule implements AltLemmaRule
 	 */
 	@Override
 	public int apply(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector,
-			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector,
+			List<Header> altLemmasCollector)
 	{
 		int newBegin = -1;
 		Matcher m = pattern.matcher(gramText);
@@ -238,7 +239,7 @@ public class AltEndingRule implements AltLemmaRule
 					Flags altParams = new Flags();
 					if (rule.altLemmaFlags != null)
 						altParams.addAll(rule.altLemmaFlags);
-					altLemmasCollector.put(rule.altLemmaParadigm, new Tuple<>(altLemma, altParams));
+					altLemmasCollector.add(new Header(altLemma, rule.altLemmaParadigm, altParams));
 
 					paradigmCollector.addAll(rule.paradigms);
 					if (rule.positiveFlags != null)

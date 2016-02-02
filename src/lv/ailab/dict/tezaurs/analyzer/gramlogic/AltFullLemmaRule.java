@@ -1,15 +1,16 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,8 +117,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 	 */
 	@Override
 	public int apply(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector,
-			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector,
+			List<Header> altLemmasCollector)
 	{
 		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
 		int newBegin = -1;
@@ -131,7 +132,7 @@ public class AltFullLemmaRule implements AltLemmaRule
 			Flags altParams = new Flags();
 			if (lemmaLogic.altLemmaFlags != null)
 				for (Tuple<Keys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
-			altLemmasCollector.put(lemmaLogic.altLemmaParadigm, new Tuple<>(altLemma, altParams));
+			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigm, altParams));
 
 			paradigmCollector.addAll(lemmaLogic.paradigms);
 			if (lemmaLogic.positiveFlags != null)

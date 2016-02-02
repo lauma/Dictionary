@@ -73,7 +73,7 @@ public class Normalizer
 		// Kā var uzrakstīt smukāk Javā?
 		Pattern p = Pattern.compile("(\\p{L}\\p{M}*)(</extended>)((\\p{L}\\p{M}*)+)");
 		Matcher m = p.matcher(line);
-		while (m.matches())
+		while (m.find())
 		{
 			String target = m.group(1) + m.group(2) + m.group(3);
 			String replacement = m.group(1) + m.group(3) + m.group(2);
@@ -84,7 +84,7 @@ public class Normalizer
 		// Ieikļauj atverošās pēdiņas tekstā pēc <i> taga.
 		p = Pattern.compile("(\\p{L}\\p{M}*)</i>\"");
 		m = p.matcher(line);
-		while (m.matches())
+		while (m.find())
 		{
 			String target = m.group(1) + "</i>\"";
 			String replacement = m.group(1) + "\"</i>";
@@ -94,7 +94,7 @@ public class Normalizer
 		// Iekļauj aizverošās pēdiņas tekstā pirms </i> taga.
 		p = Pattern.compile("\"<i>(\\p{L}\\p{M}*)");
 		m = p.matcher(line);
-		while (m.matches())
+		while (m.find())
 		{
 			String target = "\"<i>" + m.group(1);
 			String replacement = "<i>\"" + m.group(1);

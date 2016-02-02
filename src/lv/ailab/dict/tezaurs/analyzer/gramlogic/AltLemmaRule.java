@@ -1,11 +1,10 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.utils.MappingSet;
-import lv.ailab.dict.utils.Tuple;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Gramatiku apstrādes likums, kurš var ne tikai radīt jaunus karodziņus un
@@ -31,7 +30,6 @@ public interface AltLemmaRule
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int apply(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			Flags flagCollector,
-			MappingSet<Integer, Tuple<Lemma, Flags>> altLemmasCollector);
+			Set<Integer> paradigmCollector, Flags flagCollector,
+			List<Header> altLemmasCollector);
 }

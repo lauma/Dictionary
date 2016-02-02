@@ -13,9 +13,9 @@ public class EntryPreChecks
 	/**
 	 * Pārbaude, vai šķirklis nav tukšs.
 	 */
-	public static boolean isNotEmpty(Dictionary dict, int entryIndex)
+	public static boolean isNotEmpty(DictionaryFragment dict, int entryIndex)
 	{
-		Dictionary.Entry entry = dict.entries[entryIndex];
+		DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (entry.fullText.trim().equals(""))
 		{
 			dict.bad.addNewEntry(entry, "Tukša rinda");
@@ -26,9 +26,9 @@ public class EntryPreChecks
 	/**
 	 * Pārbaude, vai šķirklim netrūkst sķirkļa vārda.
 	 */
-	public static boolean hasHeaderWord(Dictionary dict, int entryIndex)
+	public static boolean hasHeaderWord(DictionaryFragment dict, int entryIndex)
 	{
-        Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if(entry.name.equals(""))
 		{
 			dict.bad.addNewEntry(entry, "Trūkst šķirkļa vārda");

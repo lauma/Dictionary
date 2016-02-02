@@ -8,7 +8,7 @@ import lv.ailab.dict.utils.StringUtils;
 
 /**
  * Statisks šķirkļa pārbaudes metožu apvienojums - galvenais pārbaužu bloks.
- * Visas metodes secīgi izsauc Dictionary klase, izmantojot Reflection
+ * Visas metodes secīgi izsauc DictionaryFragment klase, izmantojot Reflection
  * mehānismu, tāpēc šeit nav paredzēts atrasties metodēm, kas nav pārbaudes.
  * Vienīgie pieļaujamie metožu blakusefekti: izmaiņas slikto šķirkļu masīvā.
  * @author Lauma, Gunārs Danovskis
@@ -30,9 +30,9 @@ public class EntryChecks
 	 * Pārbaude vai šķirklim netrūkst satura.
 	 */
 	public static void hasContents (
-			lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+			DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.equals("") || entry.contents.length() < 5)
 			dict.bad.addNewEntry(entry, "Trūkst šķirkļa satura");
 		if (entry.fullText.matches(
@@ -42,9 +42,9 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai šķirklī ir iekavu līdzsvars
 	 */
-	public static void bracketing(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void bracketing(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		int sqBrackets = 0; // atvērto kvadrātiekavu skaits
 		int circBrackets = 0; // atvērto apaļo iekavu skaits
@@ -83,9 +83,9 @@ public class EntryChecks
 	 * ir jābūt.
 	 */
 	public static void obligatoryMarkers(
-			lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+			DictionaryFragment dict, int entryIndex)
 	{
-		lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+		DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		BadEntries bad = dict.bad;
 
 		if (!entry.contents.matches("\\s*(IN|GR|CD|DN)\\s.*"))
@@ -116,9 +116,9 @@ public class EntryChecks
 	/**
 	 * Pārbaudes, kas puslīdz vienādi attiecināmas uz visiem identifikatoriem.
 	 */
-	public static void universal(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void universal(DictionaryFragment dict, int entryIndex)
 	{
-		lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+		DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		BadEntries bad = dict.bad;
 
 		// Tukši identifikatori lielākoties nav pieļaujami, tipiska kļūda ir
@@ -152,9 +152,9 @@ public class EntryChecks
 	/**
 	 * Pārbaude vai visi marķieri ir rakstīti ar lielajiem burtiem.
 	 */
-	public static void markerCase(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void markerCase(DictionaryFragment dict, int entryIndex)
 	{
-		lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+		DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		// Izteiksme, kas meklē visu, kas aptuveni izskatās pēc tagiem.
 		Matcher tagsInsens = Pattern.compile(
 				"(^|\\s)" + Markers.regexp +"(\\s|$)", Pattern.CASE_INSENSITIVE)
@@ -190,9 +190,9 @@ public class EntryChecks
 	 * Visām gramatikām kopīgie testi: pārbauda, vai gramatika nesatur lielos
 	 * burtus.
 	 */
-	public static void grammar(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void grammar(DictionaryFragment dict, int entryIndex)
 	{
-		lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+		DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		String grams = "(^|\\s)(GR|FG|NG|AG|PG)\\s";
 		Matcher m = Pattern.compile(grams + "(((?!\\s" + Markers.regexp + "\\s).)*)(\\s" + Markers.regexp + "\\s|$)")
 				.matcher(entry.contents);
@@ -208,9 +208,9 @@ public class EntryChecks
 	/**
 	 * Ar @2 un @5 marķieriem saistītās pārbāudes.
  	 */
-	public static void at(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void at(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		// pārbauda vai aiz @ seko 2 vai 5
 		if(entry.contents.matches(".*@[13467890].*"))
@@ -249,9 +249,9 @@ public class EntryChecks
 	/**
 	 * Ar marķieriem DS, DE saistītās pārbaudes.
 	 */
-	public static void dsDe(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void dsDe(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sDS\\s.*$")) // regulārā izteiksme pārbauda vai ir DS
 		{
@@ -288,9 +288,9 @@ public class EntryChecks
 	/**
 	 * Ar marķieriem FS, FR saistītās pārbaudes.
 	 */
-	public static void fsFr(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void fsFr(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sFS\\s.*$")) // regulārā izteiksme pārbauda vai ir FS
 		{
@@ -349,9 +349,9 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz LI norādītās atsauces ir atrodams avotu sarakstā.
 	 */
-	public static void li(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void li(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (!entry.contents.matches("^.*\\sLI\\s.*$"))
             return; // pārbauda vai ir LI
@@ -386,9 +386,9 @@ public class EntryChecks
 	/**
 	 * Pārbaudes šķirkļiem ar PI un PN
 	 */
-	public static void piPn(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void piPn(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (!entry.contents.matches(".*\\s(PI|PN)\\s.*"))
 			return; // Šīs pārbaudes nav attiecināmas uz šo šķirkli.
@@ -426,9 +426,9 @@ public class EntryChecks
 	/**
 	 * Ar NS, NO, NG saistītās pārbaudes
 	 */
-	public static void nsNoNg(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void nsNoNg(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sNS\\s.*$"))
 		{
@@ -497,9 +497,9 @@ public class EntryChecks
 	/**
 	 * Ar AN saistītās pārbaudes
 	 */
-	public static void an(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void an(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches(".*\\sAN\\s[^0-9A-ZĀČĒĢĪĶĻŅŠŪŽ(\"].*"))
 			dict.bad.addNewEntry(entry, "AN jāsākas ar lielo burtu vai skaitli");
 	}
@@ -508,9 +508,9 @@ public class EntryChecks
      * Pārbaude, vai dotais ne IN šķirkļa vārds jau nav sastapts iepriekš.
      */
 	public static void notInUniquety(
-			lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+			DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (!entry.contents.matches("^IN\\s.*$") && dict.prevIN.containsKey(entry.name))
 			dict.bad.addNewEntry(entry, "Pastāv vēl šķirkļi ar tādu vārdu");
 	}
@@ -519,9 +519,9 @@ public class EntryChecks
 	 * 0 vai 1 var būt, ja iepriekš šāds šķirkļa vārds nav bijis;
 	 * 2 vai vairāk var būt, ja iepriekš ir bijis par vienu mazāks.
 	 */
-    public static void inNumber(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+    public static void inNumber(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         if(!entry.contents.matches("^IN\\s.*$"))
             return; // Visas pārbaudes attiecināmas tikai uz šķirkļiem, kuros ir IN.
 
@@ -558,9 +558,9 @@ public class EntryChecks
 	/**
 	 * Šķirkļa simbolu un tipogrāfisku kļūdu pārbaude.
 	 */
-	public static void characters(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void characters(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		//Parbauda vai skjirkla vaardaa nav nepaziistami simboli
 		if(!entry.name.matches("[" + nameSymbolRegexp + "]*"))
 			dict.bad.addNewEntry(entry, "Šķirkļa vārds satur neparedzētus simbolus");
@@ -610,9 +610,9 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz CD esošais vārds ir vārdnīcā.
 	 */
-	public static void wordAfterCd(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void wordAfterCd(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches ("^.*\\sCD\\s.*$"))
 		{
 			String cdWord = StringUtils.wordAfter(entry.contents, "CD"); // atrod vārdu aiz CD
@@ -624,9 +624,9 @@ public class EntryChecks
 	/**
 	 * Pārbaude, vai aiz DN esošais vārds ir vārdnīcā.
 	 */
-	public static void wordAfterDn(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void wordAfterDn(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
 		if (entry.contents.matches ("^.*\\sDN\\s.*$"))
 		{
 			String dnWord = StringUtils.wordAfter(entry.contents, "DN"); // atrod vārdu aiz DN
@@ -637,9 +637,9 @@ public class EntryChecks
 	
 	//metode pārbauda vai ir ievērotas GR likumsakarības
 	// metode pārbauda vai ir ir pareiza gramatika saīsinājumiem un vietvārdiem
-	public static void gr(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void gr(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if (entry.contents.matches("^.*\\sGR\\s.*$")) // ja GR ir teksta vidū
 		{
@@ -678,9 +678,9 @@ public class EntryChecks
 	}
 
 	//metode pārbauda vai ir ievērotas RU likumsakarības
-	public static void ru(lv.ailab.dict.tezaurs.checker.Dictionary dict, int entryIndex)
+	public static void ru(DictionaryFragment dict, int entryIndex)
     {
-        lv.ailab.dict.tezaurs.checker.Dictionary.Entry entry = dict.entries[entryIndex];
+        DictionaryFragment.Entry entry = dict.entries[entryIndex];
         BadEntries bad = dict.bad;
 		if(entry.contents.matches(".*\\sRU\\s.*"))
 		{

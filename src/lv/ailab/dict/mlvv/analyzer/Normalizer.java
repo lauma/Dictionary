@@ -38,6 +38,7 @@ public class Normalizer
 	 */
 	public static String normalizeLine(String line)
 	{
+		if (line == null) return null;
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
 		// marķētājiem.
@@ -45,6 +46,8 @@ public class Normalizer
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll("\\s+", " ");
 		line = line.trim();
+
+		if (line.isEmpty()) return line;
 
 		for (String tag : tags)
 		{

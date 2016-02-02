@@ -23,7 +23,7 @@ import lv.ailab.dict.utils.Trio;
  * Dati par vienu vārdnīcas failu.
  * @author Lauma
  */
-public class Dictionary
+public class DictionaryFragment
 {
 	/**
 	 * Šķirkļu teksti.
@@ -62,10 +62,10 @@ public class Dictionary
 	/**
 	 * Ielādē no word faila vārdnīcas fragmenta saturu un sagatavo pārbaudēm.
 	 */
-	public static Dictionary loadFromFile(String path, ReferenceList references)
+	public static DictionaryFragment loadFromFile(String path, ReferenceList references)
 	throws IOException
 	{
-        Dictionary dict = new Dictionary();
+        DictionaryFragment dict = new DictionaryFragment();
         dict.prevIN = new HashMap<>();
         dict.bad = new BadEntries();
         dict.stats = new Stats();
@@ -96,7 +96,7 @@ public class Dictionary
 	{
 		for (int i = 0; i < entries.length; i++)
 		{
-			Dictionary.Entry entry = entries[i];
+			DictionaryFragment.Entry entry = entries[i];
 			try
 			{
 				stats.wordCount += StringUtils.wordCount(entry.fullText);

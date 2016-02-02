@@ -8,7 +8,8 @@ import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
 /**
- * @author Lauma
+ * Lielākā daļa koda ir paņemta no vecāka projekta, pamainot vienīgi saskarni.
+ * @author Normunds Grūzītis, Lauma
  */
 public class DictionaryDic2Xml
 {

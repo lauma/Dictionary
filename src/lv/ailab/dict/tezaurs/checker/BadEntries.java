@@ -18,7 +18,7 @@ public class BadEntries
 	protected Map<Integer, BadEntry> register =
 			new HashMap<Integer, BadEntry>();
 	
-	public void addNewEntry(Dictionary.Entry entry, String error)
+	public void addNewEntry(DictionaryFragment.Entry entry, String error)
 	{
 		BadEntry e = register.get(entry.id);
 		if (e == null) e = new BadEntry(entry.fullText, error);

@@ -50,7 +50,7 @@ public class ExceptionList
 	 * Pārbauda, vai meklējamais šķirklis ir izņēmumu sarakstā, pieņemot, ka
 	 * izņēmumu saraksts ir sakārtots.
 	 */
-	public static boolean isException (Dictionary.Entry query)
+	public static boolean isException (DictionaryFragment.Entry query)
 	{
 		int index = Arrays.binarySearch(exceptions, query.fullText);
 		return index >= 0;

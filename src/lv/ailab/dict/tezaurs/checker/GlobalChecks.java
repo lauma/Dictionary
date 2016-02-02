@@ -12,7 +12,7 @@ public class GlobalChecks
 	/**
 	 * Atlasa atlasa vientuļos IN 1.
 	 */
-	public static void singleIn1Check(Dictionary dict)
+	public static void singleIn1Check(DictionaryFragment dict)
 	{
 		for (String entryName : dict.prevIN.keySet())
 		{

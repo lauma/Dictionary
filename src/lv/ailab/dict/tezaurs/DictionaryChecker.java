@@ -3,7 +3,7 @@ package lv.ailab.dict.tezaurs;
 import java.io.File;
 import java.io.IOException;
 
-import lv.ailab.dict.tezaurs.checker.Dictionary;
+import lv.ailab.dict.tezaurs.checker.DictionaryFragment;
 import lv.ailab.dict.tezaurs.checker.ExceptionList;
 import lv.ailab.dict.tezaurs.checker.ReferenceList;
 import lv.ailab.dict.tezaurs.io.XlsOutputer;
@@ -69,7 +69,7 @@ public class DictionaryChecker
 					.startsWith("~"))
 			{
 				// Inicē.
-				Dictionary dictFile = Dictionary.loadFromFile(
+				DictionaryFragment dictFile = DictionaryFragment.loadFromFile(
 						inputDataPath + fileName, refList);
 
 				// Apstrādā.

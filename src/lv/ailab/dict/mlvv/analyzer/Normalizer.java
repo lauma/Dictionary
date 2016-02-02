@@ -40,8 +40,7 @@ public class Normalizer
 	{
 		if (line == null) return null;
 		// Novāc BOM.
-		while (line.codePointAt(0) == 316 || line.codePointAt(0) == 187 || line.codePointAt(0) == 230)
-			line = line.substring(1);
+		if (line.codePointAt(0) == 65279) line = line.substring(1);
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
 		// marķētājiem.
@@ -108,7 +107,7 @@ public class Normalizer
 		// Parasti arī teikuma/frāzes beigu pieturzīmei jābūt kursīvā, ja
 		// pārējais teksts ir.
 		line = line.replace("</i>.", ".</i>");
-		line = line.replace("</i>;", ";</i>");
+		//line = line.replace("</i>;", ";</i>");
 
 		// Novāc tagu pārrāvumus.
 		line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");

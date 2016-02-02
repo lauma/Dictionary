@@ -54,7 +54,7 @@ public class StructureExtractor
 			if (f.isDirectory()) continue;
 			try
 			{
-				BufferedReader in = new BufferedReader(new FileReader(inputDataPath + fileName));
+				BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inputDataPath + fileName), "UTF8"));
 				String line = in.readLine();
 				while (line != null)
 				{

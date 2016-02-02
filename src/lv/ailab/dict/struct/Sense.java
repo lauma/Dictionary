@@ -22,6 +22,7 @@ import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.HashSet;
@@ -205,13 +206,8 @@ public class Sense implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node senseN = doc.createElement("sense");
-		if (ordNumber != null)
-		{
-			Attr ordAttr = doc.createAttribute("senseID");
-			ordAttr.setValue(ordNumber);
-			senseN.appendChild(ordAttr);
-		}
+		Element senseN = doc.createElement("sense");
+		if (ordNumber != null) senseN.setAttribute("senseID", ordNumber);
 
 		if (grammar != null) grammar.toXML(senseN);
 		if (gloss != null) gloss.toXML(senseN);

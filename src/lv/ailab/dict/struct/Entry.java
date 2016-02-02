@@ -23,6 +23,7 @@ import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.*;
@@ -262,16 +263,12 @@ public class Entry implements HasToJSON, HasToXML
 		parent.appendChild(entryN);
 	}
 
-	public Node toXML(Document doc)
+	public Element toXML(Document doc)
 	{
-		Node entryN = doc.createElement("entry");
+		Element entryN = doc.createElement("entry");
 
 		if (homId != null)
-		{
-			Attr homAttr = doc.createAttribute("ID");
-			homAttr.setValue(homId);
-			entryN.appendChild(homAttr);
-		}
+			entryN.setAttribute("ID", homId);
 		if (head != null) head.toXML(entryN);
 		if (senses != null && !senses.isEmpty())
 		{

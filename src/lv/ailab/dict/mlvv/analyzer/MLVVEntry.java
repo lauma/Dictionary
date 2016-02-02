@@ -5,8 +5,10 @@ import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,6 +86,7 @@ public class MLVVEntry extends Entry
 	 */
 	protected Header extractHead(String linePart)
 	{
+		//System.out.println(linePart);
 		Header res = new Header();
 		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())
@@ -110,6 +113,7 @@ public class MLVVEntry extends Entry
 				gram = m.group(2);
 			}
 
+			if (!gram.isEmpty() && res.gram == null) res.gram = new Gram();
 			if (gram.contains("<b>")) // ir alternatīvās vārdformas, atvasinājumi
 			{
 				// Šādi sadalās tās daļas, kur uz vairākām vārdformām ir viena
@@ -118,32 +122,41 @@ public class MLVVEntry extends Entry
 				if (gram.contains(";")) bigParts = gram.split(";\\s*");
 				for (int i = 0; i < bigParts.length; i++)
 				{
+
 					if (bigParts[i].contains("<b>"))
 					{
-						int commonStart = bigParts[i].lastIndexOf("</i>") + "</i>".length();
+						int commonStart = bigParts[i].lastIndexOf("<i>");
 						String common = bigParts[i].substring(commonStart);
-						String[] smallParts = bigParts[i].substring(0, commonStart).split("\\s*(?=<b>)");
+						ArrayList<String> smallParts = new ArrayList<>(Arrays.asList(
+								bigParts[i].substring(0, commonStart).split("(?<!\\s)\\s*(?=<b>)")));
 
 						// Pirmā gramatika iet pie šķirkļa vārda, nevis altLemmām.
 						if (i == 0)
 						{
-							String hwGram = smallParts[0].trim();
-							if (!hwGram.endsWith(",")) hwGram = hwGram + ",";
-							hwGram = hwGram + " " + common;
+							String hwGram = smallParts.get(0).trim();
+							if (hwGram.equals(",") || hwGram.isEmpty()) hwGram = common;
+							else
+							{
+								if (!hwGram.endsWith(",")) hwGram = hwGram + ",";
+								hwGram = hwGram + " " + common;
+							}
 							if (res.gram.orig == null) res.gram.orig = "";
-							else if (!res.gram.orig.trim().isEmpty()) res.gram.orig += ", ";
+							else if (!res.gram.orig.trim().isEmpty() && !res.gram.orig.trim().endsWith(","))
+								res.gram.orig = res.gram.orig.trim() + ", ";
 							res.gram.orig += hwGram;
-							smallParts = Arrays.copyOfRange(smallParts, 1, smallParts.length);
+							smallParts.remove(0);
 						}
 						// No pārējiem gabaliem veido altLemmas.
-						if (smallParts.length > 0)
+						if (smallParts.size() > 0)
 						{
 							res.gram.altLemmas = new ArrayList<>();
 							for (String smallPart : smallParts)
 							{
 								smallPart = smallPart.trim();
-								if (!smallPart.endsWith(",")) smallPart += ",";
-								smallPart += common;
+								if (smallPart.matches(".*</b>\\s*,"))
+									smallPart = smallPart.substring(0, smallPart.length()-1).trim();
+								else if (!smallPart.endsWith(",")) smallPart += ",";
+								smallPart = smallPart + " " + common;
 								res.gram.altLemmas.add(extractHead(smallPart));
 							}
 						}
@@ -176,7 +189,9 @@ public class MLVVEntry extends Entry
 
 			return res;
 		} else
-			System.out.println("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n\t" + linePart);
+			System.out.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta šķirklī \"%s\":\n%s\n",
+					this.head == null || this.head.lemma.text == null ? "" : this.head.lemma.text,
+					linePart);
 		return null;
 	}
 

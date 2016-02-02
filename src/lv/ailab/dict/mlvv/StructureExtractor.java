@@ -51,7 +51,7 @@ public class StructureExtractor
 		for (File f : listOfFiles)
 		{
 			String fileName = f.getName();
-			//if (!fileName.endsWith(".txt")) continue;
+			if (f.isDirectory()) continue;
 			try
 			{
 				BufferedReader in = new BufferedReader(new FileReader(inputDataPath + fileName));

@@ -264,7 +264,7 @@ public class Entry implements HasToJSON, HasToXML
 
 	public Node toXML(Document doc)
 	{
-		Node entryN = doc.createElement("Emtry");
+		Node entryN = doc.createElement("entry");
 
 		if (homId != null)
 		{
@@ -272,6 +272,7 @@ public class Entry implements HasToJSON, HasToXML
 			homAttr.setValue(homId);
 			entryN.appendChild(homAttr);
 		}
+		if (head != null) head.toXML(entryN);
 		if (senses != null && !senses.isEmpty())
 		{
 			Node sensesContN = doc.createElement("senses");

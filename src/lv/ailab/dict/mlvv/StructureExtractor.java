@@ -58,8 +58,15 @@ public class StructureExtractor
 				String line = in.readLine();
 				while (line != null)
 				{
-					Entry e = MLVVEntry.extractFromString(Normalizer.normalizeLine(line));
-					if (e != null) dict.entries.add(e);
+					try
+					{
+						Entry e = MLVVEntry.extractFromString(Normalizer.normalizeLine(line));
+						if (e != null) dict.entries.add(e);
+					} catch (Exception e)
+					{
+						e.printStackTrace(System.err);
+						System.out.println("Neizdevās apstrādāt šādu rindu:" + line);
+					}
 					line = in.readLine();
 				}
 				System.out.println(fileName + " [Pabeigts]");

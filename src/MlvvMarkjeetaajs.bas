@@ -120,8 +120,8 @@ Sub DubultoTaguIeliceejs()
         .Highlight = True
         Flag = .Execute
         While Flag = True
-            .Parent.InsertBefore "<gray>"
-            .Parent.InsertAfter "</gray>"
+            .Parent.InsertBefore "<high>"
+            .Parent.InsertAfter "</high>"
             .Font.Reset
             oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
             With oRange.Find
@@ -132,8 +132,32 @@ Sub DubultoTaguIeliceejs()
             End With
         Wend
     End With
-    NovaaktFormateejumu ("<gray>")
-    NovaaktFormateejumu ("</gray>")
+    NovaaktFormateejumu ("<high>")
+    NovaaktFormateejumu ("</high>")
+    
+    Set oRange = ActiveDocument.Range
+    oRange.Find.Highlight = True
+    oRange.Find.Forward = True
+    Do While oRange.Find.Execute
+        If oRange.HighlightColorIndex = WdColorIndex.wdGray25 Then
+            oRange.Find.Parent.InsertBefore "<gray>"
+            oRange.Find.Parent.InsertAfter "</gray>"
+        End If
+        intPosition = oRange.End
+        oRange.Start = intPosition
+    Loop
+    
+    Set oRange = ActiveDocument.Range
+    oRange.Find.Highlight = True
+    oRange.Find.Forward = True
+    Do While oRange.Find.Execute
+        If oRange.HighlightColorIndex = WdColorIndex.wdGray50 Then
+            oRange.Find.Parent.InsertBefore "<gray>"
+            oRange.Find.Parent.InsertAfter "</gray>"
+        End If
+        intPosition = oRange.End
+        oRange.Start = intPosition
+    Loop
     
     Set oRange = ActiveDocument.Range
     With oRange.Find

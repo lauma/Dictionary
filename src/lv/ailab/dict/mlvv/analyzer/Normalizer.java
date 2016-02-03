@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  */
 public class Normalizer
 {
-	public static String[] tags = {"gray", "sup", "sub", "b", "i", "extended"};
+	public static String[] tags = {"high", "gray", "sup", "sub", "b", "i", "extended"};
 	/**
 	 *
 	 * @param line viena vārdnīcas faila rindiņa (vienlaicīgi arī šķirklis)
@@ -40,11 +40,13 @@ public class Normalizer
 	{
 		if (line == null) return null;
 		// Novāc BOM.
-		if (line.codePointAt(0) == 65279) line = line.substring(1);
+		if (line.length() > 0 && line.codePointAt(0) == 65279)
+			line = line.substring(1);
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
 		// marķētājiem.
-		line = line.replaceAll("</?gray>", "");
+		// NB! tags <gray>, kas ir tieši pelēki krāsotiem tekstiem, ir jāatstāj!
+		line = line.replaceAll("</?high>", "");
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll("\\s+", " ");
 		line = line.trim();

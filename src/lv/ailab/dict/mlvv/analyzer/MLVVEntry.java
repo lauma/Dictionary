@@ -5,10 +5,8 @@ import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,9 +124,16 @@ public class MLVVEntry extends Entry
 					if (bigParts[i].contains("<b>"))
 					{
 						int commonStart = bigParts[i].lastIndexOf("<i>");
-						String common = bigParts[i].substring(commonStart);
+						// Ja neatrod kopīgo daļu, tad ir šitā:
+						String common = "";
+						String forSplit = bigParts[i];
+						if (commonStart > -1)
+						{
+							common = bigParts[i].substring(commonStart);
+							forSplit = bigParts[i].substring(0, commonStart);
+						}
 						ArrayList<String> smallParts = new ArrayList<>(Arrays.asList(
-								bigParts[i].substring(0, commonStart).split("(?<!\\s)\\s*(?=<b>)")));
+								forSplit.split("(?<!\\s)\\s*(?=<b>)")));
 
 						// Pirmā gramatika iet pie šķirkļa vārda, nevis altLemmām.
 						if (i == 0)
@@ -168,11 +173,11 @@ public class MLVVEntry extends Entry
 							else if (!res.gram.orig.trim().isEmpty()) res.gram.orig += ", ";
 							res.gram.orig += bigParts[0];
 						}
-						else
+						else // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
 						{
-							System.out.printf(
-									"Neizdodas saprast, kam pieder gramatikas daļa \"%s\" šķirklī \"%s\"!",
-									bigParts[i], res.lemma.text);
+							//System.out.printf(
+							//		"Neizdodas saprast, kam pieder gramatikas daļa \"%s\" šķirklī \"%s\"!",
+							//		bigParts[i], res.lemma.text);
 							if (res.gram.orig == null) res.gram.orig = "";
 							else if (!res.gram.orig.trim().isEmpty()) res.gram.orig += "; ";
 							res.gram.orig += bigParts[i];

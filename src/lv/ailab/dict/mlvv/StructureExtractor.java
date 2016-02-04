@@ -17,7 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.mlvv;
 
-import lv.ailab.dict.mlvv.analyzer.MLVVEntry;
+import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.Normalizer;
 import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.struct.Entry;

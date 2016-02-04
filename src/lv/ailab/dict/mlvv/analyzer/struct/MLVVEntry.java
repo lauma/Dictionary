@@ -1,12 +1,11 @@
-package lv.ailab.dict.mlvv.analyzer;
+package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Entry;
-import lv.ailab.dict.struct.Gram;
-import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +29,40 @@ public class MLVVEntry extends Entry
 		if (line.matches("<b>\\p{L}\\p{M}*</b>")) return null;
 
 		else return new MLVVEntry(line);
+	}
+
+	/**
+	 * Override, lai MLVV šķirkļos nedrukā galvenā header lemmu, jo tā jau ir
+	 * iekļauta altLemmu sarakstā.
+	 */
+	@Override
+	public Element toXML(Document doc)
+	{
+		Element entryN = doc.createElement("entry");
+
+		if (homId != null)
+			entryN.setAttribute("ID", homId);
+		if (head != null)
+		{
+			//head.toXML(entryN);
+			if (head.lemma != null && head.lemma.text != null)
+				entryN.setAttribute("LemmaSign", head.lemma.text);
+			if (head.lemma != null && head.lemma.pronunciation != null && head.lemma.pronunciation.length > 0)
+			{
+				System.out.printf("Šķirklim \"%s\" šķirkļavārdam ir norādīta izruna, lai gan šo lauku MLVV nav paredzēts aizpildīt!",
+						head.lemma.text != null ? head.lemma.text : "");
+				head.toXML(entryN);
+			}
+			else if (head.gram != null)
+			{
+				Node headerN = doc.createElement("header");
+				head.gram.toXML(headerN);
+				entryN.appendChild(headerN);
+			}
+		}
+		contentsToXML(entryN);
+
+		return entryN;
 	}
 
 	/**
@@ -72,7 +105,7 @@ public class MLVVEntry extends Entry
 		body = body.trim();
 		if (head.isEmpty())
 			System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
-		else this.head = this.extractHead(head);
+		else extractHead(head);
 		if (body.isEmpty())
 			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
 		else this.extractBody(body);
@@ -82,10 +115,35 @@ public class MLVVEntry extends Entry
 	 * TODO karodziņi
 	 * TODO izrunas
 	 */
-	protected Header extractHead(String linePart)
+	protected void extractHead(String linePart)
 	{
-		//System.out.println(linePart);
-		Header res = new Header();
+		head = new MLVVHeader();
+		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
+		if (m.matches())
+		{
+			head.lemma = new Lemma(m.group(1));
+			String gram = m.group(2);
+			// Homonīma infekss, ja tāds ir.
+			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gram);
+			if (m.matches())
+			{
+				if (homId != null) System.out.printf(
+							"No šķirkļavārda \"%s\" homonīma indeksu mēģina piešķiert vairākkārt: vispirms %s, tad %s!",
+							head.lemma, homId, m.group(1));
+				homId = m.group(1);
+			}
+			head.gram = MLVVGram.extractFromString(linePart);
+		} else
+		{
+			System.out.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n%s\n",
+					linePart);
+			head = null;
+		}
+
+
+		// Šitā tas strādāja, kad pirmo šķirkļa vārdu nelika pie alternatīvajām
+		// lemmām.
+/*		Header res = new Header();
 		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
@@ -145,10 +203,10 @@ public class MLVVEntry extends Entry
 								if (!hwGram.endsWith(",")) hwGram = hwGram + ",";
 								hwGram = hwGram + " " + common;
 							}
-							if (res.gram.orig == null) res.gram.orig = "";
-							else if (!res.gram.orig.trim().isEmpty() && !res.gram.orig.trim().endsWith(","))
-								res.gram.orig = res.gram.orig.trim() + ", ";
-							res.gram.orig += hwGram;
+							if (res.gram.freeText == null) res.gram.freeText = "";
+							else if (!res.gram.freeText.trim().isEmpty() && !res.gram.freeText.trim().endsWith(","))
+								res.gram.freeText = res.gram.freeText.trim() + ", ";
+							res.gram.freeText += hwGram;
 							smallParts.remove(0);
 						}
 						// No pārējiem gabaliem veido altLemmas.
@@ -169,18 +227,18 @@ public class MLVVEntry extends Entry
 					{
 						if (i == 0)
 						{
-							if (res.gram.orig == null) res.gram.orig = "";
-							else if (!res.gram.orig.trim().isEmpty()) res.gram.orig += ", ";
-							res.gram.orig += bigParts[0];
+							if (res.gram.freeText == null) res.gram.freeText = "";
+							else if (!res.gram.freeText.trim().isEmpty()) res.gram.freeText += ", ";
+							res.gram.freeText += bigParts[0];
 						}
 						else // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
 						{
 							//System.out.printf(
 							//		"Neizdodas saprast, kam pieder gramatikas daļa \"%s\" šķirklī \"%s\"!",
 							//		bigParts[i], res.lemma.text);
-							if (res.gram.orig == null) res.gram.orig = "";
-							else if (!res.gram.orig.trim().isEmpty()) res.gram.orig += "; ";
-							res.gram.orig += bigParts[i];
+							if (res.gram.freeText == null) res.gram.freeText = "";
+							else if (!res.gram.freeText.trim().isEmpty()) res.gram.freeText += "; ";
+							res.gram.freeText += bigParts[i];
 						}
 					}
 				}
@@ -189,7 +247,7 @@ public class MLVVEntry extends Entry
 			else // citu vārdformu nav
 			{
 				res.gram = new Gram();
-				res.gram.orig = gram;
+				res.gram.freeText = gram;
 			}
 
 			return res;
@@ -197,7 +255,7 @@ public class MLVVEntry extends Entry
 			System.out.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta šķirklī \"%s\":\n%s\n",
 					this.head == null || this.head.lemma.text == null ? "" : this.head.lemma.text,
 					linePart);
-		return null;
+		return null; //*/
 	}
 
 	protected void extractBody (String linePart)
@@ -209,71 +267,6 @@ public class MLVVEntry extends Entry
 }
 
 /*
-
-# Annotate entry head (wordforms + grammatical infromation).
-sub _annotateHead
-{
-	my $str = shift;
-	my $res = "\t\t<head>\n";
-
-	# Separate first headword from the string.
-	$str =~ m#^<b>(.+?)</b>\s*(.*)#;
-	my $mainHW = $1;
-	my $gram = $2;
-	warn "No head word for following entry head:\n$str\n" unless $mainHW;
-
-	# Set package variable for debunging purposes.
-	$currentHW = $mainHW if ($mainHW);
-
-	$res .= "\t\t\t<hw";
-
-	# Process homonym index.
-	if ($gram =~ m#^<sup>\s*<b>(.*?)</b>\s*</sup>\s*(.*)#)
-	{
-		my $homId = $1;
-		$gram = $2;
-		$res .= " hom=\"$homId\"";
-	}
-	$res .= ">$mainHW</hw>\n";
-
-	#Process grammatical information and secondary headwords.
-	if ($gram and $gram !~ /^\s*$/)
-	{
-		$res .= "\t\t\t<gram>\n";
-		while ($gram and $gram !~ /^\s*$/)
-		{
-			if ($gram =~ m#^<i>(.*?)</i>\s*(.*)$#)
-			{
-				$gram = $2;
-				my $newInf = "\t\t\t\t<inf>$1</inf>\n";
-				$newInf =~ s#\s*;\s*#</inf>\n\t\t\t\t<inf>#g;
-				$res .= $newInf;
-			} elsif ($gram =~ m#^<b>(.*?)</b>\s*(.*)$#)
-			{
-				$res .= "\t\t\t\t<hw>$1</hw>\n";
-				$gram = $2;
-			} elsif ($gram =~ m#^\[(.*?)\]\s*(.*)$#)
-			{
-				$res .= "\t\t\t\t<pron>$1</pron>\n";
-				$gram = $2;
-			} elsif ($gram =~ /<i>|<b>|\[/)
-			{
-				$gram =~ m#^,?\s*(.*?)\s*((<i>|<b>|\[).*)$#;
-				$res .= "\t\t\t\t<ending>$1</ending>\n" if ($1 ne '');
-				$gram = $2;
-			} else
-			{
-				$res .= "\t\t\t\t<ending>$gram</ending>\n";
-				$gram = "";
-			}
-		}
-		#$res .= "$gram";
-		$res .= "\t\t\t</gram>\n";
-	}
-
-	$res .= "\t\t</head>\n";
-	return $res;
-}
 
 # Annotate entry body (word senses + etymology + references + usage advices + phraseology).
 sub _annotateBody

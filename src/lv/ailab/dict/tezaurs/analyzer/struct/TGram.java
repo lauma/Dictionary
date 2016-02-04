@@ -28,14 +28,10 @@ import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.Rule;
-import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
 import org.w3c.dom.Node;
-import org.json.simple.JSONObject;
 
-import lv.ailab.dict.utils.MappingSet;
-import lv.ailab.dict.utils.Tuple;
 import lv.ailab.dict.utils.JSONUtils;
 
 /**
@@ -77,7 +73,7 @@ public class TGram extends Gram
 	 */
 	public TGram(Node gramNode, String lemma)
 	{
-		orig = gramNode.getTextContent();
+		freeText = gramNode.getTextContent();
 		leftovers = null;
 		flags = new Flags();
 		paradigm = new HashSet<>();
@@ -89,7 +85,7 @@ public class TGram extends Gram
 	 */
 	public void set (String gramText, String lemma)
 	{
-		orig = gramText;
+		freeText = gramText;
 		leftovers = null;
 		flags = new Flags();
 		paradigm = new HashSet<>();
@@ -137,7 +133,7 @@ public class TGram extends Gram
 	 */
 	private void parseGram(String lemma)
 	{
-		String correctedGram = correctOCRErrors(orig);
+		String correctedGram = correctOCRErrors(freeText);
 		altLemmas = new ArrayList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
@@ -607,9 +603,9 @@ public class TGram extends Gram
 				}
 			}
 			additional.append("]");
-			return toJSON(paradigm, altLemmas, flags, orig, printOrig, additional.toString());
+			return toJSON(paradigm, altLemmas, flags, freeText, printOrig, additional.toString());
 		}
-		else return toJSON(paradigm, altLemmas, flags, orig, printOrig, null);
+		else return toJSON(paradigm, altLemmas, flags, freeText, printOrig, null);
 
 	}
 

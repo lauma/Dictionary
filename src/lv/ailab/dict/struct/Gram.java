@@ -21,10 +21,8 @@ package lv.ailab.dict.struct;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -36,9 +34,11 @@ public class Gram implements HasToJSON, HasToXML
 {
 
 	/**
-	 * Gramatikas teksts kāds tas ir vārdnīcā.
+	 * Brīvs gramatikas teksts, kāds tas ir vārdnīcā.
+	 * Tēzaura gadījumā tā ir pilna analizējamās gramatikas kopija, MLVV
+	 * gadījumā - oficiāli nestrukturējamais.
 	 */
-	public String orig;
+	public String freeText;
 	/**
 	 * No gramatikas izgūtie karodziņi.
 	 */
@@ -61,7 +61,7 @@ public class Gram implements HasToJSON, HasToXML
 
 	public Gram()
 	{
-		orig = null;
+		freeText = null;
 		flags = null;
 		paradigm = null;
 		altLemmas = null;
@@ -90,7 +90,7 @@ public class Gram implements HasToJSON, HasToXML
 	 */
 	public String toJSON (boolean printOrig, String additional)
 	{
-		return toJSON(paradigm, altLemmas, flags, orig, printOrig, additional);
+		return toJSON(paradigm, altLemmas, flags, freeText, printOrig, additional);
 	}
 
 	/**
@@ -108,11 +108,11 @@ public class Gram implements HasToJSON, HasToXML
 	 * Iekšējai lietošanai.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
-	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
+	 * @param printFreeText vai izdrukā iekļaut nestrukturēto tekstu?
 	 */
 	protected static String toJSON (
 			Set<Integer> paradigm, List<Header> altLemmas, Flags flags, String orig,
-			boolean printOrig, String additional)
+			boolean printFreeText, String additional)
 	{
 		StringBuilder res = new StringBuilder();
 
@@ -174,10 +174,10 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (printOrig && orig != null && orig.length() > 0)
+		if (printFreeText && orig != null && orig.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Original\":\"");
+			res.append("\"FreeText\":\"");
 			res.append(JSONObject.escape(orig));
 			res.append("\"");
 			hasPrev = true;
@@ -196,28 +196,18 @@ public class Gram implements HasToJSON, HasToXML
 
 	public void toXML(Node parent)
 	{
-		toXML(parent, paradigm, altLemmas, flags, orig,
+		toXML(parent, paradigm, altLemmas, flags, freeText,
 				true);
-	}
-
-	/**
-	 * Izveido no dotajiem datiem tādu XML elementu, kā veidotu no Gram ar
-	 * šādiem datiem.
-	 */
-	public static void toXML (Node parent, HashSet<Integer> paradigm, Flags flags)
-	{
-		toXML(parent, paradigm, null, flags, null,
-				false);
 	}
 
 	/**
 	 * Iekšējai lietošanai - reālā XML izveidošanas metode, ko no ārpuses sauc,
 	 * dažus parametrus aizpildot automatiski.
-	 * @param printOrig - vai izdrukāt oriģinālo tekstu, ja tāds ir dots?
+	 * @param printFreeText	vai izdrukāt nestrukturēto tekstu, ja tāds ir dots
 	 */
 	protected static void toXML(
 			Node parent, Set<Integer> paradigm, List<Header> altLemmas, Flags flags,
-			String orig, boolean printOrig)
+			String orig, boolean printFreeText)
 	{
 		Document doc = parent.getOwnerDocument();
 		Node gramN = doc.createElement("gram");
@@ -239,13 +229,14 @@ public class Gram implements HasToJSON, HasToXML
 			Node altLemmasContN = doc.createElement("altLemmas");
 			for (Header al: altLemmas)
 				al.toXML(altLemmasContN);
+			gramN.appendChild(altLemmasContN);
 		}
 
 		if (flags != null) flags.toXML(gramN);
 
-		if (printOrig && orig != null && !orig.isEmpty())
+		if (printFreeText && orig != null && !orig.isEmpty())
 		{
-			Node origN = doc.createElement("original");
+			Node origN = doc.createElement("freeText");
 			origN.appendChild(doc.createTextNode(orig));
 			gramN.appendChild(origN);
 		}

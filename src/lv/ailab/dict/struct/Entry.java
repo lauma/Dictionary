@@ -256,6 +256,13 @@ public class Entry implements HasToJSON, HasToXML
 		return s.toString();
 	}
 
+	/**
+	 * Standarta transformēšanas risinājums mazākām vārdnīcām, paredzēts, lai
+	 * visu sabūvētu vienā DOM kokā.
+	 * Noklusētais risinājums ir Header pārveidot par XML, neko neizlaižot,
+	 * un head.lemma.text uzstādīt par LemmaSign, lai TLex veido sarakstus.
+	 * Wrapper metodei toXML(Document).
+	 */
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
@@ -263,40 +270,63 @@ public class Entry implements HasToJSON, HasToXML
 		parent.appendChild(entryN);
 	}
 
+	/**
+	 * Standarta transformēšanas risinājums lielākām vārdnīcām, paredzēts, lai
+	 * dabūtu DOM nodi, kas reprezentē šo šķirkli. Ērts Tēzauram.
+	 * Noklusētais risinājums ir Header pārveidot par XML, neko neizlaižot,
+	 * un head.lemma.text uzstādīt par LemmaSign, lai TLex veido sarakstus.
+	 * Šis ir tas, ko vajag pārrakstīt, ja grib, lai šķirklis drukātos savādāk.
+	 * Šķirkļa ķermenis tiek realizēts ar contentsToXML().
+	 */
 	public Element toXML(Document doc)
 	{
 		Element entryN = doc.createElement("entry");
 
 		if (homId != null)
 			entryN.setAttribute("ID", homId);
-		if (head != null) head.toXML(entryN);
+		if (head != null)
+		{
+			head.toXML(entryN);
+			if (head.lemma != null && head.lemma.text != null)
+				entryN.setAttribute("LemmaSign", head.lemma.text);
+		}
+		contentsToXML(entryN);
+
+		return entryN;
+	}
+
+	/**
+	 * Palīgmetode, kas vecākvirsotnei piekabina nozīmes, frāzes, atvasinājumus
+	 * un atsauces, kas realizētas šajā metodē.
+	 */
+	public void contentsToXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
 		if (senses != null && !senses.isEmpty())
 		{
 			Node sensesContN = doc.createElement("senses");
 			for (Sense s : senses) s.toXML(sensesContN);
-			entryN.appendChild(sensesContN);
+			parent.appendChild(sensesContN);
 		}
 		if (phrases != null && !phrases.isEmpty())
 		{
 			Node phrasesContN = doc.createElement("phrases");
 			for (Phrase p : phrases) p.toXML(phrasesContN);
-			entryN.appendChild(phrasesContN);
+			parent.appendChild(phrasesContN);
 		}
 		if (derivs != null && !derivs.isEmpty())
 		{
 			Node derivContN = doc.createElement("derivatives");
 			for (Header d : derivs) d.toXML(derivContN);
-			entryN.appendChild(derivContN);
+			parent.appendChild(derivContN);
 		}
 		if (reference != null && reference.length() > 0)
 		{
 			Node refN = doc.createElement("reference");
 			refN.appendChild(doc.createTextNode(reference));
-			entryN.appendChild(refN);
+			parent.appendChild(refN);
 		}
-		if (sources != null && !sources.isEmpty()) sources.toXML(entryN);
+		if (sources != null && !sources.isEmpty()) sources.toXML(parent);
 
-		return entryN;
 	}
-
 }

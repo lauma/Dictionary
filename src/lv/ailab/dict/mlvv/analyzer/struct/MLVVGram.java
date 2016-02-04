@@ -76,7 +76,8 @@ public class MLVVGram extends Gram
 						else if (!gram.freeText
 								.trim().isEmpty()) gram.freeText += "; ";
 						gram.freeText += bigParts[i];
-					} else // Aizdomīga situācija, šitā nevajadzētu būt, bet nu tad piekabina alt lemmām.
+					} else // Aizdomīga situācija, šitā nevajadzētu būt, bet nu tad piekabina
+					       // iepriekš atrastajām alt lemmām.
 					{
 						System.out.printf("Nav skaidrs, uz ko attiecas daļa \"%s\" gramatikā \"%s\"!\n",
 								bigParts[i], linePart);
@@ -96,7 +97,6 @@ public class MLVVGram extends Gram
 					}
 				}
 			}
-
 		} else // nav altLemmu
 			gram.freeText = linePart;
 

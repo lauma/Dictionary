@@ -33,6 +33,14 @@ public class MLVVHeader extends Header
 			m = Pattern.compile("<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gramStr);
 			if (m.matches()) gramStr = m.group(2);
 
+			// Izruna, ja tāda ir.
+			m = Pattern.compile("\\[(.*?)\\]\\s*(.*)").matcher(gramStr);
+			if (m.matches())
+			{
+				res.lemma.pronunciation = new String[]{m.group(1)};
+				// TODO sadalīt izrunas sīkāk
+				gramStr = m.group(2);
+			}
 			if (!gramStr.isEmpty())
 				res.gram = new MLVVGram(gramStr);
 

@@ -22,6 +22,8 @@ public class DirectRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
+		// 6. paradigma: 3. deklinācijas lietvārdi
+		BaseRule.noun("-us, v.", ".*us", 6, null, new Tuple[] {Features.GENDER__MASC}), // dienvidus
 		// 34. paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.noun(
 				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 34,

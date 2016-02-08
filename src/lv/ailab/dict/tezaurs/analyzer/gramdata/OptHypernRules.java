@@ -27,10 +27,12 @@ public class OptHypernRules
 		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
 		 * declension nouns.
 		 */
-		BaseRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, null,
+		BaseRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, new Tuple[] {Features.NO_SOUNDCHANGE},
 				new Tuple[]{Features.GENDER__FEM}), //uzacs, acs
 		BaseRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
 				new Tuple[]{Features.GENDER__FEM}), //aizkrāsns
+		BaseRule.noun("-nakts, dsk. ģen. -nakšu, s.", ".*nakts", 11, null,
+				new Tuple[]{Features.GENDER__FEM}), //diennakts
 		BaseRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
 				new Tuple[]{Features.GENDER__FEM}), //agrārvalsts
 
@@ -52,7 +54,8 @@ public class OptHypernRules
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
 	public static final Rule[] secondDeclNoun = {
-			BaseRule.secondDeclStd("-tēta, v.", ".*tētis"), //tētis
+			BaseRule.noun("-tēta, v.", ".*tētis", 3,
+					new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), //tētis
 	};
 
 	/**

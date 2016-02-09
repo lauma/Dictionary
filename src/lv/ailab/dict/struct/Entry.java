@@ -41,7 +41,7 @@ public class Entry implements HasToJSON, HasToXML
 	public String homId;
 
 	/**
-	 * Avotu saraksts
+	 * Avotu saraksts, MLVV nelieto.
 	 */
 	public Sources sources;
 
@@ -66,7 +66,15 @@ public class Entry implements HasToJSON, HasToXML
 	public LinkedList<Header> derivs;
 
 	/**
+	 * Papildus teksts, kas nu šķirklī var būt vajadzīgs.
+	 * Tēzaurā nelieto.
+	 */
+	public String freeText;
+
+	/**
 	 * Atsauce uz citu šķirkli (Tēzaura XML -  ref).
+	 * MLVV nelieto.
+	 * TODO vai šeit var atdalīti atsevišķi homonīma numuru?
 	 */
 	public String reference;
 
@@ -247,6 +255,12 @@ public class Entry implements HasToJSON, HasToXML
 			s.append(JSONObject.escape(reference));
 			s.append("\"");
 		}
+		if (freeText != null && freeText.length() > 0)
+		{
+			s.append(", \"FreeText\":\"");
+			s.append(JSONObject.escape(freeText));
+			s.append("\"");
+		}
 		if (sources != null && !sources.isEmpty())
 		{
 			s.append(",");
@@ -297,7 +311,7 @@ public class Entry implements HasToJSON, HasToXML
 
 	/**
 	 * Palīgmetode, kas vecākvirsotnei piekabina nozīmes, frāzes, atvasinājumus
-	 * un atsauces, kas realizētas šajā metodē.
+	 * un atsauces, kas realizētas šajā objektā.
 	 */
 	public void contentsToXML(Node parent)
 	{
@@ -325,6 +339,12 @@ public class Entry implements HasToJSON, HasToXML
 			Node refN = doc.createElement("reference");
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);
+		}
+		if (freeText != null && freeText.length() > 0)
+		{
+			Node freeTextN = doc.createElement("freeText");
+			freeTextN.appendChild(doc.createTextNode(freeText));
+			parent.appendChild(freeTextN);
 		}
 		if (sources != null && !sources.isEmpty()) sources.toXML(parent);
 

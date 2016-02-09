@@ -1,21 +1,40 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
-import lv.ailab.dict.struct.Entry;
-import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.struct.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Šķirkļa izgūšana no specifiska ieejas formāta (Word eksporti).
+ * MLVV šķirkļa struktūra + word izguve.
+ * TODO: vai origin un nevajadzētu izcelt uz Entry?
+ * TODO: uzrakstīt smuku json eksportu
+ * Piemēri: miers (vairāki stabilie savienojumi), māja (vairākas nozīmes frāzei)
+ * mākonis (vairāki atvasinājumi)
+ *
  * Izveidots 2016-02-02.
  * @author Lauma
+ *
  */
 public class MLVVEntry extends Entry
 {
+	/**
+	 * MLVV atšķirībā no citām vārdnīcām tiek šķirti stabili vārdu savienojumi
+	 * no frazeoloģismiem. Entry.phrases tiek lietots stabiliem vārdu
+	 * savienojumiem (atdalīts ar trijstūri), bet MLVVEntry.phraseology -
+	 * frazeoloģismiem (atsalīts ar rombu).
+	 */
+	public LinkedList<Phrase> phraseology;
+	/**
+	 * MLVV tiek šķirti divu veidu brīci komentāri - komentārs par vārda cilmi
+	 * (izcelsmi) tiek glabāts MLVVEntry.origin, bet normatīvā lietojuma
+	 * komentārs - Entry.freeText
+	 */
+	public String origin;
 
 	/**
 	 * Izanalizē rindu, un atgriež null, ja tajā nekā nav, vai MLVVEntry, ja no
@@ -32,40 +51,6 @@ public class MLVVEntry extends Entry
 	}
 
 	/**
-	 * Override, lai MLVV šķirkļos nedrukā galvenā header lemmu, jo tā jau ir
-	 * iekļauta altLemmu sarakstā.
-	 */
-	@Override
-	public Element toXML(Document doc)
-	{
-		Element entryN = doc.createElement("entry");
-
-		if (homId != null)
-			entryN.setAttribute("ID", homId);
-		if (head != null)
-		{
-			//head.toXML(entryN);
-			if (head.lemma != null && head.lemma.text != null)
-				entryN.setAttribute("LemmaSign", head.lemma.text);
-			if (head.lemma != null && head.lemma.pronunciation != null && head.lemma.pronunciation.length > 0)
-			{
-				System.out.printf("Šķirklim \"%s\" šķirkļavārdam ir norādīta izruna, lai gan šo lauku MLVV nav paredzēts aizpildīt!",
-						head.lemma.text != null ? head.lemma.text : "");
-				head.toXML(entryN);
-			}
-			else if (head.gram != null)
-			{
-				Node headerN = doc.createElement("header");
-				head.gram.toXML(headerN);
-				entryN.appendChild(headerN);
-			}
-		}
-		contentsToXML(entryN);
-
-		return entryN;
-	}
-
-	/**
 	 * Konstruktors, kas no dotās rindas cenšas izgūt šķirkli, pieņemot, ka tas
 	 * tur noteikti ir.
 	 */
@@ -74,7 +59,8 @@ public class MLVVEntry extends Entry
 		super();
 		// Atdala šķirkļa galvu.
 		String head, body;
-		Matcher m1 = Pattern.compile("(<b>.*?</b>.*?)(<b>1\\.</b>.*)").matcher(line);
+		Matcher m1 = Pattern.compile("(<b>.*?</b>.*?)(<b>1\\.</b>.*)")
+				.matcher(line);
 		if (m1.matches()) // Šķirklis ar numurētām nozīmēm
 		{
 			head = m1.group(1);
@@ -97,17 +83,20 @@ public class MLVVEntry extends Entry
 				}
 			} else
 			{
-				System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
+				System.out
+						.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 				throw new IllegalArgumentException("Can't match input line with regexp!");
 			}
 		}
 		head = head.trim();
 		body = body.trim();
 		if (head.isEmpty())
-			System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
+			System.out
+					.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 		else extractHead(head);
 		if (body.isEmpty())
-			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
+			System.out
+					.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
 		else this.extractBody(body);
 	}
 
@@ -124,150 +113,141 @@ public class MLVVEntry extends Entry
 			head.lemma = new Lemma(m.group(1));
 			String gram = m.group(2);
 			// Homonīma infekss, ja tāds ir.
-			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gram);
+			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)")
+					.matcher(gram);
 			if (m.matches())
 			{
 				if (homId != null) System.out.printf(
-							"No šķirkļavārda \"%s\" homonīma indeksu mēģina piešķiert vairākkārt: vispirms %s, tad %s!",
-							head.lemma, homId, m.group(1));
+						"No šķirkļavārda \"%s\" homonīma indeksu mēģina piešķiert vairākkārt: vispirms %s, tad %s!",
+						head.lemma, homId, m.group(1));
 				homId = m.group(1);
 			}
 			head.gram = MLVVGram.extractFromString(linePart);
 		} else
 		{
-			System.out.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n%s\n",
-					linePart);
+			System.out
+					.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n%s\n",
+							linePart);
 			head = null;
 		}
+	}
 
-
-		// Šitā tas strādāja, kad pirmo šķirkļa vārdu nelika pie alternatīvajām
-		// lemmām.
-/*		Header res = new Header();
-		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
+	protected void extractBody(String linePart)
+	{
+		linePart = linePart.trim();
+		// Normatīvais komentārs
+		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>").matcher(linePart);
 		if (m.matches())
 		{
-			res.lemma = new Lemma(m.group(1));
-			String gram = m.group(2);
-			// Homonīma infekss, ja tāds ir.
-			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gram);
-			if (m.matches())
-			{
-				if (homId != null)
-					System.out.printf(
-							"No šķirkļavārda \"%s\" homonīma indeksu mēģina piešķiert vairākkārt: vispirms %s, tad %s!",
-							res.lemma, homId, m.group(1));
-				homId = m.group(1);
-				gram = m.group(2);
-			}
-			// Izruna, ja tāda ir.
-			m = Pattern.compile("\\[(.*?)\\]\\s*(.*)").matcher(gram);
-			if (m.matches())
-			{
-				res.lemma.pronunciation = new String[]{m.group(1)};
-				// TODO sadalīt izrunas sīkāk
-				gram = m.group(2);
-			}
+			freeText = m.group(2).trim();
+			linePart = m.group(1).trim();
+		}
 
-			if (!gram.isEmpty() && res.gram == null) res.gram = new Gram();
-			if (gram.contains("<b>")) // ir alternatīvās vārdformas, atvasinājumi
-			{
-				// Šādi sadalās tās daļas, kur uz vairākām vārdformām ir viena
-				// vārdšķira.
-				String[] bigParts = new String[]{gram};
-				if (gram.contains(";")) bigParts = gram.split(";\\s*");
-				for (int i = 0; i < bigParts.length; i++)
-				{
+		// Cilme
+		m = Pattern.compile("(.*) [cC]ilme: (.*)").matcher(linePart);
+		if (m.matches())
+		{
+			origin = m.group(2).trim();
+			linePart = m.group(1).trim();
+		}
 
-					if (bigParts[i].contains("<b>"))
-					{
-						int commonStart = bigParts[i].lastIndexOf("<i>");
-						// Ja neatrod kopīgo daļu, tad ir šitā:
-						String common = "";
-						String forSplit = bigParts[i];
-						if (commonStart > -1)
-						{
-							common = bigParts[i].substring(commonStart);
-							forSplit = bigParts[i].substring(0, commonStart);
-						}
-						ArrayList<String> smallParts = new ArrayList<>(Arrays.asList(
-								forSplit.split("(?<!\\s)\\s*(?=<b>)")));
+		// Atvasinājumi
+		m = Pattern.compile("(.*)<square/>(.*)").matcher(linePart);
+		if (m.matches())
+		{
+			extractDerivs(m.group(2));
+			linePart = m.group(1).trim();
+		}
 
-						// Pirmā gramatika iet pie šķirkļa vārda, nevis altLemmām.
-						if (i == 0)
-						{
-							String hwGram = smallParts.get(0).trim();
-							if (hwGram.equals(",") || hwGram.isEmpty()) hwGram = common;
-							else
-							{
-								if (!hwGram.endsWith(",")) hwGram = hwGram + ",";
-								hwGram = hwGram + " " + common;
-							}
-							if (res.gram.freeText == null) res.gram.freeText = "";
-							else if (!res.gram.freeText.trim().isEmpty() && !res.gram.freeText.trim().endsWith(","))
-								res.gram.freeText = res.gram.freeText.trim() + ", ";
-							res.gram.freeText += hwGram;
-							smallParts.remove(0);
-						}
-						// No pārējiem gabaliem veido altLemmas.
-						if (smallParts.size() > 0)
-						{
-							res.gram.altLemmas = new ArrayList<>();
-							for (String smallPart : smallParts)
-							{
-								smallPart = smallPart.trim();
-								if (smallPart.matches(".*</b>\\s*,"))
-									smallPart = smallPart.substring(0, smallPart.length()-1).trim();
-								else if (!smallPart.endsWith(",")) smallPart += ",";
-								smallPart = smallPart + " " + common;
-								res.gram.altLemmas.add(extractHead(smallPart));
-							}
-						}
-					} else
-					{
-						if (i == 0)
-						{
-							if (res.gram.freeText == null) res.gram.freeText = "";
-							else if (!res.gram.freeText.trim().isEmpty()) res.gram.freeText += ", ";
-							res.gram.freeText += bigParts[0];
-						}
-						else // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
-						{
-							//System.out.printf(
-							//		"Neizdodas saprast, kam pieder gramatikas daļa \"%s\" šķirklī \"%s\"!",
-							//		bigParts[i], res.lemma.text);
-							if (res.gram.freeText == null) res.gram.freeText = "";
-							else if (!res.gram.freeText.trim().isEmpty()) res.gram.freeText += "; ";
-							res.gram.freeText += bigParts[i];
-						}
-					}
-				}
-				// TODO
-			}
-			else // citu vārdformu nav
-			{
-				res.gram = new Gram();
-				res.gram.freeText = gram;
-			}
+		// Frazeoloģismi
+		m = Pattern.compile("(.*?)<diamond/>(.*)").matcher(linePart);
+		if (m.matches())
+		{
+			extractPhraseology(m.group(2).trim());
+			linePart = m.group(1).trim();
+		}
 
-			return res;
-		} else
-			System.out.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta šķirklī \"%s\":\n%s\n",
-					this.head == null || this.head.lemma.text == null ? "" : this.head.lemma.text,
-					linePart);
-		return null; //*/
+		// Stabilie vārdu savienojumi
+		m = Pattern.compile("(.*?)<triangle/>(.*)").matcher(linePart);
+		if (m.matches())
+		{
+			extractStable(m.group(2).trim());
+			linePart = m.group(1).trim();
+		}
+
+		if (linePart.length() > 0)
+		extractSenses(linePart);
+
 	}
 
-	protected void extractBody (String linePart)
+	/**
+	 * TODO vai viena gramatika var attiekties uz vairākām lemmām?
+	 */
+	protected void extractDerivs(String linePart)
 	{
-
+		String[] derivTexts = linePart.split("(?=<b>)");
+		if (derivTexts.length < 1) return;
+		derivs = new LinkedList<>();
+		for (String dt :derivTexts)
+		{
+			MLVVHeader h = MLVVHeader.extractSingularHeader(dt.trim());
+			if (h != null) derivs.add(h);
+		}
 	}
 
+	/**
+	 * TODO gramatika pie frāzes
+	 * TODO a. nozīme. b. nozīme.
+	 */
+	protected void extractPhraseology(String linePart)
+	{
+		String[] phrasesParts = linePart.split("<diamond/>");
+		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
+		for (String phraseText : phrasesParts)
+		{
+			phraseText = phraseText.trim();
+			Phrase p = new Phrase();
+			Matcher m = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(phraseText);
+			if (!m.matches())
+				System.out.printf("Neizdodas izanalizēt frazeoloģismu \"%s\"\n", phraseText);
+			else
+			{
+				p.text = m.group(1);
+				p.subsenses = new LinkedList<>();
+				Sense pSense = new Sense();
+				String[] senseTexts = m.group(2).trim().split("(?=<i>)");
+				for (String t : senseTexts)
+				{
+					if (t.contains("<i>"))
+					{
+						String gramText = t.substring(0, t.indexOf("</i>")).trim();
+						if (gramText.startsWith("<i>")) gramText = gramText.substring(3);
+						if (gramText.contains("<i>") || gramText.contains("</i>"))
+							System.out.printf("Frazeoloģismā \"%s\" gramatikā paliek i tagi\n", phraseText);
+						t = t.substring(t.indexOf("</i>") + 4).trim();
+						p.grammar = new Gram();
+						p.grammar.freeText = gramText;
 
-}
+					}
+					pSense.gloss = new Gloss(t);
+					p.subsenses.add(pSense);
+					if (t.contains("<i>") || t.contains("</i>"))
+						System.out.printf("Frazeoloģismā \"%s\" skaidrojumā paliek i tagi\n", phraseText);
+				}
+				phrases.add(p);
+			}
+		}
+	}
+	protected void extractStable(String linePart)
+	{
+		// TODO
+	}
+	protected void extractSenses(String linePart)
+	{
+		// TODO
+	}
 
 /*
-
 # Annotate entry body (word senses + etymology + references + usage advices + phraseology).
 sub _annotateBody
 {
@@ -350,7 +330,101 @@ sub _annotateSense
 	$res .= $sense;
 	$res .= "</sense>\n";
 	return $res;
+} */
+
+	/**
+	 * Override, lai MLVV šķirkļos nedrukā galvenā header lemmu, jo tā jau ir
+	 * iekļauta altLemmu sarakstā.
+	 */
+	@Override
+	public Element toXML(Document doc)
+	{
+		Element entryN = doc.createElement("entry");
+
+		if (homId != null)
+			entryN.setAttribute("ID", homId);
+		if (head != null)
+		{
+			//head.toXML(entryN);
+			if (head.lemma != null && head.lemma.text != null)
+				entryN.setAttribute("LemmaSign", head.lemma.text);
+			if (head.lemma != null && head.lemma.pronunciation != null && head.lemma.pronunciation.length > 0)
+			{
+				System.out
+						.printf("Šķirklim \"%s\" šķirkļavārdam ir norādīta izruna, lai gan šo lauku MLVV nav paredzēts aizpildīt!\n",
+								head.lemma.text != null ? head.lemma.text : "");
+				head.toXML(entryN);
+			} else if (head.gram != null)
+			{
+				Node headerN = doc.createElement("header");
+				head.gram.toXML(headerN);
+				entryN.appendChild(headerN);
+			}
+		}
+		contentsToXML(entryN);
+
+		return entryN;
+	}
+
+	/**
+	 * Override, lai šķirkļa saturs saturētu visu vajadzīgo.
+	 */
+	@Override
+	public void contentsToXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		if (senses != null && !senses.isEmpty())
+		{
+			Node sensesContN = doc.createElement("senses");
+			for (Sense s : senses) s.toXML(sensesContN);
+			parent.appendChild(sensesContN);
+		}
+		if (phrases != null && !phrases.isEmpty())
+		{
+			Node phrasesContN = doc.createElement("stablePhrases");
+			for (Phrase p : phrases) p.toXML(phrasesContN);
+			parent.appendChild(phrasesContN);
+		}
+		if (phraseology != null && !phraseology.isEmpty())
+		{
+			Node phrasesContN = doc.createElement("phraseology");
+			for (Phrase p : phraseology) p.toXML(phrasesContN);
+			parent.appendChild(phrasesContN);
+		}
+		if (derivs != null && !derivs.isEmpty())
+		{
+			Node derivContN = doc.createElement("derivatives");
+			for (Header d : derivs) d.toXML(derivContN);
+			parent.appendChild(derivContN);
+		}
+		if (reference != null && reference.length() > 0)
+		{
+			System.out
+					.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			Node refN = doc.createElement("reference");
+			refN.appendChild(doc.createTextNode(reference));
+			parent.appendChild(refN);
+		}
+		if (origin != null && origin.length() > 0)
+		{
+			Node originN = doc.createElement("origin");
+			originN.appendChild(doc.createTextNode(origin));
+			parent.appendChild(originN);
+		}
+		if (freeText != null && freeText.length() > 0)
+		{
+			Node freeTextN = doc.createElement("normative");
+			freeTextN.appendChild(doc.createTextNode(freeText));
+			parent.appendChild(freeTextN);
+		}
+		if (sources != null && !sources.isEmpty())
+		{
+			System.out
+					.printf("Šķirklim \"%s\" norādīti avoti, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			sources.toXML(parent);
+		}
+
+	}
 }
-
-
- */

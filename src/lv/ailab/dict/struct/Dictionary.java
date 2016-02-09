@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
  * Author: Lauma Pretkalniņa
  *
@@ -14,7 +14,7 @@
  *
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
+ */
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.struct.Entry;

@@ -1,6 +1,5 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
-import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 
@@ -8,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created on 2016-02-03.
+ * Izveidots 2016-02-03.
  *
  * @author Lauma
  */

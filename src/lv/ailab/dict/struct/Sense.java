@@ -70,6 +70,15 @@ public class Sense implements HasToJSON, HasToXML
 		ordNumber = null;
 	}
 
+	public Sense(String glossText)
+	{
+		grammar = null;
+		gloss = new Gloss(glossText);
+		examples = null;
+		subsenses = null;
+		ordNumber = null;
+	}
+
 	/**
 	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
 	 * Šobrīd ņem vērā tikai gramatikas paradigmu.

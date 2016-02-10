@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * TODO: vai origin un nevajadzētu izcelt uz Entry?
  * TODO: uzrakstīt smuku json eksportu
  * Piemēri: miers (vairāki stabilie savienojumi), māja (vairākas nozīmes frāzei)
- * mākonis (vairāki atvasinājumi)
+ * mākoņains (vairāki atvasinājumi)
  *
  * Izveidots 2016-02-02.
  * @author Lauma
@@ -185,7 +185,7 @@ public class MLVVEntry extends Entry
 	 */
 	protected void extractDerivs(String linePart)
 	{
-		String[] derivTexts = linePart.split("(?=<b>)");
+		String[] derivTexts = linePart.split("\\s*(?=<b>)");
 		if (derivTexts.length < 1) return;
 		derivs = new LinkedList<>();
 		for (String dt :derivTexts)
@@ -205,132 +205,106 @@ public class MLVVEntry extends Entry
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			phraseText = phraseText.trim();
-			Phrase p = new Phrase();
-			Matcher m = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(phraseText);
-			if (!m.matches())
-				System.out.printf("Neizdodas izanalizēt frazeoloģismu \"%s\"\n", phraseText);
-			else
-			{
-				p.text = m.group(1);
-				p.subsenses = new LinkedList<>();
-				Sense pSense = new Sense();
-				String[] senseTexts = m.group(2).trim().split("(?=<i>)");
-				for (String t : senseTexts)
-				{
-					if (t.contains("<i>"))
-					{
-						String gramText = t.substring(0, t.indexOf("</i>")).trim();
-						if (gramText.startsWith("<i>")) gramText = gramText.substring(3);
-						if (gramText.contains("<i>") || gramText.contains("</i>"))
-							System.out.printf("Frazeoloģismā \"%s\" gramatikā paliek i tagi\n", phraseText);
-						t = t.substring(t.indexOf("</i>") + 4).trim();
-						p.grammar = new Gram();
-						p.grammar.freeText = gramText;
-
-					}
-					pSense.gloss = new Gloss(t);
-					p.subsenses.add(pSense);
-					if (t.contains("<i>") || t.contains("</i>"))
-						System.out.printf("Frazeoloģismā \"%s\" skaidrojumā paliek i tagi\n", phraseText);
-				}
-				phrases.add(p);
-			}
+			Phrase p = extractSinglePhrase(phraseText.trim());
+			if (p != null) phrases.add(p);
 		}
 	}
+
 	protected void extractStable(String linePart)
 	{
-		// TODO
+		String[] phrasesParts = linePart.split("<triangle/>");
+		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
+		for (String phraseText : phrasesParts)
+		{
+			Phrase p = extractSinglePhrase(phraseText.trim());
+			if (p != null) phrases.add(p);
+		}
 	}
 	protected void extractSenses(String linePart)
 	{
 		// TODO
 	}
 
-/*
-# Annotate entry body (word senses + etymology + references + usage advices + phraseology).
-sub _annotateBody
-{
-	my $str = shift;
-	my $res = "\t\t<body>\n";
-
-	# Seperate word senses from other stuff like etymology.
-	my ($senses, $nonsenses) = ($str, '');
-	if ($str =~ m#^(.*?)\s*((<square/>|<triangle/>|<diamond/>|<extended>[Cc]ilme</extended>|<gray>...+?</gray>).*)$#)
+	protected Phrase extractSinglePhrase(String linePart)
 	{
-		$senses = $1;
-		$nonsenses = $2;
-	}
-
-	# Annotate word senses.
-	while ($senses =~ m#^(.+?)(<b>\d+\.</b>.*)$#)
-	{
-		$senses = $2;
-		$res .= &_annotateSense($1);
-	}
-	$res .= &_annotateSense($senses) if ($senses and $senses !~ /^\s*$/);
-
-	warn "In \"$currentHW\" word sense after <square/>, <triangle/>, Cilme or <gray> found!"
-		if ($nonsenses =~ m#<b>\d+\.</b>.#);
-
-	# Annotate stuff after word senses.
-	while ($nonsenses and
-		$nonsenses =~ m#^(<square/>|<triangle/>|<diamond/>|<extended>[Cc]ilme</extended>|<gray>)(.*)$#)
-	{
-		my $tag = $1;
-		if ($tag eq '<gray>')
+		if (linePart == null) return null;
+		linePart = linePart.trim();
+		if (linePart.length() < 1) return null;
+		Matcher m = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
+		if (!m.matches())
 		{
-			$nonsenses =~ m#^<gray>(...+?)</gray>\s*(.*)$#;
-			$nonsenses = $2;
-			$res .= "\t\t\t<norm>$1</norm>\n";
-		} else
+			System.out.printf("Neizdodas izanalizēt frāzi \"%s\"\n", linePart);
+			Phrase res = new Phrase();
+			res.text = linePart;
+			return res;
+		}
+		Phrase res = new Phrase();
+		String begin = m.group(1).trim();
+		String end = m.group(2).trim();
+
+		// Izanalizē frāzi.
+		if (begin.contains("<i>"))
 		{
-			$nonsenses =~ m#^$tag\s*(.*?)\s*((<square/>|<triangle/>|<diamond/>|<extended>[Cc]ilme</extended>|<gray>).*)?$#;
-			$nonsenses = $2;
-			if ($tag eq '<square/>')
+			// Frāze pati ir kursīvā
+			if (begin.startsWith("<i>"))
 			{
-				$res .= "\t\t\t<deriv>$1</deriv>\n";
-			} elsif ($tag eq '<triangle/>')
+				begin = begin.replace("<i>", "");
+				begin = begin.replace("</i>", "");
+				begin = begin.replaceAll("\\s\\s+", " ");
+				res.text = begin;
+			}
+			// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
+			else
 			{
-				$res .= "\t\t\t<wgroup>$1</wgroup>\n";
-			} elsif ($tag eq '<diamond/>')
-			{
-				$res .= "\t\t\t<phras>$1</phras>\n";
-			} else
-			{
-				$1 =~ /^:?\s*(.*)$/;
-				$res .= "\t\t\t<etym>$1</etym>\n";
+				res.text = begin.substring(0, begin.indexOf("<i>")).trim();
+				res.grammar = new Gram();
+				res.grammar.freeText = begin.substring(begin.indexOf("<i>")).trim();
 			}
 		}
+		// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
+		else res.text = begin;
+
+		// Analizē skaidrojumus.
+		// Te nekāda "lielā" gramatika nav paredzēta.
+		if (end.startsWith("<i>") && end.contains(" b. "))
+			System.out.printf("Frāzē \"%s\" gramatika ir pirms vairākām nozīmēm, nozīmes netiek sadalītas\n", linePart);
+
+		String[] gloses = new String[] {end};
+		// Ir vairākas nozīmes.
+		if (end.startsWith("a."))
+		{
+			end = end.substring(2).trim();
+			gloses = end.split("\\s[bcdefghijklmnop]\\.\\s");
+		}
+		res.subsenses = new LinkedList<>();
+		for (String g : gloses)
+		{
+			if (end.startsWith("<i>"))
+			{
+				Sense newSense = new Sense();
+				newSense.grammar = new Gram();
+				if (end.contains("</i>"))
+				{
+
+					newSense.grammar.freeText = g.substring(0, g.indexOf("</i>") + 4);
+					g = g.substring(g.indexOf("</i>") + 4);
+				}
+				else
+				{
+					System.out.printf("Frāzē \"%s\" skaidrojumā nevar atrast aizverošo i tagu\n", linePart);
+					newSense.grammar.freeText = g;
+					g = "";
+				}
+				newSense.gloss = new Gloss(g);
+				res.subsenses.add(newSense);
+			}
+			else
+			{
+				res.subsenses.add(new Sense(g));
+			}
+		}
+		return res;
 	}
-
-	$res .= "\t\t</body>\n";
-
-	# Annotating current entry has been finished, so no current headword is available.
-	# For debuging purposes only!
-	$currentHW = undef;
-
-	return $res;
-}
-
-sub _annotateSense
-{
-	my $str = shift;
-
-	my $res = "\t\t\t<sense";
-	# Process number of current sense.
-	my $sense = $str;
-	if ($str =~ m#^<b>(\d+)\.</b>\s*(.*)$#)
-	{
-		$res .= " id=\"$1\"";
-		$sense  = $2;
-	}
-	$res .= ">";
-
-	$res .= $sense;
-	$res .= "</sense>\n";
-	return $res;
-} */
 
 	/**
 	 * Override, lai MLVV šķirkļos nedrukā galvenā header lemmu, jo tā jau ir

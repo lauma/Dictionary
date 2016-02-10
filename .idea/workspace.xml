@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MlvvMarkjeetaajs.bas" afterPath="$PROJECT_DIR$/src/MlvvMarkjeetaajs.bas" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Dictionary.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Dictionary.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,12 +39,22 @@
       <file leaf-file-name="MLVVEntry.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.270936">
-              <caret line="192" column="71" selection-start-line="192" selection-start-column="71" selection-end-line="192" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.9672414">
+              <caret line="255" column="71" selection-start-line="255" selection-start-column="71" selection-end-line="255" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1455027568600" expanded="true" signature="9016:9628" placeholder="{...}" />
+                <marker date="1455123012071" expanded="true" signature="8424:9036" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sense.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="35" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -145,7 +154,6 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/ELement.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/MLVVEntry.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/StructureExtractor.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java" />
@@ -158,6 +166,7 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Dictionary.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
       </list>
     </option>
@@ -170,10 +179,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
-    <option name="y" value="-7" />
-    <option name="width" value="1290" />
-    <option name="height" value="776" />
+    <option name="width" value="1282" />
+    <option name="height" value="768" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -700,7 +707,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-7" width="1290" height="776" extended-state="0" />
+    <frame x="0" y="0" width="1282" height="768" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -713,9 +720,9 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.168" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20241936" sideWeight="0.53322786" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20241936" sideWeight="0.46677214" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Ant Build" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11209677" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20373377" sideWeight="0.53205127" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20373377" sideWeight="0.4679487" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11282468" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1983871" sideWeight="0.5146771" order="6" side_tool="false" content_ui="combo" x="518" y="128" width="246" height="511" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -981,13 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="209" column="31" selection-start-line="209" selection-start-column="31" selection-end-line="209" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8374384">
@@ -1135,13 +1135,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="35" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.270936">
-          <caret line="192" column="71" selection-start-line="192" selection-start-column="71" selection-end-line="192" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.9672414">
+          <caret line="255" column="71" selection-start-line="255" selection-start-column="71" selection-end-line="255" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1455027568600" expanded="true" signature="9016:9628" placeholder="{...}" />
+            <marker date="1455123012071" expanded="true" signature="8424:9036" placeholder="{...}" />
           </folding>
         </state>
       </provider>

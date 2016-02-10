@@ -112,28 +112,29 @@ End Sub
 
 Sub DubultoTaguIeliceejs()
     Dim oRange As Range
-    
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
-        .text = ""
-        .Format = True
-        .Highlight = True
-        Flag = .Execute
-        While Flag = True
-            .Parent.InsertBefore "<high>"
-            .Parent.InsertAfter "</high>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Highlight = True
-                Flag = .Execute
-            End With
-        Wend
-    End With
-    NovaaktFormateejumu ("<high>")
-    NovaaktFormateejumu ("</high>")
+	
+    ' Ðo maríçjumu nelieto, tâpçc âtruma labad to var neievietot.
+'    Set oRange = ActiveDocument.Range
+'    With oRange.Find
+'        .text = ""
+'        .Format = True
+'        .Highlight = True
+'        Flag = .Execute
+'        While Flag = True
+'            .Parent.InsertBefore "<high>"
+'            .Parent.InsertAfter "</high>"
+'            .Font.Reset
+'            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
+'            With oRange.Find
+'                .text = ""
+'                .Format = True
+'                .Highlight = True
+'                Flag = .Execute
+'            End With
+'        Wend
+'    End With
+'    NovaaktFormateejumu ("<high>")
+'    NovaaktFormateejumu ("</high>")
     
     Set oRange = ActiveDocument.Range
     oRange.Find.Highlight = True

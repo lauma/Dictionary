@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,7 +74,7 @@ public class MLVVEntry extends Entry
 				head = m2.group(1);
 				body = m2.group(2);
 				Pattern headpart = Pattern.compile(
-						"((?:<b>.*?</b>|<i>.*?</i>|<sup>.*?</sup>|\\[.*?\\]|(?:[-,].*?(?=<)))\\s*)(.*)");
+						"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|(?:[-,].*?(?=<)))\\s*)(.*)");
 				m2 = headpart.matcher(body);
 				while (m2.matches())
 				{
@@ -195,37 +196,209 @@ public class MLVVEntry extends Entry
 		}
 	}
 
-	/**
-	 * TODO gramatika pie frāzes
-	 * TODO a. nozīme. b. nozīme.
-	 */
 	protected void extractPhraseology(String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			Phrase p = extractSinglePhrase(phraseText.trim());
+			Phrase p = extractSinglePhrase(phraseText.trim(), PhraseTypes.PHRASEOLOGICAL);
 			if (p != null) phrases.add(p);
 		}
 	}
 
 	protected void extractStable(String linePart)
 	{
+		linePart = linePart.trim();
 		String[] phrasesParts = linePart.split("<triangle/>");
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			Phrase p = extractSinglePhrase(phraseText.trim());
+			Phrase p = extractSinglePhrase(phraseText.trim(), PhraseTypes.STABLE_UNIT);
 			if (p != null) phrases.add(p);
 		}
 	}
 	protected void extractSenses(String linePart)
 	{
-		// TODO
+		linePart = linePart.trim();
+		if (linePart.length() < 1) return;
+		String[] sensesParts = new String[]{linePart};
+		if (linePart.startsWith("<b>1.</b>"))
+		{
+			linePart = linePart.substring("<b>1.</b>".length());
+			sensesParts = linePart.split("<b>\\d+\\.</b>");
+		}
+		senses = new LinkedList<>();
+		for (String sensePart : sensesParts)
+		{
+			Sense s = extractSingleSense(sensePart);
+			if (s != null) senses.add(s);
+		}
+	}
+	protected Sense extractSingleSense(String linePart)
+	{
+		linePart = linePart.trim();
+		if (linePart.length() < 1) return null;
+		Sense res = new Sense();
+
+		// Nocērp un apstrādā beigas, lai nemaisās.
+		// Nozīmes nianses
+		if (linePart.contains("<lines/>"))
+		{
+			String[] subsensesParts = linePart.substring(
+					linePart.indexOf("<lines/>") + "<lines/>".length())
+					.trim().split("<lines/>");
+			res.subsenses = new LinkedList<>();
+			for (String subP : subsensesParts)
+			{
+				Sense ss = extractSingleSense(subP);
+				if (ss != null) res.subsenses.add(ss);
+			}
+			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
+		}
+		// Taksona apstrāde
+		Phrase taxon = null;
+		if (linePart.contains("<bullet/>"))
+		{
+			taxon = extractTaxon(linePart.substring(linePart.indexOf("<bullet/>") + "<bullet/>".length()));
+			linePart = linePart.substring(0, linePart.indexOf("<bullet/>"));
+		}
+		// Citāta apstrāde
+		Phrase quote = null;
+		if (linePart.contains("<circle/>"))
+		{
+			quote = extractQuote(linePart.substring(linePart.indexOf("<circle/>") + "<circle/>".length()));
+			linePart = linePart.substring(0, linePart.indexOf("<circle/>"));
+		}
+
+		// Nocērp no sākuma saprotamo.
+		// Nozīmes gramatikas apstrāde
+		if (linePart.startsWith("<i>"))
+		{
+			if (linePart.contains("</i>"))
+			{
+				res.grammar = new MLVVGram(linePart.substring(3, linePart.indexOf("</i>")));
+				linePart = linePart.substring(linePart.indexOf("</i>") + 4);
+			}
+			else
+			{
+				System.out.printf("Nesapārots i tags nozīmē \"%s\"", linePart);
+				res.grammar = new MLVVGram(linePart.substring(3));
+				linePart = "";
+			}
+		}
+
+		// Tagad vajadzētu sakot definīcijai.
+		// Ja tālāk būs piemēri
+		if (linePart.contains("<i>"))
+		{
+			res.gloss = new Gloss(linePart.substring(0, linePart.indexOf("<i>")).trim());
+			linePart = linePart.substring(linePart.indexOf("<i>")).trim();
+		}
+		// Ja piemēru nav.
+		else
+		{
+			res.gloss = new Gloss(linePart.trim());
+			linePart = "";
+		}
+
+		// Piemēru analīze.
+		if (linePart.length() > 0)
+		{
+			res.examples = new LinkedList<>();
+			// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
+			if (linePart.startsWith("<i>")) linePart = linePart.substring(3).trim();
+			Pattern splitter = Pattern.compile("((?:.(?!</i>))*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
+			Matcher m = splitter.matcher(linePart);
+			while (m.matches())
+			{
+				Phrase sample = new Phrase();
+				sample.type = PhraseTypes.SAMPLE;
+				sample.text = m.group(1).trim();
+				res.examples.add(sample);
+				linePart = m.group(2);
+				m = splitter.matcher(linePart);
+			}
+			// Tālāk sadala lielos piemērus ar skaidrojumu
+			if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
+			{
+				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
+				String[] parts = linePart.split("\\s*(?=<i>)");
+				for (String part : parts)
+				{
+					Phrase sample = extractSinglePhrase(part, PhraseTypes.SAMPLE);
+					if (sample != null) res.examples.add(sample);
+				}
+			}
+
+		}
+
+		if (res.examples == null && (quote != null || taxon != null))
+			res.examples = new LinkedList<>();
+		if (quote != null) res.examples.add(quote);
+		if (taxon != null) res.examples.add(taxon);
+
+		return res;
 	}
 
-	protected Phrase extractSinglePhrase(String linePart)
+
+	// TODO - atstāt kvadrātiekavas vai mest ārā
+	protected Phrase extractTaxon(String linePart)
+	{
+		if (linePart == null) return null;
+		linePart = linePart.trim();
+		if (linePart.length() < 1) return null;
+
+		Phrase res = new Phrase();
+		res.type = PhraseTypes.TAXON;
+		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\[(.*)\\](.*)").matcher(linePart);
+		if (m.matches())
+		{
+			res.text = m.group(1).trim();
+			String gloss = m.group(2).trim() + " " + m.group(3).trim();
+			res.subsenses = new LinkedList<>();
+			res.subsenses.add(new Sense(gloss.trim()));
+		}
+		else
+		{
+			res.text = linePart.trim();
+			if (res.text.matches("<i>((?!</i>).)*</i>"))
+				res.text = res.text.substring(3, res.text.length()-4);
+			System.out.printf("Taksons \"%s\" neatbilst gaidītajam šablonam", res.text);
+		}
+		return res;
+
+	}
+
+	protected Phrase extractQuote(String linePart)
+	{
+		if (linePart == null) return null;
+		linePart = linePart.trim();
+		if (linePart.length() < 1) return null;
+
+		Phrase res = new Phrase();
+		res.type = PhraseTypes.QUOTE;
+		// Izmest tos kursīvus, kas iezīmē papildinājumus citātā (pietiks, ka
+		// tos iezīmē kvadātiekavas).
+		linePart = linePart.replace("</i> [", " [");
+		linePart = linePart.replace("</i>[", "[");
+		linePart = linePart.replace("] <i>", "] ");
+		linePart = linePart.replace("]<i>", "]");
+		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\((.*)\\)").matcher(linePart);
+		if (m.matches())
+		{
+			res.text = m.group(1).trim();
+			res.source = m.group(2).trim();
+		}
+		else
+		{
+			res.text = linePart;
+			System.out.printf("Citāts \"%s\" neatbilst gaidītajam šablonam", linePart);
+		}
+		return res;
+	}
+
+	protected Phrase extractSinglePhrase(String linePart, String phraseType)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -233,12 +406,13 @@ public class MLVVEntry extends Entry
 		Matcher m = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
 		if (!m.matches())
 		{
-			System.out.printf("Neizdodas izanalizēt frāzi \"%s\"\n", linePart);
+			System.out.printf("Neizdodas izanalizēt frāzi \"%s\" ar tipu \"%s\"\n", linePart, phraseType);
 			Phrase res = new Phrase();
 			res.text = linePart;
 			return res;
 		}
 		Phrase res = new Phrase();
+		res.type = phraseType;
 		String begin = m.group(1).trim();
 		String end = m.group(2).trim();
 

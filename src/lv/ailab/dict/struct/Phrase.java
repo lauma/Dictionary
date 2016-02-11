@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.Set;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -39,7 +40,7 @@ public class Phrase implements HasToJSON, HasToXML
 	public String text;
 
 	/**
-	 * Neobligātas gramatiskās norādes
+	 * Neobligātas gramatiskās norādes.
 	 */
 	public Gram grammar;
 
@@ -47,6 +48,17 @@ public class Phrase implements HasToJSON, HasToXML
 	 * Neobligāti skaidrojumi
 	 */
 	public LinkedList<Sense> subsenses;
+
+	/**
+	 * Neobligāts tips (netiek lietots Tēzaurā).
+	 */
+	public String type;
+
+	/**
+	 * Neobligāts autors vai avots (netiek lietots Tēzaurā).
+	 */
+	public String source;
+
 
 	public Phrase()
 	{
@@ -130,6 +142,15 @@ public class Phrase implements HasToJSON, HasToXML
 		//res.append("\"Phrase\":{");
 		boolean hasPrev = false;
 
+		if (type != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Type\":\"");
+			res.append(JSONObject.escape(type));
+			res.append("\"");
+			hasPrev = true;
+		}
+
 		if (text != null)
 		{
 			if (hasPrev) res.append(", ");
@@ -154,6 +175,15 @@ public class Phrase implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
+		if (source != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Source\":\"");
+			res.append(JSONObject.escape(source));
+			res.append("\"");
+			hasPrev = true;
+		}
+
 		//res.append("}");
 		return res.toString();
 	}
@@ -165,8 +195,8 @@ public class Phrase implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node phraseN = doc.createElement("phrase");
-
+		Element phraseN = doc.createElement("phrase");
+		if (type != null) phraseN.setAttribute("type", type);
 		if (text != null)
 		{
 			Node textN = doc.createElement("text");
@@ -179,6 +209,12 @@ public class Phrase implements HasToJSON, HasToXML
 			Node sensesContN = doc.createElement("senses");
 			for (Sense s : subsenses) s.toXML(sensesContN);
 			phraseN.appendChild(sensesContN);
+		}
+		if (source != null)
+		{
+			Node sourceN = doc.createElement("source");
+			sourceN.setTextContent(source);
+			phraseN.appendChild(sourceN);
 		}
 		parent.appendChild(phraseN);
 	}

@@ -5,7 +5,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -328,13 +327,11 @@ public class MLVVEntry extends Entry
 				String text = m.group(1).trim();
 				if (text.contains(".: "))
 				{
-					sample.grammar = new Gram();
-					sample.grammar.freeText = text.substring(0, text.indexOf(".: ") + 1);
+					sample.grammar = new MLVVGram(text.substring(0, text.indexOf(".: ") + 1));
 					text = text.substring(text.indexOf(".: ") + 2).trim();
 				} else if (text.contains(".</i>: <i>"))
 				{
-					sample.grammar = new Gram();
-					sample.grammar.freeText = text.substring(0, text.indexOf(".</i>: <i>") + 1);
+					sample.grammar = new MLVVGram(text.substring(0, text.indexOf(".</i>: <i>") + 1));
 					text = text.substring(text.indexOf(".</i>: <i>") + ".</i>: <i>".length()).trim();
 				}
 				sample.text = text;
@@ -450,13 +447,11 @@ public class MLVVEntry extends Entry
 				// ir ar kolu atdalītā gramatika
 				if (begin.contains(".: "))
 				{
-					res.grammar = new Gram();
-					res.grammar.freeText = begin.substring(0, begin.indexOf(".: ") + 1);
+					res.grammar = new MLVVGram(begin.substring(0, begin.indexOf(".: ") + 1));
 					begin = begin.substring(begin.indexOf(".: ") + 2).trim();
 				} else if (begin.contains(".</i>: <i>"))
 				{
-					res.grammar = new Gram();
-					res.grammar.freeText = begin.substring(0, begin.indexOf(".</i>: <i>") + 1);
+					res.grammar = new MLVVGram(begin.substring(0, begin.indexOf(".</i>: <i>") + 1));
 					begin = begin.substring(begin.indexOf(".</i>: <i>") + ".</i>: <i>".length()).trim();
 				}
 
@@ -469,8 +464,7 @@ public class MLVVEntry extends Entry
 			else
 			{
 				res.text = begin.substring(0, begin.indexOf("<i>")).trim();
-				res.grammar = new Gram();
-				res.grammar.freeText = begin.substring(begin.indexOf("<i>")).trim();
+				res.grammar = new MLVVGram(begin.substring(begin.indexOf("<i>")).trim());
 			}
 		}
 		// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
@@ -494,19 +488,21 @@ public class MLVVEntry extends Entry
 			if (end.startsWith("<i>"))
 			{
 				Sense newSense = new Sense();
-				newSense.grammar = new Gram();
+				String gramText = null;
 				if (end.contains("</i>"))
 				{
 
-					newSense.grammar.freeText = g.substring(0, g.indexOf("</i>") + 4);
+					gramText = g.substring(0, g.indexOf("</i>") + 4);
 					g = g.substring(g.indexOf("</i>") + 4);
 				}
 				else
 				{
 					System.out.printf("Frāzē \"%s\" skaidrojumā nevar atrast aizverošo i tagu\n", linePart);
-					newSense.grammar.freeText = g;
+					gramText = g;
 					g = "";
 				}
+				newSense.grammar = new MLVVGram(gramText);
+
 				newSense.gloss = new Gloss(g);
 				res.subsenses.add(newSense);
 			}

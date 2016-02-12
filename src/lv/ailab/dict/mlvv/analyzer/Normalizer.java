@@ -159,6 +159,30 @@ public class Normalizer
 		}
 		line = line.replaceAll(" \\s+", " ");
 		line = line.replace("<i>.</i>", ".");
+
+		// Labojums problēmai, ka pie nozīmes numura treknrakstā ir "pielipis"
+		// iepriekšējais punkts.
+		Pattern prevBoldDot = Pattern.compile("(.*?)<b>([.!?]\\s*)(\\d+)\\s*.(\\s*)</b>(.*)");
+		m = prevBoldDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5);
+			m = prevBoldDot.matcher(line);
+		}
+
+		// Labojums poblēmai, ka nozīmes numura punkts ir palicis ārā no
+		// treknraksta.
+		Pattern missDot = Pattern.compile("(.*?)(<b>\\d+)</b>\\.(\\s.*)");
+		m = missDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + ".</b>" + m.group(3);
+			m = missDot.matcher(line);
+		}
+
+		// <i>Pārn</i>.: <i>
+		line = line.replaceAll("(?<=\\p{L})</i>.: <i>", ".</i>: <i>");
+
 		return line;
 	}
 }

@@ -305,16 +305,39 @@ public class MLVVEntry extends Entry
 		// Piemēru analīze.
 		if (linePart.length() > 0)
 		{
+			// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
+			// atpakaļ iekšā.
+			if (linePart.endsWith("</i>."))
+				linePart = linePart.substring(0, linePart.length()-"</i>.".length())
+						+ ".</i>";
+			// Piemēros iekļautās atkursīvotās iekavas uzskata par parastām iekavām.
+			linePart = linePart.replace("</i> (<i>", " (");
+			linePart = linePart.replace("</i>(<i>", "(");
+			linePart = linePart.replace("</i>) <i>", ") ");
+			linePart = linePart.replace("</i>)<i>", ")");
+
 			res.examples = new LinkedList<>();
 			// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
 			if (linePart.startsWith("<i>")) linePart = linePart.substring(3).trim();
-			Pattern splitter = Pattern.compile("((?:.(?!</i>))*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
+			Pattern splitter = Pattern.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
 			Matcher m = splitter.matcher(linePart);
 			while (m.matches())
 			{
 				Phrase sample = new Phrase();
 				sample.type = PhraseTypes.SAMPLE;
-				sample.text = m.group(1).trim();
+				String text = m.group(1).trim();
+				if (text.contains(".: "))
+				{
+					sample.grammar = new Gram();
+					sample.grammar.freeText = text.substring(0, text.indexOf(".: ") + 1);
+					text = text.substring(text.indexOf(".: ") + 2).trim();
+				} else if (text.contains(".</i>: <i>"))
+				{
+					sample.grammar = new Gram();
+					sample.grammar.freeText = text.substring(0, text.indexOf(".</i>: <i>") + 1);
+					text = text.substring(text.indexOf(".</i>: <i>") + ".</i>: <i>".length()).trim();
+				}
+				sample.text = text;
 				res.examples.add(sample);
 				linePart = m.group(2);
 				m = splitter.matcher(linePart);
@@ -325,7 +348,7 @@ public class MLVVEntry extends Entry
 				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
 				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums."
 				// un "<i>frāze</i> - <i>gramatika</i> skaidrojums." divos.
-				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?)(?=<i>)");//
+				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s)(?=<i>)");//
 				for (String part : parts)
 				{
 					Phrase sample = extractSinglePhrase(part, PhraseTypes.SAMPLE);
@@ -386,16 +409,16 @@ public class MLVVEntry extends Entry
 		linePart = linePart.replace("</i>[", "[");
 		linePart = linePart.replace("] <i>", "] ");
 		linePart = linePart.replace("]<i>", "]");
-		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\((.*)\\)").matcher(linePart);
+		Matcher m = Pattern.compile("<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)").matcher(linePart);
 		if (m.matches())
 		{
-			res.text = m.group(1).trim();
-			res.source = m.group(2).trim();
+			res.text = (m.group(1) + m.group(2)).trim();
+			res.source = m.group(3).trim();
 		}
 		else
 		{
 			res.text = linePart;
-			System.out.printf("Citāts \"%s\" neatbilst gaidītajam šablonam", linePart);
+			System.out.printf("Citāts \"%s\" neatbilst gaidītajam šablonam\n", linePart);
 		}
 		return res;
 	}
@@ -424,6 +447,19 @@ public class MLVVEntry extends Entry
 			// Frāze pati ir kursīvā
 			if (begin.startsWith("<i>"))
 			{
+				// ir ar kolu atdalītā gramatika
+				if (begin.contains(".: "))
+				{
+					res.grammar = new Gram();
+					res.grammar.freeText = begin.substring(0, begin.indexOf(".: ") + 1);
+					begin = begin.substring(begin.indexOf(".: ") + 2).trim();
+				} else if (begin.contains(".</i>: <i>"))
+				{
+					res.grammar = new Gram();
+					res.grammar.freeText = begin.substring(0, begin.indexOf(".</i>: <i>") + 1);
+					begin = begin.substring(begin.indexOf(".</i>: <i>") + ".</i>: <i>".length()).trim();
+				}
+
 				begin = begin.replace("<i>", "");
 				begin = begin.replace("</i>", "");
 				begin = begin.replaceAll("\\s\\s+", " ");

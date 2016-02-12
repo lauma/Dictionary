@@ -290,10 +290,10 @@ public class MLVVEntry extends Entry
 
 		// Tagad vajadzētu sakot definīcijai.
 		// Ja tālāk būs piemēri
-		if (linePart.contains("<i>"))
+		if (linePart.contains(". <i>"))
 		{
-			res.gloss = new Gloss(linePart.substring(0, linePart.indexOf("<i>")).trim());
-			linePart = linePart.substring(linePart.indexOf("<i>")).trim();
+			res.gloss = new Gloss(linePart.substring(0, linePart.indexOf(". <i>") + 1).trim());
+			linePart = linePart.substring(linePart.indexOf(". <i>") + 1).trim();
 		}
 		// Ja piemēru nav.
 		else
@@ -323,7 +323,8 @@ public class MLVVEntry extends Entry
 			if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
 			{
 				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
-				String[] parts = linePart.split("\\s*(?=<i>)");
+				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums." divos.
+				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s)(?=<i>)");
 				for (String part : parts)
 				{
 					Phrase sample = extractSinglePhrase(part, PhraseTypes.SAMPLE);

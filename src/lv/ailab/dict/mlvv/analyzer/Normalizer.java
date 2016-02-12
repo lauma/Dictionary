@@ -53,6 +53,9 @@ public class Normalizer
 
 		if (line.isEmpty()) return line;
 
+		line = line.replace("<i>.</i>", ".");
+		line = line.replace("<i>. </i>", ". ");
+
 		for (String tag : tags)
 		{
 			// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
@@ -71,6 +74,7 @@ public class Normalizer
 			} while (!history.equals(line));
 
 		}
+
 		// Iebīda pēdējo burtu iekšā <extended> tagā.
 		// Perl bija tā:
 		// $line =~ s#(\p{L}\p{M}*)(</extended>)((\p{L}\p{M}*)+)#$1$3$2#g;

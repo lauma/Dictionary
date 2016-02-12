@@ -60,24 +60,30 @@ public class Normalizer
 
 		if (line.isEmpty()) return line;
 
-		for (String tag : tags)
+		String prevLine = null;
+		do // Ārējais cikls paredzēts, lai tiktu galā ar tukšu tagu virtenēm.
 		{
-			// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
-			line = line.replace(" </" + tag + ">", "</" + tag + "> ");
-			line = line.replace("<" + tag + "> ", " <" + tag + ">");
-
-			// Aizvāc nevajadzīgus tagu pārrāvumus un tukšus tagus.
-			String history = line;
-			do
+			prevLine = line;
+			for (String tag : tags)
 			{
-				history = line;
-				line = line.replaceAll("<" + tag + "></" + tag + ">", "");
-				line = line.replaceAll("<" + tag + ">\\s+</" + tag + ">", " ");
-				line = line.replaceAll("</" + tag + "><" + tag + ">", "");
-				line = line.replaceAll("</" + tag + ">\\s+<" + tag + ">", " ");
-			} while (!history.equals(line));
+				// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
+				line = line.replace(" </" + tag + ">", "</" + tag + "> ");
+				line = line.replace("<" + tag + "> ", " <" + tag + ">");
 
+				// Aizvāc nevajadzīgus tagu pārrāvumus un tukšus tagus.
+				String history = line;
+				do
+				{
+					history = line;
+					line = line.replaceAll("<" + tag + "></" + tag + ">", "");
+					line = line.replaceAll("<" + tag + ">\\s+</" + tag + ">", " ");
+					line = line.replaceAll("</" + tag + "><" + tag + ">", "");
+					line = line.replaceAll("</" + tag + ">\\s+<" + tag + ">", " ");
+				} while (!history.equals(line));
+			}
 		}
+		while (!line.equals(prevLine));
+
 
 		// Iebīda pēdējo burtu iekšā <extended> tagā.
 		// Perl bija tā:
@@ -138,11 +144,11 @@ public class Normalizer
 	{
 		if (line == null) return line;
 		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
-		Pattern cursiveDot = Pattern.compile("(.*?)<b>(\\s*)(\\d+)\\s*<i>\\.</i>(\\s*)</b>(.*)");
+		Pattern cursiveDot = Pattern.compile("(.*?)<b>(\\s*)(\\d+)\\s*<i>\\s*\\.(\\s*)</i>(\\s*)</b>(.*)");
 		Matcher m = cursiveDot.matcher(line);
 		while (m.matches())
 		{
-			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5);
+			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5) + m.group(6);
 			m = cursiveDot.matcher(line);
 		}
 		line = line.replaceAll(" \\s+", " ");

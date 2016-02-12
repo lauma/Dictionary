@@ -1,4 +1,3 @@
-Attribute VB_Name = "MlvvMarkjeetaajs"
 Sub Markjeetaajs()
 '
 ' Markjeetaajs Macro
@@ -7,9 +6,9 @@ Sub Markjeetaajs()
     Application.ScreenUpdating = False
     
     Priekshdarbi
-    DubultoTaguIeliceejs
     VienkaarshoTaguIeliceejs
-    MsgBox "Viss kârtîbâ!", 0, "Maríçtâjs"
+    DubultoTaguIeliceejs
+    MsgBox "Viss k?rt?b?!", 0, "Mar??t?js"
     Application.ScreenUpdating = True
 End Sub
 
@@ -37,6 +36,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    NovaaktFormateejumu ("<square/>")
     With oRange.Find
         .text = ChrW(9675)
         .Replacement.text = "<circle/>"
@@ -47,6 +47,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    NovaaktFormateejumu ("<circle/>")
     With oRange.Find
         .text = ChrW(8710)
         .Replacement.text = "<triangle/>"
@@ -57,6 +58,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    NovaaktFormateejumu ("<triangle/>")
     With oRange.Find
         .text = ChrW(61618)
         .Replacement.text = "<diamond/>"
@@ -67,6 +69,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    NovaaktFormateejumu ("<diamond/>")
     With oRange.Find
         .text = ChrW(8226)
         .Replacement.text = "<bullet/>"
@@ -97,6 +100,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    NovaaktFormateejumu ("<bullet/>")
     With oRange.Find
         .text = "//"
         .Replacement.text = "<lines/>"
@@ -107,34 +111,33 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
-
+    NovaaktFormateejumu ("<lines/>")
 End Sub
 
 Sub DubultoTaguIeliceejs()
     Dim oRange As Range
-	
-    ' Ðo maríçjumu nelieto, tâpçc âtruma labad to var neievietot.
-'    Set oRange = ActiveDocument.Range
-'    With oRange.Find
-'        .text = ""
-'        .Format = True
-'        .Highlight = True
-'        Flag = .Execute
-'        While Flag = True
-'            .Parent.InsertBefore "<high>"
-'            .Parent.InsertAfter "</high>"
-'            .Font.Reset
-'            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-'            With oRange.Find
-'                .text = ""
-'                .Format = True
-'                .Highlight = True
-'                Flag = .Execute
-'            End With
-'        Wend
-'    End With
-'    NovaaktFormateejumu ("<high>")
-'    NovaaktFormateejumu ("</high>")
+    
+    'Set oRange = ActiveDocument.Range
+    'With oRange.Find
+    '    .text = ""
+    '    .Format = True
+    '    .Highlight = True
+    '    Flag = .Execute
+    '    While Flag = True
+    '        .Parent.InsertBefore "<high>"
+    '        .Parent.InsertAfter "</high>"
+    '        .Font.Reset
+    '        oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
+    '        With oRange.Find
+    '            .text = ""
+    '            .Format = True
+    '            .Highlight = True
+    '            Flag = .Execute
+    '        End With
+    '    Wend
+    'End With
+    'NovaaktFormateejumu ("<high>")
+    'NovaaktFormateejumu ("</high>")
     
     Set oRange = ActiveDocument.Range
     oRange.Find.Highlight = True

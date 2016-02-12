@@ -1,4 +1,4 @@
-package lv.ailab.dict.tezaurs.io;
+package lv.ailab.dict.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class DocLoader
 	 * @return array of entries.
 	 * @throws IOException
 	 */
-	public static String[] loadDictionary(String path)
+	public static String[] loadDoc(String path)
 			throws IOException
 	{
 		File entryFile = new File(path);

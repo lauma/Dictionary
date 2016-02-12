@@ -26,6 +26,28 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
+    With oRange.Find
+        .text = "["
+        .Replacement.text = "<openSquareBrack/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
+    With oRange.Find
+        .text = "]"
+        .Replacement.text = "<closeSquareBrack/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     With oRange.Find
         .text = ChrW(61551)
         .Replacement.text = "<square/>"

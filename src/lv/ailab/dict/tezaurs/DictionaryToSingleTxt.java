@@ -1,6 +1,6 @@
 package lv.ailab.dict.tezaurs;
 
-import lv.ailab.dict.tezaurs.io.DocLoader;
+import lv.ailab.dict.io.DocLoader;
 
 import java.io.*;
 
@@ -37,7 +37,7 @@ public class DictionaryToSingleTxt
 				continue;
 
 			String[] entities = DocLoader
-					.loadDictionary(inputDataPath + fileName);
+					.loadDoc(inputDataPath + fileName);
 			for (String e : entities)
 			{
 				if (e != null && !e.trim().equals(""))

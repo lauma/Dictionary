@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import lv.ailab.dict.tezaurs.checker.Markers;
-import lv.ailab.dict.tezaurs.io.DocLoader;
+import lv.ailab.dict.io.DocLoader;
 
 public class DictionaryToDic
 {
@@ -53,7 +53,7 @@ public class DictionaryToDic
 			BufferedWriter dicOut = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath +fileName.substring(0, fileName.length()-".doc".length()) + ".dic"), "Windows-1257"));
 
-			String[] entities = DocLoader.loadDictionary(inputDataPath + fileName);
+			String[] entities = DocLoader.loadDoc(inputDataPath + fileName);
 			for (String e : entities)
 			{
 				String[] elements = convertEntry(e);

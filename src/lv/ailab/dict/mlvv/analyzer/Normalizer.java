@@ -49,6 +49,12 @@ public class Normalizer
 		// Novāc BOM.
 		if (line.length() > 0 && line.codePointAt(0) == 65279)
 			line = line.substring(1);
+
+		// Sasodīts aprisinājums kaut kādiem .doc gļukiem, kuru dēļ eksportējot
+		// haotiski kropļojas kvadrātiekavas.
+		line = line.replace("<openSquareBrack/>", "[");
+		line = line.replace("<closeSquareBrack/>", "]");
+
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
 		// marķētājiem.

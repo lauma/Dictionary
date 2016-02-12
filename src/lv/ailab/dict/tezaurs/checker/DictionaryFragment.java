@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 
 import lv.ailab.dict.tezaurs.DictionaryChecker;
-import lv.ailab.dict.tezaurs.io.DocLoader;
+import lv.ailab.dict.io.DocLoader;
 import lv.ailab.dict.utils.StringUtils;
 import lv.ailab.dict.tezaurs.io.XlsOutputer;
 import lv.ailab.dict.utils.Trio;
@@ -72,7 +72,7 @@ public class DictionaryFragment
         dict.references = references;
 
 		// Ielādē šķirkļus.
-		String[] entryTexts = DocLoader.loadDictionary(path);
+		String[] entryTexts = DocLoader.loadDoc(path);
         dict.entries = new Entry[entryTexts.length];
         dict.entryNames = new HashSet<>();
         for (int i = 0; i < entryTexts.length; i++)

@@ -38,6 +38,13 @@ public class Normalizer
 	 */
 	public static String normalizeLine(String line)
 	{
+		line = correctGeneric(line);
+		line = correctSpecials(line);
+		return line;
+	}
+
+	public static String correctGeneric(String line)
+	{
 		if (line == null) return null;
 		// Novāc BOM.
 		if (line.length() > 0 && line.codePointAt(0) == 65279)
@@ -52,9 +59,6 @@ public class Normalizer
 		line = line.trim();
 
 		if (line.isEmpty()) return line;
-
-		line = line.replace("<i>.</i>", ".");
-		line = line.replace("<i>. </i>", ". ");
 
 		for (String tag : tags)
 		{
@@ -124,6 +128,25 @@ public class Normalizer
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll(" \\s+", " ");
 		line = line.trim();
+		return line;
+	}
+
+	/**
+	 * Specifisku kļūdu labošana.
+	 */
+	public static String correctSpecials(String line)
+	{
+		if (line == null) return line;
+		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
+		Pattern cursiveDot = Pattern.compile("(.*?)<b>(\\s*)(\\d+)\\s*<i>\\.</i>(\\s*)</b>(.*)");
+		Matcher m = cursiveDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5);
+			m = cursiveDot.matcher(line);
+		}
+		line = line.replaceAll(" \\s+", " ");
+		line = line.replace("<i>.</i>", ".");
 		return line;
 	}
 }

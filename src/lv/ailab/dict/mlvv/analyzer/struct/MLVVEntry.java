@@ -323,8 +323,9 @@ public class MLVVEntry extends Entry
 			if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
 			{
 				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
-				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums." divos.
-				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s)(?=<i>)");
+				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums."
+				// un "<i>frāze</i> - <i>gramatika</i> skaidrojums." divos.
+				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?)(?=<i>)");//
 				for (String part : parts)
 				{
 					Phrase sample = extractSinglePhrase(part, PhraseTypes.SAMPLE);
@@ -365,7 +366,7 @@ public class MLVVEntry extends Entry
 			res.text = linePart.trim();
 			if (res.text.matches("<i>((?!</i>).)*</i>"))
 				res.text = res.text.substring(3, res.text.length()-4);
-			System.out.printf("Taksons \"%s\" neatbilst gaidītajam šablonam", res.text);
+			System.out.printf("Taksons \"%s\" neatbilst gaidītajam šablonam\n", res.text);
 		}
 		return res;
 

@@ -8,7 +8,7 @@ Sub Markjeetaajs()
     Priekshdarbi
     VienkaarshoTaguIeliceejs
     DubultoTaguIeliceejs
-    MsgBox "Viss k?rt?b?!", 0, "Mar??t?js"
+    MsgBox "Viss kârtîbâ!", 0, "Maríçtâjs"
     Application.ScreenUpdating = True
 End Sub
 
@@ -36,6 +36,16 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    With oRange.Find
+        .text = ChrW(-3928)
+        .Replacement.text = "<square/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     NovaaktFormateejumu ("<square/>")
     With oRange.Find
         .text = ChrW(9675)
@@ -50,6 +60,16 @@ Sub VienkaarshoTaguIeliceejs()
     NovaaktFormateejumu ("<circle/>")
     With oRange.Find
         .text = ChrW(8710)
+        .Replacement.text = "<triangle/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    With oRange.Find
+        .text = ChrW(916)
         .Replacement.text = "<triangle/>"
         .Forward = True
         .Wrap = wdFindContinue

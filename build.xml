@@ -56,15 +56,15 @@
 
   </target>
 
-  <target name="zip-all" depends="build" description="compress distribution files">
+  <target name="zip-all" depends="build" description="compress full distribution">
     <zip destfile="Dictionary.zip" basedir="${out.prod}"
          excludes="dati/*.doc,dati/*.klu,dati/*.etalons,dati/*.xls,dati/*.tmp,dati/*.xml"
          whenempty="create"/>
   </target>
 
-  <target name="zip-tezaurs-no-anal" depends="build" description="compress distribution files">
+  <target name="zip-tezaurs-no-anal" depends="build" description="compress Tēzaurs.lv distribution">
     <zip destfile="Dictionary.zip" basedir="${out.prod}"
-         excludes="dati/*.doc,dati/*.klu,dati/*.etalons,dati/*.xls,dati/*.tmp,dati/*.xml,lv/ailab/dict/mlvv/**,lv/ailab/dict/tezaurs/analyzer/**,lv/ailab/dict/tezaurs/DictionaryXmlToJsonUI.*,*TezaursXml2Json.bat,*MlvvTxt2Xml.bat"
+         excludes="dati/mlvv/,dati/*.doc,dati/*.klu,dati/*.etalons,dati/*.xls,dati/*.tmp,dati/*.xml,lv/ailab/dict/mlvv/**,lv/ailab/dict/tezaurs/analyzer/**,lv/ailab/dict/tezaurs/DictionaryXmlToJsonUI.*,*TezaursXml2Json.bat,*MlvvTxt2Xml.bat"
          whenempty="create"/>
   </target>
 
@@ -76,11 +76,11 @@
   </target>
 
   <target name="clean-build-tezaurs-no-anal" depends="clean,build,zip-tezaurs-no-anal"
-          description="clean and generate the distribution" >
+          description="clean and generate the distribution of Tēzaurs.lv preprocessing tools" >
   </target>
 
   <target name="clean-build-all" depends="clean,build,zip-all"
-          description="clean and generate the distribution" >
+          description="clean and generate full distribution" >
   </target>
 
 </project>

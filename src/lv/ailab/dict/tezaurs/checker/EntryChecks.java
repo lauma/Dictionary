@@ -478,6 +478,10 @@ public class EntryChecks
 
 		if (entry.contents.matches(".*\\sNG\\s((?!NO).)*\\sNG\\s.*"))
 			bad.addNewEntry(entry, "Divi NG pēc kārtas, bez NO");
+		if (entry.contents.matches(".*\\sNO\\s((?!AN).)*\\sAG\\s.*"))
+			bad.addNewEntry(entry, "AG tūlīt pēc NO, bez AN");
+		if (entry.contents.matches(".*\\sNO\\s((?!PI).)*\\sPG\\s.*"))
+			bad.addNewEntry(entry, "PG tūlīt pēc NO, bez PI");
 		if (entry.contents.matches("((?!\\sNO\\s).)*\\sNG\\s.*"))
 			bad.addNewEntry(entry, "Pirms pirmā NG nav atrodams NO");
 		if (entry.contents.matches(".*\\s(?!NO)" + Markers.regexp + "\\s((?!\\s" + Markers.regexp +"\\s).)*\\sNG\\s.*"))
@@ -598,13 +602,14 @@ public class EntryChecks
 			dict.bad.addNewEntry(entry, "Šķirklis beidzas ar tukšumsimbolu");
 
 		// Pārbauda specifiskas tipogrāfiskas kļūdas
-		if(entry.fullText.matches("\\*,\\s*,\\*"))
+		if(entry.fullText.matches(".*,\\s*,.*"))
 			dict.bad.addNewEntry(entry, "Šķirklis satur divus secīgus komatus");
-		if(entry.fullText.matches("\\*,\\.\\*"))
-			dict.bad.addNewEntry(entry, "Šķirklis satur punktu tieši aiz komata");
-		if(entry.fullText.matches("\\*\\s,\\*"))
+		if(entry.fullText.matches(".*[,;:]\\s*\\..*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur punktu tieši aiz ',', ':' vai ';'");
+		if(entry.fullText.matches(".*\\s,.*"))
 			dict.bad.addNewEntry(entry, "Šķirklis satur atstarpi pirms komata");
-
+		if(entry.fullText.matches(".*\\.\\s+\\..*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur secīgus, ar atstarpi atdalītus punktus");
 	}
 	
 	/**

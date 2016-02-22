@@ -364,7 +364,20 @@ public class BaseRule implements Rule
 	public static BaseRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{Features.POS__NOUN, Features.GENDER__FEM}, null);
+				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+	}
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 5. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 9. paradigmu
+	 */
+	public static BaseRule fifthDeclNoChange(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 9,
+				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -379,6 +392,33 @@ public class BaseRule implements Rule
 		return BaseRule.of(patternText, lemmaRestrictions, 3,
 				new Tuple[]{Features.POS__NOUN},
 				new Tuple[]{Features.GENDER__MASC});
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 6. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī un līdzskaņu miju.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 11. paradigmu
+	 */
+	public static BaseRule sixthDeclStd(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 11,
+				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+	}
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 6. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī un līdzskaņu miju.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 11. paradigmu
+	 */
+	public static BaseRule sixthDeclNoChange(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 11,
+				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 
 	/**

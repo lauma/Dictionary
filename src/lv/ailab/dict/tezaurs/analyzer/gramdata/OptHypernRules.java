@@ -23,19 +23,6 @@ public class OptHypernRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		/* Paradigm 11: Lietvārds 6. deklinācija -s
-		 * Rules in form "-valsts, dsk. ģen. -valstu, s.", i.e containing full 6th
-		 * declension nouns.
-		 */
-		BaseRule.noun("-acs, dsk. ģen. -acu, s.", ".*acs", 11, new Tuple[] {Features.NO_SOUNDCHANGE},
-				new Tuple[]{Features.GENDER__FEM}), //uzacs, acs
-		BaseRule.noun("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns", 11, null,
-				new Tuple[]{Features.GENDER__FEM}), //aizkrāsns
-		BaseRule.noun("-nakts, dsk. ģen. -nakšu, s.", ".*nakts", 11, null,
-				new Tuple[]{Features.GENDER__FEM}), //diennakts
-		BaseRule.noun("-valsts, dsk. ģen. -valstu, s.", ".*valsts", 11, null,
-				new Tuple[]{Features.GENDER__FEM}), //agrārvalsts
-
 		/* Paradigm 25: Pronouns
 		 */
 		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
@@ -48,8 +35,45 @@ public class OptHypernRules
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
 	public static final Rule[] fifthDeclNoun = {
-		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju", ".*upe"), //upe
+		// Ar mijām
+		BaseRule.fifthDeclStd("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
+		BaseRule.fifthDeclStd("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
+		BaseRule.fifthDeclStd("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
+		BaseRule.fifthDeclStd("-celles, dsk. ģen. -ceļļu, s.", ".*celle"), // celle
+		BaseRule.fifthDeclStd("-cemmes, dsk. ģen. -cemmju, s.", ".*cemme"), // cemme
+		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe
+		BaseRule.fifthDeclStd("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
+		// Bez mijām
+		BaseRule.fifthDeclNoChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
 	};
+
+	/**
+	 * Paradigm 11: Lietvārds 6.. deklinācija, siev.dz.
+	 * Likumi formā "-acs, dsk. ģen. -acu, s.".
+	 */
+	public static final Rule[] sixthDeclNoun = {
+		// Ar mijām
+		BaseRule.sixthDeclStd("-avs, dsk. ģen. -avju, s.", ".*avs"), //avs
+		BaseRule.sixthDeclStd("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
+		BaseRule.sixthDeclStd("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts
+		BaseRule.sixthDeclStd("-cilts, dsk. ģen. -cilšu, s.", ".*cilts"), //cilts
+		BaseRule.sixthDeclStd("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
+		BaseRule.sixthDeclStd("-debess, dsk. ģen. -debesu, s.", ".*debess"), //debess
+		BaseRule.sixthDeclStd("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns"), //aizkrāsns
+		BaseRule.sixthDeclStd("-kūts, dsk. ģen. -kūšu, s.", ".*kūts"), //cūkkūts
+		BaseRule.sixthDeclStd("-nakts, dsk. ģen. -nakšu, s.", ".*nakts"), //diennakts
+		BaseRule.sixthDeclStd("-nots, dsk. ģen. -nošu, s.", ".*nots"), // nošu
+		BaseRule.sixthDeclStd("-pirts, dsk. ģen. -piršu, s.", ".*pirts"), // asinspirts
+
+		// Bez mijām
+		BaseRule.sixthDeclNoChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
+		BaseRule.sixthDeclNoChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
+		BaseRule.sixthDeclNoChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
+		BaseRule.sixthDeclNoChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
+		BaseRule.sixthDeclNoChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss
+		BaseRule.sixthDeclNoChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
+	};
+
 	/**
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */

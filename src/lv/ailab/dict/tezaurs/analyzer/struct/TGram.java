@@ -302,7 +302,7 @@ public class TGram extends Gram
 		// "-??a, v.", "-??u, s.", "-??u, v."
 		// "-es, dsk. ģen. -??u, s."
 		// Paradigmas: 3
-		for (Rule s : DirectRules.secondDeclNounRulesDirect)
+		for (Rule s : DirectRules.secondDeclNoun)
 		{
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
@@ -310,7 +310,7 @@ public class TGram extends Gram
 		for (Rule s : OptHypernRules.secondDeclNoun)
 		{
 			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
 		// Paradigmas: 9
 		for (Rule s : DirectRules.fifthDeclNoun)
@@ -321,8 +321,15 @@ public class TGram extends Gram
 		for (Rule s : OptHypernRules.fifthDeclNoun)
 		{
 			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
+		// Paradigmas: 11
+		for (Rule s : OptHypernRules.sixthDeclNoun)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+
 		// Paradigmas: 1, 2, 3, 5, 9
 		for (Rule s : DirectRules.nounMultiDecl)
 		{

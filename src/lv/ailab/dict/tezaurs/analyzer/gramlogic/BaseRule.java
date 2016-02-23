@@ -423,7 +423,7 @@ public class BaseRule implements Rule
 	/**
 	 * Metode īsumam.
 	 * Izveido BaseRule 6. deklinācijas sieviešu dzimtes lietvārdiem ar
-	 * šķirkļa vārdu vienskaitlī un līdzskaņu miju.
+	 * šķirkļa vārdu vienskaitlī bez līdzskaņu mijas.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
 	 * @return BaseRule ar 11. paradigmu
@@ -432,6 +432,20 @@ public class BaseRule implements Rule
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 11,
 				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 6. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī un fakultatīvu līdzskaņu miju.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 11. paradigmu
+	 */
+	public static BaseRule sixthDeclOptChange(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 11,
+				new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 
 	/**

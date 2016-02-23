@@ -608,6 +608,8 @@ public class EntryChecks
 			dict.bad.addNewEntry(entry, "Šķirklis satur punktu tieši aiz ',', ':' vai ';'");
 		if(entry.fullText.matches(".*\\s,.*"))
 			dict.bad.addNewEntry(entry, "Šķirklis satur atstarpi pirms komata");
+		if(entry.fullText.matches(".*\\s\\.[^.].*"))
+			dict.bad.addNewEntry(entry, "Šķirklis satur atstarpi pirms punkta");
 		if(entry.fullText.matches(".*\\.\\s+\\..*"))
 			dict.bad.addNewEntry(entry, "Šķirklis satur secīgus, ar atstarpi atdalītus punktus");
 	}

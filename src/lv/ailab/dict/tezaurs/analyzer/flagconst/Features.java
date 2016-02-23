@@ -81,7 +81,9 @@ public class Features
 	public static final Tuple<Keys, String> FIRST_CONJ_PARALLELFORM = Tuple.of(Keys.INFLECTION_WEARDNES, Values.FIRST_CONJ_PARALLELFORM.s);
 	public static final Tuple<Keys, String> HAS_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.HAS_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_PRESENT_SOUNDCHANGE.s);
+	public static final Tuple<Keys, String> OPT_PRESENT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.OPT_PRESENT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> NO_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.NO_SOUNDCHANGE.s);
+	public static final Tuple<Keys, String> OPT_SOUNDCHANGE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.OPT_SOUNDCHANGE.s);
 	public static final Tuple<Keys, String> FROZEN = Tuple.of(Keys.INFLECTION_WEARDNES, Values.FROZEN_FORM.s);
 
 	public static final Tuple<Keys, String> UNCLEAR_PARADIGM = Tuple.of(Keys.OTHER_FLAGS, Values.UNCLEAR_PARADIGM.s);

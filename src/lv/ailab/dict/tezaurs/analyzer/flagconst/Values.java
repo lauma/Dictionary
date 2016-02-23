@@ -119,13 +119,14 @@ public enum Values
 	FIRST_CONJ_PARALLELFORM("1. konjugācijas paralēlforma"), // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	INFINITIVE_HOMOFORMS("Nenoteiksmes homoformas"), // Paredzēts morfoimporta atvieglošanai
 	HAS_PRESENT_SOUNDCHANGE("Tagadnes mija ir"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	NO_PRESENT_SOUNDCHANGE("Tagadnes mijas nav"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	NO_SOUNDCHANGE("Mijas nav"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā nav mijas
+	OPT_PRESENT_SOUNDCHANGE("Fakultatīva tagadnes mija"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
+	NO_PRESENT_SOUNDCHANGE("Nav tagadnes mijas"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj. Vai šo vajadzētu pārveidot par noklusēto variantu?
+	NO_SOUNDCHANGE("Nav mijas"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā vispār nav attiecīgajai paradigmai raksturīgās mijas
+	OPT_SOUNDCHANGE("Fakultatīva mija"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā lietojama gan locīšana ar paradigmai raksturīgo miju, gan bez tās
 
 	// Sevišķi retās vērtības:
 
 	//// Galotņu šabloniem.
-	STU_SHU_CHANGE("Miju varianti: -stu/-šu"),
 	NOT_PRESENT_FORMS("Nelieto tagadnes formas"),
 
 	//// "Savienojumā ar" apstrādei.

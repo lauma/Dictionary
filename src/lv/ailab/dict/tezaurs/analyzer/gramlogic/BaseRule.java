@@ -369,7 +369,7 @@ public class BaseRule implements Rule
 	/**
 	 * Metode īsumam.
 	 * Izveido BaseRule 5. deklinācijas sieviešu dzimtes lietvārdiem ar
-	 * šķirkļa vārdu vienskaitlī.
+	 * šķirkļa vārdu vienskaitlī bez līdzskaņu mijas.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
 	 * @return BaseRule ar 9. paradigmu
@@ -378,6 +378,19 @@ public class BaseRule implements Rule
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 9,
 				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+	}
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 5. deklinācijas sieviešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī ar fakultatīvu līdzskaņu miju.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 9. paradigmu
+	 */
+	public static BaseRule fifthDeclOptChange(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 9,
+				new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -484,8 +497,7 @@ public class BaseRule implements Rule
 		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
 		posFlags.add(Features.POS__VERB);
 		posFlags.add(Features.PARALLEL_FORMS);
-		posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
-		posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		posFlags.add(Features.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
@@ -527,8 +539,7 @@ public class BaseRule implements Rule
 		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
 		posFlags.add(Features.POS__VERB);
 		posFlags.add(Features.PARALLEL_FORMS);
-		posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
-		posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+		posFlags.add(Features.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))

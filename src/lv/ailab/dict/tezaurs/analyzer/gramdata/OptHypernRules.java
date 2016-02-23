@@ -41,10 +41,13 @@ public class OptHypernRules
 		BaseRule.fifthDeclStd("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
 		BaseRule.fifthDeclStd("-celles, dsk. ģen. -ceļļu, s.", ".*celle"), // celle
 		BaseRule.fifthDeclStd("-cemmes, dsk. ģen. -cemmju, s.", ".*cemme"), // cemme
+		BaseRule.fifthDeclStd("-dēles, dsk. ģen. -dēļu, s.", ".*dēle"), // dēle
+		BaseRule.fifthDeclStd("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
 		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe
 		BaseRule.fifthDeclStd("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
 		// Bez mijām
 		BaseRule.fifthDeclNoChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
+		BaseRule.sixthDeclNoChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 	};
 
 	/**
@@ -57,8 +60,7 @@ public class OptHypernRules
 		BaseRule.sixthDeclStd("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
 		BaseRule.sixthDeclStd("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts
 		BaseRule.sixthDeclStd("-cilts, dsk. ģen. -cilšu, s.", ".*cilts"), //cilts
-		BaseRule.sixthDeclStd("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
-		BaseRule.sixthDeclStd("-debess, dsk. ģen. -debesu, s.", ".*debess"), //debess
+		BaseRule.sixthDeclStd("-drāts, dsk. ģen. -drāšu, s.", ".*drāts"), //drāts
 		BaseRule.sixthDeclStd("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns"), //aizkrāsns
 		BaseRule.sixthDeclStd("-kūts, dsk. ģen. -kūšu, s.", ".*kūts"), //cūkkūts
 		BaseRule.sixthDeclStd("-nakts, dsk. ģen. -nakšu, s.", ".*nakts"), //diennakts
@@ -69,8 +71,9 @@ public class OptHypernRules
 		BaseRule.sixthDeclNoChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
 		BaseRule.sixthDeclNoChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
 		BaseRule.sixthDeclNoChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
-		BaseRule.sixthDeclNoChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 		BaseRule.sixthDeclNoChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss
+		BaseRule.sixthDeclNoChange("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
+		BaseRule.sixthDeclNoChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //padebess
 		BaseRule.sixthDeclNoChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
 	};
 

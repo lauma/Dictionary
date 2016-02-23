@@ -215,9 +215,8 @@ public class DirectRules
 			new Tuple[]{Features.ENTRYWORD__PLURAL}, new Tuple[]{Features.GENDER__FEM}), //bailes
 
 		// Miju varianti
-		BaseRule.noun("-es, dsk. ģen. -stu, arī -šu", ".*ste", 9,
-				new Tuple[]{Features.GENDER__FEM, Tuple.of(Keys.INFLECTION_WEARDNES, Values.STU_SHU_CHANGE.s)},
-				null), //dzeņaukste
+		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -stu, arī -šu, s.", ".*ste"), //dzeņaukste
+		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -šu vai -tu, s.", ".*te"), //cunfte, manšete
 	};
 
 	/**
@@ -226,7 +225,8 @@ public class DirectRules
 	public static final Rule[] secondDeclNoun = {
 		BaseRule.secondDeclStd("-ļa, dsk. ģen. -ļu, v.", ".*lis"), //brokolis
 		BaseRule.secondDeclStd("-ņa, dsk. ģen. -ņu, v.", ".*nis"), //bizmanis
-		BaseRule.secondDeclStd("-ša, dsk. ģen. -šu, v.", ".*[st]is"), //auseklītis
+		BaseRule.secondDeclStd("-ša, dsk. ģen. -šu, v.", ".*[st]is"), //auseklītis, lāčplēsis
+		BaseRule.secondDeclStd("-ža, dsk. ģen. -žu, v.", ".*[dz]is"), //diskvedis, plakandzelzis
 
 		BaseRule.noun("-ns, dsk. ģen. -ņu, v.", ".*ns", 4, null, new Tuple[] {Features.GENDER__MASC}), // bruģakmens
 

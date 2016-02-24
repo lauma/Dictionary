@@ -53,6 +53,7 @@ public enum Values
 	FOREIGN("Vārds svešvalodā"),
 	PIECE_OF_WORD("Vārda daļa"),
 	PREFIX("Priedēklis"),
+	PREFIX_FOREIGN("Svešvārdu priedēklis"),
 	COMPOUND_PIECE("Salikteņu daļa"),
 	COMPOUND_FIRST_PIECE("Salikteņu pirmā daļa"),
 	COMPOUND_LAST_PIECE("Salikteņu pēdējā daļa"),

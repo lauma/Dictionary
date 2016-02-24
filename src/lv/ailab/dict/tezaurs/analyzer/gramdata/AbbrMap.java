@@ -310,6 +310,7 @@ public class AbbrMap {
 		pairingFlags.put("TV", Tuple.of(Keys.DOMAIN, "Televīzija"));
 		pairingFlags.put("val.", Tuple.of(Keys.DOMAIN, "Valodniecība"));
 		pairingFlags.put("vet.", Tuple.of(Keys.DOMAIN, "Veterinārija"));
+		pairingFlags.put("veter.", Tuple.of(Keys.DOMAIN, "Veterinārija"));
 		pairingFlags.put("zool.", Tuple.of(Keys.DOMAIN, "Zooloģija"));
 
 		pairingFlags.put("angļu", Tuple.of(Keys.LANGUAGE, "Angļu"));

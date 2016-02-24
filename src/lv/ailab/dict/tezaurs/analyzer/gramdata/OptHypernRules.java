@@ -23,12 +23,13 @@ public class OptHypernRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		/* Paradigm 25: Pronouns
-		 */
+		// 10. paradigma: 5. deklinācija, vīriešu dzimte.
+		BaseRule.noun("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
+				new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), // tēte
+		// 25. paradigma: vietniekvārdi.
 		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
-				new Tuple[]{Features.POS__PRONOUN, Tuple
-						.of(Keys.INFLECT_AS, "\"kas\"")},
-				null), //daudzkas
+				new Tuple[]{Features.POS__PRONOUN, Tuple.of(Keys.INFLECT_AS, "\"kas\"")},
+				null), //daudzka
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e
@@ -54,9 +55,16 @@ public class OptHypernRules
 		BaseRule.fifthDeclStd("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
 		BaseRule.fifthDeclStd("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
 		BaseRule.fifthDeclStd("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
-		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe
+		BaseRule.fifthDeclStd("-nulles, dsk. ģen. -nuļļu, s.", ".*nulle"), // nulle
+		BaseRule.fifthDeclStd("-ores, dsk. ģen. -oru, s.", ".*ore"), // ore
+		BaseRule.fifthDeclStd("-resnes, dsk. ģen. -rešņu, s.", ".*resne"), // resne
+		BaseRule.fifthDeclStd("-teces, dsk. ģen. -teču, s.", ".*tece"), // tece
+		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe, krāčupe
+		BaseRule.fifthDeclStd("-usnes, dsk. ģen. -ušņu, s.", ".*usne"), // usne
+		BaseRule.fifthDeclStd("-vātes, dsk. ģen. -vāšu, s.", ".*vāte"), // vāte
 		BaseRule.fifthDeclStd("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
 		// Bez mijām
+		BaseRule.fifthDeclNoChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
 		BaseRule.fifthDeclNoChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
 		BaseRule.sixthDeclNoChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 	};
@@ -72,7 +80,7 @@ public class OptHypernRules
 		BaseRule.sixthDeclStd("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts
 		BaseRule.sixthDeclStd("-cilts, dsk. ģen. -cilšu, s.", ".*cilts"), //cilts
 		BaseRule.sixthDeclStd("-drāts, dsk. ģen. -drāšu, s.", ".*drāts"), //drāts
-		BaseRule.sixthDeclStd("-dzelzs, dsk. ģen. -dzelžu, s.", ".*dzelzs"), //dzelzs
+		BaseRule.sixthDeclStd("-dzelzs, dsk. ģen. -dzelžu, s.", ".*dzelzs"), //dzelzs, leņķdzelzs
 		BaseRule.sixthDeclStd("-dzimts, dsk. ģen. -dzimšu, s.", ".*dzimts"), //dzimts
 		BaseRule.sixthDeclStd("-dzirksts, dsk. ģen. -dzirkšu", ".*dzirksts"), //dzirksts
 		BaseRule.sixthDeclStd("-govs, dsk. ģen. -govju, s.", ".*govs"), //govs
@@ -91,10 +99,32 @@ public class OptHypernRules
 		BaseRule.sixthDeclStd("-kvīts, dsk. ģen. -kvīšu, s.", ".*kvīts"), //kvīts
 		BaseRule.sixthDeclStd("-lākts, dsk. ģen. -lākšu, s.", ".*lākts"), //lākts
 		BaseRule.sixthDeclStd("-lecekts, dsk. ģen. -lecekšu, s.", ".*lecekts"), //lecekts
+		BaseRule.sixthDeclStd("-līksts, dsk. ģen. -līkšu, s.", ".*līksts"), //līksts
+		BaseRule.sixthDeclStd("-maiksts, dsk. ģen. -maikšu, s.", ".*maiksts"), //maiksts
 		BaseRule.sixthDeclStd("-nakts, dsk. ģen. -nakšu, s.", ".*nakts"), //diennakts
+		BaseRule.sixthDeclStd("-nīts, dsk. ģen. -nīšu, s.", ".*nīts"), //nīts
 		BaseRule.sixthDeclStd("-nots, dsk. ģen. -nošu, s.", ".*nots"), // nošu
+		BaseRule.sixthDeclStd("-nūts, dsk. ģen. -nūšu, s.", ".*nūts"), // nūts
+		BaseRule.sixthDeclStd("-olekts, dsk. ģen. -olekšu, s.", ".*olekts"), // olekts
+		BaseRule.sixthDeclStd("-pāksts, dsk. ģen. -pākšu, s.", ".*pāksts"), // pāksts
+		BaseRule.sixthDeclStd("-palts, dsk. ģen. -palšu, s.", ".*palts"), // palts
 		BaseRule.sixthDeclStd("-pirts, dsk. ģen. -piršu, s.", ".*pirts"), // asinspirts
+		BaseRule.sixthDeclStd("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
+		BaseRule.sixthDeclStd("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
+		BaseRule.sixthDeclStd("-pults, dsk. ģen. -pulšu, s.", ".*pults"), // operatorpults
+		BaseRule.sixthDeclStd("-rūts, dsk. ģen. -rūšu, s.", ".*rūts"), // rūts
+		BaseRule.sixthDeclStd("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls
+		BaseRule.sixthDeclStd("-silkss, dsk. ģen. -silkšu, s.", ".*silkss"), // silkss
+		BaseRule.sixthDeclStd("-sirds, dsk. ģen. -siržu, s.", ".*sirds"), // sirds
+		BaseRule.sixthDeclStd("-skansts, dsk. ģen. -skanšu, s.", ".*skansts"), // skansts
+		BaseRule.sixthDeclStd("-skrots, dsk. ģen. -skrošu, s.", ".*skrots"), // skrots
+		BaseRule.sixthDeclStd("-spelts, dsk. ģen. -spelšu, s.", ".*spelts"), // spelts
+		BaseRule.sixthDeclStd("-spīts, dsk. ģen. -spīšu, s.", ".*spīts"), // spīts
+		BaseRule.sixthDeclStd("-stelts, dsk. ģen. stelšu, s.", ".*stelts"), // stelts
+		BaseRule.sixthDeclStd("-tāss, dsk. ģen. -tāšu, s.", ".*tāss"), // tāss
+		BaseRule.sixthDeclStd("-telts, dsk. ģen. -telšu, s.", ".*telts"), // telts
 		BaseRule.sixthDeclStd("-uguns, dsk. ģen. -uguņu, s.", ".*uguns"), // jāņuguns
+		BaseRule.sixthDeclStd("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
 		BaseRule.sixthDeclStd("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
 
 		// Bez mijām
@@ -105,10 +135,18 @@ public class OptHypernRules
 		BaseRule.sixthDeclNoChange("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
 		BaseRule.sixthDeclNoChange("-grīsts, dsk. ģen. -grīstu, s.", ".*grīsts"), //grīsts
 		BaseRule.sixthDeclNoChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //padebess
+		BaseRule.sixthDeclNoChange("-maksts, dsk. ģen. -makstu, s.", ".*maksts"), //maksts
+		BaseRule.sixthDeclNoChange("-nāss, dsk. ģen. -nāsu, s.", ".*nāss"), //nāss
+		BaseRule.sixthDeclNoChange("-šalts, dsk. ģen. -šaltu, s.", ".*šalts"), // šalts
+		BaseRule.sixthDeclNoChange("-takts, dsk. ģen. -taktu, s.", ".*takts"), // pietakts
+		BaseRule.sixthDeclNoChange("-uts, dsk. ģen. -utu, s.", ".*uts"), // uts
 		BaseRule.sixthDeclNoChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
+		BaseRule.sixthDeclNoChange("-vakts, dsk. ģen. -vakšu, s.", ".*vakts"), //vakts
 		BaseRule.sixthDeclNoChange("-versts, dsk. ģen. -verstu, s.", ".*versts"), // kvadrātversts
+		BaseRule.sixthDeclNoChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
+		BaseRule.sixthDeclNoChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
-		BaseRule.sixthDeclOptChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu", ".*dūksts"), //dūksts
+		BaseRule.sixthDeclOptChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
 		BaseRule.sixthDeclOptChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
 	};
 

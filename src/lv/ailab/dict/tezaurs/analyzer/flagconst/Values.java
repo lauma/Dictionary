@@ -88,6 +88,7 @@ public enum Values
 	GENITIVE("Ģenitīvs"),
 	DATIVE("Datīvs"),
 	ACUSATIVE("Akuzatīvs"),
+	INSTRUMENTAL("Instrumentālis"),
 	LOCATIVE("Lokatīvs"),
 
 	NON_INFLECTIVE("Nelokāms vārds"),

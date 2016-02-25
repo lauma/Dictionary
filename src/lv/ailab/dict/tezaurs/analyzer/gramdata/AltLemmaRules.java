@@ -1,13 +1,19 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
+import lv.ailab.dict.utils.Tuple;
 
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * TGram.processBeginingWithPatterns(String, String)
  * Likumi, kas veido alternatīvās formas.
+ *
+ * Īpašības vārdu, divdabju un skaitļa vārda likumus tikai tāpēc vien, ka tiem
+ * norādīts, kā veidot sieviešu dzimti, vēl šeit neliek, jo sieviešu dzimti
+ * Morforīki šīm vārdšķirām veido paši.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
@@ -34,6 +40,8 @@ public class AltLemmaRules
 		AltFullLemmaRule.nounPluralToSingularMasc("-u; vsk.", "vs, -a, v.", "vi", 1), // abrazīvi
 		// 1. paradigma: Lietvārds 1. deklinācija -s
 		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
+
+		//	Neviennozīmīgie likumi.
 	};
 
 	/**
@@ -42,6 +50,9 @@ public class AltLemmaRules
 	 */
 	public static final AltLemmaRule[] mascToFem = {
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
+		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -ce, -ču", "ks", "ce"), // aizsardzībnieks
+		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -re, -ru", "rs", "re"), // akvizitors
+		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -ste, -stu", "sts", "ste"), // almānists
 
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis

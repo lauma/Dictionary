@@ -314,7 +314,7 @@ public class BaseRule implements Rule
 	public static BaseRule participleIs(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 0,
-				new Tuple[]{Features.POS__VERB, Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC, Features.GENDER__FEM},
+				new Tuple[]{Features.POS__PARTICIPLE_IS},
 				null);
 	}
 	/**
@@ -334,7 +334,7 @@ public class BaseRule implements Rule
 						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[āa]ms", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ})},
-				new Tuple[]{Features.GENDER__MASC, Features.GENDER__FEM});
+				null);
 	}
 
 	/**
@@ -350,7 +350,7 @@ public class BaseRule implements Rule
 		return BaseRule.of(patternText, new SimpleSubRule[] {
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, null),
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, null)},
-				new Tuple[] {Features.POS__ADJ, Features.GENDER__MASC, Features.GENDER__FEM});
+				new Tuple[] {Features.POS__ADJ});
 	}
 
 	/**
@@ -403,6 +403,21 @@ public class BaseRule implements Rule
 	public static BaseRule secondDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 3,
+				new Tuple[]{Features.POS__NOUN},
+				new Tuple[]{Features.GENDER__MASC});
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 3. deklinācijas vīriešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 3. paradigmu
+	 */
+	public static BaseRule thirdDeclStd(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 6,
 				new Tuple[]{Features.POS__NOUN},
 				new Tuple[]{Features.GENDER__MASC});
 	}

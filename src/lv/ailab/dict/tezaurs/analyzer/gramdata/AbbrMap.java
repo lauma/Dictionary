@@ -165,6 +165,17 @@ public class AbbrMap {
 		pairingFlags.put("ar ģen.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.GENITIVE.s));
 		pairingFlags.put("priev. ar dat.", Features.POS__PREPOSITION);
 		pairingFlags.put("priev. ar dat.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.DATIVE.s));
+		pairingFlags.put("priev. ar instr.", Features.POS__PREPOSITION);
+		pairingFlags.put("priev. ar instr.", Tuple.of(Keys.USED_TOGETHER_WITH, Values.INSTRUMENTAL.s));
+
+		pairingFlags.put("parasti ar ģen.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.GENITIVE.s));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.ADJECTIVE.s));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.ADVERB.s));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.COMPARATIVE_DEGREE.s));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.ADJECTIVE.s));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.ADVERB.s));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(Keys.USUALLY_USED_TOGETHER_WITH, Values.COMPARATIVE_DEGREE.s));
+
 
 		pairingFlags.put("persv.", Features.POS__NOUN);
 		binaryFlags.put("persv.", Values.PERSON_NAME.s);
@@ -177,7 +188,7 @@ public class AbbrMap {
 		pairingFlags.put("akuz.", Tuple.of(Keys.CASE, Values.ACUSATIVE.s));
 		pairingFlags.put("dat.", Tuple.of(Keys.CASE, Values.DATIVE.s));
 		pairingFlags.put("ģen.", Tuple.of(Keys.CASE, Values.GENITIVE.s));
-		pairingFlags.put("instr.", Tuple.of(Keys.CASE, "Instrumentālis"));
+		pairingFlags.put("instr.", Tuple.of(Keys.CASE, Values.INSTRUMENTAL.s));
 		pairingFlags.put("lok.", Tuple.of(Keys.CASE, Values.LOCATIVE.s));
 		pairingFlags.put("nom.", Tuple.of(Keys.CASE, Values.NOMINATIVE.s));
 
@@ -257,6 +268,7 @@ public class AbbrMap {
 		pairingFlags.put("fizk.", Tuple.of(Keys.DOMAIN, "Fiziskā kultūra un sports"));
 		pairingFlags.put("folkl.", Tuple.of(Keys.DOMAIN, "Folklora"));
 		pairingFlags.put("fotogr.", Tuple.of(Keys.DOMAIN, "Fotogrāfija"));
+		pairingFlags.put("foto", Tuple.of(Keys.DOMAIN, "Fotogrāfija"));
 		pairingFlags.put("ģenēt.", Tuple.of(Keys.DOMAIN, "Ģenētika"));
 		pairingFlags.put("ģeod.", Tuple.of(Keys.DOMAIN, "Ģeodēzija"));
 		pairingFlags.put("ģeogr.", Tuple.of(Keys.DOMAIN, "Ģeogrāfija"));
@@ -279,6 +291,9 @@ public class AbbrMap {
 		pairingFlags.put("kokapstr.", Tuple.of(Keys.DOMAIN, "Kokapstrāde"));
 		pairingFlags.put("kul.", Tuple.of(Keys.DOMAIN, "Kulinārija"));
 		pairingFlags.put("ķīm.", Tuple.of(Keys.DOMAIN, "Ķīmija"));
+		pairingFlags.put("ķīm. tehnol.", Tuple.of(Keys.DOMAIN, "Ķīmija"));
+		pairingFlags.put("ķīm. tehnol.", Tuple.of(Keys.DOMAIN, "Tehnoloģija"));
+		pairingFlags.put("ķīm. tehnol.", Tuple.of(Keys.DOMAIN, "Ķīmijas tehnoloģija"));
 		pairingFlags.put("lauks.", Tuple.of(Keys.DOMAIN, "Lauksaimniecība"));
 		pairingFlags.put("lauks. tehn.", Tuple.of(Keys.DOMAIN, "Lauksaimniecības tehnika"));
 		pairingFlags.put("literat.", Tuple.of(Keys.DOMAIN, "Literatūrzinātne"));
@@ -396,8 +411,11 @@ public class AbbrMap {
 		pairingFlags.put("ar sirsnīgu emocionālo noskaņu", Tuple.of(Keys.USAGE_RESTRICTIONS, "Sirsnīga emocionālā nokrāsa"));
 		pairingFlags.put("ar sirsnīgu emocionālo noskaņu.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Sirsnīga emocionālā nokrāsa"));
 		pairingFlags.put("poēt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Poētiska stilistiskā nokrāsa"));
+		pairingFlags.put("t. poēt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Poētiska stilistiskā nokrāsa"));
+		pairingFlags.put("t. poēt.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Folkloras valodai raksturīga stilistiskā nokrāsa"));
 		pairingFlags.put("mīlin.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Mīlinājuma nokrāsa"));
-		pairingFlags.put("niev.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Nievīga ekspresīvā nokrāsa"));
+		pairingFlags.put("niev.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
+		pairingFlags.put("nievājoši", Tuple.of(Keys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
 		pairingFlags.put("iron.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Ironiska ekspresīvā nokrāsa"));
 		pairingFlags.put("hum.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Humoristiska ekspresīvā nokrāsa"));
 		pairingFlags.put("vienk.", Tuple.of(Keys.USAGE_RESTRICTIONS, "Vienkāršrunas stilistiskā nokrāsa"));
@@ -421,7 +439,8 @@ public class AbbrMap {
 		pairingFlags.put("tikai vsk.", Tuple.of(Keys.USED_ONLY_IN_FORM, Values.SINGULAR.s));
 		pairingFlags.put("arī dsk.", Tuple.of(Keys.ALSO_USED_IN_FORM, Values.PLURAL.s));	// Ļaunums.
 		pairingFlags.put("parasti dsk.", Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL.s));
-		pairingFlags.put("parasti dsk.", Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL.s));
+		pairingFlags.put("parasti dsk. ģen.", Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL.s));
+		pairingFlags.put("parasti dsk. ģen.", Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.GENITIVE.s));
 		pairingFlags.put("tikai dsk.", Features.USED_ONLY__PLURAL);
 		pairingFlags.put("tikai v.", Tuple.of(Keys.USED_ONLY_IN_FORM, Values.MASCULINE.s));
 		pairingFlags.put("parasti 3. pers.", Features.USUALLY_USED__THIRD_PERS);

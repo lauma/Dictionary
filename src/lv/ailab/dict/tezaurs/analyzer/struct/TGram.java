@@ -312,6 +312,14 @@ public class TGram extends Gram
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
+
+		// Paradigma: 6
+		for (Rule s : OptHypernRules.thirdDeclNoun)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
+
 		// Paradigmas: 9
 		for (Rule s : DirectRules.fifthDeclNoun)
 		{
@@ -532,6 +540,9 @@ public class TGram extends Gram
 				flags.test(Features.POS__POSS_PRONOUN) ||
 				flags.test(Features.POS__GEN_PRONOUN))
 			flags.add(Features.POS__PRONOUN);
+		if (flags.test(Features.POS__CARD_NUMERAL) ||
+				flags.test(Features.POS__ORD_NUMERAL))
+			flags.add(Features.POS__NUMERAL);
 
 		if (flags.test(Keys.CASE, Values.GENITIVE) && flags.test(Features.NON_INFLECTIVE))
 		{

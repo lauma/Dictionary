@@ -154,8 +154,20 @@ public class OptHypernRules
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
 	public static final Rule[] secondDeclNoun = {
-			BaseRule.noun("-tēta, v.", ".*tētis", 3,
-					new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), //tētis
+		BaseRule.secondDeclStd("-āķa, v.", ".*āķis"), // ākis
+		BaseRule.secondDeclStd("-aļņa, v.", ".*alnis"), // alnis
+		BaseRule.secondDeclStd("-āmja, v.", ".*āmis"), // āmis
+
+		BaseRule.noun("-tēta, v.", ".*tētis", 3,
+					new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), // tētis
+
+	};
+	/**
+	 * Paradigm 6: Lietvārds 3. deklinācija -us
+	 */
+	public static final Rule[] thirdDeclNoun = {
+			BaseRule.thirdDeclStd("-alus, v.", ".*alus"), // alus
+
 	};
 
 	/**
@@ -262,6 +274,7 @@ public class OptHypernRules
 
 		// Standartizētie.
 		// A
+		FirstConjRule.direct("-alkstu, -alksti,", "-alkst, pag. -alku", "alkt"), // alkt
 		FirstConjRule.direct("-aru, -ar,", "-ar, pag. -aru", "art"), //aizart
 		FirstConjRule.direct("-augu, -audz,", "-aug, pag. -augu", "augt"), //ieaugt, aizaugt
 		// B

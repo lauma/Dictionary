@@ -486,12 +486,12 @@ public class TGram extends Gram
 			if (pos.contains(Values.PREPOSITION.s)) paradigm.add(26);
 			if (pos.contains(Values.CONJUNCTION.s)) paradigm.add(27);
 
-			if (pos.contains(Values.INTERJECTION.s)) paradigm.add(29); // Hardcoded
-			if (pos.contains(Values.ABBREVIATION.s)) paradigm.add(29); // Hardcoded
+			if (pos.contains(Values.INTERJECTION.s)) paradigm.add(38);
+			if (pos.contains(Values.ABBREVIATION.s)) paradigm.add(36);
 
 			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
 
-			if (pos.contains(Values.FOREIGN.s)) paradigm.add(29);
+			if (pos.contains(Values.FOREIGN.s)) paradigm.add(39);
 
 			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
@@ -562,7 +562,6 @@ public class TGram extends Gram
 				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
 						(paradigm.stream().map(t -> toString())
 								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
-			//paradigm.add(29); // Sastingusi forma.
 			flags.add(Features.FROZEN);
 		}
 

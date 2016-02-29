@@ -70,7 +70,7 @@ public class OptHypernRules
 	};
 
 	/**
-	 * Paradigm 11: Lietvārds 6.. deklinācija, siev.dz.
+	 * Paradigmas 11, 35.: Lietvārds 6.. deklinācija, siev.dz.
 	 * Likumi formā "-acs, dsk. ģen. -acu, s.".
 	 */
 	public static final Rule[] sixthDeclNoun = {
@@ -837,7 +837,7 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjDir("-svepstu, -svepsti,", "-svepst, pag. -svepstēju", "svepstēt", false), //izsvepstēt
 		RegularVerbRule.thirdConjDir("-svinu, -svini,", "-svin, pag. -svinēju", "svinēt", false), //izsvinēt
 		// Š
-		RegularVerbRule.thirdConjDir("-šļauku, -šļauki,", "-šļauka, pag. -šļaucīju", "šļaucīt", false), //atšļupstēt
+		RegularVerbRule.thirdConjDir("-šļauku, -šļauki,", "-šļauka, pag. -šļaucīju", "šļaucīt", true), //atšļupstēt
 		RegularVerbRule.thirdConjDir("-šļupstu, -šļupsti,", "-šļupst, pag. -šļupstēju", "šļupstēt", false), //atšļupstēt
 		RegularVerbRule.thirdConjDir("-šņukstu, -šņuksti,", "-šņukst, pag. -šņukstēju", "šņukstēt", false), //izšņukstēt
 		// T

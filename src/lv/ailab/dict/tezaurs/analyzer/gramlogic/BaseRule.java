@@ -445,8 +445,9 @@ public class BaseRule implements Rule
 	 */
 	public static BaseRule sixthDeclNoChange(String patternText, String lemmaRestrictions)
 	{
-		return BaseRule.of(patternText, lemmaRestrictions, 11,
-				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+		return BaseRule.of(patternText, lemmaRestrictions, 35,
+				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+				//new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 
 	/**
@@ -459,8 +460,9 @@ public class BaseRule implements Rule
 	 */
 	public static BaseRule sixthDeclOptChange(String patternText, String lemmaRestrictions)
 	{
-		return BaseRule.of(patternText, lemmaRestrictions, 11,
-				new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+		return BaseRule.of(patternText, lemmaRestrictions, new Integer[]{11, 35},
+				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+				//new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
 	}
 
 	/**

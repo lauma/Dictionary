@@ -116,15 +116,19 @@ public class AbbrMap {
 		pairingFlags.put("jaut.", Features.POS__INTERROG_PRONOUN);
 		pairingFlags.put("jaut. vietn.", Features.POS__INTERROG_PRONOUN);
 		pairingFlags.put("nenot. vietn.", Features.POS__INDEF_PRONOUN);
+		pairingFlags.put("nenoteiktais vietn.", Features.POS__INDEF_PRONOUN);
 		pairingFlags.put("noliedz.",Features.POS__NEG_PRONOUN);
 		pairingFlags.put("noliedz. vietn.",Features.POS__NEG_PRONOUN);
 		pairingFlags.put("norād.", Features.POS__DEM_PRONOUN);
 		pairingFlags.put("norād. vietn.", Features.POS__DEM_PRONOUN);
 		pairingFlags.put("noteic.", Features.POS__DEF_PRONOUN);
+		pairingFlags.put("noteic. vietn.", Features.POS__DEF_PRONOUN);
 		pairingFlags.put("pers. vietn.", Features.POS__PERS_PRONOUN);
 		pairingFlags.put("pieder.", Features.POS__POSS_PRONOUN);
 		pairingFlags.put("pieder. vietn.", Features.POS__POSS_PRONOUN);
+		pairingFlags.put("pers. vietn.", Features.POS__PERS_PRONOUN);
 		pairingFlags.put("vispārin.", Features.POS__GEN_PRONOUN);
+		pairingFlags.put("vispārin. vietn.", Features.POS__GEN_PRONOUN);
 
 		pairingFlags.put("pried.", Features.POS__PREFIX);
 		pairingFlags.put("pried.", Features.POS__PIECE);

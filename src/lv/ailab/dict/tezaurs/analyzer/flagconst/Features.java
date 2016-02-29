@@ -67,6 +67,7 @@ public class Features
 	public static final Tuple<Keys, String> USUALLY_USED__PARTICIPLE_DAMS = Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PARTICIPLE_DAMS.s);
 	public static final Tuple<Keys, String> USED_ONLY__THIRD_PERS = Tuple.of(Keys.USED_ONLY_IN_FORM, Values.THIRD_PERSON.s);
 	public static final Tuple<Keys, String> USED_ONLY__PLURAL = Tuple.of(Keys.USED_ONLY_IN_FORM, Values.PLURAL.s);
+	public static final Tuple<Keys, String> USED_ONLY__SINGULAR = Tuple.of(Keys.USED_ONLY_IN_FORM, Values.SINGULAR.s);
 
 	public static final Tuple<Keys, String> USAGE_RESTR__HISTORICAL = Tuple.of(Keys.USAGE_RESTRICTIONS, Values.HISTORICAL.s);
 	public static final Tuple<Keys, String> USAGE_RESTR__DIALECTICISM = Tuple.of(Keys.USAGE_RESTRICTIONS, Values.DIALECTICISM.s);

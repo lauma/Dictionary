@@ -23,6 +23,66 @@ public class DirectRules
 	 */
 	public static final Rule[] other = {
 		// Speciāli ieviestais.
+		// Vietniekvārdi.
+		BaseRule.of("-a, v.; nenoteiktais vietn.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // jebkas, jebkurš, jebkāds
+		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
+				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // šāds, šitāds
+		BaseRule.of("vietn., -a, v.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // kurš, kurš, mans, viņš
+		BaseRule.of("pieder. vietn., -a, v.", ".*s", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__MASC}), // tavs
+
+		BaseRule.of("nenoteiktais vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__FEM}), // jebkura, jebkāda
+		BaseRule.of("pieder. vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // sava, mana, tava
+		BaseRule.of("norād. vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // šāda
+		BaseRule.of("-as, s.; vietn.", ".*a", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // viņa, kāda
+
+		BaseRule.of("vietn. paša, pašam, pašu, ar pašu, pašā, dsk. ģen. pašu, v.", "pats", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // pats
+		BaseRule.of("pašas, pašai, pašu, ar pašu, pašā, dsk. ģen. pašu, s.; noteic. vietn.", "pati", 25,
+				null, new Tuple[]{Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // pati
+		BaseRule.of("vietn.; ģen. šā (arī šī), dat. šim, akuz. šo, instr. ar šo, lok. šai (arī šinī, šajā), dsk. nom. šie, ģen. šo, dat. šiem, akuz. šos, instr. ar šiem, lok. šajos (arī šais, šinīs), v.",
+				"šis", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // šis
+		BaseRule.of("ģen. šās (arī šīs), dat. šai, akuz. šo, instr. ar šo, lok. šai (arī šinī, šajā ), dsk. nom. šīs (arī šās), ģen. šo, dat. šīm, (arī šām), akuz. šīs (arī šās), instr. ar šīm (arī šām), lok. šajās (arī šais, šinīs), s.; norād. vietn.",
+				"šī", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // šī
+		BaseRule.of("vietn.; ģen. tā, dat. tam, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tie, ģen. to, dat. tiem, akuz. tos, instr. ar tiem, lok. tajos (arī tais, tanīs), v.",
+				"tas", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // tas
+		BaseRule.of("ģen. tās, dat. tai, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tās, ģen. to, akuz. tās, instr. ar tām, lok. tajās (arī tais, tanīs), s.; norād.",
+				"tā", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // tas
+		BaseRule.of("ģen. jebkā, dat. jebkam, akuz. jebko, instr. ar jebko; tikai vsk.; nenoteiktais vietn.",
+				"jebkas", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.USED_ONLY__SINGULAR}), // jebkas
+		BaseRule.of("ģen. kā, dat. kam, akuz. ko, instr. ar ko, lok. kamī (apv.); vietn.", "kas", 25,
+				null, new Tuple[]{Features.POS__PRONOUN}), // kas
+		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko; nenoteiktais vietn.", "daudzkas", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN}), // daudzkas
+		BaseRule.of("ģen. nekā, dat. nekam, akuz. neko, instr. ar neko; noliedz. vietn.", "nekas", 25,
+				null, new Tuple[]{Features.POS__NEG_PRONOUN}), // nekas
+
+		BaseRule.of("ģen. manis, dat. man, ak. mani, instr. ar mani (ar manim), lok. manī; pers. vietn. (vsk. 1. pers.).",
+				"es", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PERS_PRONOUN}), // es
+		BaseRule.of("ģen. tevis, dat. tev, akuz. tevi, instr. ar tevi (ar tevim), lok. tevī; pers. vietn. (vsk. 2. pers.).",
+				"tu", 25,
+				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PERS_PRONOUN}), // tu
+		BaseRule.of("ģen. mūsu, dat. mums, akuz. mūs, instr. ar mums, lok. mūsos; vietn. (dsk. 1. pers.).",
+				"mēs", 25,
+				null, new Tuple[]{Features.POS__PRONOUN}), // mēs
+		BaseRule.of("ģen. jūsu, dat. jums, akuz. jūs, instr. ar jums, lok. jūsos; vietn. (dsk. 2. pers.).",
+				"jūs", 25,
+				null, new Tuple[]{Features.POS__PRONOUN}), // jūs
+		BaseRule.of("ģen.; dat. sev, akuz. sevi, instr. ar sevi, lok. sevī; atgriez. vietn.", "sevis", 25,
+				null, new Tuple[]{Features.POS__REFL_PRONOUN}), // sevis
+
 		BaseRule.of("skait.; s. -ā", ".*ais", 22,
 				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
 				null), // ceturtais

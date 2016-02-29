@@ -27,9 +27,9 @@ public class OptHypernRules
 		BaseRule.noun("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
 				new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), // tēte
 		// 25. paradigma: vietniekvārdi.
-		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
-				new Tuple[]{Features.POS__PRONOUN, Tuple.of(Keys.INFLECT_AS, "\"kas\"")},
-				null), //daudzka
+		//BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
+		//		new Tuple[]{Features.POS__PRONOUN, Tuple.of(Keys.INFLECT_AS, "\"kas\"")},
+		//		null), //daudzka
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e

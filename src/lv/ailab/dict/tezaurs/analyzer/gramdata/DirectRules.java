@@ -83,6 +83,16 @@ public class DirectRules
 		BaseRule.of("ģen.; dat. sev, akuz. sevi, instr. ar sevi, lok. sevī; atgriez. vietn.", "sevis", 25,
 				null, new Tuple[]{Features.POS__REFL_PRONOUN}), // sevis
 
+		BaseRule.of("ģen. šitā, dat. šitam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitiem, akuz. šitos, instr. ar šitiem, lok. šitais (arī šitajos, šitos, šitanīs), v., norād. vietn.",
+				"šitas", 25,
+				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__MASC}), // šitas
+		BaseRule.of("ģen. šitā, dat. šitajam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitajiem, akuz. šitos, instr. ar šitajiem, lok. šitais (arī šitajos, šitanīs), v., norād. vietn.",
+				"šitais", 25,
+				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__MASC}), // šitais
+		BaseRule.of("",
+				"šitā", 25,
+				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // šitā
+
 		BaseRule.of("skait.; s. -ā", ".*ais", 22,
 				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
 				null), // ceturtais

@@ -41,6 +41,7 @@ public class Features
 	public static final Tuple<Keys, String> POS__NUMERAL = Tuple.of(Keys.POS, Values.NUMERAL.s);
 	public static final Tuple<Keys, String> POS__CARD_NUMERAL = Tuple.of(Keys.POS, Values.CARDINAL_NUMERAL.s);
 	public static final Tuple<Keys, String> POS__ORD_NUMERAL = Tuple.of(Keys.POS, Values.ORDINAL_NUMERAL.s);
+	public static final Tuple<Keys, String> POS__FRACT_NUMERAL = Tuple.of(Keys.POS, Values.FRACTIONAL_NUMERAL.s);
 	public static final Tuple<Keys, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE.s);
 	public static final Tuple<Keys, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION.s);
 	public static final Tuple<Keys, String> POS__ABBR = Tuple.of(Keys.POS, Values.ABBREVIATION.s);

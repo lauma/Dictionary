@@ -20,6 +20,7 @@ public enum Values
 	NUMERAL("Skaitļa vārds"),
 	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
 	CARDINAL_NUMERAL("Pamata skaitļa vārds"),
+	FRACTIONAL_NUMERAL("Daļu skaitļa vārds"),
 
 	// Prievārdu nosaukumi pamatā no LLVV.
 	PRONOUN("Vietniekvārds"),

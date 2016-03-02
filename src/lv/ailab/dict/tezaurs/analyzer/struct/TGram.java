@@ -287,6 +287,13 @@ public class TGram extends Gram
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
 
+		// Vietniekvārdi.
+		for (Rule s : DirectRules.pronomen)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
+
 		// Kaut kādi sarežģītie likumi.
 		for (Rule s : DirectRules.other)
 		{
@@ -541,7 +548,8 @@ public class TGram extends Gram
 				flags.test(Features.POS__GEN_PRONOUN))
 			flags.add(Features.POS__PRONOUN);
 		if (flags.test(Features.POS__CARD_NUMERAL) ||
-				flags.test(Features.POS__ORD_NUMERAL))
+				flags.test(Features.POS__ORD_NUMERAL) ||
+				flags.test(Features.POS__FRACT_NUMERAL))
 			flags.add(Features.POS__NUMERAL);
 
 		if (flags.test(Keys.CASE, Values.GENITIVE) && flags.test(Features.NON_INFLECTIVE))

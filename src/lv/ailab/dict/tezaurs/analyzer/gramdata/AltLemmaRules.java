@@ -4,6 +4,7 @@ import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaSubRule;
 import lv.ailab.dict.utils.Tuple;
 
 /**
@@ -47,6 +48,7 @@ public class AltLemmaRules
 	/**
 	 * Likumi formā:
 	 * -ķa; s. -ķe, -ķu
+	 * s. -ā
 	 */
 	public static final AltLemmaRule[] mascToFem = {
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
@@ -56,6 +58,25 @@ public class AltLemmaRules
 
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
+
+		AltEndingRule.of("s. -ā", new AltLemmaSubRule[]{
+			AltLemmaSubRule.of(".*ošais", new Integer[] {30, 0},
+					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40, 0},
+					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+			AltLemmaSubRule.of(".*tais", new Integer[] {30, 0},
+					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40, 0},
+					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+			AltLemmaSubRule.of(".*[aā]mais", new Integer[] {30, 0},
+					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40, 0},
+					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+			AltLemmaSubRule.of(".*ais", new Integer[] {30},
+					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.DEFINITE_ENDING})
+		}), // agrākais, aiznākošais
 
 	};
 

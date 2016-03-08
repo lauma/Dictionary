@@ -17,7 +17,9 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
@@ -56,6 +58,25 @@ public class Header implements HasToJSON, HasToXML
 		gram = new Gram();
 		gram.flags= flags;
 		gram.paradigm = new HashSet<Integer>(){{add(paradigm);}};
+	}
+	public Header(Lemma lemma, Integer[] paradigm, Flags flags)
+	{
+		this.lemma = lemma;
+		gram = new Gram();
+		gram.flags= flags;
+		if (paradigm != null && paradigm.length > 0)
+			gram.paradigm = new HashSet<>(Arrays.asList(paradigm));
+		else gram.paradigm = null;
+	}
+
+	public Header(Lemma lemma, Set<Integer> paradigm, Flags flags)
+	{
+		this.lemma = lemma;
+		gram = new Gram();
+		gram.flags= flags;
+		if (paradigm != null && paradigm.size() > 0)
+			gram.paradigm = new HashSet<>(paradigm);
+		else gram.paradigm = null;
 	}
 
 	public int paradigmCount()

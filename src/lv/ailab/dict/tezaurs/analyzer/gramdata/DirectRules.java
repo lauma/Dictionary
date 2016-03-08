@@ -151,18 +151,6 @@ public class DirectRules
 								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN, Features.DEFINITE_ENDING})},
 				new Tuple[]{Features.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
 
-		// Paradigmas: 22, 30, 0
-			// TODO, te jātaisa sieviešu dzimtes formas!!!!!!
-		BaseRule.of("s. -ā", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ošais", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*tais", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*[aā]mais", new Integer[]{30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*ais", new Integer[]{30},
-								new Tuple[]{Features.POS__ADJ, Features.DEFINITE_ENDING})},
-				null) // agrākais, aiznākošais
 	};
 	/**
 	 * Vietniekvārdu likumi. Krietna tiesa ir speciāli izveidoti, papildus

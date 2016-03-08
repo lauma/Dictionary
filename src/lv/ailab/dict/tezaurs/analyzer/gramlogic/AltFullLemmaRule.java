@@ -56,7 +56,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 		this.patternTextEnding = patternEnding;
 		this.lemmaLogic = new AltLemmaSubRule(lemmaRestrict,
 				new HashSet<Integer>(){{add(paradigm);}}, positiveFlags,
-				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm, altLemmaFlags);
+				lemmaEndingCutLength, altLemmaEnding,
+				new HashSet<Integer>(){{add(altLemmaParadigm);}}, altLemmaFlags);
 	}
 
 	public static AltFullLemmaRule of(
@@ -132,7 +133,7 @@ public class AltFullLemmaRule implements AltLemmaRule
 			Flags altParams = new Flags();
 			if (lemmaLogic.altLemmaFlags != null)
 				for (Tuple<Keys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
-			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigm, altParams));
+			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigms, altParams));
 
 			paradigmCollector.addAll(lemmaLogic.paradigms);
 			if (lemmaLogic.positiveFlags != null)

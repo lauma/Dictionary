@@ -49,7 +49,7 @@ public class AltLemmaSubRule
 	/**
 	 * Paradigmas ID, ko lieto papildus izveidotajai lemmai.
 	 */
-	protected final int altLemmaParadigm;
+	protected final Set<Integer> altLemmaParadigms;
 	/**
 	 * Šos karodziņus uzstāda papildu pamatformai, nevis pamatvārdam, ja gan
 	 * gramatikas teksts, gan lemma atbilst attiecīgajiem šabloniem.
@@ -58,7 +58,7 @@ public class AltLemmaSubRule
 
 	public AltLemmaSubRule (String lemmaRestrict, Set<Integer>paradigms,
 			Set<Tuple<Keys,String>> positiveFlags, int lemmaEndingCutLength,
-			String altLemmaEnding, int altLemmaParadigm,
+			String altLemmaEnding, Set<Integer> altLemmaParadigms,
 			Set<Tuple<Keys,String>> altLemmaFlags)
 	{
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
@@ -67,7 +67,7 @@ public class AltLemmaSubRule
 
 		this.lemmaEndingCutLength = lemmaEndingCutLength;
 		this.altLemmaEnding = altLemmaEnding;
-		this.altLemmaParadigm = altLemmaParadigm;
+		this.altLemmaParadigms = Collections.unmodifiableSet(altLemmaParadigms);
 		this.altLemmaFlags = altLemmaFlags;
 	}
 
@@ -78,7 +78,19 @@ public class AltLemmaSubRule
 		return new AltLemmaSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm,
+				lemmaEndingCutLength, altLemmaEnding, new HashSet<Integer>(){{add(altLemmaParadigm);}},
+				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
+	}
+
+	public static AltLemmaSubRule of (String lemmaRestrict, Integer[] paradigms,
+			Tuple<Keys,String>[] positiveFlags, int lemmaEndingCutLength,
+			String altLemmaEnding, Integer[] altLemmaParadigms, Tuple<Keys,String>[] altLemmaFlags)
+	{
+		return new AltLemmaSubRule(lemmaRestrict,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				lemmaEndingCutLength, altLemmaEnding,
+				altLemmaParadigms == null ? null :  new HashSet<>(Arrays.asList(altLemmaParadigms)),
 				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
 	}
 }

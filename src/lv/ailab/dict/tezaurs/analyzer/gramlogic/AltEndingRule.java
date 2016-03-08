@@ -54,16 +54,17 @@ public class AltEndingRule implements AltLemmaRule
 		this.pattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
 		this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
 
-		if (lemmaLogic.size() == 1 && lemmaLogic.get(0).paradigms.size() == 1)
+		if (lemmaLogic.size() == 1 && lemmaLogic.get(0).paradigms.size() == 1
+				&& lemmaLogic.get(0).altLemmaParadigms.size() == 1)
 			errorMessage = "Neizdodas \"%s\" ielikt paradigmā " +
 					lemmaLogic.get(0).paradigms.toArray()[0] +
-					" ar papildus paradigmu " + lemmaLogic.get(0).altLemmaParadigm + "\n";
+					" ar papildus paradigmu " + lemmaLogic.get(0).altLemmaParadigms.toArray()[0] + "\n";
 		else errorMessage = "Neizdodas \"%s\" ielikt kādā no paradigmām " +
 				lemmaLogic.stream().map(t -> t.paradigms).flatMap(m -> m.stream())
 						.distinct().sorted().map(i -> i.toString())
 						.reduce((a, b) -> a + ", " + b).orElse("") +
 				" ar papildus paradigmām " + lemmaLogic.stream()
-						.map(t->t.altLemmaParadigm).distinct().sorted()
+						.map(t->t.altLemmaParadigms).flatMap(m -> m.stream()).distinct().sorted()
 						.map(i -> i.toString()).reduce((a, b) -> a + ", " + b)
 						.orElse("") + "\n";
 	}
@@ -75,18 +76,18 @@ public class AltEndingRule implements AltLemmaRule
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			Set<Integer> paradigms, Set<Tuple<Keys, String>> positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
+			Set<Integer> altLemmaParadigms, Set<Tuple<Keys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
 					add( new AltLemmaSubRule(lemmaRestrictions, paradigms,
 							positiveFlags, lemmaEndCutLength, altLemmaEnd,
-							altLemmaParadigm, altLemmaFlags));}});
+							altLemmaParadigms, altLemmaFlags));}});
 	}
 
 	/**
 	 * Konstruktors īsumam - gadījumiem, kad likums apskata tikai vienu lemmas
-	 * nosacījumu ar vienu paradigmu.
+	 * nosacījumu ar vienu paradigmu un jaunajai lemmai ari ir viena paradigma
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
 			int paradigm, Set<Tuple<Keys, String>> positiveFlags,
@@ -98,7 +99,8 @@ public class AltEndingRule implements AltLemmaRule
 					add( new AltLemmaSubRule(lemmaRestrictions,
 							new HashSet<Integer>(){{add(paradigm);}},
 							positiveFlags, lemmaEndCutLength, altLemmaEnd,
-							altLemmaParadigm, altLemmaFlags));}});
+							new HashSet<Integer>(){{add(altLemmaParadigm);}},
+							altLemmaFlags));}});
 	}
 
 	public static AltEndingRule of(String patternText, AltLemmaSubRule[] lemmaLogic)
@@ -110,14 +112,16 @@ public class AltEndingRule implements AltLemmaRule
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
 			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			int altLemmaParadigm, Tuple<Keys, String>[] altLemmaFlags)
+			Integer[] altLemmaParadigms, Tuple<Keys, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions,
 				paradigms == null ? null : new HashSet<>(Arrays
 						.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				lemmaEndCutLength, altLemmaEnd, altLemmaParadigm,
+				lemmaEndCutLength, altLemmaEnd,
+				altLemmaParadigms == null ? null : new HashSet<>(Arrays
+						.asList(altLemmaParadigms)),
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
 						.asList(altLemmaFlags)));
 	}
@@ -239,7 +243,7 @@ public class AltEndingRule implements AltLemmaRule
 					Flags altParams = new Flags();
 					if (rule.altLemmaFlags != null)
 						altParams.addAll(rule.altLemmaFlags);
-					altLemmasCollector.add(new Header(altLemma, rule.altLemmaParadigm, altParams));
+					altLemmasCollector.add(new Header(altLemma, rule.altLemmaParadigms, altParams));
 
 					paradigmCollector.addAll(rule.paradigms);
 					if (rule.positiveFlags != null)

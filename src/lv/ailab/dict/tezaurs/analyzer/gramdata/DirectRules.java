@@ -107,7 +107,7 @@ public class DirectRules
 				new Tuple[]{Features.POS__PARTICIPLE_IS, Features.DEFINITE_ENDING},
 				null), // aizpagājušais
 		BaseRule.of("s. -usies", ".*ies", 0,
-				new Tuple[]{Features.POS__PARTICIPLE_IS, },
+				new Tuple[]{Features.POS__PARTICIPLE_IS},
 				null), // izdevies
 
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
@@ -153,17 +153,16 @@ public class DirectRules
 
 		// Paradigmas: 22, 30, 0
 			// TODO, te jātaisa sieviešu dzimtes formas!!!!!!
-			// TODO, te jātiek vaļā no skaitļa vārdiem!!!!!
 		BaseRule.of("s. -ā", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ošais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*tais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*[aā]mais", new Integer[]{22, 30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*ais", new Integer[]{22, 30},
-								new Tuple[]{Features.POS__ADJ, Features.POS__NUMERAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING})},
-				null) // agrākais, pirmais, aiznākošais
+						SimpleSubRule.of(".*ošais", new Integer[]{30, 0},
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+						SimpleSubRule.of(".*tais", new Integer[]{30, 0},
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+						SimpleSubRule.of(".*[aā]mais", new Integer[]{30, 0},
+								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+						SimpleSubRule.of(".*ais", new Integer[]{30},
+								new Tuple[]{Features.POS__ADJ, Features.DEFINITE_ENDING})},
+				null) // agrākais, aiznākošais
 	};
 	/**
 	 * Vietniekvārdu likumi. Krietna tiesa ir speciāli izveidoti, papildus
@@ -421,14 +420,11 @@ public class DirectRules
 				new Tuple[]{Features.NO_SOUNDCHANGE},
 				new Tuple[]{Features.GENDER__MASC}), // stereotālskatis
 		// Vispārīgā galotne, kas der visam un neder nekam
-		// TODO: "viņš" ari ir šāda galotne
 		BaseRule.noun("-a, v.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*(desmit|simt|miljon|miljard|biljard)s", new Integer[]{1, 23}, new Tuple[]{Features.POS__NUMERAL, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*(vien|otr)s", new Integer[]{1, 23}, new Tuple[]{Features.POS__NUMERAL, Features.UNCLEAR_POS, Features.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, null),
-						SimpleSubRule.of(".*š", new Integer[]{2}, null),
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{2}, null),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis//, sparguļi, skostiņi, viens
+				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis, sparguļi, skostiņi,
 
 		// Daudzkaitlis, vīriešu dzimte
 		// Ar mijām

@@ -64,19 +64,19 @@ public class AltLemmaRules
 					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40, 0},
 					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-			AltLemmaSubRule.of(".*tais", new Integer[] {30, 0},
-					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
-					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+			//AltLemmaSubRule.of(".*tais", new Integer[] {30, 0},
+			//		new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+			//		3, "ā", new Integer[] {40, 0},
+			//		new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
 			AltLemmaSubRule.of(".*[aā]mais", new Integer[] {30, 0},
 					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40, 0},
 					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-			AltLemmaSubRule.of(".*ais", new Integer[] {30},
+			AltLemmaSubRule.of(".*[^štm]ais|visupirmais|vispirmais", new Integer[] {30},
 					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40},
 					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.DEFINITE_ENDING})
-		}), // agrākais, aiznākošais
+		}), // agrākais, aiznākošais, aiznākamais, beidzamais, visupirmais, pēdējais aizkomentētie vārdnīcā nav sastopami.
 
 	};
 

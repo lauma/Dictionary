@@ -122,7 +122,7 @@ public class DirectRules
 						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL})
 				},
-				new Tuple[]{Features.USED_ONLY__PLURAL}), // abēji 1
+				new Tuple[]{Features.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču
 
 		// Paradigma: 30 - jaundzimušais, pēdējais
 		BaseRule.of("-ā, v.", new SimpleSubRule[]{
@@ -132,9 +132,10 @@ public class DirectRules
 								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_IS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[] {30, 0},
 								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*ais", new Integer[] {30},
+						SimpleSubRule.of(".*[^tšm]ais", new Integer[] {30},
 								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN})},
-				new Tuple[]{Features.GENDER__MASC}), //pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais
+				new Tuple[]{Features.GENDER__MASC}),
+			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais,
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// 34 paradigma: Atgriezeniskie lietvārdi -šanās
@@ -147,7 +148,7 @@ public class DirectRules
 								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
 						SimpleSubRule.of(".*[aā]mā", new Integer[]{40, 0},
 								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*ā", new Integer[]{40},
+						SimpleSubRule.of(".*[^tšm]ā", new Integer[]{40},
 								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN, Features.DEFINITE_ENDING})},
 				new Tuple[]{Features.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
 
@@ -238,14 +239,14 @@ public class DirectRules
 		// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
 		/*BaseRule.of("nelok.; pamata skait.", ".*t", 29,
 				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.NON_INFLECTIVE}), // deviņsimt
-		BaseRule.of("nelok.; daļu skait.", ".*t", 29,
+		BaseRule.of("nelok.; daļu skait.", ".*pus", 29,
 				null, new Tuple[]{Features.POS__FRACT_NUMERAL, Features.NON_INFLECTIVE}), // četrarpus, divarpus
 		*/
 		// Eksperimentālā ideja: visi skaitļa vārdi, kam ir tikai viena dzimte,
 		// lai ir lietvārdi.
-		BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[tn]s", 1,
+		BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[dtn]s", 1,
 				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // desmits, pussimts
-		BaseRule.of("-a, v.; pamata skait. lietv. nozīmē.", ".*[tn]s", 1,
+		BaseRule.of("-a, v.; pamata skait. lietv. nozīmē.", ".*[dtn]s", 1,
 				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // simts1, miljons, pusmiljons, miljards, triljons
 		BaseRule.of("-ša, v.; pamata skait. lietv. nozīmē.", ".*tis", 3,
 				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // tūkstotis

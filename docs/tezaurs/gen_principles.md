@@ -3,9 +3,16 @@
 Dalījums šķirkļos
 -----------------
 
-* Vienā šķirklī tiek apkopotas tikai tās pamata šķirkļa vārda nozīmes, kas attiecināmas uz vienu vārdšķiru. Ja vārdam ir vairākas nozīmes, kas katra ir savai vārdšķirai, tad jāveido homonīmi - katrai vārdšķirai savs. Piemēram, _aerobs_ - 2 šķirkļi - lietvārds un īpašības vārds; ja par vārdu _viens_ uzskata, ka tas atkarībā no nozīmes ir vai nu skaitļa vārds (abas dzimtes), vietniekvārds (abas dzimtes) vai lietvārds (tikai vīriešu dzimte), tad jāveido 3 šķirkļi. Taču šis ierobežojums netraucē pievienot citas vārdšķiras atvasinājumu, piemēram, šķirklī ar pamatvārdu _balts_ atvasinājumu _balti_.
+Robežas starp homonīmiem pamatā ir mantotas no avotvārdnīcām, tāpēc ir nevienādas un neskaidras, taču daži gadījumi, kad noteikti ir jāveido homonīmi/homoformas, ir šādi:
 
-* Darbības vārdi iz 1. konjugācijas ar nenoteiksmes homoformām, piemēram, _dzīt_, _irt_, _degt_ tiek aprakstīti katrs ar diviem šķirkļiem atšķirīgo locīšanas īpatnību dēļ.
+* Ja atkarībā no nozīmes mainās tas, kā šķirkļavārds ir lokāms, noteikti jāvieno divi šķirķi. Tipiskie piemēri: 1. konjugācijas verbi ar nenoteiksmes homoformām, piemēram, _dzīt_, _irt_, _degt_ - katrai no šīm nenoteiksmēm ir jāveido divi šķirkļi.
+
+* Ir ļoti vēlams veidot atsevišķus sķirkļus tad, ja atkarībā no nozīmes mainās skaitliskais morfoloģijas rīka paradigmas identifikators (numurs). Piemēram, _aerobs_ - 2 šķirkļi - lietvārds (1. paradigma) un īpašības vārds (13. paradigma).
+
+* Ir vēlams veidot atsevišķu šķirkļa vārdu tad, ja atkarībā no nozīmes mainās galvenā šķirkļavārda vārdšķira, taču šie gadījumi ir grūti nošķirami no gadījumiem, kad atsevišķām nozīmēm ir kontaminācija. Piemēram, ja par vārdu _viens_ uzskata, ka tas atkarībā no nozīmes ir vai nu skaitļa vārds (abas dzimtes), vietniekvārds (abas dzimtes) vai lietvārds (tikai vīriešu dzimte), tad jāveido 3 šķirkļi. Savukārt, ja uzskata, ka šis vārds vienmēr ir skaitļa vārds, ko reizēm lieto lietvārda, vietniekvārda vai partikulas nozīmē (kontaminācija), tad pietiek ar vienu šķirkli visām _viens_ nozīmēm.
+
+Šie ierobežojumi netraucē šķirklī ievietot citas vārdšķiras atvasinājumu, piemēram, šķirklī ar pamatvārdu _balts_ atvasinājumu _balti_ (apst. v.).
+
 
 Paradigmu un vārdšķiru piešķiršana
 ----------------------------------

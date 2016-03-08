@@ -5,7 +5,7 @@ Dalījums šķirkļos
 
 * Vienā šķirklī tiek apkopotas tikai tās pamata šķirkļa vārda nozīmes, kas attiecināmas uz vienu vārdšķiru. Ja vārdam ir vairākas nozīmes, kas katra ir savai vārdšķirai, tad jāveido homonīmi - katrai vārdšķirai savs. Piemēram, _aerobs_ - 2 šķirkļi - lietvārds un īpašības vārds; _viens_ - 3 šķirkļi - skaitļa vārds (abas dzimtes), vietniekvārds (abas dzimtes) un lietvārds (tikai vīriešu dzimte). Taču šis ierobežojums netraucē pievienot citas vārdšķiras atvasinājumu, piemēram, šķirklī ar pamatvārdu _balts_ atvasinājumu _balti_.
 
-* 1. konjugācijas verbi ar nenoteiksmes homoformām, piemēram, _dzīt_, _irt_, _degt_ tiek aprakstīti katrs ar diviem šķirkļiem atšķirīgo locīšanas īpatnību dēļ.
+* Darbības vārdi iz 1. konjugācijas ar nenoteiksmes homoformām, piemēram, _dzīt_, _irt_, _degt_ tiek aprakstīti katrs ar diviem šķirkļiem atšķirīgo locīšanas īpatnību dēļ.
 
 Paradigmu un vārdšķiru piešķiršana
 ----------------------------------

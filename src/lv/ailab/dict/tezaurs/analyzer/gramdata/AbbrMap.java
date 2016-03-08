@@ -107,6 +107,9 @@ public class AbbrMap {
 		pairingFlags.put("saiklis.", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("saiklis", Tuple.of(Keys.POS, Values.CONJUNCTION.s));
 		pairingFlags.put("skait.", Features.POS__NUMERAL);
+		pairingFlags.put("daļu skait.", Features.POS__FRACT_NUMERAL);
+		pairingFlags.put("pamata skait.", Features.POS__CARD_NUMERAL);
+		pairingFlags.put("kārtas skait.", Features.POS__ORD_NUMERAL);
 		pairingFlags.put("saīs.", Features.POS__ABBR);
 		pairingFlags.put("simb.",Features.POS__ABBR);
 

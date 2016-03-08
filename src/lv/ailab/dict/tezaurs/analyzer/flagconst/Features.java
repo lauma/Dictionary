@@ -53,6 +53,7 @@ public class Features
 	public static final Tuple<Keys, String> POS__COMPOUND_LAST = Tuple.of(Keys.POS, Values.COMPOUND_LAST_PIECE.s);
 
 	public static final Tuple<Keys, String> CONTAMINATION__NOUN = Tuple.of(Keys.CONTAMINATION, Values.NOUN.s);
+	public static final Tuple<Keys, String> CONTAMINATION__CARD_NUM = Tuple.of(Keys.CONTAMINATION, Values.CARDINAL_NUMERAL.s);
 
 	public static final Tuple<Keys, String> GENDER__FEM = Tuple.of(Keys.GENDER, Values.FEMININE.s);
 	public static final Tuple<Keys, String> GENDER__MASC = Tuple.of(Keys.GENDER, Values.MASCULINE.s);

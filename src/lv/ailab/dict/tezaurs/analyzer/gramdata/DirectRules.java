@@ -22,19 +22,6 @@ public class DirectRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		// Skaitļa vārdi.
-		// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
-		BaseRule.of("nelok.; pamata skait.", ".*t", 29,
-				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.NON_INFLECTIVE}), // deviņsimt
-		BaseRule.of("nelok.; daļu skait.", ".*t", 29,
-				null, new Tuple[]{Features.POS__FRACT_NUMERAL, Features.NON_INFLECTIVE}), // četrarpus, divarpus
-		BaseRule.of("skait.; s. -ā", ".*ais", 22,
-				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
-				null), // ceturtais
-		BaseRule.of("s. -as; pamata skait.", ".*i", 24,
-				new Tuple[]{Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.POS__CARD_NUMERAL}), // deviņi
-
 		// 1. paradigma: 1. dekl. lietvārdi, -s
 		BaseRule.noun("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {Features.GENDER__MASC}), // cepurnieks
 		// 6. paradigma: 3. deklinācijas lietvārdi
@@ -253,6 +240,51 @@ public class DirectRules
 		BaseRule.of("",
 				"šitā", 25,
 				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // šitā
+	};
+
+	/**
+	 * Skaitļa vārdu likumi. Krietna tiesa ir speciāli izveidoti, papildus
+	 * pieliekot vārdšķiru, lai nesajūk ar citām vārdšķirām.
+	 * Tiek ļoti cerēts, ka te ir visi.
+	 */
+	public static final Rule[] numeral = {
+		// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
+		/*BaseRule.of("nelok.; pamata skait.", ".*t", 29,
+				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.NON_INFLECTIVE}), // deviņsimt
+		BaseRule.of("nelok.; daļu skait.", ".*t", 29,
+				null, new Tuple[]{Features.POS__FRACT_NUMERAL, Features.NON_INFLECTIVE}), // četrarpus, divarpus
+		*/
+		// Eksperimentālā ideja: visi skaitļa vārdi, kam ir tikai viena dzimte,
+		// lai ir lietvārdi.
+		BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[tn]s", 1,
+				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // desmits, pussimts
+		BaseRule.of("-a, v.; pamata skait. lietv. nozīmē.", ".*[tn]s", 1,
+				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // simts1, miljons, pusmiljons, miljards, triljons
+		BaseRule.of("-ša, v.; pamata skait. lietv. nozīmē.", ".*tis", 3,
+				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // tūkstotis
+		BaseRule.of("nulles, dsk. ģen. nuļļu, s.", "nulle", 9,
+				new Tuple[]{Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM},
+				new Tuple[]{Features.GENDER__FEM}), // nulle
+		// Puse un ??daļa arī kļūst par lietvārdiem, turklāt pat bez
+		// kontaminācijas, 		//
+
+		BaseRule.of("skait.; s. -ā", ".*ais", 22,
+				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
+				null), // ceturtais, otrais
+		BaseRule.of("skait.; s. -a", ".*s", 23,
+				null, new Tuple[]{Features.POS__CARD_NUMERAL}), // otrs
+
+		BaseRule.of("s. -as; pamata skait.", ".*i", 24,
+				new Tuple[]{Features.ENTRYWORD__PLURAL},
+				new Tuple[]{Features.POS__CARD_NUMERAL}), // deviņi, divi
+
+		BaseRule.of("ģen. triju, dat. trim (arī trijiem), akuz. trīs, instr. ar trim (arī ar trijiem), lok. trijos (arī trīs), v.; " +
+				"ģen. triju, dat. trim (arī trijām), akuz. trīs, instr. ar trim (arī ar trijām), lok. trijās (arī trīs), s.; " +
+				"arī trīs visu locījumu formu nozīmē; pamata skait.",
+				"trīs", 29,
+				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.PARALLEL_FORMS}), // trīs
+
+		// TODO: pulsteņlaiki
 	};
 
 	/**

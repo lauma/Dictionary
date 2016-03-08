@@ -68,6 +68,13 @@ public class SimpleSubRule
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
 	}
 
+	public static SimpleSubRule of(String lemmaRestrict, Integer paradigm, Tuple<Keys,String>[] positiveFlags)
+	{
+		return new SimpleSubRule(lemmaRestrict,
+				new HashSet<Integer>(){{add(paradigm);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
+	}
+
 	/**
 	 * Uztaisa šīs objekta kopiju un pievieno tam vēl arī doto karodziņu.
 	 */

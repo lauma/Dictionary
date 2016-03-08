@@ -293,6 +293,12 @@ public class TGram extends Gram
 			if (newBegin != -1) break;
 			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
+		// Skaitļa vārdi.
+		for (Rule s : DirectRules.numeral)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
+		}
 
 		// Kaut kādi sarežģītie likumi.
 		for (Rule s : DirectRules.other)
@@ -499,6 +505,12 @@ public class TGram extends Gram
 			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
 
 			if (pos.contains(Values.FOREIGN.s)) paradigm.add(39);
+
+			// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
+			if (pos.contains(Values.FRACTIONAL_NUMERAL.s)
+					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // četrarpus, divarpus
+			if (pos.contains(Values.CARDINAL_NUMERAL.s)
+					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
 			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}

@@ -15,7 +15,7 @@ public enum Values
 	NOUN("Lietvārds"),
 	REFLEXIVE_NOUN("Atgriezeniskais lietvārds"),
 	PROPER("Īpašvārds"),
-	GEN_ONLY("Ģenetīvenis"),
+	GEN_ONLY("Ģenitīvenis"),
 	ADJECTIVE("Īpašības vārds"),
 	NUMERAL("Skaitļa vārds"),
 	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),

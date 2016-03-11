@@ -136,7 +136,6 @@ public class StatsCollector
         if (bf != null)
 		{
 			if (bf.contains(Values.UNCLEAR_PARADIGM.s))
-		//if (entryFlags.test(Features.UNCLEAR_PARADIGM))
 				hasMultipleParadigmFlag++;
 			binaryFlags.addAll(bf);
 		}

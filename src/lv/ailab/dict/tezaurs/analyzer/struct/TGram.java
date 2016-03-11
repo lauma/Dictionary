@@ -512,6 +512,14 @@ public class TGram extends Gram
 			if (pos.contains(Values.CARDINAL_NUMERAL.s)
 					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
+			if (pos.contains(Values.GEN_ONLY.s))
+			{
+				paradigm.add(0);
+				if (!flags.testKey(Keys.GENDER) || !flags.testKey(Keys.NUMBER))
+					flags.add(Features.UNCLEAR_PARADIGM);
+			}
+
+
 			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
@@ -572,8 +580,8 @@ public class TGram extends Gram
 			else if (lemma.endsWith("a") || lemma.endsWith("s"))
 				flags.add(Keys.NUMBER, Values.SINGULAR);
 			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
-			flags.add(Features.UNCLEAR_PARADIGM);
-			flags.add(Features.UNCLEAR_POS);
+			if (lemma.endsWith("a"))
+				flags.add(Keys.GENDER, Values.MASCULINE);
 			flags.add(Features.FROZEN);
 		}
 		else if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))

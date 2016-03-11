@@ -18,6 +18,7 @@
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import lv.ailab.dict.struct.*;
+import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 
 import java.io.BufferedReader;
@@ -174,6 +175,21 @@ public class TEntry extends Entry
 			if (THeader.hasUnparsedGram(h)) return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Pieņemot, ka šķirklis ir apstrādāts un pabeigts, pārbauda dažādas loģikas
+	 * lietas, kas varētu norādīt uz kļūdainu programmas loģiku apstrādes
+	 * laikā.
+	 */
+	public void printConsistencyReport()
+	{
+		if (getUsedFlags().test(Features.UNCLEAR_PARADIGM)
+				&& !hasMultipleParadigms()
+				&& !getAllMentionedParadigms().contains(0))
+			System.err.printf(
+					"Šķirklī \"%s\" ir neskaidro paradigmu karodziņš, bet nav vairāku paradigmu.\n",
+					head.lemma.text);
 	}
 
 }

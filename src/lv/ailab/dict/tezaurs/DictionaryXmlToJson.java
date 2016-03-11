@@ -128,6 +128,7 @@ public class DictionaryXmlToJson
 			{
 				TEntry entry = new TEntry(entryNode);
 				sc.countEntry(entry);
+				entry.printConsistencyReport();
 
 				// Print out all pronunciations.
 				//if (makePronunceList)

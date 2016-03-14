@@ -489,7 +489,9 @@ public class TGram extends Gram
 		{
 			if (pos.contains(Values.ADJECTIVE.s))
 			{
-				if (lemma.endsWith("ais") || lemma.endsWith("ā")) paradigm.add(30);
+				if (lemma.endsWith("ais")) paradigm.add(30);
+				else if (lemma.endsWith("ā")) paradigm.add(40);
+				else if (lemma.endsWith("usī")) paradigm.add(41);
 				else if (lemma.matches(".*[^aeiouāēīōū]s")) paradigm.add(13);
 				else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);
 			}

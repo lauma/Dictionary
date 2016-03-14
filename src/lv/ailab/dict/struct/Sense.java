@@ -80,26 +80,6 @@ public class Sense implements HasToJSON, HasToXML
 		ordNumber = null;
 	}
 
-	/**
-	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
-	 * Šobrīd ņem vērā tikai gramatikas paradigmu.
-	 */
-	public boolean hasParadigm()
-	{
-		if (grammar == null) return false;
-		return grammar.paradigmCount() > 0;
-		//if (grammar.hasParadigm()) return true;
-		//for (TPhrase e : examples)
-		//{
-		//	if (e.hasParadigm()) return true;
-		//}
-		//for (TSense s : subsenses)
-		//{
-		//	if (s.hasParadigm()) return true;
-		//}
-		//return false;
-	}
-
 	public boolean glossOnly()
 	{
 		return gloss != null && grammar == null &&
@@ -108,27 +88,25 @@ public class Sense implements HasToJSON, HasToXML
 				(subsenses == null || subsenses.isEmpty());
 	}
 
-	/**
-	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
-	 */
-	public boolean hasMultipleParadigms()
+	public HashSet<Integer> getDirectParadigms()
 	{
-		return getAllMentionedParadigms().size() > 1;
+		if (grammar != null) return grammar.getDirectParadigms();
+		return new HashSet<>();
 	}
 
 	/**
 	 * Tikai statistiskām vajadzībām! Savāc visus paradigmu skaitlīšus, kas
 	 * kaut kur šajā struktūrā parādās.
 	 */
-	protected Set<Integer> getAllMentionedParadigms()
+	public HashSet<Integer> getMentionedParadigms()
 	{
 		HashSet<Integer> paradigms = new HashSet<>();
-		if (grammar!= null && grammar.paradigmCount() > 0)
-			paradigms.addAll(grammar.paradigm);
+		if (grammar != null)
+			paradigms.addAll(grammar.getMentionedParadigms());
 		if (examples != null) for (Phrase e : examples)
-			paradigms.addAll(e.getAllMentionedParadigms());
+			paradigms.addAll(e.getMentionedParadigms());
 		if (subsenses != null) for (Sense s : subsenses)
-			paradigms.addAll(s.getAllMentionedParadigms());
+			paradigms.addAll(s.getMentionedParadigms());
 		return paradigms;
 	}
 

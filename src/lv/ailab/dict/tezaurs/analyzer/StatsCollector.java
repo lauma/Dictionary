@@ -169,11 +169,12 @@ public class StatsCollector
         {
 			if (h.gram == null) continue;
 			if (collectFirstConj &&
-					(h.gram.paradigm.contains(15) || h.gram.paradigm.contains(18)))
+					(h.gram.getDirectParadigms().contains(15) ||
+							h.gram.getDirectParadigms().contains(18)))
 				firstConj.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 			if (h.gram.flags == null) continue;
 
-            if (collectFifthDeclExceptions && h.gram.paradigm.contains(9)
+            if (collectFifthDeclExceptions && h.gram.getDirectParadigms().contains(9)
 					&& h.gram.flags.test(Features.NO_SOUNDCHANGE))
                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 
@@ -203,7 +204,7 @@ public class StatsCollector
 		}
 
 		if (collectWithParadigms != null &&
-				collectWithParadigms.stream().map(entry.getAllMentionedParadigms()::contains).reduce(false, (a, b) -> a || b))
+				collectWithParadigms.stream().map(entry.getMentionedParadigms()::contains).reduce(false, (a, b) -> a || b))
 		{
 			entriesWithSelectedFeature.add(Trio.of(
 					entry.head.lemma.text,
@@ -260,7 +261,7 @@ public class StatsCollector
 	protected String describeParadigms(TEntry entry)
 	{
 		return "Pieminētās paradigmas = " +
-				entry.getAllMentionedParadigms().stream().sorted()
+				entry.getMentionedParadigms().stream().sorted()
 						.map(Object::toString).reduce((a, b) -> a + ", " + b).orElse("NULL");
 
 	}
@@ -295,7 +296,7 @@ public class StatsCollector
 			line.append(Values.UNCLEAR_POS.s);
 		else line.append("NULL");
 		line.append("\t");
-		if (entry.head.paradigmCount() == 1)
+		if (entry.head.getDirectParadigms().size() == 1)
 			// Nē, nu stulbi kaut kā taisīt mapošanu, ja objekts ir tikai viens
 			// Bet varbūt ka tā ir labāk nākotnei
 			line.append(entry.head.gram.paradigm.stream()

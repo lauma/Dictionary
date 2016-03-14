@@ -69,12 +69,6 @@ public class THeader extends Header
 		}				
 	}
 	
-	public int paradigmCount()
-	{
-		if (gram == null) return 0;
-		return gram.paradigmCount();
-	}
-	
 	public boolean hasUnparsedGram()
 	{
 		return THeader.hasUnparsedGram(this);

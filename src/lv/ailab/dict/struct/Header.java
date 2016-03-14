@@ -80,10 +80,23 @@ public class Header implements HasToJSON, HasToXML
 		else gram.paradigm = null;
 	}
 
-	public int paradigmCount()
+	/**
+	 * Paradigmas, kas attiecas uz šajā objektā iekļauto lemmu.
+	 */
+	public HashSet<Integer> getDirectParadigms()
 	{
-		if (gram == null) return 0;
-		return gram.paradigmCount();
+		if (gram!= null) return gram.getDirectParadigms();
+		return new HashSet<>();
+	}
+
+	/**
+	 * Paradigmas, kas vispār ir pieminētas šajā struktūrā.
+	 * Izmantojams meklēšanai un statistikai.
+	 */
+	public HashSet<Integer> getMentionedParadigms()
+	{
+		if (gram != null) return gram.getMentionedParadigms();
+		return new HashSet<>();
 	}
 
 	/**

@@ -69,40 +69,16 @@ public class Phrase implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Nav īsti skaidrs, vai šis ir labākais veids, kā definēt, vai paradigma ir
-	 * dota.
-	 * Šobrīd pozitīvu atbildi dod, ja paradigma ir vai nu gramatikai vai arī
-	 * kādai (vismaz vienai) no nozīmēm.
-	 */
-	public boolean hasParadigm()
-	{
-		if (grammar != null && grammar.paradigmCount() > 0) return true;
-		if (subsenses != null) for (Sense s : subsenses)
-		{
-			if (s.hasParadigm()) return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Nav skaidrs, vai šis ir labākais veids, kā apstrādāt paradigmas.
-	 */
-	public boolean hasMultipleParadigms()
-	{
-		return getAllMentionedParadigms().size() > 1;
-	}
-
-	/**
 	 * Tikai statistiskām vajadzībām! Savāc visas paradigmas, kas šajā truktūrā
 	 * ir pieminētas.
  	 */
-	protected Set<Integer> getAllMentionedParadigms()
+	protected Set<Integer> getMentionedParadigms()
 	{
 		HashSet<Integer> paradigms = new HashSet<>();
-		if (grammar != null && grammar.paradigmCount() > 0)
-			paradigms.addAll(grammar.paradigm);
+		if (grammar != null)
+			paradigms.addAll(grammar.getMentionedParadigms());
 		if (subsenses != null) for (Sense s : subsenses)
-			paradigms.addAll(s.getAllMentionedParadigms());
+			paradigms.addAll(s.getMentionedParadigms());
 		return paradigms;
 	}
 

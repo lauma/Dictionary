@@ -186,7 +186,7 @@ public class TEntry extends Entry
 	{
 		if (getUsedFlags().test(Features.UNCLEAR_PARADIGM)
 				&& !hasMultipleParadigms()
-				&& !getAllMentionedParadigms().contains(0))
+				&& !getMentionedParadigms().contains(0))
 			System.err.printf(
 					"Šķirklī \"%s\" ir neskaidro paradigmu karodziņš, bet nav vairāku paradigmu.\n",
 					head.lemma.text);

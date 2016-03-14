@@ -67,10 +67,28 @@ public class Gram implements HasToJSON, HasToXML
 		altLemmas = null;
 	}
 
-	public int paradigmCount()
+	/**
+	 * Atlasa tās paradigmas, kas ir tiešā veidā attiecināmas uz to objektu,
+	 * kam šī gramatika ir piekārtota.
+	 */
+	public HashSet<Integer> getDirectParadigms()
 	{
-		if (paradigm == null) return 0;
-		return paradigm.size();
+		HashSet<Integer> res = new HashSet<>();
+		if (paradigm != null) res.addAll(paradigm);
+		return res;
+	}
+
+	/**
+	 * Visas paradigmas, kas vispār ir pieminētas šajā struktūrā.
+	 * Izmantojams meklēšanai un statistikai.
+	 */
+	public HashSet<Integer> getMentionedParadigms()
+	{
+		HashSet<Integer> res = new HashSet<>();
+		res.addAll(getDirectParadigms());
+		for (Header h : getImplicitHeaders())
+			res.addAll(h.getMentionedParadigms());
+		return res;
 	}
 
 	/**
@@ -260,7 +278,5 @@ public class Gram implements HasToJSON, HasToXML
 
 		parent.appendChild(gramN);
 	}
-
-
 }
 

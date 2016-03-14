@@ -82,24 +82,20 @@ public class Entry implements HasToJSON, HasToXML
 	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
 	 * Šobrīd, lai iestātos true, paradigmai jābūt uzstdītai visiem
 	 * atvasinājumiem un vai nu šķirkļa galvai  vai vismaz vienai nozīmei.
+	 * AltLemmu paradigmas netiek ņemtas vērā, jo neattiecas tiešā veidā uz
+	 * problēmu.
 	 */
 	public boolean hasParadigm()
 	{
-		boolean res = head.paradigmCount() > 0;
-		//if (head.hasParadigm()) return true;
+		boolean res = head.getDirectParadigms().size() > 0;
 		if (senses != null) for (Sense s : senses)
 		{
-			if (s != null && s.hasParadigm()) res = true; //return true;
+			if (s != null && s.getDirectParadigms().size() > 0) res = true;
 		}
-		//for (Phrase e : phrases)
-		//{
-		//	if (e.hasParadigm()) return true;
-		//}
 
 		if (derivs != null) for (Header d : derivs)
-		{
-			if (d.paradigmCount() <= 0) res = false;
-		}
+			if (d.getDirectParadigms().size() < 1) res = false;
+
 		return res;
 	}
 
@@ -108,7 +104,9 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public boolean hasMultipleParadigms()
 	{
-		return getAllMentionedParadigms().size() > 1;
+		for (Header h : getAllHeaders())
+			if (h.getDirectParadigms().size() > 1) return true;
+		return false;
 	}
 
 	/**
@@ -131,17 +129,17 @@ public class Entry implements HasToJSON, HasToXML
 	 * Tikai statistiskām vajadzībām! Savāc visus paradigmu skaitlīšus, kas
 	 * kaut kur šajā struktūrā parādās.
  	 */
-	public Set<Integer> getAllMentionedParadigms()
+	public Set<Integer> getMentionedParadigms()
 	{
 		HashSet<Integer> paradigms = new HashSet<>();
-		if (head != null && head.paradigmCount() > 0)
-			paradigms.addAll(head.gram.paradigm);
+		if (head != null)
+			paradigms.addAll(head.getMentionedParadigms());
 		if (senses != null) for (Sense s : senses)
-			paradigms.addAll(s.getAllMentionedParadigms());
+			paradigms.addAll(s.getMentionedParadigms());
 		if (phrases != null) for (Phrase p : phrases)
-			paradigms.addAll(p.getAllMentionedParadigms());
+			paradigms.addAll(p.getMentionedParadigms());
 		if (derivs != null) for (Header d : derivs)
-			if (d.paradigmCount() > 0) paradigms.addAll(d.gram.paradigm);
+			paradigms.addAll(d.getMentionedParadigms());
 		return paradigms;
 	}
 

@@ -14,10 +14,7 @@ import org.json.simple.JSONObject;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -50,17 +47,25 @@ public class StatsCollector
 	 */
 	public final Pattern collectWithRegexp;
 	/**
+	 * Saraksts ar paradigmām, pēc kurām atlasīt.
+	 */
+	public final ArrayList<Integer> collectWithParadigms;
+	/**
 	 * Saraksts ar atslēgas un vērtības pārīšiem, pēc kuriem atlasīt. Karodziņus
 	 * saista ar loģisko UN.(Ja te ir null, tad kalpo kā norāde, ka nevajag šādi
 	 * atlasīt).
 	 */
-	public final ArrayList<Tuple<Keys, String>> collectWithFeature;
+	public final ArrayList<Tuple<Keys, String>> collectWithFeatures;
 	/**
 	 * Ar kādiem atslēgu/vērtību pārīšiem aprakstīt patvaļīgi atlasītos
 	 * rezultātus. Ja vērtība ir null, tad tiek drukātas visas vērtības ar tādu
 	 * atslēgu.
 	 */
 	public final ArrayList<Tuple<Keys, String>> describeWithFeatures;
+	/**
+	 * Vai rezultātā izdrukāt pieminētās paradigmas
+	 */
+	public final boolean describeWithParadigms;
 	/**
 	 * Plūsma, kurā rakstīt vārdu sarakstu. Ja null, tad pieņem, ka vārdu
 	 * sarakstu nevajag.
@@ -104,8 +109,10 @@ public class StatsCollector
 	public StatsCollector ( boolean collectPrononcations,
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, String collectWithRegexp,
+			ArrayList<Integer> collectWithParadigms,
 			ArrayList<Tuple<Keys, String>> collectFeature,
 			ArrayList<Tuple<Keys, String>> descriptionFeatures,
+			boolean describeWithParadigms,
 			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
@@ -114,8 +121,10 @@ public class StatsCollector
 		this.collectNonInflWithCase = collectNonInflWithCase;
 		this.collectWithRegexp = collectWithRegexp == null ?
 				null : Pattern.compile(collectWithRegexp);
-		this.collectWithFeature = collectFeature;
+		this.collectWithParadigms = collectWithParadigms;
+		this.collectWithFeatures = collectFeature;
 		this.describeWithFeatures = descriptionFeatures;
+		this.describeWithParadigms = describeWithParadigms;
 		this.wordlistOut = wordlistOutput;
 	}
 
@@ -188,12 +197,46 @@ public class StatsCollector
 			}
 		}
 
-		if (collectWithFeature != null &&
-				collectWithFeature.stream().map(entryFlags::test).reduce(true, (a, b) -> a && b))
+		if (collectWithParadigms != null &&
+				collectWithParadigms.stream().map(entry.getAllMentionedParadigms()::contains).reduce(false, (a, b) -> a || b))
 		{
-			ArrayList<String> flags = new ArrayList<>();
-			if (describeWithFeatures != null)
-				for (Tuple<Keys, String> feature : describeWithFeatures)
+			entriesWithSelectedFeature.add(Trio.of(
+					entry.head.lemma.text,
+					entry.homId == null ? "REF" : entry.homId,
+					describe(entry)));
+		}
+
+		if (collectWithFeatures != null &&
+				collectWithFeatures.stream().map(entryFlags::test).reduce(true, (a, b) -> a && b))
+		{
+			entriesWithSelectedFeature.add(Trio.of(
+					entry.head.lemma.text,
+					entry.homId == null ? "REF" : entry.homId,
+					describe(entry)));
+		}
+
+		writeInWordlist(entry);
+
+    }
+
+	protected ArrayList<String> describe(TEntry entry)
+	{
+		ArrayList<String> flags = new ArrayList<>();
+		if (describeWithParadigms) flags.add(describeParadigms(entry));
+		if (describeWithFeatures != null) flags.addAll(describeWithFeatures(entry));
+		if (entry.sources == null || entry.sources.isEmpty()) flags.add("NULL");
+		else flags.add(entry.sources.s.stream().sorted()
+				.reduce((a, b) -> a + ", " + b).orElse("NULL"));
+		return flags;
+
+	}
+
+	protected ArrayList<String> describeWithFeatures(TEntry entry)
+	{
+		ArrayList<String> flags = new ArrayList<>();
+		Flags entryFlags = entry.getUsedFlags();
+		if (describeWithFeatures != null)
+			for (Tuple<Keys, String> feature : describeWithFeatures)
 			{
 				if (feature.second == null && entryFlags.getAll(feature.first) == null)
 					flags.add(feature.first.s + " = NULL");
@@ -205,18 +248,16 @@ public class StatsCollector
 					flags.add(feature.first.s + " = " + feature.second);
 				else flags.add(feature.first.s + " != " + feature.second);
 			}
-			if (entry.sources == null || entry.sources.isEmpty()) flags.add("NULL");
-			else flags.add(entry.sources.s.stream().sorted()
-					.reduce((a, b) -> a + ", " + b).orElse("NULL"));
-			entriesWithSelectedFeature.add(Trio.of(
-					entry.head.lemma.text,
-					entry.homId == null ? "REF" : entry.homId,
-					flags));
-		}
+		return flags;
+	}
 
-		writeInWordlist(entry);
+	protected String describeParadigms(TEntry entry)
+	{
+		return "Pieminētās paradigmas = " +
+				entry.getAllMentionedParadigms().stream().sorted()
+						.map(Object::toString).reduce((a, b) -> a + ", " + b).orElse("NULL");
 
-    }
+	}
 
 	protected void writeInWordlist(TEntry entry) throws IOException
 	{
@@ -402,13 +443,14 @@ public class StatsCollector
 			out.write("\n]");
 		}
 
-		if ((collectWithFeature != null || collectWithRegexp != null) && entriesWithSelectedFeature != null
+		if ((collectWithFeatures != null || collectWithRegexp != null || collectWithParadigms != null)
+				&& entriesWithSelectedFeature != null
 				&& entriesWithSelectedFeature.size() > 0)
 		{
 			out.write(",\n\"");
 			String title = "";
-			if (collectWithFeature != null)
-				title = collectWithFeature.stream()
+			if (collectWithFeatures != null)
+				title = collectWithFeatures.stream()
 						.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
 						.reduce((a, b) -> a + ", " + b).orElse("");
 			if (collectWithRegexp != null)

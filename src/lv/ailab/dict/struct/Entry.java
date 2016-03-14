@@ -131,7 +131,7 @@ public class Entry implements HasToJSON, HasToXML
 	 * Tikai statistiskām vajadzībām! Savāc visus paradigmu skaitlīšus, kas
 	 * kaut kur šajā struktūrā parādās.
  	 */
-	protected Set<Integer> getAllMentionedParadigms()
+	public Set<Integer> getAllMentionedParadigms()
 	{
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (head != null && head.paradigmCount() > 0)

@@ -512,6 +512,10 @@ public class TGram extends Gram
 			if (pos.contains(Values.CARDINAL_NUMERAL.s)
 					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
+			// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
+			// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
+			// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
+			// problēmas.
 			if (pos.contains(Values.GEN_ONLY.s))
 			{
 				paradigm.add(0);

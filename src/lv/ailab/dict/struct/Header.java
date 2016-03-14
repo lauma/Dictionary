@@ -17,6 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -84,6 +85,16 @@ public class Header implements HasToJSON, HasToXML
 		if (gram == null) return 0;
 		return gram.paradigmCount();
 	}
+
+	/**
+	 * Savāc iekšā gramatikā esošās altlemmas. Šis objekts pats netiek iekļauts.
+	 */
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		if (gram == null) return new ArrayList<>();
+		return gram.getImplicitHeaders();
+	}
+
 
 	public String toJSON()
 	{

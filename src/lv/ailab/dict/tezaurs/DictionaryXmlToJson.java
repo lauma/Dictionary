@@ -39,12 +39,12 @@ public class DictionaryXmlToJson
 	public static String PRINT_WITH_REGEXP = null;
 	//public static String PRINT_WITH_REGEXP = ".*fe";
 
-	public static ArrayList<Integer> PPRINT_WITH_PARADIGM = new ArrayList<Integer>() {{
+	/*public static ArrayList<Integer> PPRINT_WITH_PARADIGM = new ArrayList<Integer>() {{
 		add (30);
 		add (40);
 		add (41);
-	}};
-	//public static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
+	}};//*/
+	public static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 
 	// Stindzeņu izgūšana ar plašāku aprakstu.
 	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
@@ -82,6 +82,7 @@ public class DictionaryXmlToJson
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
 	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
 	public static boolean PRINT_PARADIGMS = true;
+	public static boolean PRINT_OTHER_LEMMAS = true;
 
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
@@ -113,8 +114,8 @@ public class DictionaryXmlToJson
 			}
 			StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
 					PRINT_FIRST_CONJ, PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL,
-					PRINT_WITH_REGEXP, PPRINT_WITH_PARADIGM,
-					PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,
+					PRINT_WITH_REGEXP, PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
+					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS, PRINT_OTHER_LEMMAS,
 					wordlistOut);
 
 

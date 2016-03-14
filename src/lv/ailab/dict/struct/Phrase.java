@@ -20,6 +20,7 @@ package lv.ailab.dict.struct;
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.utils.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -68,9 +69,10 @@ public class Phrase implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Not sure if this is the best way to treat paradigms.
-	 * Currently to trigger true, paradigm must be set for either header or
-	 * at least one sense.
+	 * Nav īsti skaidrs, vai šis ir labākais veids, kā definēt, vai paradigma ir
+	 * dota.
+	 * Šobrīd pozitīvu atbildi dod, ja paradigma ir vai nu gramatikai vai arī
+	 * kādai (vismaz vienai) no nozīmēm.
 	 */
 	public boolean hasParadigm()
 	{
@@ -83,16 +85,16 @@ public class Phrase implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Not sure if this is the best way to treat paradigms.
+	 * Nav skaidrs, vai šis ir labākais veids, kā apstrādāt paradigmas.
 	 */
 	public boolean hasMultipleParadigms()
 	{
 		return getAllMentionedParadigms().size() > 1;
 	}
 
-	/*
-	 * For statistical use only. Collects all paradigm numbers mentioned in this
- 	 * structure
+	/**
+	 * Tikai statistiskām vajadzībām! Savāc visas paradigmas, kas šajā truktūrā
+	 * ir pieminētas.
  	 */
 	protected Set<Integer> getAllMentionedParadigms()
 	{
@@ -105,7 +107,7 @@ public class Phrase implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Get all flags used in this structure.
+	 * Savāc visus karodziņus, kas ir lietoti šajā stuktūrā.
 	 */
 	public Flags getUsedFlags()
 	{
@@ -118,7 +120,20 @@ public class Phrase implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Count all flags used in this structure.
+	 * Savāc visus hederus, kas parādās šajā struktūrā.
+	 */
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		ArrayList<Header> res = new ArrayList();
+		if (grammar != null) res.addAll(grammar.getImplicitHeaders());
+		if (subsenses != null) for (Sense s : subsenses)
+			res.addAll(s.getImplicitHeaders());
+		return res;
+	}
+
+
+	/**
+	 * Saskaita visus karodziņus, kas lietoti šajā struktūrā.
 	 */
 	public CountingSet<Tuple<Keys, String>> getFlagCounts()
 	{

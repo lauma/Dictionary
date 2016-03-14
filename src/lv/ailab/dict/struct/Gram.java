@@ -74,6 +74,23 @@ public class Gram implements HasToJSON, HasToXML
 	}
 
 	/**
+	 * Savāc altLemmas un, drošības pēc, arī pārbauda vai altLemmu objekti sevī
+	 * neietver kādu gramatiku ar altLemmu. Teorētiski tā gan nevajadzētu būt,
+	 * bet nu drošības pēc.
+	 */
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		ArrayList<Header> res = new ArrayList();
+		if (altLemmas != null)
+		{
+			res.addAll(altLemmas);
+			for (Header h : altLemmas)
+				res.addAll(h.getImplicitHeaders());
+		}
+		return res;
+	}
+
+	/**
 	 * Gramatikas struktūras JSON reprezentācija, kas iekļauj arī sākotnējo
 	 * gramatikas tekstu.
 	 */

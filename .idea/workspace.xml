@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,16 +42,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DirectRules.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.038462">
-              <caret line="141" column="28" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AltLemmaRules.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -54,37 +52,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TEntry.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java">
+      <file leaf-file-name="StatsCollector.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="188" column="44" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="44" />
-              <folding>
-                <element signature="e#5493#5494#0" expanded="true" />
-                <element signature="e#5535#5536#0" expanded="true" />
-              </folding>
+              <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TGram.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
+      <file leaf-file-name="DictionaryXmlToJson.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="13.646655">
-              <caret line="502" column="0" selection-start-line="502" selection-start-column="0" selection-end-line="502" selection-end-column="0" />
-              <folding>
-                <element signature="e#20593#20594#0" expanded="true" />
-                <element signature="e#20619#20620#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.5303777">
+              <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Values.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java">
+      <file leaf-file-name="Entry.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+              <caret line="215" column="41" selection-start-line="215" selection-start-column="41" selection-end-line="215" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -126,18 +118,14 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/ELement.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/MLVVEntry.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/RegularVerbRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Dictionary.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/PhraseTypes.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/io/DocLoader.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/StructureExtractor.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
         <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/checker/EntryChecks.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/BaseRule.java" />
@@ -147,16 +135,20 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Features.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaSubRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
       </list>
     </option>
   </component>
@@ -411,36 +403,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="struct" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dict" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tezaurs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analyzer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="gramlogic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -463,7 +425,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="struct" />
+              <option name="myItemId" value="mlvv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dict" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mlvv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -745,6 +733,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.168" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20241936" sideWeight="0.4620253" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23259494" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20241936" sideWeight="0.53797466" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11209677" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -756,7 +745,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23259494" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -793,34 +781,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/utils/JSONUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7380952">
-          <caret line="73" column="108" selection-start-line="73" selection-start-column="108" selection-end-line="73" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/utils/HasToJSON.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6141215">
-          <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/utils/HasToXML.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4187192">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/package-info.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/package-info.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.027914613">
@@ -912,45 +872,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028911564">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.028911564">
-          <caret line="75" column="35" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/PhraseTypes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0867347">
           <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49753696">
-          <caret line="43" column="39" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.027914613">
-          <caret line="205" column="28" selection-start-line="205" selection-start-column="28" selection-end-line="205" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -959,13 +884,6 @@
         <state vertical-scroll-proportion="0.27422002">
           <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.027914613">
-          <caret line="487" column="38" selection-start-line="487" selection-start-column="38" selection-end-line="487" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1045,14 +963,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85544217">
-          <caret line="76" column="47" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltEndingRule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4217687">
@@ -1103,37 +1013,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="44" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="44" />
-          <folding>
-            <element signature="e#5493#5494#0" expanded="true" />
-            <element signature="e#5535#5536#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="133" column="10" selection-start-line="133" selection-start-column="10" selection-end-line="133" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/flagconst/Values.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="235" column="52" selection-start-line="235" selection-start-column="52" selection-end-line="235" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -1154,14 +1037,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46258503">
-          <caret line="76" column="31" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/AltLemmaRules.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1170,14 +1045,131 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TSense.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26020408">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TPhrase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23129252">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26020408">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="13.646655">
+        <state vertical-scroll-proportion="0.9421769">
           <caret line="502" column="0" selection-start-line="502" selection-start-column="0" selection-end-line="502" selection-end-column="0" />
-          <folding>
-            <element signature="e#20593#20594#0" expanded="true" />
-            <element signature="e#20619#20620#0" expanded="true" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGloss.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23129252">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6377551">
+          <caret line="188" column="44" selection-start-line="188" selection-start-column="20" selection-end-line="188" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49829933">
+          <caret line="43" column="39" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028911564">
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66377443">
+          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7517007">
+          <caret line="93" column="49" selection-start-line="93" selection-start-column="49" selection-end-line="93" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Sense.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4914966">
+          <caret line="155" column="12" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Phrase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.664966">
+          <caret line="127" column="29" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8423645">
+          <caret line="88" column="9" selection-start-line="88" selection-start-column="9" selection-end-line="88" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/struct/Entry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="215" column="41" selection-start-line="215" selection-start-column="41" selection-end-line="215" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/StatsCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="269" column="21" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5303777">
+          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>

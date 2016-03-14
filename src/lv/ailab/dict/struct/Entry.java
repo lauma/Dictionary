@@ -179,13 +179,41 @@ public class Entry implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Savāc visus hederus - galveno + atvasinājumus
+	 * Savāc vārdnīcā dotos hederus - galveno + atvasinājumus
 	 */
-	public ArrayList<Header> getAllHeaders()
+	public ArrayList<Header> getOfficialHeaders()
 	{
 		ArrayList<Header> res = new ArrayList<>();
 		res.add(head);
 		if (derivs != null) res.addAll(derivs);
+		return res;
+	}
+
+
+	/**
+	 * Savāc izsecinātos hederus (altLemmas).
+	 */
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		ArrayList<Header> res = new ArrayList<>();
+		if (head != null) res.addAll(head.getImplicitHeaders());
+		if (senses != null) for (Sense s : senses)
+			res.addAll(s.getImplicitHeaders());
+		if (phrases != null) for (Phrase p : phrases)
+			res.addAll(p.getImplicitHeaders());
+		if (derivs != null) for (Header d : derivs)
+			res.addAll(d.getImplicitHeaders());
+		return res;
+	}
+
+	/**
+	 * Savāc visus headerus.
+	 */
+	public ArrayList<Header> getAllHeaders()
+	{
+		ArrayList<Header> res = new ArrayList<>();
+		res.addAll(getOfficialHeaders());
+		res.addAll(getImplicitHeaders());
 		return res;
 	}
 

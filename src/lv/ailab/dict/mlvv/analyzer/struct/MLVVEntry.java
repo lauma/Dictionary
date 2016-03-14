@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +36,29 @@ public class MLVVEntry extends Entry
 	 * komentārs - Entry.freeText
 	 */
 	public String origin;
+
+
+	/**
+	 * Savāc izsecinātos hederus (altLemmas) - šis ir drošības pēc pārrakstīts,
+	 * jo, lai gan šobrīd frazeoloģismim nevajadzētu saturēt altLemmas, tomēr
+	 * strukturāli tas pieļaujas, tāpēc nākotnē var rasties pārpratumi, šo
+	 * nepārrakstot.
+	 */
+	@Override
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		ArrayList<Header> res = new ArrayList<>();
+		if (head != null) res.addAll(head.getImplicitHeaders());
+		if (senses != null) for (Sense s : senses)
+			res.addAll(s.getImplicitHeaders());
+		if (phrases != null) for (Phrase p : phrases)
+			res.addAll(p.getImplicitHeaders());
+		if (phraseology != null) for (Phrase p : phraseology)
+			res.addAll(p.getImplicitHeaders());
+		if (derivs != null) for (Header d : derivs)
+			res.addAll(d.getImplicitHeaders());
+		return res;
+	}
 
 	/**
 	 * Izanalizē rindu, un atgriež null, ja tajā nekā nav, vai MLVVEntry, ja no

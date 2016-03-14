@@ -25,6 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -144,6 +145,20 @@ public class Sense implements HasToJSON, HasToXML
 		if (subsenses != null) for (Sense s : subsenses)
 			flags.addAll(s.getUsedFlags());
 		return flags;
+	}
+
+	/**
+	 * Savāc visus hederus, kas parādās šajā struktūrā.
+	 */
+	public ArrayList<Header> getImplicitHeaders()
+	{
+		ArrayList<Header> res = new ArrayList();
+		if (grammar != null) res.addAll(grammar.getImplicitHeaders());
+		if (examples != null) for (Phrase e : examples)
+			res.addAll(e.getImplicitHeaders());
+		if (subsenses != null) for (Sense s : subsenses)
+			res.addAll(s.getImplicitHeaders());
+		return res;
 	}
 
 	/**

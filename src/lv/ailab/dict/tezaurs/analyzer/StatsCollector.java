@@ -63,9 +63,13 @@ public class StatsCollector
 	 */
 	public final ArrayList<Tuple<Keys, String>> describeWithFeatures;
 	/**
-	 * Vai rezultātā izdrukāt pieminētās paradigmas
+	 * Vai rezultātā izdrukāt pieminētās paradigmas.
 	 */
 	public final boolean describeWithParadigms;
+	/**
+	 * Vai rezultātā izdrukāt pieminētos atvasinājumus un citas lemmas.
+	 */
+	public final boolean describeWithOtherLemmas;
 	/**
 	 * Plūsma, kurā rakstīt vārdu sarakstu. Ja null, tad pieņem, ka vārdu
 	 * sarakstu nevajag.
@@ -112,7 +116,7 @@ public class StatsCollector
 			ArrayList<Integer> collectWithParadigms,
 			ArrayList<Tuple<Keys, String>> collectFeature,
 			ArrayList<Tuple<Keys, String>> descriptionFeatures,
-			boolean describeWithParadigms,
+			boolean describeWithParadigms, boolean describeWithOtherLemmas,
 			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
@@ -125,6 +129,7 @@ public class StatsCollector
 		this.collectWithFeatures = collectFeature;
 		this.describeWithFeatures = descriptionFeatures;
 		this.describeWithParadigms = describeWithParadigms;
+		this.describeWithOtherLemmas = describeWithOtherLemmas;
 		this.wordlistOut = wordlistOutput;
 	}
 
@@ -223,6 +228,7 @@ public class StatsCollector
 	{
 		ArrayList<String> flags = new ArrayList<>();
 		if (describeWithParadigms) flags.add(describeParadigms(entry));
+		if (describeWithOtherLemmas) flags.add(describeOtherLemmas(entry));
 		if (describeWithFeatures != null) flags.addAll(describeWithFeatures(entry));
 		if (entry.sources == null || entry.sources.isEmpty()) flags.add("NULL");
 		else flags.add(entry.sources.s.stream().sorted()
@@ -257,6 +263,13 @@ public class StatsCollector
 				entry.getAllMentionedParadigms().stream().sorted()
 						.map(Object::toString).reduce((a, b) -> a + ", " + b).orElse("NULL");
 
+	}
+
+	protected String describeOtherLemmas(TEntry entry)
+	{
+		return "Visas lemmas = " +
+				entry.getAllHeaders().stream().map(a -> a.lemma.text)
+						.reduce((a, b) -> a + ", " + b).orElse("NULL");
 	}
 
 	protected void writeInWordlist(TEntry entry) throws IOException

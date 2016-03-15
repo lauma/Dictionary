@@ -22,6 +22,12 @@ public class DirectRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
+		BaseRule.of("esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt",
+				"būt", 29,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "būt"), Features.POS__IRREG_VERB, Features.POS__DIRECT_VERB}, null), //būt
+		RegularVerbRule.of("neesmu, neesi,", "nav, pag. nebiju", "nebūt", 29,
+				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "nebūt"), Features.POS__IRREG_VERB, Features.POS__REFL_VERB}, null), //nebūt
+
 		// 1. paradigma: 1. dekl. lietvārdi, -s
 		BaseRule.noun("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {Features.GENDER__MASC}), // cepurnieks
 		// 6. paradigma: 3. deklinācijas lietvārdi
@@ -623,7 +629,9 @@ public class DirectRules
 
 
 			// Standartizētie.
-		// A, B
+		// A
+		FirstConjRule.refl("-augos, -audzies,", "-augas, pag. -augos", "augties"), //paaugties
+		// B
 		FirstConjRule.refl("-bilstos, -bilsties,", "-bilstas, pag. -bildos", "bilsties"), //iebilsties
 		FirstConjRule.refl("-bļaujos, -bļaujies,", "-bļaujas, pag. -bļāvos", "bļauties"), //iebļauties
 		FirstConjRule.refl("-brēcos, -brēcies,", "-brēcas, pag. -brēcos", "brēkties"), //aizbrēkties

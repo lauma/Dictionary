@@ -17,6 +17,9 @@ public class Features
 	public static final Tuple<Keys, String> POS__REFL_NOUN = Tuple.of(Keys.POS, Values.REFLEXIVE_NOUN.s);
 	public static final Tuple<Keys, String> POS__GEN_ONLY = Tuple.of(Keys.POS, Values.GEN_ONLY.s);
 	public static final Tuple<Keys, String> POS__VERB = Tuple.of(Keys.POS, Values.VERB.s);
+	public static final Tuple<Keys, String> POS__IRREG_VERB = Tuple.of(Keys.POS, Values.IRREGULAR_VERB.s);
+	public static final Tuple<Keys, String> POS__DIRECT_VERB = Tuple.of(Keys.POS, Values.DIRECT_VERB.s);
+	public static final Tuple<Keys, String> POS__REFL_VERB = Tuple.of(Keys.POS, Values.REFLEXIVE_VERB.s);
 	public static final Tuple<Keys, String> POS__ADJ = Tuple.of(Keys.POS, Values.ADJECTIVE.s);
 
 	public static final Tuple<Keys, String> POS__PARTICIPLE = Tuple.of(Keys.POS, Values.PARTICIPLE.s);

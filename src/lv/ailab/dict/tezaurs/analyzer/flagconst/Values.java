@@ -35,7 +35,10 @@ public enum Values
 	NEGATIVE_PRONOUN("Noliedzamais vietniekvārds"),
 
 	VERB("Darbības vārds"),
-	PREFIX_VERB("Ddarbības vārds ar priedēkli"),
+	IRREGULAR_VERB("Nekārtns darbības vārds"),
+	DIRECT_VERB("Tiešs darbības vārds"),
+	REFLEXIVE_VERB("Atgriezenisks darbības vārds"),
+	PREFIX_VERB("Darbības vārds ar priedēkli"),
 	PREFIXLESS_VERB("Darbības vārds bez priedēkļa"),
 	NEGATIVE_VERB("Noliegts darbības vārds"),
 

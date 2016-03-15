@@ -33,6 +33,7 @@ public class DirectRules
 		BaseRule.noun("-as, dsk. ģen. -stu, s.", ".*sta", 7, null, new Tuple[]{Features.GENDER__FEM}), // pasta
 		BaseRule.noun("-as, dsk. ģen. -tu, s.", ".*ta", 7, null, new Tuple[]{Features.GENDER__FEM}), // placenta
 		BaseRule.noun("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {Features.GENDER__FEM}), // apskava
+		BaseRule.noun("-ēja, -as, s.", ".*va", 7, null, new Tuple[] {Features.GENDER__FEM}), // apskava
 
 		// 34. paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.noun(
@@ -294,7 +295,6 @@ public class DirectRules
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -šu, s.", ".*[sšt]e"), //abate, adrese, larkše, apokalipse, note
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -žu, s.", ".*[dz]e"), //ābolmaize, aģitbrigāde, bilde, pirolīze
 
-
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -bju, s.", ".*be"), //apdobe
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -džu, s.", ".*dze"), //kāršaudze
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -kšu, s.", ".*kte"), //daudzpunkte
@@ -309,6 +309,10 @@ public class DirectRules
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -šļu, s.", ".*sle"), //gaisagrābsle
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -vju, s.", ".*ve"), //agave, aizstāve
 		BaseRule.fifthDeclStd("-es, dsk. ģen. -žņu, s.", ".*zne"), //asteszvaigzne
+
+		BaseRule.fifthDeclStd("-es, -žu s.", ".*ze"), // apoteoze
+
+		BaseRule.fifthDeclStd("-es, -mju s.", ".*me"), // apakšzeme
 
 		BaseRule.fifthDeclNoChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
 		BaseRule.fifthDeclNoChange("-es, dsk. ģen. -fu, s.", ".*fe"), //arheogrāfe
@@ -738,6 +742,8 @@ public class DirectRules
 				"-inos, -inies,", "-inās, pag. -inājos", "ināties", false), //apklaušināties
 		RegularVerbRule.thirdConjRefl(
 				"-os, -ies,", "-ās, pag. -ījos", "īties", false), //apklausīties
+		RegularVerbRule.thirdConjRefl(
+				"-os, -ies,", "-ās, pag. -ājos", "ināties", false), //novājināties
 
 		RegularVerbRule.thirdConjRefl3Pers("-as, pag. -ējās", "ēties", false), //aizčiepstēties
 		RegularVerbRule.thirdConjRefl3Pers("-inās, pag. -inājās", "ināties", false), //aizbubināties

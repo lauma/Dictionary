@@ -120,6 +120,7 @@ public class DirectRules
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
 		BaseRule.adjectiveParticiple("-ais; s. -a, -ā"), // abējāds, acains, agāms
 		BaseRule.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
+		BaseRule.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
@@ -670,7 +671,7 @@ public class DirectRules
 		FirstConjRule.refl("-rēcos, -rēcies,", "-rēcas, pag. -rēcos", "rēkties"), //ierēkties
 		FirstConjRule.refl("-rūcos, -rūcies,", "-rūcas, pag. -rūcos", "rūkties"), //aizrūkties
 		// S
-		FirstConjRule.refl("-salstos, -salsties,", "-salstās, pag. -salos", "salties"), //izsalties
+		FirstConjRule.refl("-salstos, -salsties,", "-salstas, pag. -salos", "salties"), //izsalties
 		FirstConjRule.refl("-sēcos, -sēcies,", "-sēcas, pag. -sēcos", "sēkties"), //iesēkties
 		FirstConjRule.refl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
 		FirstConjRule.refl("-spiedzos, -spiedzies,", "-spiedzas, pag. -spiedzos", "spiegties"), //iespiegties

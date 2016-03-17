@@ -168,23 +168,44 @@ public class DirectRules
 	 * Tiek ļoti cerēts, ka te ir visi.
 	 */
 	public static final Rule[] pronomen = {
-		BaseRule.of("-a, v.; nenoteiktais vietn.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // jebkas, jebkurš, jebkāds
-		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
-				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // šāds, šitāds
+			// TODO pakāpeniski izravēt dubultlikumus
 		BaseRule.of("vietn., -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // kurš, kurš, mans, viņš
-		BaseRule.of("pieder. vietn., -a, v.", ".*s", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__MASC}), // tavs
+		BaseRule.of("vietn., -u, v.", ".*i", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC, Features.ENTRYWORD__PLURAL}), // abi
+		BaseRule.of("-a, v.; vietn.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // vienotrs
+		BaseRule.of("-a, v.; nenoteiktais vietn.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // jebkas, jebkurš, jebkāds
+		BaseRule.of("nenoteiktais vietn., -a, v.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // dažs, cits
+		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
+				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // šāds, šitāds
+		BaseRule.of("norād. vietn., -a, v.", ".*s", 25,
+				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // tāds
+		BaseRule.of("-a, v.; pieder. vietn.", ".*s", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__MASC}), // tavs, savs
+		BaseRule.of("noliedz. vietn., -a, v.", ".*s", 25,
+				null, new Tuple[]{Features.POS__NEG_PRONOUN, Features.GENDER__MASC}), // nekāds
+		BaseRule.of("vispārin. vietn., -a, v.", ".*[sš]", 25,
+				null, new Tuple[]{Features.POS__GEN_PRONOUN, Features.GENDER__MASC}), // ikkurš, ikkatrs
 
-		BaseRule.of("nenoteiktais vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__FEM}), // jebkura, jebkāda
-		BaseRule.of("pieder. vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // sava, mana, tava
-		BaseRule.of("norād. vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // šāda
+		BaseRule.of("vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__FEM}), // ref: šāda, jebkāda
+		BaseRule.of("vietn., -u, s.", ".*as", 25,
+				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__FEM, Features.ENTRYWORD__PLURAL}), // abas
 		BaseRule.of("-as, s.; vietn.", ".*a", 25,
 				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // viņa, kāda
+		BaseRule.of("nenoteiktais vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__FEM}), // jebkura, jebkāda
+		BaseRule.of("-as, s.; pieder. vietn.", ".*a", 25,
+				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // sava, mana, tava
+		BaseRule.of("norād. vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // šāda
+		BaseRule.of("noliedz. vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__NEG_PRONOUN, Features.GENDER__FEM}), // nekāda
+		BaseRule.of("vispārin. vietn., -as, s.", ".*a", 25,
+				null, new Tuple[]{Features.POS__GEN_PRONOUN, Features.GENDER__FEM}), // ikkura
 
 		BaseRule.of("vietn. paša, pašam, pašu, ar pašu, pašā, dsk. ģen. pašu, v.", "pats", 25,
 				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // pats
@@ -206,7 +227,7 @@ public class DirectRules
 				"jebkas", 25,
 				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.USED_ONLY__SINGULAR}), // jebkas
 		BaseRule.of("ģen. kā, dat. kam, akuz. ko, instr. ar ko, lok. kamī (apv.); vietn.", "kas", 25,
-				null, new Tuple[]{Features.POS__PRONOUN}), // kas
+				null, new Tuple[]{Features.POS__PRONOUN, Features.ORIGINAL_NEEDED}), // kas
 		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko; nenoteiktais vietn.", "daudzkas", 25,
 				null, new Tuple[]{Features.POS__INDEF_PRONOUN}), // daudzkas
 		BaseRule.of("ģen. nekā, dat. nekam, akuz. neko, instr. ar neko; noliedz. vietn.", "nekas", 25,
@@ -233,7 +254,7 @@ public class DirectRules
 		BaseRule.of("ģen. šitā, dat. šitajam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitajiem, akuz. šitos, instr. ar šitajiem, lok. šitais (arī šitajos, šitanīs), v., norād. vietn.",
 				"šitais", 25,
 				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__MASC}), // šitais
-		BaseRule.of("",
+		BaseRule.of("ģen. šitās, dat. šitai, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitās, ģen. šito, dat. šitām, akuz. šitās, instr. ar šitām, lok. šitais (arī šitajās, šitanīs), s., norād. vietn.",
 				"šitā", 25,
 				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // šitā
 	};
@@ -252,12 +273,14 @@ public class DirectRules
 		*/
 		// Eksperimentālā ideja: visi skaitļa vārdi, kam ir tikai viena dzimte,
 		// lai ir lietvārdi.
-		BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[dtn]s", 1,
-				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // desmits, pussimts
+		//BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[dtn]s", 1,
+		//		null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // desmits, pussimts
 		BaseRule.of("-a, v.; pamata skait. lietv. nozīmē.", ".*[dtn]s", 1,
 				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // simts1, miljons, pusmiljons, miljards, triljons
 		BaseRule.of("-ša, v.; pamata skait. lietv. nozīmē.", ".*tis", 3,
 				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // tūkstotis
+		//BaseRule.of("-as, s.; pamata skait.", "viena", 0,
+		//		null, new Tuple[]{Features.GENDER__FEM, Features.POS__CARD_NUMERAL, Features.ENTRYWORD__FEM}), // viena (iespējams, ka šito var vispār var izmest?)
 		BaseRule.of("nulles, dsk. ģen. nuļļu, s.", "nulle", 9,
 				new Tuple[]{Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM},
 				new Tuple[]{Features.GENDER__FEM}), // nulle
@@ -266,13 +289,15 @@ public class DirectRules
 
 		BaseRule.of("skait.; s. -ā", ".*ais", 22,
 				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
-				null), // ceturtais, otrais
+				null), // ceturtais, otrais, nultais
 		BaseRule.of("skait.; s. -a", ".*s", 23,
 				null, new Tuple[]{Features.POS__CARD_NUMERAL}), // otrs
+		BaseRule.of("s. -a; daļu skait.", ".*s", 23,
+				null, new Tuple[]{Features.POS__FRACT_NUMERAL}), // pusotrs, pustrešs
 
 		BaseRule.of("s. -as; pamata skait.", ".*i", 24,
 				new Tuple[]{Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.POS__CARD_NUMERAL}), // deviņi, divi
+				new Tuple[]{Features.POS__CARD_NUMERAL}), // deviņi, divi, trejdeviņi
 
 		BaseRule.of("ģen. triju, dat. trim (arī trijiem), akuz. trīs, instr. ar trim (arī ar trijiem), lok. trijos (arī trīs), v.; " +
 				"ģen. triju, dat. trim (arī trijām), akuz. trīs, instr. ar trim (arī ar trijām), lok. trijās (arī trīs), s.; " +

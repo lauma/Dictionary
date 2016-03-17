@@ -13,6 +13,13 @@ Robežas starp homonīmiem pamatā ir mantotas no avotvārdnīcām, tāpēc ir n
 
 Šie ierobežojumi netraucē šķirklī ievietot citas vārdšķiras atvasinājumu, piemēram, šķirklī ar pamatvārdu _balts_ atvasinājumu _balti_ (apst. v.).
 
+Dalījums šķirkļavārdos/atvasinājumos
+------------------------------------
+
+* Īpašības vārdiem (13., 14. paradigma) un lokāmiem skaitļa vārdiem (22., 23., 24. paradigma) regulārās sieviešu dzimtes formas netiek norādītas atsevišķi, tās veido automātiski no vīriešu dzimtas vārdformām. 
+
+* Lietvārdiem un vietniekvārdiem, kā arī substantivizējušamies īpašības vārdiem un divdabjiem (30., 40., 41. paradigma) sieviešu dzimtes formas ir jānorāda kā atvasinājums vai papildus šķirkļa vārds ar savu paradigmu.
+
 
 Paradigmu un vārdšķiru piešķiršana
 ----------------------------------

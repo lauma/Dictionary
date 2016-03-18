@@ -23,20 +23,28 @@ import java.util.ArrayList;
 
 import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.StatsCollector;
+import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
 
+/**
+ * Tēzaura gramatiku analīzes rīka ieejas punkts.
+ *
+ * Parametrus, kas nav immutable, nevajag censties izpildes laikā mainīt, tas
+ * ne pie kā laba nenovedīs.
+ */
 public class DictionaryXmlToJson
 {
-	public static String[] XML_FILES = {"entries", "references"};
-	public static boolean PRINT_PRONONCATIONS = false;
-	public static boolean PRINT_FIFTH_DECL_EXC = false;
-	public static boolean PRINT_FIRST_CONJ = false;
-	public static boolean PRINT_NON_INFL = false;
-	public static boolean PRINT_WORDLISTS = false;
-	public static String PRINT_WITH_REGEXP = null;
+	public final static String[] XML_FILES = {"entries", "references"};
+	public final static boolean PRINT_XML = true;
+	public final static boolean PRINT_PRONONCATIONS = false;
+	public final static boolean PRINT_FIFTH_DECL_EXC = false;
+	public final static boolean PRINT_FIRST_CONJ = false;
+	public final static boolean PRINT_NON_INFL = false;
+	public final static boolean PRINT_WORDLISTS = false;
+	public final static String PRINT_WITH_REGEXP = null;
 	//public static String PRINT_WITH_REGEXP = ".*fe";
 
 	/*public static ArrayList<Integer> PPRINT_WITH_PARADIGM = new ArrayList<Integer>() {{
@@ -44,14 +52,14 @@ public class DictionaryXmlToJson
 		add (40);
 		add (41);
 	}};//*/
-	public static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
+	public final static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 
 	// Stindzeņu izgūšana ar plašāku aprakstu.
 	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
 		add(new Tuple<Keys, String>(Keys.CASE, null));
 		add(Features.NON_INFLECTIVE);
 	}};
-	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
 		add(new Tuple<Keys, String>(Keys.CASE, null));
 		add(new Tuple<Keys, String>(Keys.DOMAIN, null));
 	}};//*/
@@ -59,7 +67,7 @@ public class DictionaryXmlToJson
 	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.USAGE_RESTR__HISTORICAL);
 	}};
-	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.POS__FOREIGN);
 		add(Features.PLACE_NAME);
 		add(Features.PERSON_NAME);
@@ -67,22 +75,22 @@ public class DictionaryXmlToJson
 		add(Features.DOMAIN__HIST_PERSON);
 	}};//*/
 	// Dialektismu un apvidvārdu izgūšana
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
+	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.USAGE_RESTR__DIALECTICISM);
 	}};//*/
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
+	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.USAGE_RESTR__REGIONAL);
 	}};//*/
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
+	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
 		add(Features.USAGE_RESTR__REGIONAL);
 		add(new Tuple<Keys, String>(Keys.DIALECT_FEATURES, null));
 		add(new Tuple<Keys, String>(Keys.POS, null));
 	}};//*/
 	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
-	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
-	public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
-	public static boolean PRINT_PARADIGMS = true;
-	public static boolean PRINT_OTHER_LEMMAS = true;
+	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
+	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
+	public final static boolean PRINT_PARADIGMS = true;
+	public final static boolean PRINT_OTHER_LEMMAS = true;
 
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
@@ -94,6 +102,10 @@ public class DictionaryXmlToJson
 		String path = args[0];
 		if (!path.endsWith("/") && !path.endsWith("\\"))
 			path = path + "\\";
+		String completeXmlPath = path + "analyzed_tezaurs.xml";
+		StaxWriter sw = null;
+		if (PRINT_XML) sw = new StaxWriter(completeXmlPath);
+
 		for (String file : XML_FILES)
 		{
 			System.out.println("Sāk apstrādāt failu " + file + ".xml.");
@@ -139,6 +151,7 @@ public class DictionaryXmlToJson
 				TEntry entry = new TEntry(entryNode);
 				sc.countEntry(entry);
 				entry.printConsistencyReport();
+				if (PRINT_XML) sw.writeNode(entry);
 
 				// Print out all pronunciations.
 				//if (makePronunceList)
@@ -176,6 +189,7 @@ public class DictionaryXmlToJson
 			statsOut.close();
 			//if (makePronunceList) statsOut.close();
 		}
+		if (PRINT_XML) sw.finalize();
 		System.out.println("Viss pabeigts!");
 	}
 }

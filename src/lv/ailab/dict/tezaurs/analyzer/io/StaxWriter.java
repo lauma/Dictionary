@@ -21,7 +21,7 @@ import java.io.FileOutputStream;
  * atmiņā nekad nav nepieciešams turēt vairāk par vienu šķirkli, tādejādi
  * izvairoties no atmiņas piegruzīšanas ar visa Tēzaura pilno DOM koku, vai,
  * vēl ļaunāk - ar diviem pilniem DOM kokiem (pirms un pēc izmaiņām).
- * 
+ *
  * Izveidots 2016-03-18.
  *
  * @author Lauma
@@ -38,7 +38,8 @@ public class StaxWriter
 		writer = new IndentingXMLStreamWriter(
 				factory.createXMLStreamWriter(new FileOutputStream(path), "UTF8"));
 		writer.writeStartDocument();
-		writer.writeStartElement("tezaurs");
+		writer.writeStartElement("dictionary");
+		writer.writeStartElement("latvian");
 	}
 
 	public void writeNode(Entry e)

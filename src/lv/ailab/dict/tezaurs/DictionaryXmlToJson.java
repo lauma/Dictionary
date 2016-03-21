@@ -38,12 +38,14 @@ import org.w3c.dom.Node;
 public class DictionaryXmlToJson
 {
 	public final static String[] XML_FILES = {"entries", "references"};
-	public final static boolean PRINT_XML = true;
+	public final static boolean PRINT_SINGLE_XML = false;
+	public final static boolean PRINT_SINGLE_JSON = false;
+	public final static boolean PRINT_WORDLISTS = false;
+
 	public final static boolean PRINT_PRONONCATIONS = false;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;
 	public final static boolean PRINT_FIRST_CONJ = false;
 	public final static boolean PRINT_NON_INFL = false;
-	public final static boolean PRINT_WORDLISTS = false;
 	public final static String PRINT_WITH_REGEXP = null;
 	//public static String PRINT_WITH_REGEXP = ".*fe";
 
@@ -103,8 +105,13 @@ public class DictionaryXmlToJson
 		if (!path.endsWith("/") && !path.endsWith("\\"))
 			path = path + "\\";
 		String completeXmlPath = path + "analyzed_tezaurs.xml";
-		StaxWriter sw = null;
-		if (PRINT_XML) sw = new StaxWriter(completeXmlPath);
+		String completeJsonPath = path + "analyzed_tezaurs.json";
+		StaxWriter completeXmlOut = null;
+		BufferedWriter completeJsonOut = null;
+
+		if (PRINT_SINGLE_XML) completeXmlOut = new StaxWriter(completeXmlPath);
+		if (PRINT_SINGLE_JSON) completeJsonOut = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(completeJsonPath), "UTF-8"));
 
 		for (String file : XML_FILES)
 		{
@@ -142,6 +149,8 @@ public class DictionaryXmlToJson
 			BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(badOutputFile), "UTF-8"));
 			badOut.write("[\n");
+			if (PRINT_SINGLE_JSON)
+				completeJsonOut.write("[\n");
 
 			// Process each node.
 			int count = 0;
@@ -151,13 +160,14 @@ public class DictionaryXmlToJson
 				TEntry entry = new TEntry(entryNode);
 				sc.countEntry(entry);
 				entry.printConsistencyReport();
-				if (PRINT_XML) sw.writeNode(entry);
+
+				if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
+				if (PRINT_SINGLE_JSON) completeJsonOut.write(entry.toJSON() + ",\n");
 
 				// Print out all pronunciations.
 				//if (makePronunceList)
 				//	for (String p : entry.collectPronunciations())
 				//		statsOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
-
 				if (!entry
 						.inBlacklist())    // Blacklisted entries are not included in output logs.
 				{
@@ -189,7 +199,12 @@ public class DictionaryXmlToJson
 			statsOut.close();
 			//if (makePronunceList) statsOut.close();
 		}
-		if (PRINT_XML) sw.finalize();
+		if (PRINT_SINGLE_XML) completeXmlOut.finalize();
+		if (PRINT_SINGLE_JSON)
+		{
+			completeJsonOut.write("]");
+			completeJsonOut.close();
+		}
 		System.out.println("Viss pabeigts!");
 	}
 }

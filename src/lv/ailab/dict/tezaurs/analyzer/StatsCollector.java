@@ -327,6 +327,49 @@ public class StatsCollector
 				entry.head.gram.flags.testKey(Keys.LANGUAGE))
 			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.LANGUAGE)));
 		else line.append("NULL");
+		line.append("\t");
+
+		// Celmi un priedēklis
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.INFINITY_STEM))
+		{
+			line.append(Keys.INFINITY_STEM.toString());
+			line.append("=");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(Keys.INFINITY_STEM)));
+		}
+		else line.append("NULL");
+		line.append("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.PRESENT_STEM))
+		{
+			line.append(Keys.PRESENT_STEM.toString());
+			line.append("=");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(Keys.PRESENT_STEM)));
+		}
+		else line.append("NULL");
+		line.append("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.PAST_STEM))
+		{
+			line.append(Keys.PAST_STEM.toString());
+			line.append("=");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(Keys.PAST_STEM)));
+		}
+		else line.append("NULL");
+		line.append("\t");
+		if (entry.head.gram != null && entry.head.gram.flags != null &&
+				entry.head.gram.flags.testKey(Keys.VERB_PREFIX))
+		{
+			line.append(Keys.VERB_PREFIX.toString());
+			line.append("=");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(Keys.VERB_PREFIX)));
+		}
+		else line.append("NULL");
+
 		/*line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				(entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH) ||

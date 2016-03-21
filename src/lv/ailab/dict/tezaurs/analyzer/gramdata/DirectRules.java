@@ -39,7 +39,6 @@ public class DirectRules
 		BaseRule.noun("-as, dsk. ģen. -stu, s.", ".*sta", 7, null, new Tuple[]{Features.GENDER__FEM}), // pasta
 		BaseRule.noun("-as, dsk. ģen. -tu, s.", ".*ta", 7, null, new Tuple[]{Features.GENDER__FEM}), // placenta
 		BaseRule.noun("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {Features.GENDER__FEM}), // apskava
-		BaseRule.noun("-ēja, -as, s.", ".*va", 7, null, new Tuple[] {Features.GENDER__FEM}), // apskava
 
 		// 34. paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.noun(

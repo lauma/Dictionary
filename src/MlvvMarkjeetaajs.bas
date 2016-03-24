@@ -2,7 +2,7 @@ Sub Markjeetaajs()
 '
 ' Markjeetaajs Macro
 '
-'
+
     Application.ScreenUpdating = False
     
     Priekshdarbi
@@ -169,24 +169,20 @@ End Sub
 Sub DubultoTaguIeliceejs()
     Dim oRange As Range
     
-    'Set oRange = ActiveDocument.Range
-    'With oRange.Find
+	'Set oldRange = ActiveDocument.Content
+    'With oldRange.Find
     '    .text = ""
     '    .Format = True
     '    .Highlight = True
     '    Flag = .Execute
-    '    While Flag = True
-    '        .Parent.InsertBefore "<high>"
-    '        .Parent.InsertAfter "</high>"
-    '        .Font.Reset
-    '        oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-    '        With oRange.Find
-    '            .text = ""
-    '            .Format = True
-    '            .Highlight = True
-    '            Flag = .Execute
-    '        End With
-    '    Wend
+    '    With .Replacement
+    '        .ClearFormatting
+    '        .text = "<high>^&</high>"
+    '    End With
+    '    .Forward = True
+    '    .Wrap = wdFindContinue
+    '    '.MatchWildcards = True
+    '    .Execute Replace:=wdReplaceAll
     'End With
     'NovaaktFormateejumu ("<high>")
     'NovaaktFormateejumu ("</high>")
@@ -215,135 +211,111 @@ Sub DubultoTaguIeliceejs()
         oRange.Start = intPosition
     Loop
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+	Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Superscript = True
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<sup>"
-            .Parent.InsertAfter "</sup>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Superscript = True
-                Flag = .Execute
-            End With
-        Wend
+        With .Replacement
+            .ClearFormatting
+            .text = "<sup>^&</sup>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<sup>")
     NovaaktFormateejumu ("</sup>")
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+	Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Subscript = True
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<sub>"
-            .Parent.InsertAfter "</sub>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Subscript = True
-                Flag = .Execute
-            End With
-        Wend
+        With .Replacement
+            .ClearFormatting
+            .text = "<sub>^&</sub>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<sub>")
     NovaaktFormateejumu ("</sub>")
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Underline = True
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<u>"
-            .Parent.InsertAfter "</u>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Underline = True
-                Flag = .Execute
-            End With
-        Wend
+        With .Replacement
+            .ClearFormatting
+            .text = "<u>^&</u>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<u>")
     NovaaktFormateejumu ("</u>")
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Bold = True
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<b>"
-            .Parent.InsertAfter "</b>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Bold = True
-                Flag = .Execute
-            End With
-        Wend
+        With .Replacement
+            .ClearFormatting
+            .text = "<b>^&</b>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<b>")
     NovaaktFormateejumu ("</b>")
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Italic = True
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<i>"
-            .Parent.InsertAfter "</i>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Italic = True
-                Flag = .Execute
-            End With
-        Wend
+        With .Replacement
+            .ClearFormatting
+            .text = "<i>^&</i>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<i>")
     NovaaktFormateejumu ("</i>")
     
-    Set oRange = ActiveDocument.Range
-    With oRange.Find
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
         .text = ""
         .Format = True
         .Font.Spacing = 3
         Flag = .Execute
-        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
-            .Parent.InsertBefore "<extended>"
-            .Parent.InsertAfter "</extended>"
-            .Font.Reset
-            oRange.SetRange Start:=.Parent.End, End:=ActiveDocument.Range.End
-            With oRange.Find
-                .text = ""
-                .Format = True
-                .Font.Spacing = 3
-                Flag = .Execute
-            End With
-        Wend
-    End With
+        With .Replacement
+            .ClearFormatting
+            .text = "<extended>^&</extended>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
+    End With	
     NovaaktFormateejumu ("<extended>")
     NovaaktFormateejumu ("</extended>")
     

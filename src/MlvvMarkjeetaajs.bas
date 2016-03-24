@@ -8,7 +8,7 @@ Sub Markjeetaajs()
     Priekshdarbi
     VienkaarshoTaguIeliceejs
     DubultoTaguIeliceejs
-    MsgBox "Viss kârtîbâ!", 0, "Maríçtâjs"
+    MsgBox "Viss gatavs!", 0, "MLVV"
     Application.ScreenUpdating = True
 End Sub
 
@@ -123,6 +123,16 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     With oRange.Find
+        .text = ChrW(9679)
+        .Replacement.text = "<bullet/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    With oRange.Find
         .text = ChrW(-3913)
         .Replacement.text = "<bullet/>"
         .Forward = True
@@ -211,7 +221,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Superscript = True
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<sup>"
             .Parent.InsertAfter "</sup>"
             .Font.Reset
@@ -233,7 +243,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Subscript = True
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<sub>"
             .Parent.InsertAfter "</sub>"
             .Font.Reset
@@ -255,7 +265,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Underline = True
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<u>"
             .Parent.InsertAfter "</u>"
             .Font.Reset
@@ -277,7 +287,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Bold = True
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<b>"
             .Parent.InsertAfter "</b>"
             .Font.Reset
@@ -299,7 +309,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Italic = True
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<i>"
             .Parent.InsertAfter "</i>"
             .Font.Reset
@@ -321,7 +331,7 @@ Sub DubultoTaguIeliceejs()
         .Format = True
         .Font.Spacing = 3
         Flag = .Execute
-        While Flag = True
+        While Flag = True And Not .Parent.End = ActiveDocument.Range.End
             .Parent.InsertBefore "<extended>"
             .Parent.InsertAfter "</extended>"
             .Font.Reset
@@ -343,6 +353,8 @@ End Sub
 Sub Priekshdarbi()
 
     Dim oRange As Range
+    NovaaktFormateejumu (" ^p")
+    NovaaktFormateejumu ("^p")
     Set oRange = ActiveDocument.Range
     With oRange.Find
         .text = " ^p"

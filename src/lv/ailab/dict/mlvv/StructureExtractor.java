@@ -36,6 +36,8 @@ public class StructureExtractor
 	public static String inputDataPath = "./dati/mlvv/";
 	public static String outputDataPath = "./dati/mlvv/xml/";
 
+	public static boolean PRINT_MIDLLE = true;
+
 	public Dictionary dict = new Dictionary();
 
 	public static void main (String[] args)
@@ -57,7 +59,9 @@ public class StructureExtractor
 			String fileName = f.getName();
 			if (f.isDirectory() || f.getName().startsWith("~")) continue;
 			if (fileName.endsWith(".doc")) extractor.processDoc(f);
-			else extractor.processTxt(f);
+			else if (fileName.endsWith(".txt")) extractor.processTxt(f);
+			else System.out.println(
+						"Ups! Neparedzēta tipa fails \"" + fileName + "\"!");
 		}
 		extractor.printResults();
 	}
@@ -80,11 +84,21 @@ public class StructureExtractor
 		try
 		{
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inputDataPath + file.getName()), "UTF8"));
+			PrintWriter middleOut = null;
+			if (PRINT_MIDLLE) middleOut = new PrintWriter(new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(outputDataPath + file.getName() + ".txt"), "UTF8")));
 			String line = in.readLine();
 			while (line != null)
 			{
+				if (PRINT_MIDLLE)
+					middleOut.println(Normalizer.normalizeLine(line));
 				processLine(line);
 				line = in.readLine();
+			}
+			if (PRINT_MIDLLE)
+			{
+				middleOut.flush();
+				middleOut.close();
 			}
 			System.out.println(file.getName() + " [Pabeigts]");
 		} catch (Exception e)
@@ -99,15 +113,20 @@ public class StructureExtractor
 		try
 		{
 			String[] lines = DocLoader.loadDoc(file.getPath());
-			PrintWriter out = new PrintWriter(new BufferedWriter(
+			PrintWriter MiddleOut = null;
+			if (PRINT_MIDLLE) MiddleOut = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputDataPath + file.getName() + ".txt"), "UTF8")));
 			for (String line : lines)
 			{
-				out.println(line.trim());
+				if (PRINT_MIDLLE)
+					MiddleOut.println(Normalizer.normalizeLine(line));
 				processLine(line);
 			}
-			out.flush();
-			out.close();
+			if (PRINT_MIDLLE)
+			{
+				MiddleOut.flush();
+				MiddleOut.close();
+			}
 			System.out.println(file.getName() + " [Pabeigts]");
 		} catch (Exception e)
 		{

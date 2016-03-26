@@ -71,16 +71,8 @@ public class MLVVEntry extends Entry
 		// Ja rinda satur tikai burtu, neizgūst neko.
 		if (line.matches("<b>\\p{L}\\p{M}*</b>")) return null;
 
-		else return new MLVVEntry(line);
-	}
+		MLVVEntry result = new MLVVEntry();
 
-	/**
-	 * Konstruktors, kas no dotās rindas cenšas izgūt šķirkli, pieņemot, ka tas
-	 * tur noteikti ir.
-	 */
-	protected MLVVEntry(String line)
-	{
-		super();
 		// Atdala šķirkļa galvu.
 		String head, body;
 		Matcher m1 = Pattern.compile("(<b>.*?</b>.*?)(<b>1\\.</b>.*)")
@@ -109,19 +101,24 @@ public class MLVVEntry extends Entry
 			{
 				System.out
 						.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
-				throw new IllegalArgumentException("Can't match input line with regexp!");
+				return null;
+				//throw new IllegalArgumentException("Can't match input line with regexp!");
 			}
 		}
 		head = head.trim();
 		body = body.trim();
 		if (head.isEmpty())
+		{
 			System.out
 					.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
-		else extractHead(head);
+			return null;
+		}
+		else result.extractHead(head);
 		if (body.isEmpty())
 			System.out
 					.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
-		else this.extractBody(body);
+		else result.extractBody(body);
+		return result;
 	}
 
 	/**
@@ -134,7 +131,7 @@ public class MLVVEntry extends Entry
 		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			head.lemma = new Lemma(m.group(1));
+			head.lemma = new Lemma(m.group(1).trim());
 			String gram = m.group(2);
 			// Homonīma infekss, ja tāds ir.
 			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)")
@@ -145,6 +142,8 @@ public class MLVVEntry extends Entry
 						"No šķirkļavārda \"%s\" homonīma indeksu mēģina piešķiert vairākkārt: vispirms %s, tad %s!",
 						head.lemma, homId, m.group(1));
 				homId = m.group(1);
+				// Izmet ārā homonīma indeksu.
+				linePart = "<b>" + head.lemma.text + "</b> " + m.group(2);
 			}
 			head.gram = MLVVGram.extractFromString(linePart);
 		} else

@@ -263,7 +263,7 @@ public class Gram implements HasToJSON, HasToXML
 		{
 			Node altLemmasContN = doc.createElement("altLemmas");
 			for (Header al: altLemmas)
-				al.toXML(altLemmasContN);
+				if (al != null) al.toXML(altLemmasContN); // TODO MLVV kā te var nonākt null?
 			gramN.appendChild(altLemmasContN);
 		}
 

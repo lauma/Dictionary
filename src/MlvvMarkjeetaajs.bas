@@ -2,7 +2,8 @@ Sub Markjeetaajs()
 '
 ' Markjeetaajs Macro
 '
-
+' Ðobrîd ir kaut kâda apðaubâma problçma ar tabulâm - tâs ieved bezgalîgâ
+' ciklâ dubulto tagu ielicçju.
     Application.ScreenUpdating = False
     
     Priekshdarbi
@@ -142,6 +143,17 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    ' Font = Wingdings 2
+    With oRange.Find
+        .text = ChrW(-3945)
+        .Replacement.text = "<bullet/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     With oRange.Find
         .text = "•"
         .Replacement.text = "<bullet/>"
@@ -169,7 +181,7 @@ End Sub
 Sub DubultoTaguIeliceejs()
     Dim oRange As Range
     
-	'Set oldRange = ActiveDocument.Content
+    'Set oldRange = ActiveDocument.Content
     'With oldRange.Find
     '    .text = ""
     '    .Format = True
@@ -211,7 +223,7 @@ Sub DubultoTaguIeliceejs()
         oRange.Start = intPosition
     Loop
     
-	Set oldRange = ActiveDocument.Content
+    Set oldRange = ActiveDocument.Content
     With oldRange.Find
         .text = ""
         .Format = True
@@ -229,7 +241,7 @@ Sub DubultoTaguIeliceejs()
     NovaaktFormateejumu ("<sup>")
     NovaaktFormateejumu ("</sup>")
     
-	Set oldRange = ActiveDocument.Content
+    Set oldRange = ActiveDocument.Content
     With oldRange.Find
         .text = ""
         .Format = True
@@ -315,7 +327,7 @@ Sub DubultoTaguIeliceejs()
         .Wrap = wdFindContinue
         '.MatchWildcards = True
         .Execute Replace:=wdReplaceAll
-    End With	
+    End With
     NovaaktFormateejumu ("<extended>")
     NovaaktFormateejumu ("</extended>")
     
@@ -357,3 +369,4 @@ Sub NovaaktFormateejumu(text)
         .Execute Replace:=wdReplaceAll
     End With
 End Sub
+

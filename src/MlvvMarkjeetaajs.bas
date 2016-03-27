@@ -199,7 +199,7 @@ Sub DubultoTaguIeliceejs()
     'End With
     'NovaaktFormateejumu ("<high>")
     'NovaaktFormateejumu ("</high>")
-    
+        
     Set oldRange = ActiveDocument.Content
     With oldRange.Find
         .text = ""
@@ -216,8 +216,8 @@ Sub DubultoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     
-    Set oldRange = ActiveDocument.Content
-    With oldRange.Find
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
         .text = ""
         .Format = True
         .Font.Shading.BackgroundPatternColor = wdColorGray50
@@ -232,32 +232,49 @@ Sub DubultoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "^p</gray>"
+        .Replacement.text = "</gray>^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Execute Replace:=wdReplaceAll
+    End With
+
     Set oRange = ActiveDocument.Range
-    oRange.Find.Highlight = True
-    oRange.Find.Forward = True
-    Do While oRange.Find.Execute
-        If oRange.HighlightColorIndex = WdColorIndex.wdGray25 Then
-            oRange.Find.Parent.InsertBefore "<gray>"
-            oRange.Find.Parent.InsertAfter "</gray>"
-        End If
-        intPosition = oRange.End
-        oRange.Start = intPosition
-    Loop
+    With oRange
+        .Find.Highlight = True
+        .Find.Forward = True
+        Do While oRange.Find.Execute
+            If .HighlightColorIndex = WdColorIndex.wdGray25 And _
+                    Not .Font.Shading.BackgroundPatternColor = wdColorGray50 And _
+                    Not .Font.Shading.BackgroundPatternColor = wdColorGray25 Then
+                .Find.Parent.InsertBefore "<gray>"
+                .Find.Parent.InsertAfter "</gray>"
+            End If
+            intPosition = .End
+            .Start = intPosition
+        Loop
+    End With
     
     Set oRange = ActiveDocument.Range
-    oRange.Find.Highlight = True
-    oRange.Find.Forward = True
-    Do While oRange.Find.Execute
-        If oRange.HighlightColorIndex = WdColorIndex.wdGray50 Then
-            oRange.Find.Parent.InsertBefore "<gray>"
-            oRange.Find.Parent.InsertAfter "</gray>"
-        End If
-        intPosition = oRange.End
-        oRange.Start = intPosition
-    Loop
+    With oRange
+        .Find.Highlight = True
+        .Find.Forward = True
+        Do While oRange.Find.Execute
+            If .HighlightColorIndex = WdColorIndex.wdGray50 And _
+                    Not .Font.Shading.BackgroundPatternColor = wdColorGray50 And _
+                    Not .Font.Shading.BackgroundPatternColor = wdColorGray25 Then
+                .Find.Parent.InsertBefore "<gray>"
+                .Find.Parent.InsertAfter "</gray>"
+            End If
+            intPosition = .End
+            .Start = intPosition
+        Loop
+    End With
     NovaaktFormateejumu ("<gray>")
     NovaaktFormateejumu ("</gray>")
-    
+        
     Set oldRange = ActiveDocument.Content
     With oldRange.Find
         .text = ""
@@ -392,12 +409,19 @@ Sub NovaaktFormateejumu(text)
     With oRange.Find
         .text = text
         .Replacement.text = text
-        .Replacement.Font.Underline = False
-        .Replacement.Font.Bold = False
-        .Replacement.Font.Italic = False
-        .Replacement.Font.Subscript = False
-        .Replacement.Font.Superscript = False
-        .Replacement.Font.Spacing = 0
+        '.Replacement.Highlight = False
+        With .Replacement.Font
+            .Underline = False
+            .Bold = False
+            .Italic = False
+            .Subscript = False
+            .Superscript = False
+            .Spacing = 0
+            ' Nesaprotu, kâpçc nenostrâdâ, vajag aprisinâjumu.
+            '.Shading.Texture = wdTextureNone
+            '.Shading.ForegroundPatternColor = wdColorAutomatic
+            '.Shading.BackgroundPatternColor = wdColorAutomatic
+        End With
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True

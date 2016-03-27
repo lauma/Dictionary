@@ -151,6 +151,7 @@ public class Normalizer
 		// Specifiskie tagu pārrāvumi.
 		line = line.replaceAll("</i>; <i>", "; ");
 		line = line.replaceAll("</i>, <i>", ", ");
+		line = line.replaceAll("</i>\", <i>", "\", ");
 		line = line.replaceAll("</i>\" <i>", "\" ");
 		line = line.replaceAll("</i> \"<i>", "\"");
 
@@ -207,10 +208,21 @@ public class Normalizer
 		line = line.replaceAll("</i>\\s+\\(<i>", " (");
 		line = line.replaceAll("</i>\\(<i>", "(");
 
+		line = line.replaceAll("</i>\\]\\s+<i>", "] ");
+		line = line.replaceAll("</i>\\s+\\[<i>", " [");
+
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,
 		// tad kursivē arī aizverošās.
 		// NB! šis nestrādā, ja starp iekavām ir kāds vārds nekursīvā.
 		Pattern secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)\\.*)(.*)");
+		m = secondPar.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "</i>" + m.group(3);
+			m = secondPar.matcher(line);
+		}
+
+		secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\[(?:(?!</i>).)*)</i>(\\]\\.*)(.*)");
 		m = secondPar.matcher(line);
 		while (m.matches())
 		{

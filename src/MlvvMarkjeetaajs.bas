@@ -1,3 +1,4 @@
+Attribute VB_Name = "MlvvMarkjeetaajs"
 Sub Markjeetaajs()
 '
 ' Markjeetaajs Macro
@@ -199,6 +200,38 @@ Sub DubultoTaguIeliceejs()
     'NovaaktFormateejumu ("<high>")
     'NovaaktFormateejumu ("</high>")
     
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
+        .text = ""
+        .Format = True
+        .Font.Shading.BackgroundPatternColor = wdColorGray25
+        Flag = .Execute
+        With .Replacement
+            .ClearFormatting
+            .text = "<gray>^&</gray>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
+    Set oldRange = ActiveDocument.Content
+    With oldRange.Find
+        .text = ""
+        .Format = True
+        .Font.Shading.BackgroundPatternColor = wdColorGray50
+        Flag = .Execute
+        With .Replacement
+            .ClearFormatting
+            .text = "<gray>^&</gray>"
+        End With
+        .Forward = True
+        .Wrap = wdFindContinue
+        '.MatchWildcards = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
     Set oRange = ActiveDocument.Range
     oRange.Find.Highlight = True
     oRange.Find.Forward = True
@@ -222,7 +255,7 @@ Sub DubultoTaguIeliceejs()
         intPosition = oRange.End
         oRange.Start = intPosition
     Loop
-	NovaaktFormateejumu ("<gray>")
+    NovaaktFormateejumu ("<gray>")
     NovaaktFormateejumu ("</gray>")
     
     Set oldRange = ActiveDocument.Content

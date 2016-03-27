@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MlvvMarkjeetaajs.bas" afterPath="$PROJECT_DIR$/src/MlvvMarkjeetaajs.bas" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java" />
     </list>
     <ignored path="Dictionary.iws" />
@@ -69,8 +68,8 @@
       <file leaf-file-name="Normalizer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.3248298">
-              <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.78061223">
+              <caret line="224" column="83" selection-start-line="224" selection-start-column="83" selection-end-line="224" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -1134,8 +1133,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/Normalizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.3248298">
-          <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.78061223">
+          <caret line="224" column="83" selection-start-line="224" selection-start-column="83" selection-end-line="224" selection-end-column="83" />
           <folding />
         </state>
       </provider>

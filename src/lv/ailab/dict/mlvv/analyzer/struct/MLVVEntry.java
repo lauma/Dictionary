@@ -278,20 +278,6 @@ public class MLVVEntry extends Entry
 			}
 			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
 		}
-		// Taksona apstrāde
-		Phrase taxon = null;
-		if (linePart.contains("<bullet/>"))
-		{
-			taxon = extractTaxon(linePart.substring(linePart.indexOf("<bullet/>") + "<bullet/>".length()));
-			linePart = linePart.substring(0, linePart.indexOf("<bullet/>"));
-		}
-		// Citāta apstrāde
-		Phrase quote = null;
-		if (linePart.contains("<circle/>"))
-		{
-			quote = extractQuote(linePart.substring(linePart.indexOf("<circle/>") + "<circle/>".length()));
-			linePart = linePart.substring(0, linePart.indexOf("<circle/>"));
-		}
 
 		// Nocērp no sākuma saprotamo.
 		// Nozīmes gramatikas apstrāde
@@ -325,23 +311,47 @@ public class MLVVEntry extends Entry
 		}
 
 		// Piemēru analīze.
+		LinkedList<Phrase> samples = extractSamples(linePart);
+		if (samples != null && samples.size() > 0)
+			res.examples = samples;
+
+		return res;
+	}
+
+	protected LinkedList<Phrase> extractSamples(String linePart)
+	{
+		LinkedList<Phrase> res = new LinkedList<>();
+		if (linePart == null || linePart.length() < 1) return res;
+
+		int beginTaxonOrQuot = getAnyCircleIndex(linePart);
+		String lineEndPart = null;
+		if (beginTaxonOrQuot > -1)
+		{
+			lineEndPart = linePart.substring(beginTaxonOrQuot);
+			linePart = linePart.substring(0, beginTaxonOrQuot);
+		}
+
+		// Apstrādā "pamata" piemērus.
 		if (linePart.length() > 0)
 		{
 			// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
 			// atpakaļ iekšā.
 			if (linePart.endsWith("</i>."))
-				linePart = linePart.substring(0, linePart.length()-"</i>.".length())
+				linePart = linePart
+						.substring(0, linePart.length() - "</i>.".length())
 						+ ".</i>";
 			// Piemēros iekļautās atkursīvotās iekavas uzskata par parastām iekavām.
-			linePart = linePart.replace("</i> (<i>", " (");
-			linePart = linePart.replace("</i>(<i>", "(");
-			linePart = linePart.replace("</i>) <i>", ") ");
-			linePart = linePart.replace("</i>)<i>", ")");
+			// Šim vajadzētu būt izdarītam jau normalizācijas solī.
+			//linePart = linePart.replace("</i> (<i>", " (");
+			//linePart = linePart.replace("</i>(<i>", "(");
+			//linePart = linePart.replace("</i>) <i>", ") ");
+			//linePart = linePart.replace("</i>)<i>", ")");
 
-			res.examples = new LinkedList<>();
 			// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
-			if (linePart.startsWith("<i>")) linePart = linePart.substring(3).trim();
-			Pattern splitter = Pattern.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
+			if (linePart.startsWith("<i>"))
+				linePart = linePart.substring(3).trim();
+			Pattern splitter = Pattern
+					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
 			Matcher m = splitter.matcher(linePart);
 			while (m.matches())
 			{
@@ -350,15 +360,19 @@ public class MLVVEntry extends Entry
 				String text = m.group(1).trim();
 				if (text.contains(".: "))
 				{
-					sample.grammar = new MLVVGram(text.substring(0, text.indexOf(".: ") + 1));
+					sample.grammar = new MLVVGram(text
+							.substring(0, text.indexOf(".: ") + 1));
 					text = text.substring(text.indexOf(".: ") + 2).trim();
 				} else if (text.contains(".</i>: <i>"))
 				{
-					sample.grammar = new MLVVGram(text.substring(0, text.indexOf(".</i>: <i>") + 1));
-					text = text.substring(text.indexOf(".</i>: <i>") + ".</i>: <i>".length()).trim();
+					sample.grammar = new MLVVGram(text
+							.substring(0, text.indexOf(".</i>: <i>") + 1));
+					text = text
+							.substring(text.indexOf(".</i>: <i>") + ".</i>: <i>"
+									.length()).trim();
 				}
 				sample.text = text;
-				res.examples.add(sample);
+				res.add(sample);
 				linePart = m.group(2);
 				m = splitter.matcher(linePart);
 			}
@@ -368,20 +382,48 @@ public class MLVVEntry extends Entry
 				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
 				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums."
 				// un "<i>frāze</i> - <i>gramatika</i> skaidrojums." divos.
-				String[] parts = linePart.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s)(?=<i>)");//
+				String[] parts = linePart
+						.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s)(?=<i>)");//
 				for (String part : parts)
 				{
 					Phrase sample = extractSinglePhrase(part, PhraseTypes.SAMPLE);
-					if (sample != null) res.examples.add(sample);
+					if (sample != null) res.add(sample);
 				}
 			}
-
 		}
 
-		if (res.examples == null && (quote != null || taxon != null))
-			res.examples = new LinkedList<>();
-		if (quote != null) res.examples.add(quote);
-		if (taxon != null) res.examples.add(taxon);
+		// Apstrādā to, kas ir aiz tukšā vai pilnā aplīša.
+		if (lineEndPart != null && lineEndPart.startsWith("<bullet/>"))
+		{
+			Pattern taxonPat = Pattern.compile(
+					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013](?:(?!<(/?i|bullet/|circle/)>).)*|\\.)?)(.*)");
+			Matcher m = taxonPat.matcher(lineEndPart);
+			if (m.matches())
+			{
+				res.add(extractTaxon(m.group(1)));
+				res.addAll(extractSamples(m.group(2)));
+			}
+			else
+			{
+				System.out.printf("Taksons \"%s\" neatbilst atdalīšanas šablonam\n", lineEndPart);
+				res.add(extractTaxon(lineEndPart.substring("<bullet/>".length())));
+			}
+		}
+		else if (lineEndPart != null && lineEndPart.startsWith("<circle/>"))
+		{
+			Pattern quotePat = Pattern.compile("<circle/>\\s*(<i>.*?</i>[.?!]*\\s*\\(.*\\)\\.?)(.*)");
+			Matcher m = quotePat.matcher(lineEndPart);
+			if (m.matches())
+			{
+				res.add(extractQuote(m.group(1)));
+				res.addAll(extractSamples(m.group(2)));
+			}
+			else
+			{
+				System.out.printf("Citāts \"%s\" neatbilst atdalīšanas šablonam\n", lineEndPart);
+				res.add(extractQuote(lineEndPart.substring("<circle/>".length())));
+			}
+		}
 
 		return res;
 	}
@@ -400,7 +442,10 @@ public class MLVVEntry extends Entry
 		if (m.matches())
 		{
 			res.text = m.group(1).trim();
-			String gloss = m.group(2).trim() + " " + m.group(3).trim();
+			String gloss = m.group(2).trim();
+			String glossEnd = m.group(3).trim();
+			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
+			else gloss = gloss + " " + glossEnd;
 			res.subsenses = new LinkedList<>();
 			res.subsenses.add(new Sense(gloss.trim()));
 		}
@@ -409,7 +454,7 @@ public class MLVVEntry extends Entry
 			res.text = linePart.trim();
 			if (res.text.matches("<i>((?!</i>).)*</i>"))
 				res.text = res.text.substring(3, res.text.length()-4);
-			System.out.printf("Taksons \"%s\" neatbilst gaidītajam šablonam\n", res.text);
+			System.out.printf("Taksons \"%s\" neatbilst apstrādes šablonam\n", res.text);
 		}
 		return res;
 
@@ -425,11 +470,12 @@ public class MLVVEntry extends Entry
 		res.type = PhraseTypes.QUOTE;
 		// Izmest tos kursīvus, kas iezīmē papildinājumus citātā (pietiks, ka
 		// tos iezīmē kvadātiekavas).
-		linePart = linePart.replace("</i> [", " [");
-		linePart = linePart.replace("</i>[", "[");
-		linePart = linePart.replace("] <i>", "] ");
-		linePart = linePart.replace("]<i>", "]");
-		Matcher m = Pattern.compile("<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)").matcher(linePart);
+		// Šo izdara jau pie normalizācijas.
+		//linePart = linePart.replace("</i> [", " [");
+		//linePart = linePart.replace("</i>[", "[");
+		//linePart = linePart.replace("] <i>", "] ");
+		//linePart = linePart.replace("]<i>", "]");
+		Matcher m = Pattern.compile("<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)\\.?").matcher(linePart);
 		if (m.matches())
 		{
 			res.text = (m.group(1) + m.group(2)).trim();
@@ -438,7 +484,7 @@ public class MLVVEntry extends Entry
 		else
 		{
 			res.text = linePart;
-			System.out.printf("Citāts \"%s\" neatbilst gaidītajam šablonam\n", linePart);
+			System.out.printf("Citāts \"%s\" neatbilst apstrādes šablonam\n", linePart);
 		}
 		return res;
 	}
@@ -631,5 +677,19 @@ public class MLVVEntry extends Entry
 			sources.toXML(parent);
 		}
 
+	}
+
+	protected static int getAnyCircleIndex(String linePart)
+	{
+		int bulletIndex = linePart.indexOf("<bullet/>");
+		int circleIndex = linePart.indexOf("<circle/>");
+		int res = -1;
+		if (bulletIndex > -1 && circleIndex > -1)
+			res = Math.min(bulletIndex, circleIndex);
+		else if (bulletIndex > -1)
+			res = bulletIndex;
+		else if (circleIndex > -1)
+			res = circleIndex;
+		return res;
 	}
 }

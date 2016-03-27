@@ -202,6 +202,7 @@ public class Normalizer
 		line = line.replaceAll("(?<=\\p{L})</i>.: <i>", ".</i>: <i>");
 
 		// Oriģinālais avots sistemātiski neliek iekavas kursīvā.
+		//line = line.replaceAll("</i> \\(arī <i>", " \\(arī "); // Neviennozīmīgi lietots.
 		line = line.replaceAll("</i>\\)\\s+<i>", ") ");
 		line = line.replaceAll("</i>\\)+<i>", ")");
 		line = line.replaceAll("</i>\\)\\.\\s+<i>", "). ");
@@ -214,7 +215,7 @@ public class Normalizer
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,
 		// tad kursivē arī aizverošās.
 		// NB! šis nestrādā, ja starp iekavām ir kāds vārds nekursīvā.
-		Pattern secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)\\.*)(.*)");
+		Pattern secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)[.!?]*)(.*)");
 		m = secondPar.matcher(line);
 		while (m.matches())
 		{

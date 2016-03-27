@@ -126,16 +126,33 @@ public class Normalizer
 			m = p.matcher(line);
 		}
 
+		// Pēdiņām jābūt kursīvā kopā ar vārdu/frāzi.
+		line = line.replaceAll("\u201e<i>", "<i>\u201e");
+		line = line.replaceAll("\"<i>", "<i>\"");
+		line = line.replaceAll("</i>\u201d", "\u201d</i>");
+		line = line.replaceAll("</i>\"", "\"</i>");
+
 		// Parasti arī teikuma/frāzes beigu pieturzīmei jābūt kursīvā, ja
 		// pārējais teksts ir.
 		line = line.replace("</i>.", ".</i>");
+		line = line.replace("</i>.", ".</i>");
+		line = line.replace("</i>.", ".</i>");
+		line = line.replace("</i>?", "?</i>");
+		line = line.replace("</i>!", "!</i>");
 		//line = line.replace("</i>;", ";</i>");
+
 
 		// Novāc tagu pārrāvumus.
 		line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");
 		line = line.replaceAll("<((\\p{L}\\p{M}*)+)>\\s+</\\1>", " ");
 		line = line.replaceAll("</((\\p{L}\\p{M}*)+)><\\1>", "");
 		line = line.replaceAll("</((\\p{L}\\p{M}*)+)>\\s+<\\1>", " ");
+
+		// Specifiskie tagu pārrāvumi.
+		line = line.replaceAll("</i>; <i>", "; ");
+		line = line.replaceAll("</i>, <i>", ", ");
+		line = line.replaceAll("</i>\" <i>", "\" ");
+		line = line.replaceAll("</i> \"<i>", "\"");
 
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll(" \\s+", " ");
@@ -182,6 +199,28 @@ public class Normalizer
 
 		// <i>Pārn</i>.: <i>
 		line = line.replaceAll("(?<=\\p{L})</i>.: <i>", ".</i>: <i>");
+
+		// Oriģinālais avots sistemātiski neliek iekavas kursīvā.
+		line = line.replaceAll("</i>\\)\\s+<i>", ") ");
+		line = line.replaceAll("</i>\\)+<i>", ")");
+		line = line.replaceAll("</i>\\)\\.\\s+<i>", "). ");
+		line = line.replaceAll("</i>\\s+\\(<i>", " (");
+		line = line.replaceAll("</i>\\(<i>", "(");
+
+		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,
+		// tad kursivē arī aizverošās.
+		// NB! šis nestrādā, ja starp iekavām ir kāds vārds nekursīvā.
+		Pattern secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)\\.*)(.*)");
+		m = secondPar.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "</i>" + m.group(3);
+			m = secondPar.matcher(line);
+		}
+
+		// Punkti citāta sākumā
+		line = line.replaceAll("\\.\\.\\.<i>(?=\\p{L})", "<i>...");
+		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
 
 		return line;
 	}

@@ -222,6 +222,8 @@ Sub DubultoTaguIeliceejs()
         intPosition = oRange.End
         oRange.Start = intPosition
     Loop
+	NovaaktFormateejumu ("<gray>")
+    NovaaktFormateejumu ("</gray>")
     
     Set oldRange = ActiveDocument.Content
     With oldRange.Find

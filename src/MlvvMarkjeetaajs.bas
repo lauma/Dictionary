@@ -16,8 +16,8 @@ End Sub
 
 Sub VienkaarshoTaguIeliceejs()
     Dim oRange As Range
-    Set oRange = ActiveDocument.Range
     
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61614)
         .Replacement.text = "<arrow/>"
@@ -28,7 +28,9 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    
     ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "["
         .Replacement.text = "<openSquareBrack/>"
@@ -39,6 +41,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
     With oRange.Find
         .text = "]"
@@ -50,6 +53,8 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61551)
         .Replacement.text = "<square/>"
@@ -60,6 +65,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(-3928)
         .Replacement.text = "<square/>"
@@ -71,6 +77,8 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<square/>")
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(9675)
         .Replacement.text = "<circle/>"
@@ -82,6 +90,8 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<circle/>")
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(8710)
         .Replacement.text = "<triangle/>"
@@ -92,6 +102,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(916)
         .Replacement.text = "<triangle/>"
@@ -103,6 +114,8 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<triangle/>")
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61618)
         .Replacement.text = "<diamond/>"
@@ -114,6 +127,8 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<diamond/>")
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(8226)
         .Replacement.text = "<bullet/>"
@@ -124,6 +139,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(9679)
         .Replacement.text = "<bullet/>"
@@ -134,6 +150,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(-3913)
         .Replacement.text = "<bullet/>"
@@ -144,6 +161,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     ' Font = Wingdings 2
     With oRange.Find
         .text = ChrW(-3945)
@@ -155,6 +173,7 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "•"
         .Replacement.text = "<bullet/>"
@@ -166,6 +185,8 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     NovaaktFormateejumu ("<bullet/>")
+    
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "//"
         .Replacement.text = "<lines/>"
@@ -389,6 +410,18 @@ End Sub
 Sub Priekshdarbi()
 
     Dim oRange As Range
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(160)
+        .Replacement.text = " "
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
     NovaaktFormateejumu (" ^p")
     NovaaktFormateejumu ("^p")
     Set oRange = ActiveDocument.Range

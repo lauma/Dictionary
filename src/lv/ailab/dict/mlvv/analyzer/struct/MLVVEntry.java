@@ -321,6 +321,7 @@ public class MLVVEntry extends Entry
 	protected LinkedList<Phrase> extractSamples(String linePart)
 	{
 		LinkedList<Phrase> res = new LinkedList<>();
+		if (linePart != null) linePart = linePart.trim();
 		if (linePart == null || linePart.length() < 1) return res;
 
 		int beginTaxonOrQuot = getAnyCircleIndex(linePart);
@@ -497,7 +498,10 @@ public class MLVVEntry extends Entry
 		Matcher m = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
 		if (!m.matches())
 		{
-			System.out.printf("Neizdodas izanalizēt frāzi \"%s\" ar tipu \"%s\"\n", linePart, phraseType);
+			System.out.printf("Neizdodas izanalizēt frāzi \"%s\" ar tipu \"%s\"", linePart, phraseType);
+			if (head != null && head.lemma != null)
+				System.out.printf(" (lemma \"%s\")", head.lemma.text);
+			System.out.println();
 			Phrase res = new Phrase();
 			res.text = linePart;
 			return res;

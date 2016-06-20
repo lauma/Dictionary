@@ -66,30 +66,7 @@ public class Normalizer
 
 		if (line.isEmpty()) return line;
 
-		String prevLine = null;
-		do // Ārējais cikls paredzēts, lai tiktu galā ar tukšu tagu virtenēm.
-		{
-			prevLine = line;
-			for (String tag : tags)
-			{
-				// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
-				line = line.replace(" </" + tag + ">", "</" + tag + "> ");
-				line = line.replace("<" + tag + "> ", " <" + tag + ">");
-
-				// Aizvāc nevajadzīgus tagu pārrāvumus un tukšus tagus.
-				String history = line;
-				do
-				{
-					history = line;
-					line = line.replaceAll("<" + tag + "></" + tag + ">", "");
-					line = line.replaceAll("<" + tag + ">\\s+</" + tag + ">", " ");
-					line = line.replaceAll("</" + tag + "><" + tag + ">", "");
-					line = line.replaceAll("</" + tag + ">\\s+<" + tag + ">", " ");
-				} while (!history.equals(line));
-			}
-		}
-		while (!line.equals(prevLine));
-
+		line = removeUnneededTags(line);
 
 		// Iebīda pēdējo burtu iekšā <extended> tagā.
 		// Perl bija tā:
@@ -206,6 +183,8 @@ public class Normalizer
 		line = line.replaceAll("</i>\\)\\s+<i>", ") ");
 		line = line.replaceAll("</i>\\)+<i>", ")");
 		line = line.replaceAll("</i>\\)\\.\\s+<i>", "). ");
+		line = line.replaceAll("</i>\\)\\?\\s+<i>", ")? ");
+		line = line.replaceAll("</i>\\)!\\s+<i>", ")! ");
 		line = line.replaceAll("</i>\\s+\\(<i>", " (");
 		line = line.replaceAll("</i>\\(<i>", "(");
 
@@ -235,6 +214,34 @@ public class Normalizer
 		line = line.replaceAll("\\.\\.\\.<i>(?=\\p{L})", "<i>...");
 		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
 
+		return line;
+	}
+
+	public static String removeUnneededTags(String line)
+	{
+		String prevLine = null;
+		do // Ārējais cikls paredzēts, lai tiktu galā ar tukšu tagu virtenēm.
+		{
+			prevLine = line;
+			for (String tag : tags)
+			{
+				// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
+				line = line.replace(" </" + tag + ">", "</" + tag + "> ");
+				line = line.replace("<" + tag + "> ", " <" + tag + ">");
+
+				// Aizvāc nevajadzīgus tagu pārrāvumus un tukšus tagus.
+				String history = line;
+				do
+				{
+					history = line;
+					line = line.replaceAll("<" + tag + "></" + tag + ">", "");
+					line = line.replaceAll("<" + tag + ">\\s+</" + tag + ">", " ");
+					line = line.replaceAll("</" + tag + "><" + tag + ">", "");
+					line = line.replaceAll("</" + tag + ">\\s+<" + tag + ">", " ");
+				} while (!history.equals(line));
+			}
+		}
+		while (!line.equals(prevLine));
 		return line;
 	}
 }

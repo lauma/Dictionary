@@ -352,7 +352,7 @@ public class MLVVEntry extends Entry
 			if (linePart.startsWith("<i>"))
 				linePart = linePart.substring(3).trim();
 			Pattern splitter = Pattern
-					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Upper}.*|\\s*</i>)");
+					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>)");
 			Matcher m = splitter.matcher(linePart);
 			while (m.matches())
 			{

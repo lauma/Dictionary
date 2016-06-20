@@ -76,6 +76,17 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(9633)
+        .Replacement.text = "<square/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     NovaaktFormateejumu ("<square/>")
     
     Set oRange = ActiveDocument.Content

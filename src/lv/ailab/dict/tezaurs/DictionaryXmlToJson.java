@@ -40,7 +40,7 @@ public class DictionaryXmlToJson
 	public final static String[] XML_FILES = {"entries", "references"};
 	public final static boolean PRINT_SINGLE_XML = false;
 	public final static boolean PRINT_SINGLE_JSON = false;
-	public final static boolean PRINT_WORDLISTS = false;
+	public final static boolean PRINT_WORDLISTS = true;
 
 	public final static boolean PRINT_PRONONCATIONS = false;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;
@@ -162,7 +162,11 @@ public class DictionaryXmlToJson
 				entry.printConsistencyReport();
 
 				if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
-				if (PRINT_SINGLE_JSON) completeJsonOut.write(entry.toJSON() + ",\n");
+				if (PRINT_SINGLE_JSON)
+				{
+					if (count > 0) completeJsonOut.write(",\n");
+					completeJsonOut.write(entry.toJSON());
+				}
 
 				// Print out all pronunciations.
 				//if (makePronunceList)
@@ -172,11 +176,20 @@ public class DictionaryXmlToJson
 						.inBlacklist())    // Blacklisted entries are not included in output logs.
 				{
 					if (entry.hasParadigm() && !entry.hasUnparsedGram())
-						goodOut.write(entry.toJSON() + ",\n");
+					{
+						if (count > 0) goodOut.write(",\n");
+						goodOut.write(entry.toJSON());
+					}
 					else if (!entry.hasParadigm() && !entry.hasUnparsedGram())
-						noParadigmOut.write(entry.toJSON() + ",\n");
+					{
+						if (count > 0) noParadigmOut.write(",\n");
+						noParadigmOut.write(entry.toJSON());
+					}
 					else
-						badOut.write(entry.toJSON() + ",\n");
+					{
+						if (count > 0) badOut.write(",\n");
+						badOut.write(entry.toJSON());
+					}
 				}
 				entryNode = dicReader.readNexEntry();
 				count++;
@@ -184,11 +197,11 @@ public class DictionaryXmlToJson
 					System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");
 			}
 			System.out.println("Apstrādātie šķirkļi:\t" + count);
-			goodOut.write("]");
+			goodOut.write("\n]");
 			goodOut.close();
-			noParadigmOut.write("]");
+			noParadigmOut.write("\n]");
 			noParadigmOut.close();
-			badOut.write("]");
+			badOut.write("\n]");
 			badOut.close();
 			if (wordlistOut != null) wordlistOut.close();
 
@@ -202,7 +215,7 @@ public class DictionaryXmlToJson
 		if (PRINT_SINGLE_XML) completeXmlOut.finalize();
 		if (PRINT_SINGLE_JSON)
 		{
-			completeJsonOut.write("]");
+			completeJsonOut.write("\n]");
 			completeJsonOut.close();
 		}
 		System.out.println("Viss pabeigts!");

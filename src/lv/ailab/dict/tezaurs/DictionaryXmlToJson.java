@@ -127,7 +127,7 @@ public class DictionaryXmlToJson
 			BufferedWriter wordlistOut = null;
 			if (PRINT_WORDLISTS)
 			{
-				String wordlistFile = path + file + "-wordlist.txt";
+				String wordlistFile = path + file + "-feats.txt";
 				wordlistOut = new BufferedWriter(new OutputStreamWriter(
 						new FileOutputStream(wordlistFile), "UTF-8"));
 			}

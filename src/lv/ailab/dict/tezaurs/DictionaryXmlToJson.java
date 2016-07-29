@@ -154,6 +154,9 @@ public class DictionaryXmlToJson
 
 			// Process each node.
 			int count = 0;
+			int goodCount = 0;
+			int noParadigmCount = 0;
+			int badCount = 0;
 			Node entryNode = dicReader.readNexEntry();
 			while (entryNode != null)
 			{
@@ -177,18 +180,21 @@ public class DictionaryXmlToJson
 				{
 					if (entry.hasParadigm() && !entry.hasUnparsedGram())
 					{
-						if (count > 0) goodOut.write(",\n");
+						if (goodCount > 0) goodOut.write(",\n");
 						goodOut.write(entry.toJSON());
+						goodCount++;
 					}
 					else if (!entry.hasParadigm() && !entry.hasUnparsedGram())
 					{
-						if (count > 0) noParadigmOut.write(",\n");
+						if (noParadigmCount > 0) noParadigmOut.write(",\n");
 						noParadigmOut.write(entry.toJSON());
+						noParadigmCount++;
 					}
 					else
 					{
-						if (count > 0) badOut.write(",\n");
+						if (badCount > 0) badOut.write(",\n");
 						badOut.write(entry.toJSON());
+						badCount++;
 					}
 				}
 				entryNode = dicReader.readNexEntry();
@@ -197,6 +203,9 @@ public class DictionaryXmlToJson
 					System.out.print("Apstrādātie šķirkļi:\t" + count + "\r");
 			}
 			System.out.println("Apstrādātie šķirkļi:\t" + count);
+			System.out.println("\t* "+ goodCount + " pilnīgi pabeigti;");
+			System.out.println("\t* "+ noParadigmCount + " bez paradigmām;");
+			System.out.println("\t* "+ badCount + " ar neatpazītām gramatikām.");
 			goodOut.write("\n]");
 			goodOut.close();
 			noParadigmOut.write("\n]");

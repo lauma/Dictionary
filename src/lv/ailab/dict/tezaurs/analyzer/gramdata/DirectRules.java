@@ -683,7 +683,7 @@ public class DirectRules
 		// Ķ
 		FirstConjRule.refl("-ķērcos, -ķērcies,", "-ķērcas, pag. -ķērcos", "ķērkties"), //ieķērkties
 		// L
-		FirstConjRule.refl("-lokos, -locies,", "-lokās, pag. -lakos", "lakties"), //ielakties
+		FirstConjRule.refl("-lokos, -locies,", "-lokas, pag. -lakos", "lakties"), //ielakties, TODO pielakties
 		FirstConjRule.refl("-līstos, -līsties,", "-līstas, pag. -lijos", "līties"), //izlīties
 		// M
 		FirstConjRule.refl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties
@@ -697,6 +697,7 @@ public class DirectRules
 		// S
 		FirstConjRule.refl("-salstos, -salsties,", "-salstas, pag. -salos", "salties"), //izsalties
 		FirstConjRule.refl("-sēcos, -sēcies,", "-sēcas, pag. -sēcos", "sēkties"), //iesēkties
+		FirstConjRule.refl("-sliedzos, -sliedzies,", "-sliedzas, pag. -sliedzos", "sliegties"), //piesliegties
 		FirstConjRule.refl("-snaužos, -snaudies,", "-snaužas, pag. -snaudos", "snausties"), //aizsnausties
 		FirstConjRule.refl("-spiedzos, -spiedzies,", "-spiedzas, pag. -spiedzos", "spiegties"), //iespiegties
 		FirstConjRule.refl("-spļaujos, -spļaujies,", "-spļaujas, pag. -spļāvos", "spļauties"), //nospļauties
@@ -712,6 +713,7 @@ public class DirectRules
 		FirstConjRule.refl("-šņācos, -šņācies,", "-šņācas, pag. -šņācos", "šņākties"), //aizšņākties
 		// T
 		FirstConjRule.refl("-topos, -topies,", "-topas, pag. -tapos", "tapties"), //attapties
+		FirstConjRule.refl("-tempjos, -tempies,", "-tempjas, pag. -tempos", "tempties"), //pietempties
 		FirstConjRule.refl("-tvīkstos, -tvīksties,", "-tvīkstas, pag. -tvīkos", "tvīkties"), //iztvīkties
 		// U, V
 		FirstConjRule.refl("-vārgstos, -vārgsties,", "-vārgstas, pag. -vārgos", "vārgties"), //izvārgties

@@ -281,6 +281,11 @@ public class TGram extends Gram
 			if (newBegin != -1) break;
 			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
 		}
+		for (Rule s : OptHypernRules.reflSecondConjVerb)
+		{
+			if (newBegin != -1) break;
+			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
+		}
 		for (Rule s : OptHypernRules.reflThirdConjVerb)
 		{
 			if (newBegin != -1) break;

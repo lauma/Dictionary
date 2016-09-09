@@ -373,6 +373,7 @@ public class DirectRules
 		//BaseRule.fifthDeclStd("-es, dsk. ģen. -upju, s.", ".*upe"), //dzirnavupe
 
 		// Miju varianti
+		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -fu, arī -fju, s.", ".*fe"), //arheogrāfe
 		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -šu vai -tu, s.", ".*te"), //cunfte, manšete
 		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -šu, arī -tu, s.", ".*te"), //torte
 		BaseRule.fifthDeclOptChange("-es, dsk. ģen. -stu, arī -šu, s.", ".*ste"), //dzeņaukste
@@ -683,7 +684,7 @@ public class DirectRules
 		// Ķ
 		FirstConjRule.refl("-ķērcos, -ķērcies,", "-ķērcas, pag. -ķērcos", "ķērkties"), //ieķērkties
 		// L
-		FirstConjRule.refl("-lokos, -locies,", "-lokas, pag. -lakos", "lakties"), //ielakties, TODO pielakties
+		FirstConjRule.refl("-lokos, -locies,", "-lokas, pag. -lakos", "lakties"), //ielakties, pielakties
 		FirstConjRule.refl("-līstos, -līsties,", "-līstas, pag. -lijos", "līties"), //izlīties
 		// M
 		FirstConjRule.refl("-mirstos, -mirsties,", "-mirstas, pag. -mirsos", "mirsties"), //aizmirsties

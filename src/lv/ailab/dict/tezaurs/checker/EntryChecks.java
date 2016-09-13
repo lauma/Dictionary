@@ -176,8 +176,9 @@ public class EntryChecks
 				}
 				else if ((potTag.equals("in") || potTag.equals("an")))
 				{
-					if (!entry.contents.substring(0, tagsInsens.start() + 1).matches(
-							".*[\\s\\(](angļu|vācu|angl\\.|vāc\\.)\\s\"[^\"]*"))
+					String beforeThis = entry.contents.substring(0, tagsInsens.start() + 1);
+					if (!beforeThis.matches(".*[\\s\\(](angļu|vācu|angl\\.|vāc\\.)\\s\"[^\"]*") &&
+							!beforeThis.matches("([^\"]*\"[^\"]*\")*[^\"]*\"[^\"]*"))
 						dict.bad.addNewEntry(entry, "Virkne \"" + potTag + "\" izskatās pēc kļūdaina taga");
 				}
 				else if (!potTag.equals("no") && !potTag.equals("de"))

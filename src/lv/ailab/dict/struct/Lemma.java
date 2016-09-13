@@ -109,15 +109,15 @@ public class Lemma implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node lemmaN = doc.createElement("lemma");
+		Node lemmaN = doc.createElement("Lemma");
 		lemmaN.appendChild(doc.createTextNode(text));
 		parent.appendChild(lemmaN);
 		if (pronunciation != null && pronunciation.length > 0)
 		{
-			Node pronContN = doc.createElement("pronunciations");
+			Node pronContN = doc.createElement("Pronunciations");
 			for (String pron : pronunciation)
 			{
-				Node pronN = doc.createElement("pronunciation");
+				Node pronN = doc.createElement("Pronunciation");
 				pronN.appendChild(doc.createTextNode(pron));
 				pronContN.appendChild(pronN);
 			}

@@ -320,10 +320,10 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public Element toXML(Document doc)
 	{
-		Element entryN = doc.createElement("entry");
+		Element entryN = doc.createElement("Entry");
 
 		if (homId != null)
-			entryN.setAttribute("ID", homId);
+			entryN.setAttribute("HomonymNumber", homId);
 		if (head != null)
 		{
 			head.toXML(entryN);
@@ -344,31 +344,31 @@ public class Entry implements HasToJSON, HasToXML
 		Document doc = parent.getOwnerDocument();
 		if (senses != null && !senses.isEmpty())
 		{
-			Node sensesContN = doc.createElement("senses");
+			Node sensesContN = doc.createElement("Senses");
 			for (Sense s : senses) s.toXML(sensesContN);
 			parent.appendChild(sensesContN);
 		}
 		if (phrases != null && !phrases.isEmpty())
 		{
-			Node phrasesContN = doc.createElement("phrases");
+			Node phrasesContN = doc.createElement("Phrases");
 			for (Phrase p : phrases) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
 		if (derivs != null && !derivs.isEmpty())
 		{
-			Node derivContN = doc.createElement("derivatives");
+			Node derivContN = doc.createElement("Derivatives");
 			for (Header d : derivs) d.toXML(derivContN);
 			parent.appendChild(derivContN);
 		}
 		if (reference != null && reference.length() > 0)
 		{
-			Node refN = doc.createElement("reference");
+			Node refN = doc.createElement("Reference");
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);
 		}
 		if (freeText != null && freeText.length() > 0)
 		{
-			Node freeTextN = doc.createElement("freeText");
+			Node freeTextN = doc.createElement("FreeText");
 			freeTextN.appendChild(doc.createTextNode(freeText));
 			parent.appendChild(freeTextN);
 		}

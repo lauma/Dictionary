@@ -153,7 +153,7 @@ public class Header implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node headerN = doc.createElement("header");
+		Node headerN = doc.createElement("Header");
 		if (lemma != null) lemma.toXML(headerN);
 		if (gram != null) gram.toXML(headerN);
 		parent.appendChild(headerN);

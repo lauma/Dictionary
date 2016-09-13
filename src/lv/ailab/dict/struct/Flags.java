@@ -169,16 +169,16 @@ public class Flags implements HasToXML
 		Document doc = parent.getOwnerDocument();
 		if (pairings != null && !pairings.isEmpty())
 		{
-			Node flagsContN = doc.createElement("flags");
+			Node flagsContN = doc.createElement("Flags");
 			for (Keys key : pairings.keySet().stream().filter(this::testKey).sorted()
 					.collect(Collectors.toList()))
 				for (String value : getAll(key).stream().sorted().collect(Collectors.toList()))
 				{
-					Node flagN = doc.createElement("flag");
-					Node keyN = doc.createElement("key");
+					Node flagN = doc.createElement("Flag");
+					Node keyN = doc.createElement("Key");
 					keyN.appendChild(doc.createTextNode(key.toString()));
 					flagN.appendChild(keyN);
-					Node valN = doc.createElement("value");
+					Node valN = doc.createElement("Value");
 					valN.appendChild(doc.createTextNode(value));
 					flagN.appendChild(valN);
 					flagsContN.appendChild(flagN);

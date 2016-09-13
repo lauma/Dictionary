@@ -208,21 +208,21 @@ public class Sense implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Element senseN = doc.createElement("sense");
-		if (ordNumber != null) senseN.setAttribute("senseID", ordNumber);
+		Element senseN = doc.createElement("Sense");
+		if (ordNumber != null) senseN.setAttribute("SenseNumber", ordNumber);
 
 		if (grammar != null) grammar.toXML(senseN);
 		if (gloss != null) gloss.toXML(senseN);
 		if (examples != null && !examples.isEmpty())
 		{
-			Node exContN = doc.createElement("examples");
+			Node exContN = doc.createElement("Examples");
 			for (Phrase e : examples) e.toXML(exContN);
 			senseN.appendChild(exContN);
 		}
 
 		if (subsenses != null && !subsenses.isEmpty())
 		{
-			Node subsContN = doc.createElement("subsenses");
+			Node subsContN = doc.createElement("Subsenses");
 			for (Sense subs : subsenses) subs.toXML(subsContN);
 			senseN.appendChild(subsContN);
 		}

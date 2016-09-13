@@ -245,16 +245,20 @@ public class MLVVEntry extends Entry
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return;
 		String[] sensesParts = new String[]{linePart};
+		boolean numberSenses = false;
 		if (linePart.startsWith("<b>1.</b>"))
 		{
 			linePart = linePart.substring("<b>1.</b>".length());
 			sensesParts = linePart.split("<b>\\d+\\.</b>");
+			numberSenses = true;
 		}
 		senses = new LinkedList<>();
-		for (String sensePart : sensesParts)
+		for (int senseNumber = 0; senseNumber < sensesParts.length; senseNumber++)
 		{
-			Sense s = extractSingleSense(sensePart);
+			Sense s = extractSingleSense(sensesParts[senseNumber]);
 			if (s != null) senses.add(s);
+			if (numberSenses && (s.ordNumber == null || s.ordNumber.isEmpty()))
+				s.ordNumber = Integer.toString(senseNumber + 1);
 		}
 	}
 	protected Sense extractSingleSense(String linePart)
@@ -584,6 +588,17 @@ public class MLVVEntry extends Entry
 				res.subsenses.add(new Sense(g));
 			}
 		}
+		// Ja frāzei ir vairākas nozīmes, tās sanumurē.
+		if (res.subsenses != null && res.subsenses.size() > 1)
+			for (int senseNumber = 0; senseNumber < res.subsenses.size(); senseNumber++)
+		{
+			Sense sense = res.subsenses.get(senseNumber);
+			if (sense.ordNumber != null)
+				System.out.printf("Frāzē \"%s\" nozīme ar numuru \"%s\" tiek pārnumurēta par \"%s\"\n",
+						res.text, sense.ordNumber, senseNumber +1);
+			sense.ordNumber = Integer.toString(senseNumber + 1);
+		}
+
 		return res;
 	}
 
@@ -594,10 +609,10 @@ public class MLVVEntry extends Entry
 	@Override
 	public Element toXML(Document doc)
 	{
-		Element entryN = doc.createElement("entry");
+		Element entryN = doc.createElement("Entry");
 
 		if (homId != null)
-			entryN.setAttribute("ID", homId);
+			entryN.setAttribute("HomonymNumber", homId);
 		if (head != null)
 		{
 			//head.toXML(entryN);
@@ -611,7 +626,7 @@ public class MLVVEntry extends Entry
 				head.toXML(entryN);
 			} else if (head.gram != null)
 			{
-				Node headerN = doc.createElement("header");
+				Node headerN = doc.createElement("Header");
 				head.gram.toXML(headerN);
 				entryN.appendChild(headerN);
 			}
@@ -630,25 +645,25 @@ public class MLVVEntry extends Entry
 		Document doc = parent.getOwnerDocument();
 		if (senses != null && !senses.isEmpty())
 		{
-			Node sensesContN = doc.createElement("senses");
+			Node sensesContN = doc.createElement("Senses");
 			for (Sense s : senses) s.toXML(sensesContN);
 			parent.appendChild(sensesContN);
 		}
 		if (phrases != null && !phrases.isEmpty())
 		{
-			Node phrasesContN = doc.createElement("stablePhrases");
+			Node phrasesContN = doc.createElement("StablePhrases");
 			for (Phrase p : phrases) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
 		if (phraseology != null && !phraseology.isEmpty())
 		{
-			Node phrasesContN = doc.createElement("phraseology");
+			Node phrasesContN = doc.createElement("Phraseology");
 			for (Phrase p : phraseology) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
 		if (derivs != null && !derivs.isEmpty())
 		{
-			Node derivContN = doc.createElement("derivatives");
+			Node derivContN = doc.createElement("Derivatives");
 			for (Header d : derivs) d.toXML(derivContN);
 			parent.appendChild(derivContN);
 		}
@@ -657,19 +672,19 @@ public class MLVVEntry extends Entry
 			System.out
 					.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
 							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
-			Node refN = doc.createElement("reference");
+			Node refN = doc.createElement("Reference");
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);
 		}
 		if (origin != null && origin.length() > 0)
 		{
-			Node originN = doc.createElement("origin");
+			Node originN = doc.createElement("Origin");
 			originN.appendChild(doc.createTextNode(origin));
 			parent.appendChild(originN);
 		}
 		if (freeText != null && freeText.length() > 0)
 		{
-			Node freeTextN = doc.createElement("normative");
+			Node freeTextN = doc.createElement("Normative");
 			freeTextN.appendChild(doc.createTextNode(freeText));
 			parent.appendChild(freeTextN);
 		}

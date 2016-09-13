@@ -53,8 +53,8 @@ public class Dictionary
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = builder.newDocument();
 
-		Element root = doc.createElement("dictionary");
-		Element subroot = doc.createElement("latvian");
+		Element root = doc.createElement("Dictionary");
+		Element subroot = doc.createElement("Latvian");
 		root.appendChild(subroot);
 		doc.appendChild(root);
 

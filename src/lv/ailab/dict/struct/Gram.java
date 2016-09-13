@@ -245,14 +245,14 @@ public class Gram implements HasToJSON, HasToXML
 			String orig, boolean printFreeText)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node gramN = doc.createElement("gram");
+		Node gramN = doc.createElement("Gram");
 
 		if (paradigm != null && !paradigm.isEmpty())
 		{
-			Node paradigmContN = doc.createElement("paradigms");
+			Node paradigmContN = doc.createElement("Paradigms");
 			for (Integer p : paradigm.stream().sorted().collect(Collectors.toList()))
 			{
-				Node paradigmN = doc.createElement("paradigm");
+				Node paradigmN = doc.createElement("Paradigm");
 				paradigmN.appendChild(doc.createTextNode(p.toString()));
 				paradigmContN.appendChild(paradigmN);
 			}
@@ -261,7 +261,7 @@ public class Gram implements HasToJSON, HasToXML
 
 		if (altLemmas != null && !altLemmas.isEmpty())
 		{
-			Node altLemmasContN = doc.createElement("altLemmas");
+			Node altLemmasContN = doc.createElement("AltLemmas");
 			for (Header al: altLemmas)
 				if (al != null) al.toXML(altLemmasContN); // TODO MLVV kā te var nonākt null?
 			gramN.appendChild(altLemmasContN);
@@ -271,7 +271,7 @@ public class Gram implements HasToJSON, HasToXML
 
 		if (printFreeText && orig != null && !orig.isEmpty())
 		{
-			Node origN = doc.createElement("freeText");
+			Node origN = doc.createElement("FreeText");
 			origN.appendChild(doc.createTextNode(orig));
 			gramN.appendChild(origN);
 		}

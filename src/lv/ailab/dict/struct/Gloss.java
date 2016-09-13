@@ -58,7 +58,7 @@ public class Gloss implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node glossN = doc.createElement("gloss");
+		Node glossN = doc.createElement("Gloss");
 		if (text != null) glossN.appendChild(doc.createTextNode(text));
 		parent.appendChild(glossN);
 	}

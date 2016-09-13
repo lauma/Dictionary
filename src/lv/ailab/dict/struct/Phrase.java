@@ -186,24 +186,24 @@ public class Phrase implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Element phraseN = doc.createElement("phrase");
-		if (type != null) phraseN.setAttribute("type", type);
+		Element phraseN = doc.createElement("Phrase");
+		if (type != null) phraseN.setAttribute("Type", type);
 		if (text != null)
 		{
-			Node textN = doc.createElement("text");
+			Node textN = doc.createElement("Text");
 			textN.appendChild(doc.createTextNode(text));
 			phraseN.appendChild(textN);
 		}
 		if (grammar != null) grammar.toXML(phraseN);
 		if (subsenses != null)
 		{
-			Node sensesContN = doc.createElement("senses");
+			Node sensesContN = doc.createElement("Senses");
 			for (Sense s : subsenses) s.toXML(sensesContN);
 			phraseN.appendChild(sensesContN);
 		}
 		if (source != null)
 		{
-			Node sourceN = doc.createElement("source");
+			Node sourceN = doc.createElement("Source");
 			sourceN.setTextContent(source);
 			phraseN.appendChild(sourceN);
 		}

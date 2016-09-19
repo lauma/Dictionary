@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
  */
 public class Flags implements HasToXML
 {
-	public MappingSet<TKeys, String> pairings;
+	public MappingSet<String, String> pairings;
 
 	public Flags()
 	{
@@ -61,29 +61,29 @@ public class Flags implements HasToXML
 			pairings.putAll(others.pairings);
 	}
 
-	public void addAll(Map<TKeys, String> others)
+	public void addAll(Map<String, String> others)
 	{
-		if (others != null) for (TKeys k : others.keySet())
+		if (others != null) for (String k : others.keySet())
 			add(k, others.get(k));
 	}
 
-	public void addAll(Set<Tuple<TKeys, String>> others)
+	public void addAll(Set<Tuple<String, String>> others)
 	{
-		for (Tuple<TKeys, String> t : others)
+		for (Tuple<String, String> t : others)
 			add(t.first, t.second);
 	}
 
-	public void add(TKeys key, String value)
+	public void add(String key, String value)
 	{
 		if (value == null) throw new IllegalArgumentException(
 					"Flags cannot contain null as an atribute value!");
 		pairings.put(key, value);
 	}
-	public void add(Tuple<TKeys, String> feature)
+	public void add(Tuple<String, String> feature)
 	{
 		add(feature.first, feature.second);
 	}
-	public void add(TKeys key, TValues value)
+	public void add(String key, TValues value)
 	{
 		if (value == null) throw new IllegalArgumentException(
 				"Flags cannot contain null as an atribute value!");
@@ -105,7 +105,7 @@ public class Flags implements HasToXML
 		return pairings.getAll(TKeys.OTHER_FLAGS);
 	}
 
-	public HashSet<String> getAll(TKeys key)
+	public HashSet<String> getAll(String key)
 	{
 		return pairings.getAll(key);
 	}
@@ -114,7 +114,7 @@ public class Flags implements HasToXML
 	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
 	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
 	 */
-	public boolean test (TKeys key, String value)
+	public boolean test (String key, String value)
 	{
 		if (value == null) return testKey(key);
 		HashSet<String> found = pairings.getAll(key);
@@ -126,7 +126,7 @@ public class Flags implements HasToXML
 	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
 	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
 	 */
-	public boolean test (TKeys key, TValues value)
+	public boolean test (String key, TValues value)
 	{
 		if (value == null) return testKey(key);
 		return test(key, value.s);
@@ -137,12 +137,12 @@ public class Flags implements HasToXML
 	 * Ja vērtība (pāra otrais elements) ir null, pārbauda, vai satur šādu
 	 * atslēgu.
 	 */
-	public boolean test (Tuple<TKeys, String> feature)
+	public boolean test (Tuple<String, String> feature)
 	{
 		return test (feature.first, feature.second);
 	}
 
-	public boolean testKey (TKeys key)
+	public boolean testKey (String key)
 	{
 		HashSet<String> found = pairings.getAll(key);
 		return !(found == null || found.size() < 1);
@@ -154,8 +154,8 @@ public class Flags implements HasToXML
 	 * @param accumulator	karodziņu skaitīšanas objekts
 	 * @return karodziņu skaitīšanas objekts ar atjauninātu informāciju
 	 */
-	public CountingSet<Tuple<TKeys, String>> count (
-			CountingSet<Tuple<TKeys, String>> accumulator)
+	public CountingSet<Tuple<String, String>> count (
+			CountingSet<Tuple<String, String>> accumulator)
 	{
 		if( accumulator == null) accumulator = new CountingSet<>();
 
@@ -170,7 +170,7 @@ public class Flags implements HasToXML
 		if (pairings != null && !pairings.isEmpty())
 		{
 			Node flagsContN = doc.createElement("Flags");
-			for (TKeys key : pairings.keySet().stream().filter(this::testKey).sorted()
+			for (String key : pairings.keySet().stream().filter(this::testKey).sorted()
 					.collect(Collectors.toList()))
 				for (String value : getAll(key).stream().sorted().collect(Collectors.toList()))
 				{

@@ -10,4 +10,6 @@
  * Izveidots 2015-10-26.
  * @author Lauma
  */
+
+// TODO: pārskatīt, vai likumos iekšā ar karodziņu komplektiem nevajag operēt kā ar Flags nevis Set
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;

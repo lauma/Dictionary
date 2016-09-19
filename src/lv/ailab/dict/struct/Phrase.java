@@ -111,9 +111,9 @@ public class Phrase implements HasToJSON, HasToXML
 	/**
 	 * Saskaita visus karodziņus, kas lietoti šajā struktūrā.
 	 */
-	public CountingSet<Tuple<TKeys, String>> getFlagCounts()
+	public CountingSet<Tuple<String, String>> getFlagCounts()
 	{
-		CountingSet<Tuple<TKeys, String>> counts = new CountingSet<>();
+		CountingSet<Tuple<String, String>> counts = new CountingSet<>();
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);

@@ -42,13 +42,13 @@ public class RulesAsFunctions
 	 */
 	public static boolean determineParticipleType(
 			String form, Flags overallFlagCollector, Flags specificFlagCollector,
-			TKeys usedInFormFrequency)
+			String usedInFormFrequency)
 	{
-		if (usedInFormFrequency != TKeys.USUALLY_USED_IN_FORM &&
-				usedInFormFrequency != TKeys.OFTEN_USED_IN_FORM &&
-				usedInFormFrequency != TKeys.USED_ONLY_IN_FORM &&
-				usedInFormFrequency != TKeys.ALSO_USED_IN_FORM &&
-				usedInFormFrequency != TKeys.USED_IN_FORM)
+		if (!TKeys.USUALLY_USED_IN_FORM.equals(usedInFormFrequency) &&
+				!TKeys.OFTEN_USED_IN_FORM.equals(usedInFormFrequency) &&
+				!TKeys.USED_ONLY_IN_FORM.equals(usedInFormFrequency) &&
+				!TKeys.ALSO_USED_IN_FORM.equals(usedInFormFrequency) &&
+				!TKeys.USED_IN_FORM.equals(usedInFormFrequency))
 			throw new IllegalArgumentException();
 
 		TValues partType = null;
@@ -127,7 +127,7 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String indicator = m.group(2).trim();
-			TKeys usedType = TKeys.USED_IN_FORM;
+			String usedType = TKeys.USED_IN_FORM;
 			if (indicator.equals("parasti"))
 				usedType = TKeys.USUALLY_USED_IN_FORM;
 			else if (indicator.equals("bieži"))
@@ -179,7 +179,7 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String modifier = m.group(2).trim();
-			TKeys key = TKeys.USED_TOGETHER_WITH;
+			String key = TKeys.USED_TOGETHER_WITH;
 			if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
 			String phrase = m.group(3);
 			if (phrase.endsWith(" u. tml."))
@@ -219,7 +219,7 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String modifier = m.group(2).trim();
-			TKeys key = TKeys.USED_TOGETHER_WITH;
+			String key = TKeys.USED_TOGETHER_WITH;
 			if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
 			String flagValueRaw = m.group(3);
 			ArrayList<String> flagValues = new ArrayList<>();
@@ -586,7 +586,7 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String modifier = m.group(2).trim();
-			TKeys key = TKeys.USED_TOGETHER_WITH;
+			String key = TKeys.USED_TOGETHER_WITH;
 			if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
 			String flagValueRaw = m.group(3);
 			//ArrayList<String> flagValues = new ArrayList<>();
@@ -760,7 +760,7 @@ public class RulesAsFunctions
 			String[] newLemmas = m.group(3).split(", ");
 			newBegin = m.group(1).length();
 			String indicator = m.group(2).trim();
-			TKeys usedType = TKeys.USED_IN_FORM;
+			String usedType = TKeys.USED_IN_FORM;
 			if (indicator.equals("parasti"))
 				usedType = TKeys.USUALLY_USED_IN_FORM;
 			else if (indicator.equals("bieži"))

@@ -48,13 +48,13 @@ public class RegularVerbRule implements Rule
 	 */
 	public RegularVerbRule(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Set<Tuple<TKeys, String>> positiveFlags,
-			Set<Tuple<TKeys, String>> alwaysFlags)
+			Set<Tuple<String, String>> positiveFlags,
+			Set<Tuple<String, String>> alwaysFlags)
 	{
-		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(TFeatures.POS__VERB);
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		if (patternBegin != null)
@@ -100,13 +100,13 @@ public class RegularVerbRule implements Rule
 	 *                      likuma šablonam
 	 */
 	public RegularVerbRule(String patternEnd, String lemmaEnd, int paradigmId,
-			Set<Tuple<TKeys, String>> positiveFlags,
-			Set<Tuple<TKeys, String>> alwaysFlags)
+			Set<Tuple<String, String>> positiveFlags,
+			Set<Tuple<String, String>> alwaysFlags)
 	{
-		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		allPersonRule = null;
@@ -129,7 +129,7 @@ public class RegularVerbRule implements Rule
 	 */
 	public static RegularVerbRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags)
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
 		return new RegularVerbRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
@@ -150,7 +150,7 @@ public class RegularVerbRule implements Rule
 	 *                      likuma šablonam
 	 */
 	public static RegularVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
-			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags)
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
 		return new RegularVerbRule(patternEnd, lemmaEnd, paradigmId,
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
@@ -199,7 +199,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjDir3PersParallel(String patternEnd,
 			String lemmaEnd)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
@@ -221,7 +221,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<TKeys, String> soundChange = presentChange ?
+		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return  RegularVerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
 				new Tuple[]{soundChange}, null);
@@ -239,7 +239,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjDir3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<TKeys, String> soundChange = presentChange ?
+		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 17,
 				new Tuple[]{soundChange}, null);
@@ -261,7 +261,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjDir3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
@@ -315,7 +315,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<TKeys, String> soundChange = presentChange ?
+		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return  RegularVerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);
@@ -334,7 +334,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule thirdConjRefl3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
-		Tuple<TKeys, String> soundChange = presentChange ?
+		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);

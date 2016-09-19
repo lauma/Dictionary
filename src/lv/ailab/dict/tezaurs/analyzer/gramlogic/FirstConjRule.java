@@ -69,13 +69,13 @@ public class FirstConjRule implements Rule
 	 */
 	public FirstConjRule (String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Set<Tuple<TKeys,String>> positiveFlags, Set<Tuple<TKeys,String>> alwaysFlags,
+			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
-		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		this.infinityStems = Collections.unmodifiableList(infinityStems);
@@ -137,13 +137,13 @@ public class FirstConjRule implements Rule
 	 * @param pastStems		pagātnes celmi
 	 */
 	public FirstConjRule (String patternEnd, String lemmaEnd, int paradigmId,
-			Set<Tuple<TKeys,String>> positiveFlags, Set<Tuple<TKeys,String>> alwaysFlags,
+			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
-		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		this.infinityStems = Collections.unmodifiableList(infinityStems);
@@ -179,7 +179,7 @@ public class FirstConjRule implements Rule
 	 */
 	public static FirstConjRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
 			String[] infinityStems, String[] presentStems, String[] pastStems)
 	{
 		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
@@ -208,7 +208,7 @@ public class FirstConjRule implements Rule
 	 * @param pastStems		pagātnes celmi
 	 */
 	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
-			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
 			String[] infinityStems, String[] presentStems, String[] pastStems)
 	{
 		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,

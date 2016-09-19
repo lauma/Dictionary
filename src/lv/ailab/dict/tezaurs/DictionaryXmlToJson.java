@@ -89,8 +89,8 @@ public class DictionaryXmlToJson
 		add(new Tuple<TKeys, String>(TKeys.POS, null));
 	}};//*/
 	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
-	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = null;
-	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE_DESC = null;
+	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE = null;
+	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE_DESC = null;
 	public final static boolean PRINT_PARADIGMS = true;
 	public final static boolean PRINT_OTHER_LEMMAS = true;
 

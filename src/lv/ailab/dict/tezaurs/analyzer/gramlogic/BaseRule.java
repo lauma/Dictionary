@@ -1,7 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
@@ -54,7 +53,8 @@ public class BaseRule implements Rule
      * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
      * šablonam.
      */
-    protected final Set<Tuple<TKeys,String>> alwaysFlags;
+    //TODO: varbūt šeit vajag Flags objektu?
+    protected final Set<Tuple<String,String>> alwaysFlags;
 
     /**
      * Šo izdrukā, kad liekas, ka likums varētu būt nepilnīgs - gramatikas
@@ -73,7 +73,7 @@ public class BaseRule implements Rule
      *                      atbilst attiecīgajam šablonam.
      */
     public BaseRule(String pattern, List<SimpleSubRule> lemmaLogic,
-			Set<Tuple<TKeys, String>> alwaysFlags)
+			Set<Tuple<String, String>> alwaysFlags)
     {
         if (lemmaLogic == null)
             throw new IllegalArgumentException (
@@ -112,8 +112,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule simple(String patternText, String lemmaRestrictions,
-			int paradigmId,	Set<Tuple<TKeys, String>> positiveFlags,
-			Set<Tuple<TKeys, String>> alwaysFlags)
+			int paradigmId,	Set<Tuple<String, String>> positiveFlags,
+			Set<Tuple<String, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
 						add(new SimpleSubRule(lemmaRestrictions, new HashSet<Integer>(){{
@@ -137,8 +137,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule simple(String patternText, String lemmaRestrictions,
-			Set<Integer> paradigms,	Set<Tuple<TKeys, String>> positiveFlags,
-			Set<Tuple<TKeys, String>> alwaysFlags)
+			Set<Integer> paradigms,	Set<Tuple<String, String>> positiveFlags,
+			Set<Tuple<String, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
 			add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags));}},
@@ -160,7 +160,7 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule
 	 */
 	public static BaseRule of(String patternText, SimpleSubRule[] lemmaLogic,
-			Tuple<TKeys,String>[] alwaysFlags)
+			Tuple<String,String>[] alwaysFlags)
 	{
 		return new BaseRule(patternText,
 				lemmaLogic == null ? null : Arrays.asList(lemmaLogic),
@@ -186,8 +186,8 @@ public class BaseRule implements Rule
 	 */
 	public static BaseRule of(String patternText, String lemmaRestrictions,
 			int paradigmId,
-			Tuple<TKeys, String>[] positiveFlags,
-			Tuple<TKeys, String>[] alwaysFlags)
+			Tuple<String, String>[] positiveFlags,
+			Tuple<String, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, new Integer[]{paradigmId}, positiveFlags)},
@@ -210,8 +210,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule of(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<TKeys, String>[] positiveFlags,
-			Tuple<TKeys, String>[] alwaysFlags)
+			Integer[] paradigms, Tuple<String, String>[] positiveFlags,
+			Tuple<String, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, paradigms, positiveFlags)},
@@ -234,7 +234,7 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule
 	 */
 	public static BaseRule noun (String patternText, SimpleSubRule[] lemmaLogic,
-			Tuple<TKeys,String>[] alwaysFlags)
+			Tuple<String,String>[] alwaysFlags)
 	{
 		ArrayList<SimpleSubRule> tmp = new ArrayList<>();
 		for (SimpleSubRule r : lemmaLogic)
@@ -260,18 +260,16 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<TKeys,String>[] positiveFlags,
-			Tuple<TKeys,String>[] alwaysFlags)
+			Integer[] paradigms, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags)
 	{
-		HashSet<Tuple<TKeys,String>> fullPosFlags = new HashSet<>();
+		HashSet<Tuple<String,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
 		fullPosFlags.add(TFeatures.POS__NOUN);
 		return BaseRule.simple(patternText, lemmaRestrictions,
-				paradigms == null ? null : new HashSet<>(Arrays
-						.asList(paradigms)),
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				fullPosFlags,
-				alwaysFlags == null ? null : new HashSet<>(Arrays
-						.asList(alwaysFlags)));
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
 
 	/**
@@ -290,17 +288,16 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<TKeys,String>[] positiveFlags,
-			Tuple<TKeys,String>[] alwaysFlags)
+			int paradigm, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags)
 	{
-		HashSet<Tuple<TKeys,String>> fullPosFlags = new HashSet<>();
+		HashSet<Tuple<String,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
 		fullPosFlags.add(TFeatures.POS__NOUN);
 		return BaseRule.simple(patternText, lemmaRestrictions,
 				new HashSet<Integer>()
 				{{add(paradigm);}}, fullPosFlags,
-				alwaysFlags == null ? null : new HashSet<>(Arrays
-						.asList(alwaysFlags)));
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
 
 	/**
@@ -496,7 +493,7 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd, boolean presentChange)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
@@ -525,7 +522,7 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
@@ -567,7 +564,7 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjReflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
@@ -593,7 +590,7 @@ public class BaseRule implements Rule
 	public static BaseRule secondThirdConjDirectAllPersParallel(
 			String patternText, String lemmaRestrictions, boolean presentChange)
 	{
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
@@ -624,7 +621,7 @@ public class BaseRule implements Rule
     public static BaseRule secondThirdConjReflAllPersParallel(
             String patternText, String lemmaRestrictions, boolean presentChange)
     {
-		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
@@ -721,7 +718,7 @@ public class BaseRule implements Rule
 				}
 
 				if (alwaysFlags != null)
-					for (Tuple<TKeys, String> t : alwaysFlags)
+					for (Tuple<String, String> t : alwaysFlags)
 						flagCollector.add(t.first, t.second);
 			}
 			return newBegin;

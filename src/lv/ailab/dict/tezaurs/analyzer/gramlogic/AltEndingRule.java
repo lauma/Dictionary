@@ -2,7 +2,6 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
@@ -73,9 +72,9 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu.
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			Set<Integer> paradigms, Set<Tuple<TKeys, String>> positiveFlags,
+			Set<Integer> paradigms, Set<Tuple<String, String>> positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			Set<Integer> altLemmaParadigms, Set<Tuple<TKeys, String>> altLemmaFlags)
+			Set<Integer> altLemmaParadigms, Set<Tuple<String, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
@@ -89,9 +88,9 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu ar vienu paradigmu un jaunajai lemmai ari ir viena paradigma
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			int paradigm, Set<Tuple<TKeys, String>> positiveFlags,
+			int paradigm, Set<Tuple<String, String>> positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			int altLemmaParadigm, Set<Tuple<TKeys, String>> altLemmaFlags)
+			int altLemmaParadigm, Set<Tuple<String, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
@@ -109,9 +108,9 @@ public class AltEndingRule implements AltLemmaRule
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<TKeys, String>[] positiveFlags,
+			Integer[] paradigms, Tuple<String, String>[] positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			Integer[] altLemmaParadigms, Tuple<TKeys, String>[] altLemmaFlags)
+			Integer[] altLemmaParadigms, Tuple<String, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions,
 				paradigms == null ? null : new HashSet<>(Arrays
@@ -126,9 +125,9 @@ public class AltEndingRule implements AltLemmaRule
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<TKeys, String>[] positiveFlags,
+			int paradigm, Tuple<String, String>[] positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
-			int altLemmaParadigm, Tuple<TKeys, String>[] altLemmaFlags)
+			int altLemmaParadigm, Tuple<String, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions, paradigm,
 				positiveFlags == null ? null : new HashSet<>(Arrays

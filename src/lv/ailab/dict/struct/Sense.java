@@ -17,7 +17,6 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
@@ -140,9 +139,9 @@ public class Sense implements HasToJSON, HasToXML
 	/**
 	 * Saskaita visus karodziņus, kas kaut kur šajā struktūrā parādās.
 	 */
-	public CountingSet<Tuple<TKeys, String>> getFlagCounts()
+	public CountingSet<Tuple<String, String>> getFlagCounts()
 	{
-		CountingSet<Tuple<TKeys, String>> counts = new CountingSet<>();
+		CountingSet<Tuple<String, String>> counts = new CountingSet<>();
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);

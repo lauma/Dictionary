@@ -17,7 +17,6 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.*;
 
 import org.json.simple.JSONObject;
@@ -163,9 +162,9 @@ public class Entry implements HasToJSON, HasToXML
 	/**
 	 * Count all flags used in this structure.
 	 */
-	public CountingSet<Tuple<TKeys, String>> getFlagCounts()
+	public CountingSet<Tuple<String, String>> getFlagCounts()
 	{
-		CountingSet<Tuple<TKeys, String>> counts = new CountingSet<>();
+		CountingSet<Tuple<String, String>> counts = new CountingSet<>();
 		if (head != null && head.gram != null && head.gram.flags != null)
 			head.gram.flags.count(counts);
 

@@ -55,13 +55,13 @@ public class StatsCollector
 	 * saista ar loģisko UN.(Ja te ir null, tad kalpo kā norāde, ka nevajag šādi
 	 * atlasīt).
 	 */
-	public final ArrayList<Tuple<TKeys, String>> collectWithFeatures;
+	public final ArrayList<Tuple<String, String>> collectWithFeatures;
 	/**
 	 * Ar kādiem atslēgu/vērtību pārīšiem aprakstīt patvaļīgi atlasītos
 	 * rezultātus. Ja vērtība ir null, tad tiek drukātas visas vērtības ar tādu
 	 * atslēgu.
 	 */
-	public final ArrayList<Tuple<TKeys, String>> describeWithFeatures;
+	public final ArrayList<Tuple<String, String>> describeWithFeatures;
 	/**
 	 * Vai rezultātā izdrukāt pieminētās paradigmas.
 	 */
@@ -78,7 +78,7 @@ public class StatsCollector
 
     public TreeSet<String> binaryFlags = new TreeSet<>();
     public TreeSet<String> pairingKeys = new TreeSet<>();
-	public CountingSet<Tuple<TKeys,String>> flagCounts = new CountingSet<>();
+	public CountingSet<Tuple<String,String>> flagCounts = new CountingSet<>();
     // Counting entries with various properties:
     public int overallCount = 0;
     public int hasParadigm = 0;
@@ -114,8 +114,8 @@ public class StatsCollector
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, String collectWithRegexp,
 			ArrayList<Integer> collectWithParadigms,
-			ArrayList<Tuple<TKeys, String>> collectFeature,
-			ArrayList<Tuple<TKeys, String>> descriptionFeatures,
+			ArrayList<Tuple<String, String>> collectFeature,
+			ArrayList<Tuple<String, String>> descriptionFeatures,
 			boolean describeWithParadigms, boolean describeWithOtherLemmas,
 			Writer wordlistOutput)
 	{
@@ -158,7 +158,7 @@ public class StatsCollector
 				entryFlags.getAll(TKeys.INFLECT_AS).size() > 0)
             hasLociitKaaFlag++;
         if (entryFlags.pairings != null)
-			for (Tuple<TKeys, String> f : entryFlags.pairings.asList())
+			for (Tuple<String, String> f : entryFlags.pairings.asList())
 				if (!f.first.equals(TKeys.OTHER_FLAGS))
 					pairingKeys.add(f.first + ": " + f.second);
 
@@ -191,8 +191,8 @@ public class StatsCollector
 					ArrayList<String> flags = new ArrayList<>();
 					flags.add("Vārds = " + h.lemma.text);
 					if (entryFlags.getAll(TKeys.POS) == null)
-						flags.add(TKeys.POS.s + " = NULL");
-					else flags.add(TKeys.POS.s + " = " +
+						flags.add(TKeys.POS + " = NULL");
+					else flags.add(TKeys.POS + " = " +
 							entryFlags.getAll(TKeys.POS).stream()
 									.reduce((s1, s2) -> s1 + " + " + s2).orElse("NULL"));
 					entriesWithSelectedFeature.add(Trio.of(
@@ -243,17 +243,17 @@ public class StatsCollector
 		ArrayList<String> flags = new ArrayList<>();
 		Flags entryFlags = entry.getUsedFlags();
 		if (describeWithFeatures != null)
-			for (Tuple<TKeys, String> feature : describeWithFeatures)
+			for (Tuple<String, String> feature : describeWithFeatures)
 			{
 				if (feature.second == null && entryFlags.getAll(feature.first) == null)
-					flags.add(feature.first.s + " = NULL");
+					flags.add(feature.first + " = NULL");
 				else if (feature.second == null)
-					flags.add(feature.first.s + " = " +
+					flags.add(feature.first + " = " +
 							entryFlags.getAll(feature.first).stream()
 									.reduce((s1, s2) -> s1+" + "+s2).orElse("NULL"));
 				else if (entryFlags.test(feature))
-					flags.add(feature.first.s + " = " + feature.second);
-				else flags.add(feature.first.s + " != " + feature.second);
+					flags.add(feature.first + " = " + feature.second);
+				else flags.add(feature.first + " != " + feature.second);
 			}
 		return flags;
 	}
@@ -441,13 +441,13 @@ public class StatsCollector
 		out.write("\n]");*/
 
 		out.write(",\n\"Karodziņi\":[");
-		HashMap<Tuple<TKeys, String>, Integer> counts = flagCounts.getCounts();
-		for (Tuple<TKeys, String> feature : counts.keySet().stream().sorted(
+		HashMap<Tuple<String, String>, Integer> counts = flagCounts.getCounts();
+		for (Tuple<String, String> feature : counts.keySet().stream().sorted(
 				(t1, t2) -> (t1.first != null && t1.first.equals(t2.first)) ?
 						t1.second.compareTo(t2.second) : t1.first.compareTo(t2.first)).toArray(i -> new Tuple[i]))
 		{
 			out.write("\n\t[\"");
-			out.write(JSONObject.escape(feature.first.s));
+			out.write(JSONObject.escape(feature.first));
 			out.write("\", \"");
 			out.write(JSONObject.escape(feature.second));
 			out.write("\", \"");
@@ -507,7 +507,7 @@ public class StatsCollector
 			String title = "";
 			if (collectWithFeatures != null)
 				title = collectWithFeatures.stream()
-						.map(f -> f.first.s + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
+						.map(f -> f.first + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
 						.reduce((a, b) -> a + ", " + b).orElse("");
 			if (collectWithRegexp != null)
 			{

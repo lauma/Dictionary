@@ -22,7 +22,7 @@ import java.util.HashSet;
 public class AbbrMap {
 	protected static AbbrMap singleton;
 	protected MappingSet<String, String> binaryFlags;
-	protected MappingSet<String, Tuple<TKeys, String>> pairingFlags;
+	protected MappingSet<String, Tuple<String, String>> pairingFlags;
 
 	public static AbbrMap getAbbrMap()
 	{
@@ -44,7 +44,7 @@ public class AbbrMap {
 			collector.pairings.putAll(TKeys.OTHER_FLAGS, binaryFlags
 					.getAll(gramSegment));
 		if (pairingFlags.containsKey(gramSegment))
-			for (Tuple<TKeys, String> t : pairingFlags.getAll(gramSegment))
+			for (Tuple<String, String> t : pairingFlags.getAll(gramSegment))
 			collector.pairings.put(t.first, t.second);
 		return (binaryFlags.containsKey(gramSegment) ||
 				pairingFlags.containsKey(gramSegment));
@@ -59,10 +59,10 @@ public class AbbrMap {
 	 */
 	public HashSet<String> translatePos(String gramSegment)
 	{
-		HashSet<Tuple<TKeys, String>> found = pairingFlags.getAll(gramSegment);
+		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
 		if (found == null) return null;
 		HashSet<String> result = new HashSet<>();
-		for (Tuple<TKeys, String> feature : found)
+		for (Tuple<String, String> feature : found)
 			if (feature.first.equals(TKeys.POS))
 				result.add(feature.second);
 		if (result.size() < 1) return null;
@@ -78,9 +78,9 @@ public class AbbrMap {
 	 */
 	public String translateCase(String gramSegment)
 	{
-		HashSet<Tuple<TKeys, String>> found = pairingFlags.getAll(gramSegment);
+		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
 		if (found == null || found.size() != 1) return null;
-		Tuple<TKeys, String> feature = found.iterator().next();
+		Tuple<String, String> feature = found.iterator().next();
 		if (!feature.first.equals(TKeys.CASE)) return null;
 		return feature.second;
 	}

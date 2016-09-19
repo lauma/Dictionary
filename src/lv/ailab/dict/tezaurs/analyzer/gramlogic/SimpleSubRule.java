@@ -1,6 +1,5 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
@@ -35,10 +34,10 @@ public class SimpleSubRule
 	 * Šos karodziņus uzstāda, ja gan gramatikas teksts, gan lemma atbilst
 	 * attiecīgajiem šabloniem.
 	 */
-	public final Set<Tuple<TKeys,String>> positiveFlags;
+	public final Set<Tuple<String,String>> positiveFlags;
 
 	public SimpleSubRule(String lemmaRestrict, Set<Integer> paradigms,
-			Set<Tuple<TKeys, String>> positiveFlags)
+			Set<Tuple<String, String>> positiveFlags)
 	{
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		//this.paradigms = paradigms;
@@ -50,7 +49,7 @@ public class SimpleSubRule
 	}
 
 	public SimpleSubRule(Pattern lemmaRestrict, Set<Integer> paradigms,
-			Set<Tuple<TKeys, String>> positiveFlags)
+			Set<Tuple<String, String>> positiveFlags)
 	{
 		this.lemmaRestrict = lemmaRestrict;
 		//this.paradigms = paradigms;
@@ -61,14 +60,14 @@ public class SimpleSubRule
 				Collections.unmodifiableSet(positiveFlags);
 	}
 
-	public static SimpleSubRule of(String lemmaRestrict, Integer[] paradigms, Tuple<TKeys,String>[] positiveFlags)
+	public static SimpleSubRule of(String lemmaRestrict, Integer[] paradigms, Tuple<String,String>[] positiveFlags)
 	{
 		return new SimpleSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
 	}
 
-	public static SimpleSubRule of(String lemmaRestrict, Integer paradigm, Tuple<TKeys,String>[] positiveFlags)
+	public static SimpleSubRule of(String lemmaRestrict, Integer paradigm, Tuple<String,String>[] positiveFlags)
 	{
 		return new SimpleSubRule(lemmaRestrict,
 				new HashSet<Integer>(){{add(paradigm);}},
@@ -78,9 +77,9 @@ public class SimpleSubRule
 	/**
 	 * Uztaisa šīs objekta kopiju un pievieno tam vēl arī doto karodziņu.
 	 */
-	public SimpleSubRule cloneWithFeature(Tuple<TKeys, String> feature)
+	public SimpleSubRule cloneWithFeature(Tuple<String, String> feature)
 	{
-		Set <Tuple<TKeys, String>> pFlags = new HashSet<>();
+		Set <Tuple<String, String>> pFlags = new HashSet<>();
 		if (positiveFlags != null) pFlags.addAll(positiveFlags);
 		pFlags.add(feature);
 		return new SimpleSubRule(this.lemmaRestrict, this.paradigms, pFlags);

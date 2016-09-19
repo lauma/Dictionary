@@ -2,7 +2,6 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.struct.Flags;
@@ -49,8 +48,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 	public AltFullLemmaRule(
 			String patternBegin, String patternEnding, String lemmaRestrict,
 			String altLemmaEnding, int lemmaEndingCutLength, int paradigm,
-			int altLemmaParadigm, Set<Tuple<TKeys, String>> positiveFlags,
-			Set<Tuple<TKeys, String>> altLemmaFlags)
+			int altLemmaParadigm, Set<Tuple<String, String>> positiveFlags,
+			Set<Tuple<String, String>> altLemmaFlags)
 	{
 		this.patternTextBegin = patternBegin;
 		this.patternTextEnding = patternEnding;
@@ -63,8 +62,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,
 			String altLemmaEnding, int lemmaEndingCutLength, int paradigmId,
-			int altParadigmId, Tuple<TKeys,String>[] positiveFlags,
-			Tuple<TKeys,String>[] altLemmaFlags)
+			int altParadigmId, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] altLemmaFlags)
 	{
 		return new AltFullLemmaRule(patternBegin, patternEnding, lemmaEnding,
 				altLemmaEnding, lemmaEndingCutLength, paradigmId, altParadigmId,
@@ -132,12 +131,12 @@ public class AltFullLemmaRule implements AltLemmaRule
 			Lemma altLemma = new TLemma(lemmaStub + lemmaLogic.altLemmaEnding);
 			Flags altParams = new Flags();
 			if (lemmaLogic.altLemmaFlags != null)
-				for (Tuple<TKeys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
+				for (Tuple<String, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
 			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigms, altParams));
 
 			paradigmCollector.addAll(lemmaLogic.paradigms);
 			if (lemmaLogic.positiveFlags != null)
-				for (Tuple<TKeys, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
+				for (Tuple<String, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
 			return newBegin;
 		}
 		else return -1;

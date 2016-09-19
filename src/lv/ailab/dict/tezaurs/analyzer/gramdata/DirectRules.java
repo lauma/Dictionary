@@ -561,7 +561,9 @@ public class DirectRules
 	public static final Rule[] directFirstConjVerb = {
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
+		FirstConjRule.direct("-dulbstu, -dulbsti,", "-dulbst, pag. -dulbu", "dulbt"), //sadulbt
 		FirstConjRule.direct("-dullstu, -dullsti,", "-dullst, pag. -dullu", "dullt"), //apdullt
+		FirstConjRule.direct("-drūmstu, -drūmsti,", "-drūmst, pag. -drūmu", "drūmt"), //sadrūmt
 		FirstConjRule.direct("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
 		FirstConjRule.direct("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
 		FirstConjRule.direct("-saustu, -sausti,", "-saust, pag. -sausu", "saust"), //apsaust
@@ -773,6 +775,8 @@ public class DirectRules
 	public static final Rule[] reflThirdConjVerb = {
 		// Galotņu šabloni.
 		RegularVerbRule.thirdConjRefl(
+				"-os, -ies,", "-as, pag. -ājos", "āties", false), //sadziedāties
+		RegularVerbRule.thirdConjRefl(
 				"-os, -ies,", "-as, pag. -ējos", "ēties", false), //apkaunēties, aizņaudēties
 		RegularVerbRule.thirdConjRefl(
 				"-inos, -inies,", "-inās, pag. -inājos", "ināties", false), //apklaušināties
@@ -802,6 +806,8 @@ public class DirectRules
 				"-činkstos, -činksties,", "-činkstas, pag. -činkstējos", "činkstēties", false), //iečinkstēties
 		RegularVerbRule.thirdConjRefl(
 				"-čīkstos, -čīksties,", "-čīkstas, pag. -čīkstējos", "čīkstēties", false), //iečīkstēties
+		RegularVerbRule.thirdConjRefl(
+				"-čurnos, -čurnies,", "-čurnas, pag. -čurnējos", "čurnēties", false), // sačurnēties
 		// D
 		RegularVerbRule.thirdConjRefl(
 				"-dienos, -dienies,", "-dienas, pag. -dienējos", "dienēties", false), //izdienēties

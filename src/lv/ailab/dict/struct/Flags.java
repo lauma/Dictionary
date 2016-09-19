@@ -17,8 +17,8 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.MappingSet;
@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
  */
 public class Flags implements HasToXML
 {
-	public MappingSet<Keys, String> pairings;
+	public MappingSet<TKeys, String> pairings;
 
 	public Flags()
 	{
@@ -61,29 +61,29 @@ public class Flags implements HasToXML
 			pairings.putAll(others.pairings);
 	}
 
-	public void addAll(Map<Keys, String> others)
+	public void addAll(Map<TKeys, String> others)
 	{
-		if (others != null) for (Keys k : others.keySet())
+		if (others != null) for (TKeys k : others.keySet())
 			add(k, others.get(k));
 	}
 
-	public void addAll(Set<Tuple<Keys, String>> others)
+	public void addAll(Set<Tuple<TKeys, String>> others)
 	{
-		for (Tuple<Keys, String> t : others)
+		for (Tuple<TKeys, String> t : others)
 			add(t.first, t.second);
 	}
 
-	public void add(Keys key, String value)
+	public void add(TKeys key, String value)
 	{
 		if (value == null) throw new IllegalArgumentException(
 					"Flags cannot contain null as an atribute value!");
 		pairings.put(key, value);
 	}
-	public void add(Tuple<Keys, String> feature)
+	public void add(Tuple<TKeys, String> feature)
 	{
 		add(feature.first, feature.second);
 	}
-	public void add(Keys key, Values value)
+	public void add(TKeys key, TValues value)
 	{
 		if (value == null) throw new IllegalArgumentException(
 				"Flags cannot contain null as an atribute value!");
@@ -91,21 +91,21 @@ public class Flags implements HasToXML
 	}
 	public void add(String value)
 	{
-		add(Keys.OTHER_FLAGS, value);
+		add(TKeys.OTHER_FLAGS, value);
 	}
-	public void add(Values value)
+	public void add(TValues value)
 	{
 		if (value == null) throw new IllegalArgumentException(
 				"Flags cannot contain null as an atribute value!");
-		add(Keys.OTHER_FLAGS, value.s);
+		add(TKeys.OTHER_FLAGS, value.s);
 	}
 
 	public HashSet<String> binaryFlags()
 	{
-		return pairings.getAll(Keys.OTHER_FLAGS);
+		return pairings.getAll(TKeys.OTHER_FLAGS);
 	}
 
-	public HashSet<String> getAll(Keys key)
+	public HashSet<String> getAll(TKeys key)
 	{
 		return pairings.getAll(key);
 	}
@@ -114,7 +114,7 @@ public class Flags implements HasToXML
 	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
 	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
 	 */
-	public boolean test (Keys key, String value)
+	public boolean test (TKeys key, String value)
 	{
 		if (value == null) return testKey(key);
 		HashSet<String> found = pairings.getAll(key);
@@ -126,7 +126,7 @@ public class Flags implements HasToXML
 	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
 	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
 	 */
-	public boolean test (Keys key, Values value)
+	public boolean test (TKeys key, TValues value)
 	{
 		if (value == null) return testKey(key);
 		return test(key, value.s);
@@ -137,12 +137,12 @@ public class Flags implements HasToXML
 	 * Ja vērtība (pāra otrais elements) ir null, pārbauda, vai satur šādu
 	 * atslēgu.
 	 */
-	public boolean test (Tuple<Keys, String> feature)
+	public boolean test (Tuple<TKeys, String> feature)
 	{
 		return test (feature.first, feature.second);
 	}
 
-	public boolean testKey (Keys key)
+	public boolean testKey (TKeys key)
 	{
 		HashSet<String> found = pairings.getAll(key);
 		return !(found == null || found.size() < 1);
@@ -154,8 +154,8 @@ public class Flags implements HasToXML
 	 * @param accumulator	karodziņu skaitīšanas objekts
 	 * @return karodziņu skaitīšanas objekts ar atjauninātu informāciju
 	 */
-	public CountingSet<Tuple<Keys, String>> count (
-			CountingSet<Tuple<Keys, String>> accumulator)
+	public CountingSet<Tuple<TKeys, String>> count (
+			CountingSet<Tuple<TKeys, String>> accumulator)
 	{
 		if( accumulator == null) accumulator = new CountingSet<>();
 
@@ -170,7 +170,7 @@ public class Flags implements HasToXML
 		if (pairings != null && !pairings.isEmpty())
 		{
 			Node flagsContN = doc.createElement("Flags");
-			for (Keys key : pairings.keySet().stream().filter(this::testKey).sorted()
+			for (TKeys key : pairings.keySet().stream().filter(this::testKey).sorted()
 					.collect(Collectors.toList()))
 				for (String value : getAll(key).stream().sorted().collect(Collectors.toList()))
 				{

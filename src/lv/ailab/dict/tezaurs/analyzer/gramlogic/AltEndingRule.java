@@ -1,12 +1,11 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
-import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -20,7 +19,7 @@ import java.util.regex.Pattern;
  * paradigma.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * Izveidots 2015-10-26.
  * @author Lauma
@@ -74,9 +73,9 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu.
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			Set<Integer> paradigms, Set<Tuple<Keys, String>> positiveFlags,
+			Set<Integer> paradigms, Set<Tuple<TKeys, String>> positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			Set<Integer> altLemmaParadigms, Set<Tuple<Keys, String>> altLemmaFlags)
+			Set<Integer> altLemmaParadigms, Set<Tuple<TKeys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
@@ -90,9 +89,9 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu ar vienu paradigmu un jaunajai lemmai ari ir viena paradigma
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			int paradigm, Set<Tuple<Keys, String>> positiveFlags,
+			int paradigm, Set<Tuple<TKeys, String>> positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			int altLemmaParadigm, Set<Tuple<Keys, String>> altLemmaFlags)
+			int altLemmaParadigm, Set<Tuple<TKeys, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<AltLemmaSubRule>(){{
@@ -110,9 +109,9 @@ public class AltEndingRule implements AltLemmaRule
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
+			Integer[] paradigms, Tuple<TKeys, String>[] positiveFlags,
 			int lemmaEndCutLength, String altLemmaEnd,
-			Integer[] altLemmaParadigms, Tuple<Keys, String>[] altLemmaFlags)
+			Integer[] altLemmaParadigms, Tuple<TKeys, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions,
 				paradigms == null ? null : new HashSet<>(Arrays
@@ -127,9 +126,9 @@ public class AltEndingRule implements AltLemmaRule
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<Keys, String>[] positiveFlags,
+			int paradigm, Tuple<TKeys, String>[] positiveFlags,
 			int lemmaEndingCutLength, String altLemmaEnding,
-			int altLemmaParadigm, Tuple<Keys, String>[] altLemmaFlags)
+			int altLemmaParadigm, Tuple<TKeys, String>[] altLemmaFlags)
 	{
 		return simple(patternText, lemmaRestrictions, paradigm,
 				positiveFlags == null ? null : new HashSet<>(Arrays
@@ -159,9 +158,9 @@ public class AltEndingRule implements AltLemmaRule
 				"Neizdodas pēc galotnes \"%s\" noteikt paradigmu likumam \"%s\"\n",
 				lemmaEnd, patternText);
 		return AltEndingRule.of(patternText, ".*" + lemmaEnd, paradigm,
-				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
 				lemmaEnd.length(), altLemmaEnd, 9,
-				new Tuple[]{Features.ENTRYWORD__FEM, Features.CHANGED_PARADIGM});
+				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
 	}
 
 	/**
@@ -175,9 +174,9 @@ public class AltEndingRule implements AltLemmaRule
 			String patternText, String lemmaEnd, String altLemmaEnd)
 	{
 		return AltEndingRule.of(patternText, ".*" + lemmaEnd, 3,
-				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
 				lemmaEnd.length(), altLemmaEnd, 9,
-				new Tuple[]{Features.ENTRYWORD__FEM, Features.CHANGED_PARADIGM});
+				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
 	}
 
 	/*
@@ -189,9 +188,9 @@ public class AltEndingRule implements AltLemmaRule
 			int lemmaEndingCutLength)
 	{
 		return AltEndingRule.of(patternText, lemmaRestrict, 0,
-				new Tuple[]{Features.POS__PARTICIPLE, Features.POS__PARTICIPLE_IS, Features.GENDER__MASC},
+				new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_IS, TFeatures.GENDER__MASC},
 				lemmaEndingCutLength, altLemmaEnding, 0,
-				new Tuple[]{Features.ENTRYWORD__FEM});
+				new Tuple[]{TFeatures.ENTRYWORD__FEM});
 	}*
 
 	/*

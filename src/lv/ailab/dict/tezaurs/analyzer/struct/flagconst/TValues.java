@@ -1,16 +1,16 @@
-package lv.ailab.dict.tezaurs.analyzer.flagconst;
+package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
 
 /**
  * Populārākās karodziņu vērtības - iznestas šeit, lai mazinātu pārakstīšanās
  * risku.
  *
  * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un AbbrMap
- * klasē - citās klasēs jālieto atsauces uz Values klasē definētajām, lai kaut
+ * klasē - citās klasēs jālieto atsauces uz TValues klasē definētajām, lai kaut
  * ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
  *
  * @author Lauma
  */
-public enum Values
+public enum TValues
 {
 	NOUN("Lietvārds"),
 	REFLEXIVE_NOUN("Atgriezeniskais lietvārds"),
@@ -165,7 +165,7 @@ public enum Values
 
 	public String s;
 
-	Values(String name)
+	TValues(String name)
 	{
 		this.s = name;
 	}

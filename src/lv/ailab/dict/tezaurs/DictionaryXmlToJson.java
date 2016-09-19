@@ -21,7 +21,7 @@ package lv.ailab.dict.tezaurs;
 import java.io.*;
 import java.util.ArrayList;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.StatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
@@ -57,40 +57,40 @@ public class DictionaryXmlToJson
 	public final static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 
 	// Stindzeņu izgūšana ar plašāku aprakstu.
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
-		add(new Tuple<Keys, String>(Keys.CASE, null));
-		add(Features.NON_INFLECTIVE);
+	/*public static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<TKeys, String>>(){{
+		add(new Tuple<TKeys, String>(TKeys.CASE, null));
+		add(TFeatures.NON_INFLECTIVE);
 	}};
-	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
-		add(new Tuple<Keys, String>(Keys.CASE, null));
-		add(new Tuple<Keys, String>(Keys.DOMAIN, null));
+	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<TKeys, String>>(){{
+		add(new Tuple<TKeys, String>(TKeys.CASE, null));
+		add(new Tuple<TKeys, String>(TKeys.DOMAIN, null));
 	}};//*/
 	// Vēsturisko izgūšana.
-	/*public static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
-		add(Features.USAGE_RESTR__HISTORICAL);
+	/*public static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<TKeys, String>>(){{
+		add(TFeatures.USAGE_RESTR__HISTORICAL);
 	}};
-	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
-		add(Features.POS__FOREIGN);
-		add(Features.PLACE_NAME);
-		add(Features.PERSON_NAME);
-		add(Features.DOMAIN__HIST_PLACE);
-		add(Features.DOMAIN__HIST_PERSON);
+	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<TKeys, String>>(){{
+		add(TFeatures.POS__FOREIGN);
+		add(TFeatures.PLACE_NAME);
+		add(TFeatures.PERSON_NAME);
+		add(TFeatures.DOMAIN__HIST_PLACE);
+		add(TFeatures.DOMAIN__HIST_PERSON);
 	}};//*/
 	// Dialektismu un apvidvārdu izgūšana
-	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
-		add(Features.USAGE_RESTR__DIALECTICISM);
+	/*public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<TKeys, String>>(){{
+		add(TFeatures.USAGE_RESTR__DIALECTICISM);
 	}};//*/
-	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<Keys, String>>(){{
-		add(Features.USAGE_RESTR__REGIONAL);
+	/*public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<TKeys, String>>(){{
+		add(TFeatures.USAGE_RESTR__REGIONAL);
 	}};//*/
-	/*public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<Keys, String>>(){{
-		add(Features.USAGE_RESTR__REGIONAL);
-		add(new Tuple<Keys, String>(Keys.DIALECT_FEATURES, null));
-		add(new Tuple<Keys, String>(Keys.POS, null));
+	/*public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE_DESC = new ArrayList<Tuple<TKeys, String>>(){{
+		add(TFeatures.USAGE_RESTR__REGIONAL);
+		add(new Tuple<TKeys, String>(TKeys.DIALECT_FEATURES, null));
+		add(new Tuple<TKeys, String>(TKeys.POS, null));
 	}};//*/
 	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
-	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE = null;
-	public final static ArrayList<Tuple<Keys, String>> PRINT_WITH_FEATURE_DESC = null;
+	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = null;
+	public final static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE_DESC = null;
 	public final static boolean PRINT_PARADIGMS = true;
 	public final static boolean PRINT_OTHER_LEMMAS = true;
 

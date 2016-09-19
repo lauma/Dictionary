@@ -2,9 +2,9 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * kas to norāda, piemēram, šķirklī dižtauriņi: -ņu, vsk. dižtauriņš, -ņa, v.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * Izveidots 2015-10-26.
  * @author Lauma
@@ -49,8 +49,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 	public AltFullLemmaRule(
 			String patternBegin, String patternEnding, String lemmaRestrict,
 			String altLemmaEnding, int lemmaEndingCutLength, int paradigm,
-			int altLemmaParadigm, Set<Tuple<Keys, String>> positiveFlags,
-			Set<Tuple<Keys, String>> altLemmaFlags)
+			int altLemmaParadigm, Set<Tuple<TKeys, String>> positiveFlags,
+			Set<Tuple<TKeys, String>> altLemmaFlags)
 	{
 		this.patternTextBegin = patternBegin;
 		this.patternTextEnding = patternEnding;
@@ -63,8 +63,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,
 			String altLemmaEnding, int lemmaEndingCutLength, int paradigmId,
-			int altParadigmId, Tuple<Keys,String>[] positiveFlags,
-			Tuple<Keys,String>[] altLemmaFlags)
+			int altParadigmId, Tuple<TKeys,String>[] positiveFlags,
+			Tuple<TKeys,String>[] altLemmaFlags)
 	{
 		return new AltFullLemmaRule(patternBegin, patternEnding, lemmaEnding,
 				altLemmaEnding, lemmaEndingCutLength, paradigmId, altParadigmId,
@@ -94,8 +94,8 @@ public class AltFullLemmaRule implements AltLemmaRule
 		return AltFullLemmaRule.of(
 				patternBegin + " ", patternEnding, ".*" + lemmaEnding, altLemmaEnding,
 				lemmaEnding.length(), paradigmId, paradigmId,
-				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.ENTRYWORD__SINGULAR});
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
 	}
 
 
@@ -132,12 +132,12 @@ public class AltFullLemmaRule implements AltLemmaRule
 			Lemma altLemma = new TLemma(lemmaStub + lemmaLogic.altLemmaEnding);
 			Flags altParams = new Flags();
 			if (lemmaLogic.altLemmaFlags != null)
-				for (Tuple<Keys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
+				for (Tuple<TKeys, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
 			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigms, altParams));
 
 			paradigmCollector.addAll(lemmaLogic.paradigms);
 			if (lemmaLogic.positiveFlags != null)
-				for (Tuple<Keys, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
+				for (Tuple<TKeys, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
 			return newBegin;
 		}
 		else return -1;

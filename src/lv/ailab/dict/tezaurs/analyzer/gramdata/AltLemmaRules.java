@@ -1,6 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
@@ -17,7 +17,7 @@ import lv.ailab.dict.utils.Tuple;
  * Morforīki šīm vārdšķirām veido paši.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * Izveidots 2015-10-26.
  *
@@ -61,21 +61,21 @@ public class AltLemmaRules
 
 		AltEndingRule.of("s. -ā", new AltLemmaSubRule[]{
 			AltLemmaSubRule.of(".*ošais", new Integer[] {30, 0},
-					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 			//AltLemmaSubRule.of(".*tais", new Integer[] {30, 0},
-			//		new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+			//		new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
 			//		3, "ā", new Integer[] {40, 0},
-			//		new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+			//		new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 			AltLemmaSubRule.of(".*[aā]mais", new Integer[] {30, 0},
-					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 			AltLemmaSubRule.of(".*[^štm]ais|visupirmais|vispirmais", new Integer[] {30},
-					new Tuple[]{Features.GENDER__MASC, Features.POS__ADJ, Features.DEFINITE_ENDING},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40},
-					new Tuple[]{Features.GENDER__FEM, Features.POS__ADJ, Features.DEFINITE_ENDING})
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING})
 		}), // agrākais, aiznākošais, aiznākamais, beidzamais, visupirmais, pēdējais aizkomentētie vārdnīcā nav sastopami.
 
 	};

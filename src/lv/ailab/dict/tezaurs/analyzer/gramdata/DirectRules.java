@@ -1,8 +1,8 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.utils.Tuple;
 
@@ -12,7 +12,7 @@ import lv.ailab.dict.utils.Tuple;
  * Likumi kas jālieto ar Rule.applyDirect().
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * @author Lauma
  */
@@ -24,96 +24,96 @@ public class DirectRules
 	public static final Rule[] other = {
 		BaseRule.of("esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt",
 				"būt", 29,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "būt"), Features.POS__IRREG_VERB, Features.POS__DIRECT_VERB}, null), //būt
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //būt
 		RegularVerbRule.of("neesmu, neesi,", "nav, pag. nebiju", "nebūt", 29,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "nebūt"), Features.POS__IRREG_VERB, Features.POS__REFL_VERB}, null), //nebūt
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "nebūt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //nebūt
 
 		// 1. paradigma: 1. dekl. lietvārdi, -s
-		BaseRule.noun("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {Features.GENDER__MASC}), // cepurnieks
+		BaseRule.noun("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // cepurnieks
 		// 6. paradigma: 3. deklinācijas lietvārdi
-		BaseRule.noun("-us, v.", ".*us", 6, null, new Tuple[] {Features.GENDER__MASC}), // dienvidus
+		BaseRule.noun("-us, v.", ".*us", 6, null, new Tuple[] {TFeatures.GENDER__MASC}), // dienvidus
 
 		// 7. paradigma: 4. dekl. lietvārdi, sieviešu dzimte
-		BaseRule.noun("-jas, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{Features.GENDER__FEM}), // kastrētāja
-		BaseRule.noun("-as, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{Features.GENDER__FEM}), // vaivadija
-		BaseRule.noun("-as, dsk. ģen. -stu, s.", ".*sta", 7, null, new Tuple[]{Features.GENDER__FEM}), // pasta
-		BaseRule.noun("-as, dsk. ģen. -tu, s.", ".*ta", 7, null, new Tuple[]{Features.GENDER__FEM}), // placenta
-		BaseRule.noun("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {Features.GENDER__FEM}), // apskava
+		BaseRule.noun("-jas, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // kastrētāja
+		BaseRule.noun("-as, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // vaivadija
+		BaseRule.noun("-as, dsk. ģen. -stu, s.", ".*sta", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // pasta
+		BaseRule.noun("-as, dsk. ģen. -tu, s.", ".*ta", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // placenta
+		BaseRule.noun("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {TFeatures.GENDER__FEM}), // apskava
 
 		// 34. paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.noun(
 				"ģen. -ās, akuz. -os, instr. -os, dsk. -ās, ģen. -os, akuz. -ās, s.", ".*šanās", 34,
-				new Tuple[]{Features.POS__REFL_NOUN}, new Tuple[]{Features.GENDER__FEM}), //aizbildināšanās
+				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //aizbildināšanās
 		BaseRule.noun("ģen. -ās, akuz. -os, instr. -os, s.", ".*šanās", 34,
-				new Tuple[]{Features.POS__REFL_NOUN}, new Tuple[]{Features.GENDER__FEM}), //augšāmcelšanās
+				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //augšāmcelšanās
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		BaseRule.noun("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
-				new Tuple[]{Tuple.of(Keys.GENDER, Values.COGENDER.s)}), // aitasgalva, aizmārša
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER.s)}), // aitasgalva, aizmārša
 
 		// Paradigmas: 1, 2 - 1. deklinācija
 		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
 		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN}), // aerobs
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN}), // aerobs
 		BaseRule.noun("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{Features.GENDER__MASC, Tuple.of(Keys.NUMBER, Values.SINGULAR.s)}), // acteks
+				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR.s)}), // acteks
 		BaseRule.noun("-a, vsk.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{Features.GENDER__MASC})},
+						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{TFeatures.GENDER__MASC})},
 				null), // aizkars, cīsiņš, sakņkājis
 
 		// Paradigmas: 7, 11
 		BaseRule.noun("-as, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*a", new Integer[]{7}, null),
-						SimpleSubRule.of(".*[^aeiouāēīōū]as", new Integer[]{7}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]as", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{11}, null)},
-				new Tuple[]{Features.GENDER__FEM}), // aberācija, milns, najādas
+				new Tuple[]{TFeatures.GENDER__FEM}), // aberācija, milns, najādas
 
 		// Paradigmas: 9, 11
 		BaseRule.noun("dsk. ģen. -ņu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ne", new Integer[]{9}, null),
-						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ns", new Integer[]{11}, null)},
-				new Tuple[]{Features.GENDER__FEM}), // ādmine, bākuguns, bārkšsaknes
+				new Tuple[]{TFeatures.GENDER__FEM}), // ādmine, bākuguns, bārkšsaknes
 		BaseRule.noun("dsk. ģen. -šu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*[ts]e", new Integer[]{9}, null),
-						SimpleSubRule.of(".*[ts]es", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[ts]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ts", new Integer[]{11}, null)},
-				new Tuple[]{Features.GENDER__FEM}), //alžīriete, kroņprincese, autiņbiksītes, īsbikses, azots
+				new Tuple[]{TFeatures.GENDER__FEM}), //alžīriete, kroņprincese, autiņbiksītes, īsbikses, azots
 		BaseRule.noun("dsk. ģen. -ļu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*le", new Integer[]{9}, null),
-						SimpleSubRule.of(".*les", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*les", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ls", new Integer[]{11}, null)},
-				new Tuple[]{Features.GENDER__FEM}), //apakšcentrāle, dziesmuspēles, ezerpils
+				new Tuple[]{TFeatures.GENDER__FEM}), //apakšcentrāle, dziesmuspēles, ezerpils
 
 
 
 			// Paradigma: 11 - 6. dekl.
 		BaseRule.sixthDeclNoChange("-ts, dsk. ģen. -tu", ".*ts"), // koloniālvalsts
-		BaseRule.noun("-ts, -šu", ".*ts", 11, new Tuple[]{Features.GENDER__FEM}, null), //abonentpults
-		BaseRule.noun("-vs, -vju", ".*vs", 11, new Tuple[]{Features.GENDER__FEM}, null), //adatzivs
+		BaseRule.noun("-ts, -šu", ".*ts", 11, new Tuple[]{TFeatures.GENDER__FEM}, null), //abonentpults
+		BaseRule.noun("-vs, -vju", ".*vs", 11, new Tuple[]{TFeatures.GENDER__FEM}, null), //adatzivs
 
 		BaseRule.noun("-žu, v.", ".*ļaudis", 11,
-				new Tuple[]{Features.ENTRYWORD__PLURAL, Features.USED_ONLY__PLURAL},
-				new Tuple[]{Features.GENDER__MASC}), //ļaudis
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.USED_ONLY__PLURAL},
+				new Tuple[]{TFeatures.GENDER__MASC}), //ļaudis
 
 		// Paradigmas: 13, 14 - īpašības vārdi - skaidri pateikts
 		BaseRule.adjective("īp. v. -ais; s. -a, -ā"), // aerobs
 		BaseRule.of("s. -as; adj.", ".*i", new Integer[]{13, 14},
-				new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM},
-				new Tuple[]{Features.POS__ADJ}), // abēji 2
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.POS__ADJ}), // abēji 2
 
 		// Nedefinēta paradigma: divdabji
 		BaseRule.participleIs("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
 		BaseRule.participleIs("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
 
 		BaseRule.of("s. -usī", ".*ušais", 0,
-				new Tuple[]{Features.POS__PARTICIPLE_IS, Features.DEFINITE_ENDING},
+				new Tuple[]{TFeatures.POS__PARTICIPLE_IS, TFeatures.DEFINITE_ENDING},
 				null), // aizpagājušais
 		BaseRule.of("s. -usies", ".*ies", 0,
-				new Tuple[]{Features.POS__PARTICIPLE_IS},
+				new Tuple[]{TFeatures.POS__PARTICIPLE_IS},
 				null), // izdevies
 
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
@@ -121,43 +121,43 @@ public class DirectRules
 		BaseRule.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
 		BaseRule.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
-						//SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						//SimpleSubRule.of(".*dami", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						//SimpleSubRule.of(".*[aā]mi", new Integer[]{13, 14, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						//SimpleSubRule.of(".*uši", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_IS, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{Features.POS__ADJ, Features.ENTRYWORD__PLURAL})
+						//SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						//SimpleSubRule.of(".*dami", new Integer[]{13, 14, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						//SimpleSubRule.of(".*[aā]mi", new Integer[]{13, 14, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						//SimpleSubRule.of(".*uši", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL})
 				},
-				new Tuple[]{Features.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču
+				new Tuple[]{TFeatures.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču
 
 		// Paradigma: 30 - jaundzimušais, pēdējais
 		BaseRule.of("-ā, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*tais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ušais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_IS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[] {30, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[^tšm]ais", new Integer[] {30},
-								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN})},
-				new Tuple[]{Features.GENDER__MASC}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN})},
+				new Tuple[]{TFeatures.GENDER__MASC}),
 			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais,
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// 34 paradigma: Atgriezeniskie lietvārdi -šanās
 		BaseRule.of("-ās, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*šanās", new Integer[]{34},
-								new Tuple[]{Features.POS__REFL_NOUN}),
+								new Tuple[]{TFeatures.POS__REFL_NOUN}),
 						SimpleSubRule.of(".*tā", new Integer[]{40, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 						SimpleSubRule.of(".*ošā", new Integer[]{40, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 						SimpleSubRule.of(".*[aā]mā", new Integer[]{40, 0},
-								new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.CONTAMINATION__NOUN, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS, Features.DEFINITE_ENDING}),
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 						SimpleSubRule.of(".*[^tšm]ā", new Integer[]{40},
-								new Tuple[]{Features.POS__ADJ, Features.CONTAMINATION__NOUN, Features.DEFINITE_ENDING})},
-				new Tuple[]{Features.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
+								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN, TFeatures.DEFINITE_ENDING})},
+				new Tuple[]{TFeatures.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
 
 	};
 	/**
@@ -169,93 +169,93 @@ public class DirectRules
 	public static final Rule[] pronomen = {
 			// TODO pakāpeniski izravēt dubultlikumus
 		BaseRule.of("vietn., -a, v.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // kurš, kurš, mans, viņš
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // kurš, kurš, mans, viņš
 		BaseRule.of("vietn., -u, v.", ".*i", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC, Features.ENTRYWORD__PLURAL}), // abi
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL}), // abi
 		BaseRule.of("-a, v.; vietn.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // vienotrs
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // vienotrs
 		BaseRule.of("-a, v.; nenoteiktais vietn.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // jebkas, jebkurš, jebkāds
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // jebkas, jebkurš, jebkāds
 		BaseRule.of("nenoteiktais vietn., -a, v.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__MASC}), // dažs, cits
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // dažs, cits
 		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
-				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // šāds, šitāds
+				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__MASC}), // šāds, šitāds
 		BaseRule.of("norād. vietn., -a, v.", ".*s", 25,
-				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__MASC}), // tāds
+				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__MASC}), // tāds
 		BaseRule.of("-a, v.; pieder. vietn.", ".*s", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__MASC}), // tavs, savs
+				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__MASC}), // tavs, savs
 		BaseRule.of("noliedz. vietn., -a, v.", ".*s", 25,
-				null, new Tuple[]{Features.POS__NEG_PRONOUN, Features.GENDER__MASC}), // nekāds
+				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__MASC}), // nekāds
 		BaseRule.of("vispārin. vietn., -a, v.", ".*[sš]", 25,
-				null, new Tuple[]{Features.POS__GEN_PRONOUN, Features.GENDER__MASC}), // ikkurš, ikkatrs
+				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikkurš, ikkatrs
 
 		BaseRule.of("vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__FEM}), // ref: šāda, jebkāda
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM}), // ref: šāda, jebkāda
 		BaseRule.of("vietn., -u, s.", ".*as", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__FEM, Features.ENTRYWORD__PLURAL}), // abas
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL}), // abas
 		BaseRule.of("-as, s.; vietn.", ".*a", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // viņa, kāda
+				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__FEM}), // viņa, kāda
 		BaseRule.of("nenoteiktais vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.GENDER__FEM}), // jebkura, jebkāda
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__FEM}), // jebkura, jebkāda
 		BaseRule.of("-as, s.; pieder. vietn.", ".*a", 25,
-				null, new Tuple[]{Features.POS__POSS_PRONOUN, Features.GENDER__FEM}), // sava, mana, tava
+				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__FEM}), // sava, mana, tava
 		BaseRule.of("norād. vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // šāda
+				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__FEM}), // šāda
 		BaseRule.of("noliedz. vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__NEG_PRONOUN, Features.GENDER__FEM}), // nekāda
+				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__FEM}), // nekāda
 		BaseRule.of("vispārin. vietn., -as, s.", ".*a", 25,
-				null, new Tuple[]{Features.POS__GEN_PRONOUN, Features.GENDER__FEM}), // ikkura
+				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__FEM}), // ikkura
 
 		BaseRule.of("vietn. paša, pašam, pašu, ar pašu, pašā, dsk. ģen. pašu, v.", "pats", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // pats
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // pats
 		BaseRule.of("pašas, pašai, pašu, ar pašu, pašā, dsk. ģen. pašu, s.; noteic. vietn.", "pati", 25,
-				null, new Tuple[]{Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // pati
+				null, new Tuple[]{TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__FEM}), // pati
 		BaseRule.of("vietn.; ģen. šā (arī šī), dat. šim, akuz. šo, instr. ar šo, lok. šai (arī šinī, šajā), dsk. nom. šie, ģen. šo, dat. šiem, akuz. šos, instr. ar šiem, lok. šajos (arī šais, šinīs), v.",
 				"šis", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // šis
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // šis
 		BaseRule.of("ģen. šās (arī šīs), dat. šai, akuz. šo, instr. ar šo, lok. šai (arī šinī, šajā ), dsk. nom. šīs (arī šās), ģen. šo, dat. šīm, (arī šām), akuz. šīs (arī šās), instr. ar šīm (arī šām), lok. šajās (arī šais, šinīs), s.; norād. vietn.",
 				"šī", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // šī
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__FEM}), // šī
 		BaseRule.of("vietn.; ģen. tā, dat. tam, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tie, ģen. to, dat. tiem, akuz. tos, instr. ar tiem, lok. tajos (arī tais, tanīs), v.",
 				"tas", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PRONOUN, Features.GENDER__MASC}), // tas
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // tas
 		BaseRule.of("ģen. tās, dat. tai, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tās, ģen. to, akuz. tās, instr. ar tām, lok. tajās (arī tais, tanīs), s.; norād.",
 				"tā", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__DEM_PRONOUN, Features.GENDER__FEM}), // tas
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__FEM}), // tas
 		BaseRule.of("ģen. jebkā, dat. jebkam, akuz. jebko, instr. ar jebko; tikai vsk.; nenoteiktais vietn.",
 				"jebkas", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN, Features.USED_ONLY__SINGULAR}), // jebkas
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.USED_ONLY__SINGULAR}), // jebkas
 		BaseRule.of("ģen. kā, dat. kam, akuz. ko, instr. ar ko, lok. kamī (apv.); vietn.", "kas", 25,
-				null, new Tuple[]{Features.POS__PRONOUN, Features.ORIGINAL_NEEDED}), // kas
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.ORIGINAL_NEEDED}), // kas
 		BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko; nenoteiktais vietn.", "daudzkas", 25,
-				null, new Tuple[]{Features.POS__INDEF_PRONOUN}), // daudzkas
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN}), // daudzkas
 		BaseRule.of("ģen. nekā, dat. nekam, akuz. neko, instr. ar neko; noliedz. vietn.", "nekas", 25,
-				null, new Tuple[]{Features.POS__NEG_PRONOUN}), // nekas
+				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN}), // nekas
 
 		BaseRule.of("ģen. manis, dat. man, ak. mani, instr. ar mani (ar manim), lok. manī; pers. vietn. (vsk. 1. pers.).",
 				"es", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PERS_PRONOUN}), // es
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__PERS_PRONOUN}), // es
 		BaseRule.of("ģen. tevis, dat. tev, akuz. tevi, instr. ar tevi (ar tevim), lok. tevī; pers. vietn. (vsk. 2. pers.).",
 				"tu", 25,
-				new Tuple[]{Features.PARALLEL_FORMS}, new Tuple[]{Features.POS__PERS_PRONOUN}), // tu
+				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__PERS_PRONOUN}), // tu
 		BaseRule.of("ģen. mūsu, dat. mums, akuz. mūs, instr. ar mums, lok. mūsos; vietn. (dsk. 1. pers.).",
 				"mēs", 25,
-				null, new Tuple[]{Features.POS__PRONOUN}), // mēs
+				null, new Tuple[]{TFeatures.POS__PRONOUN}), // mēs
 		BaseRule.of("ģen. jūsu, dat. jums, akuz. jūs, instr. ar jums, lok. jūsos; vietn. (dsk. 2. pers.).",
 				"jūs", 25,
-				null, new Tuple[]{Features.POS__PRONOUN}), // jūs
+				null, new Tuple[]{TFeatures.POS__PRONOUN}), // jūs
 		BaseRule.of("ģen.; dat. sev, akuz. sevi, instr. ar sevi, lok. sevī; atgriez. vietn.", "sevis", 25,
-				null, new Tuple[]{Features.POS__REFL_PRONOUN}), // sevis
+				null, new Tuple[]{TFeatures.POS__REFL_PRONOUN}), // sevis
 
 		BaseRule.of("ģen. šitā, dat. šitam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitiem, akuz. šitos, instr. ar šitiem, lok. šitais (arī šitajos, šitos, šitanīs), v., norād. vietn.",
 				"šitas", 25,
-				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__MASC}), // šitas
+				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__MASC}), // šitas
 		BaseRule.of("ģen. šitā, dat. šitajam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitajiem, akuz. šitos, instr. ar šitajiem, lok. šitais (arī šitajos, šitanīs), v., norād. vietn.",
 				"šitais", 25,
-				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__MASC}), // šitais
+				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__MASC}), // šitais
 		BaseRule.of("ģen. šitās, dat. šitai, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitās, ģen. šito, dat. šitām, akuz. šitās, instr. ar šitām, lok. šitais (arī šitajās, šitanīs), s., norād. vietn.",
 				"šitā", 25,
-				null, new Tuple[]{Features.PARALLEL_FORMS, Features.POS__DEF_PRONOUN, Features.GENDER__FEM}), // šitā
+				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__FEM}), // šitā
 	};
 
 	/**
@@ -266,43 +266,43 @@ public class DirectRules
 	public static final Rule[] numeral = {
 		// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
 		/*BaseRule.of("nelok.; pamata skait.", ".*t", 29,
-				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.NON_INFLECTIVE}), // deviņsimt
+				null, new Tuple[]{TFeatures.POS__CARD_NUMERAL, TFeatures.NON_INFLECTIVE}), // deviņsimt
 		BaseRule.of("nelok.; daļu skait.", ".*pus", 29,
-				null, new Tuple[]{Features.POS__FRACT_NUMERAL, Features.NON_INFLECTIVE}), // četrarpus, divarpus
+				null, new Tuple[]{TFeatures.POS__FRACT_NUMERAL, TFeatures.NON_INFLECTIVE}), // četrarpus, divarpus
 		*/
 		// Eksperimentālā ideja: visi skaitļa vārdi, kam ir tikai viena dzimte,
 		// lai ir lietvārdi.
 		//BaseRule.of("-a, v.; pamata skait. lietvārda nozīmē.", ".*[dtn]s", 1,
-		//		null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // desmits, pussimts
+		//		null, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM}), // desmits, pussimts
 		BaseRule.of("-a, v.; pamata skait. lietv. nozīmē.", ".*[dtn]s", 1,
-				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // simts1, miljons, pusmiljons, miljards, triljons
+				null, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM}), // simts1, miljons, pusmiljons, miljards, triljons
 		BaseRule.of("-ša, v.; pamata skait. lietv. nozīmē.", ".*tis", 3,
-				null, new Tuple[]{Features.GENDER__MASC, Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM}), // tūkstotis
+				null, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM}), // tūkstotis
 		//BaseRule.of("-as, s.; pamata skait.", "viena", 0,
-		//		null, new Tuple[]{Features.GENDER__FEM, Features.POS__CARD_NUMERAL, Features.ENTRYWORD__FEM}), // viena (iespējams, ka šito var vispār var izmest?)
+		//		null, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__CARD_NUMERAL, TFeatures.ENTRYWORD__FEM}), // viena (iespējams, ka šito var vispār var izmest?)
 		BaseRule.of("nulles, dsk. ģen. nuļļu, s.", "nulle", 9,
-				new Tuple[]{Features.POS__NOUN, Features.CONTAMINATION__CARD_NUM},
-				new Tuple[]{Features.GENDER__FEM}), // nulle
+				new Tuple[]{TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM},
+				new Tuple[]{TFeatures.GENDER__FEM}), // nulle
 		// Puse un ??daļa arī kļūst par lietvārdiem, turklāt pat bez
 		// kontaminācijas, 		//
 
 		BaseRule.of("skait.; s. -ā", ".*ais", 22,
-				new Tuple[]{Features.POS__ORD_NUMERAL, Features.DEFINITE_ENDING},
+				new Tuple[]{TFeatures.POS__ORD_NUMERAL, TFeatures.DEFINITE_ENDING},
 				null), // ceturtais, otrais, nultais
 		BaseRule.of("skait.; s. -a", ".*s", 23,
-				null, new Tuple[]{Features.POS__CARD_NUMERAL}), // otrs
+				null, new Tuple[]{TFeatures.POS__CARD_NUMERAL}), // otrs
 		BaseRule.of("s. -a; daļu skait.", ".*s", 23,
-				null, new Tuple[]{Features.POS__FRACT_NUMERAL}), // pusotrs, pustrešs
+				null, new Tuple[]{TFeatures.POS__FRACT_NUMERAL}), // pusotrs, pustrešs
 
 		BaseRule.of("s. -as; pamata skait.", ".*i", 24,
-				new Tuple[]{Features.ENTRYWORD__PLURAL},
-				new Tuple[]{Features.POS__CARD_NUMERAL}), // deviņi, divi, trejdeviņi
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL},
+				new Tuple[]{TFeatures.POS__CARD_NUMERAL}), // deviņi, divi, trejdeviņi
 
 		BaseRule.of("ģen. triju, dat. trim (arī trijiem), akuz. trīs, instr. ar trim (arī ar trijiem), lok. trijos (arī trīs), v.; " +
 				"ģen. triju, dat. trim (arī trijām), akuz. trīs, instr. ar trim (arī ar trijām), lok. trijās (arī trīs), s.; " +
 				"arī trīs visu locījumu formu nozīmē; pamata skait.",
 				"trīs", 29,
-				null, new Tuple[]{Features.POS__CARD_NUMERAL, Features.PARALLEL_FORMS}), // trīs
+				null, new Tuple[]{TFeatures.POS__CARD_NUMERAL, TFeatures.PARALLEL_FORMS}), // trīs
 
 		// TODO: pulsteņlaiki
 	};
@@ -359,8 +359,8 @@ public class DirectRules
 
 			// Vienskaitlis + daudzskaitlis
 		BaseRule.noun("-es, dsk. ģen. -pju, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*pe", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM}),
-						SimpleSubRule.of(".*pes", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.GENDER__FEM})},
+						SimpleSubRule.of(".*pe", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
+						SimpleSubRule.of(".*pes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.GENDER__FEM})},
 				null), // aitkope, antilope, tūsklapes
 
 		// Nejauki, pārāk specifiski gdījumi
@@ -383,7 +383,7 @@ public class DirectRules
 
 		// Nestandartīgie
 		BaseRule.noun("-ļu, s.", ".*les", 9,
-			new Tuple[]{Features.ENTRYWORD__PLURAL}, new Tuple[]{Features.GENDER__FEM}), //bailes
+			new Tuple[]{TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), //bailes
 
 
 	};
@@ -401,7 +401,7 @@ public class DirectRules
 		BaseRule.secondDeclStd("-vja, dsk. ģen. -vju, v.", ".*vis"), //kapātuvis
 		BaseRule.secondDeclStd("-ža, dsk. ģen. -žu, v.", ".*[dz]is"), //diskvedis, plakandzelzis
 
-		BaseRule.noun("-ns, dsk. ģen. -ņu, v.", ".*ns", 4, null, new Tuple[] {Features.GENDER__MASC}), // bruģakmens
+		BaseRule.noun("-ns, dsk. ģen. -ņu, v.", ".*ns", 4, null, new Tuple[] {TFeatures.GENDER__MASC}), // bruģakmens
 
 		BaseRule.secondDeclStd("-bja, v.", ".*bis"), //aizsargdambis
 		BaseRule.secondDeclStd("-dža, v.", ".*dzis"), //algādzis
@@ -422,55 +422,55 @@ public class DirectRules
 		// Ar mijām
 		BaseRule.noun("-ļa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*lis", new Integer[]{3}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // acumirklis, (bacils, durkls=kļūda)
+				new Tuple[]{TFeatures.GENDER__MASC}), // acumirklis, (bacils, durkls=kļūda)
 		BaseRule.noun("-ņa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ņš", new Integer[]{2}, null),
 						SimpleSubRule.of(".*nis", new Integer[]{3}, null),
 						SimpleSubRule.of(".*suns", new Integer[]{5}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // abesīnis, dižtauriņš, dzinējsuns
+				new Tuple[]{TFeatures.GENDER__MASC}), // abesīnis, dižtauriņš, dzinējsuns
 		BaseRule.noun("-ša, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*[sšt]is", new Integer[]{3}, null),
 						SimpleSubRule.of(".*ss", new Integer[]{5}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // abrkasis, lemess
+				new Tuple[]{TFeatures.GENDER__MASC}), // abrkasis, lemess
 		// Bez mijām
 		BaseRule.noun("-ra, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*rs", new Integer[]{1}, null),
 						SimpleSubRule.of(".*ris", new Integer[]{3}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // airis, mūrniekmeistars
+				new Tuple[]{TFeatures.GENDER__MASC}), // airis, mūrniekmeistars
 		BaseRule.noun("-sa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ss", new Integer[]{1}, null),
-						SimpleSubRule.of(".*sis", new Integer[]{3}, new Tuple[]{Features.NO_SOUNDCHANGE})},
-				new Tuple[]{Features.GENDER__MASC}), // balanss, kūrviesis
+						SimpleSubRule.of(".*sis", new Integer[]{3}, new Tuple[]{TFeatures.NO_SOUNDCHANGE})},
+				new Tuple[]{TFeatures.GENDER__MASC}), // balanss, kūrviesis
 		BaseRule.noun("-ta, v.", ".*tis", new Integer[]{3},
-				new Tuple[]{Features.NO_SOUNDCHANGE},
-				new Tuple[]{Features.GENDER__MASC}), // stereotālskatis
+				new Tuple[]{TFeatures.NO_SOUNDCHANGE},
+				new Tuple[]{TFeatures.GENDER__MASC}), // stereotālskatis
 		// Vispārīgā galotne, kas der visam un neder nekam
 		BaseRule.noun("-a, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, null),
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{2}, null),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
-				new Tuple[]{Features.GENDER__MASC}), // abats, akustiķis, sparguļi, skostiņi,
+				new Tuple[]{TFeatures.GENDER__MASC}), // abats, akustiķis, sparguļi, skostiņi,
 
 		// Daudzkaitlis, vīriešu dzimte
 		// Ar mijām
 		BaseRule.noun("-ņu, v.", ".*ņi", new Integer[]{1, 2, 3, 4, 5},
-				new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM},
-				new Tuple[]{Features.GENDER__MASC}), // bretoņi
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC}), // bretoņi
 		// Vispārīgā galotne, kas der visam un neder nekam
 		BaseRule.noun("-u, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*š", new Integer[]{2}, null),
 						SimpleSubRule.of(".*(otāji|umi|anti|nieki|[aeiouāēīōū]īdi|isti|mēsli|svārki|plūdi|rati|vecāki|bērni|raksti|vidi|rīti|vakari|vārdi|kapi|augi|svētki|audi|laiki|putni|svari)",
-								new Integer[]{1}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[bcdghklmnpstvz]i", new Integer[]{1}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+								new Integer[]{1}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[bcdghklmnpstvz]i", new Integer[]{1}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*(ieši|āņi|ēži|grieži|stāvji|grauži|brunči|viļņi|ceļi|liberāļi|krampji|kaļķi)",
-								new Integer[]{3}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*suņi", new Integer[]{5}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ši", new Integer[]{1, 3, 4}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*[čļņž]i", new Integer[]{2, 3, 4}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*(ģ|[mv]j)i", new Integer[]{3, 4}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*([ķr]|[aeiāē]j)i", new Integer[]{1, 2, 3, 4}, new Tuple[]{Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
+								new Integer[]{3}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*suņi", new Integer[]{5}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ši", new Integer[]{1, 3, 4}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*[čļņž]i", new Integer[]{2, 3, 4}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*(ģ|[mv]j)i", new Integer[]{3, 4}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*([ķr]|[aeiāē]j)i", new Integer[]{1, 2, 3, 4}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
 				},
-				new Tuple[]{Features.GENDER__MASC}),
+				new Tuple[]{TFeatures.GENDER__MASC}),
 			// dededstiņš
 			// atgremotāji, apstādījumi, antikoagulanti, austrumnieki, eiropeīdi,
 				// leiboristi, amonijmēsli, apakšsvārki, asinsplūdi, atsperrati,
@@ -492,27 +492,27 @@ public class DirectRules
 		// Ar mijām
 		BaseRule.noun("-ņu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ne", new Integer[]{9}, null),
-						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*nis", new Integer[]{11}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*nis", new Integer[]{11}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				},
-				new Tuple[]{Features.GENDER__FEM}), // acenes, iemaņas, balodene, robežugunis
+				new Tuple[]{TFeatures.GENDER__FEM}), // acenes, iemaņas, balodene, robežugunis
 		BaseRule.noun("-šu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*te", new Integer[]{9}, null),
-						SimpleSubRule.of(".*šas", new Integer[]{7}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[st]es", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*tis", new Integer[]{11}, new Tuple[]{Features.ENTRYWORD__PLURAL}),},
-				new Tuple[]{Features.GENDER__FEM}), // ahajiete, aizkulises, autosacīkstes, klaušas, šķūtis
+						SimpleSubRule.of(".*šas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[st]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*tis", new Integer[]{11}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
+				new Tuple[]{TFeatures.GENDER__FEM}), // ahajiete, aizkulises, autosacīkstes, klaušas, šķūtis
 		BaseRule.noun("-žu, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*žas", new Integer[]{7}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),},
-				new Tuple[]{Features.GENDER__FEM}), // mirādes, graizes, bažas
+						SimpleSubRule.of(".*žas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
+				new Tuple[]{TFeatures.GENDER__FEM}), // mirādes, graizes, bažas
 		// Vispārīgā galotne, kas der visam un neder nekam
 		BaseRule.noun("-u, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*a", new Integer[]{7}, null),
-						SimpleSubRule.of(".*[^aeiouāēīōū]as", new Integer[]{7}, new Tuple[]{Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ķes", new Integer[]{9}, new Tuple[]{Features.ENTRYWORD__PLURAL}),},
-				new Tuple[]{Features.GENDER__FEM}), // aijas, spēķes, zeķes, konkrēcija
+						SimpleSubRule.of(".*[^aeiouāēīōū]as", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ķes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
+				new Tuple[]{TFeatures.GENDER__FEM}), // aijas, spēķes, zeķes, konkrēcija
 
 
 };
@@ -529,28 +529,28 @@ public class DirectRules
 
 		// Paradigma: 3 - Lietvārds 2. deklinācija -is
 		BaseRule.noun("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
-				new Tuple[]{Features.ENTRYWORD__PLURAL}, new Tuple[]{Features.GENDER__MASC}), //afroamerikāņi
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__MASC}), //afroamerikāņi
 			// konflikts ar "bizmanis"
 
 		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
 		// Paradigmas: 9, 7 - vienskaitlī un daudzskaitlī
 		BaseRule.noun("-žu", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ži", new Integer[]{1, 3}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[dz]e", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM}),
-						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL})},
+						SimpleSubRule.of(".*ži", new Integer[]{1, 3}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*[dz]e", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
+						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL})},
 				null), // gliemeži, abioģenēze, ablumozes, akolāde, nematodes
 		BaseRule.noun("-ņu", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ne", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM}),
-						SimpleSubRule.of(".suņi", new Integer[]{5}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*ņi", new Integer[]{1, 2, 3, 4}, new Tuple[]{Features.GENDER__MASC, Features.ENTRYWORD__PLURAL, Features.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{Features.GENDER__FEM, Features.ENTRYWORD__PLURAL})},
+						SimpleSubRule.of(".*ne", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
+						SimpleSubRule.of(".suņi", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*ņi", new Integer[]{1, 2, 3, 4}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL})},
 				null), // celtņi, agrene, aizlaidnes
 		// Paradigma: 2, 3
 		BaseRule.noun("-ņa", new SimpleSubRule[]{
-						SimpleSubRule.of(".*akmens", new Integer[]{4}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*ņš", new Integer[]{2}, new Tuple[]{Features.GENDER__MASC}),
-						SimpleSubRule.of(".*nis", new Integer[]{3}, new Tuple[]{Features.GENDER__MASC})},
+						SimpleSubRule.of(".*akmens", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*ņš", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*nis", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC})},
 				null), // abolainis, jūrakmens, ļautiņš
 	};
 	/**
@@ -758,9 +758,9 @@ public class DirectRules
 		BaseRule.of(
 				"parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies",
 				".*ēties", 19,
-				new Tuple[] {Features.POS__VERB},
-				new Tuple[]{Features.USUALLY_USED__PLURAL, Features.USUALLY_USED__THIRD_PERS,
-							Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.PLURAL_OR_THIRD_PERS.s)}), //konstituēties
+				new Tuple[] {TFeatures.POS__VERB},
+				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
+							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS.s)}), //konstituēties
 			//parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies
 		// Darbības vārdu specifiskie likumi.
 		// Nav.

@@ -1,9 +1,9 @@
 package lv.ailab.dict.tezaurs.analyzer;
 
 import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.struct.Flags;
@@ -55,13 +55,13 @@ public class StatsCollector
 	 * saista ar loģisko UN.(Ja te ir null, tad kalpo kā norāde, ka nevajag šādi
 	 * atlasīt).
 	 */
-	public final ArrayList<Tuple<Keys, String>> collectWithFeatures;
+	public final ArrayList<Tuple<TKeys, String>> collectWithFeatures;
 	/**
 	 * Ar kādiem atslēgu/vērtību pārīšiem aprakstīt patvaļīgi atlasītos
 	 * rezultātus. Ja vērtība ir null, tad tiek drukātas visas vērtības ar tādu
 	 * atslēgu.
 	 */
-	public final ArrayList<Tuple<Keys, String>> describeWithFeatures;
+	public final ArrayList<Tuple<TKeys, String>> describeWithFeatures;
 	/**
 	 * Vai rezultātā izdrukāt pieminētās paradigmas.
 	 */
@@ -78,7 +78,7 @@ public class StatsCollector
 
     public TreeSet<String> binaryFlags = new TreeSet<>();
     public TreeSet<String> pairingKeys = new TreeSet<>();
-	public CountingSet<Tuple<Keys,String>> flagCounts = new CountingSet<>();
+	public CountingSet<Tuple<TKeys,String>> flagCounts = new CountingSet<>();
     // Counting entries with various properties:
     public int overallCount = 0;
     public int hasParadigm = 0;
@@ -114,8 +114,8 @@ public class StatsCollector
 			boolean collectFirstConj, boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, String collectWithRegexp,
 			ArrayList<Integer> collectWithParadigms,
-			ArrayList<Tuple<Keys, String>> collectFeature,
-			ArrayList<Tuple<Keys, String>> descriptionFeatures,
+			ArrayList<Tuple<TKeys, String>> collectFeature,
+			ArrayList<Tuple<TKeys, String>> descriptionFeatures,
 			boolean describeWithParadigms, boolean describeWithOtherLemmas,
 			Writer wordlistOutput)
 	{
@@ -149,17 +149,17 @@ public class StatsCollector
 		HashSet<String> bf = entryFlags.binaryFlags();
         if (bf != null)
 		{
-			if (bf.contains(Values.UNCLEAR_PARADIGM.s))
+			if (bf.contains(TValues.UNCLEAR_PARADIGM.s))
 				hasMultipleParadigmFlag++;
 			binaryFlags.addAll(bf);
 		}
 
-        if (entryFlags.getAll(Keys.INFLECT_AS) != null &&
-				entryFlags.getAll(Keys.INFLECT_AS).size() > 0)
+        if (entryFlags.getAll(TKeys.INFLECT_AS) != null &&
+				entryFlags.getAll(TKeys.INFLECT_AS).size() > 0)
             hasLociitKaaFlag++;
         if (entryFlags.pairings != null)
-			for (Tuple<Keys, String> f : entryFlags.pairings.asList())
-				if (!f.first.equals(Keys.OTHER_FLAGS))
+			for (Tuple<TKeys, String> f : entryFlags.pairings.asList())
+				if (!f.first.equals(TKeys.OTHER_FLAGS))
 					pairingKeys.add(f.first + ": " + f.second);
 
 		if (collectPrononcations)
@@ -175,11 +175,11 @@ public class StatsCollector
 			if (h.gram.flags == null) continue;
 
             if (collectFifthDeclExceptions && h.gram.getDirectParadigms().contains(9)
-					&& h.gram.flags.test(Features.NO_SOUNDCHANGE))
+					&& h.gram.flags.test(TFeatures.NO_SOUNDCHANGE))
                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 
-			if (collectNonInflWithCase && h.gram.flags.testKey(Keys.CASE) &&
-					h.gram.flags.test(Features.NON_INFLECTIVE))
+			if (collectNonInflWithCase && h.gram.flags.testKey(TKeys.CASE) &&
+					h.gram.flags.test(TFeatures.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
         }
 		if (collectWithRegexp != null)
@@ -190,10 +190,10 @@ public class StatsCollector
 				{
 					ArrayList<String> flags = new ArrayList<>();
 					flags.add("Vārds = " + h.lemma.text);
-					if (entryFlags.getAll(Keys.POS) == null)
-						flags.add(Keys.POS.s + " = NULL");
-					else flags.add(Keys.POS.s + " = " +
-							entryFlags.getAll(Keys.POS).stream()
+					if (entryFlags.getAll(TKeys.POS) == null)
+						flags.add(TKeys.POS.s + " = NULL");
+					else flags.add(TKeys.POS.s + " = " +
+							entryFlags.getAll(TKeys.POS).stream()
 									.reduce((s1, s2) -> s1 + " + " + s2).orElse("NULL"));
 					entriesWithSelectedFeature.add(Trio.of(
 							entry.head.lemma.text,
@@ -243,7 +243,7 @@ public class StatsCollector
 		ArrayList<String> flags = new ArrayList<>();
 		Flags entryFlags = entry.getUsedFlags();
 		if (describeWithFeatures != null)
-			for (Tuple<Keys, String> feature : describeWithFeatures)
+			for (Tuple<TKeys, String> feature : describeWithFeatures)
 			{
 				if (feature.second == null && entryFlags.getAll(feature.first) == null)
 					flags.add(feature.first.s + " = NULL");
@@ -284,14 +284,14 @@ public class StatsCollector
 		else line.append("0");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.POS))
+				entry.head.gram.flags.testKey(TKeys.POS))
 		{
-			if (entry.head.gram.flags.test(Features.UNCLEAR_POS))
+			if (entry.head.gram.flags.test(TFeatures.UNCLEAR_POS))
 			{
-				line.append(Values.UNCLEAR_POS.s);
+				line.append(TValues.UNCLEAR_POS.s);
 				line.append(",");
 			}
-			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.POS)));
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.POS)));
 		}
 		else line.append("NULL");
 		line.append("\t");
@@ -311,96 +311,96 @@ public class StatsCollector
 		else line.append(String.join(",", entry.sources.s));
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.DOMAIN))
+				entry.head.gram.flags.testKey(TKeys.DOMAIN))
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(Keys.DOMAIN)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.DOMAIN)));
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.USAGE_RESTRICTIONS))
+				entry.head.gram.flags.testKey(TKeys.USAGE_RESTRICTIONS))
 			line.append(String.join(",", entry.head.gram.flags
-					.getAll(Keys.USAGE_RESTRICTIONS)));
+					.getAll(TKeys.USAGE_RESTRICTIONS)));
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.LANGUAGE))
-			line.append(String.join(",", entry.head.gram.flags.getAll(Keys.LANGUAGE)));
+				entry.head.gram.flags.testKey(TKeys.LANGUAGE))
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.LANGUAGE)));
 		else line.append("NULL");
 		line.append("\t");
 
 		// Celmi un priedēklis
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.INFINITY_STEM))
+				entry.head.gram.flags.testKey(TKeys.INFINITY_STEM))
 		{
-			line.append(Keys.INFINITY_STEM.toString());
+			line.append(TKeys.INFINITY_STEM.toString());
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(Keys.INFINITY_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITY_STEM)));
 		}
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.PRESENT_STEM))
+				entry.head.gram.flags.testKey(TKeys.PRESENT_STEM))
 		{
-			line.append(Keys.PRESENT_STEM.toString());
+			line.append(TKeys.PRESENT_STEM.toString());
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(Keys.PRESENT_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEM)));
 		}
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.PAST_STEM))
+				entry.head.gram.flags.testKey(TKeys.PAST_STEM))
 		{
-			line.append(Keys.PAST_STEM.toString());
+			line.append(TKeys.PAST_STEM.toString());
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(Keys.PAST_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEM)));
 		}
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(Keys.VERB_PREFIX))
+				entry.head.gram.flags.testKey(TKeys.VERB_PREFIX))
 		{
-			line.append(Keys.VERB_PREFIX.toString());
+			line.append(TKeys.VERB_PREFIX.toString());
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(Keys.VERB_PREFIX)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.VERB_PREFIX)));
 		}
 		else line.append("NULL");
 
 		/*line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				(entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH) ||
-						entry.head.gram.flags.testKey(Keys.CONTAMINATION) ||
-						entry.head.gram.flags.testKey(Keys.USUALLY_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(Keys.OFTEN_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(Keys.USED_ONLY_IN_FORM) ||
-						entry.head.gram.flags.testKey(Keys.ALSO_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(Keys.USED_IN_FORM)))
+				(entry.head.gram.flags.testKey(TKeys.USED_TOGETHER_WITH) ||
+						entry.head.gram.flags.testKey(TKeys.CONTAMINATION) ||
+						entry.head.gram.flags.testKey(TKeys.USUALLY_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(TKeys.OFTEN_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(TKeys.USED_ONLY_IN_FORM) ||
+						entry.head.gram.flags.testKey(TKeys.ALSO_USED_IN_FORM) ||
+						entry.head.gram.flags.testKey(TKeys.USED_IN_FORM)))
 		{
 			ArrayList<String> tmp = new ArrayList<>();
-			if (entry.head.gram.flags.testKey(Keys.CONTAMINATION))
-				for (String value : entry.head.gram.flags.getAll(Keys.CONTAMINATION))
-					tmp.add(Keys.CONTAMINATION.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.USED_ONLY_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(Keys.USED_ONLY_IN_FORM))
-					tmp.add(Keys.USED_ONLY_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.USUALLY_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(Keys.USUALLY_USED_IN_FORM))
-					tmp.add(Keys.USUALLY_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.OFTEN_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(Keys.OFTEN_USED_IN_FORM))
-					tmp.add(Keys.OFTEN_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.ALSO_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(Keys.ALSO_USED_IN_FORM))
-					tmp.add(Keys.ALSO_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(Keys.USED_IN_FORM))
-					tmp.add(Keys.USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(Keys.USED_TOGETHER_WITH))
-				for (String value : entry.head.gram.flags.getAll(Keys.USED_TOGETHER_WITH))
-					tmp.add(Keys.USED_TOGETHER_WITH.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.CONTAMINATION))
+				for (String value : entry.head.gram.flags.getAll(TKeys.CONTAMINATION))
+					tmp.add(TKeys.CONTAMINATION.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.USED_ONLY_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(TKeys.USED_ONLY_IN_FORM))
+					tmp.add(TKeys.USED_ONLY_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.USUALLY_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(TKeys.USUALLY_USED_IN_FORM))
+					tmp.add(TKeys.USUALLY_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.OFTEN_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(TKeys.OFTEN_USED_IN_FORM))
+					tmp.add(TKeys.OFTEN_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.ALSO_USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(TKeys.ALSO_USED_IN_FORM))
+					tmp.add(TKeys.ALSO_USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.USED_IN_FORM))
+				for (String value : entry.head.gram.flags.getAll(TKeys.USED_IN_FORM))
+					tmp.add(TKeys.USED_IN_FORM.s + " = " + value);
+			if (entry.head.gram.flags.testKey(TKeys.USED_TOGETHER_WITH))
+				for (String value : entry.head.gram.flags.getAll(TKeys.USED_TOGETHER_WITH))
+					tmp.add(TKeys.USED_TOGETHER_WITH.s + " = " + value);
 			line.append(String.join(",", tmp));
 		}
 		else line.append("NULL");//*/
@@ -441,8 +441,8 @@ public class StatsCollector
 		out.write("\n]");*/
 
 		out.write(",\n\"Karodziņi\":[");
-		HashMap<Tuple<Keys, String>, Integer> counts = flagCounts.getCounts();
-		for (Tuple<Keys, String> feature : counts.keySet().stream().sorted(
+		HashMap<Tuple<TKeys, String>, Integer> counts = flagCounts.getCounts();
+		for (Tuple<TKeys, String> feature : counts.keySet().stream().sorted(
 				(t1, t2) -> (t1.first != null && t1.first.equals(t2.first)) ?
 						t1.second.compareTo(t2.second) : t1.first.compareTo(t2.first)).toArray(i -> new Tuple[i]))
 		{

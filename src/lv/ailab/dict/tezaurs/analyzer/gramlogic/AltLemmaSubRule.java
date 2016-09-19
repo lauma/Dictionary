@@ -1,6 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
@@ -35,7 +35,7 @@ public class AltLemmaSubRule
 	 * Šos karodziņus uzstāda pamata karodziņu savācējam, ja gan gramatikas
 	 * teksts, gan lemma atbilst attiecīgajiem šabloniem.
 	 */
-	protected final Set<Tuple<Keys,String>> positiveFlags;
+	protected final Set<Tuple<TKeys,String>> positiveFlags;
 	/**
 	 * Simbolu skaits, kas tiks noņemts no dotās lemmas beigām, to izmantojot
 	 * gramatikas šablona viedošanai.
@@ -54,12 +54,12 @@ public class AltLemmaSubRule
 	 * Šos karodziņus uzstāda papildu pamatformai, nevis pamatvārdam, ja gan
 	 * gramatikas teksts, gan lemma atbilst attiecīgajiem šabloniem.
 	 */
-	protected final Set<Tuple<Keys,String>> altLemmaFlags;
+	protected final Set<Tuple<TKeys,String>> altLemmaFlags;
 
 	public AltLemmaSubRule (String lemmaRestrict, Set<Integer>paradigms,
-			Set<Tuple<Keys,String>> positiveFlags, int lemmaEndingCutLength,
+			Set<Tuple<TKeys,String>> positiveFlags, int lemmaEndingCutLength,
 			String altLemmaEnding, Set<Integer> altLemmaParadigms,
-			Set<Tuple<Keys,String>> altLemmaFlags)
+			Set<Tuple<TKeys,String>> altLemmaFlags)
 	{
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		this.paradigms = Collections.unmodifiableSet(paradigms);
@@ -72,8 +72,8 @@ public class AltLemmaSubRule
 	}
 
 	public static AltLemmaSubRule of (String lemmaRestrict, Integer[] paradigms,
-			Tuple<Keys,String>[] positiveFlags, int lemmaEndingCutLength,
-			String altLemmaEnding, int altLemmaParadigm, Tuple<Keys,String>[] altLemmaFlags)
+			Tuple<TKeys,String>[] positiveFlags, int lemmaEndingCutLength,
+			String altLemmaEnding, int altLemmaParadigm, Tuple<TKeys,String>[] altLemmaFlags)
 	{
 		return new AltLemmaSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
@@ -83,8 +83,8 @@ public class AltLemmaSubRule
 	}
 
 	public static AltLemmaSubRule of (String lemmaRestrict, Integer[] paradigms,
-			Tuple<Keys,String>[] positiveFlags, int lemmaEndingCutLength,
-			String altLemmaEnding, Integer[] altLemmaParadigms, Tuple<Keys,String>[] altLemmaFlags)
+			Tuple<TKeys,String>[] positiveFlags, int lemmaEndingCutLength,
+			String altLemmaEnding, Integer[] altLemmaParadigms, Tuple<TKeys,String>[] altLemmaFlags)
 	{
 		return new AltLemmaSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),

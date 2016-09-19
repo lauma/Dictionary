@@ -17,10 +17,9 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,7 +27,6 @@ import org.w3c.dom.Node;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * Nozīmes, nozīmes nianses vai skaidrojuma lauks.
@@ -142,9 +140,9 @@ public class Sense implements HasToJSON, HasToXML
 	/**
 	 * Saskaita visus karodziņus, kas kaut kur šajā struktūrā parādās.
 	 */
-	public CountingSet<Tuple<Keys, String>> getFlagCounts()
+	public CountingSet<Tuple<TKeys, String>> getFlagCounts()
 	{
-		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
+		CountingSet<Tuple<TKeys, String>> counts = new CountingSet<>();
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);

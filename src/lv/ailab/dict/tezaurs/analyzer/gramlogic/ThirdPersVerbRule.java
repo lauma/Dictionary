@@ -1,7 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * Likums šabloniem, kas sākas ar "parasti 3. pers.," vai  "tikai 3. pers.,"
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * @author Lauma
  */
@@ -36,30 +36,30 @@ public class ThirdPersVerbRule implements Rule
 	 *                      automātiski)
      */
     public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
-            Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags)
+            Set<Tuple<TKeys,String>> positiveFlags, Set<Tuple<TKeys,String>> alwaysFlags)
     {
         thirdPersUsually = BaseRule.simple(
                 "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<Tuple<Keys, String>>()
+                new HashSet<Tuple<TKeys, String>>()
                 {{
-                        add(Features.POS__VERB);
+                        add(TFeatures.POS__VERB);
                         if (positiveFlags != null) addAll(positiveFlags);
                     }},
-                new HashSet<Tuple<Keys, String>>()
+                new HashSet<Tuple<TKeys, String>>()
                 {{
-                        add(Features.USUALLY_USED__THIRD_PERS);
+                        add(TFeatures.USUALLY_USED__THIRD_PERS);
                         if (alwaysFlags != null) addAll(alwaysFlags);
                     }});
         thirdPersOnly = BaseRule.simple(
                 "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
-                new HashSet<Tuple<Keys, String>>()
+                new HashSet<Tuple<TKeys, String>>()
                 {{
-                        add(Features.POS__VERB);
+                        add(TFeatures.POS__VERB);
                         if (positiveFlags != null) addAll(positiveFlags);
                     }},
-                new HashSet<Tuple<Keys, String>>()
+                new HashSet<Tuple<TKeys, String>>()
                 {{
-                        add(Features.USED_ONLY__THIRD_PERS);
+                        add(TFeatures.USED_ONLY__THIRD_PERS);
                         if (alwaysFlags != null) addAll(alwaysFlags);
                     }});
     }
@@ -78,7 +78,7 @@ public class ThirdPersVerbRule implements Rule
 	 *                      automātiski)
      */
     public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
-            int paradigmId, Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags)
+            int paradigmId, Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags)
     {
         return new ThirdPersVerbRule(patternText, lemmaEnding, paradigmId,
                 positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),

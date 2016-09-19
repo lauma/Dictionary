@@ -24,12 +24,12 @@ import java.util.LinkedList;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.Rule;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import org.w3c.dom.Node;
 
 import lv.ailab.dict.utils.JSONUtils;
@@ -53,7 +53,7 @@ import lv.ailab.dict.utils.JSONUtils;
  * iespējams.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  */
 public class TGram extends Gram
 {
@@ -138,7 +138,7 @@ public class TGram extends Gram
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))
-			flags.add(Features.POS__PIECE);
+			flags.add(TFeatures.POS__PIECE);
 		
 		// Vispirms apstrādā galotņu šablonus (tie parasti ir gramatikas sākumā).
 		correctedGram = processBeginingWithPatterns(correctedGram, lemma);
@@ -489,10 +489,10 @@ public class TGram extends Gram
 	 */
 	private void paradigmFromFlags(String lemma)
 	{
-		HashSet<String> pos = flags.getAll(Keys.POS);
+		HashSet<String> pos = flags.getAll(TKeys.POS);
 		if (pos != null)
 		{
-			if (pos.contains(Values.ADJECTIVE.s))
+			if (pos.contains(TValues.ADJECTIVE.s))
 			{
 				if (lemma.endsWith("ais")) paradigm.add(30);
 				else if (lemma.endsWith("ā")) paradigm.add(40);
@@ -501,37 +501,37 @@ public class TGram extends Gram
 				else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);
 			}
 
-			if (pos.contains(Values.ADVERB.s)) paradigm.add(21);
-			if (pos.contains(Values.PARTICLE.s)) paradigm.add(28);
-			if (pos.contains(Values.PREPOSITION.s)) paradigm.add(26);
-			if (pos.contains(Values.CONJUNCTION.s)) paradigm.add(27);
+			if (pos.contains(TValues.ADVERB.s)) paradigm.add(21);
+			if (pos.contains(TValues.PARTICLE.s)) paradigm.add(28);
+			if (pos.contains(TValues.PREPOSITION.s)) paradigm.add(26);
+			if (pos.contains(TValues.CONJUNCTION.s)) paradigm.add(27);
 
-			if (pos.contains(Values.INTERJECTION.s)) paradigm.add(38);
-			if (pos.contains(Values.ABBREVIATION.s)) paradigm.add(36);
+			if (pos.contains(TValues.INTERJECTION.s)) paradigm.add(38);
+			if (pos.contains(TValues.ABBREVIATION.s)) paradigm.add(36);
 
-			if (pos.contains(Values.PRONOUN.s)) paradigm.add(25);
+			if (pos.contains(TValues.PRONOUN.s)) paradigm.add(25);
 
-			if (pos.contains(Values.FOREIGN.s)) paradigm.add(39);
+			if (pos.contains(TValues.FOREIGN.s)) paradigm.add(39);
 
 			// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
-			if (pos.contains(Values.FRACTIONAL_NUMERAL.s)
-					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // četrarpus, divarpus
-			if (pos.contains(Values.CARDINAL_NUMERAL.s)
-					&& flags.test(Features.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
+			if (pos.contains(TValues.FRACTIONAL_NUMERAL.s)
+					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // četrarpus, divarpus
+			if (pos.contains(TValues.CARDINAL_NUMERAL.s)
+					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
 			// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
 			// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 			// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 			// problēmas.
-			if (pos.contains(Values.GEN_ONLY.s))
+			if (pos.contains(TValues.GEN_ONLY.s))
 			{
 				paradigm.add(0);
-				if (!flags.testKey(Keys.GENDER) || !flags.testKey(Keys.NUMBER))
-					flags.add(Features.UNCLEAR_PARADIGM);
+				if (!flags.testKey(TKeys.GENDER) || !flags.testKey(TKeys.NUMBER))
+					flags.add(TFeatures.UNCLEAR_PARADIGM);
 			}
 
 
-			if (pos.contains(Values.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
+			if (pos.contains(TValues.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
 
@@ -545,67 +545,67 @@ public class TGram extends Gram
 	private void postprocessFlags(String lemma)
 	{
 		// Šis tiek darīts tāpēc, ka "vēst." oriģinālajā vārdnīcā nozīmē visu un neko.
-		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PERSON_NAME))
-			flags.add(Features.DOMAIN__HIST_PERSON);
-		if (flags.test(Features.USAGE_RESTR__HISTORICAL) && flags.test(Features.PLACE_NAME))
-			flags.add(Features.DOMAIN__HIST_PLACE);
+		if (flags.test(TFeatures.USAGE_RESTR__HISTORICAL) && flags.test(TFeatures.PERSON_NAME))
+			flags.add(TFeatures.DOMAIN__HIST_PERSON);
+		if (flags.test(TFeatures.USAGE_RESTR__HISTORICAL) && flags.test(TFeatures.PLACE_NAME))
+			flags.add(TFeatures.DOMAIN__HIST_PLACE);
 
 		// Tālāk sekojošais ir shortcut, lai nebūtu dažāda mēroga karodziņiem
 		// jānorāda visi, pietiktu ar konkrētāku. Populārākie gadījumi.
 		// TODO - papildināt. Te šobrīd noteikti nav viss, tikai tas, ko ātrumā pamanīju likumu failā.
-		if (flags.test(Features.POS__PARTICIPLE_AMS) ||
-				flags.test(Features.POS__PARTICIPLE_DAMS) ||
-				flags.test(Features.POS__PARTICIPLE_IS) ||
-				flags.test(Features.POS__PARTICIPLE_OSS) ||
-				flags.test(Features.POS__PARTICIPLE_OT) ||
-				flags.test(Features.POS__PARTICIPLE_TS))
-			flags.add(Features.POS__PARTICIPLE);
+		if (flags.test(TFeatures.POS__PARTICIPLE_AMS) ||
+				flags.test(TFeatures.POS__PARTICIPLE_DAMS) ||
+				flags.test(TFeatures.POS__PARTICIPLE_IS) ||
+				flags.test(TFeatures.POS__PARTICIPLE_OSS) ||
+				flags.test(TFeatures.POS__PARTICIPLE_OT) ||
+				flags.test(TFeatures.POS__PARTICIPLE_TS))
+			flags.add(TFeatures.POS__PARTICIPLE);
 
-		if (flags.test(Features.POS__PARTICIPLE))
-			flags.add(Features.POS__VERB);
-		if (flags.test(Features.POS__REFL_NOUN))
-			flags.add(Features.POS__NOUN);
-		if (flags.test(Features.POS__REFL_NOUN))
-			flags.add(Features.POS__NOUN);
+		if (flags.test(TFeatures.POS__PARTICIPLE))
+			flags.add(TFeatures.POS__VERB);
+		if (flags.test(TFeatures.POS__REFL_NOUN))
+			flags.add(TFeatures.POS__NOUN);
+		if (flags.test(TFeatures.POS__REFL_NOUN))
+			flags.add(TFeatures.POS__NOUN);
 
-		if (flags.test(Features.POS__REFL_PRONOUN) ||
-				flags.test(Features.POS__INTERROG_PRONOUN) ||
-				flags.test(Features.POS__INDEF_PRONOUN) ||
-				flags.test(Features.POS__DEF_PRONOUN) ||
-				flags.test(Features.POS__NEG_PRONOUN) ||
-				flags.test(Features.POS__DEM_PRONOUN) ||
-				flags.test(Features.POS__PERS_PRONOUN) ||
-				flags.test(Features.POS__POSS_PRONOUN) ||
-				flags.test(Features.POS__GEN_PRONOUN))
-			flags.add(Features.POS__PRONOUN);
-		if (flags.test(Features.POS__CARD_NUMERAL) ||
-				flags.test(Features.POS__ORD_NUMERAL) ||
-				flags.test(Features.POS__FRACT_NUMERAL))
-			flags.add(Features.POS__NUMERAL);
+		if (flags.test(TFeatures.POS__REFL_PRONOUN) ||
+				flags.test(TFeatures.POS__INTERROG_PRONOUN) ||
+				flags.test(TFeatures.POS__INDEF_PRONOUN) ||
+				flags.test(TFeatures.POS__DEF_PRONOUN) ||
+				flags.test(TFeatures.POS__NEG_PRONOUN) ||
+				flags.test(TFeatures.POS__DEM_PRONOUN) ||
+				flags.test(TFeatures.POS__PERS_PRONOUN) ||
+				flags.test(TFeatures.POS__POSS_PRONOUN) ||
+				flags.test(TFeatures.POS__GEN_PRONOUN))
+			flags.add(TFeatures.POS__PRONOUN);
+		if (flags.test(TFeatures.POS__CARD_NUMERAL) ||
+				flags.test(TFeatures.POS__ORD_NUMERAL) ||
+				flags.test(TFeatures.POS__FRACT_NUMERAL))
+			flags.add(TFeatures.POS__NUMERAL);
 
-		if (flags.test(Keys.CASE, Values.GENITIVE) && flags.test(Features.NON_INFLECTIVE))
+		if (flags.test(TKeys.CASE, TValues.GENITIVE) && flags.test(TFeatures.NON_INFLECTIVE))
 		{
-			flags.add(Features.POS__GEN_ONLY);
+			flags.add(TFeatures.POS__GEN_ONLY);
 			if (lemma.endsWith("u"))
-				flags.add(Keys.NUMBER, Values.PLURAL);
+				flags.add(TKeys.NUMBER, TValues.PLURAL);
 			else if (lemma.endsWith("a") || lemma.endsWith("s"))
-				flags.add(Keys.NUMBER, Values.SINGULAR);
+				flags.add(TKeys.NUMBER, TValues.SINGULAR);
 			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
 			if (lemma.endsWith("a") || lemma.endsWith("us")) // tēvA, jāņA, medus
-				flags.add(Keys.GENDER, Values.MASCULINE);
+				flags.add(TKeys.GENDER, TValues.MASCULINE);
 			else if (lemma.endsWith("s")) // annAS, eglES, sirdS
-				flags.add(Keys.GENDER, Values.FEMININE);
+				flags.add(TKeys.GENDER, TValues.FEMININE);
 			else if (!lemma.endsWith("u"))
 				System.out.println("Ģenitīvenim ar nestandarta galotni \"" + lemma + "\" nevar noteikt dzimti.");
-			flags.add(Features.FROZEN);
+			flags.add(TFeatures.FROZEN);
 		}
-		else if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))
+		else if (flags.testKey(TKeys.CASE) && flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			if (paradigm.size() > 0)
 				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +
 						(paradigm.stream().map(t -> toString())
 								.reduce((t1, t2) -> t1 + ", " + t2).orElse("")) + ".");
-			flags.add(Features.FROZEN);
+			flags.add(TFeatures.FROZEN);
 		}
 
 	}

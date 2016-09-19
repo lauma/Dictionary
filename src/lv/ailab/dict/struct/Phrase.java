@@ -17,7 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.utils.*;
 
 import java.util.ArrayList;
@@ -111,9 +111,9 @@ public class Phrase implements HasToJSON, HasToXML
 	/**
 	 * Saskaita visus karodziņus, kas lietoti šajā struktūrā.
 	 */
-	public CountingSet<Tuple<Keys, String>> getFlagCounts()
+	public CountingSet<Tuple<TKeys, String>> getFlagCounts()
 	{
-		CountingSet<Tuple<Keys, String>> counts = new CountingSet<>();
+		CountingSet<Tuple<TKeys, String>> counts = new CountingSet<>();
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);

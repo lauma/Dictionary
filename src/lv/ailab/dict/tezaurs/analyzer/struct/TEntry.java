@@ -18,7 +18,7 @@
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import lv.ailab.dict.struct.*;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 
 import java.io.BufferedReader;
@@ -184,7 +184,7 @@ public class TEntry extends Entry
 	 */
 	public void printConsistencyReport()
 	{
-		if (getUsedFlags().test(Features.UNCLEAR_PARADIGM)
+		if (getUsedFlags().test(TFeatures.UNCLEAR_PARADIGM)
 				&& !hasMultipleParadigms()
 				&& !getMentionedParadigms().contains(0))
 			System.err.printf(

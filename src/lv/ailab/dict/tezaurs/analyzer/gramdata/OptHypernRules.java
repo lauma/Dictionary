@@ -1,9 +1,9 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 /**
@@ -12,7 +12,7 @@ import lv.ailab.dict.utils.Tuple;
  * Likumi kas jālieto ar Rule.applyOptHyphens().
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā, vai konkrēti
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā, vai konkrēti
  * vārdi.
  *
  * @author Lauma
@@ -24,16 +24,16 @@ public class OptHypernRules
 	 */
 	public static final Rule[] other = {
 		RegularVerbRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "iet"), Features.POS__IRREG_VERB, Features.POS__DIRECT_VERB}, null), //apiet
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //apiet
 		RegularVerbRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 29,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "iet"), Features.POS__IRREG_VERB, Features.POS__REFL_VERB}, null), //apieties\
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //apieties\
 
 			// 10. paradigma: 5. deklinācija, vīriešu dzimte.
 		BaseRule.noun("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
-				new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), // tēte
+				new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tēte
 		// 25. paradigma: vietniekvārdi.
 		//BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
-		//		new Tuple[]{Features.POS__PRONOUN, Tuple.of(Keys.INFLECT_AS, "\"kas\"")},
+		//		new Tuple[]{TFeatures.POS__PRONOUN, Tuple.of(TKeys.INFLECT_AS, "\"kas\"")},
 		//		null), //daudzka
 	};
 	/**
@@ -164,7 +164,7 @@ public class OptHypernRules
 		BaseRule.secondDeclStd("-āmja, v.", ".*āmis"), // āmis
 
 		BaseRule.noun("-tēta, v.", ".*tētis", 3,
-					new Tuple[]{Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__MASC}), // tētis
+					new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tētis
 
 	};
 	/**
@@ -270,13 +270,13 @@ public class OptHypernRules
 
 		// Izņēmums.
 		FirstConjRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "pārdot", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"dot\"")}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"dot\"")}, null,
 				new String[]{"do"}, new String[]{"dod"}, new String[]{"dev"}), //izpārdot
 		FirstConjRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "palikt", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"likt\"")}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\"")}, null,
 				new String[]{"lik"}, new String[]{"liek"}, new String[]{"lik"}), //izpalikt
 		FirstConjRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīt\"")}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
 
 		// Standartizētie.
@@ -692,12 +692,12 @@ public class OptHypernRules
 
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikt\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS.s)},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\"")},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS.s)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
 		//FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
-		//		new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"gulgt\"")},
-		//		new Tuple[]{Features.USUALLY_USED__THIRD_PERS},
+		//		new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"gulgt\"")},
+		//		new Tuple[]{TFeatures.USUALLY_USED__THIRD_PERS},
 		//		new String[]{"gulg"}, new String[]{"guldz"}, new String[]{"guldz"}), //aizgulgt
 	};
 
@@ -720,7 +720,7 @@ public class OptHypernRules
 		BaseRule.of(
 				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
 				".*skandēt", 16,
-				new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS, Features.FIRST_CONJ_PARALLELFORM, Features.ORIGINAL_NEEDED},
+				new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.FIRST_CONJ_PARALLELFORM, TFeatures.ORIGINAL_NEEDED},
 				null), // noskandēt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
@@ -1025,8 +1025,8 @@ public class OptHypernRules
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
 						SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
-								new Tuple[]{Features.POS__VERB, Features.PARALLEL_FORMS, Features.NO_PRESENT_SOUNDCHANGE})},
-				new Tuple[]{Features.USUALLY_USED__THIRD_PERS}), // aizpelēt
+								new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.NO_PRESENT_SOUNDCHANGE})},
+				new Tuple[]{TFeatures.USUALLY_USED__THIRD_PERS}), // aizpelēt
 	};
 
 	/**
@@ -1084,7 +1084,7 @@ public class OptHypernRules
 
 		// Izņēmums.
 		FirstConjRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"zīties\"")}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīties\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //iepazīties
 
 		// Standartizētie.
@@ -1295,8 +1295,8 @@ public class OptHypernRules
 
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"teikties\"")},
-				new Tuple[]{Tuple.of(Keys.USUALLY_USED_IN_FORM, Values.NOT_PRESENT_FORMS.s)},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\"")},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS.s)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
 	};
 

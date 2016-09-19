@@ -1,7 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * atrasta, tālāk nepārbauda (tātad uzdošanās kārtība ir svarīga).
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * Izveidots 2015-10-26.
  * @author Lauma
@@ -54,7 +54,7 @@ public class BaseRule implements Rule
      * Šos karodziņus uzstāda, ja gramatikas teksts atbilst attiecīgajam
      * šablonam.
      */
-    protected final Set<Tuple<Keys,String>> alwaysFlags;
+    protected final Set<Tuple<TKeys,String>> alwaysFlags;
 
     /**
      * Šo izdrukā, kad liekas, ka likums varētu būt nepilnīgs - gramatikas
@@ -73,7 +73,7 @@ public class BaseRule implements Rule
      *                      atbilst attiecīgajam šablonam.
      */
     public BaseRule(String pattern, List<SimpleSubRule> lemmaLogic,
-			Set<Tuple<Keys, String>> alwaysFlags)
+			Set<Tuple<TKeys, String>> alwaysFlags)
     {
         if (lemmaLogic == null)
             throw new IllegalArgumentException (
@@ -112,8 +112,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule simple(String patternText, String lemmaRestrictions,
-			int paradigmId,	Set<Tuple<Keys, String>> positiveFlags,
-			Set<Tuple<Keys, String>> alwaysFlags)
+			int paradigmId,	Set<Tuple<TKeys, String>> positiveFlags,
+			Set<Tuple<TKeys, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
 						add(new SimpleSubRule(lemmaRestrictions, new HashSet<Integer>(){{
@@ -137,8 +137,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule simple(String patternText, String lemmaRestrictions,
-			Set<Integer> paradigms,	Set<Tuple<Keys, String>> positiveFlags,
-			Set<Tuple<Keys, String>> alwaysFlags)
+			Set<Integer> paradigms,	Set<Tuple<TKeys, String>> positiveFlags,
+			Set<Tuple<TKeys, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
 			add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags));}},
@@ -160,7 +160,7 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule
 	 */
 	public static BaseRule of(String patternText, SimpleSubRule[] lemmaLogic,
-			Tuple<Keys,String>[] alwaysFlags)
+			Tuple<TKeys,String>[] alwaysFlags)
 	{
 		return new BaseRule(patternText,
 				lemmaLogic == null ? null : Arrays.asList(lemmaLogic),
@@ -186,8 +186,8 @@ public class BaseRule implements Rule
 	 */
 	public static BaseRule of(String patternText, String lemmaRestrictions,
 			int paradigmId,
-			Tuple<Keys, String>[] positiveFlags,
-			Tuple<Keys, String>[] alwaysFlags)
+			Tuple<TKeys, String>[] positiveFlags,
+			Tuple<TKeys, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, new Integer[]{paradigmId}, positiveFlags)},
@@ -210,8 +210,8 @@ public class BaseRule implements Rule
 	 *                      	atbilst attiecīgajam šablonam
 	 */
 	public static BaseRule of(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<Keys, String>[] positiveFlags,
-			Tuple<Keys, String>[] alwaysFlags)
+			Integer[] paradigms, Tuple<TKeys, String>[] positiveFlags,
+			Tuple<TKeys, String>[] alwaysFlags)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, paradigms, positiveFlags)},
@@ -234,11 +234,11 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule
 	 */
 	public static BaseRule noun (String patternText, SimpleSubRule[] lemmaLogic,
-			Tuple<Keys,String>[] alwaysFlags)
+			Tuple<TKeys,String>[] alwaysFlags)
 	{
 		ArrayList<SimpleSubRule> tmp = new ArrayList<>();
 		for (SimpleSubRule r : lemmaLogic)
-			tmp.add(r.cloneWithFeature(Features.POS__NOUN));
+			tmp.add(r.cloneWithFeature(TFeatures.POS__NOUN));
 		return new BaseRule(patternText, tmp,
 				alwaysFlags == null ? null :
 						new HashSet<>(Arrays.asList(alwaysFlags)));
@@ -260,12 +260,12 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<Keys,String>[] positiveFlags,
-			Tuple<Keys,String>[] alwaysFlags)
+			Integer[] paradigms, Tuple<TKeys,String>[] positiveFlags,
+			Tuple<TKeys,String>[] alwaysFlags)
 	{
-		HashSet<Tuple<Keys,String>> fullPosFlags = new HashSet<>();
+		HashSet<Tuple<TKeys,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
-		fullPosFlags.add(Features.POS__NOUN);
+		fullPosFlags.add(TFeatures.POS__NOUN);
 		return BaseRule.simple(patternText, lemmaRestrictions,
 				paradigms == null ? null : new HashSet<>(Arrays
 						.asList(paradigms)),
@@ -290,12 +290,12 @@ public class BaseRule implements Rule
 	 * @return	jauns BaseRule, kam ir pazīme Vārdšķira ar vērtību Lietvārds.
 	 */
 	public static BaseRule noun(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<Keys,String>[] positiveFlags,
-			Tuple<Keys,String>[] alwaysFlags)
+			int paradigm, Tuple<TKeys,String>[] positiveFlags,
+			Tuple<TKeys,String>[] alwaysFlags)
 	{
-		HashSet<Tuple<Keys,String>> fullPosFlags = new HashSet<>();
+		HashSet<Tuple<TKeys,String>> fullPosFlags = new HashSet<>();
 		if (positiveFlags != null) fullPosFlags.addAll(Arrays.asList(positiveFlags));
-		fullPosFlags.add(Features.POS__NOUN);
+		fullPosFlags.add(TFeatures.POS__NOUN);
 		return BaseRule.simple(patternText, lemmaRestrictions,
 				new HashSet<Integer>()
 				{{add(paradigm);}}, fullPosFlags,
@@ -314,7 +314,7 @@ public class BaseRule implements Rule
 	public static BaseRule participleIs(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 0,
-				new Tuple[]{Features.POS__PARTICIPLE_IS},
+				new Tuple[]{TFeatures.POS__PARTICIPLE_IS},
 				null);
 	}
 	/**
@@ -328,12 +328,12 @@ public class BaseRule implements Rule
 	public static BaseRule adjectiveParticiple (String patternText)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[] {
-						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{Features.POS__ADJ}),
-						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_TS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_OSS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_DAMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*[āa]ms", new Integer[]{13, 0}, new Tuple[]{Features.POS__ADJ, Features.POS__PARTICIPLE_AMS, Features.UNCLEAR_PARADIGM, Features.UNCLEAR_POS}),
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{Features.POS__ADJ})},
+						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{TFeatures.POS__ADJ}),
+						SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*[āa]ms", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ})},
 				null);
 	}
 
@@ -350,7 +350,7 @@ public class BaseRule implements Rule
 		return BaseRule.of(patternText, new SimpleSubRule[] {
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, null),
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, null)},
-				new Tuple[] {Features.POS__ADJ});
+				new Tuple[] {TFeatures.POS__ADJ});
 	}
 
 	/**
@@ -364,7 +364,7 @@ public class BaseRule implements Rule
 	public static BaseRule fifthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -377,7 +377,7 @@ public class BaseRule implements Rule
 	public static BaseRule fifthDeclNoChange(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN, TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -390,7 +390,7 @@ public class BaseRule implements Rule
 	public static BaseRule fifthDeclOptChange(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN, TFeatures.OPT_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -403,8 +403,8 @@ public class BaseRule implements Rule
 	public static BaseRule secondDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 3,
-				new Tuple[]{Features.POS__NOUN},
-				new Tuple[]{Features.GENDER__MASC});
+				new Tuple[]{TFeatures.POS__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC});
 	}
 
 	/**
@@ -418,8 +418,8 @@ public class BaseRule implements Rule
 	public static BaseRule thirdDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 6,
-				new Tuple[]{Features.POS__NOUN},
-				new Tuple[]{Features.GENDER__MASC});
+				new Tuple[]{TFeatures.POS__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC});
 	}
 
 	/**
@@ -433,7 +433,7 @@ public class BaseRule implements Rule
 	public static BaseRule sixthDeclStd(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 11,
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 	/**
 	 * Metode īsumam.
@@ -446,8 +446,8 @@ public class BaseRule implements Rule
 	public static BaseRule sixthDeclNoChange(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 35,
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
-				//new Tuple[]{Features.POS__NOUN, Features.NO_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
+				//new Tuple[]{TFeatures.POS__NOUN, TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 
 	/**
@@ -461,8 +461,8 @@ public class BaseRule implements Rule
 	public static BaseRule sixthDeclOptChange(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, new Integer[]{11, 35},
-				new Tuple[]{Features.POS__NOUN}, new Tuple[]{Features.GENDER__FEM});
-				//new Tuple[]{Features.POS__NOUN, Features.OPT_SOUNDCHANGE}, new Tuple[]{Features.GENDER__FEM});
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
+				//new Tuple[]{TFeatures.POS__NOUN, TFeatures.OPT_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 
 	/**
@@ -478,7 +478,7 @@ public class BaseRule implements Rule
 			String patternText, String lemmaEnd)
 	{
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
-				new Tuple[]{Features.POS__VERB}, null);
+				new Tuple[]{TFeatures.POS__VERB}, null);
 	}
 
 	/**
@@ -496,17 +496,17 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd, boolean presentChange)
 	{
-		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
-		posFlags.add(Features.POS__VERB);
-		posFlags.add(Features.PARALLEL_FORMS);
+		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
-			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
-			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags.add(Features.ORIGINAL_NEEDED);
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
@@ -525,14 +525,14 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjDirAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
-		posFlags.add(Features.POS__VERB);
-		posFlags.add(Features.PARALLEL_FORMS);
-		posFlags.add(Features.OPT_PRESENT_SOUNDCHANGE);
+		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags.add(Features.ORIGINAL_NEEDED);
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
@@ -550,7 +550,7 @@ public class BaseRule implements Rule
 			String patternText, String lemmaEnd)
 	{
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 19,
-				new Tuple[]{Features.POS__VERB}, null);
+				new Tuple[]{TFeatures.POS__VERB}, null);
 	}
 
 	/**
@@ -567,14 +567,14 @@ public class BaseRule implements Rule
 	public static BaseRule thirdConjReflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
-		posFlags.add(Features.POS__VERB);
-		posFlags.add(Features.PARALLEL_FORMS);
-		posFlags.add(Features.OPT_PRESENT_SOUNDCHANGE);
+		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags.add(Features.ORIGINAL_NEEDED);
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
@@ -593,17 +593,17 @@ public class BaseRule implements Rule
 	public static BaseRule secondThirdConjDirectAllPersParallel(
 			String patternText, String lemmaRestrictions, boolean presentChange)
 	{
-		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
-		posFlags.add(Features.POS__VERB);
-		posFlags.add(Features.PARALLEL_FORMS);
+		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
-			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
-			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags.add(Features.ORIGINAL_NEEDED);
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 					SimpleSubRule.of(lemmaRestrictions, new Integer[]{16, 17}, posFlags.toArray(new Tuple[posFlags.size()]))},
@@ -624,17 +624,17 @@ public class BaseRule implements Rule
     public static BaseRule secondThirdConjReflAllPersParallel(
             String patternText, String lemmaRestrictions, boolean presentChange)
     {
-		ArrayList<Tuple<Keys, String>> posFlags = new ArrayList<>();
-		posFlags.add(Features.POS__VERB);
-		posFlags.add(Features.PARALLEL_FORMS);
+		ArrayList<Tuple<TKeys, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
-			posFlags.add(Features.HAS_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
-			posFlags.add(Features.NO_PRESENT_SOUNDCHANGE);
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(Features.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags.add(Features.ORIGINAL_NEEDED);
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 					SimpleSubRule.of(lemmaRestrictions, new Integer[]{19, 20}, posFlags.toArray(new Tuple[posFlags.size()]))},
@@ -721,7 +721,7 @@ public class BaseRule implements Rule
 				}
 
 				if (alwaysFlags != null)
-					for (Tuple<Keys, String> t : alwaysFlags)
+					for (Tuple<TKeys, String> t : alwaysFlags)
 						flagCollector.add(t.first, t.second);
 			}
 			return newBegin;

@@ -1,8 +1,8 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Features;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Keys;
-import lv.ailab.dict.tezaurs.analyzer.flagconst.Values;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
@@ -18,7 +18,7 @@ import java.util.*;
  * atvasināt trešās personas formu šablonu (sarežģītas paralēlformas).
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
- * lietotas tikai vērtības, kas ieviestas Values uzskaitījumā.
+ * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
  *
  * Izveidots 2015-10-16.
  * @author Lauma
@@ -69,13 +69,13 @@ public class FirstConjRule implements Rule
 	 */
 	public FirstConjRule (String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags,
+			Set<Tuple<TKeys,String>> positiveFlags, Set<Tuple<TKeys,String>> alwaysFlags,
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
-		HashSet<Tuple<Keys,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(Keys.POS, Values.VERB.s));
+		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<Keys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		this.infinityStems = Collections.unmodifiableList(infinityStems);
@@ -137,13 +137,13 @@ public class FirstConjRule implements Rule
 	 * @param pastStems		pagātnes celmi
 	 */
 	public FirstConjRule (String patternEnd, String lemmaEnd, int paradigmId,
-			Set<Tuple<Keys,String>> positiveFlags, Set<Tuple<Keys,String>> alwaysFlags,
+			Set<Tuple<TKeys,String>> positiveFlags, Set<Tuple<TKeys,String>> alwaysFlags,
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
-		HashSet<Tuple<Keys,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(Keys.POS, Values.VERB.s));
+		HashSet<Tuple<TKeys,String>> positiveFlagsFull = new HashSet<>();
+		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
-		HashSet<Tuple<Keys,String>> alwaysFlagsSet = alwaysFlags == null ?
+		HashSet<Tuple<TKeys,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		this.infinityStems = Collections.unmodifiableList(infinityStems);
@@ -179,7 +179,7 @@ public class FirstConjRule implements Rule
 	 */
 	public static FirstConjRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags,
+			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags,
 			String[] infinityStems, String[] presentStems, String[] pastStems)
 	{
 		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
@@ -208,7 +208,7 @@ public class FirstConjRule implements Rule
 	 * @param pastStems		pagātnes celmi
 	 */
 	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
-			Tuple<Keys,String>[] positiveFlags, Tuple<Keys,String>[] alwaysFlags,
+			Tuple<TKeys,String>[] positiveFlags, Tuple<TKeys,String>[] alwaysFlags,
 			String[] infinityStems, String[] presentStems, String[] pastStems)
 	{
 		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,
@@ -233,7 +233,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 15,
-				new Tuple[] {Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -250,7 +250,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -271,7 +271,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -292,7 +292,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -313,8 +313,8 @@ public class FirstConjRule implements Rule
 				extractPPStemsAllPersParallel(patternText);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
@@ -337,7 +337,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -358,7 +358,7 @@ public class FirstConjRule implements Rule
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		String lemmaEnd = "(" + String.join("|",lemmaEnds) + ")";
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, extractInfinityStems(lemmaEnds),
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -377,7 +377,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -397,7 +397,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -419,7 +419,7 @@ public class FirstConjRule implements Rule
 	{
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(Keys.INFLECT_AS, inflectAs), Features.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				new String[] {stems.first}, new String[] {stems.second});
 	}
@@ -441,8 +441,8 @@ public class FirstConjRule implements Rule
 				extractPPStemsThirdPersParallel(patternEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
-			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
@@ -465,8 +465,8 @@ public class FirstConjRule implements Rule
 				extractPPStemsAllPersParallel(patternText);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {Features.PARALLEL_FORMS, Tuple.of(Keys.INFLECT_AS, "\"" + lemmaEnd + "\""), Features.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternText, null, lemmaEnd, 18, posFlags,
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
@@ -732,13 +732,13 @@ public class FirstConjRule implements Rule
 		{
 			prefix = prefix.substring(0, prefix.length() - infinityStem.length());
 			if (prefix.length() > 0)
-				flagCollector.add(Keys.VERB_PREFIX, prefix);
-			flagCollector.add(Keys.INFINITY_STEM, prefix + infinityStem);
+				flagCollector.add(TKeys.VERB_PREFIX, prefix);
+			flagCollector.add(TKeys.INFINITY_STEM, prefix + infinityStem);
 
 			for (String stem : presentStems)
-				flagCollector.add(Keys.PRESENT_STEM, prefix + stem);
+				flagCollector.add(TKeys.PRESENT_STEM, prefix + stem);
 			for (String stem : pastStems)
-				flagCollector.add(Keys.PAST_STEM, prefix + stem);
+				flagCollector.add(TKeys.PAST_STEM, prefix + stem);
 
 		}
 		else System.err.printf(

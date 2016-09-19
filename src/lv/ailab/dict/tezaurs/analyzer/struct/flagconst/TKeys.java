@@ -1,11 +1,11 @@
-package lv.ailab.dict.tezaurs.analyzer.flagconst;
+package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
 
 /**
  * Karodziņu grupas.
  *
  * @author Lauma
  */
-public enum Keys
+public enum TKeys
 {
 	/**
 	 * Vārdšķiras, saīsinājumi, salikteņu daļas, priedēkļi, vārdi svešvalodā
@@ -18,14 +18,14 @@ public enum Keys
 	/**
 	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
 	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
-	 * nepieciešams lietot jau definētās Values. Konkrētus vārdus jāliek
+	 * nepieciešams lietot jau definētās TValues. Konkrētus vārdus jāliek
 	 * pēdiņās.
 	 */
 	USED_TOGETHER_WITH("Lieto kopā ar"),
 	/**
 	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
 	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
-	 * nepieciešams lietot jau definētās Values. Konkrētus vārdus jāliek
+	 * nepieciešams lietot jau definētās TValues. Konkrētus vārdus jāliek
 	 * pēdiņās.
 	 * Šis variants ir gadījumiem, kad vārdnīcā ir "parasti savienojumā ar".
 	 */
@@ -140,7 +140,7 @@ public enum Keys
 
 	public String s;
 
-	Keys(String name)
+	TKeys(String name)
 	{
 		this.s = name;
 	}

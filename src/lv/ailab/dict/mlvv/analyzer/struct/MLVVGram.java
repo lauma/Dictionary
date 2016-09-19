@@ -2,27 +2,40 @@ package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.utils.JSONUtils;
+import org.json.simple.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
- * Created on 2016-02-03.
+ * Izveidots 2016-02-03.
  *
  * @author Lauma
  */
 public class MLVVGram extends Gram
 {
+	/**
+	 * freeText izmanto galotņu šabloniem, flagtext - gramatikas beigu daļai
+	 * kursīvā.
+	 */
+	public String flagText = null;
 	public MLVVGram(){};
 
 	/**
-	 * Uztaisa jaunu grmatikas elementu, uzstādot freeText un normalizējot to.
+	 * Uztaisa jaunu grmatikas elementu, doto tekstu sadalot pa freeText un
+	 * flagText.
 	 */
-	public MLVVGram(String freeText)
+	public MLVVGram(String text)
 	{
 		super();
-		this.freeText = freeText;
-		normalizeFreeText();
+		this.freeText = text;
+		separateFlagText();
 	}
 	public static MLVVGram extractFromString(String linePart)
 	{
@@ -101,18 +114,100 @@ public class MLVVGram extends Gram
 		} else // nav altLemmu
 			gram.freeText = linePart;
 
-		gram.normalizeFreeText();
+		gram.separateFlagText();
 		return gram;
 
 	}
 
+	protected static String normalizeGramField(String field)
+	{
+		if (field == null) return null;
+		while (field.startsWith(",") || field.startsWith(";"))
+			field = field.substring(1).trim();
+		while (field.endsWith(",") || field.endsWith(";"))
+			field = field.substring(0, field.length() - 1).trim();
+		return field;
+	}
 	public void normalizeFreeText()
 	{
+		freeText = normalizeGramField(freeText);
+		if (freeText != null && freeText.isEmpty()) freeText = null;
+	}
+
+	public void normalizeFlagText()
+	{
+		flagText = normalizeGramField(flagText);
+		if (flagText != null && flagText.isEmpty()) flagText = null;
+	}
+
+	public void separateFlagText()
+	{
+		// Priekšsatīrīšana.
+		normalizeFreeText();
 		if (freeText == null) return;
-		while (freeText.startsWith(",") || freeText.startsWith(";"))
-			freeText = freeText.substring(1).trim();
-		while (freeText.endsWith(",") || freeText.endsWith(";"))
-			freeText = freeText.substring(0, freeText.length() - 1).trim();
+
+		// Analīze, kā dalīt.
+		int lastIOpen = freeText.lastIndexOf("<i>");
+		int lastIClose = freeText.lastIndexOf("</i>");
+		if (lastIOpen > -1 &&
+				(lastIClose == freeText.length() - "</i>".length() ||
+						lastIClose == freeText.length() - "</i>".length() - 1 ||
+						lastIOpen > lastIClose))
+		{
+			flagText = freeText.substring(lastIOpen).trim();
+			freeText = freeText.substring(0, lastIOpen).trim();
+		}
+		else if (lastIOpen == -1 && (lastIClose == -1 ||
+				lastIClose == freeText.length() - "</i>".length() ||
+				lastIClose == freeText.length() - "</i>".length() - 1))
+		{
+			if (!freeText.contains(" -"))
+			{
+				flagText = freeText;
+				freeText = null;
+			}
+		}
+
+		// Satīra visu iegūto.
+		if (flagText != null)
+		{
+			flagText = flagText.replace("<i>", "");
+			flagText = flagText.replace("</i>", "");
+		}
+		if (freeText != null)
+		{
+			freeText = freeText.replace("<i>", "");
+			freeText = freeText.replace("</i>", "");
+		}
+		normalizeFreeText();
+		normalizeFlagText();
+	}
+
+	/**
+	 * Pārrakstīta JSON izvade, lai atspoguļotu flagText lauku.
+	 */
+	@Override
+	public String toJSON ()
+	{
+		if (flagText != null)
+			return toJSON("Inflection", "\"FlagText\":\"" + JSONObject.escape(flagText) + "\"");
+		else return toJSON("Inflection", null);
+	}
+
+	/**
+	 * Pāarakstīta XML izveide, lai atspoguļotu flagText lauku.
+	 */
+	@Override
+	public void toXML(Node parent)
+	{
+		if (flagText != null)
+		{
+			Document doc = parent.getOwnerDocument();
+			Element flagTextNode = doc.createElement("FlagText");
+			flagTextNode.appendChild(doc.createTextNode(flagText));
+			toXML(parent, "Inflection", flagTextNode);
+		}
+		else toXML(parent, "Inflection", null);
 	}
 
 }

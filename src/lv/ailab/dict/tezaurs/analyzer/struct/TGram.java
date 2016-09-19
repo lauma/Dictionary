@@ -637,17 +637,6 @@ public class TGram extends Gram
 	@Override
 	public String toJSON()
 	{
-		return toJSON(true);
-	}
-
-	/**
-	 * Izveido JSON reprezentāciju.
-	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
-	 * atgriešanu.
-	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
-	 */
-	public String toJSON (boolean printOrig)
-	{
 		if (leftovers != null && leftovers.size() > 0)
 		{
 			StringBuilder additional = new StringBuilder();
@@ -663,11 +652,8 @@ public class TGram extends Gram
 				}
 			}
 			additional.append("]");
-			return toJSON(paradigm, altLemmas, flags, freeText, printOrig, additional.toString());
+			return toJSON(null, additional.toString());
 		}
-		else return toJSON(paradigm, altLemmas, flags, freeText, printOrig, null);
-
+		else return toJSON(null, null);
 	}
-
-	
 }

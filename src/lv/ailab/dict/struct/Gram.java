@@ -28,6 +28,7 @@ import org.w3c.dom.Node;
 
 /**
  * Gramatikas lauks.
+ * TODO: pārrakstīt toXML metodei, lai iekļautu izejā leftovers.
  * @author Lauma
  */
 public class Gram implements HasToJSON, HasToXML
@@ -113,41 +114,20 @@ public class Gram implements HasToJSON, HasToXML
 	 * gramatikas tekstu.
 	 */
 	public String toJSON()
-		{
-			return toJSON(true, null);
-		}
-
-	/**
-	 * Izveido JSON reprezentāciju.
-	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
-	 * atgriešanu.
-	 * @param printOrig vai izdrukā iekļaut oriģinālo tekstu?
-	 */
-	public String toJSON (boolean printOrig, String additional)
 	{
-		return toJSON(paradigm, altLemmas, flags, freeText, printOrig, additional);
+		return toJSON(null, null);
 	}
 
 	/**
-	 * Izveido JSON reprezentāciju TGram elementa stilā no datiem, kas padoti no
-	 * ārpuses.
+	 * Reālā JSON reprezentācijas izveides metode, ko konkrētais objekts sauc,
+	 * dažus parametrus aizpildot automātiski.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
+	 * @param freeTextFieldName	freeText lauka nosaukums
+	 * @param additional	JSON-noformēts atslēgu vērtību pārītis, ko pievienot
+	 *                      izdrukā.
 	 */
-	public static String toJSON (HashSet<Integer> paradigm, Flags flags)
-	{
-		return toJSON(paradigm, null, flags, "", false, null);
-	}
-	/**
-	 * Izveido JSON reprezentāciju Gram elementa stilā no padotiem datiem.
-	 * Iekšējai lietošanai.
-	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
-	 * atgriešanu.
-	 * @param printFreeText vai izdrukā iekļaut nestrukturēto tekstu?
-	 */
-	protected static String toJSON (
-			Set<Integer> paradigm, List<Header> altLemmas, Flags flags, String orig,
-			boolean printFreeText, String additional)
+	public String toJSON (String freeTextFieldName, String additional)
 	{
 		StringBuilder res = new StringBuilder();
 
@@ -167,37 +147,6 @@ public class Gram implements HasToJSON, HasToXML
 			if (hasPrev) res.append(", ");
 			res.append("\"AltLemmas\":");
 			res.append(JSONUtils.objectsToJSON(altLemmas));
-			/*Iterator<Header> it = altLemmas.iterator();
-			while (it.hasNext())
-			{
-				Header next = it.next();
-				if (!altLemmas.getAll(next).isEmpty())
-				{
-					res.append("\"");
-					res.append(JSONObject.escape(next.toString()));
-					res.append("\":[");
-					Iterator<Tuple<Lemma, Flags>> flagIt = altLemmas.getAll(next).iterator();
-					while (flagIt.hasNext())
-					{
-						Tuple<Lemma, Flags> alt = flagIt.next();
-						//res.append("{");
-						//res.append(alt.first.toJSON());
-						if (alt.second != null && !alt.second.pairings.isEmpty())
-						{
-							res.append(Header.toJSON(alt.first, next, alt.second, false));
-							//res.append(", ");
-							//res.append("\"Flags\":");
-							//res.append(JSONUtils.mappingSetToJSON(alt.second.pairings));
-						}
-						//res.append("}");
-						if (flagIt.hasNext()) res.append(", ");
-					}
-
-					res.append("]");
-					if (it.hasNext()) res.append(", ");
-				}
-			}
-			res.append("}");*/
 			hasPrev = true;
 		}
 
@@ -209,11 +158,13 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (printFreeText && orig != null && orig.length() > 0)
+		if (freeText != null && freeText.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"FreeText\":\"");
-			res.append(JSONObject.escape(orig));
+			if (freeTextFieldName == null || freeTextFieldName.trim().isEmpty())
+				res.append("\"FreeText\":\"");
+			else res.append("\"" + JSONObject.escape(freeTextFieldName) + "\":");
+			res.append(JSONObject.escape(freeText));
 			res.append("\"");
 			hasPrev = true;
 		}
@@ -231,18 +182,17 @@ public class Gram implements HasToJSON, HasToXML
 
 	public void toXML(Node parent)
 	{
-		toXML(parent, paradigm, altLemmas, flags, freeText,
-				true);
+		toXML(parent, null, null);
 	}
 
 	/**
-	 * Iekšējai lietošanai - reālā XML izveidošanas metode, ko no ārpuses sauc,
-	 * dažus parametrus aizpildot automatiski.
-	 * @param printFreeText	vai izdrukāt nestrukturēto tekstu, ja tāds ir dots
+	 * Reālā XML izveidošanas metode, ko konkrētais obekts sauc, dažus
+	 * parametrus aizpildot automatiski.
+ 	 * @param freeTextFieldName	freeText lauka nosaukums
+	 * @param additional	XML node ar papildus informāciju.
 	 */
-	protected static void toXML(
-			Node parent, Set<Integer> paradigm, List<Header> altLemmas, Flags flags,
-			String orig, boolean printFreeText)
+
+	public void toXML(Node parent, String freeTextFieldName, Node additional)
 	{
 		Document doc = parent.getOwnerDocument();
 		Node gramN = doc.createElement("Gram");
@@ -269,12 +219,17 @@ public class Gram implements HasToJSON, HasToXML
 
 		if (flags != null) flags.toXML(gramN);
 
-		if (printFreeText && orig != null && !orig.isEmpty())
+		if (freeText != null && !freeText.isEmpty())
 		{
-			Node origN = doc.createElement("FreeText");
-			origN.appendChild(doc.createTextNode(orig));
+			Node origN;
+			if (freeTextFieldName == null || freeTextFieldName.trim().isEmpty())
+				origN = doc.createElement("FreeText");
+			else origN = doc.createElement(freeTextFieldName);
+			origN.appendChild(doc.createTextNode(freeText));
 			gramN.appendChild(origN);
 		}
+		if (additional != null)
+			gramN.appendChild(additional);
 
 		parent.appendChild(gramN);
 	}

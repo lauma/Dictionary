@@ -127,24 +127,6 @@ public class Header implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā Header.
-	 * @param addTitle vai sākumā pielikt "\"Header\":"
-	 */
-	public static String toJSON(Lemma lemma, int paradigm, Flags flags, boolean addTitle)
-	{
-		StringBuilder res = new StringBuilder();
-
-		if (addTitle) res.append("\"Header\":");
-		res.append("{");
-		res.append(lemma.toJSON());
-		res.append(", ");
-		res.append(Gram.toJSON(new HashSet<Integer>(){{add(paradigm);}}, flags));
-
-		res.append("}");
-		return res.toString();
-	}
-
-	/**
 	 * Noklusētais risinājums ir drukāt visu, arī header galveno lemmu - ja nu
 	 * tā ir iekļauta arī altLemmās, tad apakšklasei vajag šo pārrakstīt.
 	 *

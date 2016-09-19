@@ -96,24 +96,5 @@ public class THeader extends Header
 		return res.toString();
 	}
 
-	/**
-	 * Izdrukā padotos datus līdzīgā stilā, kā jau parasti drukā THeader.
-	 * @param addTitle vai sākumā pielikt "\"Header\":"
-	 */
-	public static String toJSON(TLemma lemma, int paradigm, Flags flags, boolean addTitle)
-	{
-		StringBuilder res = new StringBuilder();
-
-		if (addTitle) res.append("\"Header\":");
-		res.append("{");
-		res.append(lemma.toJSON());
-		res.append(", ");
-		res.append(TGram.toJSON(new HashSet<Integer>(){{add(paradigm);}}, flags));
-
-		res.append("}");
-		return res.toString();
-	}
-	
-
 
 }

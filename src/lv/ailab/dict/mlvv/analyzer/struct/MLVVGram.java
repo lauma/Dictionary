@@ -57,7 +57,7 @@ public class MLVVGram extends Gram
 					// No visiem gabaliem veido altLemmas.
 					if (smallParts.size() > 0)
 					{
-						gram.altLemmas = new ArrayList<>();
+						if (gram.altLemmas == null) gram.altLemmas = new ArrayList<>();
 						for (String smallPart : smallParts)
 						{
 							smallPart = smallPart.trim();
@@ -65,7 +65,8 @@ public class MLVVGram extends Gram
 								smallPart = smallPart.substring(0, smallPart.length()-1).trim();
 							else if (!smallPart.endsWith(",")) smallPart += ",";
 							smallPart = smallPart + " " + common;
-							gram.altLemmas.add(MLVVHeader.extractSingularHeader(smallPart));
+							Header altLemma = MLVVHeader.extractSingularHeader(smallPart);
+							if (altLemma!= null) gram.altLemmas.add(altLemma);
 						}
 					}
 				} else

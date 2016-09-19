@@ -221,10 +221,10 @@ public class Entry implements HasToJSON, HasToXML
 	public ArrayList<String> collectPronunciations()
 	{
 		ArrayList<String> res = new ArrayList<> ();
-		if (head.lemma.pronunciation != null)
-			res.addAll(Arrays.asList(head.lemma.pronunciation));
-		if (derivs == null || derivs.isEmpty()) return res;
-		for (Header h : derivs)
+		//if (head.lemma.pronunciation != null)
+		//	res.addAll(Arrays.asList(head.lemma.pronunciation));
+		//if (derivs == null || derivs.isEmpty()) return res;
+		for (Header h : getAllHeaders())
 		{
 			if (h.lemma.pronunciation != null)
 				res.addAll(Arrays.asList(h.lemma.pronunciation));

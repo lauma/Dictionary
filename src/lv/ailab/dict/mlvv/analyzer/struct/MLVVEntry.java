@@ -127,6 +127,7 @@ public class MLVVEntry extends Entry
 	 */
 	protected void extractHead(String linePart)
 	{
+
 		head = new MLVVHeader();
 		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())

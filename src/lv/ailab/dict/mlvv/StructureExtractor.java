@@ -22,8 +22,10 @@ import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.Normalizer;
 import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.struct.Entry;
+import lv.ailab.dict.utils.Trio;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Programmas ārējā saskarne. Nodrošina XML izgūšanas rīku darbināšanu.
@@ -34,11 +36,17 @@ import java.io.*;
 public class StructureExtractor
 {
 	public static String inputDataPath = "./dati/mlvv/";
-	public static String outputDataPath = "./dati/mlvv/xml/";
+	public static String outputDataPath = "./dati/mlvv/result/";
 
 	public static boolean PRINT_MIDLLE = true;
+	public static boolean PRINT_PRONUNCIATION = true;
 
 	public Dictionary dict = new Dictionary();
+
+	/**
+	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
+	 */
+	public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
 
 	public static void main (String[] args)
 	{
@@ -71,7 +79,17 @@ public class StructureExtractor
 		try
 		{
 			Entry e = MLVVEntry.extractFromString(Normalizer.normalizeLine(line));
-			if (e != null) dict.entries.add(e);
+			if (e != null)
+			{
+				dict.entries.add(e);
+				if (PRINT_PRONUNCIATION)
+				{
+					String entryword = e.head.lemma.text;
+					String homID = e.homId;
+					for (String pronun : e.collectPronunciations())
+						pronunciations.add(Trio.of(pronun, entryword, homID));
+				}
+			}
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
@@ -138,18 +156,40 @@ public class StructureExtractor
 	public void printResults()
 	{
 		System.out.println("Drukā rezultātu...");
+		boolean success = true;
+
+		if (PRINT_PRONUNCIATION && pronunciations != null) try
+		{
+			BufferedWriter out = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(outputDataPath + "pronun.txt"), "UTF8"));
+			for (Trio<String, String, String> p : pronunciations)
+			{
+				out.write(p.first + "\t" + p.second + "\t" + p.third + "\n");
+			}
+			out.close();
+		} catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+			System.out.println("Neizdodas izdrukāt izrunas failā " + outputDataPath + "pronun.txt!");
+			success = false;
+		}
+
 		try
 		{
 			PrintWriter out = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputDataPath + "mlvv.xml"), "UTF8")));
 			dict.toXMLFile(out);
 			out.close();
-			System.out.println("Viss pabeigts!");
+
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
 			System.out.println("Neizdodas izdrukāt rezultātu XML failā " + outputDataPath + "mlvv.xml!");
-			System.out.println("Pabeigts, bet neveiksmīgi.");
+			success = false;
 		}
+
+		if (success)
+			System.out.println("Viss pabeigts!");
+		else System.out.println("Pabeigts, bet neveiksmīgi.");
 	}
 }

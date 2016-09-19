@@ -591,8 +591,12 @@ public class TGram extends Gram
 			else if (lemma.endsWith("a") || lemma.endsWith("s"))
 				flags.add(Keys.NUMBER, Values.SINGULAR);
 			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
-			if (lemma.endsWith("a"))
+			if (lemma.endsWith("a") || lemma.endsWith("us")) // tēvA, jāņA, medus
 				flags.add(Keys.GENDER, Values.MASCULINE);
+			else if (lemma.endsWith("s")) // annAS, eglES, sirdS
+				flags.add(Keys.GENDER, Values.FEMININE);
+			else if (!lemma.endsWith("u"))
+				System.out.println("Ģenitīvenim ar nestandarta galotni \"" + lemma + "\" nevar noteikt dzimti.");
 			flags.add(Features.FROZEN);
 		}
 		else if (flags.testKey(Keys.CASE) && flags.test(Features.NON_INFLECTIVE))

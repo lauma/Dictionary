@@ -1,177 +1,143 @@
 package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
 
+import lv.ailab.dict.struct.flagconst.Values;
+
 /**
  * Populārākās karodziņu vērtības - iznestas šeit, lai mazinātu pārakstīšanās
- * risku.
+ * risku. Vispopulārākās atrodamas virsklasē Values.
  *
- * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un AbbrMap
- * klasē - citās klasēs jālieto atsauces uz TValues klasē definētajām, lai kaut
- * ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
+ * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit/Values un
+ * AbbrMap klasē - citās klasēs jālieto atsauces, lai kaut ko pamainot, nav
+ * jadzenās pakaļ pa daudzām klasēm.
  *
  * @author Lauma
  */
-public enum TValues
+public class TValues extends Values
 {
-	NOUN("Lietvārds"),
-	REFLEXIVE_NOUN("Atgriezeniskais lietvārds"),
-	PROPER("Īpašvārds"),
-	GEN_ONLY("Ģenitīvenis"),
-	ADJECTIVE("Īpašības vārds"),
-	NUMERAL("Skaitļa vārds"),
-	ORDINAL_NUMERAL("Kārtas skaitļa vārds"),
-	CARDINAL_NUMERAL("Pamata skaitļa vārds"),
-	FRACTIONAL_NUMERAL("Daļu skaitļa vārds"),
+	public final static String REFLEXIVE_NOUN = "Atgriezeniskais lietvārds";
+	public final static String PROPER = "Īpašvārds";
+	public final static String ORDINAL_NUMERAL = "Kārtas skaitļa vārds";
+	public final static String CARDINAL_NUMERAL = "Pamata skaitļa vārds";
+	public final static String FRACTIONAL_NUMERAL = "Daļu skaitļa vārds";
 
 	// Prievārdu nosaukumi pamatā no LLVV.
-	PRONOUN("Vietniekvārds"),
-	PERSONAL_PRONOUN("Personas vietniekvārds"),
-	POSSESIVE_PRONOUN("Piederības vietniekvārds"),
-	DEMONSTRATIVE_PRONOUN("Norādāmais vietniekvārds"),
-	DEFINITE_PRONOUN("Noteicamais vietniekvārds"),
-	INDEFINITE_PRONOUN("Nenoteiktais vietniekvārds"),
-	GENRERIC_PRONOUN("Vispārināmais vietniekvārds"),
-	REFLEXIVE_PRONOUN("Atgriezeniskais vietniekvārds"),
-	INTERROGATIVE_PRONOUN("Jautājamais vietniekvārds"),
-	NEGATIVE_PRONOUN("Noliedzamais vietniekvārds"),
+	public final static String PERSONAL_PRONOUN = "Personas vietniekvārds";
+	public final static String POSSESIVE_PRONOUN = "Piederības vietniekvārds";
+	public final static String DEMONSTRATIVE_PRONOUN = "Norādāmais vietniekvārds";
+	public final static String DEFINITE_PRONOUN = "Noteicamais vietniekvārds";
+	public final static String INDEFINITE_PRONOUN = "Nenoteiktais vietniekvārds";
+	public final static String GENRERIC_PRONOUN = "Vispārināmais vietniekvārds";
+	public final static String REFLEXIVE_PRONOUN = "Atgriezeniskais vietniekvārds";
+	public final static String INTERROGATIVE_PRONOUN = "Jautājamais vietniekvārds";
+	public final static String NEGATIVE_PRONOUN = "Noliedzamais vietniekvārds";
 
-	VERB("Darbības vārds"),
-	IRREGULAR_VERB("Nekārtns darbības vārds"),
-	DIRECT_VERB("Tiešs darbības vārds"),
-	REFLEXIVE_VERB("Atgriezenisks darbības vārds"),
-	PREFIX_VERB("Darbības vārds ar priedēkli"),
-	PREFIXLESS_VERB("Darbības vārds bez priedēkļa"),
-	NEGATIVE_VERB("Noliegts darbības vārds"),
+	public final static String IRREGULAR_VERB = "Nekārtns darbības vārds";
+	public final static String DIRECT_VERB = "Tiešs darbības vārds";
+	public final static String REFLEXIVE_VERB = "Atgriezenisks darbības vārds";
+	public final static String PREFIX_VERB = "Darbības vārds ar priedēkli";
+	public final static String PREFIXLESS_VERB = "Darbības vārds bez priedēkļa";
+	public final static String NEGATIVE_VERB = "Noliegts darbības vārds";
 
-	ADVERB("Apstākļa vārds"),
-	PLACE_ADVERB("Vietas apstākļa vārds"),
-	INTEROGATIVE_ADVERB("Jautājamais apstākļa vārds"),
+	public final static String PLACE_ADVERB = "Vietas apstākļa vārds";
+	public final static String INTEROGATIVE_ADVERB = "Jautājamais apstākļa vārds";
 
-	INTERJECTION("Izsauksmes vārds"),
-	CONJUNCTION("Saiklis"),
-	PARTICLE("Partikula"),
-	INTERROGATIVE_PARTICLE("Jautājamā partikula"),
+	public final static String INTERROGATIVE_PARTICLE = "Jautājamā partikula";
 
-	PREPOSITION("Prievārds"),
+	public final static String FOREIGN = "Vārds svešvalodā";
+	public final static String PIECE_OF_WORD = "Vārda daļa";
+	public final static String PREFIX = "Priedēklis";
+	public final static String PREFIX_FOREIGN = "Svešvārdu priedēklis";
+	public final static String COMPOUND_PIECE = "Salikteņu daļa";
+	public final static String COMPOUND_FIRST_PIECE = "Salikteņu pirmā daļa";
+	public final static String COMPOUND_LAST_PIECE = "Salikteņu pēdējā daļa";
 
-	ABBREVIATION("Saīsinājums"),
-	FOREIGN("Vārds svešvalodā"),
-	PIECE_OF_WORD("Vārda daļa"),
-	PREFIX("Priedēklis"),
-	PREFIX_FOREIGN("Svešvārdu priedēklis"),
-	COMPOUND_PIECE("Salikteņu daļa"),
-	COMPOUND_FIRST_PIECE("Salikteņu pirmā daļa"),
-	COMPOUND_LAST_PIECE("Salikteņu pēdējā daļa"),
+	public final static String PHRASE = "Vārdu savienojums";
 
-	PHRASE("Vārdu savienojums"),
+	public final static String PARTICIPLE = "Divdabis";
+	public final static String PARTICIPLE_OSS = "Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)";
+	public final static String PARTICIPLE_IS = "Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)";
+	public final static String PARTICIPLE_AMS = "Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)";
+	public final static String PARTICIPLE_TS = "Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)";
+	public final static String PARTICIPLE_DAMS = "Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)";
+	public final static String PARTICIPLE_OT = "Nelokāmais divdabis (-ot, -oties)";
 
-	PARTICIPLE("Divdabis"),
-	PARTICIPLE_OSS("Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)"),
-	PARTICIPLE_IS("Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)"),
-	PARTICIPLE_AMS("Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)"),
-	PARTICIPLE_TS("Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)"),
-	PARTICIPLE_DAMS("Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)"),
-	PARTICIPLE_OT("Nelokāmais divdabis (-ot, -oties)"),
+	public final static String PLACE_NAME = "Vietvārds";
+	public final static String PERSON_NAME = "Personvārds";
+	public final static String HISTORICAL = "Vēsturisks";
+	public final static String HISTORICAL_PLACE = "Vēsturisks vietvārds";
+	public final static String HISTORICAL_PERSON = "Vēsturisks personvārds";
+	public final static String DIALECTICISM = "Dialektisms";
+	public final static String REGIONAL_TERM = "Apvidvārds";
 
-	PLACE_NAME("Vietvārds"),
-	PERSON_NAME("Personvārds"),
-	HISTORICAL("Vēsturisks"),
-	HISTORICAL_PLACE("Vēsturisks vietvārds"),
-	HISTORICAL_PERSON("Vēsturisks personvārds"),
-	DIALECTICISM("Dialektisms"),
-	REGIONAL_TERM("Apvidvārds"),
 
-	SINGULAR("Vienskaitlis"),
-	DUAL("Divskaitlis"),
-	PLURAL("Daudzskaitlis"),
+	public final static String DUAL = "Divskaitlis";
 
-	FEMININE("Sieviešu dzimte"),
-	MASCULINE("Vīriešu dzimte"),
-	COGENDER("Kopdzimte"),
+	public final static String COGENDER = "Kopdzimte";
 
-	NOMINATIVE("Nominatīvs"),
-	GENITIVE("Ģenitīvs"),
-	DATIVE("Datīvs"),
-	ACUSATIVE("Akuzatīvs"),
-	INSTRUMENTAL("Instrumentālis"),
-	LOCATIVE("Lokatīvs"),
+	public final static String INSTRUMENTAL = "Instrumentālis";
 
-	NON_INFLECTIVE("Nelokāms vārds"),
 
-	INFINITIVE("Nenoteiksme"),
-	THIRD_PERSON("3. persona"),
-	PERSON_FORM("Personas forma"), // Tipiski darbības vārdiem
-	PASSIVE_VOICE("Ciešamā kārta"), // Ciešamās kārtas forma
-	IMPERATIVE("Pavēles izteiksme"), // Pavēles izteiksmes forma
+	public final static String INFINITIVE = "Nenoteiksme";
+	public final static String THIRD_PERSON = "3. persona";
+	public final static String PERSON_FORM = "Personas forma"; // Tipiski darbības vārdiem
+	public final static String PASSIVE_VOICE = "Ciešamā kārta"; // Ciešamās kārtas forma
+	public final static String IMPERATIVE = "Pavēles izteiksme"; // Pavēles izteiksmes forma
 
-	MAIN_VERB("Patstāvīgs darbības vārds"),
+	public final static String MAIN_VERB = "Patstāvīgs darbības vārds";
 
-	COMPARATIVE_DEGREE("Pārākā pakāpe"),
-	SUPERLATIVE_DEGREE("Vispārākā pakāpe"),
+	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
+	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
 
-	DEFINITE_ENDING("Noteiktā galotne"),
+	public final static String DEFINITE_ENDING = "Noteiktā galotne";
 
-	ATTRIBUTE("Apzīmētājs"),
-	//ADVERBIAL_MOD("Apstāklis"),
-	//ADVERBIAL_PLACE_MOD("Vietas apstāklis"),
+	public final static String ATTRIBUTE = "Apzīmētājs";
+	//public final static String ADVERBIAL_MOD = "Apstāklis";
+	//public final static String ADVERBIAL_PLACE_MOD = "Vietas apstāklis";
 
-	ORIGINAL_NEEDED("Oriģinālā gramatika satur karodziņos neatšifrētas nianses"), // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
+	public final static String ORIGINAL_NEEDED = "Oriģinālā gramatika satur karodziņos neatšifrētas nianses"; // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
 
-	CHANGED_PARADIGM("Cita paradigma"), // Paredzēts morfoimporta atvieglošanai
-	UNCLEAR_PARADIGM("Neviennozīmīga paradigma"), // Paredzēts morfoimporta atvieglošanai
-	UNCLEAR_POS("Neviennozīmīga vārdšķira vai kategorija"), // Paredzēts morfoimporta atvieglošanai
+	public final static String CHANGED_PARADIGM = "Cita paradigma"; // Paredzēts morfoimporta atvieglošanai
+	public final static String UNCLEAR_PARADIGM = "Neviennozīmīga paradigma"; // Paredzēts morfoimporta atvieglošanai
+	public final static String UNCLEAR_POS = "Neviennozīmīga vārdšķira vai kategorija"; // Paredzēts morfoimporta atvieglošanai
 
-	PARALLEL_FORMS("Paralēlās formas"), // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
-	FROZEN_FORM("Sastingusi forma"), // Paredzēts morfoimporta atvieglošanai, cerams, ka pabeidzot darbu ar tēzauru, šis vairs nebūs vajadzīgs
-	FIRST_CONJ_PARALLELFORM("1. konjugācijas paralēlforma"), // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
-	INFINITIVE_HOMOFORMS("Nenoteiksmes homoformas"), // Paredzēts morfoimporta atvieglošanai
-	HAS_PRESENT_SOUNDCHANGE("Tagadnes mija ir"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	OPT_PRESENT_SOUNDCHANGE("Fakultatīva tagadnes mija"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	NO_PRESENT_SOUNDCHANGE("Nav tagadnes mijas"), // Paredzēts morfoimporta atvieglošanai, tikai 3. konj. Vai šo vajadzētu pārveidot par noklusēto variantu?
-	NO_SOUNDCHANGE("Nav mijas"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā vispār nav attiecīgajai paradigmai raksturīgās mijas
-	OPT_SOUNDCHANGE("Fakultatīva mija"), // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā lietojama gan locīšana ar paradigmai raksturīgo miju, gan bez tās
+	public final static String PARALLEL_FORMS = "Paralēlās formas"; // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
+	public final static String FROZEN_FORM = "Sastingusi forma"; // Paredzēts morfoimporta atvieglošanai, cerams, ka pabeidzot darbu ar tēzauru, šis vairs nebūs vajadzīgs
+	public final static String FIRST_CONJ_PARALLELFORM = "1. konjugācijas paralēlforma"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
+	public final static String INFINITIVE_HOMOFORMS = "Nenoteiksmes homoformas"; // Paredzēts morfoimporta atvieglošanai
+	public final static String HAS_PRESENT_SOUNDCHANGE = "Tagadnes mija ir"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
+	public final static String OPT_PRESENT_SOUNDCHANGE = "Fakultatīva tagadnes mija"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
+	public final static String NO_PRESENT_SOUNDCHANGE = "Nav tagadnes mijas"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj. Vai šo vajadzētu pārveidot par noklusēto variantu?
+	public final static String NO_SOUNDCHANGE = "Nav mijas"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā vispār nav attiecīgajai paradigmai raksturīgās mijas
+	public final static String OPT_SOUNDCHANGE = "Fakultatīva mija"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā lietojama gan locīšana ar paradigmai raksturīgo miju, gan bez tās
 
 	// Sevišķi retās vērtības:
 
 	//// Galotņu šabloniem.
-	NOT_PRESENT_FORMS("Nelieto tagadnes formas"),
+	public final static String NOT_PRESENT_FORMS = "Nelieto tagadnes formas";
 
 	//// "Savienojumā ar" apstrādei.
-	ILLNESS_NAME("Slimības izraisītāja mikroorganisma, arī slimības nosaukums"),
-	TIME_UNIT_NAME("Laika mērvienības nosaukums"),
-	CLOTHING_UNIT_NAME("Apģērba gabala nosaukums"),
-	TEACHING_SUBJECT_NAME("Mācību priekšmeta nosaukums"),
-	DIMENSION_NAME("Dimensiju apzīmējums"),
-	MULTI_TINGY_NAME("Daudzskaitlinieks vai pāra priekšmetu apzīmējums"), // Līdz šim nekur citur nevajag daudzskaitlieku kā vērtību, mēģināšu izšmaukt arī te.
-	PERSON_TERM("Vārds, kas apzīmē personu"), // Nav tas pats, kas personvārds - šeit iederās arī "cilvēks" un "muļķis".
-	NEGATIVE_PERSON_TERM("Vārds, kas nosauc personu ar negatīvu īpašību"),
-	ADVERBIAL_TERM("Daudzuma, masas, lieluma vai ilguma apzīmējums"),
-	TIME_TERM("Vārds ar laika nozīmi"),
-	DISTRUCTION_NAME("Vārds, kas apzīmē bojāšanu, iznīcināšanu"),
-	//VERB_WITH_DERIVS("Dotais darbības vārds un tā atvasinājumi"),
+	public final static String ILLNESS_NAME = "Slimības izraisītāja mikroorganisma, arī slimības nosaukums";
+	public final static String TIME_UNIT_NAME = "Laika mērvienības nosaukums";
+	public final static String CLOTHING_UNIT_NAME = "Apģērba gabala nosaukums";
+	public final static String TEACHING_SUBJECT_NAME = "Mācību priekšmeta nosaukums";
+	public final static String DIMENSION_NAME = "Dimensiju apzīmējums";
+	public final static String MULTI_TINGY_NAME = "Daudzskaitlinieks vai pāra priekšmetu apzīmējums"; // Līdz šim nekur citur nevajag daudzskaitlieku kā vērtību, mēģināšu izšmaukt arī te.
+	public final static String PERSON_TERM = "Vārds, kas apzīmē personu"; // Nav tas pats, kas personvārds - šeit iederās arī "cilvēks" un "muļķis".
+	public final static String NEGATIVE_PERSON_TERM = "Vārds, kas nosauc personu ar negatīvu īpašību";
+	public final static String ADVERBIAL_TERM = "Daudzuma, masas, lieluma vai ilguma apzīmējums";
+	public final static String TIME_TERM = "Vārds ar laika nozīmi";
+	public final static String DISTRUCTION_NAME = "Vārds, kas apzīmē bojāšanu, iznīcināšanu";
+	//public final static String VERB_WITH_DERIVS = "Dotais darbības vārds un tā atvasinājumi";
 	// Slikti, ka nākamos trijus arī vajag :/
-	NOUN_CONTAMINATION("Lietvārda nozīmē lietots vārds"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	NOUN_CONTAMINATION_ADJ_COMP("Lietvārda nozīmē lietots īpašības vārds ar pārāko pakāpi"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	ADVERB_CONTAMINATION("Apstākļa vārda nozīmē lietots vārds"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	PLACE_ADVERB_CONTAMINATION("Vietas apstākļa vārda nozīmē lietots vārds"), // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	REPETITION("Atkārtots vienas un tās pašas saknes vārds"),
-	DATIVE_AND_ADVERB("Vārds datīvā un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
-	ADVERB_AND_NEGVERB("Apstākļa vārds un noliegts darbības vārds"), // Iesaistīšanās divu nosacījumu grupā.
-	NUMERAL_AND_ADVERB("Skaitļa vārds un apstākļa vārds"), // Iesaistīšanās divu nosacījumu grupā.
-	NUMERAL_AND_ADJECTIVE("Skaitļa vārds un īpašības vārds"), // Iesaistīšanās divu nosacījumu grupā.
-	NOUN_WITH_PREPOSITION("Lietvārds un prievārds"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
-	PLURAL_OR_THIRD_PERS("Daudzskaitlis vai 3. persona"), // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
-
-	;
-
-	public String s;
-
-	TValues(String name)
-	{
-		this.s = name;
-	}
-
-	public String toString()
-	{
-		return s;
-	}
+	public final static String NOUN_CONTAMINATION = "Lietvārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
+	public final static String NOUN_CONTAMINATION_ADJ_COMP = "Lietvārda nozīmē lietots īpašības vārds ar pārāko pakāpi"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
+	public final static String ADVERB_CONTAMINATION = "Apstākļa vārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
+	public final static String PLACE_ADVERB_CONTAMINATION = "Vietas apstākļa vārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
+	public final static String REPETITION = "Atkārtots vienas un tās pašas saknes vārds";
+	public final static String DATIVE_AND_ADVERB = "Vārds datīvā un apstākļa vārds"; // Iesaistīšanās divu nosacījumu grupā.
+	public final static String ADVERB_AND_NEGVERB = "Apstākļa vārds un noliegts darbības vārds"; // Iesaistīšanās divu nosacījumu grupā.
+	public final static String NUMERAL_AND_ADVERB = "Skaitļa vārds un apstākļa vārds"; // Iesaistīšanās divu nosacījumu grupā.
+	public final static String NUMERAL_AND_ADJECTIVE = "Skaitļa vārds un īpašības vārds"; // Iesaistīšanās divu nosacījumu grupā.
+	public final static String NOUN_WITH_PREPOSITION = "Lietvārds un prievārds"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
+	public final static String PLURAL_OR_THIRD_PERS = "Daudzskaitlis vai 3. persona"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
 }

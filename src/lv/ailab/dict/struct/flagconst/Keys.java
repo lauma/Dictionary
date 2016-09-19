@@ -1,8 +1,9 @@
 package lv.ailab.dict.struct.flagconst;
 
 /**
- * Created on 2016-09-19.
+ * Vispārīgās (dažādām vārdnīcām izmantojamās) karodziņu grupas (atslēgas).
  *
+ * Izveidots 2016-09-19.
  * @author Lauma
  */
 public class Keys

@@ -73,7 +73,7 @@ public class FirstConjRule implements Rule
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
+		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
@@ -141,7 +141,7 @@ public class FirstConjRule implements Rule
 			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB.s));
+		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);

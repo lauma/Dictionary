@@ -17,8 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
+import lv.ailab.dict.struct.flagconst.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.MappingSet;
@@ -83,26 +82,17 @@ public class Flags implements HasToXML
 	{
 		add(feature.first, feature.second);
 	}
-	public void add(String key, TValues value)
-	{
-		if (value == null) throw new IllegalArgumentException(
-				"Flags cannot contain null as an atribute value!");
-		add(key, value.s);
-	}
+
 	public void add(String value)
 	{
-		add(TKeys.OTHER_FLAGS, value);
-	}
-	public void add(TValues value)
-	{
 		if (value == null) throw new IllegalArgumentException(
 				"Flags cannot contain null as an atribute value!");
-		add(TKeys.OTHER_FLAGS, value.s);
+		add(Keys.OTHER_FLAGS, value);
 	}
 
 	public HashSet<String> binaryFlags()
 	{
-		return pairings.getAll(TKeys.OTHER_FLAGS);
+		return pairings.getAll(Keys.OTHER_FLAGS);
 	}
 
 	public HashSet<String> getAll(String key)
@@ -120,16 +110,6 @@ public class Flags implements HasToXML
 		HashSet<String> found = pairings.getAll(key);
 		if (found == null || found.size() < 1) return false;
 		return (found.contains(value));
-	}
-
-	/**
-	 * Pārbauda, vai karodziņi satur šādu atslēgas/vērtības pārīti.
-	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
-	 */
-	public boolean test (String key, TValues value)
-	{
-		if (value == null) return testKey(key);
-		return test(key, value.s);
 	}
 
 	/**
@@ -176,7 +156,7 @@ public class Flags implements HasToXML
 				{
 					Node flagN = doc.createElement("Flag");
 					Node keyN = doc.createElement("Key");
-					keyN.appendChild(doc.createTextNode(key.toString()));
+					keyN.appendChild(doc.createTextNode(key));
 					flagN.appendChild(keyN);
 					Node valN = doc.createElement("Value");
 					valN.appendChild(doc.createTextNode(value));

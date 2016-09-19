@@ -492,7 +492,7 @@ public class TGram extends Gram
 		HashSet<String> pos = flags.getAll(TKeys.POS);
 		if (pos != null)
 		{
-			if (pos.contains(TValues.ADJECTIVE.s))
+			if (pos.contains(TValues.ADJECTIVE))
 			{
 				if (lemma.endsWith("ais")) paradigm.add(30);
 				else if (lemma.endsWith("ā")) paradigm.add(40);
@@ -501,29 +501,29 @@ public class TGram extends Gram
 				else if (lemma.matches(".*[^aeiouāēīōū]š")) paradigm.add(14);
 			}
 
-			if (pos.contains(TValues.ADVERB.s)) paradigm.add(21);
-			if (pos.contains(TValues.PARTICLE.s)) paradigm.add(28);
-			if (pos.contains(TValues.PREPOSITION.s)) paradigm.add(26);
-			if (pos.contains(TValues.CONJUNCTION.s)) paradigm.add(27);
+			if (pos.contains(TValues.ADVERB)) paradigm.add(21);
+			if (pos.contains(TValues.PARTICLE)) paradigm.add(28);
+			if (pos.contains(TValues.PREPOSITION)) paradigm.add(26);
+			if (pos.contains(TValues.CONJUNCTION)) paradigm.add(27);
 
-			if (pos.contains(TValues.INTERJECTION.s)) paradigm.add(38);
-			if (pos.contains(TValues.ABBREVIATION.s)) paradigm.add(36);
+			if (pos.contains(TValues.INTERJECTION)) paradigm.add(38);
+			if (pos.contains(TValues.ABBREVIATION)) paradigm.add(36);
 
-			if (pos.contains(TValues.PRONOUN.s)) paradigm.add(25);
+			if (pos.contains(TValues.PRONOUN)) paradigm.add(25);
 
-			if (pos.contains(TValues.FOREIGN.s)) paradigm.add(39);
+			if (pos.contains(TValues.FOREIGN)) paradigm.add(39);
 
 			// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
-			if (pos.contains(TValues.FRACTIONAL_NUMERAL.s)
+			if (pos.contains(TValues.FRACTIONAL_NUMERAL)
 					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // četrarpus, divarpus
-			if (pos.contains(TValues.CARDINAL_NUMERAL.s)
+			if (pos.contains(TValues.CARDINAL_NUMERAL)
 					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
 			// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
 			// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 			// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 			// problēmas.
-			if (pos.contains(TValues.GEN_ONLY.s))
+			if (pos.contains(TValues.GEN_ONLY))
 			{
 				paradigm.add(0);
 				if (!flags.testKey(TKeys.GENDER) || !flags.testKey(TKeys.NUMBER))
@@ -531,7 +531,7 @@ public class TGram extends Gram
 			}
 
 
-			if (pos.contains(TValues.PIECE_OF_WORD.s)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
+			if (pos.contains(TValues.PIECE_OF_WORD)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
 

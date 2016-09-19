@@ -149,7 +149,7 @@ public class StatsCollector
 		HashSet<String> bf = entryFlags.binaryFlags();
         if (bf != null)
 		{
-			if (bf.contains(TValues.UNCLEAR_PARADIGM.s))
+			if (bf.contains(TValues.UNCLEAR_PARADIGM))
 				hasMultipleParadigmFlag++;
 			binaryFlags.addAll(bf);
 		}
@@ -288,7 +288,7 @@ public class StatsCollector
 		{
 			if (entry.head.gram.flags.test(TFeatures.UNCLEAR_POS))
 			{
-				line.append(TValues.UNCLEAR_POS.s);
+				line.append(TValues.UNCLEAR_POS);
 				line.append(",");
 			}
 			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.POS)));

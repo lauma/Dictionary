@@ -48,14 +48,14 @@ public class DirectRules
 				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //augšāmcelšanās
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		BaseRule.noun("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
-				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER.s)}), // aitasgalva, aizmārša
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
 
 		// Paradigmas: 1, 2 - 1. deklinācija
 		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
 		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN}), // aerobs
 		BaseRule.noun("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR.s)}), // acteks
+				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
 		BaseRule.noun("-a, vsk.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
@@ -760,7 +760,7 @@ public class DirectRules
 				".*ēties", 19,
 				new Tuple[] {TFeatures.POS__VERB},
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
-							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS.s)}), //konstituēties
+							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties
 			//parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies
 		// Darbības vārdu specifiskie likumi.
 		// Nav.

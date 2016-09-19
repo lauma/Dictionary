@@ -693,7 +693,7 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\"")},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS.s)},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
 		//FirstConjRule.of("3. pers. -guldz, pag. -guldza\"", "gulgt", 15,
 		//		new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"gulgt\"")},
@@ -1296,7 +1296,7 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\"")},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS.s)},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
 	};
 

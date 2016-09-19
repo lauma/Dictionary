@@ -11,7 +11,7 @@ public class PhraseTypes
 	public final static String PHRASEOLOGICAL = "Frazeoloģisms";
 	public final static String STABLE_UNIT = "Stabila vienība";
 	public final static String SAMPLE = "Piemērs";
-	public final static String TAXON = "Taxons";
+	public final static String TAXON = "Taksons";
 	public final static String QUOTE = "Citāts";
 
 }

@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
 
+import lv.ailab.dict.struct.flagconst.Features;
 import lv.ailab.dict.utils.Tuple;
 
 /**
@@ -11,16 +12,12 @@ import lv.ailab.dict.utils.Tuple;
  * Izveidots 2015-10-09.
  * @author Lauma
  */
-public class TFeatures
+public class TFeatures extends Features
 {
-	public static final Tuple<String, String> POS__NOUN = Tuple.of(TKeys.POS, TValues.NOUN);
 	public static final Tuple<String, String> POS__REFL_NOUN = Tuple.of(TKeys.POS, TValues.REFLEXIVE_NOUN);
-	public static final Tuple<String, String> POS__GEN_ONLY = Tuple.of(TKeys.POS, TValues.GEN_ONLY);
-	public static final Tuple<String, String> POS__VERB = Tuple.of(TKeys.POS, TValues.VERB);
 	public static final Tuple<String, String> POS__IRREG_VERB = Tuple.of(TKeys.POS, TValues.IRREGULAR_VERB);
 	public static final Tuple<String, String> POS__DIRECT_VERB = Tuple.of(TKeys.POS, TValues.DIRECT_VERB);
 	public static final Tuple<String, String> POS__REFL_VERB = Tuple.of(TKeys.POS, TValues.REFLEXIVE_VERB);
-	public static final Tuple<String, String> POS__ADJ = Tuple.of(TKeys.POS, TValues.ADJECTIVE);
 
 	public static final Tuple<String, String> POS__PARTICIPLE = Tuple.of(TKeys.POS, TValues.PARTICIPLE);
 	public static final Tuple<String, String> POS__PARTICIPLE_OSS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_OSS);
@@ -30,7 +27,6 @@ public class TFeatures
 	public static final Tuple<String, String> POS__PARTICIPLE_AMS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_AMS);
 	public static final Tuple<String, String> POS__PARTICIPLE_DAMS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_DAMS);
 
-	public static final Tuple<String, String> POS__PRONOUN = Tuple.of(TKeys.POS, TValues.PRONOUN);
 	public static final Tuple<String, String> POS__PERS_PRONOUN = Tuple.of(TKeys.POS, TValues.PERSONAL_PRONOUN);
 	public static final Tuple<String, String> POS__POSS_PRONOUN = Tuple.of(TKeys.POS, TValues.POSSESIVE_PRONOUN);
 	public static final Tuple<String, String> POS__DEM_PRONOUN = Tuple.of(TKeys.POS, TValues.DEMONSTRATIVE_PRONOUN);
@@ -41,13 +37,9 @@ public class TFeatures
 	public static final Tuple<String, String> POS__INTERROG_PRONOUN = Tuple.of(TKeys.POS, TValues.INTERROGATIVE_PRONOUN);
 	public static final Tuple<String, String> POS__NEG_PRONOUN = Tuple.of(TKeys.POS, TValues.NEGATIVE_PRONOUN);
 
-	public static final Tuple<String, String> POS__NUMERAL = Tuple.of(TKeys.POS, TValues.NUMERAL);
 	public static final Tuple<String, String> POS__CARD_NUMERAL = Tuple.of(TKeys.POS, TValues.CARDINAL_NUMERAL);
 	public static final Tuple<String, String> POS__ORD_NUMERAL = Tuple.of(TKeys.POS, TValues.ORDINAL_NUMERAL);
 	public static final Tuple<String, String> POS__FRACT_NUMERAL = Tuple.of(TKeys.POS, TValues.FRACTIONAL_NUMERAL);
-	public static final Tuple<String, String> POS__PARTICLE = Tuple.of(TKeys.POS, TValues.PARTICLE);
-	public static final Tuple<String, String> POS__PREPOSITION = Tuple.of(TKeys.POS, TValues.PREPOSITION);
-	public static final Tuple<String, String> POS__ABBR = Tuple.of(TKeys.POS, TValues.ABBREVIATION);
 	public static final Tuple<String, String> POS__FOREIGN = Tuple.of(TKeys.POS, TValues.FOREIGN);
 	public static final Tuple<String, String> POS__PIECE = Tuple.of(TKeys.POS, TValues.PIECE_OF_WORD);
 	public static final Tuple<String, String> POS__PREFIX = Tuple.of(TKeys.POS, TValues.PREFIX);
@@ -57,9 +49,6 @@ public class TFeatures
 
 	public static final Tuple<String, String> CONTAMINATION__NOUN = Tuple.of(TKeys.CONTAMINATION, TValues.NOUN);
 	public static final Tuple<String, String> CONTAMINATION__CARD_NUM = Tuple.of(TKeys.CONTAMINATION, TValues.CARDINAL_NUMERAL);
-
-	public static final Tuple<String, String> GENDER__FEM = Tuple.of(TKeys.GENDER, TValues.FEMININE);
-	public static final Tuple<String, String> GENDER__MASC = Tuple.of(TKeys.GENDER, TValues.MASCULINE);
 
 	public static final Tuple<String, String> DEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.DEFINITE_ENDING);
 
@@ -101,7 +90,6 @@ public class TFeatures
 
 	public static final Tuple<String, String> CHANGED_PARADIGM = Tuple.of(TKeys.OTHER_FLAGS, TValues.CHANGED_PARADIGM);
 
-	public static final Tuple<String, String> NON_INFLECTIVE = Tuple.of(TKeys.OTHER_FLAGS, TValues.NON_INFLECTIVE);
 
 	public static final Tuple<String, String> ORIGINAL_NEEDED = Tuple.of(TKeys.OTHER_FLAGS, TValues.ORIGINAL_NEEDED);
 

@@ -10,17 +10,17 @@ public class Values
 {
 	//=== Kategorija ==========================================================
 	public final static String NOUN = "Lietvārds";
-	public final static String PRONOUN = "Vietniekvārds";
 	public final static String ADJECTIVE = "Īpašības vārds";
 	public final static String NUMERAL = "Skaitļa vārds";
+	public final static String PRONOUN = "Vietniekvārds";
 
 	public final static String VERB = "Darbības vārds";
 	public final static String ADVERB = "Apstākļa vārds";
 
-	public final static String INTERJECTION = "Izsauksmes vārds";
+	public final static String PREPOSITION = "Prievārds";
 	public final static String CONJUNCTION = "Saiklis";
 	public final static String PARTICLE = "Partikula";
-	public final static String PREPOSITION = "Prievārds";
+	public final static String INTERJECTION = "Izsauksmes vārds";
 
 	public final static String GEN_ONLY = "Ģenitīvenis";
 

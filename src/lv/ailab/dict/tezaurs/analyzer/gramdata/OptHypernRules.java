@@ -205,6 +205,14 @@ public class OptHypernRules
 				"\"mīt\" (pedāļus)"), //aizmīt 1
 		FirstConjRule.directHomof("-miju, -mij,", "-mij, pag. -miju", "mīt",
 				"\"mīt\" (mainīt naudu)"), //aizmīt 2
+		FirstConjRule.directHomof("-spriedzu, -spriedz,", "-spriedz, pag. -spriedzu", "spriegt",
+				"\"spriegt\" (kādu citu)"), //nospriegt, saspriegt 1
+		FirstConjRule.directHomof("-spriegstu, -spriegsti,", "-spriegst, pag. -spriegu", "spriegt",
+				"\"spriegt\" (pašam)"), //saspriegt 2
+			FirstConjRule.directHomof("-spriedzu, -spriedz,", "-spriedz, pag. -spriedzu", "springt",
+					"\"springt\" (kādu citu)"), //saspringt 2
+			FirstConjRule.directHomof("-spriegstu, -spriegsti,", "-spriegst, pag. -spriegu", "springt",
+					"\"springt\" (pašam)"), //saspringt 1
 		FirstConjRule.directHomof("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt",
 				"\"tikt\" (nokļūt kaut kur)"), //aiztikt 1, 2
 		FirstConjRule.directHomof("-tīku, -tīc,", "-tīk, pag. -tiku", "tikt",
@@ -492,8 +500,9 @@ public class OptHypernRules
 		FirstConjRule.direct("-plīstu, -plīsti,", "-plīst, pag. -plīsu", "plīst"), //applīst, aizplīst
 		FirstConjRule.direct("-plūku, -plūc,", "-plūk, pag. -pluku", "plukt"), //noplukt
 		FirstConjRule.direct("-plūcu, -plūc,", "-plūc, pag. -plūcu", "plūkt"), //aizplūkt
-		FirstConjRule.direct("-plūstu, -plūsti,", "-plūst, pag. -plūdu", "plūst"), //applūst, aizplūst
+		FirstConjRule.direct("-plūstu, -plūsti,", "-plūst, pag. -plūdu", "plūst"), //applūst, aizplūstFirstConjRule.direct("-pļauju, -pļauj,", "-pļauj, pag. -pļāvu", "pļaut"), //aizpļaut
 		FirstConjRule.direct("-pļauju, -pļauj,", "-pļauj, pag. -pļāvu", "pļaut"), //aizpļaut
+		FirstConjRule.direct("-pošu, -pos,", "-poš, pag. -posu", "post"), //sapost
 		FirstConjRule.direct("-protu, -proti,", "-prot, pag. -pratu", "prast"), //izprast
 		FirstConjRule.direct("-pūšu, -pūt,", "-pūš, pag. -pūtu", "pūst"), //aizpūst
 		FirstConjRule.direct("-pūstu, -pūsti,", "-pūst, pag. -puvu", "pūt"), //aizpūt, pūt
@@ -511,6 +520,8 @@ public class OptHypernRules
 		FirstConjRule.direct("-riežu, -riez,", "-riež, pag. -riezu", "riezt"), //ieriezt
 		FirstConjRule.direct("-rimstu, -rimsti,", "-rimst, pag. -rimu", "rimt"), //aprimt
 		FirstConjRule.direct("-riju, -rij,", "-rij, pag. -riju", "rīt"), //aizrīt
+		FirstConjRule.direct("-rūku, -rūc,", "-rūk, pag. -ruku", "rukt"), //sarukt
+		FirstConjRule.direct("-rūgstu, -rūgsti,", "-rūgst, pag. -rūgu", "rūgt"), //sarūgt
 		FirstConjRule.direct("-rūcu, -rūc,", "-rūc, pag. -rūcu", "rūkt"), //atrūkt
 		// S
 		FirstConjRule.direct("-salkstu, -salksti,", "-salkst, pag. -salku", "salkt"), //aizsalkt
@@ -533,6 +544,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-skaru, -skar,", "-skar, pag. -skāru", "skart"), //aizskart
 		FirstConjRule.direct("-skaužu, -skaud,", "-skauž, pag. -skaudu", "skaust"), //apskaust
 		FirstConjRule.direct("-skauju, -skauj,", "-skauj, pag. -skāvu", "skaut"), //apskaut
+		FirstConjRule.direct("-skābstu, -skābsti,", "-skābst, pag. -skābu", "skābt"), //saskābt
 		FirstConjRule.direct("-skumstu, -skumsti,", "-skumst, pag. -skumu", "skumt"), //apskumt
 		FirstConjRule.direct("-skurbstu, -skurbsti,", "-skurbst, pag. -skurbu", "skurbt"), //apskurbt
 		FirstConjRule.direct("-skuju, -skuj,", "-skuj, pag. -skuvu", "skūt"), //aizskūt
@@ -545,10 +557,10 @@ public class OptHypernRules
 		FirstConjRule.direct("-slēpju, -slēp,", "-slēpj, pag. -slēpu", "slēpt"), //aizslēpt
 		FirstConjRule.direct("-sliecu, -sliec,", "-sliec, pag. -sliecu", "sliekt"), //nosliekt
 		FirstConjRule.direct("-slimstu, -slimsti,", "-slimst, pag. -slimu", "slimt"), //apslimt
-		FirstConjRule.direct("-slinkstu, -slinksti,", "-slinkst, pag. -slinku", "slinkt"), //apslinkt
 		FirstConjRule.direct("-slīgstu, -slīgsti,", "-slīgst, pag. -slīgu", "slīgt"), //aizslīgt
 		FirstConjRule.direct("-slīkstu, -slīksti,", "-slīkst, pag. -slīku", "slīkt"), //ieslīkt
 		FirstConjRule.direct("-sliju, -slij,", "-slij, pag. -sliju", "slīt"), //ieslīt
+		FirstConjRule.direct("-smagstu, -smagsti,", "-smagst, pag. -smagu", "smagt"), //sasmagt
 		FirstConjRule.direct("-smoku, -smoc,", "-smok, pag. -smaku", "smakt"), //aizsmakt
 		FirstConjRule.direct("-smeļu, -smel,", "-smeļ, pag. -smēlu", "smelt"), //apsmelt
 		FirstConjRule.direct("-smeju, -smej,", "-smej, pag. -smēju", "smiet"), //apsmiet
@@ -564,7 +576,6 @@ public class OptHypernRules
 		FirstConjRule.direct("-spraucu, -sprauc,", "-sprauc, pag. -spraucu", "spraukt"), //iespraukt
 		FirstConjRule.direct("-spraužu, -spraud,", "-sprauž, pag. -spraudu", "spraust"), //aizspraust
 		FirstConjRule.direct("-sprāgstu, -sprāgsti,", "-sprāgst, pag. -sprāgu", "sprāgt"), //atsprāgt
-		FirstConjRule.direct("-spriedzu, -spriedz,", "-spriedz, pag. -spriedzu", "spriegt"), //nospriegt
 		FirstConjRule.direct("-spriežu, -spried,", "-spriež, pag. -spriedu", "spriest"), //apspriest
 		FirstConjRule.direct("-sprūku, -sprūc,", "-sprūk, pag. -spruku", "sprukt"), //aizsprukt
 		FirstConjRule.direct("-sprūstu, -sprūsti,", "-sprūst, pag. -sprūdu", "sprūst"), //iesprūst

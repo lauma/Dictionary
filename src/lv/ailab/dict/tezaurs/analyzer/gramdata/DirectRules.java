@@ -870,6 +870,8 @@ public class DirectRules
 		// R
 		RegularVerbRule.thirdConjRefl(
 				"-raudos, -raudies,", "-raudas, pag. -raudājos", "raudāties", false), //aizraudāties
+		RegularVerbRule.thirdConjRefl(
+				"-rocos, -rocies,", "-rocās, pag. -rocījos", "rocīties", false), // sarocīties
 		// S
 		RegularVerbRule.thirdConjRefl(
 				"-sēžos, -sēdies,", "-sēžas, pag. -sēdējos", "sēdēties", true), //aizsēdēties

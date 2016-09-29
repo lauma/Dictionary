@@ -332,7 +332,7 @@ public class StatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.INFINITY_STEM))
 		{
-			line.append(TKeys.INFINITY_STEM.toString());
+			line.append(TKeys.INFINITY_STEM);
 			line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITY_STEM)));
@@ -342,7 +342,7 @@ public class StatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PRESENT_STEM))
 		{
-			line.append(TKeys.PRESENT_STEM.toString());
+			line.append(TKeys.PRESENT_STEM);
 			line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEM)));
@@ -352,7 +352,7 @@ public class StatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PAST_STEM))
 		{
-			line.append(TKeys.PAST_STEM.toString());
+			line.append(TKeys.PAST_STEM);
 			line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEM)));
@@ -362,48 +362,24 @@ public class StatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.VERB_PREFIX))
 		{
-			line.append(TKeys.VERB_PREFIX.toString());
+			line.append(TKeys.VERB_PREFIX);
 			line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.VERB_PREFIX)));
 		}
 		else line.append("NULL");
-
-		/*line.append("\t");
+		line.append("\t");
+		// 3. konjugācijas grupas, 2./5. deklinācijas mijas, 1. konjugācijas paralēlformas
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				(entry.head.gram.flags.testKey(TKeys.USED_TOGETHER_WITH) ||
-						entry.head.gram.flags.testKey(TKeys.CONTAMINATION) ||
-						entry.head.gram.flags.testKey(TKeys.USUALLY_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(TKeys.OFTEN_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(TKeys.USED_ONLY_IN_FORM) ||
-						entry.head.gram.flags.testKey(TKeys.ALSO_USED_IN_FORM) ||
-						entry.head.gram.flags.testKey(TKeys.USED_IN_FORM)))
+				entry.head.gram.flags.testKey(TKeys.INFLECTION_WEARDNES))
 		{
-			ArrayList<String> tmp = new ArrayList<>();
-			if (entry.head.gram.flags.testKey(TKeys.CONTAMINATION))
-				for (String value : entry.head.gram.flags.getAll(TKeys.CONTAMINATION))
-					tmp.add(TKeys.CONTAMINATION.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.USED_ONLY_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(TKeys.USED_ONLY_IN_FORM))
-					tmp.add(TKeys.USED_ONLY_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.USUALLY_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(TKeys.USUALLY_USED_IN_FORM))
-					tmp.add(TKeys.USUALLY_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.OFTEN_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(TKeys.OFTEN_USED_IN_FORM))
-					tmp.add(TKeys.OFTEN_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.ALSO_USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(TKeys.ALSO_USED_IN_FORM))
-					tmp.add(TKeys.ALSO_USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.USED_IN_FORM))
-				for (String value : entry.head.gram.flags.getAll(TKeys.USED_IN_FORM))
-					tmp.add(TKeys.USED_IN_FORM.s + " = " + value);
-			if (entry.head.gram.flags.testKey(TKeys.USED_TOGETHER_WITH))
-				for (String value : entry.head.gram.flags.getAll(TKeys.USED_TOGETHER_WITH))
-					tmp.add(TKeys.USED_TOGETHER_WITH.s + " = " + value);
-			line.append(String.join(",", tmp));
+			line.append(TKeys.INFLECTION_WEARDNES);
+			line.append("=");
+			line.append(String
+					.join(",", entry.head.gram.flags.getAll(TKeys.INFLECTION_WEARDNES)));
 		}
-		else line.append("NULL");//*/
+		else line.append("NULL");
+
 		line.append("\n");
 		wordlistOut.write(line.toString().replace(" ", "_"));
 	}

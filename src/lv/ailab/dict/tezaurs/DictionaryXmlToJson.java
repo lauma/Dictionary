@@ -40,7 +40,7 @@ public class DictionaryXmlToJson
 	public final static String[] XML_FILES = {"entries", "references"};
 	public final static boolean PRINT_SINGLE_XML = false;
 	public final static boolean PRINT_SINGLE_JSON = false;
-	public final static boolean PRINT_WORDLISTS = true;
+	public final static boolean PRINT_WORDLISTS = false;
 
 	public final static boolean PRINT_PRONONCATIONS = false;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;

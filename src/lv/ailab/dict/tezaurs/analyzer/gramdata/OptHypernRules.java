@@ -1011,6 +1011,7 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
+		// Šobrīd sarezgitās struktūras dēļ 3. personas likums netiek atvasinats.
 			// TODO uztaisīt verbu likumu, kas atvasina 3. personas likumu.
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
@@ -1092,20 +1093,47 @@ public class OptHypernRules
 		// Paralēlformu paralēlforma
 		RegularVerbRule.secondThirdConjDirect3PersParallel(
 				"-rūsē, arī -rūs, pag. -rūsēja (retāk -rūsa, 1. konj.)", "rūsēt", false), // aizsūsēt
+
 		// Standartizētie
+		// A, B
 		RegularVerbRule.secondThirdConjDirect3PersParallel(
 				"-balē, arī -bal, pag. -balēja", "balēt", false), // apbalēt
 		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-bāl, arī -bālē, pag. -bālēja", "bālēt", false), // iebālēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-brūn, arī -brūnē, pag. -brūnēja", "brūnēt", false), // iebrūnēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-būb, arī -būbē, pag. -būbēja", "būbēt", false), // nobūbēt
+		// C, D
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-dim, arī -dimē, pag. -dimēja", "dimēt", false), // nodimēt
+		// E, F, G
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-gail, arī -gailē, pag. -gailēja", "gailēt", false), // izgailēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-gaidē, arī -gald, pag. -galdēja", "galdēt", false), // sagaldēt
+		// H, I, J
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-junda, arī -jundī, pag. -jundīja", "jundīt", false), // iejundīt
+		// K
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-kveldē, arī -kveld, pag. -kveldēja", "kveldēt", false), // pakveldēt
+		// L, M, N, O, P
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
 				"-pelē, arī -pel, pag. -pelēja", "pelēt", false), // aizpelēt
 		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-plekn, arī -pleknē, pag. -pleknēja", "pleknēt", false), // sapleknēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
 				"-plēn, arī -plēnē, pag. -plēnēja", "plēnēt", false), // applēnēt
+		// R
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-rec, arī -recē, pag. -recēja", "recēt", false), // sarecēt
+		// S
 		RegularVerbRule.secondThirdConjDirect3PersParallel(
 				"-sūb, arī -sūbē, pag. -sūbēja", "sūbēt", false), // aizsūbēt
-
-		//BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
-		//		SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
-		//				new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.NO_PRESENT_SOUNDCHANGE})},
-		//		new Tuple[]{TFeatures.USUALLY_USED__THIRD_PERS}), // aizpelēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-sus, arī -susē, pag. -susēja", "susēt", false), // izsusēt
+		// T, U, V, Z
 	};
 
 	/**

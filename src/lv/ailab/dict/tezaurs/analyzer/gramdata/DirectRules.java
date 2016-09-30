@@ -960,13 +960,20 @@ public class DirectRules
 	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
 	public static final Rule[] reflMultiConjVerb = {
-			// Galotņu šabloni.
-			BaseRule.secondThirdConjReflAllPersParallel(
-					"-os, -ies, -as, arī -ējos, -ējies, -ējas, pag. -ējos", ".*ēties", false), // mīlēties
-			BaseRule.secondThirdConjReflAllPersParallel(
-					"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
+		// Galotņu šabloni.
+		// Visām personām (3. personas likumi netiek atvasināti).
+		BaseRule.secondThirdConjReflAllPersParallel(
+				"-os, -ies, -as, arī -ējos, -ējies, -ējas, pag. -ējos", ".*ēties", false), // mīlēties
+		BaseRule.secondThirdConjReflAllPersParallel(
+				"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
 
-			// Darbības vārdu specifiskie likumi.
-			// Nav.
+		// 3. personai.
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-ās, arī -ījas, pag. -ījās", "īties", false), // rotīties
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-ījas, arī -ās, pag. -ījās", "īties", false), // pietašķīties
+
+		// Darbības vārdu specifiskie likumi.
+		// Nav.
 	};
 }

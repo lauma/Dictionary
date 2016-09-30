@@ -762,13 +762,6 @@ public class OptHypernRules
 		RegularVerbRule.secondConjDir("-verkšķīju, -verkšķī,", "-verkšķī, pag. -verkšķīju", "verkšķīt"), //saverkšķīt
 		RegularVerbRule.secondConjDir("-žūpoju, -žūpo,", "-žūpo, pag. -žūpoju", "žūpot"), //nožūpot
 
-		// Nestandarts
-		BaseRule.of(
-				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
-				".*skandēt", 16,
-				new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.FIRST_CONJ_PARALLELFORM, TFeatures.ORIGINAL_NEEDED},
-				null), // noskandēt
-
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Paralēlās formas.
 		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
@@ -779,7 +772,7 @@ public class OptHypernRules
 		// Standartizētie.
 		RegularVerbRule.secondConjDir3Pers("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
 		RegularVerbRule.secondConjDir3Pers("-mirgo, pag. -mirgoja", "mirgot"), //aizmirgot
-		 RegularVerbRule.secondConjDir3Pers("-sērē, pag. -sērēja", "sērēt"), //aizsērēt
+		RegularVerbRule.secondConjDir3Pers("-sērē, pag. -sērēja", "sērēt"), //aizsērēt
 
 	};
 
@@ -1086,6 +1079,29 @@ public class OptHypernRules
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
 				".*vētīt", false), // aizvētīt
 
+		// TODO vai tiešām nav saskaņojams ne ar vienu priedēkļa likumu?
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -bālē, pag. -bālēju",
+				".*bālēt", false), // bālēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-durnu, -durni, -durn, arī -durnēju, -durnē, -durnē, pag. -durnēju",
+				".*durnēt", false), // durnēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-kluknu, -klukni, -klukn, arī -kluknēju, -kluknē, -kluknē, pag. -kluknēju",
+				".*kluknēt", false), // kluknēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-kruknu, -krukni, -krukn, arī -kruknēju, -kruknē, -kruknē, pag. -kruknēju",
+				".*kruknēt", false), // kruknēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-kuknu, -kukni, -kukn, arī -kuknēju, -kuknē, -kuknē, pag. -kuknēju",
+				".*kuknēt", false), // kuknēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-pleknu, -plekni, -plekn, arī -pleknēju, -pleknē, -pleknē, pag. -pleknēju",
+				".*pleknēt", false), // pleknēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
+				"vēdīju, vēdī, vēdī, arī vēdu, vedi, veda, pag. vēdīju",
+				".*vēdīt", false), //vēdīt
+
 		// Paralēlformu paralēlforma.
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -balē, pag. -bālēju (arī -bālu, 1. konj.)",
@@ -1097,9 +1113,11 @@ public class OptHypernRules
 				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
 				".*rūsēt", false), // ierūsēt
 		BaseRule.secondThirdConjDirectAllPersParallel(
+				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
+				".*skandēt", false), // noskandēt
+		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				".*slīdēt", false), // uzslīdēt
-
 
 		// Likumi, kam ir "parasti 3. pers." variants.
 		// Paralēlformu paralēlforma
@@ -1583,8 +1601,9 @@ public class OptHypernRules
 				".*svētīties", false), // iesvētīties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// TODO vai tiešām nav saskaņojams ne ar vienu priedēkļa likumu?
 		RegularVerbRule.secondThirdConjRefl3PersParallel(
-				"vēdījas, arī vēdās, pag. vēdījas", "vēdīties", false), // vēdīties
+				"-vēdījas, arī -vēdās, pag. -vēdījas", "vēdīties", false), // vēdīties
 	};
 
 }

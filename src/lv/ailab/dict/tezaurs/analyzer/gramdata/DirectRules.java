@@ -728,6 +728,12 @@ public class DirectRules
 		FirstConjRule.refl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Paralēlformas.
+		FirstConjRule.refl3PersParallel("-mejas, arī -mienas, pag. -mējās", "mieties"), // iemieties
+		// TODO pārbaudīt, vai ir pieņemami, ka abas homoformas ir kopā
+		FirstConjRule.refl3PersParallel("-spuldzas, arī -spulgstas, pag. -spuldzās, arī -spulgās", "spulgties"), // iespulgties
+
+		// Standartizētie.
 		// A, B, C, D
 		FirstConjRule.refl3Pers("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
 		// E, F, G, H, I, J, K

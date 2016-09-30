@@ -699,7 +699,19 @@ public class OptHypernRules
 		FirstConjRule.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
 
 		// Paralēlformas
-		FirstConjRule.direct3PersParallel("-ries, pag. -rieta, arī -riesa", "riest"), //aizriest
+		FirstConjRule.direct3PersParallel(
+				"-glumst, arī -glum, pag. -gluma", "glumt"), // pieglumt
+		FirstConjRule.direct3PersParallel(
+				"kūp, arī kūpst, pag. kūpa", "kūpt"), // kūpt
+		FirstConjRule.direct3PersParallel(
+				"-ries, pag. -rieta, arī -riesa", "riest"), // aizriest
+		// TODO pārbaudīt, vai ir pieņemami, ka abas homoformas ir kopā
+		FirstConjRule.direct3PersParallel(
+				"-springst, arī -sprindz, pag. -springa, arī -sprindza", "springt"), // atspringt
+		FirstConjRule.direct3PersParallel(
+				"-spuldz, arī -spulgst, pag. -spuldza, arī -spulga", "spulgt"), // atspulgt
+		FirstConjRule.direct3PersParallel(
+				"-strēdz, arī -strēgst, pag. -strēdza, arī -strēga", "strēgt"), // piestrēgt
 
 		// Standartizētie.
 		// A, B
@@ -1542,36 +1554,37 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
 				".*gailēties", false), // iegailēties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-kristījos, -kristījies, -kristījas, arī -kristos, -kristies, -kristās, pag. -kristījos",
 				".*kristīties", false), // nokristīties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-krustījos, -krustījies, -krustījas, arī -krustos, -krusties, -krustās, pag. -krustījos",
 				".*krustīties", false), // nokrustīties
-			//-krustījos, -krustījies, -krustījās, arī -krustos, -krusties, -krustās, pag. -krustījos
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-ķēzījos, -ķēzījies, -ķēzījas, arī -ķēzos, -ķēzies, -ķēzās, pag. -ķēzījos",
 				".*ķēzīties", false), //noķēzīties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-mērījos, -mērījies, -mērījas, arī -mēros, -mēries, -mērās, pag. -mērījos",
 				".*mērīties", false), // izmērīties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-pelnos, -pelnies, -pelnās, arī -pelnījos, -pelnījies, -pelnījās, pag. -pelnījos",
 				".*pelnīties", false), //izpelnīties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-pūlos, -pūlies, -pūlas, arī -pūlējos, -pūlējies, -pūlējas, pag. -pūlējos",
 				".*pūlēties", false), // nopūlēties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
 				".*sargāties", false), // aizsargāties
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		BaseRule.secondThirdConjReflAllPersParallel(
 				"-svētījos, -svētījies, -svētījas, arī -svētos, -svēties, -svētās, pag. -svētījos",
 				".*svētīties", false), // iesvētīties
+
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		// Nav.
+		RegularVerbRule.secondThirdConjRefl3PersParallel(
+				"vēdījas, arī vēdās, pag. vēdījas", "vēdīties", false), // vēdīties
 	};
 
 }

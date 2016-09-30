@@ -967,6 +967,8 @@ public class OptHypernRules
 				"-spindz, pag. -spindzēja (retāk -spindza, 1. konj.)", "spindzēt", false), // aizspindzēt
 		RegularVerbRule.thirdConjDir3PersParallel(
 				"-spīd, pag. -spīdēja (retāk -spīda, 1. konj.)", "spīdēt", false), // aizspīdēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-šķind, pag. -šķindēja (retāk -šķinda, 1. konj.)", "šķindēt", false), // aizšķindēt
 
 		// Standartizētie.
 		// A, B
@@ -1009,6 +1011,7 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
+			// TODO uztaisīt verbu likumu, kas atvasina 3. personas likumu.
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
 				".*bedīt", false), // apbedīt
@@ -1069,6 +1072,7 @@ public class OptHypernRules
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
 				".*vētīt", false), // aizvētīt
+
 		// Paralēlformu paralēlforma.
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -balē, pag. -bālēju (arī -bālu, 1. konj.)",
@@ -1083,12 +1087,25 @@ public class OptHypernRules
 				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				".*slīdēt", false), // uzslīdēt
 
-			// TODO - vai tiešām šis nav kaut kur jāiesistematizē?
-		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
-						SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
-								new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.NO_PRESENT_SOUNDCHANGE})},
-				new Tuple[]{TFeatures.USUALLY_USED__THIRD_PERS}), // aizpelēt
+
+		// Likumi, kam ir "parasti 3. pers." variants.
+		// Paralēlformu paralēlforma
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-rūsē, arī -rūs, pag. -rūsēja (retāk -rūsa, 1. konj.)", "rūsēt", false), // aizsūsēt
+		// Standartizētie
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-balē, arī -bal, pag. -balēja", "balēt", false), // apbalēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-pelē, arī -pel, pag. -pelēja", "pelēt", false), // aizpelēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-plēn, arī -plēnē, pag. -plēnēja", "plēnēt", false), // applēnēt
+		RegularVerbRule.secondThirdConjDirect3PersParallel(
+				"-sūb, arī -sūbē, pag. -sūbēja", "sūbēt", false), // aizsūbēt
+
+		//BaseRule.of("parasti 3. pers., -pelē, arī -pel, pag. -pelēja", new SimpleSubRule[]{
+		//		SimpleSubRule.of(".*pelēt", new Integer[]{16, 17},
+		//				new Tuple[]{TFeatures.POS__VERB, TFeatures.PARALLEL_FORMS, TFeatures.NO_PRESENT_SOUNDCHANGE})},
+		//		new Tuple[]{TFeatures.USUALLY_USED__THIRD_PERS}), // aizpelēt
 	};
 
 	/**
@@ -1364,7 +1381,9 @@ public class OptHypernRules
 		// Paralēlās formas.
 		FirstConjRule.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 		FirstConjRule.refl3PersParallel("-riešas, pag. -riesās, arī -rietās", "riesties"), //aizriesties
-		FirstConjRule.refl3PersParallel("-sākas, pag. -sākās", "sākties"), //aizsākties
+		// Standarts
+		FirstConjRule.refl3Pers("-sākas, pag. -sākās", "sākties"), //aizsākties
+		FirstConjRule.refl3Pers("-šķiļas, pag. -šķilās", "šķilties"), //aizšķilties
 
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,

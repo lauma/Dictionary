@@ -765,9 +765,8 @@ public class DirectRules
 				new Tuple[] {TFeatures.POS__VERB},
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
 							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties
-			//parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies
+
 		// Darbības vārdu specifiskie likumi.
-		// Nav.
 		RegularVerbRule.secondConjRefl3Pers("-spundējas, pag. -spundējās", "spundēties"), //aizspundēties
 	};
 
@@ -949,6 +948,8 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl3Pers("-sanas, pag. -sanējās", "sanēties", false), //aizsanēties
 		RegularVerbRule.thirdConjRefl3Pers("-sāpas, pag. -sāpējās", "sāpēties", false), //aizsāpeties
 		RegularVerbRule.thirdConjRefl3Pers("-skanas, pag. -skanējās", "skanēties", false), //aizskanēties
+		RegularVerbRule.thirdConjRefl3Pers("-strinkšas, pag. -strinkšējās", "strinkšēties", false), //aizstrinkšēties
+		RegularVerbRule.thirdConjRefl3Pers("-strinkšķas, pag. -strinkšķējās", "strinkšķēties", false), //aizstrinkšķēties
 
 	};
 

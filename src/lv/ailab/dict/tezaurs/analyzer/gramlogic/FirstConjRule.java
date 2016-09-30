@@ -101,12 +101,12 @@ public class FirstConjRule implements Rule
 
 			allPersonRule = BaseRule.simple(allPersonPattern,
 					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
-			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
+			thirdPersonRule = ThirdPersVerbRule.simple(thirdPersonPattern,
 					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternEnd != null && patternEnd.trim().length() > 0)
 		{
 			allPersonRule = null;
-			thirdPersonRule = new ThirdPersVerbRule(patternEnd,
+			thirdPersonRule = ThirdPersVerbRule.simple(patternEnd,
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternBegin != null && patternBegin.trim().length() > 0)
 		{
@@ -151,7 +151,7 @@ public class FirstConjRule implements Rule
 		this.pastStems = Collections.unmodifiableList(pastStems);
 
 		allPersonRule = null;
-		thirdPersonRule = new ThirdPersVerbRule(patternEnd,
+		thirdPersonRule = ThirdPersVerbRule.simple(patternEnd,
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
 	}
 

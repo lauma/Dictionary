@@ -39,7 +39,7 @@ public class RegularVerbRule implements Rule
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
-	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 * @param paradigms		paradigmas, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem
@@ -47,7 +47,7 @@ public class RegularVerbRule implements Rule
 	 *                      likuma šablonam
 	 */
 	public RegularVerbRule(String patternBegin, String patternEnd,
-			String lemmaEnd, int paradigmId,
+			String lemmaEnd, Set<Integer> paradigms,
 			Set<Tuple<String, String>> positiveFlags,
 			Set<Tuple<String, String>> alwaysFlags)
 	{
@@ -74,15 +74,15 @@ public class RegularVerbRule implements Rule
 				thirdPersonPattern = allPersonPattern;
 			}
 			allPersonRule = BaseRule.simple(allPersonPattern,
-					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
-					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+					lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		}
 		else
 		{
 			allPersonRule = null;
 			thirdPersonRule = new ThirdPersVerbRule(patternEnd,
-					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+					lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		}
 	}
 
@@ -92,14 +92,15 @@ public class RegularVerbRule implements Rule
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
 	 *                      varētu piemērot
-	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 * @param paradigms	paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
 	 */
-	public RegularVerbRule(String patternEnd, String lemmaEnd, int paradigmId,
+	public RegularVerbRule(String patternEnd, String lemmaEnd,
+			Set<Integer> paradigms,
 			Set<Tuple<String, String>> positiveFlags,
 			Set<Tuple<String, String>> alwaysFlags)
 	{
@@ -111,7 +112,7 @@ public class RegularVerbRule implements Rule
 
 		allPersonRule = null;
 		thirdPersonRule = new ThirdPersVerbRule(patternEnd,
-				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 	}
 
 	/**
@@ -131,13 +132,15 @@ public class RegularVerbRule implements Rule
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
-		return new RegularVerbRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
+		return new RegularVerbRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
 
 	/**
-	 * Konstruktors likumam, kur norādītas tikai 3. personas formas.
+	 * Konstruktors likumam, kur norādītas tikai 3. personas formas un viena
+	 * paradigma.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
@@ -152,7 +155,32 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
-		return new RegularVerbRule(patternEnd, lemmaEnd, paradigmId,
+		return new RegularVerbRule(patternEnd, lemmaEnd,
+				new HashSet<Integer>(){{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+	}
+
+	/**
+	 * Konstruktors likumam, kur norādītas tikai 3. personas formas un vairākas
+	 * paradigmas
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa, lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigms		paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam
+	 */
+	public static RegularVerbRule of(String patternEnd, String lemmaEnd,
+			Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
+	{
+		return new RegularVerbRule(patternEnd, lemmaEnd,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
@@ -169,7 +197,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjDir(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new RegularVerbRule(patternBegin, patternEnd, lemmaEnd, 16, null, null);
+		return RegularVerbRule.of(patternBegin, patternEnd, lemmaEnd, 16, null, null);
 	}
 
 	/**
@@ -183,7 +211,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjDir3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return new RegularVerbRule(patternEnd, lemmaEnd, 16, null, null);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 16, null, null);
 	}
 
 	/**
@@ -276,6 +304,35 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
+	 * Izveido likumu tiešajam darbības vārdam ar paralēlajām formām, kas veido
+	 * pilnu 2. un 3. konjugācijas formu sistēmu, un ir norādītas tikai 3.
+	 * personas formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return likums ar paradigmām 16, 17
+	 */
+	public static RegularVerbRule secondThirdConjDirect3PersParallel(
+			String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, new Integer[]{16, 17},
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
 	 * Izveido RegularVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
@@ -286,7 +343,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjRefl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return new RegularVerbRule(patternBegin, patternEnd, lemmaEnd, 19, null, null);
+		return RegularVerbRule.of(patternBegin, patternEnd, lemmaEnd, 19, null, null);
 	}
 
 	/**
@@ -300,7 +357,7 @@ public class RegularVerbRule implements Rule
 	public static RegularVerbRule secondConjRefl3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return new RegularVerbRule(patternEnd, lemmaEnd, 19, null, null);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 19, null, null);
 	}
 
 	/**
@@ -339,6 +396,37 @@ public class RegularVerbRule implements Rule
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);
 	}
+
+	/**
+	 * Izveido likumu atgriezeniskajam darbības vārdam ar paralēlajām formām,
+	 * kas veido pilnu 2. un 3. konjugācijas formu sistēmu, un ir norādītas
+	 * tikai 3. personas formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return likums ar paradigmām 19, 20
+	 */
+	public static RegularVerbRule secondThirdConjRefl3PersParallel(
+			String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, new Integer[]{19, 20},
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.

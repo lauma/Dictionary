@@ -25,7 +25,7 @@ public class ThirdPersVerbRule implements Rule
      * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
      * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
      *                      varētu piemērot
-     * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+     * @param paradigms		paradigma, ko lietot, ja konstatēta atbilstība šim
      *                      likumam
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
@@ -34,11 +34,11 @@ public class ThirdPersVerbRule implements Rule
 	 *                      likuma šablonam ("Parasti 3. personā" pievieno
 	 *                      automātiski)
      */
-    public ThirdPersVerbRule(String patternText, String lemmaEnding, int paradigmId,
+    public ThirdPersVerbRule(String patternText, String lemmaEnding, Set<Integer> paradigms,
             Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags)
     {
         thirdPersUsually = BaseRule.simple(
-                "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
+                "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigms,
                 new HashSet<Tuple<String, String>>()
                 {{
                         add(TFeatures.POS__VERB);
@@ -50,7 +50,7 @@ public class ThirdPersVerbRule implements Rule
                         if (alwaysFlags != null) addAll(alwaysFlags);
                     }});
         thirdPersOnly = BaseRule.simple(
-                "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigmId,
+                "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigms,
                 new HashSet<Tuple<String, String>>()
                 {{
                         add(TFeatures.POS__VERB);
@@ -62,6 +62,28 @@ public class ThirdPersVerbRule implements Rule
                         if (alwaysFlags != null) addAll(alwaysFlags);
                     }});
     }
+
+	/**
+	 * Papildus konstruktors īsumam - gadījumam, kad ir tikai viena paradigma.
+	 * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
+	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
+	 *                      pievieno automātiski)
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam ("Parasti 3. personā" pievieno
+	 *                      automātiski)
+	 */
+	public static ThirdPersVerbRule simple(String patternText, String lemmaEnding,
+			int paradigmId,	Set<Tuple<String,String>> positiveFlags,
+			Set<Tuple<String,String>> alwaysFlags)
+	{
+		return new ThirdPersVerbRule(patternText, lemmaEnding,
+				new HashSet<Integer>() {{add(paradigmId);}}, positiveFlags, alwaysFlags);
+	}
 
     /**
      * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
@@ -77,13 +99,36 @@ public class ThirdPersVerbRule implements Rule
 	 *                      automātiski)
      */
     public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
-            int paradigmId, Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
+            int paradigmId, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags)
     {
-        return new ThirdPersVerbRule(patternText, lemmaEnding, paradigmId,
+        return new ThirdPersVerbRule(patternText, lemmaEnding,
+                new HashSet<Integer>() {{add(paradigmId);}},
                 positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
                 alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
     }
 
+	/**
+	 * @param patternText   gramatikas šablons bez "parasti/tikai 3. pers.,".
+	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigms	paradigmas, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
+	 *                      pievieno automātiski)
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam ("Parasti 3. personā" pievieno
+	 *                      automātiski)
+	 */
+	public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
+			Integer[] paradigms, Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
+	{
+		return new ThirdPersVerbRule(patternText, lemmaEnding,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+	}
 
     /**
      * Piemērot likumu bez papildus maģijas.

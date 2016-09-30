@@ -298,6 +298,31 @@ public class FirstConjRule implements Rule
 	}
 
 	/**
+	 * Izveido likumu 1. konjugācijas tiesajam darbības vārdam ar
+	 * paralēlajām formām, bet bez nenoteiksmes homoformām, tikai 3. personas
+	 * formas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
+	 * TODO add IDs from lexicon
+	 */
+	public static FirstConjRule direct3PersParallel(
+			String patternEnd, String lemmaEnd)
+	{
+		Tuple<ArrayList<String>, ArrayList<String>> stems =
+				extractPPStemsThirdPersParallel(patternEnd);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+		return FirstConjRule.of(patternEnd, lemmaEnd, 15, posFlags,
+				null, new String[] {extractInfinityStem(lemmaEnd)},
+				stems.first.toArray(new String[stems.first.size()]),
+				stems.second.toArray(new String[stems.second.size()]));
+	}
+
+	/**
 	 * Izveido likumu 1. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām, bet bez nenoteiksmes homoformām.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai

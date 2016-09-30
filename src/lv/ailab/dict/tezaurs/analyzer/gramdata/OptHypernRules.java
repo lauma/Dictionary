@@ -462,6 +462,7 @@ public class OptHypernRules
 		FirstConjRule.direct("-lūstu, -lūsti,", "-lūst, pag. -lūzu", "lūzt"), //aizlūzt, aizlūzt
 		// Ļ
 		FirstConjRule.direct("-ļauju, -ļauj,", "-ļauj, pag. -ļāvu", "ļaut"), //atļaut
+			//ļauju, ļauj, pag. ļāvu
 		FirstConjRule.direct("-ļimstu, -ļimsti,", "-ļimst, pag. -ļimu", "ļimt"), //noļimt
 		FirstConjRule.direct("-ļumstu, -ļumsti,", "-ļumst, pag. -ļumu", "ļumt"), //saļumt
 		// M
@@ -696,9 +697,9 @@ public class OptHypernRules
 		FirstConjRule.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (gaismai)"), //aizaust 1
 		FirstConjRule.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (ievainojumam)"), //aizdzīt 2
 		FirstConjRule.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
-		//FirstConjRule.direct3PersHomof("-verd, pag. -virda", "virst", "\"virst\" (vārīties)"), //izvirst 2
-			//TODO -virst, arī -vird, pag. -virta, arī -virda (retāk -verda)
-			// Virst/virt ir murgs, jāsagaida, ko teiks L&B
+
+		// Paralēlformas
+		FirstConjRule.direct3PersParallel("-ries, pag. -rieta, arī -riesa", "riest"), //aizriest
 
 		// Standartizētie.
 		// A, B
@@ -708,13 +709,17 @@ public class OptHypernRules
 		FirstConjRule.direct3Pers("-dip, pag. -dipa", "dipt"), //aizdipt
 		// E, F, G
 		FirstConjRule.direct3Pers("-grūst, pag. -gruva", "grūt"), //aizgrūt
+		FirstConjRule.direct3Pers("-guldz, pag. -guldza", "gulgt"), //aizgulgt
 		// H, I, J, K
 		FirstConjRule.direct3Pers("-kviec, pag. -kvieca", "kviekt"), //aizkviekt
 		// L, M
 		FirstConjRule.direct3Pers("-milst, pag. -milza", "milzt"), //aizmilzt
 		// N, Ņ
 		FirstConjRule.direct3Pers("-ņirb, pag. -ņirba", "ņirbt"), //aizņirbt
-		// O, P, R, S, Š, T, U, V, Z
+		// O, P, R, S
+		FirstConjRule.direct3Pers("-sīc, pag. -sīca", "sīkt"), //aizsīkt
+		FirstConjRule.direct3Pers("-smeldz, pag. -smeldza", "smelgt"), //aizsmelgt
+		// T, U, V, Z
 
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
@@ -762,6 +767,8 @@ public class OptHypernRules
 		// Standartizētie.
 		RegularVerbRule.secondConjDir3Pers("-kūko, pag. -kūkoja", "kūkot"), //aizkūkot
 		RegularVerbRule.secondConjDir3Pers("-mirgo, pag. -mirgoja", "mirgot"), //aizmirgot
+		 RegularVerbRule.secondConjDir3Pers("-sērē, pag. -sērēja", "sērēt"), //aizsērēt
+
 	};
 
 	/**
@@ -954,6 +961,12 @@ public class OptHypernRules
 				"-gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", "gruzdēt", false), //aizgruzdēt
 		RegularVerbRule.thirdConjDir3PersParallel(
 				"-mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", "mirdzēt", false), //aizmirdzēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-rit, pag. -ritēja (retāk -rita, 1. konj.)", "ritēt", false), // aizritēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-spindz, pag. -spindzēja (retāk -spindza, 1. konj.)", "spindzēt", false), // aizspindzēt
+		RegularVerbRule.thirdConjDir3PersParallel(
+				"-spīd, pag. -spīdēja (retāk -spīda, 1. konj.)", "spīdēt", false), // aizspīdēt
 
 		// Standartizētie.
 		// A, B
@@ -975,7 +988,17 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjDir3Pers("-klaudz, pag. -klaudzēja", "klaudzēt", false), //aizklaudzēt
 		// L, M, N, Ņ
 		RegularVerbRule.thirdConjDir3Pers("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
-		// O, P, R, S, T, U, V, Z
+		// O, P
+		RegularVerbRule.thirdConjDir3Pers("-pukšķ, pag. -pukšķēja", "pukšķēt", false), //aizpukšķēt
+		// R
+		RegularVerbRule.thirdConjDir3Pers("-riet, pag. -rietēja", "rietēt", false), //aizrietēt
+		RegularVerbRule.thirdConjDir3Pers("-rīb, pag. -rībēja", "rībēt", false), //aizrībēt
+		// S
+		RegularVerbRule.thirdConjDir3Pers("-san, pag. -sanēja", "sanēt", false), //aizsanēt
+		RegularVerbRule.thirdConjDir3Pers("-sprakst, pag. -sprakstēja", "sprakstēt", false), //aizsprakstēt
+		RegularVerbRule.thirdConjDir3Pers("-sprakš, pag. -sprakšēja", "sprakšēt", false), //aizsprakšēt
+		RegularVerbRule.thirdConjDir3Pers("-sprakšķ, pag. -sprakšķēja", "sprakšķēt", false), //aizsprakšķēt
+		// T, U, V, Z
 	};
 
 	/**
@@ -1337,8 +1360,11 @@ public class OptHypernRules
 		// Nenoteiksmes homoformas
 		FirstConjRule.refl3PersHomof("-tīkas, pag. -tikās", "tikties",
 				"\"tikties\" (patikties kādam)"), //patikties
+
 		// Paralēlās formas.
 		FirstConjRule.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
+		FirstConjRule.refl3PersParallel("-riešas, pag. -riesās, arī -rietās", "riesties"), //aizriesties
+		FirstConjRule.refl3PersParallel("-sākas, pag. -sākās", "sākties"), //aizsākties
 
 		// Pilnīgs nestandarts.
 		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 15,

@@ -435,6 +435,7 @@ public class AbbrMap {
 		pairingFlags.put("sar.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
 		pairingFlags.put("vulg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Vulgārisms"));
 		pairingFlags.put("barb.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Barbarisms"));
+		pairingFlags.put("īsziņās", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));
 
 		// Formu ierobežojumi
 		pairingFlags.put("arī vsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));		// Ļaunums.

@@ -732,7 +732,10 @@ public class DirectRules
 		FirstConjRule.refl3Pers("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
 		// E, F, G, H, I, J, K
 		FirstConjRule.refl3Pers("-kaucas, pag. -kaucās", "kaukties"), //aizkaukties
-		// L, M, N, O, P, R, S, Š
+		// L, M, N, O, P, R, S
+		FirstConjRule.refl3Pers("-sīcas, pag. -sīcās", "sīkties"), //aizsīkties
+		FirstConjRule.refl3Pers("-smeldzas, pag. -smeldzās", "smelgties"), //aizsmelgties
+		// Š
 		FirstConjRule.refl3Pers("-šalcas, pag. -šalcās", "šalkties"), //aizšalkties
 		// T, U, V, Z
 	};
@@ -964,8 +967,16 @@ public class DirectRules
 				"-kurkšķas, pag. -kurkšķējās", "kurkšķēties", false), //aizkurkšķēties
 		// L, M
 		RegularVerbRule.thirdConjRefl3Pers(
-				"-mirdzas, pag. -mirdzējās", "mirdzēties", false) //aizmirdzēties
-		// N, O, P, R, S, T, U, V, Z
+				"-mirdzas, pag. -mirdzējās", "mirdzēties", false), //aizmirdzēties
+		// N, O, P, R
+		RegularVerbRule.thirdConjRefl3Pers("-rukšas, pag. -rukšējās", "rukšēties", false), //aizrukšēties
+		RegularVerbRule.thirdConjRefl3Pers("-rukšķas, pag. -rukšķējās", "rukšķēties", false), //aizrukšķēties
+		// S, T, U, V, Z
+		RegularVerbRule.thirdConjRefl3Pers("-sanas, pag. -sanējās", "sanēties", false), //aizsanēties
+		RegularVerbRule.thirdConjDir3Pers("-sāpas, pag. -sāpējās", "sāpēties", false), //aizsāpeties
+		RegularVerbRule.thirdConjDir3Pers("-skanas, pag. -skanējās", "skanēties", false), //aizskanēties
+		RegularVerbRule.thirdConjDir3Pers("-spundējas, pag. -spundējās,", "spundēties", false), //aizspundēties
+
 	};
 
 	/**

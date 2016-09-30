@@ -768,6 +768,7 @@ public class DirectRules
 			//parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies
 		// Darbības vārdu specifiskie likumi.
 		// Nav.
+		RegularVerbRule.secondConjRefl3Pers("-spundējas, pag. -spundējās", "spundēties"), //aizspundēties
 	};
 
 	/**
@@ -948,7 +949,6 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl3Pers("-sanas, pag. -sanējās", "sanēties", false), //aizsanēties
 		RegularVerbRule.thirdConjRefl3Pers("-sāpas, pag. -sāpējās", "sāpēties", false), //aizsāpeties
 		RegularVerbRule.thirdConjRefl3Pers("-skanas, pag. -skanējās", "skanēties", false), //aizskanēties
-		RegularVerbRule.thirdConjRefl3Pers("-spundējas, pag. -spundējās,", "spundēties", false), //aizspundēties
 
 	};
 

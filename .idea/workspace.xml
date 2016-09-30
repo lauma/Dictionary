@@ -27,8 +27,8 @@
       <file leaf-file-name="DirectRules.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="941" column="15" selection-start-line="941" selection-start-column="15" selection-end-line="941" selection-end-column="15" />
+            <state relative-caret-position="475">
+              <caret line="770" column="105" selection-start-line="770" selection-start-column="105" selection-end-line="770" selection-end-column="105" />
               <folding />
             </state>
           </provider>
@@ -1110,8 +1110,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="941" column="15" selection-start-line="941" selection-start-column="15" selection-end-line="941" selection-end-column="15" />
+        <state relative-caret-position="475">
+          <caret line="770" column="105" selection-start-line="770" selection-start-column="105" selection-end-line="770" selection-end-column="105" />
           <folding />
         </state>
       </provider>

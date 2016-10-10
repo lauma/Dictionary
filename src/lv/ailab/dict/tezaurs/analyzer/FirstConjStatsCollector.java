@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer;
 
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.struct.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 
@@ -38,6 +39,19 @@ public class FirstConjStatsCollector
 	 * sakārtot pēc visiem celmiem.
 	 */
 	public final boolean collectReflByStems;
+
+	/**
+	 * Karodziņš, vai savākt 1. konjugācijas tiešos darbības vārdus un sakārtot
+	 * pēc priedēkļiem (un nenoteiksmes saknes).
+	 */
+	public final boolean collectDirectByPrefix;
+
+	/**
+	 * Karodziņš, vai savākt 1. konjugācijas atgriezeniskos darbības vārdus un
+	 * sakārtot pēc priedēkļiem (un nenoteiksmes saknes).
+	 */
+	public final boolean collectReflByPrefix;
+
 	/**
 	 * "Locīt kā" -> attiecīgais darbības vārds.
 	 */
@@ -59,6 +73,19 @@ public class FirstConjStatsCollector
 	 */
 	public TreeMap<String, TreeSet<String>> reflByStems = new TreeMap<>();
 
+	/**
+	 * Priedēkļi, pēc kuriem tiek kārtoti darbības vārdi.
+	 */
+	public TreeSet<String> prefixes = new TreeSet<>();
+	/**
+	 * "Locīt kā" -> priedēklis -> attiecīgie darbības vārdi
+	 */
+	public TreeMap<String,TreeMap<String, TreeSet<String>>> directByPrefix = new TreeMap<>();
+	/**
+	 * "Locīt kā" -> priedēklis -> attiecīgie darbības vārdi
+	 */
+	public TreeMap<String,TreeMap<String, TreeSet<String>>> reflByPrefix = new TreeMap<>();
+
 
 	public FirstConjStatsCollector(boolean collectDirect,
 			boolean collectRefl)
@@ -68,16 +95,22 @@ public class FirstConjStatsCollector
 
 		this.collectReflByInfinitive = collectRefl;
 		this.collectReflByStems = collectRefl;
+
+		this.collectDirectByPrefix = collectDirect;
+		this.collectReflByPrefix = collectRefl;
 	}
 
 	public FirstConjStatsCollector(
 			boolean collectDirectByInfinitive, boolean collectReflByInfinitive,
-			boolean collectDirectByStems, boolean collectReflByStems)
+			boolean collectDirectByStems, boolean collectReflByStems,
+			boolean collectDirectByPrefix, boolean collectReflByPrefix)
 	{
 		this.collectDirectByInfinitive = collectDirectByInfinitive;
 		this.collectReflByInfinitive = collectReflByInfinitive;
 		this.collectDirectByStems = collectDirectByStems;
 		this.collectReflByStems = collectReflByStems;
+		this.collectDirectByPrefix = collectDirectByPrefix;
+		this.collectReflByPrefix = collectReflByPrefix;
 	}
 
 	/**
@@ -100,12 +133,14 @@ public class FirstConjStatsCollector
 			{
 				if (collectDirectByInfinitive) addByInf(directByInf, h);
 				if (collectReflByStems) addByStem(directbyStems, h);
+				if (collectDirectByPrefix) addByPrefix(directByPrefix, h);
 			}
 			// Ir atpazīts, ka locīs kā atgriezenisko.
 			if (h.gram.getDirectParadigms().contains(18))
 			{
 				if (collectReflByInfinitive) addByInf(reflByInf, h);
 				if (collectReflByStems) addByStem(reflByStems, h);
+				if (collectReflByPrefix) addByPrefix(reflByPrefix, h);
 			}
 		}
 	}
@@ -118,11 +153,12 @@ public class FirstConjStatsCollector
 	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
 	 *              struktūrai
 	 */
-	private static void addByInf(TreeMap<String, TreeSet<String>> where, Header what)
+	protected static void addByInf(
+			TreeMap<String, TreeSet<String>> where, Header what)
 	{
 		Set<String> keys = what.gram.flags.getAll(TKeys.INFLECT_AS);
 		if (keys == null) keys = new HashSet<>();
-		if (keys.isEmpty()) keys.add(" ");
+		if (keys.isEmpty()) keys.add("NULL");
 		for (String key : keys)
 		{
 			TreeSet<String> values = where.get(key);
@@ -140,22 +176,73 @@ public class FirstConjStatsCollector
 	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
 	 *              struktūrai
 	 */
-	private static void addByStem(TreeMap<String, TreeSet<String>> where, Header what)
+	protected static void addByStem(
+			TreeMap<String, TreeSet<String>> where, Header what)
 	{
-		String key = "Infinitive=";
-		Set<String> stemKeys = what.gram.flags.getAll(TKeys.INFINITIVE_STEM);
-		key = key + stemKeys.stream().sorted().reduce((a, b) -> a + "," + b).orElse("??")
-				+ "; Present=";
-		stemKeys = what.gram.flags.getAll(TKeys.PRESENT_STEM);
-		key = key + stemKeys.stream().sorted().reduce((a, b) -> a + "," + b).orElse("??")
-				+ "; Past=";
-		stemKeys = what.gram.flags.getAll(TKeys.PAST_STEM);
-		key = key + stemKeys.stream().sorted().reduce((a, b) -> a + "," + b).orElse("??");
+		String key = "";
+		final String prefix;
+		Set<String> prefixes = what.gram.flags.getAll(Keys.VERB_PREFIX);
+		if (prefixes != null)
+		{
+			if (prefixes.size() > 1)
+				System.out.println("Pie \"" + what.lemma.text
+						+ "\" ir vairāk kā 1 priedēklis: "
+						+ prefixes.stream().sorted().reduce((p1, p2) -> p1 + ", " + p2).orElse("")
+						+ "!");
+			prefix = prefixes.stream().sorted().findFirst().orElse("");
+		}
+		else prefix = "";
+		Set<String> stemKeys = what.gram.flags.getAll(Keys.INFINITIVE_STEM);
+		key = key + stemKeys.stream().sorted()
+				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+				.reduce((a, b) -> a + ", " + b).orElse("NULL")
+				+ "\t";
+		stemKeys = what.gram.flags.getAll(Keys.PRESENT_STEM);
+		key = key + stemKeys.stream().sorted()
+				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+				.reduce((a, b) -> a + ", " + b).orElse("NULL")
+				+ "\t";
+		stemKeys = what.gram.flags.getAll(Keys.PAST_STEM);
+		key = key + stemKeys.stream().sorted()
+				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+				.reduce((a, b) -> a + ", " + b).orElse("NULL");
 
 		TreeSet<String> values = where.get(key);
 		if (values == null) values = new TreeSet<>();
 		values.add(what.lemma.text);
 		where.put(key, values);
+	}
+	/**
+	 * Pievienot informāciju par doto Header objektu directBySPrefix vai
+	 * reflByPrefix statistiku vākšanas objektā.
+	 * @param where	datu struktūra, kuru nepieciešams papildināt (directByPrefix
+	 *              vai reflByPrefix)
+	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
+	 *              struktūrai
+	 */
+	protected void addByPrefix(
+			TreeMap<String,TreeMap<String, TreeSet<String>>> where, Header what)
+	{
+		Set<String> prefs = what.gram.flags.getAll(Keys.VERB_PREFIX);
+		Set<String> infs = what.gram.flags.getAll(TKeys.INFLECT_AS);
+		if (prefs == null) prefs = new HashSet<>();
+		if (prefs.isEmpty()) prefs.add("NULL");
+		if (infs == null) infs = new HashSet<>();
+		if (infs.isEmpty()) infs.add("NULL");
+		for (String inf : infs)
+		{
+			TreeMap<String, TreeSet<String>> prefMap = where.get(inf);
+			if (prefMap == null) prefMap = new TreeMap<>();
+			for (String pref : prefs)
+			{
+				prefixes.add(pref);
+				TreeSet<String> verbs = prefMap.get(pref);
+				if (verbs == null) verbs = new TreeSet<>();
+				verbs.add(what.lemma.text);
+				prefMap.put(pref, verbs);
+			}
+			where.put(inf, prefMap);
+		}
 	}
 
 	/**
@@ -186,6 +273,15 @@ public class FirstConjStatsCollector
 			out.close();
 		}
 
+		if (collectDirectByPrefix)
+		{
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-prefix.txt"), "UTF-8"));
+			printPrefixMap(out, directByPrefix);
+			out.flush();
+			out.close();
+		}
+
 		if (collectReflByInfinitive)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
@@ -200,6 +296,15 @@ public class FirstConjStatsCollector
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-stems.txt"), "UTF-8"));
 			printStemMap(out, reflByStems);
+			out.flush();
+			out.close();
+		}
+
+		if (collectReflByPrefix)
+		{
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-prefix.txt"), "UTF-8"));
+			printPrefixMap(out, reflByPrefix);
 			out.flush();
 			out.close();
 		}
@@ -218,10 +323,11 @@ public class FirstConjStatsCollector
 	{
 		if (what != null && what.size() > 0)
 		{
+			where.write("Celms+izskaņa\tDisambiguators\tDarbības vārdu rinda\n");
 			where.write(what.keySet().stream().map(k ->
-					k + "\t" + what.get(k).stream()
-								.reduce((v1, v2) -> v1 + ", " + v2)
-								.orElse(""))
+					k.replaceAll("\" \\(", "\t").replaceAll("\"$", "\tNULL").replaceAll("\"\\(?|\\)", "")
+							+ "\t" + what.get(k).stream()
+								.reduce((v1, v2) -> v1 + ", " + v2)	.orElse(""))
 					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
 			where.write("\n");
 		}
@@ -241,6 +347,7 @@ public class FirstConjStatsCollector
 	{
 		if (what != null && what.size() > 0)
 		{
+			where.write("Nenoteiksme\tTagadne\tPagātne\tDarbības vārdi\n");
 			where.write(what.keySet().stream().map(k ->
 					k + "\t" +
 							what.get(k).stream()
@@ -249,5 +356,45 @@ public class FirstConjStatsCollector
 					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
 			where.write("\n");
 		}
+	}
+	/**
+	 * Ertības metode, kas tiek izmantota directByPrefix un reflByPrefix
+	 * izdrukāšanai.
+	 * @param where	plusma/fails, kur notiks izdeukāšana
+	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByPrefix
+	 *              vai reflByPrefix)
+	 * @throws IOException
+	 */
+	protected void printPrefixMap (
+			BufferedWriter where, TreeMap<String,TreeMap<String, TreeSet<String>>> what)
+	throws IOException
+	{
+		if (what != null && what.size() > 0)
+		{
+			where.write("Celms+izskaņa\t");
+			where.write(prefixes.stream().map(p -> "NULL".equals(p) ? p : p + "-").reduce(
+					(p1, p2) -> p1 + "\t" + p2).orElse(""));
+			where.write("\n");
+			for (String inf : what.keySet())
+			{
+				where.write(inf + "\t");
+				TreeMap<String, TreeSet<String>> prefMap = what.get(inf);
+				where.write(prefixes.stream().sorted().map(pref -> prefMap
+						.getOrDefault(pref, new TreeSet<>()).stream().sorted()
+						.reduce((v1, v2) -> v1 + ", " + v2).orElse("NULL"))
+					.reduce((v1, v2) -> v1 + "\t" + v2).orElse(""));
+				//for (String pref: prefixes)
+				//{
+				//	if (prefMap.containsKey(pref))
+				//		where.write(prefMap.get(pref).stream().reduce(
+				//				(v1, v2) -> v1 + ", " + v2).orElse("NULL"));
+				//	else where.write("NULL");
+				//	where.write("\t");
+				//}
+				where.write("\n");
+			}
+
+		}
+
 	}
 }

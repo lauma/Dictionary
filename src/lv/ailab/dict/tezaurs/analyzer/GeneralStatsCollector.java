@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  *
  * @author Lauma
  */
-public class StatsCollector
+public class GeneralStatsCollector
 {
 	/**
 	 * Karodziņš, vai savākt izrunas.
@@ -128,7 +128,7 @@ public class StatsCollector
 	 */
 	public ArrayList<Trio<String, String, ArrayList<String>>> entriesWithSelectedFeature = new ArrayList<>();
 
-	public StatsCollector ( boolean collectPrononcations,
+	public GeneralStatsCollector( boolean collectPrononcations,
 			//boolean collectFirstConjAll,
 			boolean collectFirstConjDirectSorted,
 			boolean collectFirstConjReflSorted,

@@ -21,8 +21,7 @@ package lv.ailab.dict.tezaurs;
 import java.io.*;
 import java.util.ArrayList;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.StatsCollector;
+import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
@@ -133,7 +132,7 @@ public class DictionaryXmlToJson
 				wordlistOut = new BufferedWriter(new OutputStreamWriter(
 						new FileOutputStream(wordlistFile), "UTF-8"));
 			}
-			StatsCollector sc = new StatsCollector(PRINT_PRONONCATIONS,
+			GeneralStatsCollector sc = new GeneralStatsCollector(PRINT_PRONONCATIONS,
 					//PRINT_FIRST_CONJ,
 					PRINT_FIRST_CONJ_DIRECT_SORTED,
 					PRINT_FIRST_CONJ_REFL_SORTED, PRINT_FIFTH_DECL_EXC,

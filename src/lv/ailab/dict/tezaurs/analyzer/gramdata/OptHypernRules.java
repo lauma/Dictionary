@@ -209,9 +209,9 @@ public class OptHypernRules
 				"\"spriegt\" (kādu citu)"), //nospriegt, saspriegt 1
 		FirstConjRule.directHomof("-spriegstu, -spriegsti,", "-spriegst, pag. -spriegu", "spriegt",
 				"\"spriegt\" (pašam)"), //saspriegt 2
-		FirstConjRule.directHomof("-spriedzu, -spriedz,", "-spriedz, pag. -spriedzu", "springt",
+		FirstConjRule.directHomof("-sprindzu, -sprindz,", "-sprindz, pag. -sprindzu", "springt",
 				"\"springt\" (kādu citu)"), //saspringt 2
-		FirstConjRule.directHomof("-spriegstu, -spriegsti,", "-spriegst, pag. -spriegu", "springt",
+		FirstConjRule.directHomof("-springstu, -springsti,", "-springst, pag. -springu", "springt",
 				"\"springt\" (pašam)"), //saspringt 1
 		FirstConjRule.directHomof("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt",
 				"\"tikt\" (nokļūt kaut kur)"), //aiztikt 1, 2
@@ -219,7 +219,7 @@ public class OptHypernRules
 				"\"tikt\" (patikt kādam)"), //patikt
 		// Pēc mokošām pārrunām. Paldies, Vent Zvaigzne, paldies, Aldi Lauzi!
 		FirstConjRule.directHomof("-verdu, -verd,", "-verd, pag. -virdu", "virst",
-				"\"virst\" (izļākt)"), //izvirst 2, virst 1 || Tēzaurā neieliktā alternatīva: -verdu, -verd, -verd, retāk -verdu, -vird, -vird, pag. -virdu
+				"\"virst\" (izšļākt)"), //izvirst 2, virst 1 || Tēzaurā neieliktā alternatīva: -verdu, -verd, -verd, retāk -verdu, -vird, -vird, pag. -virdu
 		FirstConjRule.directHomof("-virstu, -virsti,", "-virst, pag. -virtu", "virst",
 				"\"virst\" (zaudēt tikumiskās īpašības)"), //izvirst 1, virst 2
 		FirstConjRule.directHomof("-verdu, -verd,", "-verd, pag. -viru", "virt",

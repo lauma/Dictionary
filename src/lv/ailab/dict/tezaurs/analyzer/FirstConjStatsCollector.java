@@ -80,7 +80,12 @@ public class FirstConjStatsCollector
 		this.collectReflByStems = collectReflByStems;
 	}
 
-	public void countEntry( TEntry entry) throws IOException
+	/**
+	 * Apstrādāt doto šķirkli - papildināt vācamās statistikas ar visu
+	 * nepieciešamo informāciju par šo šķirkli.
+	 * @param entry	apstrādājamais šķirklis
+	 */
+	public void countEntry( TEntry entry)
 	{
 		// Uzmanīgi, šī ir optimizācija ātrumam: if nosacījums daļēji dublē
 		// iekšā esošos nosacījumus.
@@ -105,6 +110,14 @@ public class FirstConjStatsCollector
 		}
 	}
 
+	/**
+	 * Pievienot informāciju par doto Header objektu directByInf vai reflByInf
+	 * statistiku vākšanas objektā.
+	 * @param where	datu struktūra, kuru nepieciešams papildināt (directByInf
+	 *              vai reflByInf)
+	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
+	 *              struktūrai
+	 */
 	private static void addByInf(TreeMap<String, TreeSet<String>> where, Header what)
 	{
 		Set<String> keys = what.gram.flags.getAll(TKeys.INFLECT_AS);
@@ -119,6 +132,14 @@ public class FirstConjStatsCollector
 		}
 	}
 
+	/**
+	 * Pievienot informāciju par doto Header objektu directByStem vai reflByStem
+	 * statistiku vākšanas objektā.
+	 * @param where	datu struktūra, kuru nepieciešams papildināt (directByStem
+	 *              vai reflByStem)
+	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
+	 *              struktūrai
+	 */
 	private static void addByStem(TreeMap<String, TreeSet<String>> where, Header what)
 	{
 		String key = "Infinitive=";
@@ -137,6 +158,13 @@ public class FirstConjStatsCollector
 		where.put(key, values);
 	}
 
+	/**
+	 * Izdrukāt visu savākto. Datu objekti netiek iztīrīti pēc drukāšanas.
+	 * @param folderPath		ceļš, kur drukāt
+	 * @param fileNamePrefix	faila prefikss, kuru izmantot izveidotajiem
+	 *                          failiem (piemēram, "entities" vai "references")
+	 * @throws IOException
+	 */
 	public void printContents(String folderPath, String fileNamePrefix)
 	throws IOException
 	{
@@ -177,7 +205,15 @@ public class FirstConjStatsCollector
 		}
 	}
 
-	private static void printInfMap (BufferedWriter where, TreeMap<String, TreeSet<String>> what)
+	/**
+	 * Ertības metode, kas tiek izmantota directByInf un reflByInf izdrukāšanai.
+	 * @param where	plusma/fails, kur notiks izdeukāšana
+	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByInf vai
+	 *              reflByInf)
+	 * @throws IOException
+	 */
+	protected static void printInfMap (
+			BufferedWriter where, TreeMap<String, TreeSet<String>> what)
 	throws IOException
 	{
 		if (what != null && what.size() > 0)
@@ -191,7 +227,16 @@ public class FirstConjStatsCollector
 		}
 	}
 
-	private static void printStemMap (BufferedWriter where, TreeMap<String, TreeSet<String>> what)
+	/**
+	 * Ertības metode, kas tiek izmantota directByStem un reflByStem
+	 * izdrukāšanai.
+	 * @param where	plusma/fails, kur notiks izdeukāšana
+	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByStem vai
+	 *              reflByStem)
+	 * @throws IOException
+	 */
+	protected static void printStemMap (
+			BufferedWriter where, TreeMap<String, TreeSet<String>> what)
 	throws IOException
 	{
 		if (what != null && what.size() > 0)

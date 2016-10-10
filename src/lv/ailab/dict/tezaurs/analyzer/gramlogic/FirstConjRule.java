@@ -758,7 +758,7 @@ public class FirstConjRule implements Rule
 			prefix = prefix.substring(0, prefix.length() - infinityStem.length());
 			if (prefix.length() > 0)
 				flagCollector.add(TKeys.VERB_PREFIX, prefix);
-			flagCollector.add(TKeys.INFINITY_STEM, prefix + infinityStem);
+			flagCollector.add(TKeys.INFINITIVE_STEM, prefix + infinityStem);
 
 			for (String stem : presentStems)
 				flagCollector.add(TKeys.PRESENT_STEM, prefix + stem);

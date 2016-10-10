@@ -21,6 +21,7 @@ package lv.ailab.dict.tezaurs;
 import java.io.*;
 import java.util.ArrayList;
 
+import lv.ailab.dict.tezaurs.analyzer.FirstConjStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
@@ -39,24 +40,28 @@ public class DictionaryXmlToJson
 	public final static String[] XML_FILES = {"entries", "references"};
 	public final static boolean PRINT_SINGLE_XML = false;
 	public final static boolean PRINT_SINGLE_JSON = false;
+
+	// Parametri, kas attiecināmi ur GeneralStatsCollector.
 	public final static boolean PRINT_WORDLISTS = false;
 
 	public final static boolean PRINT_PRONONCATIONS = false;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;
 	//public final static boolean PRINT_FIRST_CONJ = false;
-	public final static boolean PRINT_FIRST_CONJ_DIRECT_SORTED = false;
-	public final static boolean PRINT_FIRST_CONJ_REFL_SORTED = false;
 	public final static boolean PRINT_NON_INFL = false;
+
 	public final static String PRINT_WITH_REGEXP = null;
 	//public static String PRINT_WITH_REGEXP = ".*fe";
 
+	public final static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 	/*public static ArrayList<Integer> PPRINT_WITH_PARADIGM = new ArrayList<Integer>() {{
 		add (30);
 		add (40);
 		add (41);
 	}};//*/
-	public final static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 
+	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
+	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE = null;
+	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE_DESC = null;
 	// Stindzeņu izgūšana ar plašāku aprakstu.
 	/*public static ArrayList<Tuple<TKeys, String>> PRINT_WITH_FEATURE = new ArrayList<Tuple<TKeys, String>>(){{
 		add(new Tuple<TKeys, String>(TKeys.CASE, null));
@@ -89,11 +94,14 @@ public class DictionaryXmlToJson
 		add(new Tuple<TKeys, String>(TKeys.DIALECT_FEATURES, null));
 		add(new Tuple<TKeys, String>(TKeys.POS, null));
 	}};//*/
-	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
-	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE = null;
-	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE_DESC = null;
+	// Vēl raksturlielumi, ar kuriem aprakstīt šķirkļus, kas izgūti ar PRINT_WITH_FEATURE
 	public final static boolean PRINT_PARADIGMS = true;
 	public final static boolean PRINT_OTHER_LEMMAS = true;
+
+	// Parametri, kas attiecināmi ur FirstConjStatsCollector.
+	public final static boolean PRINT_FIRST_CONJ_DIRECT = true;
+	public final static boolean PRINT_FIRST_CONJ_REFL = true;
+
 
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
@@ -132,14 +140,15 @@ public class DictionaryXmlToJson
 				wordlistOut = new BufferedWriter(new OutputStreamWriter(
 						new FileOutputStream(wordlistFile), "UTF-8"));
 			}
-			GeneralStatsCollector sc = new GeneralStatsCollector(PRINT_PRONONCATIONS,
-					//PRINT_FIRST_CONJ,
-					PRINT_FIRST_CONJ_DIRECT_SORTED,
-					PRINT_FIRST_CONJ_REFL_SORTED, PRINT_FIFTH_DECL_EXC,
-					PRINT_NON_INFL, PRINT_WITH_REGEXP, PPRINT_WITH_PARADIGM,
-					PRINT_WITH_FEATURE, PRINT_WITH_FEATURE_DESC,
-					PRINT_PARADIGMS, PRINT_OTHER_LEMMAS,
-					wordlistOut);
+			GeneralStatsCollector genSC = new GeneralStatsCollector(
+					PRINT_PRONONCATIONS, //PRINT_FIRST_CONJ,
+					PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL, PRINT_WITH_REGEXP,
+					PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
+					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,
+					PRINT_OTHER_LEMMAS,	wordlistOut);
+
+			FirstConjStatsCollector firstConjSC = new FirstConjStatsCollector(
+					PRINT_FIRST_CONJ_DIRECT, PRINT_FIRST_CONJ_REFL);
 
 			StaxReader dicReader = new StaxReader(inputFile);
 
@@ -164,7 +173,8 @@ public class DictionaryXmlToJson
 			while (entryNode != null)
 			{
 				TEntry entry = new TEntry(entryNode);
-				sc.countEntry(entry);
+				genSC.countEntry(entry);
+				firstConjSC.countEntry(entry);
 				entry.printConsistencyReport();
 
 				if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
@@ -220,7 +230,8 @@ public class DictionaryXmlToJson
 			System.out.println("Drukā statistiku...");
 			BufferedWriter statsOut = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(statsFile), "UTF-8"));
-			sc.printContents(statsOut);
+			genSC.printContents(statsOut);
+			firstConjSC.printContents(path, file);
 			statsOut.close();
 			//if (makePronunceList) statsOut.close();
 		}

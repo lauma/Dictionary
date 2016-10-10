@@ -34,16 +34,6 @@ public class GeneralStatsCollector
 	 */
 	//public final boolean collectFirstConjAll;
 	/**
-	 * Karodziņš, vai savākt 1. konjugācijas tiešos darbības vārdus un sakārtot
-	 * pēc nenoteiksmes saknes.
-	 */
-	public final boolean collectFirstConjDirectSorted;
-	/**
-	 * Karodziņš, vai savākt 1. konjugācijas tiešos darbības vārdus un sakārtot
-	 * pēc nenoteiksmes saknes.
-	 */
-	public final boolean collectFirstConjReflSorted;
-	/**
 	 * Karodziņš, vai savākt 5. deklinācijas izņēmumus.
 	 */
 	public final boolean collectFifthDeclExceptions;
@@ -115,14 +105,7 @@ public class GeneralStatsCollector
 	 * Vārds, šķirkļavāds, homonīma indekss.
 	 */
     public ArrayList<Trio<String, String, String>> fifthDeclExceptions = new ArrayList<>();
-	/**
-	 * "Locīt kā" -> šķirkļavārds.
-	 */
-	public TreeMap<String, TreeSet<String>> firstConjDirectSorted = new TreeMap<>();
-	/**
-	 * "Locīt kā" -> šķirkļavārds.
-	 */
-	public TreeMap<String, TreeSet<String>> firstConjReflSorted = new TreeMap<>();
+
 	/**
 	 * Šķirkļavāds, homonīma indekss, karodziņi.
 	 */
@@ -130,8 +113,6 @@ public class GeneralStatsCollector
 
 	public GeneralStatsCollector( boolean collectPrononcations,
 			//boolean collectFirstConjAll,
-			boolean collectFirstConjDirectSorted,
-			boolean collectFirstConjReflSorted,
 			boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, String collectWithRegexp,
 			ArrayList<Integer> collectWithParadigms,
@@ -143,8 +124,6 @@ public class GeneralStatsCollector
 		this.collectPrononcations = collectPrononcations;
 		//this.collectFirstConjAll = collectFirstConjAll;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
-		this.collectFirstConjDirectSorted = collectFirstConjDirectSorted;
-		this.collectFirstConjReflSorted = collectFirstConjReflSorted;
 		this.collectNonInflWithCase = collectNonInflWithCase;
 		this.collectWithRegexp = collectWithRegexp == null ?
 				null : Pattern.compile(collectWithRegexp);
@@ -188,7 +167,11 @@ public class GeneralStatsCollector
 		if (collectPrononcations)
         	for (String p : entry.collectPronunciations())
             	pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
-        for (Header h : entry.getAllHeaders())
+
+		// Uzmanīgi, šī ir optimizācija ātrumam: if nosacījums daļēji dublē
+		// iekšā esošos nosacījumus.
+		if (collectFifthDeclExceptions || collectNonInflWithCase)
+        	for (Header h : entry.getAllHeaders())
         {
 			if (h.gram == null) continue;
 			/*if (collectFirstConjAll &&
@@ -204,37 +187,8 @@ public class GeneralStatsCollector
 			if (collectNonInflWithCase && h.gram.flags.testKey(TKeys.CASE) &&
 					h.gram.flags.test(TFeatures.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
-
-			if (collectFirstConjDirectSorted && h.gram.getDirectParadigms().contains(15))
-			{
-				Set<String> keys = h.gram.flags.getAll(TKeys.INFLECT_AS);
-				if (keys == null) keys = new HashSet<>();
-				if (keys.isEmpty()) keys.add(" ");
-				for (String key : keys)
-				{
-					TreeSet<String> values = firstConjDirectSorted.get(key);
-					if (values == null) values = new TreeSet<>();
-					values.add(h.lemma.text);
-					firstConjDirectSorted.put(key, values);
-				}
-			}
-
-			if (collectFirstConjReflSorted && h.gram.getDirectParadigms().contains(18))
-			{
-				Set<String> keys = h.gram.flags.getAll(TKeys.INFLECT_AS);
-				if (keys == null) keys = new HashSet<>();
-				if (keys.isEmpty()) keys.add(" ");
-				for (String key : keys)
-				{
-					TreeSet<String> values = firstConjReflSorted.get(key);
-					if (values == null) values = new TreeSet<>();
-					values.add(h.lemma.text);
-					firstConjReflSorted.put(key, values);
-				}
-			}
-
-
 		}
+
 		if (collectWithRegexp != null)
 		{
 			for (Header h : entry.getAllHeaders())
@@ -383,12 +337,12 @@ public class GeneralStatsCollector
 
 		// Celmi un priedēklis
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(TKeys.INFINITY_STEM))
+				entry.head.gram.flags.testKey(TKeys.INFINITIVE_STEM))
 		{
-			line.append(TKeys.INFINITY_STEM);
+			line.append(TKeys.INFINITIVE_STEM);
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITY_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITIVE_STEM)));
 		}
 		else line.append("NULL");
 		line.append("\t");
@@ -516,26 +470,7 @@ public class GeneralStatsCollector
 					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
 			out.write("\n]");
 		}*/
-		if (collectFirstConjDirectSorted && firstConjDirectSorted != null
-				&& firstConjDirectSorted.size() > 0)
-		{
-			out.write(",\n\"1. konjugācija, tiešie\":\"\n");
-			out.write(firstConjDirectSorted.keySet().stream().map(k ->
-					JSONObject.escape(k) + "\t" +
-						firstConjDirectSorted.get(k).stream().reduce((v1, v2) -> v1 + ", " + v2).orElse(""))
-					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
-			out.write("\n\"");
-		}
-		if (collectFirstConjReflSorted && firstConjReflSorted != null
-				&& firstConjReflSorted.size() > 0)
-		{
-			out.write(",\n\"1. konjugācija, atgriezeniskie\":\"\n");
-			out.write(firstConjReflSorted.keySet().stream().map(k ->
-					JSONObject.escape(k) + "\t" +
-							firstConjReflSorted.get(k).stream().reduce((v1, v2) -> v1 + ", " + v2).orElse(""))
-					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
-			out.write("\n\"");
-		}
+
 		if (collectNonInflWithCase && nonInflWithCase != null
 				&& nonInflWithCase.size() > 0)
 		{

@@ -48,7 +48,7 @@ public class Keys
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * 1. konjugācijas darbības vārdiem - celms, ko veido no nenoteiksmes.
 	 */
-	public final static String INFINITY_STEM = "Stem1";
+	public final static String INFINITIVE_STEM = "Stem1";
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * 1. konjugācijas darbības vārdiem - celms, ko veido no tagadnes

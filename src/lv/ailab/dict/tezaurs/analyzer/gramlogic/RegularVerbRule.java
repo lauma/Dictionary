@@ -361,8 +361,8 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido RegularVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam bez
-	 * paralēlajām formām.
+	 * Izveido RegularVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
+	 * bez paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -379,8 +379,8 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido RegularVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
-	 * paralēlajām formām, tikai 3. personas formām.
+	 * Izveido RegularVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
+	 * bez paralēlajām formām, tikai 3. personas formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
@@ -396,6 +396,36 @@ public class RegularVerbRule implements Rule
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);
 	}
+
+	/**
+	 * Izveido likumu 3. konjugācijas atgriezeniskajam darbības vārdam ar
+	 * paralēlajām formām, kam visām ir vienādas mijas, un ir norādītas tikai
+	 * 3. personas formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return likums ar paradigmu 20
+	 */
+	public static RegularVerbRule thirdConjRefl3PersParallel(
+			String patternEnd, String lemmaEnd, boolean presentChange)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return RegularVerbRule.of(patternEnd, lemmaEnd, 20,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
 
 	/**
 	 * Izveido likumu atgriezeniskajam darbības vārdam ar paralēlajām formām,

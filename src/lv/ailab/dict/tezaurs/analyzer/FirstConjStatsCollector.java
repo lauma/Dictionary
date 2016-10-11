@@ -325,7 +325,7 @@ public class FirstConjStatsCollector
 		{
 			where.write("Celms+izskaņa\tDisambiguators\tDarbības vārdu rinda\n");
 			where.write(what.keySet().stream().map(k ->
-					k.replaceAll("\" \\(", "\t").replaceAll("\"$", "\tNULL").replaceAll("\"\\(?|\\)", "")
+					k.replaceAll("\" \\(", "\t").replaceAll("\"$", "\t0").replaceAll("\"\\(?|\\)", "")
 							+ "\t" + what.get(k).stream()
 								.reduce((v1, v2) -> v1 + ", " + v2)	.orElse(""))
 					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
@@ -372,7 +372,7 @@ public class FirstConjStatsCollector
 		if (what != null && what.size() > 0)
 		{
 			where.write("Celms+izskaņa\t");
-			where.write(prefixes.stream().map(p -> "NULL".equals(p) ? p : p + "-").reduce(
+			where.write(prefixes.stream().map(p -> "0".equals(p) ? p : p + "-").reduce(
 					(p1, p2) -> p1 + "\t" + p2).orElse(""));
 			where.write("\n");
 			for (String inf : what.keySet())
@@ -381,7 +381,7 @@ public class FirstConjStatsCollector
 				TreeMap<String, TreeSet<String>> prefMap = what.get(inf);
 				where.write(prefixes.stream().sorted().map(pref -> prefMap
 						.getOrDefault(pref, new TreeSet<>()).stream().sorted()
-						.reduce((v1, v2) -> v1 + ", " + v2).orElse("NULL"))
+						.reduce((v1, v2) -> v1 + ", " + v2).orElse("0"))
 					.reduce((v1, v2) -> v1 + "\t" + v2).orElse(""));
 				//for (String pref: prefixes)
 				//{

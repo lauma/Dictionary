@@ -109,7 +109,7 @@ public final class SecondConj
 	 * paralēlajām formām.
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return VerbDoubleRule ar paradigmu 16
+	 * @return PluralVerbRule ar paradigmu 16
 	 */
 	public static PluralVerbRule directPlural(String patternText, String lemmaEnd)
 	{

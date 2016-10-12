@@ -12,9 +12,7 @@ import java.util.Set;
  * Likums šabloniem, kas sākas ar "parasti dsk.," vai  "tikai dsk.,"
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
- *
- * TODO Vai šo vispārināt un daļēji apvienot ar ThirdPersVerbRule?
- *
+ **
  * Izveidots 2016-10-12.
  * @author Lauma
  */
@@ -22,6 +20,13 @@ public class PluralVerbRule implements Rule
 {
 	protected BaseRule pluralOnly;
 	protected BaseRule pluralUsually;
+
+	/**
+	 * Celmus glabā atsevišķi, nevis jau kā gatavus karodziņus tāpēc, ka
+	 * karodziņam jāsatur arī "priedēklis", bet šobrīd tas nav zināms.
+	 * NULL 2. un 3. konjufgācijas verbiem.
+	 */
+	protected FirstConjStems stems;
 
 	/**
 	 * @param patternText   gramatikas šablons bez "parasti/tikai dsk.,".
@@ -37,8 +42,10 @@ public class PluralVerbRule implements Rule
 	 *                      automātiski)
 	 */
 	public PluralVerbRule(String patternText, String lemmaEnding, Set<Integer> paradigms,
-			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags)
+			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
+			FirstConjStems stems)
 	{
+		this.stems = stems;
 		pluralUsually = BaseRule.simple(
 				"parasti dsk., " + patternText, ".*" + lemmaEnding, paradigms,
 				new HashSet<Tuple<String, String>>()
@@ -66,7 +73,7 @@ public class PluralVerbRule implements Rule
 	}
 
 	/**
-	 * Papildus konstruktors īsumam - gadījumam, kad ir tikai viena paradigma.
+	 * Konstruktors, ja ir viena paradigma un celmi jau ir izdalīti.
 	 * @param patternText   gramatikas šablons bez "parasti/tikai dsk.,".
 	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
@@ -76,18 +83,50 @@ public class PluralVerbRule implements Rule
 	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
 	 *                      pievieno automātiski)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
-	 *                      likuma šablonam ("Parasti dskaudzskaitlī" pievieno
+	 *                      likuma šablonam ("Parasti daudzskaitlī" pievieno
 	 *                      automātiski)
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public static PluralVerbRule simple(String patternText, String lemmaEnding,
-			int paradigmId,	Set<Tuple<String,String>> positiveFlags,
-			Set<Tuple<String,String>> alwaysFlags)
+	public static PluralVerbRule of(String patternText, String lemmaEnding,
+			int paradigmId, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags, FirstConjStems stems)
 	{
 		return new PluralVerbRule(patternText, lemmaEnding,
-				new HashSet<Integer>() {{add(paradigmId);}}, positiveFlags, alwaysFlags);
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				stems);
 	}
 
 	/**
+	 * 	Konstruktors, ja ir vairākas paradigmas un celmi jau ir izdalīti.
+	 * @param patternText   gramatikas šablons bez "parasti/tikai dsk.,".
+	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigms	paradigmas, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
+	 *                      pievieno automātiski)
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam ("Parasti daudzskaitlī" pievieno
+	 *                      automātiski)
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
+	 */
+	public static PluralVerbRule of(String patternText, String lemmaEnding,
+			Integer[] paradigms, Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags, FirstConjStems stems)
+	{
+		return new PluralVerbRule(patternText, lemmaEnding,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				stems);
+	}
+
+	/**
+	 * Konstruktors, ja ir viena paradigma un celmi nav jāuzdod (parasti 2.,
+	 * 3. konj.).
 	 * @param patternText   gramatikas šablons bez "parasti/tikai dsk.,".
 	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
@@ -107,10 +146,13 @@ public class PluralVerbRule implements Rule
 		return new PluralVerbRule(patternText, lemmaEnding,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
 	}
 
 	/**
+	 * 	Konstruktors, ja ir vairākas paradigmas un celmi nav jāuzdod, (parasti
+	 * 	2., 3. konj.).
 	 * @param patternText   gramatikas šablons bez "parasti/tikai dsk.,".
 	 * @param lemmaEnding   nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
@@ -129,9 +171,9 @@ public class PluralVerbRule implements Rule
 		return new PluralVerbRule(patternText, lemmaEnding,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
 	}
-
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.
@@ -142,7 +184,7 @@ public class PluralVerbRule implements Rule
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
@@ -154,6 +196,8 @@ public class PluralVerbRule implements Rule
 		if (newBegin == -1)
 			newBegin = pluralOnly.applyDirect(
 					gramText, lemma, paradigmCollector, flagCollector);
+		if (newBegin != -1 && stems != null)
+			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
 
@@ -166,7 +210,7 @@ public class PluralVerbRule implements Rule
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
+	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
@@ -178,6 +222,8 @@ public class PluralVerbRule implements Rule
 		if (newBegin == -1)
 			newBegin = pluralOnly.applyOptHyphens(
 					gramText, lemma, paradigmCollector, flagCollector);
+		if (newBegin != -1 && stems != null)
+			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
 }

@@ -181,7 +181,8 @@ public class FirstConjStems
 		if (past.startsWith("pag.")) past = past.substring(4).trim();
 		if (past.startsWith("-")) past = past.substring(1).trim();
 		if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-		else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
+		else if (past.endsWith("os") || past.endsWith("ās") || past.endsWith("ām")) past = past.substring(0, past.length()-2);
+		else if (past.endsWith("āmies")) past = past.substring(0, past.length()-5);
 		else System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", patternEnd);
 
 		return Tuple.of(thirdPers, past);
@@ -261,7 +262,8 @@ public class FirstConjStems
 				past = past.trim();
 				if (past.startsWith("-")) past = past.substring(1).trim();
 				if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-				else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
+				else if (past.endsWith("os") || past.endsWith("ās") || past.endsWith("ām")) past = past.substring(0, past.length()-2);
+				else if (past.endsWith("āmies")) past = past.substring(0, past.length()-5);
 				else
 				{
 					System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", pattern);

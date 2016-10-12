@@ -67,7 +67,8 @@ public class FirstConjStems
 
 	/**
 	 * Konstruktors vienkāršas celmu kopas izveidei no vienkārša gramatikas
-	 * šablona un vienas nenoteiksmes.
+	 * šablona, kas beidzas ar "-?tagadne, pag. -?pagātne", un no vienas
+	 * nenoteiksmes.
 	 * @param patternEnd	verba gramatikas paterna otrās (vienmer esošā) daļa
 	 *                      - no tās izvelk tagadnes un pagātnes celmus,
 	 *                      pieņemot, ka nav paralēlformu.
@@ -84,7 +85,8 @@ public class FirstConjStems
 
 	/**
 	 * Konstruktors celmu kopas izveidei no vienkārša gramatikas
-	 * šablona un vairākām nenoteiksmēm.
+	 * šablona, kas beidzas ar "-?tagadne, pag. -?pagātne", un vairākām
+	 * nenoteiksmēm.
 	 * @param patternEnd	verba gramatikas paterna otrās (vienmer esošā) daļa
 	 *                      - no tās izvelk tagadnes un pagātnes celmus,
 	 *                      pieņemot, ka nav paralēlformu.
@@ -111,7 +113,7 @@ public class FirstConjStems
 	 * @return	celmu komplekts, kam ir vairākas tagadnes vai pagātnes un
 	 * 			viena nenoteiksme.
 	 */
-	public static FirstConjStems parallelPP (String patternText, String lemmaEnd)
+	public static FirstConjStems parallelPP(String patternText, String lemmaEnd)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems = extractPPStemsParallel(patternText);
 		return new FirstConjStems (
@@ -130,7 +132,7 @@ public class FirstConjStems
 	 * @return	celmu komplekts, kam ir vairākas tagadnes vai pagātnes un
 	 * 			vairākas nenoteiksme.
 	 */
-	public static FirstConjStems parallelPP (String patternText, String[] lemmaEnds)
+	public static FirstConjStems parallelPP(String patternText, String[] lemmaEnds)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems = extractPPStemsParallel(patternText);
 		return new FirstConjStems (
@@ -173,11 +175,11 @@ public class FirstConjStems
 		if (parts.length < 2)
 			System.err.printf("Neizdodas izveidot tagadnes un pagātnes celmus verba šablonam \"%s\"\n", patternEnd);
 
-		String thirdPers = parts[0].trim();
+		String thirdPers = parts[parts.length-2].trim();
 		if (thirdPers.startsWith("-")) thirdPers = thirdPers.substring(1);
 		if (thirdPers.endsWith("as")) thirdPers = thirdPers.substring(0, thirdPers.length()-2);
 
-		String past = parts[1].trim();
+		String past = parts[parts.length-1].trim();
 		if (past.startsWith("pag.")) past = past.substring(4).trim();
 		if (past.startsWith("-")) past = past.substring(1).trim();
 		if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);

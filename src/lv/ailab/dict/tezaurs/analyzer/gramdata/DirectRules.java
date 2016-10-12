@@ -34,7 +34,7 @@ public class DirectRules
 		BaseRule.of("esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt",
 				"būt", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //būt
-		DualVerbRule.of("neesmu, neesi,", "nav, pag. nebiju", "nebūt", 29,
+		VerbDoubleRule.of("neesmu, neesi,", "nav, pag. nebiju", "nebūt", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "nebūt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //nebūt
 
 		// 1. paradigma: 1. dekl. lietvārdi, -s

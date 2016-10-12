@@ -3,7 +3,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.DualVerbRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * 3. konjugācijas ērtummetodes.
  * NB: Metodes, kam klāt norādīts "AllPers", neizveido 3. personas likumus.
+ * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -19,20 +20,20 @@ import java.util.ArrayList;
 public final class ThirdConj
 {
 	/**
-	 * Izveido DualVerbRule 3. konjugācijas tiešajam darbības vārdam bez
+	 * Izveido VerbDoubleRule 3. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return DualVerbRule ar paradigmu 17
+	 * @return VerbDoubleRule ar paradigmu 17
 	 */
-	public static DualVerbRule direct(
+	public static VerbDoubleRule direct(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 17,
+		return  VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 17,
 				new Tuple[]{soundChange}, null);
 	}
 
@@ -45,12 +46,12 @@ public final class ThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmu 17
 	 */
-	public static DualVerbRule direct3Pers(
+	public static VerbDoubleRule direct3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return DualVerbRule.of(patternEnd, lemmaEnd, 17,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 17,
 				new Tuple[]{soundChange}, null);
 
 	}
@@ -67,7 +68,7 @@ public final class ThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmu 17
 	 */
-	public static DualVerbRule direct3PersParallel(
+	public static VerbDoubleRule direct3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -80,7 +81,7 @@ public final class ThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 17,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 17,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -144,7 +145,7 @@ public final class ThirdConj
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return DualVerbRule ar paradigmu 17
+	 * @return VerbDoubleRule ar paradigmu 17
 	 */
 	public static PluralVerbRule directPlural(
 			String patternText, String lemmaEnd, boolean presentChange)
@@ -155,25 +156,25 @@ public final class ThirdConj
 	}
 
 	/**
-	 * Izveido DualVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
+	 * Izveido VerbDoubleRule 3. konjugācijas atgriezeniskajam darbības vārdam
 	 * bez paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return DualVerbRule ar paradigmu 20
+	 * @return VerbDoubleRule ar paradigmu 20
 	 */
-	public static DualVerbRule refl(
+	public static VerbDoubleRule refl(
 			String patternBegin, String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 20,
+		return  VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);
 	}
 
 	/**
-	 * Izveido DualVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
+	 * Izveido VerbDoubleRule 3. konjugācijas atgriezeniskajam darbības vārdam
 	 * bez paralēlajām formām, tikai 3. personas formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
@@ -182,12 +183,12 @@ public final class ThirdConj
 	 * @return ThirdPersVerbRule ar paradigmu 20
 
 	 */
-	public static DualVerbRule refl3Pers(
+	public static VerbDoubleRule refl3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return DualVerbRule.of(patternEnd, lemmaEnd, 20,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 20,
 				new Tuple[]{soundChange}, null);
 	}
 
@@ -203,7 +204,7 @@ public final class ThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmu 20
 	 */
-	public static DualVerbRule refl3PersParallel(
+	public static VerbDoubleRule refl3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -216,7 +217,7 @@ public final class ThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 20,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -251,7 +252,7 @@ public final class ThirdConj
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return DualVerbRule ar paradigmu 17
+	 * @return VerbDoubleRule ar paradigmu 17
 	 */
 	public static PluralVerbRule reflPlural(
 			String patternText, String lemmaEnd, boolean presentChange)

@@ -2,7 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.DualVerbRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.SimpleSubRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Ērtummetodes darbības vārdiem, kas vienlaicīgi pieder gan 2., gan 3.
  * konjugācijai.
  * NB: Metodes, kam klāt norādīts "AllPers", neizveido 3. personas likumus.
+ * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -31,7 +32,7 @@ public final class SecondThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmām 16, 17
 	 */
-	public static DualVerbRule direct3PersParallel(
+	public static VerbDoubleRule direct3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -44,7 +45,7 @@ public final class SecondThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return DualVerbRule.of(patternEnd, lemmaEnd, new Integer[]{16, 17},
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, new Integer[]{16, 17},
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -89,7 +90,7 @@ public final class SecondThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmām 19, 20
 	 */
-	public static DualVerbRule refl3PersParallel(
+	public static VerbDoubleRule refl3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -102,7 +103,7 @@ public final class SecondThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return DualVerbRule.of(patternEnd, lemmaEnd, new Integer[]{19, 20},
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, new Integer[]{19, 20},
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 

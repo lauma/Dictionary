@@ -2,7 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.DualVerbRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  * 2. konjugācijas ērtummetodes.
  * NB: Metodes, kam nosaukumā norādīts "AllPers", neizveido 3. personas likumus!
+ * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -19,44 +20,44 @@ import java.util.ArrayList;
 public final class SecondConj
 {
 	/**
-	 * Izveido DualVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * Izveido VerbDoubleRule 2. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return DualVerbRule ar paradigmu 16
+	 * @return VerbDoubleRule ar paradigmu 16
 	 */
-	public static DualVerbRule direct(
+	public static VerbDoubleRule direct(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 16, null, null);
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 16, null, null);
 	}
 
 	/**
-	 * Izveido DualVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * Izveido VerbDoubleRule 2. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām tikai 3. personas formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return DualVerbRule ar paradigmu 16 un tikai 3.perosnas formām
+	 * @return VerbDoubleRule ar paradigmu 16 un tikai 3.perosnas formām
 	 */
-	public static DualVerbRule direct3Pers(String patternEnd,
+	public static VerbDoubleRule direct3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return DualVerbRule.of(patternEnd, lemmaEnd, 16, null, null);
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 16, null, null);
 	}
 
 	/**
-	 * Izveido DualVerbRule 2. konjugācijas tiešajam darbības vārdam ar
+	 * Izveido VerbDoubleRule 2. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām tikai 3. personas formām.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return DualVerbRule ar paradigmu 16 un tikai 3.perosnas formām
+	 * @return VerbDoubleRule ar paradigmu 16 un tikai 3.perosnas formām
 	 */
-	public static DualVerbRule direct3PersParallel(String patternEnd,
+	public static VerbDoubleRule direct3PersParallel(String patternEnd,
 			String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -65,7 +66,7 @@ public final class SecondConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 16,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 16,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -85,7 +86,6 @@ public final class SecondConj
 	}
 
 	/**
-	 * Metode īsumam.
 	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
 	 * visas formas un paralēlformas, bet atvasināt tikai trešās personas formu
 	 * likumu nav iespējams.
@@ -112,7 +112,7 @@ public final class SecondConj
 	 * paralēlajām formām.
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return DualVerbRule ar paradigmu 16
+	 * @return VerbDoubleRule ar paradigmu 16
 	 */
 	public static PluralVerbRule directPlural(String patternText, String lemmaEnd)
 	{
@@ -120,31 +120,31 @@ public final class SecondConj
 	}
 
 	/**
-	 * Izveido DualVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * Izveido VerbDoubleRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return DualVerbRule ar paradigmu 19
+	 * @return VerbDoubleRule ar paradigmu 19
 	 */
-	public static DualVerbRule refl(
+	public static VerbDoubleRule refl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 19, null, null);
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 19, null, null);
 	}
 
 	/**
-	 * Izveido DualVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
+	 * Izveido VerbDoubleRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
 	 * paralēlajām formām, tikai 3. personas formām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
 	 * @return ThirdPersVerbRule ar paradigmu 19
 	 */
-	public static DualVerbRule refl3Pers(String patternEnd,
+	public static VerbDoubleRule refl3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return DualVerbRule.of(patternEnd, lemmaEnd, 19, null, null);
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 19, null, null);
 	}
 
 	/**

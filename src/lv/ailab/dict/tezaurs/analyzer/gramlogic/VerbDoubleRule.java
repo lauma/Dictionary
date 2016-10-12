@@ -1,18 +1,15 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
 
 /**
- * Likums, kas apvieno divus SimpleRule - divus darbības vārdiem raksturīgos
- * gadījumus: vienu visām personām, otru - tikai trešajai, piemēram,
- * "-brāžu, -brāz, -brāž, pag. -brāzu" un
- * "parasti 3. pers., -brāž, pag. -brāzu". Pirmās konjugācijas gadījumā - arī
+ * Likums, kas apvieno divus darbības vārdiem raksturīgos gadījumus: vienu visām
+ * personām, otru tikai trešajai, piemēram, "-brāžu, -brāz, -brāž, pag. -brāzu"
+ * un "parasti 3. pers., -brāž, pag. -brāzu". Pirmās konjugācijas gadījumā - arī
  * celmu iegūšanu un uzstādīšanu.
  * Šajā klasē apvienots saskarne likumiem, kam ir:
  * a) gan visu personu formu šablons, gan tikai trešās personas formu šablons,
@@ -26,7 +23,7 @@ import java.util.*;
  * Izveidots 2015-10-16.
  * @author Lauma
  */
-public class DualVerbRule implements Rule
+public class VerbDoubleRule implements Rule
 {
 	protected BaseRule allPersonRule;
 	protected ThirdPersVerbRule thirdPersonRule;
@@ -56,7 +53,7 @@ public class DualVerbRule implements Rule
 	 *                      likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public DualVerbRule(String patternBegin, String patternEnd,
+	public VerbDoubleRule(String patternBegin, String patternEnd,
 			String lemmaEnd, Set<Integer> paradigms,
 			Set<Tuple<String,String>> positiveFlags,
 			Set<Tuple<String,String>> alwaysFlags,
@@ -120,7 +117,7 @@ public class DualVerbRule implements Rule
 	 *                      likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public DualVerbRule(String patternEnd, String lemmaEnd, Set<Integer> paradigms,
+	public VerbDoubleRule(String patternEnd, String lemmaEnd, Set<Integer> paradigms,
 			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
 			FirstConjStems stems)
 	{
@@ -155,13 +152,13 @@ public class DualVerbRule implements Rule
 	 *                      likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public static DualVerbRule of(String patternBegin, String patternEnd,
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags,
 			FirstConjStems stems)
 	{
-		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -182,11 +179,11 @@ public class DualVerbRule implements Rule
 	 *                      likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
+	public static VerbDoubleRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
 			FirstConjStems stems)
 	{
-		return new DualVerbRule(patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -215,13 +212,13 @@ public class DualVerbRule implements Rule
 	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
 	 * @param pastStems			pagātnes celmi (nedrīkst but null)
 	 */
-	public static DualVerbRule of(String patternBegin, String patternEnd,
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags,
 			String[] infinitiveStems, String[] presentStems, String[] pastStems)
 	{
-		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -247,11 +244,11 @@ public class DualVerbRule implements Rule
 	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
 	 * @param pastStems			pagātnes celmi (nedrīkst būt null)
 	 */
-	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
+	public static VerbDoubleRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
 			String[] infinitiveStems, String[] presentStems, String[] pastStems)
 	{
-		return new DualVerbRule(patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -276,12 +273,12 @@ public class DualVerbRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                      	atbilstība likuma šablonam
 	 */
-	public static DualVerbRule of(String patternBegin, String patternEnd,
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags)
 	{
-		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -303,10 +300,10 @@ public class DualVerbRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                          atbilstība likuma šablonam
 	 */
-	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
+	public static VerbDoubleRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
-		return new DualVerbRule(patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -332,12 +329,12 @@ public class DualVerbRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                      	atbilstība likuma šablonam
 	 */
-	public static DualVerbRule of(String patternBegin, String patternEnd,
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, Integer[] paradigms,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags)
 	{
-		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
@@ -359,10 +356,10 @@ public class DualVerbRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                          atbilstība likuma šablonam
 	 */
-	public static DualVerbRule of(String patternEnd, String lemmaEnd, Integer[] paradigms,
+	public static VerbDoubleRule of(String patternEnd, String lemmaEnd, Integer[] paradigms,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
-		return new DualVerbRule(patternEnd, lemmaEnd,
+		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),

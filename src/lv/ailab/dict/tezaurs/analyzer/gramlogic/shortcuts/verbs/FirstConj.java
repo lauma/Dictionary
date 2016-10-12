@@ -1,7 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.DualVerbRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
@@ -13,7 +13,7 @@ import lv.ailab.dict.utils.Tuple;
  * Izveidots 2016-10-12.
  * @author Lauma
  */
-public class FirstConj
+public final class FirstConj
 {
 	/**
 	 * Izveido likumu 1. konjugācijas tiešajam darbības vārdam bez paralēlajām
@@ -25,11 +25,11 @@ public class FirstConj
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
 	 */
-	public static DualVerbRule direct(
+	public static VerbDoubleRule direct(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 15,
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 15,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
@@ -41,11 +41,11 @@ public class FirstConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 */
-	public static DualVerbRule direct3Pers(
+	public static VerbDoubleRule direct3Pers(
 			String patternEnd, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 15,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
@@ -59,13 +59,13 @@ public class FirstConj
 	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
 	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
 	 *                      atšķiršanai
-	 * @return DualVerbRule ar paradigmu 15 un karodziņiem
+	 * @return VerbDoubleRule ar paradigmu 15 un karodziņiem
 	 */
-	public static DualVerbRule directHomof(
+	public static VerbDoubleRule directHomof(
 			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 15,
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, stems);
 	}
@@ -81,11 +81,11 @@ public class FirstConj
 	 *                      atšķiršanai
 	 * @return ThirdPersVerbRule ar paradigmu 15 un karodziņiem
 	 */
-	public static DualVerbRule direct3PersHomof(
+	public static VerbDoubleRule direct3PersHomof(
 			String patternEnd, String lemmaEnd, String inflectAs)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 15,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, stems);
 	}
@@ -100,7 +100,7 @@ public class FirstConj
 	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
 	 * TODO add IDs from lexicon
 	 */
-	public static DualVerbRule direct3PersParallel(
+	public static VerbDoubleRule direct3PersParallel(
 			String patternEnd, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
@@ -108,7 +108,7 @@ public class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
-		return DualVerbRule.of(patternEnd, lemmaEnd, 15, posFlags,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
 
@@ -119,9 +119,8 @@ public class FirstConj
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return likums ar paradigmu 15 un karodziņiem, ka tas ir darbības
 	 * 		   vārds ar paralēlajām formām
-	 * TODO extract stems
 	 */
-	public static DualVerbRule directAllPersParallel(
+	public static VerbDoubleRule directAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
@@ -129,7 +128,7 @@ public class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
-		return DualVerbRule.of(patternText, null, lemmaEnd, 15, posFlags,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, stems);
 
 	}
@@ -144,11 +143,11 @@ public class FirstConj
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
 	 */
-	public static DualVerbRule refl(String patternBegin, String patternEnd,
+	public static VerbDoubleRule refl(String patternBegin, String patternEnd,
 			String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 18,
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
@@ -163,12 +162,12 @@ public class FirstConj
 	 * @param lemmaEnds		nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
 	 */
-	public static DualVerbRule reflMultiLemma(String patternBegin, String patternEnd,
+	public static VerbDoubleRule reflMultiLemma(String patternBegin, String patternEnd,
 			String[] lemmaEnds)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnds);
 		String lemmaEnd = "(" + String.join("|",lemmaEnds) + ")";
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 18,
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
@@ -182,11 +181,11 @@ public class FirstConj
 	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņu par locīšanu
 	 * TODO add IDs from lexicon
 	 */
-	public static DualVerbRule refl3Pers(
+	public static VerbDoubleRule refl3Pers(
 			String patternEnd, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 18,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
@@ -201,11 +200,11 @@ public class FirstConj
 	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
 	 *                      atšķiršanai
 	 */
-	public static DualVerbRule reflHomof(
+	public static VerbDoubleRule reflHomof(
 			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternBegin, patternEnd, lemmaEnd, 18,
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, stems);
 	}
@@ -222,11 +221,11 @@ public class FirstConj
 	 *                      atšķiršanai
 	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
 	 */
-	public static DualVerbRule refl3PersHomof(
+	public static VerbDoubleRule refl3PersHomof(
 			String patternEnd, String lemmaEnd, String inflectAs)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
-		return DualVerbRule.of(patternEnd, lemmaEnd, 18,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
 				null, stems);
 	}
@@ -241,7 +240,7 @@ public class FirstConj
 	 * @return ThirdPersVerbRule ar paradigmu 18 un karodziņiem
 	 * TODO add IDs from lexicon
 	 */
-	public static DualVerbRule refl3PersParallel(
+	public static VerbDoubleRule refl3PersParallel(
 			String patternEnd, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
@@ -249,7 +248,7 @@ public class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
-		return DualVerbRule.of(patternEnd, lemmaEnd, 18, posFlags,
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18, posFlags,
 				null, stems);
 	}
 
@@ -261,7 +260,7 @@ public class FirstConj
 	 * @return likums ar paradigmu 18 un karodziņiem, ka tas ir darbības
 	 * 		   vārds ar paralēlajām formām
 	 */
-	public static DualVerbRule reflAllPersParallel(
+	public static VerbDoubleRule reflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
@@ -269,7 +268,7 @@ public class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
-		return DualVerbRule.of(patternText, null, lemmaEnd, 18, posFlags,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 18, posFlags,
 				null, stems);
 	}
 }

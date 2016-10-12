@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.RegularVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -138,6 +139,22 @@ public final class ThirdConj
 	}
 
 	/**
+	 * Izveido PluralVerbRule 3. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return RegularVerbRule ar paradigmu 17
+	 */
+	public static PluralVerbRule directPlural(
+			String patternText, String lemmaEnd, boolean presentChange)
+	{
+		Tuple<String, String> soundChange = presentChange ?
+				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
+		return  PluralVerbRule.of(patternText, lemmaEnd, 17, new Tuple[]{soundChange}, null);
+	}
+
+	/**
 	 * Izveido RegularVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
 	 * bez paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
@@ -226,5 +243,21 @@ public final class ThirdConj
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Izveido PluralVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
+	 * bez paralēlajām formām.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return RegularVerbRule ar paradigmu 17
+	 */
+	public static PluralVerbRule reflPlural(
+			String patternText, String lemmaEnd, boolean presentChange)
+	{
+		Tuple<String, String> soundChange = presentChange ?
+				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
+		return  PluralVerbRule.of(patternText, lemmaEnd, 20, new Tuple[]{soundChange}, null);
 	}
 }

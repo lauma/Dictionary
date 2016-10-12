@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.RegularVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -107,6 +108,18 @@ public final class SecondConj
 	}
 
 	/**
+	 * Izveido PluralVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return RegularVerbRule ar paradigmu 16
+	 */
+	public static PluralVerbRule directPlural(String patternText, String lemmaEnd)
+	{
+		return PluralVerbRule.of(patternText, lemmaEnd, 16, null, null);
+	}
+
+	/**
 	 * Izveido RegularVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
@@ -147,5 +160,17 @@ public final class SecondConj
 	{
 		return BaseRule.of(patternText, ".*" + lemmaEnd, 19,
 				new Tuple[]{TFeatures.POS__VERB}, null);
+	}
+
+	/**
+	 * Izveido PluralVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam
+	 * bez paralēlajām formām.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return RegularVerbRule ar paradigmu 19
+	 */
+	public static PluralVerbRule reflPlural(String patternText, String lemmaEnd)
+	{
+		return PluralVerbRule.of(patternText, lemmaEnd, 19, null, null);
 	}
 }

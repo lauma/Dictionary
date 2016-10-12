@@ -624,7 +624,7 @@ public class DirectRules
 				"-ē, pag. -ēja (retāk -gluma, 1. konj.)", "glumēt"), //aizglumēt
 
 		// Likumi ar modifikatoru parasti/tikai daudzskaitlī.
-		PluralVerbRule.secondConjDir("-ojam, -ojat, -o, pag. -ojām", "ot"), // sabizot
+		SecondConj.directPlural("-ojam, -ojat, -o, pag. -ojām", "ot"), // sabizot
 	};
 
 	/**
@@ -789,10 +789,10 @@ public class DirectRules
 				"ēties"), //adverbiēties
 
 		// Parasti/tikai daudzskaitlī.
-		PluralVerbRule.secondConjRefl("-ējamies, pag. -ējāmies", "ēties"), // drūzmēties
-		PluralVerbRule.secondConjRefl("-ējamies, -ējaties, -ējas, pag. -ējāmies", "ēties"), // sadrūzmēties
-		PluralVerbRule.secondConjRefl("-ojamies, pag. -ojāmies", "oties"), // apciemoties
-		PluralVerbRule.secondConjRefl("-ojamies, -ojaties, -ojas, pag. -ojāmies", "oties"), // sarindoties
+		SecondConj.reflPlural("-ējamies, pag. -ējāmies", "ēties"), // drūzmēties
+		SecondConj.reflPlural("-ējamies, -ējaties, -ējas, pag. -ējāmies", "ēties"), // sadrūzmēties
+		SecondConj.reflPlural("-ojamies, pag. -ojāmies", "oties"), // apciemoties
+		SecondConj.reflPlural("-ojamies, -ojaties, -ojas, pag. -ojāmies", "oties"), // sarindoties
 
 		// Dīvainīši: dsk. + 3. pers. vsk.
 		BaseRule.of(
@@ -836,10 +836,10 @@ public class DirectRules
 		ThirdConj.refl3Pers("-inās, pag. -inājās", "ināties", false), //aizbubināties
 		ThirdConj.refl3Pers("-ās, pag. -ījās", "īties", false), //aizbīdīties
 
-		PluralVerbRule.thirdConjRefl("-ējamies, -ējaties, -ējas, pag. -ējāmies", "ēties", false), //saliedēties
-		PluralVerbRule.thirdConjRefl("-ināmies, pag. -inājāmies", "ināties", false), //apdāvināties
-		PluralVerbRule.thirdConjRefl("-āmies, pag. -ījāmies", "īties", false), //apšaudīties
-		PluralVerbRule.thirdConjRefl("-āmies, -āties, -ās, pag. -ījāmies", "īties", false), //sagaidīties
+		ThirdConj.reflPlural("-ējamies, -ējaties, -ējas, pag. -ējāmies", "ēties", false), //saliedēties
+		ThirdConj.reflPlural("-ināmies, pag. -inājāmies", "ināties", false), //apdāvināties
+		ThirdConj.reflPlural("-āmies, pag. -ījāmies", "īties", false), //apšaudīties
+		ThirdConj.reflPlural("-āmies, -āties, -ās, pag. -ījāmies", "īties", false), //sagaidīties
 
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
@@ -1136,7 +1136,7 @@ public class DirectRules
 		ThirdConj.refl3Pers("-žvīkstas, pag. -žvīkstējās", "žvīkstēties", false), //iežvīkstēties
 
 		// Likumi daudzskaitļa formām.
-		PluralVerbRule.thirdConjRefl("-dziedamies, pag. -dziedājāmies", "dziedāties", false), //apdziedāties
+		ThirdConj.reflPlural("-dziedamies, pag. -dziedājāmies", "dziedāties", false), //apdziedāties
 	};
 
 	/**

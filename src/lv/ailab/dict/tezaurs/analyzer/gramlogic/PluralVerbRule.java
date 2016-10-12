@@ -132,62 +132,6 @@ public class PluralVerbRule implements Rule
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
 	}
 
-	/**
-	 * Izveido PluralVerbRule 2. konjugācijas tiešajam darbības vārdam bez
-	 * paralēlajām formām.
-	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return RegularVerbRule ar paradigmu 16
-	 */
-	public static PluralVerbRule secondConjDir(String patternText, String lemmaEnd)
-	{
-		return PluralVerbRule.of(patternText, lemmaEnd, 16, null, null);
-	}
-
-	/**
-	 * Izveido PluralVerbRule 3. konjugācijas tiešajam darbības vārdam bez
-	 * paralēlajām formām.
-	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return RegularVerbRule ar paradigmu 17
-	 */
-	public static PluralVerbRule thirdConjDir(
-			String patternText, String lemmaEnd, boolean presentChange)
-	{
-		Tuple<String, String> soundChange = presentChange ?
-				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  PluralVerbRule.of(patternText, lemmaEnd, 17, new Tuple[]{soundChange}, null);
-	}
-
-	/**
-	 * Izveido PluralVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam
-	 * bez paralēlajām formām.
-	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return RegularVerbRule ar paradigmu 19
-	 */
-	public static PluralVerbRule secondConjRefl(String patternText, String lemmaEnd)
-	{
-		return PluralVerbRule.of(patternText, lemmaEnd, 19, null, null);
-	}
-
-	/**
-	 * Izveido PluralVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
-	 * bez paralēlajām formām.
-	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return RegularVerbRule ar paradigmu 17
-	 */
-	public static PluralVerbRule thirdConjRefl(
-			String patternText, String lemmaEnd, boolean presentChange)
-	{
-		Tuple<String, String> soundChange = presentChange ?
-				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  PluralVerbRule.of(patternText, lemmaEnd, 20, new Tuple[]{soundChange}, null);
-	}
-
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.

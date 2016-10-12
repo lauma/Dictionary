@@ -480,6 +480,29 @@ public class BaseRule implements Rule
 
 	/**
 	 * Metode īsumam.
+	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas un paralēlformas, bet atvasināt tikai trešās personas formu
+	 * likumu nav iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 16. paradigmu
+	 */
+	public static BaseRule secondConjDirAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Metode īsumam.
 	 * Izveido BaseRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
 	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, ir paralēlās formas.

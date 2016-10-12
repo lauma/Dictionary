@@ -238,8 +238,8 @@ public class RegularVerbRule implements Rule
 	}
 
 	/**
-	 * Izveido RegularVerbRule 3. konjugācijas tiešajam darbības vārdam bez paralēlajām
-	 * formām.
+	 * Izveido RegularVerbRule 3. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -258,9 +258,9 @@ public class RegularVerbRule implements Rule
 	/**
 	 * Izveido likumu 3. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām, tikai 3. personas formas
-	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei, bez
-	 *                  "parasti 3.pers.,"
-	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmu 17
 	 */

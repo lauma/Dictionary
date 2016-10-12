@@ -780,6 +780,12 @@ public class OptHypernRules
 	 */
 	public static final Rule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
+		// Paralēlās formas.
+		BaseRule.secondConjDirAllPersParallel(
+				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
+				"skandēt"), // noskandēt
+
+		// Standartīgie.
 		RegularVerbRule.secondConjDir("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
 		RegularVerbRule.secondConjDir("-jaucēju, -jaucē,", "-jaucē, pag. -jaucēju", "jaucēt"), //piejaucēt
 		RegularVerbRule.secondConjDir("-klusēju, -klusē,", "-klusē, pag. -klusēju", "klusēt"), //noklusēt
@@ -1086,6 +1092,8 @@ public class OptHypernRules
 		RegularVerbRule.thirdConjDir3Pers("-žvadz, pag. -žvadzēja", "žvadzēt", false), //aizžvadzēt
 		RegularVerbRule.thirdConjDir3Pers("-žvinkst, pag. -žvinkstēja", "žvinkstēt", false), //aizžvinkstēt
 
+		// Likumi daudzskaitļa formām.
+		PluralVerbRule.thirdConjDir("-tekam, -tekat, -tek, pag. -tecējām", "tecēt", true), //satecēt
 	};
 
 	/**
@@ -1192,12 +1200,6 @@ public class OptHypernRules
 		BaseRule.secondThirdConjDirectAllPersParallel(
 				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
 				".*rūsēt", false), // ierūsēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
-				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
-				".*skandēt", false), // noskandēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
-				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
-				".*slīdēt", false), // uzslīdēt
 
 		// Likumi, kam ir "parasti 3. pers." variants.
 		// Paralēlformu paralēlforma

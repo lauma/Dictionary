@@ -311,7 +311,7 @@ public class FirstConjRule implements Rule
 			String patternEnd, String lemmaEnd)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsThirdPersParallel(patternEnd);
+				extractPPStemsParallel(patternEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
@@ -335,7 +335,7 @@ public class FirstConjRule implements Rule
 			String patternText, String lemmaEnd)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsAllPersParallel(patternText);
+				extractPPStemsParallel(patternText);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
@@ -463,7 +463,7 @@ public class FirstConjRule implements Rule
 			String patternEnd, String lemmaEnd)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsThirdPersParallel(patternEnd);
+				extractPPStemsParallel(patternEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
@@ -472,7 +472,6 @@ public class FirstConjRule implements Rule
 				null, new String[] {extractInfinityStem(lemmaEnd)},
 				stems.first.toArray(new String[stems.first.size()]),
 				stems.second.toArray(new String[stems.second.size()]));
-
 	}
 
 	/**
@@ -487,7 +486,7 @@ public class FirstConjRule implements Rule
 			String patternText, String lemmaEnd)
 	{
 		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsAllPersParallel(patternText);
+				extractPPStemsParallel(patternText);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
@@ -553,42 +552,52 @@ public class FirstConjRule implements Rule
 	 * Palīgmetode, kas no verba gramatikas paterna tikai 3. personai izvelk
 	 * tagadnes un pagātnes celmus, pieņemot, ka likums ir formā
 	 * -?tagcelms, arī -?tagcelms[,;] pag. -?pagcelms, arī -?pagcelms
+	 * -?tagcelms, pag. -?pagcelms, arī -?tagcelms[,;], pag. -?pagcelms
 	 * (viena vai otra "arī" daļa var nebūt).
 	 * @return Pārītis, kur pirmais saraksts ir tagadnes celmu sarakst un otrais
 	 * - pagātnes.
+	 * @Deprecated par labu vienotai metodei paralēlformu izgūšanas gadījumā.
 	 */
+	@Deprecated
 	protected static Tuple<ArrayList<String>,ArrayList<String>> extractPPStemsThirdPersParallel(
 			String patternEnd)
 	{
 		ArrayList<String> presents = new ArrayList<>();
 		ArrayList<String> pasts = new ArrayList<>();
+		String[] bigParts;
 
-		String[] parts = patternEnd.split("[,;] pag\\.");
-		if (parts.length != 2)
-			System.err.printf("Neizdodas izveidot tagadnes un pagātnes celmus verba šablonam \"%s\"\n", patternEnd);
-
-		String[] thirdPersText = parts[0].trim().split(", arī ");
-		for (String present : thirdPersText)
+		if (patternEnd.matches(".*[,;] pag\\..*?, (arī|retāk) .*[,;] pag\\..*"))
+			bigParts = patternEnd.split(", (arī|retāk) ");
+		else bigParts = new String[] {patternEnd};
+		for (String patternPart : bigParts)
 		{
-			present = present.trim();
-			if (present.startsWith("-")) present = present.substring(1);
-			if (present.endsWith("as")) present = present.substring(0, present.length()-2);
-			presents.add(present);
-		}
+			String[] parts = patternPart.split("[,;] pag\\.");
+			if (parts.length != 2)
+				System.err.printf("Neizdodas izveidot tagadnes un pagātnes celmus verba šablonam \"%s\"\n", patternEnd);
 
-		String[] pastText = parts[1].trim().split(", (arī|retāk) ");
-		for (String past : pastText)
-		{
-			boolean good = true;
-			if (past.startsWith("-")) past = past.substring(1).trim();
-			if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-			else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
-			else
+			String[] thirdPersText = parts[0].trim().split(", arī ");
+			for (String present : thirdPersText)
 			{
-				System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", patternEnd);
-				good = false;
+				present = present.trim();
+				if (present.startsWith("-")) present = present.substring(1);
+				if (present.endsWith("as")) present = present.substring(0, present.length()-2);
+				presents.add(present);
 			}
-			if (good) pasts.add(past);
+
+			String[] pastText = parts[1].trim().split(", (arī|retāk) ");
+			for (String past : pastText)
+			{
+				boolean good = true;
+				if (past.startsWith("-")) past = past.substring(1).trim();
+				if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
+				else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
+				else
+				{
+					System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", patternEnd);
+					good = false;
+				}
+				if (good) pasts.add(past);
+			}
 		}
 
 		return Tuple.of(presents, pasts);
@@ -601,10 +610,12 @@ public class FirstConjRule implements Rule
 	 * -gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu
 	 * -jaušu, -jaut, -jauš, pag. -jautu, arī -jaužu, -jaud, -jauž, pag. -jaudu
 	 * -gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos
+	 * -?tagcelms, arī -?tagcelms[,;] pag. -?pagcelms, arī -?pagcelms
+	 * -?tagcelms, pag. -?pagcelms, arī -?tagcelms[,;], pag. -?pagcelms
 	 * @return Pārītis, kur pirmais saraksts ir tagadnes celmu sarakst un otrais
 	 * - pagātnes.
 	 */
-	protected static Tuple<ArrayList<String>,ArrayList<String>> extractPPStemsAllPersParallel(
+	protected static Tuple<ArrayList<String>,ArrayList<String>> extractPPStemsParallel(
 			String pattern)
 	{
 		ArrayList<String> presentTexts = new ArrayList<>();

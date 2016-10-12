@@ -582,6 +582,7 @@ public class DirectRules
 				"-purstu, -pursti, -purst, pag. -puru, arī -pūru", "purt"), //izpurt
 
 		// Tikai trešās personas formas.
+		FirstConjRule.direct3Pers("-burbst, pag. -burba", "burbt"), //izburbt
 		FirstConjRule.direct3Pers("-rep, pag. -repa", "rept"), //aprept
 
 	};
@@ -1024,11 +1025,12 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl3Pers("-pēkšķas, pag. -pēkšķējās", "pēkšķēties", false), //iepēkšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-plarkšas, pag. -plarkšējās", "plarkšēties", false), //ieplarkšēties
 		RegularVerbRule.thirdConjRefl3Pers("-plarkšķas, pag. -plarkšķējās", "plarkšķēties", false), //ieplarkšķēties
-		RegularVerbRule.thirdConjRefl3Pers("-plerkšas, pag. -plerkšējās", "plerkšeties", false), //ieplerkšēties
-		RegularVerbRule.thirdConjRefl3Pers("-plerkšķas, pag. -plerkšķējās", "plerkšķeties", false), //ieplerkšķēties
+		RegularVerbRule.thirdConjRefl3Pers("-plerkšas, pag. -plerkšējās", "plerkšēties", false), //ieplerkšēties
+		RegularVerbRule.thirdConjRefl3Pers("-plerkšķas, pag. -plerkšķējās", "plerkšķēties", false), //ieplerkšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-plīkšas, pag. -plīkšējās", "plīkšēties", false), //ieplīkšēties
 		RegularVerbRule.thirdConjRefl3Pers("-plīkšķas, pag. -plīkšķējās", "plīkšķēties", false), //ieplīkšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-plinkšas, pag. -plinkšējās", "plinkšēties", false), //ieplinkšēties
+		RegularVerbRule.thirdConjRefl3Pers("-plinkšķas, pag. -plinkšķējās", "plinkšķēties", false), //ieplinkšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-pliukšas, pag. -pliukšējās", "pliukšēties", false), //iepliukšēties
 		RegularVerbRule.thirdConjRefl3Pers("-pliukšķas, pag. -pliukšķējās", "pliukšķēties", false), //iepliukšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-pliukšķas, pag. -pliukšķējās", "pliukšķēties", false), //iepliukšķēties
@@ -1059,6 +1061,7 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl3Pers("-sprakstas, pag. -sprakstējās", "sprakstēties", false), //iesprakstēties
 		RegularVerbRule.thirdConjRefl3Pers("-sprakšas, pag. -sprakšējās", "sprakšēties", false), //iesprakšēties
 		RegularVerbRule.thirdConjRefl3Pers("-sprakšķas, pag. -sprakšķējās", "sprakšķēties", false), //iesprakšķēties
+		RegularVerbRule.thirdConjRefl3Pers("-spridzas, pag. -spridzējās", "spridzēties", false), //iespridzēties
 		RegularVerbRule.thirdConjRefl3Pers("-sprikstas, pag. -sprikstējās", "sprikstēties", false), //iesprikstēties
 		RegularVerbRule.thirdConjRefl3Pers("-strinkšas, pag. -strinkšējās", "strinkšēties", false), //aizstrinkšēties
 		RegularVerbRule.thirdConjRefl3Pers("-strinkšķas, pag. -strinkšķējās", "strinkšķēties", false), //aizstrinkšķēties
@@ -1078,8 +1081,8 @@ public class DirectRules
 		RegularVerbRule.thirdConjRefl3Pers("-tikšķas, pag. -tikšķējās", "tikšķēties", false), //ietikšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-tinkšas, pag. -tinkšējās", "tinkšēties", false), //aiztinkšēties
 		RegularVerbRule.thirdConjRefl3Pers("-tinkšķas, pag. -tinkšķējās", "tinkšķēties", false), //aiztinkšķēties
-		RegularVerbRule.thirdConjRefl3Pers("-tirkšas, pag. -tirkšējās", "trikšēties", false), //ietrikšēties
-		RegularVerbRule.thirdConjRefl3Pers("-tirkšķas, pag. -tirkšķējās", "trikšķēties", false), //ietrikšķēties
+		RegularVerbRule.thirdConjRefl3Pers("-tirkšas, pag. -tirkšējās", "tirkšēties", false), //ietirkšēties
+		RegularVerbRule.thirdConjRefl3Pers("-tirkšķas, pag. -tirkšķējās", "tirkšķēties", false), //ietirkšķēties
 		RegularVerbRule.thirdConjRefl3Pers("-trinkšas, pag. -trinkšējās", "trinkšēties", false), //aiztrinkšēties
 		RegularVerbRule.thirdConjRefl3Pers("-trinkšķas, pag. -trinkšķējās", "trinkšķēties", false), //aiztrinkšķēties
 		// U

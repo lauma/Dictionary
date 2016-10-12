@@ -1,8 +1,11 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.SecondConj;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.SecondThirdConj;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.ThirdConj;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.FifthDecl;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.GenNoun;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.SixthDecl;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondConj;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondThirdConj;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.ThirdConj;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
@@ -32,7 +35,7 @@ public class OptHypernRules
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //apieties\
 
 			// 10. paradigma: 5. deklinācija, vīriešu dzimte.
-		BaseRule.noun("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
+		GenNoun.any("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
 				new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tēte
 		// 25. paradigma: vietniekvārdi.
 		//BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
@@ -45,36 +48,36 @@ public class OptHypernRules
 	 */
 	public static final Rule[] fifthDeclNoun = {
 		// Ar mijām
-		BaseRule.fifthDeclStd("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe, aļģe
-		BaseRule.fifthDeclStd("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
-		BaseRule.fifthDeclStd("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
-		BaseRule.fifthDeclStd("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
-		BaseRule.fifthDeclStd("-celles, dsk. ģen. -ceļļu, s.", ".*celle"), // celle
-		BaseRule.fifthDeclStd("-cemmes, dsk. ģen. -cemmju, s.", ".*cemme"), // cemme
-		BaseRule.fifthDeclStd("-dēles, dsk. ģen. -dēļu, s.", ".*dēle"), // dēle
-		BaseRule.fifthDeclStd("-eģes, dsk. ģen. -eģu, s.", ".*eģe"), // eģe
-		BaseRule.fifthDeclStd("-elles, dsk. ģen. -eļļu, s.", ".*elle"), // elle
-		BaseRule.fifthDeclStd("-eņģes, dsk. ģen. -eņģu, s.", ".*eņģe"), // eņģe
-		BaseRule.fifthDeclStd("-epiķes, dsk. ģen. -epiķu", ".*epiķe"), // epiķe
-		BaseRule.fifthDeclStd("-ēzes, dsk. ģen. -ēžu, s.", ".*ēze"), // ēze
-		BaseRule.fifthDeclStd("-halles, dsk. ģen. -haļļu, s.", ".*halle"), // halle
-		BaseRule.fifthDeclStd("-indes, dsk. ģen. -inžu, s.", ".*inde"), // inde
-		BaseRule.fifthDeclStd("-īzes, dsk. ģen. -īžu, s.", ".*īze"), // īze
-		BaseRule.fifthDeclStd("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
-		BaseRule.fifthDeclStd("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
-		BaseRule.fifthDeclStd("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
-		BaseRule.fifthDeclStd("-nulles, dsk. ģen. -nuļļu, s.", ".*nulle"), // nulle
-		BaseRule.fifthDeclStd("-ores, dsk. ģen. -oru, s.", ".*ore"), // ore
-		BaseRule.fifthDeclStd("-resnes, dsk. ģen. -rešņu, s.", ".*resne"), // resne
-		BaseRule.fifthDeclStd("-teces, dsk. ģen. -teču, s.", ".*tece"), // tece
-		BaseRule.fifthDeclStd("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe, krāčupe
-		BaseRule.fifthDeclStd("-usnes, dsk. ģen. -ušņu, s.", ".*usne"), // usne
-		BaseRule.fifthDeclStd("-vātes, dsk. ģen. -vāšu, s.", ".*vāte"), // vāte
-		BaseRule.fifthDeclStd("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
+		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe, aļģe
+		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
+		FifthDecl.std("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
+		FifthDecl.std("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
+		FifthDecl.std("-celles, dsk. ģen. -ceļļu, s.", ".*celle"), // celle
+		FifthDecl.std("-cemmes, dsk. ģen. -cemmju, s.", ".*cemme"), // cemme
+		FifthDecl.std("-dēles, dsk. ģen. -dēļu, s.", ".*dēle"), // dēle
+		FifthDecl.std("-eģes, dsk. ģen. -eģu, s.", ".*eģe"), // eģe
+		FifthDecl.std("-elles, dsk. ģen. -eļļu, s.", ".*elle"), // elle
+		FifthDecl.std("-eņģes, dsk. ģen. -eņģu, s.", ".*eņģe"), // eņģe
+		FifthDecl.std("-epiķes, dsk. ģen. -epiķu", ".*epiķe"), // epiķe
+		FifthDecl.std("-ēzes, dsk. ģen. -ēžu, s.", ".*ēze"), // ēze
+		FifthDecl.std("-halles, dsk. ģen. -haļļu, s.", ".*halle"), // halle
+		FifthDecl.std("-indes, dsk. ģen. -inžu, s.", ".*inde"), // inde
+		FifthDecl.std("-īzes, dsk. ģen. -īžu, s.", ".*īze"), // īze
+		FifthDecl.std("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
+		FifthDecl.std("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
+		FifthDecl.std("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
+		FifthDecl.std("-nulles, dsk. ģen. -nuļļu, s.", ".*nulle"), // nulle
+		FifthDecl.std("-ores, dsk. ģen. -oru, s.", ".*ore"), // ore
+		FifthDecl.std("-resnes, dsk. ģen. -rešņu, s.", ".*resne"), // resne
+		FifthDecl.std("-teces, dsk. ģen. -teču, s.", ".*tece"), // tece
+		FifthDecl.std("-upes, dsk. ģen. -upju, s.", ".*upe"), // upe, krāčupe
+		FifthDecl.std("-usnes, dsk. ģen. -ušņu, s.", ".*usne"), // usne
+		FifthDecl.std("-vātes, dsk. ģen. -vāšu, s.", ".*vāte"), // vāte
+		FifthDecl.std("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
 		// Bez mijām
-		BaseRule.fifthDeclNoChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
-		BaseRule.fifthDeclNoChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
-		BaseRule.sixthDeclNoChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
+		FifthDecl.noChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
+		FifthDecl.noChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
+		SixthDecl.noChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 	};
 
 	/**
@@ -83,90 +86,90 @@ public class OptHypernRules
 	 */
 	public static final Rule[] sixthDeclNoun = {
 		// Ar mijām
-		BaseRule.sixthDeclStd("-avs, dsk. ģen. -avju, s.", ".*avs"), //avs
-		BaseRule.sixthDeclStd("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
-		BaseRule.sixthDeclStd("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts
-		BaseRule.sixthDeclStd("-cilts, dsk. ģen. -cilšu, s.", ".*cilts"), //cilts
-		BaseRule.sixthDeclStd("-drāts, dsk. ģen. -drāšu, s.", ".*drāts"), //drāts
-		BaseRule.sixthDeclStd("-dzelzs, dsk. ģen. -dzelžu, s.", ".*dzelzs"), //dzelzs, leņķdzelzs
-		BaseRule.sixthDeclStd("-dzimts, dsk. ģen. -dzimšu, s.", ".*dzimts"), //dzimts
-		BaseRule.sixthDeclStd("-dzirksts, dsk. ģen. -dzirkšu", ".*dzirksts"), //dzirksts
-		BaseRule.sixthDeclStd("-govs, dsk. ģen. -govju, s.", ".*govs"), //govs
-		BaseRule.sixthDeclStd("-grunts, dsk. ģen. -grunšu, s.", ".*grunts"), //grunts
-		BaseRule.sixthDeclStd("-guns, dsk. ģen. -guņu", ".*guns"), //guns
-		BaseRule.sixthDeclStd("-igvāts, dsk. ģen. -igvāšu, s.", ".*igvāts"), //igvāts
-		BaseRule.sixthDeclStd("-ilkss, dsk. ģen. -ilkšu, s.", ".*ilkss"), //ilkss
-		BaseRule.sixthDeclStd("-izkapts, dsk. ģen. -izkapšu, s.", ".*izkapts"), //izkapts
-		BaseRule.sixthDeclStd("-kārts, dsk. ģen. -kāršu, s.", ".*kārts"), //kārts 1, 2
-		BaseRule.sixthDeclStd("-klēts, dsk. ģen. -klēšu, s.", ".*klēts"), //klēts
-		BaseRule.sixthDeclStd("-klints, dsk. ģen. klinšu, s.", ".*klints"), //klints
-		BaseRule.sixthDeclStd("-krants, dsk. ģen. -kranšu, s.", ".*krants"), //krants
-		BaseRule.sixthDeclStd("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns"), //aizkrāsns
-		BaseRule.sixthDeclStd("-krūts, dsk. ģen. -krūšu, s.", ".*krūts"), //galvkrūts
-		BaseRule.sixthDeclStd("-kūts, dsk. ģen. -kūšu, s.", ".*kūts"), //cūkkūts
-		BaseRule.sixthDeclStd("-kvīts, dsk. ģen. -kvīšu, s.", ".*kvīts"), //kvīts
-		BaseRule.sixthDeclStd("-lākts, dsk. ģen. -lākšu, s.", ".*lākts"), //lākts
-		BaseRule.sixthDeclStd("-lecekts, dsk. ģen. -lecekšu, s.", ".*lecekts"), //lecekts
-		BaseRule.sixthDeclStd("-līksts, dsk. ģen. -līkšu, s.", ".*līksts"), //līksts
-		BaseRule.sixthDeclStd("-maiksts, dsk. ģen. -maikšu, s.", ".*maiksts"), //maiksts
-		BaseRule.sixthDeclStd("-nakts, dsk. ģen. -nakšu, s.", ".*nakts"), //diennakts
-		BaseRule.sixthDeclStd("-nīts, dsk. ģen. -nīšu, s.", ".*nīts"), //nīts
-		BaseRule.sixthDeclStd("-nots, dsk. ģen. -nošu, s.", ".*nots"), // nošu
-		BaseRule.sixthDeclStd("-nūts, dsk. ģen. -nūšu, s.", ".*nūts"), // nūts
-		BaseRule.sixthDeclStd("-olekts, dsk. ģen. -olekšu, s.", ".*olekts"), // olekts
-		BaseRule.sixthDeclStd("-pāksts, dsk. ģen. -pākšu, s.", ".*pāksts"), // pāksts
-		BaseRule.sixthDeclStd("-palts, dsk. ģen. -palšu, s.", ".*palts"), // palts
-		BaseRule.sixthDeclStd("-pirts, dsk. ģen. -piršu, s.", ".*pirts"), // asinspirts
-		BaseRule.sixthDeclStd("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
-		BaseRule.sixthDeclStd("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
-		BaseRule.sixthDeclStd("-pults, dsk. ģen. -pulšu, s.", ".*pults"), // operatorpults
-		BaseRule.sixthDeclStd("-rūts, dsk. ģen. -rūšu, s.", ".*rūts"), // rūts
-		BaseRule.sixthDeclStd("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls
-		BaseRule.sixthDeclStd("-silkss, dsk. ģen. -silkšu, s.", ".*silkss"), // silkss
-		BaseRule.sixthDeclStd("-sirds, dsk. ģen. -siržu, s.", ".*sirds"), // sirds
-		BaseRule.sixthDeclStd("-skansts, dsk. ģen. -skanšu, s.", ".*skansts"), // skansts
-		BaseRule.sixthDeclStd("-skrots, dsk. ģen. -skrošu, s.", ".*skrots"), // skrots
-		BaseRule.sixthDeclStd("-spelts, dsk. ģen. -spelšu, s.", ".*spelts"), // spelts
-		BaseRule.sixthDeclStd("-spīts, dsk. ģen. -spīšu, s.", ".*spīts"), // spīts
-		BaseRule.sixthDeclStd("-stelts, dsk. ģen. stelšu, s.", ".*stelts"), // stelts
-		BaseRule.sixthDeclStd("-tāss, dsk. ģen. -tāšu, s.", ".*tāss"), // tāss
-		BaseRule.sixthDeclStd("-telts, dsk. ģen. -telšu, s.", ".*telts"), // telts
-		BaseRule.sixthDeclStd("-uguns, dsk. ģen. -uguņu, s.", ".*uguns"), // jāņuguns
-		BaseRule.sixthDeclStd("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
-		BaseRule.sixthDeclStd("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
+		SixthDecl.std("-avs, dsk. ģen. -avju, s.", ".*avs"), //avs
+		SixthDecl.std("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
+		SixthDecl.std("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts
+		SixthDecl.std("-cilts, dsk. ģen. -cilšu, s.", ".*cilts"), //cilts
+		SixthDecl.std("-drāts, dsk. ģen. -drāšu, s.", ".*drāts"), //drāts
+		SixthDecl.std("-dzelzs, dsk. ģen. -dzelžu, s.", ".*dzelzs"), //dzelzs, leņķdzelzs
+		SixthDecl.std("-dzimts, dsk. ģen. -dzimšu, s.", ".*dzimts"), //dzimts
+		SixthDecl.std("-dzirksts, dsk. ģen. -dzirkšu", ".*dzirksts"), //dzirksts
+		SixthDecl.std("-govs, dsk. ģen. -govju, s.", ".*govs"), //govs
+		SixthDecl.std("-grunts, dsk. ģen. -grunšu, s.", ".*grunts"), //grunts
+		SixthDecl.std("-guns, dsk. ģen. -guņu", ".*guns"), //guns
+		SixthDecl.std("-igvāts, dsk. ģen. -igvāšu, s.", ".*igvāts"), //igvāts
+		SixthDecl.std("-ilkss, dsk. ģen. -ilkšu, s.", ".*ilkss"), //ilkss
+		SixthDecl.std("-izkapts, dsk. ģen. -izkapšu, s.", ".*izkapts"), //izkapts
+		SixthDecl.std("-kārts, dsk. ģen. -kāršu, s.", ".*kārts"), //kārts 1, 2
+		SixthDecl.std("-klēts, dsk. ģen. -klēšu, s.", ".*klēts"), //klēts
+		SixthDecl.std("-klints, dsk. ģen. klinšu, s.", ".*klints"), //klints
+		SixthDecl.std("-krants, dsk. ģen. -kranšu, s.", ".*krants"), //krants
+		SixthDecl.std("-krāsns, dsk. ģen. -krāšņu, s.", ".*krāsns"), //aizkrāsns
+		SixthDecl.std("-krūts, dsk. ģen. -krūšu, s.", ".*krūts"), //galvkrūts
+		SixthDecl.std("-kūts, dsk. ģen. -kūšu, s.", ".*kūts"), //cūkkūts
+		SixthDecl.std("-kvīts, dsk. ģen. -kvīšu, s.", ".*kvīts"), //kvīts
+		SixthDecl.std("-lākts, dsk. ģen. -lākšu, s.", ".*lākts"), //lākts
+		SixthDecl.std("-lecekts, dsk. ģen. -lecekšu, s.", ".*lecekts"), //lecekts
+		SixthDecl.std("-līksts, dsk. ģen. -līkšu, s.", ".*līksts"), //līksts
+		SixthDecl.std("-maiksts, dsk. ģen. -maikšu, s.", ".*maiksts"), //maiksts
+		SixthDecl.std("-nakts, dsk. ģen. -nakšu, s.", ".*nakts"), //diennakts
+		SixthDecl.std("-nīts, dsk. ģen. -nīšu, s.", ".*nīts"), //nīts
+		SixthDecl.std("-nots, dsk. ģen. -nošu, s.", ".*nots"), // nošu
+		SixthDecl.std("-nūts, dsk. ģen. -nūšu, s.", ".*nūts"), // nūts
+		SixthDecl.std("-olekts, dsk. ģen. -olekšu, s.", ".*olekts"), // olekts
+		SixthDecl.std("-pāksts, dsk. ģen. -pākšu, s.", ".*pāksts"), // pāksts
+		SixthDecl.std("-palts, dsk. ģen. -palšu, s.", ".*palts"), // palts
+		SixthDecl.std("-pirts, dsk. ģen. -piršu, s.", ".*pirts"), // asinspirts
+		SixthDecl.std("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
+		SixthDecl.std("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
+		SixthDecl.std("-pults, dsk. ģen. -pulšu, s.", ".*pults"), // operatorpults
+		SixthDecl.std("-rūts, dsk. ģen. -rūšu, s.", ".*rūts"), // rūts
+		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls
+		SixthDecl.std("-silkss, dsk. ģen. -silkšu, s.", ".*silkss"), // silkss
+		SixthDecl.std("-sirds, dsk. ģen. -siržu, s.", ".*sirds"), // sirds
+		SixthDecl.std("-skansts, dsk. ģen. -skanšu, s.", ".*skansts"), // skansts
+		SixthDecl.std("-skrots, dsk. ģen. -skrošu, s.", ".*skrots"), // skrots
+		SixthDecl.std("-spelts, dsk. ģen. -spelšu, s.", ".*spelts"), // spelts
+		SixthDecl.std("-spīts, dsk. ģen. -spīšu, s.", ".*spīts"), // spīts
+		SixthDecl.std("-stelts, dsk. ģen. stelšu, s.", ".*stelts"), // stelts
+		SixthDecl.std("-tāss, dsk. ģen. -tāšu, s.", ".*tāss"), // tāss
+		SixthDecl.std("-telts, dsk. ģen. -telšu, s.", ".*telts"), // telts
+		SixthDecl.std("-uguns, dsk. ģen. -uguņu, s.", ".*uguns"), // jāņuguns
+		SixthDecl.std("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
+		SixthDecl.std("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
 
 		// Bez mijām
-		BaseRule.sixthDeclNoChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
-		BaseRule.sixthDeclNoChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
-		BaseRule.sixthDeclNoChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
-		BaseRule.sixthDeclNoChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss
-		BaseRule.sixthDeclNoChange("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
-		BaseRule.sixthDeclNoChange("-grīsts, dsk. ģen. -grīstu, s.", ".*grīsts"), //grīsts
-		BaseRule.sixthDeclNoChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //padebess
-		BaseRule.sixthDeclNoChange("-maksts, dsk. ģen. -makstu, s.", ".*maksts"), //maksts
-		BaseRule.sixthDeclNoChange("-nāss, dsk. ģen. -nāsu, s.", ".*nāss"), //nāss
-		BaseRule.sixthDeclNoChange("-šalts, dsk. ģen. -šaltu, s.", ".*šalts"), // šalts
-		BaseRule.sixthDeclNoChange("-takts, dsk. ģen. -taktu, s.", ".*takts"), // pietakts
-		BaseRule.sixthDeclNoChange("-uts, dsk. ģen. -utu, s.", ".*uts"), // uts
-		BaseRule.sixthDeclNoChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
-		BaseRule.sixthDeclNoChange("-vakts, dsk. ģen. -vakšu, s.", ".*vakts"), //vakts
-		BaseRule.sixthDeclNoChange("-versts, dsk. ģen. -verstu, s.", ".*versts"), // kvadrātversts
-		BaseRule.sixthDeclNoChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
-		BaseRule.sixthDeclNoChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
+		SixthDecl.noChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
+		SixthDecl.noChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
+		SixthDecl.noChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
+		SixthDecl.noChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss
+		SixthDecl.noChange("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
+		SixthDecl.noChange("-grīsts, dsk. ģen. -grīstu, s.", ".*grīsts"), //grīsts
+		SixthDecl.noChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //padebess
+		SixthDecl.noChange("-maksts, dsk. ģen. -makstu, s.", ".*maksts"), //maksts
+		SixthDecl.noChange("-nāss, dsk. ģen. -nāsu, s.", ".*nāss"), //nāss
+		SixthDecl.noChange("-šalts, dsk. ģen. -šaltu, s.", ".*šalts"), // šalts
+		SixthDecl.noChange("-takts, dsk. ģen. -taktu, s.", ".*takts"), // pietakts
+		SixthDecl.noChange("-uts, dsk. ģen. -utu, s.", ".*uts"), // uts
+		SixthDecl.noChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
+		SixthDecl.noChange("-vakts, dsk. ģen. -vakšu, s.", ".*vakts"), //vakts
+		SixthDecl.noChange("-versts, dsk. ģen. -verstu, s.", ".*versts"), // kvadrātversts
+		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
+		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
-		BaseRule.sixthDeclOptChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
-		BaseRule.sixthDeclOptChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
+		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
+		SixthDecl.optChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
 	};
 
 	/**
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
 	public static final Rule[] secondDeclNoun = {
-		BaseRule.secondDeclStd("-āķa, v.", ".*āķis"), // ākis
-		BaseRule.secondDeclStd("-aļņa, v.", ".*alnis"), // alnis
-		BaseRule.secondDeclStd("-āmja, v.", ".*āmis"), // āmis
+		lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.SecondConj.std("-āķa, v.", ".*āķis"), // ākis
+		lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.SecondConj.std("-aļņa, v.", ".*alnis"), // alnis
+		lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.SecondConj.std("-āmja, v.", ".*āmis"), // āmis
 
-		BaseRule.noun("-tēta, v.", ".*tētis", 3,
+		GenNoun.any("-tēta, v.", ".*tētis", 3,
 					new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tētis
 
 	};
@@ -174,7 +177,7 @@ public class OptHypernRules
 	 * Paradigm 6: Lietvārds 3. deklinācija -us
 	 */
 	public static final Rule[] thirdDeclNoun = {
-			BaseRule.thirdDeclStd("-alus, v.", ".*alus"), // alus
+			lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.ThirdConj.std("-alus, v.", ".*alus"), // alus
 
 	};
 
@@ -784,7 +787,7 @@ public class OptHypernRules
 	public static final Rule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		BaseRule.secondConjDirAllPersParallel(
+		SecondConj.directAllPersParallel(
 				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
 				"skandēt"), // noskandēt
 
@@ -827,39 +830,39 @@ public class OptHypernRules
 	public static final Rule[] directThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-ļogu, -ļogi, -ļoga, retāk -ļodzu, -ļodzi, -ļodza, pag. -ļodzīju", "ļodzīt"), //paļodzīt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-moku, -moki, -moka, arī -mocu, -moci, -moca, pag. -mocīju", "mocīt"), //aizmocīt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-murcu, -murci, -murca, retāk -murku, -murki, -murka, pag. -murcīju", "murcīt"), //apmurcīt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-ņurcu, -ņurci, -ņurca, retāk -ņurku, -ņurki, -ņurka, pag. -ņurcīju", "ņurcīt"), //apmurcīt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-sēžu, -sēdi, -sēž, arī -sēdu, -sēdi, -sēd, pag. -sēdēju", "sēdēt"), //iesēdēt
 
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-dzirdu, -dzirdi, -dzird, pag. -dzirdu (1. konj.), arī -dzirdēju",
 				"dzirdēt", false), //izdzirdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-dzirdu, -dzirdi, -dzird, pag. -dzirdēju, arī -dzirdu (1. konj.)",
 				"dzirdēt", false), //padzirdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
 				"slīdēt", false), // aizslīdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-smirdu, -smirdi, -smird, pag. -smirdēju (3. pers. arī -smirda, 1. konj.)",
 				"smirdēt", false), // nosmirdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-spīdu, -spīdi, -spīd, pag. -spīdēju, -spīdēji, -spīdēja (retāk -spīda, 1. konj.)",
 				"spīdēt", false), // paspīdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-vīdu, -vīdi, -vīd, pag. -vīdēju (3. pers. retāk -vīda, 1. konj.)",
 				"vīdēt", false), //novīdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-vīdu, -vīdi, -vīd, pag. -vīdēju (retāk -vīdu, 1. konj.)",
 				"vīdēt", false), // pavīdēt
-		BaseRule.thirdConjDirAllPersParallel(
+		ThirdConj.directAllPersParallel(
 				"-guļu, -guli, -guļ (arī -gul), pag. -gulēju", "gulēt"), // iegulēt
 			//TODO kā norādīt miju + ko darīt ar otru, standartizēto gulēt?
 
@@ -1109,98 +1112,98 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		// Šobrīd sarezgitās struktūras dēļ 3. personas likums netiek atvasinats.
 			// TODO uztaisīt verbu likumu, kas atvasina 3. personas likumu.
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
 				".*bedīt", false), // apbedīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-brūnu, -brūni, -brūn, arī -brūnēju, -brūnē, -brūnē, pag. -brūnēju",
 				".*brūnēt", false), // nobrūnēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju",
 				".*cerēt", false), // apcerēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-cienu, -cieni, -ciena, arī -cienīju, -cienī, -cienī, pag. -cienīju",
 				".*cienīt", false), // iecienīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju",
 				".*dēstīt", false), // apdēstīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-kristīju, -kristī, -kristī, arī -kristu, -kristi, -krista, pag. -kristīju",
 				".*kristīt", false), // iekristīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-krustīju, -krustī, -krustī, arī -krustu, -krusti, -krusta, pag. -krustīju",
 				".*krustīt", false), // iekrustīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-kveldēju, -kveldē, -kveldē, arī -kveldu, -kveldi, -kveld, pag. -kveldēju",
 				".*kveldēt", false), // nokveldēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
 				".*ķēzīt", false), // apķēzīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-lāsu, -lāsi, -lās, retāk -lāsēju, -lāsē, -lāsē, pag. -lāsēju",
 				".*lāsēt", false), // nolāsēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-mērīju, -mērī, -mērī, arī -mēru, -mēri, -mēra, pag. -mērīju",
 				".*mērīt", false), // atmērīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-pelnu, -pelni, -pelna, arī -pelnīju, -pelnī, -pelnī, pag. -pelnīju",
 				".*pelnīt", false), // atpelnīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju",
 				".*pētīt", false), // appētīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-pūlu, -pūli, -pūl, arī -pūlēju, -pūlē, -pūlē, pag. -pūlēju",
 				".*pūlēt", false), // nopūlēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
 				".*rotīt", false), // aizrotīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju",
 				".*sargāt", false), // aizsargāt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju",
 				".*svētīt", false), // aizsargāt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju",
 				".*tašķīt", false), // aptašķīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju",
 				".*veltīt", false), // apveltīt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
 				".*vētīt", false), // aizvētīt
 
 		// TODO vai tiešām nav saskaņojams ne ar vienu priedēkļa likumu?
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -bālē, pag. -bālēju",
 				".*bālēt", false), // bālēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-durnu, -durni, -durn, arī -durnēju, -durnē, -durnē, pag. -durnēju",
 				".*durnēt", false), // durnēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-kluknu, -klukni, -klukn, arī -kluknēju, -kluknē, -kluknē, pag. -kluknēju",
 				".*kluknēt", false), // kluknēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-kruknu, -krukni, -krukn, arī -kruknēju, -kruknē, -kruknē, pag. -kruknēju",
 				".*kruknēt", false), // kruknēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-kuknu, -kukni, -kukn, arī -kuknēju, -kuknē, -kuknē, pag. -kuknēju",
 				".*kuknēt", false), // kuknēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-pleknu, -plekni, -plekn, arī -pleknēju, -pleknē, -pleknē, pag. -pleknēju",
 				".*pleknēt", false), // pleknēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"vēdīju, vēdī, vēdī, arī vēdu, vedi, veda, pag. vēdīju",
 				".*vēdīt", false), //vēdīt
 
 		// Paralēlformu paralēlforma.
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -balē, pag. -bālēju (arī -bālu, 1. konj.)",
 				".*bālēt", false), //nobālēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-bālēju, -bālē, -bālē, arī -bālu, -bāli, -bāl, pag. -bālēju (retāk -bālu, 1. konj.)",
 				".*bālēt", false), //sabālēt
-		BaseRule.secondThirdConjDirectAllPersParallel(
+		SecondThirdConj.directAllPersParallel(
 				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
 				".*rūsēt", false), // ierūsēt
 
@@ -1577,9 +1580,9 @@ public class OptHypernRules
 	public static final Rule[] reflThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		BaseRule.thirdConjReflAllPersParallel(
+		ThirdConj.reflAllPersParallel(
 				"-ļogos, -ļogies, -ļogās, retāk -ļodzos, -ļodzies, -ļodzās, pag. -ļodzījos", "ļodzīties"), //noļodzīties
-		BaseRule.thirdConjReflAllPersParallel(
+		ThirdConj.reflAllPersParallel(
 				"-mokos, -mokies, -mokās, arī -mocos, -mocies, -mocās, pag. -mocījos", "mocīties"), //aizmocīties
 
 		// Standartizētie.
@@ -1683,31 +1686,31 @@ public class OptHypernRules
 	 */
 	public static final Rule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
 				".*gailēties", false), // iegailēties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-kristījos, -kristījies, -kristījas, arī -kristos, -kristies, -kristās, pag. -kristījos",
 				".*kristīties", false), // nokristīties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-krustījos, -krustījies, -krustījas, arī -krustos, -krusties, -krustās, pag. -krustījos",
 				".*krustīties", false), // nokrustīties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-ķēzījos, -ķēzījies, -ķēzījas, arī -ķēzos, -ķēzies, -ķēzās, pag. -ķēzījos",
 				".*ķēzīties", false), //noķēzīties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-mērījos, -mērījies, -mērījas, arī -mēros, -mēries, -mērās, pag. -mērījos",
 				".*mērīties", false), // izmērīties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-pelnos, -pelnies, -pelnās, arī -pelnījos, -pelnījies, -pelnījās, pag. -pelnījos",
 				".*pelnīties", false), //izpelnīties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-pūlos, -pūlies, -pūlas, arī -pūlējos, -pūlējies, -pūlējas, pag. -pūlējos",
 				".*pūlēties", false), // nopūlēties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
 				".*sargāties", false), // aizsargāties
-		BaseRule.secondThirdConjReflAllPersParallel(
+		SecondThirdConj.reflAllPersParallel(
 				"-svētījos, -svētījies, -svētījas, arī -svētos, -svēties, -svētās, pag. -svētījos",
 				".*svētīties", false), // iesvētīties
 

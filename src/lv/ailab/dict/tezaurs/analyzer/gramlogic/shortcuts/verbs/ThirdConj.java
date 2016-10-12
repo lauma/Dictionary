@@ -1,6 +1,7 @@
-package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
+package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.RegularVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -9,11 +10,12 @@ import java.util.ArrayList;
 
 /**
  * 3. konjugācijas ērtummetodes.
+ * NB: Metodes, kam klāt norādīts "AllPers", neizveido 3. personas likumus.
  *
  * Izveidots 2016-10-12.
  * @author Lauma
  */
-public class ThirdConj
+public final class ThirdConj
 {
 	/**
 	 * Izveido RegularVerbRule 3. konjugācijas tiešajam darbības vārdam bez
@@ -82,6 +84,60 @@ public class ThirdConj
 	}
 
 	/**
+	 * Izveido BaseRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams, ir paralēlās formas.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return BaseRule ar 17. paradigmu
+	 */
+	public static BaseRule directAllPersParallel(
+			String patternText, String lemmaEnd, boolean presentChange)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (presentChange)
+			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
+		else
+			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Izveido BaseRule 3. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams, paralēlās formas ir gan ar miju, gan bez.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 17. paradigmu
+	 */
+	public static BaseRule directAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
 	 * Izveido RegularVerbRule 3. konjugācijas atgriezeniskajam darbības vārdam
 	 * bez paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
@@ -144,6 +200,31 @@ public class ThirdConj
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 20,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Izveido BaseRule 3. konjugācijas darbības vārdam, kam dotas visas
+	 * formas, bet atvasināt tikai trešās personas formu likumu nav iespējams,
+	 * paralēlās formas ir gan ar miju, gan bez.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 20. paradigmu
+	 */
+	public static BaseRule reflAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 }

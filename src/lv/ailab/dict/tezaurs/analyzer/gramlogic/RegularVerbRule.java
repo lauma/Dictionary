@@ -18,6 +18,7 @@ import java.util.Set;
  * Šajā klasē apvienots saskarne likumiem, kam ir:
  * a) gan visu personu formu šablons, gan tikai trešās personas formu šablons,
  * b) tikai trešās personas formu šablons.
+ * // TODO šādam apvienojumam šobrīd nav jēgas.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.

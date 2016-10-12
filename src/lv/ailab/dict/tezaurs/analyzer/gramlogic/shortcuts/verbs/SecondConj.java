@@ -1,6 +1,7 @@
-package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
+package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.RegularVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * 2. konjugācijas ērtummetodes.
+ * NB: Metodes, kam nosaukumā norādīts "AllPers", neizveido 3. personas likumus!
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -16,8 +18,8 @@ import java.util.ArrayList;
 public final class SecondConj
 {
 	/**
-	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam bez paralēlajām
-	 * formām.
+	 * Izveido RegularVerbRule 2. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
@@ -67,6 +69,44 @@ public final class SecondConj
 	}
 
 	/**
+	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 16. paradigmu
+	 */
+	public static BaseRule directAllPers(
+			String patternText, String lemmaEnd)
+	{
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
+				new Tuple[]{TFeatures.POS__VERB}, null);
+	}
+
+	/**
+	 * Metode īsumam.
+	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
+	 * visas formas un paralēlformas, bet atvasināt tikai trešās personas formu
+	 * likumu nav iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 16. paradigmu
+	 */
+	public static BaseRule directAllPersParallel(
+			String patternText, String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.POS__VERB);
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		if (RulesAsFunctions.containsFirstConj(patternText))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
 	 * Izveido RegularVerbRule 2. konjugācijas atgriezeniskajam darbības vārdam bez
 	 * paralēlajām formām.
 	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai
@@ -92,5 +132,20 @@ public final class SecondConj
 			String lemmaEnd)
 	{
 		return RegularVerbRule.of(patternEnd, lemmaEnd, 19, null, null);
+	}
+
+	/**
+	 * Izveido BaseRule 2. konjugācijas atgriezeniskajam darbības vārdam, kam
+	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return BaseRule ar 19. paradigmu
+	 */
+	public static BaseRule reflAllPers(
+			String patternText, String lemmaEnd)
+	{
+		return BaseRule.of(patternText, ".*" + lemmaEnd, 19,
+				new Tuple[]{TFeatures.POS__VERB}, null);
 	}
 }

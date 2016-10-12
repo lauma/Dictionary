@@ -3,19 +3,22 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
-import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
 
 /**
- * Pirmās konjugācijas likumi, kas sevī ietver celmu iegūšanu un uzstādīšanu.
+ * Likums, kas apvieno divus SimpleRule - divus darbības vārdiem raksturīgos
+ * gadījumus: vienu visām personām, otru - tikai trešajai, piemēram,
+ * "-brāžu, -brāz, -brāž, pag. -brāzu" un
+ * "parasti 3. pers., -brāž, pag. -brāzu". Pirmās konjugācijas gadījumā - arī
+ * celmu iegūšanu un uzstādīšanu.
  * Šajā klasē apvienots saskarne likumiem, kam ir:
  * a) gan visu personu formu šablons, gan tikai trešās personas formu šablons,
- * b) tikai trešās personas formu šablons,
- * c) visu personu formu šablons, no kura kaut kādu iemeslu dēļ nav iespējams
- * atvasināt trešās personas formu šablonu (sarežģītas paralēlformas).
+ * b) tikai trešās personas formu šablons (jo 3. personas likumi neatbalsta
+ *    celmu izgūšanu),
+ * c) tikai visu personu formu šablons (jo BaseRule neatbalsta celmu izgūšanu).
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
@@ -23,12 +26,15 @@ import java.util.*;
  * Izveidots 2015-10-16.
  * @author Lauma
  */
-public class FirstConjRule implements Rule
+public class DualVerbRule implements Rule
 {
 	protected BaseRule allPersonRule;
 	protected ThirdPersVerbRule thirdPersonRule;
-	// Celmus glabā atsevišķi, nevis jau kā gatavus karodziņus tāpēc, ka
-	// karodziņam jāsatur arī "priedēklis", bet šobrīd tas nav zināms.
+	/**
+	 * Celmus glabā atsevišķi, nevis jau kā gatavus karodziņus tāpēc, ka
+	 * karodziņam jāsatur arī "priedēklis", bet šobrīd tas nav zināms.
+	 * NULL 2. un 3. konjufgācijas verbiem.
+ 	 */
 	protected FirstConjStems stems;
 
 	/**
@@ -41,27 +47,26 @@ public class FirstConjRule implements Rule
 	 *                      no šī likuma automātiski
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
-	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 * @param paradigms		paradigmas, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param stems			visi nepieciešamie celmi, jau izgūti
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public FirstConjRule (String patternBegin, String patternEnd,
-			String lemmaEnd, int paradigmId,
+	public DualVerbRule(String patternBegin, String patternEnd,
+			String lemmaEnd, Set<Integer> paradigms,
 			Set<Tuple<String,String>> positiveFlags,
 			Set<Tuple<String,String>> alwaysFlags,
 			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
+		positiveFlagsFull.add(TFeatures.POS__VERB);
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
-
 		this.stems = stems;
 
 		if (patternBegin != null && patternBegin.trim().length() > 0 &&
@@ -82,18 +87,18 @@ public class FirstConjRule implements Rule
 			}
 
 			allPersonRule = BaseRule.simple(allPersonPattern,
-					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
-			thirdPersonRule = ThirdPersVerbRule.simple(thirdPersonPattern,
-					lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
+					lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternEnd != null && patternEnd.trim().length() > 0)
 		{
 			allPersonRule = null;
-			thirdPersonRule = ThirdPersVerbRule.simple(patternEnd,
-				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+			thirdPersonRule = new ThirdPersVerbRule(patternEnd,
+				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternBegin != null && patternBegin.trim().length() > 0)
 		{
 			allPersonRule = BaseRule.simple(patternBegin,
-					".*" + lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = null;
 		}
 		else
@@ -106,30 +111,29 @@ public class FirstConjRule implements Rule
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
 	 *                      varētu piemērot
-	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 * @param paradigms		paradigma, ko lietot, ja konstatēta atbilstība šim
 	 *                      likumam
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param stems			visi nepieciešamie celmi, jau izgūti
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public FirstConjRule (String patternEnd, String lemmaEnd, int paradigmId,
-			Set<Tuple<String,String>> positiveFlags,
-			Set<Tuple<String,String>> alwaysFlags,
+	public DualVerbRule(String patternEnd, String lemmaEnd, Set<Integer> paradigms,
+			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
 			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
-		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
+		positiveFlagsFull.add(TFeatures.POS__VERB);
 		if (positiveFlags != null) positiveFlagsFull.addAll(positiveFlags);
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
 		this.stems = stems;
 		allPersonRule = null;
-		thirdPersonRule = ThirdPersVerbRule.simple(patternEnd,
-				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
+		thirdPersonRule = new ThirdPersVerbRule(patternEnd,
+				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 	}
 
 	/**
@@ -149,22 +153,48 @@ public class FirstConjRule implements Rule
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param stems			visi nepieciešamie celmi, jau izgūti
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public static FirstConjRule of(String patternBegin, String patternEnd,
+	public static DualVerbRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags,
 			FirstConjStems stems)
 	{
-		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
-			positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-			alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-			stems);
+		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				stems);
 	}
 
 	/**
-	 * Konstruktors pilnam likumam.
+	 * Konstruktors likumam, kam ir tikai 3. personas formas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
+	 *                      Darbības vārds nav obligāts)
+	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
+	 *                      likuma šablonam
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
+	 */
+	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
+			FirstConjStems stems)
+	{
+		return new DualVerbRule(patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				stems);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam, ja tiek uzdoti celmi (paredzēts 1. konj.).
 	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
 	 *                          var būt null, ja tas ir likums tikai ar
 	 *                          3. personas formām
@@ -181,24 +211,26 @@ public class FirstConjRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                      	atbilstība likuma šablonam
 	 * @param infinitiveStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      	vairākām nenoteiksmēm
-	 * @param presentStems		tagadnes celmi
-	 * @param pastStems			pagātnes celmi
+	 *                      	vairākām nenoteiksmēm (nedrīkst būt null)
+	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
+	 * @param pastStems			pagātnes celmi (nedrīkst but null)
 	 */
-	public static FirstConjRule of(String patternBegin, String patternEnd,
+	public static DualVerbRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags,
 			String[] infinitiveStems, String[] presentStems, String[] pastStems)
 	{
-		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
+		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
 				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
 	}
 
 	/**
-	 * Konstruktors likumam, kam ir tikai 3. personas formas.
+	 * Konstruktors likumam, kam ir tikai 3. personas formas, ja tiek uzdoti
+	 * celmi (paredzēts 1. konj.).
 	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
 	 *                          agātnei
 	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
@@ -211,44 +243,131 @@ public class FirstConjRule implements Rule
 	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
 	 *                          atbilstība likuma šablonam
 	 * @param infinitiveStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      	vairākām nenoteiksmēm
-	 * @param presentStems		tagadnes celmi
-	 * @param pastStems			pagātnes celmi
+	 *                      	vairākām nenoteiksmēm (nedrīkst būt null)
+	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
+	 * @param pastStems			pagātnes celmi (nedrīkst būt null)
 	 */
-	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
+	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
 			String[] infinitiveStems, String[] presentStems, String[] pastStems)
 	{
-		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,
+		return new DualVerbRule(patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
 				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
 	}
 
 	/**
-	 * Konstruktors likumam, kam ir tikai 3. personas formas.
-	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
-	 *                      varētu piemērot
-	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
-	 *                      likumam
-	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
-	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
-	 *                     Darbības vārds nav obligāts)
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
-	 *                      likuma šablonam
-	 * @param stems			visi nepieciešamie celmi, jau izgūti
+	 * Konstruktors pilnam likumam, ja celmu nav (paredzēts 2., 3. konj.).
+	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                          var būt null, ja tas ir likums tikai ar
+	 *                          3. personas formām
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                      	pagātnei, var būt null, ja 3. personas dormas
+	 *                      	nevar atvasīnāt no šī likuma automātiski
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                      	likuma šablonam, gan lemmas nosacījumiem
+	 *                      	(Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      	atbilstība likuma šablonam
 	 */
-	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
-			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
-			FirstConjStems stems)
+	public static DualVerbRule of(String patternBegin, String patternEnd,
+			String lemmaEnd, int paradigmId,
+			Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags)
 	{
-		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,
+		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				stems);
+				null);
 	}
 
+	/**
+	 * Konstruktors likumam, kam ir tikai 3. personas formas, ja celmu nav
+	 * (paredzēts 2., 3. konj.).
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                          agātnei
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                          likuma šablonam, gan lemmas nosacījumiem
+	 *                          (Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                          atbilstība likuma šablonam
+	 */
+	public static DualVerbRule of(String patternEnd, String lemmaEnd, int paradigmId,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
+	{
+		return new DualVerbRule(patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam, ja celmu nav, bet ir vairākas paradigmas
+	 * (paredzēts 2., 3. konj.).
+	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                          var būt null, ja tas ir likums tikai ar
+	 *                          3. personas formām
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                      	pagātnei, var būt null, ja 3. personas dormas
+	 *                      	nevar atvasīnāt no šī likuma automātiski
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigms			paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                      	likuma šablonam, gan lemmas nosacījumiem
+	 *                      	(Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      	atbilstība likuma šablonam
+	 */
+	public static DualVerbRule of(String patternBegin, String patternEnd,
+			String lemmaEnd, Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags)
+	{
+		return new DualVerbRule(patternBegin, patternEnd, lemmaEnd,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
+	}
+
+	/**
+	 * Konstruktors likumam, kam ir tikai 3. personas formas, ja celmu nav
+	 * (paredzēts 2., 3. konj.).
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                          agātnei
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigms			paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                          likuma šablonam, gan lemmas nosacījumiem
+	 *                          (Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                          atbilstība likuma šablonam
+	 */
+	public static DualVerbRule of(String patternEnd, String lemmaEnd, Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
+	{
+		return new DualVerbRule(patternEnd, lemmaEnd,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
+	}
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.
@@ -272,7 +391,8 @@ public class FirstConjRule implements Rule
 			newBegin = thirdPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
 		if (newBegin == -1 && allPersonRule != null)
 			newBegin = allPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
-		if (newBegin != -1) stems.addStemFlags(lemma, flagCollector);
+		if (newBegin != -1 && stems != null)
+			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
 
@@ -298,9 +418,8 @@ public class FirstConjRule implements Rule
 			newBegin = thirdPersonRule.applyOptHyphens(gramText, lemma, paradigmCollector, flagCollector);
 		if (newBegin == -1 && allPersonRule != null)
 			newBegin = allPersonRule.applyOptHyphens(gramText, lemma, paradigmCollector, flagCollector);
-		if (newBegin != -1) stems.addStemFlags(lemma, flagCollector);
+		if (newBegin != -1 && stems != null)
+			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
-
-
 }

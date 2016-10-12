@@ -2,7 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.RegularVerbRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.DualVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.SimpleSubRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -31,7 +31,7 @@ public final class SecondThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmām 16, 17
 	 */
-	public static RegularVerbRule direct3PersParallel(
+	public static DualVerbRule direct3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -44,7 +44,7 @@ public final class SecondThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return RegularVerbRule.of(patternEnd, lemmaEnd, new Integer[]{16, 17},
+		return DualVerbRule.of(patternEnd, lemmaEnd, new Integer[]{16, 17},
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -89,7 +89,7 @@ public final class SecondThirdConj
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return likums ar paradigmām 19, 20
 	 */
-	public static RegularVerbRule refl3PersParallel(
+	public static DualVerbRule refl3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
@@ -102,7 +102,7 @@ public final class SecondThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return RegularVerbRule.of(patternEnd, lemmaEnd, new Integer[]{19, 20},
+		return DualVerbRule.of(patternEnd, lemmaEnd, new Integer[]{19, 20},
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 

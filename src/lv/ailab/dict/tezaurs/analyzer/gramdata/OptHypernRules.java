@@ -28,9 +28,9 @@ public class OptHypernRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		RegularVerbRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
+		DualVerbRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //apiet
-		RegularVerbRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 29,
+		DualVerbRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //apieties\
 
 			// 10. paradigma: 5. deklinācija, vīriešu dzimte.
@@ -291,13 +291,13 @@ public class OptHypernRules
 				"-viešu, -vies, -vieš, retāk -viežu, -vied, -viež, pag. -viedu", "viest"), //saviest
 
 		// Izņēmums.
-		FirstConjRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "pārdot", 15,
+		DualVerbRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "pārdot", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"dot\"")}, null,
 				new String[]{"do"}, new String[]{"dod"}, new String[]{"dev"}), //izpārdot
-		FirstConjRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "palikt", 15,
+		DualVerbRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "palikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\"")}, null,
 				new String[]{"lik"}, new String[]{"liek"}, new String[]{"lik"}), //izpalikt
-		FirstConjRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
+		DualVerbRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "pazīt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
 
@@ -771,7 +771,7 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-zilst, pag. -zila", "zilt"), //apzilt
 
 		// Pilnīgs nestandarts.
-		FirstConjRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
+		DualVerbRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\"")},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
@@ -1307,7 +1307,7 @@ public class OptHypernRules
 				"-spurdzos, -spurdzies, -spurdzas, pag. -spurdzos, retāk -spurgstos, -spurgsties, -spurgstas, pag. -spurgos", "spurgties"), //iespurgties
 
 		// Izņēmums.
-		FirstConjRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
+		DualVerbRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīties\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //iepazīties
 
@@ -1551,7 +1551,7 @@ public class OptHypernRules
 		FirstConj.refl3Pers("-žmaudzas, pag. -žmaudzās", "žmaugties"), //iežmaugties
 
 		// Pilnīgs nestandarts.
-		FirstConjRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 18,
+		DualVerbRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\"")},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties

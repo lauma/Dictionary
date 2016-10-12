@@ -5,6 +5,9 @@
  * sarežgītām locīšanas grupām (lietvārdi, darbības vārdi), tad pa locīšanas
  * grupām (deklinācijām/konjugācijām).
  *
+ * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā pakā tiek
+ * lietotas tikai vērtības, kas ieviestas TValues/TKeys uzskaitījumā.
+ *
  * Izveidots 2016-10-12.
  * @author Lauma
  */

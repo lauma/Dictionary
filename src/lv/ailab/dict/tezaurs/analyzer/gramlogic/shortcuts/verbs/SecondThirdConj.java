@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * Ērtummetodes darbības vārdiem, kas vienlaicīgi pieder gan 2., gan 3.
  * konjugācijai.
  * NB: Metodes, kam klāt norādīts "AllPers", neizveido 3. personas likumus.
- * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -30,7 +29,7 @@ public final class SecondThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmām 16, 17
+	 * @return likums ar paradigmām 16, 17 un tikai 3. personas formām.
 	 */
 	public static VerbDoubleRule direct3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -50,19 +49,19 @@ public final class SecondThirdConj
 	}
 
 	/**
-	 * Izveido BaseRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
-	 * kuram dotas visu personu formas/galotnes.
+	 * Izveido VerbDoubleRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā
+	 * un kuram dotas visu personu formas/galotnes.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
-	 * @param patternText		teksts, ar kuru jāsākas gramatikai
-	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
-	 * @param presentChange		vai tagadnes formās ir līdzskaņu mija
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return	VerbDoubleRule ar paradigmām 16, 17 bez 3. personas likuma
 	 */
-	public static BaseRule directAllPersParallel(
-			String patternText, String lemmaRestrictions, boolean presentChange)
+	public static VerbDoubleRule directAllPersParallel(
+			String patternText, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
@@ -73,9 +72,8 @@ public final class SecondThirdConj
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 
-		return BaseRule.of(patternText, new SimpleSubRule[]{
-						SimpleSubRule.of(lemmaRestrictions, new Integer[]{16, 17}, posFlags.toArray(new Tuple[posFlags.size()]))},
-				null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, new Integer[]{16, 17},
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**
@@ -88,7 +86,7 @@ public final class SecondThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmām 19, 20
+	 * @return likums ar paradigmām 19, 20 un tikai 3. personas formām
 	 */
 	public static VerbDoubleRule refl3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -108,19 +106,19 @@ public final class SecondThirdConj
 	}
 
 	/**
-     * Izveido BaseRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
+     * Izveido VerbDoubleRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
      * kuram dotas visu personu formas/galotnes.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
-     * @param patternText		teksts, ar kuru jāsākas gramatikai
-     * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
-     * @param presentChange		vai tagadnes formās ir līdzskaņu mija
-     */
-    public static BaseRule reflAllPersParallel(
-            String patternText, String lemmaRestrictions, boolean presentChange)
+     * @param patternText	teksts, ar kuru jāsākas gramatikai
+     * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+     * @param presentChange	vai tagadnes formās ir līdzskaņu mija
+	 * @return	VerbDoubleRule ar paradigmām 19, 20 bez 3. personas likuma
+	 */
+    public static VerbDoubleRule reflAllPersParallel(
+            String patternText, String lemmaEnd, boolean presentChange)
     {
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
@@ -131,8 +129,7 @@ public final class SecondThirdConj
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 
-		return BaseRule.of(patternText, new SimpleSubRule[]{
-					SimpleSubRule.of(lemmaRestrictions, new Integer[]{19, 20}, posFlags.toArray(new Tuple[posFlags.size()]))},
-				null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, new Integer[]{19, 20},
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
     }
 }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * 2. konjugācijas ērtummetodes.
  * NB: Metodes, kam nosaukumā norādīts "AllPers", neizveido 3. personas likumus!
- * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -39,7 +38,7 @@ public final class SecondConj
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return VerbDoubleRule ar paradigmu 16 un tikai 3.perosnas formām
+	 * @return VerbDoubleRule ar paradigmu 16 un tikai 3.personas formām
 	 */
 	public static VerbDoubleRule direct3Pers(String patternEnd,
 			String lemmaEnd)
@@ -71,39 +70,37 @@ public final class SecondConj
 	}
 
 	/**
-	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
-	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * Izveido VerbDoubleRule 2. konjugācijas tiešajam darbības vārdam, kam
+	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return BaseRule ar 16. paradigmu
+	 * @return VerbDoubleRule ar 16. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule directAllPers(
+	public static VerbDoubleRule directAllPers(
 			String patternText, String lemmaEnd)
 	{
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
-				new Tuple[]{TFeatures.POS__VERB}, null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 16, null, null);
 	}
 
 	/**
-	 * Izveido BaseRule 2. konjugācijas tiešajam darbības vārdam, kam dotas
-	 * visas formas un paralēlformas, bet atvasināt tikai trešās personas formu
-	 * likumu nav iespējams.
+	 * Izveido VerbDoubleRule 2. konjugācijas tiešajam darbības vārdam, kam
+	 * dotas visas formas un paralēlformas, bet atvasināt tikai trešās personas
+	 * formu likumu nav iespējams.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return BaseRule ar 16. paradigmu
+	 * @return VerbDoubleRule ar 16. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule directAllPersParallel(
+	public static VerbDoubleRule directAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 16,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 16,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -139,7 +136,7 @@ public final class SecondConj
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
-	 * @return ThirdPersVerbRule ar paradigmu 19
+	 * @return ThirdPersVerbRule ar paradigmu 19 un tikai 3. personas formām
 	 */
 	public static VerbDoubleRule refl3Pers(String patternEnd,
 			String lemmaEnd)
@@ -148,18 +145,17 @@ public final class SecondConj
 	}
 
 	/**
-	 * Izveido BaseRule 2. konjugācijas atgriezeniskajam darbības vārdam, kam
-	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
-	 * iespējams.
+	 * Izveido VerbDoubleRule 2. konjugācijas atgriezeniskajam darbības vārdam,
+	 * kam dotas visas formas, bet atvasināt tikai trešās personas formu likumu
+	 * nav iespējams.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return BaseRule ar 19. paradigmu
+	 * @return VerbDoubleRule ar 19. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule reflAllPers(
+	public static VerbDoubleRule reflAllPers(
 			String patternText, String lemmaEnd)
 	{
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 19,
-				new Tuple[]{TFeatures.POS__VERB}, null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 19, null, null);
 	}
 
 	/**

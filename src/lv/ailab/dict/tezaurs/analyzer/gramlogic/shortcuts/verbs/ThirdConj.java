@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * 3. konjugācijas ērtummetodes.
  * NB: Metodes, kam klāt norādīts "AllPers", neizveido 3. personas likumus.
- * TODO: vai AllPers metodes vajag no BaseRule pārvest uz VerbDoubleRule, kā tas ir FirstConj?
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -44,7 +43,7 @@ public final class ThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmu 17
+	 * @return likums ar paradigmu 17 un tikai 3. personas formām
 	 */
 	public static VerbDoubleRule direct3Pers(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -66,7 +65,7 @@ public final class ThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmu 17
+	 * @return likums ar paradigmu 17 un tikai 3. personas formām
 	 */
 	public static VerbDoubleRule direct3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -86,7 +85,7 @@ public final class ThirdConj
 	}
 
 	/**
-	 * Izveido BaseRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
+	 * Izveido VerbDoubleRule 3. konjugācijas tiešajamdarbības vārdam, kam dotas
 	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, ir paralēlās formas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
@@ -94,13 +93,12 @@ public final class ThirdConj
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return BaseRule ar 17. paradigmu
+	 * @return VerbDoubleRule ar 17. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule directAllPersParallel(
+	public static VerbDoubleRule directAllPersParallel(
 			String patternText, String lemmaEnd, boolean presentChange)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
@@ -110,32 +108,31 @@ public final class ThirdConj
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 17,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
 	/**
-	 * Izveido BaseRule 3. konjugācijas tiešajam darbības vārdam, kam dotas
-	 * visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * Izveido VerbDoubleRule 3. konjugācijas tiešajam darbības vārdam, kam
+	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, paralēlās formas ir gan ar miju, gan bez.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return BaseRule ar 17. paradigmu
+	 * @return VerbDoubleRule ar 17. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule directAllPersParallel(
+	public static VerbDoubleRule directAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 17,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 17,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -180,7 +177,7 @@ public final class ThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return ThirdPersVerbRule ar paradigmu 20
+	 * @return ThirdPersVerbRule ar paradigmu 20 un tikai 3. personas formām
 
 	 */
 	public static VerbDoubleRule refl3Pers(
@@ -202,7 +199,7 @@ public final class ThirdConj
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmu 20
+	 * @return likums ar paradigmu 20 un tikai 3. personas formām
 	 */
 	public static VerbDoubleRule refl3PersParallel(
 			String patternEnd, String lemmaEnd, boolean presentChange)
@@ -222,27 +219,26 @@ public final class ThirdConj
 	}
 
 	/**
-	 * Izveido BaseRule 3. konjugācijas darbības vārdam, kam dotas visas
+	 * Izveido VerbDoubleRule 3. konjugācijas darbības vārdam, kam dotas visas
 	 * formas, bet atvasināt tikai trešās personas formu likumu nav iespējams,
 	 * paralēlās formas ir gan ar miju, gan bez.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @return BaseRule ar 20. paradigmu
+	 * @return VerbDoubleRule ar 20. paradigmu bez 3. personas likuma
 	 */
-	public static BaseRule reflAllPersParallel(
+	public static VerbDoubleRule reflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
-		posFlags.add(TFeatures.POS__VERB);
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
-		return BaseRule.of(patternText, ".*" + lemmaEnd, 20,
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 
@@ -252,7 +248,7 @@ public final class ThirdConj
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return VerbDoubleRule ar paradigmu 17
+	 * @return PluralVerbRule ar paradigmu 20
 	 */
 	public static PluralVerbRule reflPlural(
 			String patternText, String lemmaEnd, boolean presentChange)

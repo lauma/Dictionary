@@ -654,11 +654,11 @@ public class DirectRules
 	public static final Rule[] directMultiConjVerb = {
 		// Galotņu šabloni.
 		SecondThirdConj.directAllPersParallel(
-				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", ".*īt", false), // aprobīt
+				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", "īt", false), // aprobīt
 		SecondThirdConj.directAllPersParallel(
-				"-u, -i, -a, arī -īju, -ī, -ī, pag. -īju", ".*īt", false), // atrotīt
+				"-u, -i, -a, arī -īju, -ī, -ī, pag. -īju", "īt", false), // atrotīt
 		SecondThirdConj.directAllPersParallel(
-				"-u, -i, -a, retāk -īju, -ī, -ī, pag. -īju", ".*īt", false), // matīt
+				"-u, -i, -a, retāk -īju, -ī, -ī, pag. -īju", "īt", false), // matīt
 
 		// Darbības vārdu specifiskie likumi.
 		// Nav.
@@ -1149,9 +1149,9 @@ public class DirectRules
 		// Galotņu šabloni.
 		// Visām personām (3. personas likumi netiek atvasināti).
 		SecondThirdConj.reflAllPersParallel(
-				"-os, -ies, -as, arī -ējos, -ējies, -ējas, pag. -ējos", ".*ēties", false), // mīlēties
+				"-os, -ies, -as, arī -ējos, -ējies, -ējas, pag. -ējos", "ēties", false), // mīlēties
 		SecondThirdConj.reflAllPersParallel(
-				"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", ".*īties", false), // blēdīties
+				"-ījos, -ījies, -ījas, arī -os, -ies, -ās, pag. -ījos", "īties", false), // blēdīties
 
 		// 3. personai.
 		SecondThirdConj.direct3PersParallel(

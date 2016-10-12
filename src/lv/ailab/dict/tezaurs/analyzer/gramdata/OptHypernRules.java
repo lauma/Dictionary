@@ -1113,98 +1113,98 @@ public class OptHypernRules
 			// TODO uztaisīt verbu likumu, kas atvasina 3. personas likumu.
 		SecondThirdConj.directAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju",
-				".*bedīt", false), // apbedīt
+				"bedīt", false), // apbedīt
 		SecondThirdConj.directAllPersParallel(
 				"-brūnu, -brūni, -brūn, arī -brūnēju, -brūnē, -brūnē, pag. -brūnēju",
-				".*brūnēt", false), // nobrūnēt
+				"brūnēt", false), // nobrūnēt
 		SecondThirdConj.directAllPersParallel(
 				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju",
-				".*cerēt", false), // apcerēt
+				"cerēt", false), // apcerēt
 		SecondThirdConj.directAllPersParallel(
 				"-cienu, -cieni, -ciena, arī -cienīju, -cienī, -cienī, pag. -cienīju",
-				".*cienīt", false), // iecienīt
+				"cienīt", false), // iecienīt
 		SecondThirdConj.directAllPersParallel(
 				"-dēstu, -dēsti, -dēsta, retāk -dēstīju, -dēstī, -dēstī, pag. -dēstīju",
-				".*dēstīt", false), // apdēstīt
+				"dēstīt", false), // apdēstīt
 		SecondThirdConj.directAllPersParallel(
 				"-kristīju, -kristī, -kristī, arī -kristu, -kristi, -krista, pag. -kristīju",
-				".*kristīt", false), // iekristīt
+				"kristīt", false), // iekristīt
 		SecondThirdConj.directAllPersParallel(
 				"-krustīju, -krustī, -krustī, arī -krustu, -krusti, -krusta, pag. -krustīju",
-				".*krustīt", false), // iekrustīt
+				"krustīt", false), // iekrustīt
 		SecondThirdConj.directAllPersParallel(
 				"-kveldēju, -kveldē, -kveldē, arī -kveldu, -kveldi, -kveld, pag. -kveldēju",
-				".*kveldēt", false), // nokveldēt
+				"kveldēt", false), // nokveldēt
 		SecondThirdConj.directAllPersParallel(
 				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
-				".*ķēzīt", false), // apķēzīt
+				"ķēzīt", false), // apķēzīt
 		SecondThirdConj.directAllPersParallel(
 				"-lāsu, -lāsi, -lās, retāk -lāsēju, -lāsē, -lāsē, pag. -lāsēju",
-				".*lāsēt", false), // nolāsēt
+				"lāsēt", false), // nolāsēt
 		SecondThirdConj.directAllPersParallel(
 				"-mērīju, -mērī, -mērī, arī -mēru, -mēri, -mēra, pag. -mērīju",
-				".*mērīt", false), // atmērīt
+				"mērīt", false), // atmērīt
 		SecondThirdConj.directAllPersParallel(
 				"-pelnu, -pelni, -pelna, arī -pelnīju, -pelnī, -pelnī, pag. -pelnīju",
-				".*pelnīt", false), // atpelnīt
+				"pelnīt", false), // atpelnīt
 		SecondThirdConj.directAllPersParallel(
 				"-pētīju, -pētī, -pētī, arī -pētu, -pēti, -pēta, pag. -pētīju",
-				".*pētīt", false), // appētīt
+				"pētīt", false), // appētīt
 		SecondThirdConj.directAllPersParallel(
 				"-pūlu, -pūli, -pūl, arī -pūlēju, -pūlē, -pūlē, pag. -pūlēju",
-				".*pūlēt", false), // nopūlēt
+				"pūlēt", false), // nopūlēt
 		SecondThirdConj.directAllPersParallel(
 				"-rotu, -roti, -rota, arī -rotīju, -roti, -rotī, pag. -rotīju",
-				".*rotīt", false), // aizrotīt
+				"rotīt", false), // aizrotīt
 		SecondThirdConj.directAllPersParallel(
 				"-sargāju, -sargā, -sargā, arī -sargu, -sargi, -sarga, pag. -sargāju",
-				".*sargāt", false), // aizsargāt
+				"sargāt", false), // aizsargāt
 		SecondThirdConj.directAllPersParallel(
 				"-svētīju, -svētī, -svētī, arī -svētu, -svēti, -svēta, pag. -svētīju",
-				".*svētīt", false), // aizsargāt
+				"svētīt", false), // aizsargāt
 		SecondThirdConj.directAllPersParallel(
 				"-tašķīju, -tašķī, -tašķī, arī -tašķu, -tašķi, -tašķa, pag. -tašķīju",
-				".*tašķīt", false), // aptašķīt
+				"tašķīt", false), // aptašķīt
 		SecondThirdConj.directAllPersParallel(
 				"-veltīju, -veltī, -veltī, arī -veltu, -velti, -velta, pag. -veltīju",
-				".*veltīt", false), // apveltīt
+				"veltīt", false), // apveltīt
 		SecondThirdConj.directAllPersParallel(
 				"-vētīju, -vētī, -vētī, arī -vētu, -vēti, -vēta, pag. -vētīju",
-				".*vētīt", false), // aizvētīt
+				"vētīt", false), // aizvētīt
 
 		// TODO vai tiešām nav saskaņojams ne ar vienu priedēkļa likumu?
 		SecondThirdConj.directAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -bālē, pag. -bālēju",
-				".*bālēt", false), // bālēt
+				"bālēt", false), // bālēt
 		SecondThirdConj.directAllPersParallel(
 				"-durnu, -durni, -durn, arī -durnēju, -durnē, -durnē, pag. -durnēju",
-				".*durnēt", false), // durnēt
+				"durnēt", false), // durnēt
 		SecondThirdConj.directAllPersParallel(
 				"-kluknu, -klukni, -klukn, arī -kluknēju, -kluknē, -kluknē, pag. -kluknēju",
-				".*kluknēt", false), // kluknēt
+				"kluknēt", false), // kluknēt
 		SecondThirdConj.directAllPersParallel(
 				"-kruknu, -krukni, -krukn, arī -kruknēju, -kruknē, -kruknē, pag. -kruknēju",
-				".*kruknēt", false), // kruknēt
+				"kruknēt", false), // kruknēt
 		SecondThirdConj.directAllPersParallel(
 				"-kuknu, -kukni, -kukn, arī -kuknēju, -kuknē, -kuknē, pag. -kuknēju",
-				".*kuknēt", false), // kuknēt
+				"kuknēt", false), // kuknēt
 		SecondThirdConj.directAllPersParallel(
 				"-pleknu, -plekni, -plekn, arī -pleknēju, -pleknē, -pleknē, pag. -pleknēju",
-				".*pleknēt", false), // pleknēt
+				"pleknēt", false), // pleknēt
 		SecondThirdConj.directAllPersParallel(
-				"vēdīju, vēdī, vēdī, arī vēdu, vedi, veda, pag. vēdīju",
-				".*vēdīt", false), //vēdīt
+				"-vēdīju, -vēdī, -vēdī, arī -vēdu, -vēdi, -vēda, pag. vēdīju",
+				"vēdīt", false), //vēdīt
 
 		// Paralēlformu paralēlforma.
 		SecondThirdConj.directAllPersParallel(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -balē, pag. -bālēju (arī -bālu, 1. konj.)",
-				".*bālēt", false), //nobālēt
+				"bālēt", false), //nobālēt
 		SecondThirdConj.directAllPersParallel(
 				"-bālēju, -bālē, -bālē, arī -bālu, -bāli, -bāl, pag. -bālēju (retāk -bālu, 1. konj.)",
-				".*bālēt", false), //sabālēt
+				"bālēt", false), //sabālēt
 		SecondThirdConj.directAllPersParallel(
 				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
-				".*rūsēt", false), // ierūsēt
+				"rūsēt", false), // ierūsēt
 
 		// Likumi, kam ir "parasti 3. pers." variants.
 		// Paralēlformu paralēlforma
@@ -1653,31 +1653,31 @@ public class OptHypernRules
 		// Likumi, kam ir visu formu variants.
 		SecondThirdConj.reflAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",
-				".*gailēties", false), // iegailēties
+				"gailēties", false), // iegailēties
 		SecondThirdConj.reflAllPersParallel(
 				"-kristījos, -kristījies, -kristījas, arī -kristos, -kristies, -kristās, pag. -kristījos",
-				".*kristīties", false), // nokristīties
+				"kristīties", false), // nokristīties
 		SecondThirdConj.reflAllPersParallel(
 				"-krustījos, -krustījies, -krustījas, arī -krustos, -krusties, -krustās, pag. -krustījos",
-				".*krustīties", false), // nokrustīties
+				"krustīties", false), // nokrustīties
 		SecondThirdConj.reflAllPersParallel(
 				"-ķēzījos, -ķēzījies, -ķēzījas, arī -ķēzos, -ķēzies, -ķēzās, pag. -ķēzījos",
-				".*ķēzīties", false), //noķēzīties
+				"ķēzīties", false), //noķēzīties
 		SecondThirdConj.reflAllPersParallel(
 				"-mērījos, -mērījies, -mērījas, arī -mēros, -mēries, -mērās, pag. -mērījos",
-				".*mērīties", false), // izmērīties
+				"mērīties", false), // izmērīties
 		SecondThirdConj.reflAllPersParallel(
 				"-pelnos, -pelnies, -pelnās, arī -pelnījos, -pelnījies, -pelnījās, pag. -pelnījos",
-				".*pelnīties", false), //izpelnīties
+				"pelnīties", false), //izpelnīties
 		SecondThirdConj.reflAllPersParallel(
 				"-pūlos, -pūlies, -pūlas, arī -pūlējos, -pūlējies, -pūlējas, pag. -pūlējos",
-				".*pūlēties", false), // nopūlēties
+				"pūlēties", false), // nopūlēties
 		SecondThirdConj.reflAllPersParallel(
 				"-sargājos, -sargājies, -sargājas, arī -sargos, -sargies, -sargās, pag. -sargājos",
-				".*sargāties", false), // aizsargāties
+				"sargāties", false), // aizsargāties
 		SecondThirdConj.reflAllPersParallel(
 				"-svētījos, -svētījies, -svētījas, arī -svētos, -svēties, -svētās, pag. -svētījos",
-				".*svētīties", false), // iesvētīties
+				"svētīties", false), // iesvētīties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// TODO vai tiešām nav saskaņojams ne ar vienu priedēkļa likumu?

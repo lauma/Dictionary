@@ -29,21 +29,7 @@ public class FirstConjRule implements Rule
 	protected ThirdPersVerbRule thirdPersonRule;
 	// Celmus glabā atsevišķi, nevis jau kā gatavus karodziņus tāpēc, ka
 	// karodziņam jāsatur arī "priedēklis", bet šobrīd tas nav zināms.
-	/**
-	 * Nenoteiksmes celmi - katrā likuma trigerošanās reizē lietos tikai VIENU -
-	 * to, kurš tajā reizē atbildīs lemmai.
-	 */
-	protected List<String> infinityStems;
-	/**
-	 * Tagadnes celmi, kas izsecināmi no attiecīgā gramatikas šablona - katrā
-	 * likuma trigerošanās riezē pielietos VISUS.
-	 */
-	protected List<String> presentStems;
-	/**
-	 * Pagātnes celmi, kas izsecināmi no attiecīgā gramatikas šablona - katrā
-	 * likuma trigerošanās riezē pielietos VISUS.
-	 */
-	protected List<String> pastStems;
+	protected FirstConjStems stems;
 
 	/**
 	 * Konstruktors pilnam likumam.
@@ -62,15 +48,13 @@ public class FirstConjRule implements Rule
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param stems			visi nepieciešamie celmi, jau izgūti
 	 */
 	public FirstConjRule (String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
-			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
+			Set<Tuple<String,String>> positiveFlags,
+			Set<Tuple<String,String>> alwaysFlags,
+			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
@@ -78,9 +62,7 @@ public class FirstConjRule implements Rule
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
-		this.infinityStems = Collections.unmodifiableList(infinityStems);
-		this.presentStems = Collections.unmodifiableList(presentStems);
-		this.pastStems = Collections.unmodifiableList(pastStems);
+		this.stems = stems;
 
 		if (patternBegin != null && patternBegin.trim().length() > 0 &&
 				patternEnd != null && patternEnd.trim().length() > 0)
@@ -131,14 +113,12 @@ public class FirstConjRule implements Rule
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param stems			visi nepieciešamie celmi, jau izgūti
 	 */
 	public FirstConjRule (String patternEnd, String lemmaEnd, int paradigmId,
-			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
-			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
+			Set<Tuple<String,String>> positiveFlags,
+			Set<Tuple<String,String>> alwaysFlags,
+			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
 		positiveFlagsFull.add(Tuple.of(TKeys.POS, TValues.VERB));
@@ -146,10 +126,7 @@ public class FirstConjRule implements Rule
 		HashSet<Tuple<String,String>> alwaysFlagsSet = alwaysFlags == null ?
 				null : new HashSet<>(alwaysFlags);
 
-		this.infinityStems = Collections.unmodifiableList(infinityStems);
-		this.presentStems = Collections.unmodifiableList(presentStems);
-		this.pastStems = Collections.unmodifiableList(pastStems);
-
+		this.stems = stems;
 		allPersonRule = null;
 		thirdPersonRule = ThirdPersVerbRule.simple(patternEnd,
 				lemmaEnd, paradigmId, positiveFlagsFull, alwaysFlagsSet);
@@ -172,22 +149,80 @@ public class FirstConjRule implements Rule
 	 *                      Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param stems			visi nepieciešamie celmi, jau izgūti
 	 */
 	public static FirstConjRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
-			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
-			String[] infinityStems, String[] presentStems, String[] pastStems)
+			Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags,
+			FirstConjStems stems)
 	{
 		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
 			positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 			alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-			infinityStems == null ? null : new ArrayList<>(Arrays.asList(infinityStems)),
-			presentStems == null ? null : new ArrayList<>(Arrays.asList(presentStems)),
-			pastStems == null ? null : new ArrayList<>(Arrays.asList(pastStems)));
+			stems);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam.
+	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                          var būt null, ja tas ir likums tikai ar
+	 *                          3. personas formām
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                      	pagātnei, var būt null, ja 3. personas dormas
+	 *                      	nevar atvasīnāt no šī likuma automātiski
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                      	likuma šablonam, gan lemmas nosacījumiem
+	 *                      	(Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      	atbilstība likuma šablonam
+	 * @param infinitiveStems	iespējamie netnoteiksmes celmi, ja likums der
+	 *                      	vairākām nenoteiksmēm
+	 * @param presentStems		tagadnes celmi
+	 * @param pastStems			pagātnes celmi
+	 */
+	public static FirstConjRule of(String patternBegin, String patternEnd,
+			String lemmaEnd, int paradigmId,
+			Tuple<String,String>[] positiveFlags,
+			Tuple<String,String>[] alwaysFlags,
+			String[] infinitiveStems, String[] presentStems, String[] pastStems)
+	{
+		return new FirstConjRule(patternBegin, patternEnd, lemmaEnd, paradigmId,
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
+	}
+
+	/**
+	 * Konstruktors likumam, kam ir tikai 3. personas formas.
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                          agātnei
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                          likuma šablonam, gan lemmas nosacījumiem
+	 *                          (Vārdšķira = Darbības vārds nav obligāts)
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                          atbilstība likuma šablonam
+	 * @param infinitiveStems	iespējamie netnoteiksmes celmi, ja likums der
+	 *                      	vairākām nenoteiksmēm
+	 * @param presentStems		tagadnes celmi
+	 * @param pastStems			pagātnes celmi
+	 */
+	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
+			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
+			String[] infinitiveStems, String[] presentStems, String[] pastStems)
+	{
+		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
 	}
 
 	/**
@@ -202,22 +237,18 @@ public class FirstConjRule implements Rule
 	 *                     Darbības vārds nav obligāts)
 	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
 	 *                      likuma šablonam
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param stems			visi nepieciešamie celmi, jau izgūti
 	 */
 	public static FirstConjRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
-			String[] infinityStems, String[] presentStems, String[] pastStems)
+			FirstConjStems stems)
 	{
 		return new FirstConjRule(patternEnd, lemmaEnd, paradigmId,
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				infinityStems == null ? null : new ArrayList<>(Arrays.asList(infinityStems)),
-				presentStems == null ? null : new ArrayList<>(Arrays.asList(presentStems)),
-				pastStems == null ? null : new ArrayList<>(Arrays.asList(pastStems)));
+				stems);
 	}
+
 	/**
 	 * Izveido likumu 1. konjugācijas tiešajam darbības vārdam bez paralēlajām
 	 * formām un bez nenoteiksmes homoformām.
@@ -231,11 +262,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule direct(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 15,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -248,11 +278,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule direct3Pers(
 			String patternEnd, String lemmaEnd)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -269,11 +298,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule directHomof(
 			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -290,11 +318,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule direct3PersHomof(
 			String patternEnd, String lemmaEnd, String inflectAs)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -310,16 +337,13 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule direct3PersParallel(
 			String patternEnd, String lemmaEnd)
 	{
-		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsParallel(patternEnd);
+		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternEnd, lemmaEnd, 15, posFlags,
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				stems.first.toArray(new String[stems.first.size()]),
-				stems.second.toArray(new String[stems.second.size()]));
+				null, stems);
 	}
 
 	/**
@@ -334,16 +358,13 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule directAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsParallel(patternText);
+		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternText, null, lemmaEnd, 15, posFlags,
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				stems.first.toArray(new String[stems.first.size()]),
-				stems.second.toArray(new String[stems.second.size()]));
+				null, stems);
 
 	}
 
@@ -360,11 +381,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule refl(String patternBegin, String patternEnd,
 			String lemmaEnd)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -380,12 +400,11 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule reflMultiLemma(String patternBegin, String patternEnd,
 			String[] lemmaEnds)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnds);
 		String lemmaEnd = "(" + String.join("|",lemmaEnds) + ")";
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
-				null, extractInfinityStems(lemmaEnds),
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -400,11 +419,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule refl3Pers(
 			String patternEnd, String lemmaEnd)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -420,11 +438,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule reflHomof(
 			String patternBegin, String patternEnd, String lemmaEnd, String inflectAs)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternBegin, patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -442,11 +459,10 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule refl3PersHomof(
 			String patternEnd, String lemmaEnd, String inflectAs)
 	{
-		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				null, stems);
 	}
 
 	/**
@@ -462,16 +478,13 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule refl3PersParallel(
 			String patternEnd, String lemmaEnd)
 	{
-		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsParallel(patternEnd);
+		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternEnd, lemmaEnd, 18, posFlags,
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				stems.first.toArray(new String[stems.first.size()]),
-				stems.second.toArray(new String[stems.second.size()]));
+				null, stems);
 	}
 
 	/**
@@ -485,211 +498,15 @@ public class FirstConjRule implements Rule
 	public static FirstConjRule reflAllPersParallel(
 			String patternText, String lemmaEnd)
 	{
-		Tuple<ArrayList<String>, ArrayList<String>> stems =
-				extractPPStemsParallel(patternText);
+		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
 		return FirstConjRule.of(patternText, null, lemmaEnd, 18, posFlags,
-				null, new String[] {extractInfinityStem(lemmaEnd)},
-				stems.first.toArray(new String[stems.first.size()]),
-				stems.second.toArray(new String[stems.second.size()]));
+				null, stems);
 	}
 
-	/**
-	 * Palīgmetode, kas izvelk nenoteiksmes celmu no virknes ar ko jābeidzas
-	 * lemmai.
-	 */
-	protected static String extractInfinityStem(String lemmaEnd)
-	{
-		String result = lemmaEnd;
-		if (result.startsWith(".*")) result = result.substring(2);
-		if (lemmaEnd.endsWith("t")) result = result.substring(0, result.length()-1);
-		else if (lemmaEnd.endsWith("ties")) result = result.substring(0, result.length() - 4);
-		else System.err.printf("Problēma, veidojot nenoteiksmes celmu verba likumam \"%s\"\n", lemmaEnd);
-		return result;
-	}
-
-	/**
-	 * Palīgmetode, kas izvelk nenoteiksmes celmus no katras virknes ar ko
-	 * jābeidzas lemmai.
-	 */
-	protected static String[] extractInfinityStems(String[] lemmaEnds)
-	{
-		return Arrays.asList(lemmaEnds).stream().map(s -> extractInfinityStem(s))
-				.toArray(size -> new String[size]);
-
-	}
-
-	/**
-	 * Palīgmetode, kas no verba gramatikas paterna otrās (vienmer esošās) daļas
-	 * izvelk tagadnes un pagātnes celmus, pieņemot, ka nav paralēlformu.
-	 * @return Pārītis, kur pirmais celms ir tagadnes un otrais - pagātnes.
-	 * TODO - vai šis ir extractPPStemsThirdPersParallel() speciālgadījumam?
-	 */
-	protected static Tuple<String,String> extractPPStemsSimple(String patternEnd)
-	{
-		String[] parts = patternEnd.split("[,;]");
-		if (parts.length < 2)
-			System.err.printf("Neizdodas izveidot tagadnes un pagātnes celmus verba šablonam \"%s\"\n", patternEnd);
-
-		String thirdPers = parts[0].trim();
-		if (thirdPers.startsWith("-")) thirdPers = thirdPers.substring(1);
-		if (thirdPers.endsWith("as")) thirdPers = thirdPers.substring(0, thirdPers.length()-2);
-
-		String past = parts[1].trim();
-		if (past.startsWith("pag.")) past = past.substring(4).trim();
-		if (past.startsWith("-")) past = past.substring(1).trim();
-		if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-		else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
-		else System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", patternEnd);
-
-		return Tuple.of(thirdPers, past);
-	}
-
-	/**
-	 * Palīgmetode, kas no verba gramatikas paterna tikai 3. personai izvelk
-	 * tagadnes un pagātnes celmus, pieņemot, ka likums ir formā
-	 * -?tagcelms, arī -?tagcelms[,;] pag. -?pagcelms, arī -?pagcelms
-	 * -?tagcelms, pag. -?pagcelms, arī -?tagcelms[,;], pag. -?pagcelms
-	 * (viena vai otra "arī" daļa var nebūt).
-	 * @return Pārītis, kur pirmais saraksts ir tagadnes celmu sarakst un otrais
-	 * - pagātnes.
-	 * @Deprecated par labu vienotai metodei paralēlformu izgūšanas gadījumā.
-	 */
-	@Deprecated
-	protected static Tuple<ArrayList<String>,ArrayList<String>> extractPPStemsThirdPersParallel(
-			String patternEnd)
-	{
-		ArrayList<String> presents = new ArrayList<>();
-		ArrayList<String> pasts = new ArrayList<>();
-		String[] bigParts;
-
-		if (patternEnd.matches(".*[,;] pag\\..*?, (arī|retāk) .*[,;] pag\\..*"))
-			bigParts = patternEnd.split(", (arī|retāk) ");
-		else bigParts = new String[] {patternEnd};
-		for (String patternPart : bigParts)
-		{
-			String[] parts = patternPart.split("[,;] pag\\.");
-			if (parts.length != 2)
-				System.err.printf("Neizdodas izveidot tagadnes un pagātnes celmus verba šablonam \"%s\"\n", patternEnd);
-
-			String[] thirdPersText = parts[0].trim().split(", arī ");
-			for (String present : thirdPersText)
-			{
-				present = present.trim();
-				if (present.startsWith("-")) present = present.substring(1);
-				if (present.endsWith("as")) present = present.substring(0, present.length()-2);
-				presents.add(present);
-			}
-
-			String[] pastText = parts[1].trim().split(", (arī|retāk) ");
-			for (String past : pastText)
-			{
-				boolean good = true;
-				if (past.startsWith("-")) past = past.substring(1).trim();
-				if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-				else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
-				else
-				{
-					System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", patternEnd);
-					good = false;
-				}
-				if (good) pasts.add(past);
-			}
-		}
-
-		return Tuple.of(presents, pasts);
-	}
-
-	/**
-	 * Palīgmetode, kas no verba gramatikas paterna visām personai izvelk
-	 * tagadnes un pagātnes celmus, pieņemot, ka likums ir kādā no formām
-	 * -auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu
-	 * -gulstu, -gulsti, -gulst, pag. -gūlu, arī -gulu
-	 * -jaušu, -jaut, -jauš, pag. -jautu, arī -jaužu, -jaud, -jauž, pag. -jaudu
-	 * -gulstos, -gulsties, -gulstas, arī -guļos, -gulies, -guļas, pag. -gūlos, arī -gulos
-	 * -?tagcelms, arī -?tagcelms[,;] pag. -?pagcelms, arī -?pagcelms
-	 * -?tagcelms, pag. -?pagcelms, arī -?tagcelms[,;], pag. -?pagcelms
-	 * @return Pārītis, kur pirmais saraksts ir tagadnes celmu sarakst un otrais
-	 * - pagātnes.
-	 */
-	protected static Tuple<ArrayList<String>,ArrayList<String>> extractPPStemsParallel(
-			String pattern)
-	{
-		ArrayList<String> presentTexts = new ArrayList<>();
-		ArrayList<String> pastTexts = new ArrayList<>();
-
-		String[] parts = pattern.split(", (arī|retāk|pag\\.) ");
-		if (pattern.matches(
-				"((?!, (arī|retāk|pag\\.) ).)*, pag\\. ((?!, (arī|retāk|pag\\.) ).)*, (arī|retāk) ((?!, (arī|retāk|pag\\.) ).)*, pag\\. ((?!, (arī|retāk|pag\\.) ).)*"))
-		{
-			presentTexts.add(parts[0]);
-			pastTexts.add(parts[1]);
-			presentTexts.add(parts[2]);
-			pastTexts.add(parts[3]);
-		}
-		else if (pattern.matches(
-				"((?!, (arī|retāk|pag\\.) ).)*, (arī|retāk) ((?!, (arī|retāk|pag\\.) ).)*, pag\\. ((?!, (arī|retāk|pag\\.) ).)*, (arī|retāk) ((?!, (arī|retāk|pag\\.) ).)*"))
-		{
-			presentTexts.add(parts[0]);
-			presentTexts.add(parts[1]);
-			pastTexts.add(parts[2]);
-			pastTexts.add(parts[3]);
-		}
-		else if (pattern.matches(
-				"((?!, (arī|retāk|pag\\.) ).)*, (arī|retāk) ((?!, (arī|retāk|pag\\.) ).)*, pag\\. ((?!, (arī|retāk|pag\\.) ).)*"))
-		{
-			presentTexts.add(parts[0]);
-			presentTexts.add(parts[1]);
-			pastTexts.add(parts[2]);
-		}
-		else if (pattern.matches(
-				"((?!, (arī|retāk|pag\\.) ).)*, pag\\. ((?!, (arī|retāk|pag\\.) ).)*, (arī|retāk) ((?!, (arī|retāk|pag\\.) ).)*"))
-		{
-			presentTexts.add(parts[0]);
-			pastTexts.add(parts[1]);
-			pastTexts.add(parts[2]);
-		}
-		else System.err.printf(
-				"Nespēj izgūt tagadnes un pagātnes celmus no šablona \"%s\"\n", pattern);
-
-		ArrayList<String> presents = new ArrayList<>();
-		ArrayList<String> pasts = new ArrayList<>();
-
-		if (presentTexts.size() + pastTexts.size() == parts.length)
-		{
-			for (String present : presentTexts)
-			{
-				if (present.contains(","))
-					present = present.substring(present.lastIndexOf(',') + 1).trim();
-				if (present.startsWith("-")) present = present.substring(1);
-				if (present.endsWith("as")) present = present.substring(0, present.length()-2);
-				if (present.matches(".*[ ,\\-].*")) System.err.printf(
-						"Problēma, veidojot tagadnes celmu verba likumam \"%s\"\n", pattern);
-				else presents.add(present);
-			}
-
-			for (String past : pastTexts)
-			{
-				boolean good = true;
-				past = past.trim();
-				if (past.startsWith("-")) past = past.substring(1).trim();
-				if (past.endsWith("u") || past.endsWith("a")) past = past.substring(0, past.length()-1);
-				else if (past.endsWith("os") || past.endsWith("ās")) past = past.substring(0, past.length()-2);
-				else
-				{
-					System.err.printf("Problēma, veidojot pagātnes celmu verba likumam \"%s\"\n", pattern);
-					good = false;
-				}
-				if (good) pasts.add(past);
-			}
-		}
-		else System.err.printf(
-				"Nespēj izgūt tagadnes un pagātnes celmus no šablona \"%s\"\n", pattern);
-		return Tuple.of(presents, pasts);
-	}
 
 	/**
 	 * Piemērot likumu bez papildus maģijas.
@@ -713,7 +530,7 @@ public class FirstConjRule implements Rule
 			newBegin = thirdPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
 		if (newBegin == -1 && allPersonRule != null)
 			newBegin = allPersonRule.applyDirect(gramText, lemma, paradigmCollector, flagCollector);
-		if (newBegin != -1) addStemFlags(lemma, flagCollector);
+		if (newBegin != -1) stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
 
@@ -739,46 +556,9 @@ public class FirstConjRule implements Rule
 			newBegin = thirdPersonRule.applyOptHyphens(gramText, lemma, paradigmCollector, flagCollector);
 		if (newBegin == -1 && allPersonRule != null)
 			newBegin = allPersonRule.applyOptHyphens(gramText, lemma, paradigmCollector, flagCollector);
-		if (newBegin != -1) addStemFlags(lemma, flagCollector);
+		if (newBegin != -1) stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
 	}
 
-	/**
-	 * Pieņemot, ka vārds ir veiksmīgi atpazīts, pievieno celmus aprakstošos
-	 * karodziņus.
-	 * @param lemma 		atpazītais vārds
-	 * @param flagCollector	kolekcija, kurā pielikt karodziņus
-	 */
-	protected void addStemFlags(String lemma, Flags flagCollector)
-	{
-		String prefix = lemma;
-		if (prefix.endsWith("t"))
-			prefix = prefix.substring(0, prefix.length() - 1);
-		else if (prefix.endsWith("ties"))
-			prefix = prefix.substring(0, prefix.length() - 4);
-		else System.err.printf(
-					"Neizdodas noteikt prefiksu 1. konj. vārdam \"%s\"\n", lemma);
-		String infinityStem = null;
-		for (String stem : infinityStems)
-		{
-			if (prefix.endsWith(stem))
-				infinityStem = stem;
-		}
-		if (infinityStem != null)
-		{
-			prefix = prefix.substring(0, prefix.length() - infinityStem.length());
-			if (prefix.length() > 0)
-				flagCollector.add(TKeys.VERB_PREFIX, prefix);
-			flagCollector.add(TKeys.INFINITIVE_STEM, prefix + infinityStem);
 
-			for (String stem : presentStems)
-				flagCollector.add(TKeys.PRESENT_STEM, prefix + stem);
-			for (String stem : pastStems)
-				flagCollector.add(TKeys.PAST_STEM, prefix + stem);
-
-		}
-		else System.err.printf(
-				"Neizdodas noteikt prefiksu 1. konj. vārdam \"%s\" ar nenoteiksmes celmu \"%s\"\n",
-				lemma, infinityStems.stream().reduce((s1, s2)-> s1 + "\", \"" + s2).orElse(""));
-	}
 }

@@ -770,6 +770,16 @@ public class OptHypernRules
 		// V, Z
 		FirstConj.direct3Pers("-zilst, pag. -zila", "zilt"), //apzilt
 
+		// Daudzskaitļa formu likumi.
+		FirstConj.directPlural("-bēgam, -bēgat, -bēg, pag. -bēgām", "bēgt"), // sabēgt
+		FirstConj.directPlural("-lecam, -lecat, -lec, pag. -lēcām", "lēkt"), // salēkt
+		FirstConj.directPlural("-lienam, -lienat, -lien, pag. -līdām", "līst"), // salīst
+		FirstConj.directPlural("-mūkam, -mūkat, -mūk, pag. -mukām", "mukt"), // samukt
+		FirstConj.directPlural("-sprūkam, -sprūkat, -sprūk, pag. -sprukām", "sprukt"), // sasprukt
+		FirstConj.directPlural("-sprūstam, -sprūstat, -sprūst, pag. -sprūdām", "sprūst"), // sasprūst
+		FirstConj.directPlural("-spurdzam, -spurdzat, -spurdz, pag. -spurdzām", "spurgt"), // saspurgt
+		FirstConj.directPlural("-tupstam, -tupstat, -tupst, pag. -tupām", "tupt"), // satupt
+
 		// Pilnīgs nestandarts.
 		VerbDoubleRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\"")},
@@ -1549,6 +1559,16 @@ public class OptHypernRules
 		FirstConj.refl3Pers("-viešas, pag. -viesās", "viesties"), //ieviesties
 		// Z, Ž
 		FirstConj.refl3Pers("-žmaudzas, pag. -žmaudzās", "žmaugties"), //iežmaugties
+
+		// Daudzskaitļa formu likumi
+		FirstConj.reflPlural("-brāžamies, -brāžaties, -brāžas, pag. -brāzāmies", "brāzties"), // sabrāzties
+		FirstConj.reflPlural("-liekamies, -liekaties, -liekas, pag. -likāmies", "likties"), // salikties
+		FirstConj.reflPlural("-rodamies, -rodaties, -rodas, pag. -radāmies", "rasties"), // sarasties
+		FirstConj.reflPlural("-raušamies, -raušaties, -raušas, pag. -rausāmies", "rausties"), // sarausties
+		FirstConj.reflPlural("-rāpjamies, -rāpjaties, -rāpjas, pag. -rāpāmies", "rāpties"), // sarāpties
+		FirstConj.reflPlural("-spriežamies, -spriežaties, -spriežas, pag. -spriedāmies", "spriesties"), // saspriesties
+		FirstConj.reflPlural("-traušamies, -traušaties, -traušas, pag. -trausāmies", "trausties"), // satrausties
+		FirstConj.reflPlural("-tupstamies, -tupstaties, -tupstas, pag. -tupāmies", "tupties"), // satupties
 
 		// Pilnīgs nestandarts.
 		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 18,

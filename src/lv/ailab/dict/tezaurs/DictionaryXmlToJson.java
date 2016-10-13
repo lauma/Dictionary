@@ -122,6 +122,8 @@ public class DictionaryXmlToJson
 		if (PRINT_SINGLE_JSON) completeJsonOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(completeJsonPath), "UTF-8"));
 
+		FirstConjStatsCollector firstConjSC = new FirstConjStatsCollector(
+				PRINT_FIRST_CONJ_DIRECT, PRINT_FIRST_CONJ_REFL);
 		for (String file : XML_FILES)
 		{
 			System.out.println("Sāk apstrādāt failu " + file + ".xml.");
@@ -146,9 +148,6 @@ public class DictionaryXmlToJson
 					PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
 					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,
 					PRINT_OTHER_LEMMAS,	wordlistOut);
-
-			FirstConjStatsCollector firstConjSC = new FirstConjStatsCollector(
-					PRINT_FIRST_CONJ_DIRECT, PRINT_FIRST_CONJ_REFL);
 
 			StaxReader dicReader = new StaxReader(inputFile);
 
@@ -231,9 +230,7 @@ public class DictionaryXmlToJson
 			BufferedWriter statsOut = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(statsFile), "UTF-8"));
 			genSC.printContents(statsOut);
-			firstConjSC.printContents(path, file);
 			statsOut.close();
-			//if (makePronunceList) statsOut.close();
 		}
 		if (PRINT_SINGLE_XML) completeXmlOut.finalize();
 		if (PRINT_SINGLE_JSON)
@@ -241,6 +238,9 @@ public class DictionaryXmlToJson
 			completeJsonOut.write("\n]");
 			completeJsonOut.close();
 		}
+		if (PRINT_FIRST_CONJ_DIRECT || PRINT_FIRST_CONJ_REFL)
+			System.out.println("Drukā 1. konjugācijas statistikas");
+		firstConjSC.printContents(path, "tezaurs");
 		System.out.println("Viss pabeigts!");
 	}
 }

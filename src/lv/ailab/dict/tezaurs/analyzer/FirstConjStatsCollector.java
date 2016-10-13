@@ -3,10 +3,12 @@ package lv.ailab.dict.tezaurs.analyzer;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Objekts, kas uzvāc dažādas statistikas par 1. konjugācijas verbiem Tēzaurā.
@@ -63,6 +65,7 @@ public class FirstConjStatsCollector
 	 */
 	public final boolean collectReflPotential;
 
+	//=== Priekš collectByInfinitive ===========================================
 	/**
 	 * "Locīt kā" -> attiecīgais darbības vārds.
 	 */
@@ -72,22 +75,19 @@ public class FirstConjStatsCollector
 	 */
 	public TreeMap<String, TreeSet<String>> reflByInf = new TreeMap<>();
 
+	//=== Priekš collectByStems ================================================
 	/**
 	 * Celmi -> attiecīgais darbības vārds.
 	 * TODO: adekvāta celmu reprezentācija.
 	 */
 	public TreeMap<String, TreeSet<String>> directbyStems = new TreeMap<>();
-
 	/**
 	 * Celmi -> attiecīgais darbības vārds.
 	 * TODO: adekvāta celmu reprezentācija.
 	 */
 	public TreeMap<String, TreeSet<String>> reflByStems = new TreeMap<>();
 
-	/**
-	 * Priedēkļi, pēc kuriem tiek kārtoti darbības vārdi.
-	 */
-	public TreeSet<String> prefixes = new TreeSet<>();
+	//=== Priekš collectByPrefix ===============================================
 	/**
 	 * "Locīt kā" -> priedēklis -> attiecīgie darbības vārdi
 	 */
@@ -96,17 +96,32 @@ public class FirstConjStatsCollector
 	 * "Locīt kā" -> priedēklis -> attiecīgie darbības vārdi
 	 */
 	public TreeMap<String,TreeMap<String, TreeSet<String>>> reflByPrefix = new TreeMap<>();
+	/**
+	 * Priedēklis -> 1. konj. verbu skaits.
+	 */
+	public TreeMap<String, Integer> prefixCountsDirect = new TreeMap<>();
+	/**
+	 * Priedēklis -> 1. konj. verbu skaits.
+	 */
+	public TreeMap<String, Integer> prefixCountsRefl = new TreeMap<>();
 
+	//=== Priekš collectPotential ==============================================
 	/**
 	 * Nenoteiksmes celmi.
 	 */
 	public TreeSet<String> infinitiveStems = new TreeSet<>();
 	/**
-	 * Vārdi, kam nav paradigmas un kas beidzas ar -t.
+	 * Priedēkļi, pēc kuriem tiek kārtoti darbības vārdi.
+	 */
+	public TreeSet<String> prefixes = new TreeSet<String>(){{add("0");}};
+	/**
+	 * Vārdi, kam nav paradigmas, beidzas ar -t, rakstīti mazajiem burtiem un
+	 * vārdšķiras vai nu nav vispar vai tā ir darbības vards.
 	 */
 	public TreeSet<String> potentialDirect = new TreeSet<>();
 	/**
-	 * Vārdi, kam nav paradigmas un kas beidzas ar -ties.
+	 * Vārdi, kam nav paradigmas, beidzas ar -ties un rakstīti mazajiem burtiem
+	 * un vārdšķiras vai nu nav vispar vai tā ir darbības vards.
 	 */
 	public TreeSet<String> potentialRefl = new TreeSet<>();
 
@@ -159,30 +174,48 @@ public class FirstConjStatsCollector
 		{
 			Set<Integer> paradigms = null;
 			if (h.gram != null) paradigms = h.getDirectParadigms();
-			if (paradigms == null || paradigms.isEmpty())
+			// Ja vajag vākt potenciālos verbus, tad šeit būvē sarakstus, no kā
+			// izvēlēties.
+			if (collectDirectPotential && collectReflPotential
+					&& (paradigms == null || paradigms.isEmpty())
+					&& h.lemma.text.equals(h.lemma.text.toLowerCase()) &&
+					(h.gram == null || h.gram.flags == null
+							|| !h.gram.flags.testKey(TKeys.POS)
+							|| h.gram.flags.test(TFeatures.POS__VERB)))
 			{
 				if (collectDirectPotential && h.lemma.text.endsWith("t"))
 					potentialDirect.add(h.lemma.text);
 				if (collectReflPotential && h.lemma.text.endsWith("ties"))
 					potentialRefl.add(h.lemma.text);
 			}
+
 			if (h.gram == null) continue;
 			if (h.gram.flags == null) continue;
 
-			if (paradigms.contains(15)) // Ir atpazīts, ka locīs kā tiešo.
+			// Ja tiek darīts kaut kas, kam vajag zināt "atzītos" verbu priedēkļus.
+			if ((collectDirectPotential || collectReflPotential) &&
+					h.gram.flags.testKey(TKeys.VERB_PREFIX))
+				prefixes.addAll(h.gram.flags.getAll(TKeys.VERB_PREFIX));
+
+			// Ja ir atpazīts, ka locīs kā tiešo.
+			if (paradigms.contains(15))
 			{
 				if (collectDirectByInfinitive) addByInf(directByInf, h);
 				if (collectReflByStems) addByStem(directbyStems, h);
-				if (collectDirectByPrefix) addByPrefix(directByPrefix, h);
+				if (collectDirectByPrefix) addByPrefix(
+						directByPrefix, prefixCountsDirect,h);
 			}
 
-			if (paradigms.contains(18)) // Ir atpazīts, ka locīs kā atgriezenisko.
+			// Ja ir atpazīts, ka locīs kā atgriezenisko.
+			if (paradigms.contains(18))
 			{
 				if (collectReflByInfinitive) addByInf(reflByInf, h);
 				if (collectReflByStems) addByStem(reflByStems, h);
-				if (collectReflByPrefix) addByPrefix(reflByPrefix, h);
+				if (collectReflByPrefix) addByPrefix(
+						reflByPrefix, prefixCountsRefl, h);
 			}
 
+			// Ja vajag savākt celmus.
 			if (collectDirectPotential || collectReflPotential)
 			{
 				Set<String> stems = h.gram.flags.getAll(TKeys.INFINITIVE_STEM);
@@ -270,13 +303,17 @@ public class FirstConjStatsCollector
 	/**
 	 * Pievienot informāciju par doto Header objektu directBySPrefix vai
 	 * reflByPrefix statistiku vākšanas objektā.
-	 * @param where	datu struktūra, kuru nepieciešams papildināt (directByPrefix
-	 *              vai reflByPrefix)
-	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
-	 *              struktūrai
+	 * @param whereVerb		datu struktūra, kuru nepieciešams papildināt
+	 *                  	(directByPrefix vai reflByPrefix), ieliekot verbu
+	 * @param whereCount	datu struktūra, kuru nepieciešams papildināt
+	 *                  	(directByPrefix vai reflByPrefix), ieliekot un
+	 *                  	pieskaitot priedēkli
+	 * @param what			Header, par kuru informācija jāpievieno
+	 *                      papildināmajai datu struktūrai
 	 */
 	protected void addByPrefix(
-			TreeMap<String,TreeMap<String, TreeSet<String>>> where, Header what)
+			TreeMap<String,TreeMap<String, TreeSet<String>>> whereVerb,
+			TreeMap<String,Integer> whereCount,	Header what)
 	{
 		Set<String> prefs = what.gram.flags.getAll(Keys.VERB_PREFIX);
 		Set<String> infs = what.gram.flags.getAll(TKeys.INFLECT_AS);
@@ -286,17 +323,19 @@ public class FirstConjStatsCollector
 		if (infs.isEmpty()) infs.add("0");
 		for (String inf : infs)
 		{
-			TreeMap<String, TreeSet<String>> prefMap = where.get(inf);
+			TreeMap<String, TreeSet<String>> prefMap = whereVerb.get(inf);
 			if (prefMap == null) prefMap = new TreeMap<>();
 			for (String pref : prefs)
 			{
-				prefixes.add(pref);
+				int count = 1;
+				if (whereCount.containsKey(pref)) count = whereCount.get(pref) + 1;
+				whereCount.put(pref, count);
 				TreeSet<String> verbs = prefMap.get(pref);
 				if (verbs == null) verbs = new TreeSet<>();
 				verbs.add(what.lemma.text);
 				prefMap.put(pref, verbs);
 			}
-			where.put(inf, prefMap);
+			whereVerb.put(inf, prefMap);
 		}
 	}
 
@@ -332,7 +371,15 @@ public class FirstConjStatsCollector
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-prefix.txt"), "UTF-8"));
-			printPrefixMap(out, directByPrefix, prefixes);
+			List<String> sortedPrefs = prefixCountsDirect.keySet().stream()
+					.sorted((a, b) -> {
+						if (prefixCountsDirect.get(a) > prefixCountsDirect.get(b)) return -1;
+						else if (prefixCountsDirect.get(a) < prefixCountsDirect.get(b)) return 1;
+						else return a.compareTo(b);})
+					.collect(Collectors.toList());
+			printPrefixMap(out, directByPrefix, sortedPrefs, sortedPrefs.stream()
+					.map(p -> ("0".equals(p) ? p : p + "-") + " (" + prefixCountsDirect.get(p) + ")")
+					.collect(Collectors.toList()));
 			out.flush();
 			out.close();
 		}
@@ -368,7 +415,15 @@ public class FirstConjStatsCollector
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-prefix.txt"), "UTF-8"));
-			printPrefixMap(out, reflByPrefix, prefixes);
+			List<String> sortedPrefs = prefixCountsRefl.keySet().stream()
+					.sorted((a, b) -> {
+						if (prefixCountsRefl.get(a) > prefixCountsRefl.get(b)) return -1;
+						else if (prefixCountsRefl.get(a) < prefixCountsRefl.get(b)) return 1;
+						else return a.compareTo(b);})
+					.collect(Collectors.toList());
+			printPrefixMap(out, reflByPrefix, sortedPrefs, sortedPrefs.stream()
+					.map(p -> ("0".equals(p) ? p : p + "-") + " (" + prefixCountsRefl.get(p) + ")")
+					.collect(Collectors.toList()));
 			out.flush();
 			out.close();
 		}
@@ -396,10 +451,10 @@ public class FirstConjStatsCollector
 	{
 		if (what != null && what.size() > 0)
 		{
-			where.write("Celms+izskaņa\tDisambiguators\tDarbības vārdu rinda\n");
+			where.write("Celms+izskaņa\tDisambiguators\tSkaits\tDarbības vārdu rinda\n");
 			where.write(what.keySet().stream().map(k ->
-					k.replaceAll("\" \\(", "\t").replaceAll("\"$", "\t0").replaceAll("\"\\(?|\\)", "")
-							+ "\t" + what.get(k).stream()
+					k.replaceAll("\" \\(", "\t").replaceAll("\"$", "\t0").replaceAll("\"|\\)(?!\t)", "")
+							+ "\t" + what.get(k).size() + "\t" + what.get(k).stream()
 								.reduce((v1, v2) -> v1 + ", " + v2)	.orElse(""))
 					.reduce((p1, p2) -> p1 + "\n" + p2).orElse(""));
 			where.write("\n");
@@ -420,9 +475,9 @@ public class FirstConjStatsCollector
 	{
 		if (what != null && what.size() > 0)
 		{
-			where.write("Nenoteiksme\tTagadne\tPagātne\tDarbības vārdi\n");
+			where.write("Nenoteiksme\tTagadne\tPagātne\tSkaits\tDarbības vārdi\n");
 			where.write(what.keySet().stream().map(k ->
-					k + "\t" +
+					k + "\t" + what.get(k).size() + "\t" +
 							what.get(k).stream()
 									.reduce((v1, v2) -> v1 + ", " + v2)
 									.orElse(""))
@@ -433,28 +488,34 @@ public class FirstConjStatsCollector
 	/**
 	 * Ertības metode, kas tiek izmantota directByPrefix un reflByPrefix
 	 * izdrukāšanai.
-	 * @param where	plusma/fails, kur notiks izdeukāšana
-	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByPrefix
-	 *              vai reflByPrefix)
+	 * @param where			plusma/fails, kur notiks izdeukāšana
+	 * @param what			datu struktūra, kuru nepieciešams izdrukāt
+	 *                  	(piemēram, directByPrefix vai reflByPrefix)
+	 * @param yAxisKeys		vēlamajā secībā atslēgas, pēc kurām meklēt
+	 *                      drukājāmās struktūras 2. līmenī (atbilst kolonnām
+	 *                      izdrukātajā rezultātā)
+	 * @param yAxisLabels	kolonnu nosaukumi (izsaucējam pašam jārūpējas, lai
+	 *                      yAxisKeys un yAxisLabels garumi un secības sakrīt)
 	 * @throws IOException
 	 */
 	protected static void printPrefixMap (
 			BufferedWriter where,
 			TreeMap<String,TreeMap<String, TreeSet<String>>> what,
-			TreeSet<String> axisLabels)
+			Collection<String> yAxisKeys,
+			Collection<String> yAxisLabels)
 	throws IOException
 	{
 		if (what != null && what.size() > 0)
 		{
 			where.write("Celms+izskaņa\t");
-			where.write(axisLabels.stream().map(p -> "0".equals(p) ? p : p + "-").reduce(
+			where.write(yAxisLabels.stream().reduce(
 					(p1, p2) -> p1 + "\t" + p2).orElse(""));
 			where.write("\n");
 			for (String inf : what.keySet())
 			{
 				where.write(inf + "\t");
 				TreeMap<String, TreeSet<String>> prefMap = what.get(inf);
-				where.write(axisLabels.stream().sorted().map(pref -> prefMap
+				where.write(yAxisKeys.stream().map(pref -> prefMap
 						.getOrDefault(pref, new TreeSet<>()).stream().sorted()
 						.reduce((v1, v2) -> v1 + ", " + v2).orElse("0"))
 					.reduce((v1, v2) -> v1 + "\t" + v2).orElse(""));
@@ -463,13 +524,22 @@ public class FirstConjStatsCollector
 		}
 	}
 
+	/**
+	 * Metode potenciālo verbu apkopšanai un izdrukāšanai
+	 * @param where		plusma/fails, kur notiks izdeukāšana
+	 * @param source	datu struktūra, kas satur pārbaudāmos verbus
+	 *                  (potentialDirect vai potentialRefl)
+	 * @param ending	darbības vārda izskaņa, ko pievienot nenoteiksmes
+	 *                  celmiem, meklējot darbības vārdus ("t" vai "ties")
+	 */
 	protected void printPotentials(
 			BufferedWriter where, TreeSet<String> source, String ending)
 	throws IOException
 	{
 		// Celms + izskaņa -> priedēklis -> attiecīgie darbības vārdi
-		TreeMap<String,TreeMap<String, TreeSet<String>>> potentials = new TreeMap<>();
-		TreeSet<String>  prefixes = new TreeSet<>();
+		TreeMap<String,TreeMap<String, TreeSet<String>>> potVerbs = new TreeMap<>();
+		// Priedēklis -> skaits
+		TreeMap<String, Integer>  potPrefs = new TreeMap<>();
 		String[] sortedStems = infinitiveStems.stream()
 				.sorted((a, b) -> b.length() - a.length())
 				.toArray(size -> new String[size]);
@@ -484,15 +554,17 @@ public class FirstConjStatsCollector
 					String prefix = "0";
 					if (potVerb.length() > inf.length())
 						prefix = potVerb.substring(0, potVerb.length() - inf.length());
-					prefixes.add(prefix);
+					int prefixCount = 0;
+					if (potPrefs.containsKey(prefix)) prefixCount = potPrefs.get(prefix);
+					potPrefs.put(prefix, prefixCount + 1);
 
-					TreeMap<String, TreeSet<String>> prefMap = potentials.get(inf);
+					TreeMap<String, TreeSet<String>> prefMap = potVerbs.get(inf);
 					if (prefMap == null) prefMap = new TreeMap<>();
 					TreeSet<String> verbs = prefMap.get(prefix);
 					if (verbs == null) verbs = new TreeSet<>();
 					verbs.add(potVerb);
 					prefMap.put(prefix, verbs);
-					potentials.put(inf, prefMap);
+					potVerbs.put(inf, prefMap);
 					// Tiek pieņemts, ka visgarākais celms ir vislabākais, lai
 					// "aizgraut" neanalizē kā "aizgr" + "aut". Tāpat tiek
 					// pieņemts, ka katram vardam ir ne vairāk par vienu pareizu
@@ -502,7 +574,19 @@ public class FirstConjStatsCollector
 				}
 			}
 		}
-		if (potentials.size() > 0)
-			printPrefixMap(where, potentials, prefixes);
+		List<String> sortedPrefs = potPrefs.keySet().stream()
+				.sorted((a, b) -> {
+					if (prefixes.contains(a) && !prefixes.contains(b)) return -1;
+					else if (!prefixes.contains(a) && prefixes.contains(b)) return 1;
+					else if (potPrefs.get(a) > potPrefs.get(b)) return -1;
+					else if (potPrefs.get(a) < potPrefs.get(b)) return 1;
+					else return a.compareTo(b);})
+				.collect(Collectors.toList());
+		if (potVerbs.size() > 0)
+			printPrefixMap(where, potVerbs, sortedPrefs, sortedPrefs.stream()
+					.map(p -> ("0".equals(p) ? p : p + "-")
+							+ (prefixes.contains(p) ? " (+; " : " (-; ")
+							+ potPrefs.get(p) + ")")
+					.collect(Collectors.toList()));
 	}
 }

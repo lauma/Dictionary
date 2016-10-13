@@ -1341,7 +1341,6 @@ public class OptHypernRules
 		FirstConj.refl("-ceļos, -celies,", "-ceļas, pag. -cēlos", "celties"), //apcelties
 		FirstConj.refl("-cenšos, -centies,", "-cenšas, pag. -centos", "censties"), //pazensties
 		FirstConj.refl("-cepos, -cepies,", "-cepas, pag. -cepos", "cepties"), //sacepties
-		FirstConj.refl("-ceros, -ceries,", "-ceras, pag. -cerējos", "cerēties"), //atcerēties
 		FirstConj.refl("-ciešos, -cieties,", "-ciešas, pag. -cietos", "ciesties"), //aizciesties
 		FirstConj.refl("-cērtos, -cērties,", "-cērtas, pag. -cirtos", "cirsties"), //aizcirsties
 		// D
@@ -1607,7 +1606,9 @@ public class OptHypernRules
 		// Standartizētie.
 		// A, B
 		ThirdConj.refl("-braukos, -braukies,", "-braukās, pag. -braucījos", "braucīties", true), //atbraucīties
-		// C, Č
+		// C
+		ThirdConj.refl("-ceros, -ceries,", "-ceras, pag. -cerējos", "cerēties", false), //atcerēties
+		// Č
 		ThirdConj.refl("-čabinos, -čabinies,", "-čabinās, pag. -čabinājos", "čabināties", false), //iečabināties
 		ThirdConj.refl("-čukstos, -čuksties,", "-čukstas, pag. -čukstējos", "čukstēties", false), //iečukstēties
 		// D

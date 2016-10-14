@@ -230,9 +230,11 @@ public class EntryChecks
 		if (entry.contents.matches(".*@2\\s*[.,;:].*"))
 			bad.addNewEntry(entry, "Tieši pēc @2 seko \'.\', \',\', \';\' vai \':\'");
 
-		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*"))
+		if (entry.contents.matches(".*\\s@2\\s((?!@5).)*\\s@2\\s.*") ||
+				entry.contents.matches(".*\\s@2\\s?@s\\s.*"))
 			bad.addNewEntry(entry, "Divi @2 pēc kārtas, bez @5");
-		if (entry.contents.matches(".*\\s@5\\s((?!@2).)*\\s@5(\\s.*)?"))
+		if (entry.contents.matches(".*\\s@5\\s((?!@2).)*\\s@5(\\s.*)?") ||
+				entry.contents.matches(".*\\s@5\\s?@5\\s.*"))
 			bad.addNewEntry(entry, "Divi @5 pēc kārtas, bez @2");
 
         if (entry.contents.matches(".*\\s@2\\s((?!\\s@5).)*"))

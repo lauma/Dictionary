@@ -164,9 +164,9 @@ public class DirectRules
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
 						SimpleSubRule.of(".*[aā]mā", new Integer[]{40, 0},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-						SimpleSubRule.of(".*[^tšm]ā", new Integer[]{40},
+						SimpleSubRule.of(".*([^tšm]|[^aā]m)ā", new Integer[]{40},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN, TFeatures.DEFINITE_ENDING})},
-				new Tuple[]{TFeatures.GENDER__FEM}), // pirmdzimtā, notiesātā -šanās
+				new Tuple[]{TFeatures.GENDER__FEM}), // pirmdzimtā, notiesātā, vispirmā, -šanās
 	};
 
 	/**
@@ -355,7 +355,7 @@ public class DirectRules
 		FifthDecl.std("-es, -mju s.", ".*me"), // apakšzeme
 
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
-		FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //arheogrāfe
+		//FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //vairs nav, jo atļāva miju.
 		FifthDecl.noChange("-es, dsk. ģen. mufu, s.", ".*mufe"), //mufe
 		FifthDecl.noChange("-es, dsk. ģen. -pu, s.", ".*pe"), // filantrope
 		FifthDecl.noChange("-es, dsk. ģen. -su, s.", ".*se"), // bise
@@ -537,8 +537,10 @@ public class DirectRules
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
 		// Paradigma: 3 - Lietvārds 2. deklinācija -is
-		GenNoun.any("-ņa, dsk. ģen. -ņu", ".*ņi", 3,
-				new Tuple[]{TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__MASC}), //afroamerikāņi
+		GenNoun.any("-ņa, dsk. ģen. -ņu", new SimpleSubRule[]{
+						SimpleSubRule.of(".*ņi", 3, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*nis", 3, new Tuple[]{TFeatures.GENDER__MASC})},
+				null), //afroamerikāņi, šovmenis
 			// konflikts ar "bizmanis"
 
 		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
@@ -761,7 +763,9 @@ public class DirectRules
 		FirstConj.refl3Pers("-kviecas, pag. -kviecās", "kviekties"), //iekviekties
 		// L, M, N, Ņ
 		FirstConj.refl3Pers("-ņirbjas, pag. -ņirbās", "ņirbties"), //ieņirbties
-		// O, P, R, S
+		// O, P
+		FirstConj.refl3Pers("-pūstas, pag. -puvās", "pūties"), //izpūties
+		// R, S
 		FirstConj.refl3Pers("-sīcas, pag. -sīcās", "sīkties"), //aizsīkties
 		FirstConj.refl3Pers("-smeldzas, pag. -smeldzās", "smelgties"), //aizsmelgties
 		// Š
@@ -787,6 +791,9 @@ public class DirectRules
 		SecondConj.reflAllPers(
 				"-ējos, -ējies, -ējas, -ējamies, -ējaties, pag. -ējos, -ējāmies, -ējāties; pav. -ējies, -ējieties",
 				"ēties"), //adverbiēties
+
+		// Parasti/tikai 3. personā.
+		SecondConj.refl3Pers("-ējas, pag. -ējās", "ēties"), // miekšēties
 
 		// Parasti/tikai daudzskaitlī.
 		SecondConj.reflPlural("-ējamies, pag. -ējāmies", "ēties"), // drūzmēties
@@ -1020,6 +1027,7 @@ public class DirectRules
 		ThirdConj.refl3Pers("-knikšķas, pag. -knikšķējās", "knikšķēties", false), //aizknikšķēties
 		ThirdConj.refl3Pers("-kņudas, pag. -kņudējās", "kņudēties", false), //iekņudēties
 		ThirdConj.refl3Pers("-krakstas, pag. -krakstējās", "krakstēties", false), //aizkrakstēties
+		ThirdConj.refl3Pers("-krakšas, pag. -krakšējās", "krakšēties", false), //nokrakšēties
 		ThirdConj.refl3Pers("-krakšķas, pag. -krakšķējās", "krakšķēties", false), //aizkrakšķēties
 		ThirdConj.refl3Pers("-kraukstas, pag. -kraukstējās", "kraukstēties", false), //iekraukstēties
 		ThirdConj.refl3Pers("-kraukšas, pag. -kraukšējās", "kraukšēties", false), //iekraukšēties
@@ -1128,6 +1136,7 @@ public class DirectRules
 		ThirdConj.refl3Pers("-vizas, pag. -vizējās", "vizēties", false), //ievizēties
 		// Z
 		ThirdConj.refl3Pers("-zibas, pag. -zibējās", "zibēties", false), //iezibēties
+		ThirdConj.refl3Pers("-ziedas, pag. -ziedējās", "ziedēties", false), //izziedēties
 		ThirdConj.refl3Pers("-zuzas, pag. -zuzējās", "zuzēties", false), //iezuzēties
 		// Ž
 		ThirdConj.refl3Pers("-žvadzas, pag. -žvadzējās", "žvadzēties", false), //iežvadzēties

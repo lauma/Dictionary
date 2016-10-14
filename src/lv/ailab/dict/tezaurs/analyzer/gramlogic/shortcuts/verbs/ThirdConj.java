@@ -1,7 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
@@ -215,6 +214,30 @@ public final class ThirdConj
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 20,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Izveido likumu 3. konjugācijas atgriezeniskajam darbības vārdam,
+	 * paralēlās formas ir gan ar miju, gan bez.
+	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
+	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbDoubleRule ar 20. paradigmu un tikai 3. personas formām
+	 */
+	public static VerbDoubleRule direct3PersParallel(
+			String patternEnd, String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
+		if (RulesAsFunctions.containsFirstConj(patternEnd))
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return VerbDoubleRule.of(patternEnd, null, lemmaEnd, 20,
 				posFlags.toArray(new Tuple[posFlags.size()]), null);
 	}
 

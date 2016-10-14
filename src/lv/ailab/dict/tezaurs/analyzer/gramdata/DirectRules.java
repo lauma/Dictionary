@@ -674,10 +674,7 @@ public class DirectRules
 	 */
 	public static final Rule[] reflFirstConjVerb = {
 		// Likumi, kam ir visu formu variants.
-		// Netoteiksmes homoformas.
-
-
-			// Standartizētie.
+		// Standartizētie.
 		// A
 		FirstConj.refl("-augos, -audzies,", "-augas, pag. -augos", "augties"), //paaugties
 		// B

@@ -233,14 +233,16 @@ public class OptHypernRules
 				"\"virt\" (pašam)"), //aizvirt, uzvirt, virt 1
 		FirstConj.directHomof("-viru, -vir,", "-vir, pag. -viru", "virt",
 				"\"virt\" (kādu citu)"), // virt 2
-		// Izņēmuma izņēmums :/
-		FirstConj.directHomof("-patīku, -patīc,", "-patīk, pag. -patiku", "tikt",
-				"\"tikt\" (patikt kādam)"), //patikt
 		FirstConj.directHomof("-vēršu, -vērs,", "-vērš, pag. -vērsu", "vērst",
 				"\"vērst\" (mainīt virzienu)"), //aizvērst, izvērst 1
 		FirstConj.directHomof("-vēršu, -vērt,", "-vērš, pag. -vērtu", "vērst",
 				"\"vērst\" (mainīt būtību)"), //izvērst 2
 
+		// Izņēmuma izņēmums.
+		VerbDoubleRule.of("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikt\" (patikt kādam)"),
+						TFeatures.INFINITIVE_HOMOFORMS}, null,
+				new String[]{"tik"}, new String[]{"tīk"}, new String[]{"tik"}), //patikt
 
 		// Paralēlās formas.
 		FirstConj.directAllPersParallel(
@@ -302,6 +304,9 @@ public class OptHypernRules
 		VerbDoubleRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "likt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\"")}, null,
 				new String[]{"lik"}, new String[]{"liek"}, new String[]{"lik"}), //izpalikt
+		VerbDoubleRule.of("-nespēju, -nespēj,", "-nespēj, pag. -nespēju", "nespēt", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\"")}, null,
+				new String[]{"spē"}, new String[]{"spēj"}, new String[]{"spēj"}), //nespēt
 		VerbDoubleRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "zīt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
@@ -1046,6 +1051,7 @@ public class OptHypernRules
 		// T
 		ThirdConj.direct("-tarkšķu, -tarkšķi,", "-tarkšķ, pag. -tarkšķēju", "tarkšķēt", false), //iztarkšķēt
 		ThirdConj.direct("-teku, -teci,", "-tek, pag. -tecēju", "tecēt", true), //aiztecēt
+		ThirdConj.direct("-neticu, -netici,", "-netic, pag. -neticēju,", "neticēt", false), //neticēt //TODO vai vajag citur?
 		ThirdConj.direct("-ticu, -tici,", "-tic, pag. -ticēju", "ticēt", false), //noticēt
 		ThirdConj.direct("-trīcu, -trīci,", "-trīc, pag. -trīcēju", "trīcēt", false), //ietrīcēt
 		ThirdConj.direct("-trīsu, -trīsi,", "-trīs, pag. -trīsēju", "trīsēt", false), //ietrīsēt
@@ -1507,14 +1513,16 @@ public class OptHypernRules
 				"\"mīties\" (mainīt naudu)"), //apmīties
 		FirstConj.reflHomof("-tiekos, -tiecies,", "-tiekas, pag. -tikos", "tikties",
 				"\"tikties\" (satikties ar kādu)"), //satikties
-		// Izņēmuma izņēmums :/
-		FirstConj.reflHomof("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "tikties",
-				"\"tikties\" (patikties kādam)"), //iepatikties
 		FirstConj.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērsos", "vērsties",
 				"\"vērsties\" (mainīt virzienu)"), //aizvērsties, izvērsties 1
 		FirstConj.reflHomof("-vēršos, -vērties,", "-vēršas, pag. -vērtos", "vērsties",
 				"\"vērsties\" (mainīt būtību)"), //izvērsties 2
 
+		// Izņēmums.
+		VerbDoubleRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikties\" (patikties kādam)"),
+						TFeatures.INFINITIVE_HOMOFORMS}, null,
+				new String[]{"tik"}, new String[]{"tīk"}, new String[]{"tik"}), //iepatikties
 
 		// Paralēlās formas.
 		FirstConj.reflAllPersParallel(
@@ -1536,7 +1544,7 @@ public class OptHypernRules
 				"-spurdzos, -spurdzies, -spurdzas, pag. -spurdzos, retāk -spurgstos, -spurgsties, -spurgstas, pag. -spurgos", "spurgties"), //iespurgties
 
 		// Izņēmums.
-		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "zīties", 18,
+		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīties\"")}, null,
 				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //iepazīties
 
@@ -1554,7 +1562,6 @@ public class OptHypernRules
 		FirstConj.refl("-božos, -bozies,", "-bozās, pag. -bozos", "bozties"), //pabozties
 		FirstConj.refl("-braucos, -braucies,", "-braucas, pag. -braucos", "braukties"), //izbraukties
 		FirstConj.refl("-brāžos, -brāzies,", "-brāžas, pag. -brāzos", "brāzties"), //aizbrāzties
-			// brāžos, brāzies, brāžas, pag. brāžos
 		FirstConj.refl("-brienos, -brienies,", "-brienas, pag. -bridos", "bristies"), //atbristies
 		FirstConj.refl("-būros, -buries,", "-buras, pag. -būros", "burties"), //izburties
 		// C

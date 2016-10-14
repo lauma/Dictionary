@@ -607,6 +607,7 @@ public class DirectRules
 		// Galotņu šabloni.
 		SecondConj.direct("-āju, -ā,", "-ā, pag. -āju", "āt"), //aijāt, aizkābāt
 		SecondConj.direct("-ēju, -ē,", "-ē, pag. -ēju", "ēt"), //abonēt, adsorbēt
+			// -ēju, -ē, -ē, pag. -ēju
 		SecondConj.direct("-ēju, -ē,", "-ē; pag. -ēju", "ēt"), //dulburēt
 		SecondConj.direct("-īju, -ī,", "-ī, pag. -īju", "īt"), //apšķibīt, aizdzirkstīt
 		SecondConj.direct("-oju, -o,", "-o, pag. -oju", "ot"), //aizalvot, aizbangot
@@ -850,6 +851,8 @@ public class DirectRules
 		// Likumi, kam ir visu formu variants.
 		// A, B
 		ThirdConj.refl(
+				"-burkšos, -burkšies,", "-burkšas, pag. -burkšējos", "burkšēties", false), // ieburkšēties
+		ThirdConj.refl(
 				"-burkšķos, -burkšķies,", "-burkšķas, pag. -burkšķējos", "burkšķēties", false), //ieburkšķēties
 		// C, Č
 		ThirdConj.refl(
@@ -948,6 +951,8 @@ public class DirectRules
 		ThirdConj.refl(
 				"-šņukstos, -šņuksties,", "-šņukstas, pag. -šņukstējos", "šņukstēties", false), //aizšņukstēties
 		// T
+		ThirdConj.refl(
+				"-tarkšos, -tarkšies,", "-tarkšas, pag. -tarkšējos", "tarkšēties", false), //ietarkšēties
 		ThirdConj.refl(
 				"-tarkšķos, -tarkšķies,", "-tarkšķas, pag. -tarkšķējos", "tarkšķēties", false), //ietarkšķēties
 		ThirdConj.refl(

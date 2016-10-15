@@ -1726,7 +1726,6 @@ public class OptHypernRules
 		FirstConj.refl("-raujos, -raujies,", "-raujas, pag. -rāvos", "rauties"), //aizrauties
 		FirstConj.refl("-rāpjos, -rāpies,", "-rāpjas, pag. -rāpos", "rāpties"), // aizrāpties
 		FirstConj.refl("-rājos, -rājies,", "-rājas, pag. -rājos", "rāties"), // izrāties
-		FirstConj.refl("-redzos, -redzies,", "-redzas, pag. -redzējos", "redzēties"), // izredzēties
 		FirstConj.refl("-riebjos, -riebies,", "-riebjas, pag. -riebos", "riebties"), //aizriebties, apriebties
 		FirstConj.refl("-rejos, -rejies,", "-rejas, pag. -rējos", "rieties"), //atrieties
 		FirstConj.refl("-rimstos, -rimsties,", "-rimstas, pag. -rimos", "rimties"), //aprimties
@@ -1924,6 +1923,7 @@ public class OptHypernRules
 		ThirdConj.refl("-precos, -precies,", "-precas, pag. -precējos", "precēties", false), //aizprecēties
 		// R
 		ThirdConj.refl("-raugos, -raugies,", "-raugās, pag. -raudzījos", "raudzīties", true), //apraudzīties
+		ThirdConj.refl("-redzos, -redzies,", "-redzas, pag. -redzējos", "redzēties", false), // izredzēties
 		// S
 		ThirdConj.refl("-sakos, -sakies,", "-sakās, pag. -sacījos", "sacīties", true), //atsacīties
 		ThirdConj.refl("-slakos, -slakies,", "-slakās, pag. -slacījos", "slacīties", true), //apslacīties

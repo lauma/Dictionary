@@ -862,6 +862,7 @@ public class DirectRules
 				"-čerkstos, -čerksties,", "-čerkstas, pag. -čerkstējos", "čerkstēties", false), //iečerkstēties
 		ThirdConj.refl(
 				"-čērkstos, -čērksties,", "-čērkstas, pag. -čērkstējos", "čērkstēties", false), //iečērkstēties
+			//  -čērkstas, pag. -čerkstējās
 		ThirdConj.refl(
 				"-čiepstos, -čiepsties,", "-čiepstas, pag. -čiepstējos", "čiepstēties", false), //iečiepstēties
 		ThirdConj.refl(

@@ -1174,7 +1174,7 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-bliukš, pag. -bliukšēja", "bliukšēt", false), //nobliukšēt
 		ThirdConj.direct3Pers("-bliukšķ, pag. -bliukšķēja", "bliukšķēt", false), //nobliukšķēt
 		ThirdConj.direct3Pers("-blīkš, pag. -blīkšēja", "blīkšēt", false), //noblīkšēt
-		ThirdConj.direct3Pers("-blīkķš, pag. -blīkšķēja", "blīkšķēt", false), //noblīkšķēt
+		ThirdConj.direct3Pers("-blīkšķ, pag. -blīkšķēja", "blīkšķēt", false), //noblīkšķēt
 		ThirdConj.direct3Pers("-blūkš, pag. -blūkšēja", "blūkšēt", false), //noblūkšēt
 		ThirdConj.direct3Pers("-blūkšķ, pag. -blūkšķēja", "blūkšķēt", false), //noblūkšķēt
 		ThirdConj.direct3Pers("-brakst, pag. -brakstēja", "brakstēt", false), //nobrakstēt
@@ -1261,7 +1261,7 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
 		ThirdConj.direct3Pers("-ņirkst, pag. -ņirkstēja", "ņirkstēt", false), //noņirkstēt
 		ThirdConj.direct3Pers("-ņirkš, pag. -ņirkšēja", "ņirkšēt", false), //noņirkšēt
-		ThirdConj.direct3Pers("-ņirkšķ, pag. -ņirkšēja", "ņirkšķēt", false), //noņirkšķēt
+		ThirdConj.direct3Pers("-ņirkšķ, pag. -ņirkšķēja", "ņirkšķēt", false), //noņirkšķēt
 		// O, P
 		ThirdConj.direct3Pers("-pakš, pag. -pakšēja", "pakšēt", false), //nopakšēt
 		ThirdConj.direct3Pers("-pakšķ, pag. -pakšķēja", "pakšķēt", false), //nopakšķēt

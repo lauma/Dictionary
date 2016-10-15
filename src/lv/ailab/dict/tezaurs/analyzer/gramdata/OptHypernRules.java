@@ -1611,7 +1611,7 @@ public class OptHypernRules
 		FirstConj.refl("-bēgos, -bēdzies,", "-bēgas, pag. -bēgos", "bēgties"), //nobēgties
 		FirstConj.refl("-beros, -beries,", "-beras, pag. -bēros", "bērties"), //apbērties
 		FirstConj.refl("-bīstos, -bīsties,", "-bīstas, pag. -bijos", "bīties"), //izbīties
-		FirstConj.refl("-božos, -bozies,", "-bozās, pag. -bozos", "bozties"), //pabozties
+		FirstConj.refl("-božos, -bozies,", "-božas, pag. -bozos", "bozties"), //pabozties
 		FirstConj.refl("-braucos, -braucies,", "-braucas, pag. -braucos", "braukties"), //izbraukties
 		FirstConj.refl("-brāžos, -brāzies,", "-brāžas, pag. -brāzos", "brāzties"), //aizbrāzties
 		FirstConj.refl("-brienos, -brienies,", "-brienas, pag. -bridos", "bristies"), //atbristies

@@ -1415,6 +1415,9 @@ public class OptHypernRules
 				"-kveldēju, -kveldē, -kveldē, arī -kveldu, -kveldi, -kveld, pag. -kveldēju",
 				"kveldēt", false), // nokveldēt
 		SecondThirdConj.directAllPersParallel(
+				"-kvēlu, -kvēli, -kvēl, retāk -kvēlēju, -kvēlē, -kvēlē, pag. -kvēlēju",
+				"kvēlēt", false), // kvēlēt
+		SecondThirdConj.directAllPersParallel(
 				"-ķēzīju, -ķēzī, -ķēzī, arī -ķēzu, -ķēzi, -ķēza, pag. -ķēzīju",
 				"ķēzīt", false), // apķēzīt
 		SecondThirdConj.directAllPersParallel(

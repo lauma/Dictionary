@@ -746,10 +746,14 @@ public class DirectRules
 		FirstConj.refl("-zviedzos, -zviedzies,", "-zviedzas, pag. -zviedzos", "zviegties"), //aizzviegties
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// Nenoteiksmes homoformas
+		FirstConj.refl3PersHomof("-sīcas, pag. -sīcās", "sīkties",
+				"\"sīkties\" (kā odam)"), //aizsīkties
 		// Paralēlformas.
 		FirstConj.refl3PersParallel("-mejas, arī -mienas, pag. -mējās", "mieties"), // iemieties
 		// TODO pārbaudīt, vai ir pieņemami, ka abas homoformas ir kopā
 		FirstConj.refl3PersParallel("-spuldzas, arī -spulgstas, pag. -spuldzās, arī -spulgās", "spulgties"), // iespulgties
+
 
 		// Standartizētie.
 		// A, B
@@ -764,7 +768,6 @@ public class DirectRules
 		// O, P
 		FirstConj.refl3Pers("-pūstas, pag. -puvās", "pūties"), //izpūties
 		// R, S
-		FirstConj.refl3Pers("-sīcas, pag. -sīcās", "sīkties"), //aizsīkties
 		FirstConj.refl3Pers("-smeldzas, pag. -smeldzās", "smelgties"), //aizsmelgties
 		// Š
 		FirstConj.refl3Pers("-šalcas, pag. -šalcās", "šalkties"), //aizšalkties

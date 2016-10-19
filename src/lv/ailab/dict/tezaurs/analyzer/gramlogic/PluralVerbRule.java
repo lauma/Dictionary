@@ -2,6 +2,8 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
@@ -9,10 +11,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Likums šabloniem, kas sākas ar "parasti dsk.," vai  "tikai dsk.,"
+ * Likums šabloniem, kas sākas ar "parasti dsk.," vai  "tikai dsk.,". Tiek
+ * pārbaudīts, vai likums nesatur " arī vsk. 3. pers. " un vajadzības gadījumā
+ * tiek pielikti nepieciešamie karodziņi.
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
- **
+ *
  * Izveidots 2016-10-12.
  * @author Lauma
  */
@@ -46,6 +50,7 @@ public class PluralVerbRule implements Rule
 			FirstConjStems stems)
 	{
 		this.stems = stems;
+		boolean singular3Pers = patternText.contains(" vai vsk. 3. pers. ");
 		pluralUsually = BaseRule.simple(
 				"parasti dsk., " + patternText, ".*" + lemmaEnding, paradigms,
 				new HashSet<Tuple<String, String>>()
@@ -56,6 +61,11 @@ public class PluralVerbRule implements Rule
 				new HashSet<Tuple<String, String>>()
 				{{
 					add(TFeatures.USUALLY_USED__PLURAL);
+					if (singular3Pers)
+					{
+						add(TFeatures.USUALLY_USED__THIRD_PERS);
+						add(Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS));
+					};
 					if (alwaysFlags != null) addAll(alwaysFlags);
 				}});
 		pluralOnly = BaseRule.simple(
@@ -68,6 +78,11 @@ public class PluralVerbRule implements Rule
 				new HashSet<Tuple<String, String>>()
 				{{
 					add(TFeatures.USED_ONLY__PLURAL);
+					if (singular3Pers)
+					{
+						add(TFeatures.USED_ONLY__THIRD_PERS);
+						add(Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PLURAL_OR_THIRD_PERS));
+					};
 					if (alwaysFlags != null) addAll(alwaysFlags);
 				}});
 	}

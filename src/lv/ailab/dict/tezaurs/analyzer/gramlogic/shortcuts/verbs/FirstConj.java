@@ -55,7 +55,8 @@ public final class FirstConj
 
 	/**
 	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam bez
-	 * paralēlajām formām.
+	 * paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī, bet ne
+	 * vienskaitļa 3. personā.
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return PluralVerbRule ar paradigmu 15
@@ -67,7 +68,25 @@ public final class FirstConj
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
 				null, stems);
 	}
-
+	/**
+	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam bez
+	 * paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī
+	 * vai vienskaitļa 3. personā.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                      norāde par 3. personu
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 *                      (no šīs daļas tiks izvilkti celmi)
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return PluralVerbRule ar paradigmu 15
+	 */
+	public static PluralVerbRule directPluralOr3Pers(
+			String patternBegin, String patternEnd, String lemmaEnd)
+	{
+		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
+		return PluralVerbRule.of(patternBegin + " " + patternEnd, lemmaEnd, 15,
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				null, stems);
+	}
 	/**
 	 * Izveido VerbDoubleRule 1. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām, bet ar  nenoteiksmes homoformām.
@@ -133,6 +152,35 @@ public final class FirstConj
 	}
 
 	/**
+	 * Izveido VerbDoubleRule 1. konjugācijas tiesajam darbības vārdam ar
+	 * paralēlajām formām un nenoteiksmes homoformām, tikai 3. personas
+	 * formas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return	VerbDoubleRule ar paradigmu 15, paralēlformām, nenoteiksmes
+	 * 			homoformām un tikai	3. personas formām.
+	 */
+	public static VerbDoubleRule direct3PersParallelHomof(
+			String patternEnd, String lemmaEnd, String inflectAs)
+	{
+		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {
+					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+					TFeatures.INFINITIVE_HOMOFORMS};
+		else posFlags = new Tuple[] {
+				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.ORIGINAL_NEEDED};
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15, posFlags,
+				null, stems);
+	}
+
+	/**
 	 * Izveido VerbDoubleRule 1. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām, bet bez nenoteiksmes homoformām.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
@@ -148,6 +196,33 @@ public final class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
 		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 15, posFlags,
+				null, stems);
+	}
+
+	/**
+	 * Izveido VerbDoubleRule 1. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām un nenoteiksmes homoformām.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return	VerbDoubleRule ar paradigmu 15, paralēlformām, nenoteiksmes
+	 * 			homoformām un bez 3. personas likuma.
+	 */
+	public static VerbDoubleRule directAllPersParallelHomof(
+			String patternText, String lemmaEnd, String inflectAs)
+	{
+		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {
+					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+					TFeatures.INFINITIVE_HOMOFORMS};
+		else posFlags = new Tuple[] {
+				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+				TFeatures.ORIGINAL_NEEDED, TFeatures.INFINITIVE_HOMOFORMS};
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
@@ -274,7 +349,36 @@ public final class FirstConj
 	 * formas.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
-	 * @param lemmaEnd	nepieciešamā nenoteiksmes izskaņa
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return	VerbDoubleRule ar paradigmu 18, nenoteiksmes homofotmām,
+	 * 			paralēlformām un tikai 3. personas formām.
+	 */
+	public static VerbDoubleRule refl3PersParallelHomof(
+			String patternEnd, String lemmaEnd, String inflectAs)
+	{
+		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternEnd))
+			posFlags = new Tuple[] {
+					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+					TFeatures.INFINITIVE_HOMOFORMS};
+		else posFlags = new Tuple[] {
+				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
+				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.ORIGINAL_NEEDED};
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18, posFlags,
+				null, stems);
+	}
+
+	/**
+	 * Izveido VerbDoubleRule 1. konjugācijas atgriezeniskajam darbības vārdam
+	 * ar paralēlajām formām ar nenoteiksmes homoformām, tikai 3. personas
+	 * formas.
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      bez "parasti 3.pers.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return	VerbDoubleRule ar paradigmu 18 un paralēlformām un tikai
 	 * 			3. personas formām.
 	 */

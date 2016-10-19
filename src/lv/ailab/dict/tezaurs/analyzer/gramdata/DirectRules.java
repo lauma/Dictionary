@@ -803,18 +803,18 @@ public class DirectRules
 		SecondConj.reflPlural("-ojamies, -ojaties, -ojas, pag. -ojāmies", "oties"), // sarindoties
 
 		// Dīvainīši: dsk. + 3. pers. vsk.
-		BaseRule.of(
+		/*BaseRule.of(
 				"parasti dsk., -ējamies, -ējaties, -ējas (3. pers. arī vsk.), pag. -ējāmies",
 				".*ēties", 19,
 				new Tuple[] {TFeatures.POS__VERB},
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
-							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties
-		BaseRule.of(
-				"parasti dsk., -ojamies, -ojaties, -ojas, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
-				".*oties", 19,
-				new Tuple[] {TFeatures.POS__VERB},
-				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
-						Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //noslāņoties
+							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties*/
+		SecondConj.reflPlural(
+				"-ojamies, -ojaties, -ojas, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
+				"oties"), //noslāņoties
+		SecondConj.reflPlural(
+				"-ojamies, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
+				"oties"), // izretoties
 
 		// Darbības vārdu specifiskie likumi.
 		// Tikai 3. personas formas.
@@ -843,6 +843,10 @@ public class DirectRules
 		ThirdConj.refl3Pers("-as, pag. -ējās", "ēties", false), //aizčiepstēties
 		ThirdConj.refl3Pers("-inās, pag. -inājās", "ināties", false), //aizbubināties
 		ThirdConj.refl3Pers("-ās, pag. -ījās", "īties", false), //aizbīdīties
+
+		ThirdConj.reflPlural(
+				"-ināmies, pag. -inājāmies vai vsk. 3. pers., -inās, pag. -inājās",
+				"ināties", false), // izretināties
 
 		ThirdConj.reflPlural("-ējamies, -ējaties, -ējas, pag. -ējāmies", "ēties", false), //saliedēties
 		ThirdConj.reflPlural("-ināmies, pag. -inājāmies", "ināties", false), //apdāvināties
@@ -1049,6 +1053,7 @@ public class DirectRules
 		ThirdConj.refl3Pers("-ķērkstas, pag. -ķērkstējās", "ķērkstēties", false), //ieķērkstēties
 		// L, M
 		ThirdConj.refl3Pers("-mirdzas, pag. -mirdzējās", "mirdzēties", false), //aizmirdzēties
+		ThirdConj.refl3Pers("-mudas, pag. -mudējās", "mudēties", false), //samudēties
 		// N
 		ThirdConj.refl3Pers("-niezas, pag. -niezējās", "niezēties", false), //ieniezēties
 		// Ņ
@@ -1137,6 +1142,8 @@ public class DirectRules
 		ThirdConj.refl3Pers("-vankšķas, pag. -vankšķējās", "vankšķēties", false), //ievankšķēties
 		ThirdConj.refl3Pers("-vaukšas, pag. -vaukšējās", "vaukšēties", false), //ievaukšēties
 		ThirdConj.refl3Pers("-vaukšķas, pag. -vaukšķējās", "vaukšķēties", false), //ievaukšķēties
+		ThirdConj.refl3Pers("-verkšas, pag. -verkšējās", "verkšēties", false), //saverkšēties
+		ThirdConj.refl3Pers("-verkšķas, pag. -verkšķējās", "verkšķēties", false), //saverkšķēties
 		ThirdConj.refl3Pers("-vēkšas, pag. -vēkšējās", "vēkšēties", false), //ievēkšēties
 		ThirdConj.refl3Pers("-vēkšķas, pag. -vēkšķējās", "vēkšķēties", false), //ievēkšķēties
 		ThirdConj.refl3Pers("-vizas, pag. -vizējās", "vizēties", false), //ievizēties

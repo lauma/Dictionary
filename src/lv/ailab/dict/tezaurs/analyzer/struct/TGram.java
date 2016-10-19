@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
+import lv.ailab.dict.struct.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
@@ -181,6 +183,9 @@ public class TGram extends Gram
 		
 		cleanupLeftovers();
 		// TODO cleanup altLemmas;
+
+		// Pārbauda loģikas kļūdas.
+		aftercheck(lemma);
 	}
 	
 	/**
@@ -530,7 +535,6 @@ public class TGram extends Gram
 					flags.add(TFeatures.UNCLEAR_PARADIGM);
 			}
 
-
 			if (pos.contains(TValues.PIECE_OF_WORD)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 
@@ -560,6 +564,9 @@ public class TGram extends Gram
 				flags.test(TFeatures.POS__PARTICIPLE_OT) ||
 				flags.test(TFeatures.POS__PARTICIPLE_TS))
 			flags.add(TFeatures.POS__PARTICIPLE);
+		if (flags.test(TFeatures.POS__DIRECT_VERB) ||
+				flags.test(TFeatures.POS__REFL_VERB))
+			flags.add(TFeatures.POS__VERB);
 
 		if (flags.test(TFeatures.POS__PARTICIPLE))
 			flags.add(TFeatures.POS__VERB);
@@ -609,6 +616,24 @@ public class TGram extends Gram
 		}
 
 	}
+
+	/**
+	 * Pēc apstrādes var pārbaudīt karodziņus uz iekšējo konsistenci, vai nav
+	 * kaut kas galīgi šķērsu aizgājis.
+	 * TODO: papildināt izstrādes gaitā.
+	 */
+	private void aftercheck(String lemma)
+	{
+		if (flags.test(TFeatures.POS__VERB) &&
+				(paradigm.contains(15) || paradigm.contains(18) ||
+						paradigm.contains(16) || paradigm.contains(19) ||
+						paradigm.contains(17) || paradigm.contains(20) ||
+						paradigm.contains(29)) &&
+				!(flags.test(TFeatures.POS__DIRECT_VERB) ||
+					flags.test(TFeatures.POS__REFL_VERB)))
+			System.out.println("Darbības vārdam \"" + lemma + "\" nav norādīts tiešs/atgriezenisks!");
+	}
+
 	/**
 	 * Šo jāizsauc katru reizi, kad kaut ko izņem no leftovers.
 	 */

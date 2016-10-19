@@ -31,7 +31,19 @@ public class OptHypernRules
 		VerbDoubleRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //apiet
 		VerbDoubleRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //apieties\
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //apieties
+
+		VerbDoubleRule.of(
+				"esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt", null,
+				"būt", 29, new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
+				null), // būt
+		VerbDoubleRule.of(
+				"neesmu, neesi, nav, pag. nebiju", null,
+				"būt", 29, new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
+				null), // būt
+		BaseRule.of("tagadnes formas nelieto, pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", ".*būt", 29,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__VERB, TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NOT_PRESENT_FORMS)}), // pabut
 
 			// 10. paradigma: 5. deklinācija, vīriešu dzimte.
 		GenNoun.any("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
@@ -835,8 +847,12 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-trus, pag. -trusa", "trust"), //aptrust
 		// U
 		FirstConj.direct3Pers("-urdz, pag. -urdza", "urgt"), //aizurgt
-		// V, Z
+		// V
+		FirstConj.direct3Pers("-veldz, pag. -veldza", "velgt"), //velgt
+		// Z
+		FirstConj.direct3Pers("-zilgst, pag. -zilga", "zilgt"), //zilgt
 		FirstConj.direct3Pers("-zilst, pag. -zila", "zilt"), //apzilt
+		// Ž
 		FirstConj.direct3Pers("-žulgst, pag. -žulga", "žulgt"), //izžulgt
 
 		// Daudzskaitļa formu likumi.
@@ -910,6 +926,7 @@ public class OptHypernRules
 		SecondConj.direct3Pers("-smadzē, pag. -smadzēja", "smadzēt"), //piesmadzēt
 		SecondConj.direct3Pers("-šalko, pag. -šalkoja", "šalkot"), // iešalkot
 		SecondConj.direct3Pers("-tumē, pag. -tumēja", "tumēt"), // satumēt
+		SecondConj.direct3Pers("-vilnī, pag. -vilnīja", "vilnīt"), // vilnīt
 		SecondConj.direct3Pers("-vižņo, pag. -vižņoja", "vižņot"), // savižņot
 		SecondConj.direct3Pers("-zilē, pag. -zilēja", "zilēt"), // iezilēt
 
@@ -1504,14 +1521,21 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-vankšķ, pag. -vankšķēja", "vankšķēt", false), //vankšķēt
 		ThirdConj.direct3Pers("-vaukš, pag. -vaukšēja", "vaukšēt", false), //novaukšēt
 		ThirdConj.direct3Pers("-vaukšķ, pag. -vaukšķēja", "vaukšķēt", false), //novaukšķēt
+		ThirdConj.direct3Pers("-vidž, pag. -vidžēja", "vidžēt", false), //vidžēt
+		ThirdConj.direct3Pers("-virkš, pag. -virkšēja", "virkšēt", false), //virkšēt
 		ThirdConj.direct3Pers("-virkšķ, pag. -virkšķēja", "virkšķēt", false), //novirkšķēt
 		ThirdConj.direct3Pers("-viz, pag. -vizēja", "vizēt", false), //novizēt
 		// Z
+		ThirdConj.direct3Pers("-zad, pag. -zadēja", "zadēt", false), //zadēt
+		ThirdConj.direct3Pers("-zimz, pag. -zimzēja", "zimzēt", false), //zimzēt
 		ThirdConj.direct3Pers("-zlarkš, pag. -zlarkšēja", "zlarkšēt", false), //nozlarkšēt
 		ThirdConj.direct3Pers("-zlarkšķ, pag. -zlarkšķēja", "zlarkšķēt", false), //nozlarkšķēt
+		ThirdConj.direct3Pers("-zum, pag. -zumēja", "zumēt", false), //zumēt
 		ThirdConj.direct3Pers("-zuz, pag. -zuzēja", "zuzēt", false), //aizzuzēt
 		// Ž
+		ThirdConj.direct3Pers("-žļadz, pag. -žļadzēja", "žļadzēt", false), //žļadzēt
 		ThirdConj.direct3Pers("-žļakst, pag. -žļakstēja", "žļakstēt", false), //nožļakstēt
+		ThirdConj.direct3Pers("-žļankst, pag. -žļankstēja", "žļankstēt", false), //žļankstēt
 		ThirdConj.direct3Pers("-žļarkst, pag. -žļarkstēja", "žļarkstēt", false), //nožļarkstēt
 		ThirdConj.direct3Pers("-žļerkst, pag. -žļerkstēja", "žļerkstēt", false), //nožļerkstēt
 		ThirdConj.direct3Pers("-žļirkst, pag. -žļirkstēja", "žļirkstēt", false), //nožļirkstēt
@@ -1523,9 +1547,11 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-žvarkst, pag. -žvarkstēja", "žvarkstēt", false), //nožvarkstēt
 		ThirdConj.direct3Pers("-žvaukst, pag. -žvaukstēja", "žvaukstēt", false), //nožvaukstēt
 		ThirdConj.direct3Pers("-žvākst, pag. -žvākstēja", "žvākstēt", false), //nožvākstēt
-		ThirdConj.direct3Pers("-žvirkst, pag. -žvirkstēja", "žvirkstēt", false), //nožvirkstēt
-		ThirdConj.direct3Pers("-žvīkst, pag. -žvīkstēja", "žvīkstēt", false), //nožvīkstēt
+		ThirdConj.direct3Pers("-žvindz, pag. -žvindzēja", "žvindzēt", false), //žvindzēt
 		ThirdConj.direct3Pers("-žvinkst, pag. -žvinkstēja", "žvinkstēt", false), //aizžvinkstēt
+		ThirdConj.direct3Pers("-žvirkst, pag. -žvirkstēja", "žvirkstēt", false), //nožvirkstēt
+		ThirdConj.direct3Pers("-žviukst, pag. -žviukstēja", "žviukstēt", false), //žviukstēt
+		ThirdConj.direct3Pers("-žvīkst, pag. -žvīkstēja", "žvīkstēt", false), //nožvīkstēt
 
 		// Likumi daudzskaitļa formām.
 		ThirdConj.directPlural("-tekam, -tekat, -tek, pag. -tecējām", "tecēt", true), //satecēt

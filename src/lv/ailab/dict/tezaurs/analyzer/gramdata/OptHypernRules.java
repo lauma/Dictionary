@@ -250,7 +250,7 @@ public class OptHypernRules
 
 		FirstConj.directAllPersParallelHomof(
 				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "\"riest\" (parastais)"), //ieriest 2
-
+			// riešu, ries, rieš, pag. rietu, arī riešu
 		// Paralēlās formas.
 		FirstConj.directAllPersParallel(
 				"-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", "aut"), //apaut
@@ -781,13 +781,16 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-bož, pag. -boza", "bozt"), //izbozt
 		FirstConj.direct3Pers("-brūk, pag. -bruka", "brukt"), //aizbrukt
 		// C, D
+		FirstConj.direct3Pers("-derdz, pag. -derdza", "dergt"), //dergt
 		FirstConj.direct3Pers("-dim, pag. -dima", "dimt"), //aizdimt
 		FirstConj.direct3Pers("-dip, pag. -dipa", "dipt"), //aizdipt
 		FirstConj.direct3Pers("-dīgst, pag. -dīga", "dīgt"), //apdīgt
 		FirstConj.direct3Pers("-drūp, pag. -drupa", "drupt"), //apdrupt
 		FirstConj.direct3Pers("-dub, pag. -duba", "dubt"), //iedubt
 		// E, F, G
+		FirstConj.direct3Pers("-galdz, pag. -galdza", "galgt"), //galgt
 		FirstConj.direct3Pers("-glumst, pag. -gluma", "glumt"), //saglumt
+		FirstConj.direct3Pers("-grauž, pag. -grauda", "graust"), //graust
 		FirstConj.direct3Pers("-grūst, pag. -gruva", "grūt"), //aizgrūt
 		FirstConj.direct3Pers("-guldz, pag. -guldza", "gulgt"), //aizgulgt
 		// H, I
@@ -795,8 +798,10 @@ public class OptHypernRules
 		// J, K
 		FirstConj.direct3Pers("-knieš, pag. -kniesa", "kniest"), //nokniest
 		FirstConj.direct3Pers("-knīt, pag. -knita", "knist"), //izknist
+		FirstConj.direct3Pers("-krauc, pag. -krauca", "kraukt"), //pakraukt
 		FirstConj.direct3Pers("-kviec, pag. -kvieca", "kviekt"), //aizkviekt
 		FirstConj.direct3Pers("-kupst, pag. -kupa", "kupt"), //sakupt
+		FirstConj.direct3Pers("-kurc, pag. -kurca", "kurkt"), //kurkt
 		// L
 		FirstConj.direct3Pers("-lūp, pag. -lupa", "lupt"), //aplupt
 		// Ļ
@@ -805,11 +810,13 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-ļurkst, pag. -ļurka", "ļurkt"), //izļurkt
 		// M
 		FirstConj.direct3Pers("-milst, pag. -milza", "milzt"), //aizmilzt
+		FirstConj.direct3Pers("-mēj, pag. -mēja", "mēt"), //mēt
 		// N
 		FirstConj.direct3Pers("-nērš, pag. -nērsa", "nērst"), //iznērst
 		// Ņ
 		FirstConj.direct3Pers("-ņirb, pag. -ņirba", "ņirbt"), //aizņirbt
 		// O, P
+		FirstConj.direct3Pers("-paist, pag. -paisa", "paist"), //paist
 		FirstConj.direct3Pers("-palst, pag. -palsa", "palst"), //nopalst
 		// R
 		FirstConj.direct3Pers("-ris, pag. -risa", "rist"), //aprist
@@ -817,6 +824,7 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-smog, pag. -smaga", "smagt"), //piesmagt
 		FirstConj.direct3Pers("-smeldz, pag. -smeldza", "smelgt"), //aizsmelgt
 		FirstConj.direct3Pers("-smirkst, pag. -smirka", "smirkt"), //piesmirkt
+		FirstConj.direct3Pers("-spilgst, pag. -spilga", "spilgt"), //spilgt
 		FirstConj.direct3Pers("-spurdz, pag. -spurdza", "spurgt"), //pārspurgt
 		FirstConj.direct3Pers("-svēpst, pag. -svēpa", "svēpt"), //piesvēpt
 		// Š
@@ -898,6 +906,7 @@ public class OptHypernRules
 		SecondConj.direct3Pers("-piepē, pag. -piepēja", "piepēt"), //nopiepēt
 		SecondConj.direct3Pers("-plīvo, pag. -plīvoja", "plīvot"), //noplīvot
 		SecondConj.direct3Pers("-sērē, pag. -sērēja", "sērēt"), //aizsērēt
+		SecondConj.direct3Pers("-skānē, pag. -skānēja", "skānēt"), //skānēt
 		SecondConj.direct3Pers("-smadzē, pag. -smadzēja", "smadzēt"), //piesmadzēt
 		SecondConj.direct3Pers("-šalko, pag. -šalkoja", "šalkot"), // iešalkot
 		SecondConj.direct3Pers("-tumē, pag. -tumēja", "tumēt"), // satumēt
@@ -1172,6 +1181,8 @@ public class OptHypernRules
 		ThirdConj.direct3PersParallel(
 				"-rit, pag. -ritēja (retāk -rita, 1. konj.)", "ritēt", false), // aizritēt
 		ThirdConj.direct3PersParallel(
+				"-skand, pag. -skandēja (retāk -skanda, 1. konj.)", "skandēt", false), // skandēt
+		ThirdConj.direct3PersParallel(
 				"-smird, pag. -smirdēja (arī -smirda, 1. konj.)", "smirdēt", false), // sasmirdēt
 		ThirdConj.direct3PersParallel(
 				"-spindz, pag. -spindzēja (retāk -spindza, 1. konj.)", "spindzēt", false), // aizspindzēt
@@ -1218,31 +1229,46 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-būb, pag. -būbēja", "būbēt", false), //apbūbēt
 		ThirdConj.direct3Pers("-būkš, pag. -būkšēja", "būkšēt", false), //nobūkšēt
 		ThirdConj.direct3Pers("-būkšķ, pag. -būkšķēja", "būkšķēt", false), //nobūkšķēt
-		// C, Č
+		// C
+		ThirdConj.direct3Pers("-cipst, pag. -cipstēja", "cipstēt", false), //cipstēt
+		ThirdConj.direct3Pers("-cirpst, pag. -cirpstēja", "cirpstēt", false), //cirpstēt
+		// Č
 		ThirdConj.direct3Pers("-čakst, pag. -čakstēja", "čakstēt", false), //nočakstēt
+		ThirdConj.direct3Pers("-čarkst, pag. -čarkstēja", "čarkstēt", false), //čarkstēt
 		ThirdConj.direct3Pers("-čaukst, pag. -čaukstēja", "čaukstēt", false), //aizčaukstēt
+		ThirdConj.direct3Pers("-čērkst, pag. čērkstēja", "čērkstēt", false), //čērkstēt
 		ThirdConj.direct3Pers("-čib, pag. -čibēja", "čibēt", false), //izčibēt
 		ThirdConj.direct3Pers("-čirkst, pag. -čirkstēja", "čirkstēt", false), //nočirkstēt
+		ThirdConj.direct3Pers("-čirpst, pag. -čirpstēja", "čirpstēt", false), //čirpstēt
+		ThirdConj.direct3Pers("-čiukst, pag. -čiukstēja", "čiukstēt", false), //čiukstēt
+		ThirdConj.direct3Pers("-čum, pag. -čumēja", "čumēt", false), //čumēt
 		ThirdConj.direct3Pers("-čurkst, pag. -čurkstēja", "čurkstēt", false), //izčurkstēt
 		ThirdConj.direct3Pers("-čūkst, pag. -čūkstēja", "čūkstēt", false), //nočūkstēt
 		// D
 		ThirdConj.direct3Pers("-dārd, pag. -dārdēja", "dārdēt", false), //aizdārdēt
 		ThirdConj.direct3Pers("-dimd, pag. -dimdēja", "dimdēt", false), //aizdimdēt
 		ThirdConj.direct3Pers("-dip, pag. -dipēja", "dipēt", false), //aizdipēt
+		ThirdConj.direct3Pers("-dund, pag. -dundēja", "dundēt", false), //dundēt
 		ThirdConj.direct3Pers("-dun, pag. -dunēja", "dunēt", false), //aizdunēt
 		ThirdConj.direct3Pers("-dzinkst, pag. -dzinkstēja", "dzinkstēt", false), //nodzinkstēt
 		ThirdConj.direct3Pers("-dzirkst, pag. -dzirkstēja", "dzirkstēt", false), //iedzirkstēt
+		ThirdConj.direct3Pers("-džerkst, pag. -džerkstēja", "džerkstēt", false), //džerkstēt
 		ThirdConj.direct3Pers("-džinkst, pag. -džinkstēja", "džinkstēt", false), //aizdžinkstēt
+		ThirdConj.direct3Pers("-džirkst, pag. -džirkstēja", "džirkstēt", false), //džirkstēt
 		// E, F, G
 		ThirdConj.direct3Pers("-granda, pag. -grandīja", "grandīt", false), //nograndīt
 		ThirdConj.direct3Pers("-guldz, pag. -guldzēja", "guldzēt", false), //noguldzēt
 		ThirdConj.direct3Pers("-gurkst, pag. -gurkstēja", "gurkstēt", false), //aizgurkstēt
 		ThirdConj.direct3Pers("-gurkš, pag. -gurkšēja", "gurkšēt", false), //pagurkšēt
 		ThirdConj.direct3Pers("-gurkšķ, pag. -gurkšķēja", "gurkšķēt", false), //pagurkšķēt
-		// H, I, J, K
+		// H, I
+		ThirdConj.direct3Pers("-indz, pag. -indzēja", "indzēt", false), //indzēt
+		ThirdConj.direct3Pers("-irdz, pag. -irdzēja", "irdzēt", false), //irdzēt
+		// J, K
 		ThirdConj.direct3Pers("-klakst, pag. -klakstēja", "klakstēt", false), //aizklakstēt
 		ThirdConj.direct3Pers("-klakš, pag. -klakšēja", "klakšēt", false), //noklakšēt
 		ThirdConj.direct3Pers("-klakšķ, pag. -klakšķēja", "klakšķēt", false), //noklakšķēt
+		ThirdConj.direct3Pers("-kland, pag. -klandēja", "klandēt", false), //klandēt
 		ThirdConj.direct3Pers("-klankst, pag. -klankstēja", "klankstēt", false), //noklankstēt
 		ThirdConj.direct3Pers("-klankš, pag. -klankšēja", "klankšēt", false), //noklankšēt
 		ThirdConj.direct3Pers("-klankšķ, pag. -klankšķēja", "klankšķēt", false), //noklankšķēt
@@ -1255,21 +1281,33 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-klinkš, pag. -klinkšēja", "klinkšēt", false), //noklinkšēt
 		ThirdConj.direct3Pers("-klinkšķ, pag. -klinkšķēja", "klinkšķēt", false), //noklinkšķēt
 		ThirdConj.direct3Pers("-klukst, pag. -klukstēja", "klukstēt", false), //noklukstēt
+		ThirdConj.direct3Pers("-klukš, pag. -klukšēja", "klukšēt", false), //klukšēt
+		ThirdConj.direct3Pers("-klukšķ, pag. -klukšķēja", "klukšķēt", false), //klukšķēt
 		ThirdConj.direct3Pers("-klunkst, pag. -klunkstēja", "klunkstēt", false), //noklunkstēt
 		ThirdConj.direct3Pers("-klunkš, pag. -klunkšēja", "klunkšēt", false), //noklunkšēt
 		ThirdConj.direct3Pers("-klunkšķ, pag. -klunkšķēja", "klunkšķēt", false), //noklunkšķēt
 		ThirdConj.direct3Pers("-knakst, pag. -knakstēja", "knakstēt", false), //noknakstēt
 		ThirdConj.direct3Pers("-knakš, pag. -knakšēja", "knakšēt", false), //noknakšēt
 		ThirdConj.direct3Pers("-knakšķ, pag. -knakšķēja", "knakšķēt", false), //noknakšķēt
+		ThirdConj.direct3Pers("-knaukst, pag. -knaukstēja", "knaukstēt", false), //noknaukstēt
 		ThirdConj.direct3Pers("-knaukš, pag. -knaukšēja", "knaukšēt", false), //noknaukšēt
 		ThirdConj.direct3Pers("-knaukšķ, pag. -knaukšķēja", "knaukšķēt", false), //noknaukšķēt
+		ThirdConj.direct3Pers("-knies, pag. -kniesēja", "kniesēt", false), //kniesēt
+		ThirdConj.direct3Pers("-kniez, pag. -kniezēja", "kniezēt", false), //kniezēt
 		ThirdConj.direct3Pers("-knikst, pag. -knikstēja", "knikstēt", false), //noknikstēt
 		ThirdConj.direct3Pers("-knikš, pag. -knikšēja", "knikšēt", false), //noknikšēt
 		ThirdConj.direct3Pers("-knikšķ, pag. -knikšķēja", "knikšķēt", false), //noknikšķēt
+		ThirdConj.direct3Pers("-knirkst, pag. -knirkstēja", "knirkstēt", false), //knirkstēt
+		ThirdConj.direct3Pers("-kniukst, pag. -kniukstēja", "kniukstēt", false), //kniukstēt
+		ThirdConj.direct3Pers("-kniukš, pag. -kniukšēja", "kniukšēt", false), //kniukšēt
+		ThirdConj.direct3Pers("-kniukšķ, pag. -kniukšķēja", "kniukšķēt", false), //kniukšķēt
 		ThirdConj.direct3Pers("-kņud, pag. -kņudēja", "kņudēt", false), //nokņudēt
 		ThirdConj.direct3Pers("-krakst, pag. -krakstēja", "krakstēt", false), //nokrakstēt
 		ThirdConj.direct3Pers("-krakš, pag. -krakšēja", "krakšēt", false), //nokrakšēt
 		ThirdConj.direct3Pers("-krakšķ, pag. -krakšķēja", "krakšķēt", false), //nokrakšķēt
+		ThirdConj.direct3Pers("-krapst, pag. -krapstēja", "krapstēt", false), //krapstēt
+		ThirdConj.direct3Pers("-krapš, pag. -krapšēja", "krapšēt", false), //krapšēt
+		ThirdConj.direct3Pers("-krapšķ, pag. -krapšķēja", "krapšķēt", false), //krapšķēt
 		ThirdConj.direct3Pers("-kraukst, pag. -kraukstēja", "kraukstēt", false), //nokraukstēt
 		ThirdConj.direct3Pers("-kraukš, pag. -kraukšēja", "kraukšēt", false), //nokraukšēt
 		ThirdConj.direct3Pers("-kraukšķ, pag. -kraukšķēja", "kraukšķēt", false), //nokraukšķēt
@@ -1278,28 +1316,48 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-krikšķ, pag. -krikšķēja", "krikšķēt", false), //nokrikšķēt
 		ThirdConj.direct3Pers("-krimš, pag. -krimšēja", "krimšēt", false), //nokrimšēt
 		ThirdConj.direct3Pers("-krimšķ, pag. -krimšķēja", "krimšķēt", false), //nokrimšķēt
+		ThirdConj.direct3Pers("-kripst, pag. -kripstēja", "kripstēt", false), //kripstēt
+		ThirdConj.direct3Pers("-kripš, pag. -kripšēja", "kripšēt", false), //kripšēt
+		ThirdConj.direct3Pers("-kripšķ, pag. -kripšķēja", "kripšķēt", false), //kripšķēt
+		ThirdConj.direct3Pers("-kriukst, pag. -kriukstēja", "kriukstēt", false), //kriukstēt
 		ThirdConj.direct3Pers("-kriukš, pag. -kriukšēja", "kriukšēt", false), //pakriukšēt
 		ThirdConj.direct3Pers("-kriukšķ, pag. -kriukšķēja", "kriukšķēt", false), //pakriukšķēt
 		ThirdConj.direct3Pers("-kurkst, pag. -kurkstēja", "kurkstēt", false), //nokurkstēt
 		ThirdConj.direct3Pers("-kurkš, pag. -kurkšēja", "kurkšēt", false), //nokurkšēt
 		ThirdConj.direct3Pers("-kurkšķ, pag. -kurkšķēja", "kurkšķēt", false), //nokurkšķēt
-		ThirdConj.direct3Pers("-kut, pag. -kutēja ", "kutēt", false), //pakutēt
+		ThirdConj.direct3Pers("-kut, pag. -kutēja", "kutēt", false), //pakutēt
 		ThirdConj.direct3Pers("-kvakst, pag. -kvakstēja", "kvakstēt", false), //nokvakstēt
 		ThirdConj.direct3Pers("-kvakš, pag. -kvakšēja", "kvakšēt", false), //nokvakšēt
 		ThirdConj.direct3Pers("-kvakšķ, pag. -kvakšķēja", "kvakšķēt", false), //nokvakšķēt
 		ThirdConj.direct3Pers("-kvankst, pag. -kvankstēja", "kvankstēt", false), //nokvankstēt
 		ThirdConj.direct3Pers("-kvankš, pag. -kvankšēja", "kvankšēt", false), //nokvankšēt
 		ThirdConj.direct3Pers("-kvankšķ, pag. -kvankšķēja", "kvankšķēt", false), //nokvankšķēt
+		ThirdConj.direct3Pers("-kvarkš, pag. -kvarkšēja", "kvarkšēt", false), //kvarkšēt
+		ThirdConj.direct3Pers("-kvarkšķ, pag. -kvarkšķēja", "kvarkšķēt", false), //kvarkšķēt
+		ThirdConj.direct3Pers("-kvekst, pag. -kvekstēja", "kvekstēt", false), //kvekstēt
+		ThirdConj.direct3Pers("-kvekš, pag. -kvekšēja", "kvekšēt", false), //kvekšēt
+		ThirdConj.direct3Pers("-kvekšķ, pag. -kvekšķēja", "kvekšķēt", false), //kvekšķēt
+		ThirdConj.direct3Pers("-kverkst, pag. -kverkstēja", "kverkstēt", false), //kverkstēt
+		ThirdConj.direct3Pers("-kverkš, pag. -kverkšēja", "kverkšēt", false), //kverkšēt
+		ThirdConj.direct3Pers("-kverkšķ, pag. -kverkšķēja", "kverkšķēt", false), //kverkšķēt
+		// Ķ
+		ThirdConj.direct3Pers("-ķaukst, pag. -ķaukstēja", "ķaukstēt", false), //ķaukstēt
+		ThirdConj.direct3Pers("-ķiukst, pag. -ķiukstēja", "ķiukstēt", false), //ķiukstēt
 		// L
 		ThirdConj.direct3Pers("-lās, pag. -lāsēja", "lāsēt", false), //pielāsēt
+		ThirdConj.direct3Pers("-lon, pag. -lonēja", "lonēt", false), //lonēt
+		// M
+		ThirdConj.direct3Pers("-mēkšķ, pag. -mēkšķēja", "mēkšķēt", false), //mēkšķēt
 		ThirdConj.direct3Pers("-mud, pag. -mudēja", "mudēt", false), //samudet
-		// M, N
+		ThirdConj.direct3Pers("-mudž, pag. -mudžēja", "mudžēt", false), //mudžēt
+		// N
 		ThirdConj.direct3Pers("-niez, pag. -niezēja", "niezēt", false), //paniezēt
 		// Ņ
 		ThirdConj.direct3Pers("-ņirb, pag. -ņirbēja", "ņirbēt", false), //aizņirbēt
 		ThirdConj.direct3Pers("-ņirkst, pag. -ņirkstēja", "ņirkstēt", false), //noņirkstēt
 		ThirdConj.direct3Pers("-ņirkš, pag. -ņirkšēja", "ņirkšēt", false), //noņirkšēt
 		ThirdConj.direct3Pers("-ņirkšķ, pag. -ņirkšķēja", "ņirkšķēt", false), //noņirkšķēt
+		ThirdConj.direct3Pers("-ņudz, pag. -ņudzēja", "ņudzēt", false), //ņudzēt
 		// O, P
 		ThirdConj.direct3Pers("-pakš, pag. -pakšēja", "pakšēt", false), //nopakšēt
 		ThirdConj.direct3Pers("-pakšķ, pag. -pakšķēja", "pakšķēt", false), //nopakšķēt
@@ -1308,6 +1366,7 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-pēkst, pag. -pēkstēja", "pēkstēt", false), //nopēkstēt
 		ThirdConj.direct3Pers("-pēkš, pag. -pēkšēja", "pēkšēt", false), //nopēkšēt
 		ThirdConj.direct3Pers("-pēkšķ, pag. -pēkšķēja", "pēkšķēt", false), //nopēkšķēt
+		ThirdConj.direct3Pers("-plakst, pag. -plakstēja", "plakstēt", false), //noplakstēt
 		ThirdConj.direct3Pers("-plakš, pag. -plakšēja", "plakšēt", false), //noplakšēt
 		ThirdConj.direct3Pers("-plakšķ, pag. -plakšķēja", "plakšķēt", false), //noplakšķēt
 		ThirdConj.direct3Pers("-plākš, pag. -plākšēja", "plākšēt", false), //noplākšēt
@@ -1315,19 +1374,29 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-pland, pag. -plandēja", "plandēt", false), //noplandēt
 		ThirdConj.direct3Pers("-plaukš, pag. -plaukšēja", "plaukšēt", false), //noplaukšēt
 		ThirdConj.direct3Pers("-plaukšķ, pag. -plaukšķēja", "plaukšķēt", false), //noplaukšķēt
+		ThirdConj.direct3Pers("-plekst, pag. -plekstēja", "plekstēt", false), //plekstēt
+		ThirdConj.direct3Pers("-plekš, pag. -plekšēja", "plekšēt", false), //plekšēt
+		ThirdConj.direct3Pers("-plekšķ, pag. -plekšķēja", "plekšķēt", false), //plekšķēt
+		ThirdConj.direct3Pers("-plikst, pag. plikstēja", "plikstēt", false), //plikstēt
 		ThirdConj.direct3Pers("-plikš, pag. -plikšēja", "plikšēt", false), //paplikšēt
 		ThirdConj.direct3Pers("-plikšķ, pag. -plikšķēja", "plikšķēt", false), //paplikškēt
-		ThirdConj.direct3Pers("-plīkš, pag. -plīkšēja", "plīkšēt", false), //noplīkšēt
-		ThirdConj.direct3Pers("-plīkšķ, pag. -plīkšķēja", "plīkšķēt", false), //noplīkšķēt
 		ThirdConj.direct3Pers("-plinkš, pag. -plinkšēja", "plinkšēt", false), //noplinkšēt
 		ThirdConj.direct3Pers("-plinkšķ, pag. -plinkšķēja", "plinkšķēt", false), //noplinkšķēt
+		ThirdConj.direct3Pers("-plirkš, pag. -plirkšēja", "plirkšēt", false), //plirkšēt
+		ThirdConj.direct3Pers("-plirkšķ, pag. -plirkšķēja", "plirkšķēt", false), //plirkšķēt
 		ThirdConj.direct3Pers("-pliukš, pag. -pliukšēja", "pliukšēt", false), //nopliukšēt
 		ThirdConj.direct3Pers("-pliukšķ, pag. -pliukšķēja", "pliukšķēt", false), //nopliukšķēt
+		ThirdConj.direct3Pers("-plīkš, pag. -plīkšēja", "plīkšēt", false), //noplīkšēt
+		ThirdConj.direct3Pers("-plīkšķ, pag. -plīkšķēja", "plīkšķēt", false), //noplīkšķēt
 		ThirdConj.direct3Pers("-plīv, pag. -plīvēja", "plīvēt", false), //noplīvēt
 		ThirdConj.direct3Pers("-plunkš, pag. -plunkšēja", "plunkšēt", false), //noplunkšēt
 		ThirdConj.direct3Pers("-plunkšķ, pag. -plunkšķēja", "plunkšķēt", false), //noplunkšķēt
+		ThirdConj.direct3Pers("-pūkš, pag. -pūkšēja", "pūkšēt", false), //pūkšēt
+		ThirdConj.direct3Pers("-pūkšķ, pag. -pūkšķēja", "pūkšķēt", false), //pūkšķēt
 		// R
 		ThirdConj.direct3Pers("-rec, pag. -recēja", "recēt", false), //aprecēt
+		ThirdConj.direct3Pers("-rekš, pag. -rekšēja", "rekšēt", false), //rekšēt
+		ThirdConj.direct3Pers("-rekšķ, pag. -rekšķēja", "rekšķēt", false), //rekšķēt
 		ThirdConj.direct3Pers("-riet, pag. -rietēja", "rietēt", false), //aizrietēt
 		ThirdConj.direct3Pers("-ris, pag. -risēja", "risēt", false), //norisēt
 		ThirdConj.direct3Pers("-rit, pag. -ritēja", "ritēt", false), // pārritēt
@@ -1335,16 +1404,29 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-rukst, pag. -rukstēja", "rukstēt", false), //norukstēt
 		ThirdConj.direct3Pers("-rukš, pag. -rukšēja", "rukšēt", false), //atrukšēt
 		ThirdConj.direct3Pers("-rukšķ, pag. -rukšķēja", "rukšķēt", false), //atrukšķēt
+		ThirdConj.direct3Pers("-rūp, pag. -rūpēja", "rūpēt", false), //rūpēt
 		// S
 		ThirdConj.direct3Pers("-san, pag. -sanēja", "sanēt", false), //aizsanēt
 		ThirdConj.direct3Pers("-sekš, pag. -sekšēja", "sekšēt", false), //sasekšēt
 		ThirdConj.direct3Pers("-sekšķ, pag. -sekšķēja", "sekšķēt", false), //sasekškēt
+		ThirdConj.direct3Pers("-skrab, pag. -skrabēja", "skrabēt", false), //skrabēt
+		ThirdConj.direct3Pers("-skrakst, pag. -skrakstēja", "skrakstēt", false), //skrakstēt
+		ThirdConj.direct3Pers("-skrakš, pag. -skrakšēja", "skrakšēt", false), //skrakšēt
+		ThirdConj.direct3Pers("-skrakšķ, pag. -skrakšķēja", "skrakšķēt", false), //skrakšķēt
 		ThirdConj.direct3Pers("-skapst, pag. -skapstēja", "skapstēt", false), //apskapstēt
 		ThirdConj.direct3Pers("-skrapst, pag. -skrapstēja", "skrapstēt", false), //noskrapstēt
 		ThirdConj.direct3Pers("-skrapš, pag. -skrapšēja", "skrapšēt", false), //noskrapšēt
 		ThirdConj.direct3Pers("-skrapšķ, pag. -skrapšķēja", "skrapšķēt", false), //noskrapšķēt
+		ThirdConj.direct3Pers("-skraukst, pag. -skraukstēja", "skraukstēt", false), //skraukstēt
 		ThirdConj.direct3Pers("-skraukš, pag. -skraukšēja", "skraukšēt", false), //noskraukšēt
 		ThirdConj.direct3Pers("-skraukšķ, pag. -skraukšķēja", "skraukšķēt", false), //noskraukšķēt
+		ThirdConj.direct3Pers("-skripst, pag. -skripstēja", "skripstēt", false), //skripstēt
+		ThirdConj.direct3Pers("-skripš, pag. -skripšēja", "skripšēt", false), //skripšēt
+		ThirdConj.direct3Pers("-skripšķ, pag. -skripšķēja", "skripšķēt", false), //skripšķēt
+		ThirdConj.direct3Pers("-skriukst, pag. -skriukstēja", "skriukstēt", false), //skriukstēt
+		ThirdConj.direct3Pers("-skriukš, pag. -skriukšēja", "skriukšēt", false), //skriukšēt
+		ThirdConj.direct3Pers("-skriukšķ, pag. -skriukšķēja", "skriukšķēt", false), //skriukšķēt
+		ThirdConj.direct3Pers("-sparkst, pag. -sparkstēja", "sparkstēt", false), //sparkstēt
 		ThirdConj.direct3Pers("-sparkš, pag. -sparkšēja", "sparkšēt", false), //nosparkšēt
 		ThirdConj.direct3Pers("-sparkšķ, pag. -sparkšķēja", "sparkšķēt", false), //nosparkšķēt
 		ThirdConj.direct3Pers("-sprakst, pag. -sprakstēja", "sprakstēt", false), //aizsprakstēt
@@ -1353,31 +1435,52 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-spraukst, pag. -spraukstēja", "spraukstēt", false), //nospraukstēt
 		ThirdConj.direct3Pers("-spraukš, pag. -spraukšēja", "spraukšēt", false), //nospraukšēt
 		ThirdConj.direct3Pers("-spraukšķ, pag. -spraukšķēja", "spraukšķēt", false), //nospraukšķēt
+		ThirdConj.direct3Pers("-stinkš, pag. -stinkšēja", "stinkšēt", false), //stinkšēt
+		ThirdConj.direct3Pers("-stinkšķ, pag. -stinkšķēja", "stinkšķēt", false), //stinkšķēt
+		ThirdConj.direct3Pers("-stirkst, pag. -stirkstēja", "stirkstēt", false), //stirkstēt
 		ThirdConj.direct3Pers("-stirkš, pag. -stirkšēja", "stirkšēt", false), //nosptirkšēt
 		ThirdConj.direct3Pers("-stirkšķ, pag. -stirkšķēja", "stirkšķēt", false), //nostirkšķēt
+		ThirdConj.direct3Pers("-strikš, pag. -strikšēja", "strikšēt", false), //strikšēt
+		ThirdConj.direct3Pers("-strikšķ, pag. -strikšķēja", "strikšķēt", false), //strikšķēt
 		ThirdConj.direct3Pers("-strinkš, pag. -strinkšēja", "strinkšēt", false), //nostrinkšēt
 		ThirdConj.direct3Pers("-strinkšķ, pag. -strinkšķēja", "strinkšķēt", false), //nostrinkšķēt
 		ThirdConj.direct3Pers("-sus, pag. -susēja", "susēt", false), //apsusēt
 		ThirdConj.direct3Pers("-sūb, pag. -sūbēja", "sūbēt", false), //piesūbēt
+		ThirdConj.direct3Pers("-sūkst, pag. -sūkstēja", "sūkstēt", false), //sūkstēt
+		ThirdConj.direct3Pers("-sūrkst, pag. -sūrkstēja", "sūrkstēt", false), //sūrkstēt
 		ThirdConj.direct3Pers("-sūrst, pag. -sūrstēja", "sūrstēt", false), //nosūrstēt
 		// Š
 		ThirdConj.direct3Pers("-šļakst, pag. -šļakstēja", "šļakstēt", false), //aizšļakstēt
+		ThirdConj.direct3Pers("-šļankst, pag. -šļankstēja", "šļankstēt", false), //šļankstēt
+		ThirdConj.direct3Pers("-šļaukst, pag. -šļaukstēja", "šļaukstēt", false), //šļaukstēt
+		ThirdConj.direct3Pers("-šļirkst, pag. -šļirkstēja", "šļirkstēt", false), //šļirkstēt
+		ThirdConj.direct3Pers("-šļurkst, pag. -šļurkstēja", "šļurkstēt", false), //šļurkstēt
 		ThirdConj.direct3Pers("-šmakst, pag. -šmakstēja", "šmakstēt", false), //nošmakstēt
 		ThirdConj.direct3Pers("-šmaukst, pag. -šmaukstēja", "šmaukstēt", false), //nošmaukstēt
 		ThirdConj.direct3Pers("-šmīkst, pag. -šmīkstēja", "šmīkstēt", false), //nošmīkstēt
 		ThirdConj.direct3Pers("-šmiukst, pag. -šmiukstēja", "šmiukstēt", false), //nošmiukstēt
+		ThirdConj.direct3Pers("-šmuikst, pag. -šmuikstēja", "šmuikstēt", false), //šmuikstēt
+		ThirdConj.direct3Pers("-šmurkst, pag. -šmurkstēja", "šmurkstēt", false), //šmurkstēt
 		ThirdConj.direct3Pers("-šmūkst, pag. -šmūkstēja", "šmūkstēt", false), //nošmūkstēt
 		ThirdConj.direct3Pers("-šņakst, pag. -šņakstēja", "šņakstēt", false), //nošņakstēt
+		ThirdConj.direct3Pers("-šņarkst, pag. -šņarkstēja", "šņarkstēt", false), //šņarkstēt
 		ThirdConj.direct3Pers("-šņerkst, pag. -šņerkstēja", "šņerkstēt", false), //nošņerkstēt
+		ThirdConj.direct3Pers("-šņikst, pag. -šņikstēja", "šņikstēt", false), //šņikstēt
 		ThirdConj.direct3Pers("-šņirkst, pag. -šņirkstēja", "šņirkstēt", false), //nošņirkstēt
 		ThirdConj.direct3Pers("-švīkst, pag. -švīkstēja", "švīkstēt", false), //aizšvīkstēt
 		// T
+		ThirdConj.direct3Pers("-takš, pag. -takšēja", "takšēt", false), //takšēt
+		ThirdConj.direct3Pers("-takšķ, pag. -takšķēja", "takšķēt", false), //takšķēt
+		ThirdConj.direct3Pers("-tankš, pag. -tankšēja", "tankšēt", false), //tankšēt
+		ThirdConj.direct3Pers("-tankšķ, pag. -tankšķēja", "tankšķēt", false), //tankšķēt
 		ThirdConj.direct3Pers("-tikš, pag. -tikšēja", "tikšēt", false), //aiztikšēt
 		ThirdConj.direct3Pers("-tikšķ, pag. -tikšķēja", "tikšķēt", false), //aiztikšķēt
 		ThirdConj.direct3Pers("-tinkš, pag. -tinkšēja", "tinkšēt", false), //aiztinkšēt
 		ThirdConj.direct3Pers("-tinkšķ, pag. -tinkšķēja", "tinkšķēt", false), //aiztinkšķēt
 		ThirdConj.direct3Pers("-tirkš, pag. -tirkšēja", "tirkšēt", false), //notirkšēt
 		ThirdConj.direct3Pers("-tirkšķ, pag. -tirkšķēja", "tirkšķēt", false), //notirkšķēt
+		ThirdConj.direct3Pers("-tramš, pag. -tramšēja", "tramšēt", false), //tramšēt
+		ThirdConj.direct3Pers("-tramšķ, pag. -tramšķēja", "tramšķēt", false), //tramšķēt
 		ThirdConj.direct3Pers("-trankš, pag. -trankšēja", "trankšēt", false), //notrankšēt
 		ThirdConj.direct3Pers("-trankšķ, pag. -trankšķēja", "trankšķēt", false), //notrankšķēt
 		ThirdConj.direct3Pers("-trinkš, pag. -trinkšēja", "trinkšēt", false), //notrinkšēt
@@ -1388,10 +1491,17 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-trūd, pag. -trūdēja", "trūdēt", false), //aptrūdēt
 		ThirdConj.direct3Pers("-tvan, pag. -tvanēja", "tvanēt", false), //iztvanēt
 		// U
+		ThirdConj.direct3Pers("-urd, pag. -urdēja", "urdēt", false), //urdēt
 		ThirdConj.direct3Pers("-urdz, pag. -urdzēja", "urdzēt", false), //aizurdzēt
 		ThirdConj.direct3Pers("-urkš, pag. -urkšēja", "urkšēt", false), //paurkšēt
 		ThirdConj.direct3Pers("-urkšķ, pag. -urkšķēja", "urkšķēt", false), //paurkšķēt
+		// Ū
+		ThirdConj.direct3Pers("-ūkš, pag. -ūkšēja", "ūkšēt", false), //ūkšēt
+		ThirdConj.direct3Pers("-ūkšķ, pag. -ūkšķēja", "ūkšķēt", false), //ūkšķēt
 		// V
+		ThirdConj.direct3Pers("-vajag, pag. -vajadzēja", "vajadzēt", false), //vajadzēt
+		ThirdConj.direct3Pers("-vankš, pag. -vankšēja", "vankšēt", false), //vankšēt
+		ThirdConj.direct3Pers("-vankšķ, pag. -vankšķēja", "vankšķēt", false), //vankšķēt
 		ThirdConj.direct3Pers("-vaukš, pag. -vaukšēja", "vaukšēt", false), //novaukšēt
 		ThirdConj.direct3Pers("-vaukšķ, pag. -vaukšķēja", "vaukšķēt", false), //novaukšķēt
 		ThirdConj.direct3Pers("-virkšķ, pag. -virkšķēja", "virkšķēt", false), //novirkšķēt
@@ -1867,18 +1977,24 @@ public class OptHypernRules
 
 		// Paralēlās formas.
 		FirstConj.refl3PersParallel("-jaušas, pag. -jautās, arī -jaužas, pag. -jaudās", "jausties"), //jausties
+		FirstConj.refl3PersParallel("-jumjas, pag. -jūmās, arī -jumās", "jumties"), //jumties
 		FirstConj.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 
 		// Standarts
-		// A, B, C, D, E, F, G
+		// A, B, C, D
+		FirstConj.refl3Pers("-derdzas, pag. -derdzās", "dergties"), // dergties
+		// E, F, G
 		FirstConj.refl3Pers("-graujas, pag. -grāvās", "grauties"), // iegrauties
 		// H, I, J, K
+		FirstConj.refl3Pers("-knābjas, pag. -knābās", "knābties"), // knābties
+		FirstConj.refl3Pers("-kremtas, pag. -krimtās", "krimsties"), // krimsties
 		FirstConj.refl3Pers("-kurcas, pag. -kurcās", "kurkties"), // iekurkties
-		FirstConj.refl3Pers("-kuras, pag. -kurās", "kurties"), // iekurties
+		FirstConj.refl3Pers("-kuras, pag. -kūrās", "kurties"), // iekurties
 		// L, M
 		FirstConj.refl3Pers("-maujas, pag. -māvās", "mauties"), // atmauties
 		// N, O, P
 		FirstConj.refl3Pers("-paužas, pag. -paudās", "pausties"), //izpausties
+		FirstConj.refl3Pers("-plokas, pag. -plakās", "plakties"), //plakties
 		// R
 		FirstConj.refl3Pers("-riežas, pag. -riezās", "riezties"), //ieriezties
 		// S
@@ -2011,6 +2127,8 @@ public class OptHypernRules
 		ThirdConj.refl3Pers("-mīcās, pag. -mīcījās", "mīcīties", false), //piemīcīties
 		ThirdConj.refl3Pers("-vajagas, pag. -vajadzējās", "vajadzēties", true), //ievajadzēties
 		ThirdConj.refl3Pers("-vārās, pag. -vārījās", "vārīties", false), //pievārīties
+
+		ThirdConj.reflPlural("-čukstamies, pag. -čukstējāmies", "čukstēties", false), // čukstēties
 
 	};
 

@@ -810,8 +810,11 @@ public class DirectRules
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
 							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties*/
 		SecondConj.reflPlural(
+				"-ējamies, -ējaties, -ējas, pag. -ējāmies vai vsk. 3. pers., -ējas, pag. -ējāmies",
+				"ēties"), // konstituēties
+		SecondConj.reflPlural(
 				"-ojamies, -ojaties, -ojas, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
-				"oties"), //noslāņoties
+				"oties"), // noslāņoties
 		SecondConj.reflPlural(
 				"-ojamies, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
 				"oties"), // izretoties

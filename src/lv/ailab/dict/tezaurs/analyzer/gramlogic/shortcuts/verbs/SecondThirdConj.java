@@ -36,6 +36,7 @@ public final class SecondThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -63,6 +64,7 @@ public final class SecondThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -93,6 +95,7 @@ public final class SecondThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -120,6 +123,7 @@ public final class SecondThirdConj
     {
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else

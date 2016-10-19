@@ -31,11 +31,18 @@ public class DirectRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final Rule[] other = {
-		BaseRule.of("esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt",
+		VerbDoubleRule.of(
+				"esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt", null,
 				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null), //būt
-		VerbDoubleRule.of("neesmu, neesi,", "nav, pag. nebiju", "nebūt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "nebūt"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null), //nebūt
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.PARALLEL_FORMS,
+						TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
+				null), // būt
+		VerbDoubleRule.of(
+				"neesmu, neesi, nav, pag. nebiju", null,
+				"būt", 29,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
+						TFeatures.POS__DIRECT_VERB},
+				null), // būt
 
 		// 1. paradigma: 1. dekl. lietvārdi, -s
 		GenNoun.any("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // cepurnieks

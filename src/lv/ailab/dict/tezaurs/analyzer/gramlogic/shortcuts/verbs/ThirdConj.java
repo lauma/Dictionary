@@ -32,7 +32,7 @@ public final class ThirdConj
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return  VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 17,
-				new Tuple[]{soundChange}, null);
+				new Tuple[]{soundChange, TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public final class ThirdConj
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 17,
-				new Tuple[]{soundChange}, null);
+				new Tuple[]{soundChange, TFeatures.POS__DIRECT_VERB}, null);
 
 	}
 
@@ -71,6 +71,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -98,6 +99,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
@@ -123,6 +125,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -150,6 +153,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
@@ -172,7 +176,8 @@ public final class ThirdConj
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  PluralVerbRule.of(patternText, lemmaEnd, 17, new Tuple[]{soundChange}, null);
+		return  PluralVerbRule.of(patternText, lemmaEnd, 17,
+				new Tuple[]{soundChange, TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -190,7 +195,7 @@ public final class ThirdConj
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return  VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 20,
-				new Tuple[]{soundChange}, null);
+				new Tuple[]{soundChange, TFeatures.POS__REFL_VERB}, null);
 	}
 
 	/**
@@ -209,7 +214,7 @@ public final class ThirdConj
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 20,
-				new Tuple[]{soundChange}, null);
+				new Tuple[]{soundChange, TFeatures.POS__REFL_VERB}, null);
 	}
 
 	/**
@@ -229,6 +234,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (presentChange)
 			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
 		else
@@ -256,6 +262,7 @@ public final class ThirdConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__REFL_VERB);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
@@ -281,6 +288,7 @@ public final class ThirdConj
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.OPT_PRESENT_SOUNDCHANGE);
+		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
@@ -302,6 +310,7 @@ public final class ThirdConj
 	{
 		Tuple<String, String> soundChange = presentChange ?
 				TFeatures.HAS_PRESENT_SOUNDCHANGE : TFeatures.NO_PRESENT_SOUNDCHANGE;
-		return  PluralVerbRule.of(patternText, lemmaEnd, 20, new Tuple[]{soundChange}, null);
+		return  PluralVerbRule.of(patternText, lemmaEnd, 20,
+				new Tuple[]{soundChange, TFeatures.POS__REFL_VERB}, null);
 	}
 }

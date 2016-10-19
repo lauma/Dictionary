@@ -32,7 +32,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 15,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 
@@ -49,7 +50,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 
@@ -65,7 +67,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternText, lemmaEnd);
 		return PluralVerbRule.of(patternText, lemmaEnd, 15,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 	/**
@@ -84,7 +87,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return PluralVerbRule.of(patternBegin + " " + patternEnd, lemmaEnd, 15,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 	/**
@@ -103,7 +107,9 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs),
+						TFeatures.INFINITIVE_HOMOFORMS,
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 
@@ -125,7 +131,9 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs),
+						TFeatures.INFINITIVE_HOMOFORMS,
+						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
 
@@ -145,8 +153,13 @@ public final class FirstConj
 		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
-			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+					Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+					TFeatures.POS__DIRECT_VERB};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+				Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+				TFeatures.POS__DIRECT_VERB,
+				TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
@@ -172,10 +185,11 @@ public final class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {
 					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-					TFeatures.INFINITIVE_HOMOFORMS};
+					TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB};
 		else posFlags = new Tuple[] {
 				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.ORIGINAL_NEEDED};
+				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB,
+				TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
@@ -194,8 +208,12 @@ public final class FirstConj
 		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+					Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+					TFeatures.POS__DIRECT_VERB};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+				Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+				TFeatures.POS__DIRECT_VERB, TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
@@ -219,10 +237,11 @@ public final class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags = new Tuple[] {
 					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-					TFeatures.INFINITIVE_HOMOFORMS};
+					TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB};
 		else posFlags = new Tuple[] {
 				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-				TFeatures.ORIGINAL_NEEDED, TFeatures.INFINITIVE_HOMOFORMS};
+				TFeatures.ORIGINAL_NEEDED, TFeatures.INFINITIVE_HOMOFORMS,
+				TFeatures.POS__DIRECT_VERB};
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 15, posFlags,
 				null, stems);
 	}
@@ -243,7 +262,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -264,7 +284,8 @@ public final class FirstConj
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnds);
 		String lemmaEnd = "(" + String.join("|",lemmaEnds) + ")";
 		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -282,7 +303,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -297,7 +319,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternText, lemmaEnd);
 		return PluralVerbRule.of(patternText, lemmaEnd, 18,
-				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")},
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -317,7 +340,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs),
+						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -339,7 +363,8 @@ public final class FirstConj
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternEnd, lemmaEnd);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs), TFeatures.INFINITIVE_HOMOFORMS},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, inflectAs),
+						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB},
 				null, stems);
 	}
 
@@ -364,10 +389,11 @@ public final class FirstConj
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags = new Tuple[] {
 					TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-					TFeatures.INFINITIVE_HOMOFORMS};
+					TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB};
 		else posFlags = new Tuple[] {
 				TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, inflectAs),
-				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.ORIGINAL_NEEDED};
+				TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB,
+				TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18, posFlags,
 				null, stems);
 	}
@@ -388,8 +414,12 @@ public final class FirstConj
 		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternEnd))
-			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+					Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+					TFeatures.POS__REFL_VERB};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+				Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+				TFeatures.POS__REFL_VERB, TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 18, posFlags,
 				null, stems);
 	}
@@ -408,8 +438,12 @@ public final class FirstConj
 		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
 		Tuple[] posFlags;
 		if (RulesAsFunctions.containsFormsOnly(patternText))
-			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\"")};
-		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS, Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""), TFeatures.ORIGINAL_NEEDED};
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+					Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+					TFeatures.POS__REFL_VERB};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+				Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+				TFeatures.POS__REFL_VERB, TFeatures.ORIGINAL_NEEDED};
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 18, posFlags,
 				null, stems);
 	}

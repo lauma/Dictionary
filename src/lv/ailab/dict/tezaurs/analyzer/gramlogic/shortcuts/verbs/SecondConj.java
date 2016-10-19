@@ -1,7 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
@@ -29,7 +28,8 @@ public final class SecondConj
 	public static VerbDoubleRule direct(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 16, null, null);
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 16,
+				new Tuple[]{TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -43,7 +43,8 @@ public final class SecondConj
 	public static VerbDoubleRule direct3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternEnd, lemmaEnd, 16, null, null);
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 16,
+				new Tuple[]{TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -61,6 +62,7 @@ public final class SecondConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
@@ -80,7 +82,8 @@ public final class SecondConj
 	public static VerbDoubleRule directAllPers(
 			String patternText, String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternText, null, lemmaEnd, 16, null, null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 16,
+				new Tuple[]{TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -96,6 +99,7 @@ public final class SecondConj
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
@@ -113,7 +117,8 @@ public final class SecondConj
 	 */
 	public static PluralVerbRule directPlural(String patternText, String lemmaEnd)
 	{
-		return PluralVerbRule.of(patternText, lemmaEnd, 16, null, null);
+		return PluralVerbRule.of(patternText, lemmaEnd, 16,
+				new Tuple[]{TFeatures.POS__DIRECT_VERB}, null);
 	}
 
 	/**
@@ -127,7 +132,8 @@ public final class SecondConj
 	public static VerbDoubleRule refl(
 			String patternBegin, String patternEnd, String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 19, null, null);
+		return VerbDoubleRule.of(patternBegin, patternEnd, lemmaEnd, 19,
+				new Tuple[]{TFeatures.POS__REFL_VERB}, null);
 	}
 
 	/**
@@ -141,7 +147,8 @@ public final class SecondConj
 	public static VerbDoubleRule refl3Pers(String patternEnd,
 			String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternEnd, lemmaEnd, 19, null, null);
+		return VerbDoubleRule.of(patternEnd, lemmaEnd, 19,
+				new Tuple[]{TFeatures.POS__REFL_VERB}, null);
 	}
 
 	/**
@@ -155,7 +162,8 @@ public final class SecondConj
 	public static VerbDoubleRule reflAllPers(
 			String patternText, String lemmaEnd)
 	{
-		return VerbDoubleRule.of(patternText, null, lemmaEnd, 19, null, null);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 19,
+				new Tuple[]{TFeatures.POS__REFL_VERB}, null);
 	}
 
 	/**
@@ -167,6 +175,7 @@ public final class SecondConj
 	 */
 	public static PluralVerbRule reflPlural(String patternText, String lemmaEnd)
 	{
-		return PluralVerbRule.of(patternText, lemmaEnd, 19, null, null);
+		return PluralVerbRule.of(patternText, lemmaEnd, 19,
+				new Tuple[]{TFeatures.POS__REFL_VERB}, null);
 	}
 }

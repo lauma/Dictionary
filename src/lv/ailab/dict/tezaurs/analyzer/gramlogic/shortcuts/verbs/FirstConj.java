@@ -71,6 +71,29 @@ public final class FirstConj
 						TFeatures.POS__DIRECT_VERB},
 				null, stems);
 	}
+
+	/**
+	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam ar
+	 * paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī, bet ne
+	 * vienskaitļa 3. personā.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return PluralVerbRule ar paradigmu 15
+	 */
+	public static PluralVerbRule directPluralAllPersParallel(String patternText, String lemmaEnd)
+	{
+		FirstConjStems stems = FirstConjStems.parallelPP(patternText, lemmaEnd);
+		Tuple[] posFlags;
+		if (RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+					Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+					TFeatures.POS__DIRECT_VERB};
+		else posFlags = new Tuple[] {TFeatures.PARALLEL_FORMS,
+				Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+				TFeatures.POS__DIRECT_VERB,
+				TFeatures.ORIGINAL_NEEDED};
+		return PluralVerbRule.of(patternText, lemmaEnd, 15, posFlags, null, stems);
+	}
 	/**
 	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam bez
 	 * paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī
@@ -315,10 +338,31 @@ public final class FirstConj
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return PluralVerbRule ar paradigmu 18
 	 */
-	public static PluralVerbRule reflPlural(String patternText, String lemmaEnd)
+	public static PluralVerbRule reflAllPersPlural(String patternText, String lemmaEnd)
 	{
 		FirstConjStems stems = FirstConjStems.singlePP(patternText, lemmaEnd);
 		return PluralVerbRule.of(patternText, lemmaEnd, 18,
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
+						TFeatures.POS__REFL_VERB},
+				null, stems);
+	}
+
+	/**
+	 * Izveido PluralVerbRule 1. konjugācijas atgriezeniskajam darbības vārdam
+	 * ar paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī
+	 * vai vienskaitļa 3. personā.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                      norāde par 3. personu
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei
+	 *                      (no šīs daļas tiks izvilkti celmi)
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return PluralVerbRule ar paradigmu 18
+	 */
+	public static PluralVerbRule reflPluralOr3PersParallel(
+			String patternBegin, String patternEnd, String lemmaEnd)
+	{
+		FirstConjStems stems = FirstConjStems.parallelPP(patternEnd, lemmaEnd);
+		return PluralVerbRule.of(patternBegin + " " + patternEnd, lemmaEnd, 18,
 				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, "\"" + lemmaEnd + "\""),
 						TFeatures.POS__REFL_VERB},
 				null, stems);

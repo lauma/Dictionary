@@ -221,13 +221,12 @@ public class AbbrMap {
 		pairingFlags.put("kopdz.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
 		
 		binaryFlags.put("intrans.", "Nepārejošs");
-		//pairingFlags.put("intrans.", TFeatures.POS__VERB); // Kas ir ar divdabjiem?
 		binaryFlags.put("intr.", "Nepārejošs");
-		//pairingFlags.put("intr.", TFeatures.POS__VERB);
 		binaryFlags.put("trans.", "Pārejošs");
-		//pairingFlags.put("trans.", TFeatures.POS__VERB);
 		binaryFlags.put("tr.", "Pārejošs");
-		//pairingFlags.put("tr.", TFeatures.POS__VERB);
+		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs");
+		binaryFlags.put("tr. un intr. darb. v.", "Nepārejošs");
+		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs un nepārejošs");
 
 		/*binaryFlags.put("konj.", "Konjugācija");
 		binaryFlags.put("pers.", "Persona");*/
@@ -391,6 +390,8 @@ public class AbbrMap {
 		pairingFlags.put("liet.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("port.", Tuple.of(TKeys.LANGUAGE, "Portugāļu"));
 		pairingFlags.put("port.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("prūšu val.", Tuple.of(TKeys.LANGUAGE, "Prūšu"));
+		pairingFlags.put("prūšu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("sanskr.", Tuple.of(TKeys.LANGUAGE, "Sanskrits"));
 		pairingFlags.put("sanskr.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("sengr.", Tuple.of(TKeys.LANGUAGE, "Sengrieķu"));
@@ -452,6 +453,7 @@ public class AbbrMap {
 		pairingFlags.put("tikai dsk.", TFeatures.USED_ONLY__PLURAL);
 		pairingFlags.put("tikai v.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.MASCULINE));
 		pairingFlags.put("parasti 3. pers.", TFeatures.USUALLY_USED__THIRD_PERS);
+		pairingFlags.put("tikai 3. pers.", TFeatures.USED_ONLY__THIRD_PERS);
 		pairingFlags.put("parasti saliktajos laikos", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Saliktie laiki"));
 		pairingFlags.put("parasti saliktajos laikos", TFeatures.POS__VERB);
 		pairingFlags.put("parasti saliktajos laikos.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Saliktie laiki"));

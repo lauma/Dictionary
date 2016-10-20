@@ -752,17 +752,16 @@ public class OptHypernRules
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas.
+		// Ar paralēlformām.
+		FirstConj.direct3PersParallelHomof(
+				"-rieš, pag. -rieta, arī -riesa", "riest", "\"riest\" (parastais)"), // aizriest
+		// Bez paralēlformām.
 		FirstConj.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (gaismai)"), //aizaust 1
 		FirstConj.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (ievainojumam)"), //aizdzīt 2
 		FirstConj.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
-		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "\"sust\" (žūt)"), //nosust 2
-
-
 		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "\"riest\" (parastais)"), //ieriest 1
 		FirstConj.direct3PersHomof("-riest, pag. -rieta", "riest", "\"riest\" (izņēmums)"), //pieriest 1
-
-		FirstConj.direct3PersParallelHomof(
-					"-rieš, pag. -rieta, arī -riesa", "riest", "\"riest\" (parastais)"), // aizriest
+		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "\"sust\" (žūt)"), //nosust 2
 
 		// Paralēlformas
 		FirstConj.direct3PersParallel(
@@ -853,6 +852,8 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-žulgst, pag. -žulga", "žulgt"), //izžulgt
 
 		// Daudzskaitļa formu likumi.
+		FirstConj.directPluralAllPersParallel(
+				"-sēžam, -sēžat, -sēž, arī -sēstam, -sēstat, -sēst, pag. -sēdām", "sēst"), // sasēst
 		// Ar trešo personu
 		FirstConj.directPluralOr3Pers(
 				"-klīstam, pag. -klīdām vai vsk. 3. pers.", "-klīst, pag. -klīda", "klīst"), // izklīst
@@ -987,6 +988,7 @@ public class OptHypernRules
 		ThirdConj.direct("-ciepstu, -ciepsti,", "-ciepst, pag. -ciepstēju", "ciepstēt", false), //ciepstēt
 		// Č
 		ThirdConj.direct("-čabu, -čabi,", "-čab, pag. -čabēju", "čabēt", false), //čabēt, aizčabēt
+		ThirdConj.direct("-čaukstu, -čauksti,", "-čaukst, pag. -čaukstēju", "čaukstēt", false), //čaukstēt, aizčaukstēt
 		ThirdConj.direct("-čākstu, -čāksti,", "-čākst, pag. -čākstēju", "čākstēt", false), //sačākstēt
 		ThirdConj.direct("-čerkstu, -čerksti,", "-čerkst, pag. -čerkstēju", "čerkstēt", false), //nočerkstēt
 		ThirdConj.direct("-čērkstu, -čērksti,", "-čērkst, pag. -čērkstēju", "čērkstēt", false), //nočērkstēt
@@ -1249,7 +1251,6 @@ public class OptHypernRules
 		// Č
 		ThirdConj.direct3Pers("-čakst, pag. -čakstēja", "čakstēt", false), //nočakstēt
 		ThirdConj.direct3Pers("-čarkst, pag. -čarkstēja", "čarkstēt", false), //čarkstēt
-		ThirdConj.direct3Pers("-čaukst, pag. -čaukstēja", "čaukstēt", false), //aizčaukstēt
 		ThirdConj.direct3Pers("-čērkst, pag. čērkstēja", "čērkstēt", false), //čērkstēt
 		ThirdConj.direct3Pers("-čib, pag. -čibēja", "čibēt", false), //izčibēt
 		ThirdConj.direct3Pers("-čirkst, pag. -čirkstēja", "čirkstēt", false), //nočirkstēt
@@ -1541,6 +1542,7 @@ public class OptHypernRules
 		ThirdConj.direct3Pers("-žņirkst, pag. -žņirkstēja", "žņirkstēt", false), //nožņirkstēt
 		ThirdConj.direct3Pers("-žvadz, pag. -žvadzēja", "žvadzēt", false), //aizžvadzēt
 		ThirdConj.direct3Pers("-žvakst, pag. -žvakstēja", "žvakstēt", false), //nožvakstēt
+		ThirdConj.direct3Pers("-žvankst, pag. -žvankstēja", "žvankstēt", false), //nožvankstēt
 		ThirdConj.direct3Pers("-žvarkst, pag. -žvarkstēja", "žvarkstēt", false), //nožvarkstēt
 		ThirdConj.direct3Pers("-žvaukst, pag. -žvaukstēja", "žvaukstēt", false), //nožvaukstēt
 		ThirdConj.direct3Pers("-žvākst, pag. -žvākstēja", "žvākstēt", false), //nožvākstēt
@@ -1694,7 +1696,12 @@ public class OptHypernRules
 		// K
 		SecondThirdConj.direct3PersParallel(
 				"-kveldē, arī -kveld, pag. -kveldēja", "kveldēt", false), // pakveldēt
-		// L, M, N, O, P
+		// L
+		SecondThirdConj.direct3PersParallel(
+				"-lās, retāk -lāsē, pag. -lāsēja", "lāsēt", false), // lāsēt
+		// M, N, O, P
+		SecondThirdConj.direct3PersParallel(
+				"-melnē, retāk -meln, pag. -melnēja", "melnēt", false), // melnēt
 		SecondThirdConj.direct3PersParallel(
 				"-pelē, arī -pel, pag. -pelēja", "pelēt", false), // aizpelēt
 		SecondThirdConj.direct3PersParallel(
@@ -1704,6 +1711,8 @@ public class OptHypernRules
 		// R
 		SecondThirdConj.direct3PersParallel(
 				"-rec, arī -recē, pag. -recēja", "recēt", false), // sarecēt
+		SecondThirdConj.direct3PersParallel(
+				"-rec, retāk -recē, pag. -recēja", "recēt", false), // ierecēt
 		// S
 		SecondThirdConj.direct3PersParallel(
 				"-sūb, arī -sūbē, pag. -sūbēja", "sūbēt", false), // aizsūbēt
@@ -2001,6 +2010,7 @@ public class OptHypernRules
 		// Paralēlās formas.
 		FirstConj.refl3PersParallel("-jaušas, pag. -jautās, arī -jaužas, pag. -jaudās", "jausties"), //jausties
 		FirstConj.refl3PersParallel("-jumjas, pag. -jūmās, arī -jumās", "jumties"), //jumties
+		FirstConj.refl3PersParallel("-nīkas, retāk -nīkstas, pag. -nikās", "nikties"), //apnikties
 		FirstConj.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
 
 		// Standarts
@@ -2021,9 +2031,11 @@ public class OptHypernRules
 		// R
 		FirstConj.refl3Pers("-riežas, pag. -riezās", "riezties"), //ieriezties
 		// S
-		FirstConj.refl3Pers("-spriedzas, pag. -spriedzās", "spriegties"), //saspriegties
 		FirstConj.refl3Pers("-sākas, pag. -sākās", "sākties"), //aizsākties
+		FirstConj.refl3Pers("-sokas, pag. -secās", "sekties"), //sekties
+		FirstConj.refl3Pers("-skrienas, pag. -skrējās", "skrieties"), //apskrieties
 		FirstConj.refl3Pers("-slaucas, pag. -slaucās", "slaukties"), //atslaukties
+		FirstConj.refl3Pers("-spriedzas, pag. -spriedzās", "spriegties"), //saspriegties
 		// Š
 		FirstConj.refl3Pers("-šķiļas, pag. -šķīlās", "šķilties"), //aizšķilties
 		// T, U, V
@@ -2036,20 +2048,35 @@ public class OptHypernRules
 		FirstConj.refl3Pers("-žmaudzas, pag. -žmaudzās", "žmaugties"), //iežmaugties
 
 		// Daudzskaitļa formu likumi
-		FirstConj.reflPlural("-brāžamies, -brāžaties, -brāžas, pag. -brāzāmies", "brāzties"), // sabrāzties
-		FirstConj.reflPlural("-liekamies, -liekaties, -liekas, pag. -likāmies", "likties"), // salikties
-		FirstConj.reflPlural("-rodamies, -rodaties, -rodas, pag. -radāmies", "rasties"), // sarasties
-		FirstConj.reflPlural("-raušamies, -raušaties, -raušas, pag. -rausāmies", "rausties"), // sarausties
-		FirstConj.reflPlural("-rāpjamies, -rāpjaties, -rāpjas, pag. -rāpāmies", "rāpties"), // sarāpties
-		FirstConj.reflPlural("-spriežamies, -spriežaties, -spriežas, pag. -spriedāmies", "spriesties"), // saspriesties
-		FirstConj.reflPlural("-traušamies, -traušaties, -traušas, pag. -trausāmies", "trausties"), // satrausties
-		FirstConj.reflPlural("-tupstamies, -tupstaties, -tupstas, pag. -tupāmies", "tupties"), // satupties
+		FirstConj.reflAllPersPlural("-brāžamies, -brāžaties, -brāžas, pag. -brāzāmies", "brāzties"), // sabrāzties
+		FirstConj.reflAllPersPlural("-kaujamies, -kaujaties, -kaujas, pag. -kāvāmies", "kauties"), // apkauties
+		FirstConj.reflAllPersPlural("-liekamies, -liekaties, -liekas, pag. -likāmies", "likties"), // salikties
+		FirstConj.reflAllPersPlural("-rodamies, -rodaties, -rodas, pag. -radāmies", "rasties"), // sarasties
+		FirstConj.reflAllPersPlural("-raušamies, -raušaties, -raušas, pag. -rausāmies", "rausties"), // sarausties
+		FirstConj.reflAllPersPlural("-rāpjamies, -rāpjaties, -rāpjas, pag. -rāpāmies", "rāpties"), // sarāpties
+		FirstConj.reflAllPersPlural("-spraucamies, -spraucaties, -spraucas, pag. -spraucāmies", "spraukties"), // saspraukties
+		FirstConj.reflAllPersPlural("-spriežamies, -spriežaties, -spriežas, pag. -spriedāmies", "spriesties"), // saspriesties
+		FirstConj.reflAllPersPlural("-traušamies, -traušaties, -traušas, pag. -trausāmies", "trausties"), // satrausties
+		FirstConj.reflAllPersPlural("-tupstamies, -tupstaties, -tupstas, pag. -tupāmies", "tupties"), // satupties
+
+		FirstConj.reflPluralOr3PersParallel(
+				"-sēžamies, arī -sēstamies, pag. -sēdāmies vai vsk. 3. pers.,", "-sēžas, arī -sēstas, pag. -sēdās",
+				"sēsties"), // izsēsties
 
 		// Pilnīgs nestandarts.
-		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos", "teikties", 18,
+		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos",
+				"teikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\""), TFeatures.POS__REFL_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
 				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
+
+		VerbDoubleRule.of("parasti dsk. 3. pers., -sveicas, pag. -sveicās", null,
+				"sveikties", 18,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sveikties\""), TFeatures.POS__REFL_VERB},
+				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS},
+				FirstConjStems.singlePP("-sveicas, pag. -sveicās", "sveikties")), // apsveikties
+
+
 	};
 
 	/**
@@ -2151,7 +2178,7 @@ public class OptHypernRules
 		ThirdConj.refl3Pers("-vajagas, pag. -vajadzējās", "vajadzēties", true), //ievajadzēties
 		ThirdConj.refl3Pers("-vārās, pag. -vārījās", "vārīties", false), //pievārīties
 
-		ThirdConj.reflPlural("-čukstamies, pag. -čukstējāmies", "čukstēties", false), // čukstēties
+		ThirdConj.reflPlural("-čukstamies, -čukstaties, -čukstas, pag. -čukstējāmies", "čukstēties", false), // pačukstēties
 
 	};
 

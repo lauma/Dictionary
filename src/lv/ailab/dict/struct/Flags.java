@@ -39,7 +39,9 @@ import java.util.stream.Collectors;
  * ir savstarpēji izslēdzoši, tad tos saista loģiskais VAI - sieviešu vai
  * vīriešu dzimte, mija var gan būt gan nebūt. Ja karodziņi nav savstarpēji
  * izslēdzoši, tad tie ir spēkā abi (loģiskais UN) - daudzskaitlis un 3. persona
- * vai arī viens no tiem precizē otru.
+ * vai arī viens no tiem precizē otru. Ja ir neieciešams norādīt, ka darbības
+ * vārdu lieto daudzskaitlī vai 3. personā, tad jāizveido atsevišķs karodziņš,
+ * kas šo "vai" norāda.
  *
  * Izveidots 2015-10-08.
  * @author Lauma

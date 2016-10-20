@@ -65,6 +65,8 @@ public class DirectRules
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		GenNoun.any("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
+		GenNoun.any("-as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // žūpa
 
 		// Paradigmas: 1, 2 - 1. deklinācija
 		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
@@ -82,6 +84,7 @@ public class DirectRules
 
 		GenNoun.any("-ļļa, v.", ".*llis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // amarillis
 		GenNoun.any("-ļņa, v.", ".*lnis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // aizsargvalnis
+		GenNoun.any("-šļa, v.", ".*slis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // bauslis
 		GenNoun.any("-šņa, v.", ".*snis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // alksnis
 		GenNoun.any("-ča, v.", ".*cis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // akacis
 		GenNoun.any("-ģa, v.", ".*ģis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // āliņģis
@@ -137,6 +140,7 @@ public class DirectRules
 
 		// Paradigmas: 13, 14 - īpašības vārdi - skaidri pateikts
 		Adjective.std("īp. v. -ais; s. -a, -ā"), // aerobs
+		Adjective.std("-ais, īp."), // albīns
 		BaseRule.of("s. -as; adj.", ".*i", new Integer[]{13, 14},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.POS__ADJ}), // abēji 2
@@ -157,6 +161,7 @@ public class DirectRules
 		MultiPos.adjectiveParticiple("-ais; s. -a; -ā"), // aloģisks
 		MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
 		MultiPos.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
+		MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*oši", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ti", new Integer[]{13, 14, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),

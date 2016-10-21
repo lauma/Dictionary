@@ -113,7 +113,8 @@ public class TValues extends Values
 	// Sevišķi retās vērtības:
 
 	//// Galotņu šabloniem.
-	public final static String NOT_PRESENT_FORMS = "Nelieto tagadnes formas";
+	public final static String NO_PRESENT = "Nelieto tagadnes formas";
+	public final static String PAST = "Pagātne";
 
 	//// "Savienojumā ar" apstrādei.
 	public final static String ILLNESS_NAME = "Slimības izraisītāja mikroorganisma, arī slimības nosaukums";

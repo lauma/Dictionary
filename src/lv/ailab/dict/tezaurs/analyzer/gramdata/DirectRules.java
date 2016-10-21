@@ -25,6 +25,9 @@ import java.util.List;
  * Ja vienai lemmai atbilst vairāki likumi (piemēram, verbiem ir reizēm ir
  * norādīta locīšana ar paralēlformām un reizēm bez), tad visiem likumiem jābūt
  * vienā klasē - vai nu OptHypernRules vai DirectRules, bet ne juku jukām.
+ * Verbu likumiem visu personu likumus, no kuriem tiek atvasināti 3. personas
+ * likumi, vajag likt pirms 3. personas likumiem - tad redundantie 3. personas
+ * likumi uzrādīsies statistikā kā nelietoti.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
@@ -679,6 +682,11 @@ public class DirectRules
 		FirstConj.direct3Pers("-burbst, pag. -burba", "burbt"), //izburbt
 		FirstConj.direct3Pers("-rep, pag. -repa", "rept"), //aprept
 
+		// Pilnīgs nestandarts.
+		VerbDoubleRule.of("parasti pag. -sārtu, -sārti, -sārta", null, "sārst", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sārst\""), TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
+				FirstConjStems.of("sārs", null, "sart")), // piesārst
 	};
 
 	/**
@@ -724,8 +732,6 @@ public class DirectRules
 		ThirdConj.direct("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
 		ThirdConj.direct("-u, -i,", "-a, pag. -āju", "āt", false), //līcināt
 		ThirdConj.direct("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
-		// Tikai trešajai personai.
-		ThirdConj.direct3Pers("-ina, pag. -ināja", "ināt", false), //aizducināt
 
 		// Darbības vārdu specifiskie likumi.
 		ThirdConj.direct("-bildu, -bildi,", "-bild, pag. -bildēju", "bildēt", false), //atbildēt
@@ -877,7 +883,6 @@ public class DirectRules
 				"ēties"), //adverbiēties
 
 		// Parasti/tikai 3. personā.
-		SecondConj.refl3Pers("-ējas, pag. -ējās", "ēties"), // miekšēties
 
 		// Parasti/tikai daudzskaitlī.
 		SecondConj.reflPlural("-ējamies, pag. -ējāmies", "ēties"), // drūzmēties
@@ -893,7 +898,7 @@ public class DirectRules
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
 							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties*/
 		SecondConj.reflPlural(
-				"-ējamies, -ējaties, -ējas, pag. -ējāmies vai vsk. 3. pers., -ējas, pag. -ējāmies",
+				"-ējamies, -ējaties, -ējas, pag. -ējāmies vai vsk. 3. pers., -ējas, pag. -ējās",
 				"ēties"), // konstituēties
 		SecondConj.reflPlural(
 				"-ojamies, -ojaties, -ojas, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",
@@ -925,10 +930,6 @@ public class DirectRules
 				"-os, -ies,", "-ās, pag. -ījos", "īties", false), //apklausīties
 		ThirdConj.refl(
 				"-os, -ies,", "-ās, pag. -ājos", "ināties", false), //novājināties
-
-		ThirdConj.refl3Pers("-as, pag. -ējās", "ēties", false), //aizčiepstēties
-		ThirdConj.refl3Pers("-inās, pag. -inājās", "ināties", false), //aizbubināties
-		ThirdConj.refl3Pers("-ās, pag. -ījās", "īties", false), //aizbīdīties
 
 		ThirdConj.reflPlural(
 				"-ināmies, pag. -inājāmies vai vsk. 3. pers., -inās, pag. -inājās",

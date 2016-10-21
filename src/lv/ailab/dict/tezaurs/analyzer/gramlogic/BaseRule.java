@@ -334,6 +334,6 @@ public class BaseRule implements EndingRule
 	public String getStrReprezentation()
 	{
 		return String.format("%s \"%s\"",
-				this.getClass().getSimpleName(), patternText);
+				this.getClass().getName(), patternText);
 	}
 }

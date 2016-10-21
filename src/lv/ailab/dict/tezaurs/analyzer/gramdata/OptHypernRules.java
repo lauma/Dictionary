@@ -20,6 +20,9 @@ import java.util.ArrayList;
  * Ja vienai lemmai atbilst vairāki likumi (piemēram, verbiem ir reizēm ir
  * norādīta locīšana ar paralēlformām un reizēm bez), tad visiem likumiem jābūt
  * vienā klasē - vai nu OptHypernRules vai DirectRules, bet ne juku jukām.
+ * Verbu likumiem visu personu likumus, no kuriem tiek atvasināti 3. personas
+ * likumi, vajag likt pirms 3. personas likumiem - tad redundantie 3. personas
+ * likumi uzrādīsies statistikā kā nelietoti.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā, vai konkrēti
@@ -74,7 +77,12 @@ public class OptHypernRules
 				"būt", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NOT_PRESENT_FORMS)}), // pabut
+				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NO_PRESENT)}), // pabut
+		VerbDoubleRule.of("parasti pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
+				"būt", 29,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
+						TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)}), // pārbūt
 
 			// 10. paradigma: 5. deklinācija, vīriešu dzimte.
 		GenNoun.any("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 10,
@@ -827,7 +835,6 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-birst, pag. -birza", "birzt"), //izbirzt
 		FirstConj.direct3Pers("-blēj, pag. -blēja", "blēt"), //atblēt
 		FirstConj.direct3Pers("-bož, pag. -boza", "bozt"), //izbozt
-		FirstConj.direct3Pers("-brūk, pag. -bruka", "brukt"), //aizbrukt
 		// C, D
 		FirstConj.direct3Pers("-derdz, pag. -derdza", "dergt"), //dergt
 		FirstConj.direct3Pers("-dim, pag. -dima", "dimt"), //aizdimt
@@ -839,7 +846,6 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-galdz, pag. -galdza", "galgt"), //galgt
 		FirstConj.direct3Pers("-glumst, pag. -gluma", "glumt"), //saglumt
 		FirstConj.direct3Pers("-grauž, pag. -grauda", "graust"), //graust
-		FirstConj.direct3Pers("-grūst, pag. -gruva", "grūt"), //aizgrūt
 		FirstConj.direct3Pers("-guldz, pag. -guldza", "gulgt"), //aizgulgt
 		// H, I
 		FirstConj.direct3Pers("-ilgst, pag. -ilga", "ilgt"), //ieilgt
@@ -910,10 +916,15 @@ public class OptHypernRules
 		FirstConj.directPlural("-tupstam, -tupstat, -tupst, pag. -tupām", "tupt"), // satupt
 
 		// Pilnīgs nestandarts.
-		VerbDoubleRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
+		VerbDoubleRule.of(
+				"-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\""), TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikt
+		VerbDoubleRule.of("parasti pag., -sēdu, -sēdi, -sēda", null, "sēst", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sēst\""), TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
+				FirstConjStems.of("sēs", null, "sēd")), // apsēst
 
 	};
 
@@ -1091,6 +1102,7 @@ public class OptHypernRules
 		ThirdConj.direct("-loku, -loki,", "-loka, pag. -locīju", "locīt", true), //aizlocīt
 		ThirdConj.direct("-lūru, -lūri,", "-lūr, pag. -lūrēju", "lūrēt", false), //aplūrēt
 		// Ļ
+		ThirdConj.direct("-ļerkstu, -ļerksti,", "-ļerkst, pag. -ļerkstēju", "ļerkstēt", false), //ļerkstēt
 		ThirdConj.direct("-ļerkšu, -ļerkši,", "-ļerkš, pag. -ļerkšēju", "ļerkšēt", false), //ļerkšēt
 		ThirdConj.direct("-ļerkšķu, -ļerkšķi,", "-ļerkšķ, pag. -ļerkšķēju", "ļerkšķēt", false), //ļerkšķēt
 		ThirdConj.direct("-ļogu, -ļogi,", "-ļoga, pag. -ļodzīju", "ļodzīt", true), //izļodzīt
@@ -1291,7 +1303,6 @@ public class OptHypernRules
 		// Č
 		ThirdConj.direct3Pers("-čakst, pag. -čakstēja", "čakstēt", false), //nočakstēt
 		ThirdConj.direct3Pers("-čarkst, pag. -čarkstēja", "čarkstēt", false), //čarkstēt
-		ThirdConj.direct3Pers("-čērkst, pag. čērkstēja", "čērkstēt", false), //čērkstēt
 		ThirdConj.direct3Pers("-čib, pag. -čibēja", "čibēt", false), //izčibēt
 		ThirdConj.direct3Pers("-čirkst, pag. -čirkstēja", "čirkstēt", false), //nočirkstēt
 		ThirdConj.direct3Pers("-čirpst, pag. -čirpstēja", "čirpstēt", false), //čirpstēt
@@ -1548,8 +1559,6 @@ public class OptHypernRules
 		// U
 		ThirdConj.direct3Pers("-urd, pag. -urdēja", "urdēt", false), //urdēt
 		ThirdConj.direct3Pers("-urdz, pag. -urdzēja", "urdzēt", false), //aizurdzēt
-		ThirdConj.direct3Pers("-urkš, pag. -urkšēja", "urkšēt", false), //paurkšēt
-		ThirdConj.direct3Pers("-urkšķ, pag. -urkšķēja", "urkšķēt", false), //paurkšķēt
 		// Ū
 		ThirdConj.direct3Pers("-ūkš, pag. -ūkšēja", "ūkšēt", false), //ūkšēt
 		ThirdConj.direct3Pers("-ūkšķ, pag. -ūkšķēja", "ūkšķēt", false), //ūkšķēt
@@ -1937,7 +1946,6 @@ public class OptHypernRules
 		FirstConj.refl("-pērkos, -pērcies,", "-pērkas, pag. -pirkos", "pirkties"), // appirkties
 		FirstConj.refl("-pinos, -pinies,", "-pinas, pag. -pinos", "pīties"), // iepīties
 		FirstConj.refl("-plēšos, -plēsies,", "-plēšas, pag. -plēsos", "plēsties"), // izplēsties
-		FirstConj.refl("-plēšos, -plēsies,", "-plēšas, pag. -plēsos", "plēsties"), // izplēsties
 		FirstConj.refl("-plijos, -plijies,", "-plijas, pag. -plijos", "plīties"), // uzplīties
 		FirstConj.refl("-plūcos, -plūcies,", "-plūcas, pag. -plūcos", "plūkties"), // izplukties
 		FirstConj.refl("-pļaujos, -pļaujies,", "-pļaujas, pag. -pļāvos", "pļauties"), // appļauties
@@ -2111,7 +2119,7 @@ public class OptHypernRules
 		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos",
 				"teikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\""), TFeatures.POS__REFL_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikties
 
 		VerbDoubleRule.of("parasti dsk. 3. pers., -sveicas, pag. -sveicās", null,
@@ -2217,7 +2225,6 @@ public class OptHypernRules
 		// Standartīgie.
 		ThirdConj.refl3Pers("-gailējas, pag. -gailējās", "gailēties", false), //pagailēties
 		ThirdConj.refl3Pers("-lauzās, pag. -lauzījās", "lauzīties", false), //aplauzīties
-		ThirdConj.refl3Pers("-lokās, pag. -locījās", "locīties", true), //aizlocīties
 		ThirdConj.refl3Pers("-mīcās, pag. -mīcījās", "mīcīties", false), //piemīcīties
 		ThirdConj.refl3Pers("-vajagas, pag. -vajadzējās", "vajadzēties", true), //ievajadzēties
 		ThirdConj.refl3Pers("-vārās, pag. -vārījās", "vārīties", false), //pievārīties

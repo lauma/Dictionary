@@ -114,6 +114,8 @@ public class AbbrMap {
 		pairingFlags.put("kārtas skait.", TFeatures.POS__ORD_NUMERAL);
 		pairingFlags.put("saīs.", TFeatures.POS__ABBR);
 		pairingFlags.put("simb.", TFeatures.POS__ABBR);
+		pairingFlags.put("refl. darb.", TFeatures.POS__REFL_VERB);
+		pairingFlags.put("refl. darb.", TFeatures.POS__VERB);
 
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietniekv.", TFeatures.POS__PRONOUN);

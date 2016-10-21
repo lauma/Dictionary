@@ -222,18 +222,20 @@ public class VerbDoubleRule implements EndingRule
 	 *                      	vairākām nenoteiksmēm (nedrīkst būt null)
 	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
 	 * @param pastStems			pagātnes celmi (nedrīkst but null)
+	 * @param areStemsOrdered	vai celmiem ir prioritāšu secība
 	 */
 	public static VerbDoubleRule of(String patternBegin, String patternEnd,
 			String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags,
-			String[] infinitiveStems, String[] presentStems, String[] pastStems)
+			String[] infinitiveStems, String[] presentStems, String[] pastStems,
+			boolean areStemsOrdered)
 	{
 		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
+				FirstConjStems.of(infinitiveStems, presentStems, pastStems,	areStemsOrdered));
 	}
 
 	/**
@@ -254,16 +256,18 @@ public class VerbDoubleRule implements EndingRule
 	 *                      	vairākām nenoteiksmēm (nedrīkst būt null)
 	 * @param presentStems		tagadnes celmi (nedrīkst būt null)
 	 * @param pastStems			pagātnes celmi (nedrīkst būt null)
+	 * @param areStemsOrdered	vai celmiem ir prioritāšu secība
 	 */
 	public static VerbDoubleRule of(String patternEnd, String lemmaEnd, int paradigmId,
 			Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags,
-			String[] infinitiveStems, String[] presentStems, String[] pastStems)
+			String[] infinitiveStems, String[] presentStems, String[] pastStems,
+			boolean areStemsOrdered)
 	{
 		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				FirstConjStems.of(infinitiveStems, presentStems, pastStems));
+				FirstConjStems.of(infinitiveStems, presentStems, pastStems, areStemsOrdered));
 	}
 
 	/**

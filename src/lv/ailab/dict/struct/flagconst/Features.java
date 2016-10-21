@@ -32,7 +32,8 @@ public class Features
 
 	public static final Tuple<String, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE);
 
+	public static final Tuple<String, String> STEMS_ARE_ORDERED = Tuple.of(Keys.OTHER_FLAGS, Values.STEMS_ARE_ORDERED);
 
-
+	public static final Tuple<String, String> NO_PREFIX = Tuple.of(Keys.OTHER_FLAGS, Values.NO_PREFIX);
 
 }

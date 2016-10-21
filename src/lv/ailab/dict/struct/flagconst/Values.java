@@ -44,4 +44,8 @@ public class Values
 	//=== Citi =================================================================
 	public final static String NON_INFLECTIVE = "Nelokāms vārds";
 
+	//=== 1. konjugācijas informācijas kodēšanai ===============================
+	public final static String STEMS_ARE_ORDERED = "Pēdējie celmi lietojami retāk";
+
+	public final static String NO_PREFIX = "Vārds bez priedēkļa";
 }

@@ -1,7 +1,9 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -9,8 +11,10 @@ import java.util.*;
 /**
  * Darbošanās ar 1. konjugācijas celmiem, kas katra 1. konjugācijas verba
  * apstrādei ir vajadzīgi, lai nodrošinātu korektu integrāciju ar morfoloģisko
- * analizatoru. Katru verbu raksturo viens vai vairāki celmi nenoteiksmei,
- * tagadnei un pagātnei.
+ * analizatoru. Katru verbu raksturo viens vai vairāki celmi nenoteiksmei
+ * (visiežāk viens), tagadnei (tipiski viens vai divi) un pagātnei (tipiski
+ * viens vai divi), kā arī boolean, kas norāda, vai gramatīkā ir bijis norādīts,
+ * ka pirmo tagadnes/pagātnes celmu lieto biežāk.
  *
  * Izveidots 2016-10-12.
  * @author Lauma
@@ -34,35 +38,65 @@ public class FirstConjStems
 	protected List<String> pastStems;
 
 	/**
+	 * Vai gadījumā, ja ir vairāki celmi, vārdnīcā ir bijis norādīts, ka pirmais
+	 * ir biežāk lietots.
+	 */
+	protected boolean isOrderImportant;
+
+	/**
 	 * Izveido objektu no jau gataviem celmu komplektiem.
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param infinityStems		iespējamie netnoteiksmes celmi, ja likums der
+	 *                      	vairākām nenoteiksmēm
+	 * @param presentStems		tagadnes celmi
+	 * @param pastStems			pagātnes celmi
+	 * @param isOrderImportant	vai celmiem ir prioritāšu secība
 	 */
 	public FirstConjStems(
-			List<String> infinityStems, List<String> presentStems, List<String> pastStems)
+			List<String> infinityStems, List<String> presentStems,
+			List<String> pastStems, boolean isOrderImportant)
 	{
 		this.infinityStems = Collections.unmodifiableList(infinityStems);
 		this.presentStems = Collections.unmodifiableList(presentStems);
 		this.pastStems = Collections.unmodifiableList(pastStems);
+		this.isOrderImportant = isOrderImportant;
 	}
 
 	/**
 	 * Konstruktors objektam no jau gataviem celmu komplektiem.
-	 * @param infinityStems	iespējamie netnoteiksmes celmi, ja likums der
-	 *                      vairākām nenoteiksmēm
-	 * @param presentStems	tagadnes celmi
-	 * @param pastStems		pagātnes celmi
+	 * @param infinityStems		iespējamie netnoteiksmes celmi, ja likums der
+	 *                      	vairākām nenoteiksmēm
+	 * @param presentStems		tagadnes celmi
+	 * @param pastStems			pagātnes celmi
+	 * @param isOrderImportant	vai celmiem ir prioritāšu secība
 	 * @return atbilstoši aizpildīts celmu objekts
 	 */
 	public static FirstConjStems of (
-			String[] infinityStems, String[] presentStems, String[] pastStems)
+			String[] infinityStems, String[] presentStems, String[] pastStems,
+			boolean isOrderImportant)
 	{
 		return new FirstConjStems(
 				infinityStems == null ? null : Arrays.asList(infinityStems),
 				presentStems == null ? null : Arrays.asList(presentStems),
-				pastStems == null ? null : Arrays.asList(pastStems));
+				pastStems == null ? null : Arrays.asList(pastStems),
+				isOrderImportant);
+	}
+
+	/**
+	 * Konstruktors objektam no jau gatava celmu komplekta, kur katrs celms ir
+	 * vienā eksemplārā.
+	 * @param infinityStem		nenoteiksmes celms
+	 * @param presentStem		tagadnes celms
+	 * @param pastStem			pagātnes celms
+	 * @return atbilstoši aizpildīts celmu objekts
+	 */
+	public static FirstConjStems of (
+			String infinityStem, String presentStem, String pastStem)
+	{
+		return new FirstConjStems(
+				new ArrayList<String>() {{add(infinityStem);}},
+				new ArrayList<String>() {{add(presentStem);}},
+				new ArrayList<String>() {{add(pastStem);}},
+				false);
 	}
 
 	/**
@@ -80,7 +114,8 @@ public class FirstConjStems
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjStems.of(
 				new String[] {extractInfinityStemSimple(lemmaEnd)},
-				new String[] {stems.first}, new String[] {stems.second});
+				new String[] {stems.first}, new String[] {stems.second},
+				false);
 	}
 
 	/**
@@ -100,7 +135,8 @@ public class FirstConjStems
 		Tuple<String, String> stems = extractPPStemsSimple(patternEnd);
 		return FirstConjStems.of(
 				extractInfinityStemsParallel(lemmaEnds),
-				new String[] {stems.first}, new String[] {stems.second});
+				new String[] {stems.first}, new String[] {stems.second},
+				false);
 	}
 
 	/**
@@ -118,7 +154,8 @@ public class FirstConjStems
 		Tuple<ArrayList<String>, ArrayList<String>> stems = extractPPStemsParallel(patternText);
 		return new FirstConjStems (
 				new ArrayList<String>() {{add(extractInfinityStemSimple(lemmaEnd));}},
-				stems.first, stems.second);
+				stems.first, stems.second,
+				extractOrderImportance(patternText));
 	}
 
 	/**
@@ -137,7 +174,8 @@ public class FirstConjStems
 		Tuple<ArrayList<String>, ArrayList<String>> stems = extractPPStemsParallel(patternText);
 		return new FirstConjStems (
 				Arrays.asList(extractInfinityStemsParallel(lemmaEnds)),
-				stems.first, stems.second);
+				stems.first, stems.second,
+				extractOrderImportance(patternText));
 	}
 
 	/**
@@ -280,6 +318,20 @@ public class FirstConjStems
 	}
 
 	/**
+	 * Dažādiem likumiem pārbauda, vai tie satur vārdus, kas norada, ka kāds
+	 * no celmiem ir biežāk lietots, ka aiz tā sekojosais. Šobrīd vienīgais
+	 * zināmais šāds vārds ir "retāk". Tiek uzskatīts, ka ja ir izmantots tikai
+	 * "arī", tad secība nav tik svarīga.
+	 * @param patternText	analizējamais gramatikas šablons.
+	 * @return prioritātes indikators.
+	 */
+	public static boolean extractOrderImportance(String patternText)
+	{
+		if (patternText.matches(".*, retāk .*")) return true;
+		return false;
+	}
+
+	/**
 	 * Pieņemot, ka vārds ir veiksmīgi atpazīts, pievieno celmus aprakstošos
 	 * karodziņus.
 	 * @param lemma 		atpazītais vārds
@@ -305,12 +357,21 @@ public class FirstConjStems
 			prefix = prefix.substring(0, prefix.length() - infinityStem.length());
 			if (prefix.length() > 0)
 				flagCollector.add(TKeys.VERB_PREFIX, prefix);
+			else
+				flagCollector.add(TFeatures.NO_PREFIX);
 			flagCollector.add(TKeys.INFINITIVE_STEM, prefix + infinityStem);
 
-			for (String stem : presentStems)
-				flagCollector.add(TKeys.PRESENT_STEM, prefix + stem);
-			for (String stem : pastStems)
-				flagCollector.add(TKeys.PAST_STEM, prefix + stem);
+			final String finalPrefix = prefix;
+			if (!presentStems.isEmpty())
+				flagCollector.add(TKeys.PRESENT_STEMS,
+						presentStems.stream().map(s -> finalPrefix + s)
+								.reduce((s1, s2) -> s1 + "," + s2).orElse(""));
+			if (!pastStems.isEmpty())
+				flagCollector.add(TKeys.PAST_STEMS,
+						pastStems.stream().map(s -> finalPrefix + s)
+								.reduce((s1, s2) -> s1 + "," + s2).orElse(""));
+			if ((!presentStems.isEmpty() || !pastStems.isEmpty()) && isOrderImportant)
+					flagCollector.add(TValues.STEMS_ARE_ORDERED);
 
 		}
 		else System.err.printf(

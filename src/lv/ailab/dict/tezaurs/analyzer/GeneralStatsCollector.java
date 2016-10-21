@@ -347,22 +347,22 @@ public class GeneralStatsCollector
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(TKeys.PRESENT_STEM))
+				entry.head.gram.flags.testKey(TKeys.PRESENT_STEMS))
 		{
-			line.append(TKeys.PRESENT_STEM);
+			line.append(TKeys.PRESENT_STEMS);
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEMS)));
 		}
 		else line.append("NULL");
 		line.append("\t");
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(TKeys.PAST_STEM))
+				entry.head.gram.flags.testKey(TKeys.PAST_STEMS))
 		{
-			line.append(TKeys.PAST_STEM);
+			line.append(TKeys.PAST_STEMS);
 			line.append("=");
 			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEM)));
+					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEMS)));
 		}
 		else line.append("NULL");
 		line.append("\t");

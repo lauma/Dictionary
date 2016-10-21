@@ -288,7 +288,7 @@ public class OptHypernRules
 		VerbDoubleRule.of("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikt\" (patikt kādam)"),
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"tik"}, new String[]{"tīk"}, new String[]{"tik"}), //patikt
+				FirstConjStems.of("tik", "tīk", "tik")), //patikt
 
 		FirstConj.directAllPersParallelHomof(
 				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "\"riest\" (parastais)"), //ieriest 2
@@ -344,25 +344,25 @@ public class OptHypernRules
 		// Izņēmums.
 		VerbDoubleRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "dot", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"dot\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"do"}, new String[]{"dod"}, new String[]{"dev"}), //izpārdot
+				FirstConjStems.of("do", "dod", "dev")), //izpārdot
 		VerbDoubleRule.of("-nesajēdzu, -nesajēdz,", "-nesajēdz, pag. -nesajēdzu", "jēgt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"jēgt\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"jēg"}, new String[]{"jēdz"}, new String[]{"jēdz"}), //nesajēgt
+				FirstConjStems.of("jēg", "jēdz", "jēdz")), //nesajēgt
 		VerbDoubleRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "likt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"lik"}, new String[]{"liek"}, new String[]{"lik"}), //izpalikt
+				FirstConjStems.of("lik", "liek", "lik")), //izpalikt
 		VerbDoubleRule.of("-nespēju, -nespēj,", "-nespēj, pag. -nespēju", "nespēt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"spē"}, new String[]{"spēj"}, new String[]{"spēj"}), //nespēt
+				FirstConjStems.of("spē", "spēj", "spēj")), //nespēt
 		VerbDoubleRule.of("-sastopu, -sastopi,", "-sastop, pag. -sastapu", "sastapt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"stapt\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"stap"}, new String[]{"stop"}, new String[]{"stap"}), //sastapt
+				FirstConjStems.of("stap", "stop", "stap")), //sastapt
 		VerbDoubleRule.of("-sašūtu, -sašūti,", "-sašūt, pag. -sašutu", "sašust", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"šust\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"šus"}, new String[]{"šū"}, new String[]{"šut"}), //sašust
+				FirstConjStems.of("šus", "šū", "šut")), //sašust
 		VerbDoubleRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "zīt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\""), TFeatures.POS__DIRECT_VERB}, null,
-				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //atpazīt
+				FirstConjStems.of("zī", "zīst", "zin")), //atpazīt
 
 		// Standartizētie.
 		// A
@@ -906,7 +906,7 @@ public class OptHypernRules
 		VerbDoubleRule.of("-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\""), TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
-				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikt
+				FirstConjStems.of("teik", "teic", "teic")), //atteikt
 
 	};
 
@@ -1790,7 +1790,7 @@ public class OptHypernRules
 		VerbDoubleRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikties\" (patikties kādam)"),
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB}, null,
-				new String[]{"tik"}, new String[]{"tīk"}, new String[]{"tik"}), //iepatikties
+				FirstConjStems.of("tik", "tīk", "tik")), //iepatikties
 
 		// Paralēlās formas.
 		FirstConj.reflAllPersParallel(
@@ -1814,10 +1814,10 @@ public class OptHypernRules
 		// Izņēmums.
 		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīties\""), TFeatures.POS__REFL_VERB}, null,
-				new String[]{"zī"}, new String[]{"zīst"}, new String[]{"zin"}), //iepazīties
+				FirstConjStems.of("zī", "zīst", "zin")), //iepazīties
 		VerbDoubleRule.of("-sastopos, -sastopies,", "-sastopas, pag. -sastapos", "sastapties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"stapties\""), TFeatures.POS__REFL_VERB}, null,
-				new String[]{"stap"}, new String[]{"stop"}, new String[]{"stap"}), //sastapties
+				FirstConjStems.of("stap", "stop", "stap")), //sastapties
 
 		// Standartizētie.
 		// A
@@ -2101,13 +2101,13 @@ public class OptHypernRules
 				"teikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\""), TFeatures.POS__REFL_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOT_PRESENT_FORMS)},
-				new String[]{"teik"}, new String[]{"teic"}, new String[]{"teic"}), //atteikties
+				FirstConjStems.of("teik", "teic", "teic")), //atteikties
 
 		VerbDoubleRule.of("parasti dsk. 3. pers., -sveicas, pag. -sveicās", null,
 				"sveikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sveikties\""), TFeatures.POS__REFL_VERB},
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS},
-				FirstConjStems.singlePP("-sveicas, pag. -sveicās", "sveikties")), // apsveikties
+				FirstConjStems.of("sveik", "sveic", "sveic")), // apsveikties
 
 
 	};

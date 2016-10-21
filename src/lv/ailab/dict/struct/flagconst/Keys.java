@@ -46,20 +46,23 @@ public class Keys
 	//=== Morfoimporta informācija =============================================
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
-	 * 1. konjugācijas darbības vārdiem - celms, ko veido no nenoteiksmes.
+	 * 1. konjugācijas darbības vārdiem - celms (katram šķirkļavārdam viens), ko
+	 * veido no nenoteiksmes.
 	 */
 	public final static String INFINITIVE_STEM = "Stem1";
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
-	 * 1. konjugācijas darbības vārdiem - celms, ko veido no tagadnes
-	 * 3. personas.
+	 * 1. konjugācijas darbības vārdiem - ar komatu atdalīti celmi, ko veido no
+	 * tagadnes 3. personas.
 	 */
-	public final static String PRESENT_STEM = "Stem2";
+	public final static String PRESENT_STEMS = "Stem2";
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
-	 * 1. konjugācijas darbības vārdiem - celms, ko veido no pagātnes.
+	 * 1. konjugācijas darbības vārdiem - ar komatu atdalīti celmi, ko veido no
+	 * pagātnes.
 	 */
-	public final static String PAST_STEM = "Stem3";
+	public final static String PAST_STEMS = "Stem3";
+
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * 1. konjugācijas darbības vārdiem - priedēkļi vai, salikteņu gadījumā,

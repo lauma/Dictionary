@@ -5,10 +5,12 @@ import lv.ailab.dict.struct.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Objekts, kas uzvāc dažādas statistikas par 1. konjugācijas verbiem Tēzaurā.
@@ -215,7 +217,7 @@ public class FirstConjStatsCollector
 						reflByPrefix, prefixCountsRefl, h);
 			}
 
-			// Ja vajag savākt celmus.
+			// Ja vajag savākt nenoteiksmes celmus.
 			if (collectDirectPotential || collectReflPotential)
 			{
 				Set<String> stems = h.gram.flags.getAll(TKeys.INFINITIVE_STEM);
@@ -267,7 +269,6 @@ public class FirstConjStatsCollector
 	protected static void addByStem(
 			TreeMap<String, TreeSet<String>> where, Header what)
 	{
-		String key = "";
 		final String prefix;
 		Set<String> prefixes = what.gram.flags.getAll(Keys.VERB_PREFIX);
 		if (prefixes != null)
@@ -280,20 +281,66 @@ public class FirstConjStatsCollector
 			prefix = prefixes.stream().sorted().findFirst().orElse("");
 		}
 		else prefix = "";
+
+		boolean hasParallelStems = false;
+		String infinitives = "";
 		Set<String> stemKeys = what.gram.flags.getAll(Keys.INFINITIVE_STEM);
-		key = key + stemKeys.stream().sorted()
-				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
-				.reduce((a, b) -> a + ", " + b).orElse("0")
-				+ "\t";
-		stemKeys = what.gram.flags.getAll(Keys.PRESENT_STEM);
-		key = key + stemKeys.stream().sorted()
-				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
-				.reduce((a, b) -> a + ", " + b).orElse("0")
-				+ "\t";
-		stemKeys = what.gram.flags.getAll(Keys.PAST_STEM);
-		key = key + stemKeys.stream().sorted()
+		infinitives = stemKeys.stream().sorted()
 				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 				.reduce((a, b) -> a + ", " + b).orElse("0");
+
+		String presents = "";
+		stemKeys = what.gram.flags.getAll(Keys.PRESENT_STEMS);
+		if (stemKeys.size() > 1)
+			System.out.println("Pie \"" + what.lemma.text
+					+ "\" ir vairāk kā 1 tagadnes celmu rinda: "
+					+ stemKeys.stream().sorted().reduce((p1, p2) -> p1 + ", " + p2).orElse("")
+					+ "!");
+		if (what.gram.flags.test(TFeatures.STEMS_ARE_ORDERED))
+			presents = stemKeys.stream().sorted()
+					.map(stems -> Arrays.asList(stems.split(",")).stream()
+							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
+					.reduce((a, b) -> a + ", " + b).orElse("0");
+		else
+			presents = stemKeys.stream().sorted()
+					.map(stems -> Arrays.asList(stems.split(",")).stream()
+							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+							.sorted()
+							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
+					.reduce((a, b) -> a + ", " + b).orElse("0");
+
+		String pasts = "";
+		stemKeys = what.gram.flags.getAll(Keys.PAST_STEMS);
+		if (stemKeys.size() > 1)
+			System.out.println("Pie \"" + what.lemma.text
+					+ "\" ir vairāk kā 1 pagātnes celmu rinda: "
+					+ stemKeys.stream().sorted().reduce((p1, p2) -> p1 + ", " + p2).orElse("")
+					+ "!");
+		if (what.gram.flags.test(TFeatures.STEMS_ARE_ORDERED))
+			pasts = stemKeys.stream().sorted()
+					.map(stems -> Arrays.asList(stems.split(",")).stream()
+							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+							.sorted()
+							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
+					.reduce((a, b) -> a + ", " + b).orElse("0");
+		else
+			pasts = stemKeys.stream().sorted()
+					.map(stems -> Arrays.asList(stems.split(",")).stream()
+							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
+							.sorted()
+							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
+					.reduce((a, b) -> a + ", " + b).orElse("0");
+
+		if (infinitives.contains(",") || presents.contains(",") || pasts.contains(","))
+			hasParallelStems = true;
+		String stemSeparator = "0";
+		if (hasParallelStems && what.gram.flags.test(TFeatures.STEMS_ARE_ORDERED))
+			stemSeparator = "\"retāk\"";
+		else if (hasParallelStems)
+			stemSeparator = "\"arī\"";
+
+		String key = infinitives + "\t" + presents + "\t" + pasts + "\t" + stemSeparator;
 
 		TreeSet<String> values = where.get(key);
 		if (values == null) values = new TreeSet<>();
@@ -475,7 +522,7 @@ public class FirstConjStatsCollector
 	{
 		if (what != null && what.size() > 0)
 		{
-			where.write("Nenoteiksme\tTagadne\tPagātne\tSkaits\tDarbības vārdi\n");
+			where.write("Nenoteiksme\tTagadne\tPagātne\tAtdalītājs\tSkaits\tDarbības vārdi\n");
 			where.write(what.keySet().stream().map(k ->
 					k + "\t" + what.get(k).size() + "\t" +
 							what.get(k).stream()

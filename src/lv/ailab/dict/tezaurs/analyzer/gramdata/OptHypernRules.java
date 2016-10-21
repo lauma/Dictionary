@@ -290,9 +290,10 @@ public class OptHypernRules
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("tik", "tīk", "tik")), //patikt
 
+		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.directAllPersParallelHomof(
 				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "\"riest\" (parastais)"), //ieriest 2
-			// riešu, ries, rieš, pag. rietu, arī riešu
+
 		// Paralēlās formas.
 		FirstConj.directAllPersParallel(
 				"-auju, -auj, -auj, arī -aunu, -aun, -aun, pag. -āvu", "aut"), //apaut
@@ -317,8 +318,6 @@ public class OptHypernRules
 		FirstConj.directAllPersParallel(
 				"-plešu, -plet, -pleš, pag. -pletu, arī -plētu", "plest"), //aizplest
 		FirstConj.directAllPersParallel(
-				"-purstu, -pursti, -purst, pag. -pūru, arī -pūru", "purt"), //papurt
-		FirstConj.directAllPersParallel(
 				"-skārstu, -skārsti, -skārst, arī -skāršu, -skārt, -skārš, pag. -skārtu", "skārst"), //apskārst
 		FirstConj.directAllPersParallel(
 				"-skrienu, -skrien, -skrien, arī -skreju, -skrej, -skrej, pag. -skrēju", "skriet"), //aizskriet
@@ -338,8 +337,13 @@ public class OptHypernRules
 				"-strēdzu, -strēdz, -strēdz, pag. -strēdzu, arī -strēgstu, -strēgsti, -strēgst, pag. -strēgu", "strēgt"), //iestrēgt
 		FirstConj.directAllPersParallel(
 				"-tilpstu, -tilpsti, -tilpst, retāk -telpu, telpi, -telp, pag. -tilpu", "tilpt"), //ietilpt
+		// TODO: sakārtot "viest" un "viesties"
 		FirstConj.directAllPersParallel(
 				"-viešu, -vies, -vieš, retāk -viežu, -vied, -viež, pag. -viedu", "viest"), //saviest
+		FirstConj.directAllPersParallel(
+				"-viešu, -vies, -vieš, retāk -viežu, -vied, -viež, pag. -viesu", "viest"), // viest 1
+		FirstConj.directAllPersParallel(
+				"-viežu, -vied, -viež, retāk -viešu, -vies, -vieš, pag. -viedu", "viest"), // viest 2
 
 		// Izņēmums.
 		VerbDoubleRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "dot", 15,
@@ -757,6 +761,7 @@ public class OptHypernRules
 		FirstConj.direct("-veru, -ver,", "-ver, pag. -vēru", "vērt"), //aizvērt
 		FirstConj.direct("-vēžu, -vēz,", "-vēž, pag. -vēzu", "vēzt"), //apvēzt
 		FirstConj.direct("-viebju, -vieb,", "-viebj, pag. -viebu", "viebt"), //izviebt
+		// TODO: sakārtot "viest" un "viesties"
 		FirstConj.direct("-viešu, -vies,", "-vieš, pag. -viesu", "viest"), //ieviest
 		FirstConj.direct("-vilgstu, -vilgsti,", "-vilgst, pag. -vilgu", "vilgt"), //atvilgt
 		FirstConj.direct("-velku, -velc,", "-velk, pag. -vilku", "vilkt"), //aizvilkt
@@ -786,12 +791,14 @@ public class OptHypernRules
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas.
 		// Ar paralēlformām.
+		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.direct3PersParallelHomof(
 				"-rieš, pag. -rieta, arī -riesa", "riest", "\"riest\" (parastais)"), // aizriest
 		// Bez paralēlformām.
 		FirstConj.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (gaismai)"), //aizaust 1
 		FirstConj.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (ievainojumam)"), //aizdzīt 2
 		FirstConj.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
+		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "\"riest\" (parastais)"), //ieriest 1
 		FirstConj.direct3PersHomof("-riest, pag. -rieta", "riest", "\"riest\" (izņēmums)"), //pieriest 1
 		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "\"sust\" (žūt)"), //nosust 2
@@ -2036,6 +2043,7 @@ public class OptHypernRules
 
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
+		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.refl3PersParallelHomof(
 				"-riešas, pag. -riesās, arī -rietās", "riesties", "\"riesties\" (parastais)"), //aizriesties
 		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "\"riesties\" (parastais)"), // ieriesties 1
@@ -2045,6 +2053,9 @@ public class OptHypernRules
 		FirstConj.refl3PersParallel("-jumjas, pag. -jūmās, arī -jumās", "jumties"), //jumties
 		FirstConj.refl3PersParallel("-nīkas, retāk -nīkstas, pag. -nikās", "nikties"), //apnikties
 		FirstConj.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
+		// TODO: sakārtot "viest" un "viesties"
+		FirstConj.refl3PersParallel("-viešas, retāk -viežas, pag. -viesās", "viesties"), // viesties 1
+		FirstConj.refl3PersParallel("-viežas, retāk -viešas, pag. -viedās", "viesties"), // viesties 2
 
 		// Standarts
 		// A, B, C, D
@@ -2072,10 +2083,10 @@ public class OptHypernRules
 		// Š
 		FirstConj.refl3Pers("-šķiļas, pag. -šķīlās", "šķilties"), //aizšķilties
 		// T, U, V
-		// TODO ko darīt ar viesties?
 		FirstConj.refl3Pers("-vāžas, pag. -vāzās", "vāzties"), //uzvāzties
 		FirstConj.refl3Pers("-veicas, pag. -veicās", "veikties"), //izveikties
 		FirstConj.refl3Pers("-velbjas, pag. -velbās", "velbties"), //izvelbties
+		// TODO: sakārtot "viest" un "viesties"
 		FirstConj.refl3Pers("-viešas, pag. -viesās", "viesties"), //ieviesties
 		// Z, Ž
 		FirstConj.refl3Pers("-žmaudzas, pag. -žmaudzās", "žmaugties"), //iežmaugties

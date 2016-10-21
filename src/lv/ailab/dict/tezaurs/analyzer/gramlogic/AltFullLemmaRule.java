@@ -44,6 +44,10 @@ public class AltFullLemmaRule implements AltLemmaRule
 	 */
 	protected final AltLemmaSubRule lemmaLogic;
 
+	/**
+	 * Skaitītājs, kas norāda, cik reižu likums ir ticis lietots (applyDirect).
+	 */
+	protected int usageCount = 0;
 
 	public AltFullLemmaRule(
 			String patternBegin, String patternEnding, String lemmaRestrict,
@@ -116,7 +120,7 @@ public class AltFullLemmaRule implements AltLemmaRule
 	 * daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
-	public int apply(String gramText, String lemma,
+	public int applyDirect(String gramText, String lemma,
 			Set<Integer> paradigmCollector, Flags flagCollector,
 			List<Header> altLemmasCollector)
 	{
@@ -137,8 +141,32 @@ public class AltFullLemmaRule implements AltLemmaRule
 			paradigmCollector.addAll(lemmaLogic.paradigms);
 			if (lemmaLogic.positiveFlags != null)
 				for (Tuple<String, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
+			if (newBegin > -1) usageCount++;
 			return newBegin;
 		}
 		else return -1;
+	}
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		return usageCount;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s_?_%s\"",
+				this.getClass().getSimpleName(), patternTextBegin, patternTextEnding);
 	}
 }

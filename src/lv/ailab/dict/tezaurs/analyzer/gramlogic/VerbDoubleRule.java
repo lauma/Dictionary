@@ -23,8 +23,14 @@ import java.util.*;
  * Izveidots 2015-10-16.
  * @author Lauma
  */
-public class VerbDoubleRule implements Rule
+public class VerbDoubleRule implements EndingRule
 {
+	/**
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
+	 */
+	protected final String patternText;
+
 	protected BaseRule allPersonRule;
 	protected ThirdPersVerbRule thirdPersonRule;
 	/**
@@ -82,25 +88,29 @@ public class VerbDoubleRule implements Rule
 				System.err.printf("Neizdevās izveidot \"parasti 3. pers.\" likumu gramatikas šablonam \"%s\"\n", allPersonPattern);
 				thirdPersonPattern = allPersonPattern;
 			}
-
+			patternText = allPersonPattern;
 			allPersonRule = BaseRule.simple(allPersonPattern,
 					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
 					lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternEnd != null && patternEnd.trim().length() > 0)
 		{
+			patternText = patternEnd;
 			allPersonRule = null;
 			thirdPersonRule = new ThirdPersVerbRule(patternEnd,
 				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 		} else if (patternBegin != null && patternBegin.trim().length() > 0)
 		{
+			patternText = patternBegin;
 			allPersonRule = BaseRule.simple(patternBegin,
 					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
 			thirdPersonRule = null;
 		}
 		else
-			System.err.printf("Veidojot 1. konjugācijas likumu \"%s\", nav norādīti šabloni\n", lemmaEnd);
-
+		{
+			patternText = "";
+			System.err.printf("Veidojot darbības vārda likumu \"%s\", nav norādīti šabloni\n", lemmaEnd);
+		}
 	}
 
 	/**
@@ -131,6 +141,7 @@ public class VerbDoubleRule implements Rule
 		allPersonRule = null;
 		thirdPersonRule = new ThirdPersVerbRule(patternEnd,
 				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+		patternText = patternEnd;
 	}
 
 	/**
@@ -381,7 +392,7 @@ public class VerbDoubleRule implements Rule
 	 */
 	@Override
 	public int applyDirect(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = -1;
 		if (thirdPersonRule != null)
@@ -408,7 +419,7 @@ public class VerbDoubleRule implements Rule
 	 */
 	@Override
 	public int applyOptHyphens(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = -1;
 		if (thirdPersonRule != null)
@@ -418,5 +429,31 @@ public class VerbDoubleRule implements Rule
 		if (newBegin != -1 && stems != null)
 			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
+	}
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		int res = 0;
+		if (allPersonRule != null) res = res + allPersonRule.getUsageCount();
+		if (thirdPersonRule != null) res = res + thirdPersonRule.getUsageCount();
+		return res;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s\"",
+				this.getClass().getSimpleName(), patternText);
 	}
 }

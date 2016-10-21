@@ -13,10 +13,10 @@ import java.util.Set;
  *
  * @author Lauma
  */
-public interface AltLemmaRule
+public interface AltLemmaRule extends Rule
 {
 	/**
-	 * Likuma piemērošana.
+	 * Likuma piemērošana pa tiešo, bez maģijas.
 	 * @param gramText          	apstrādājamā gramatika
 	 * @param lemma             	hederim, kurā atrodas gramatika, atbilstošā
 	 *                          	lemma
@@ -29,7 +29,7 @@ public interface AltLemmaRule
 	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
-	public int apply(String gramText, String lemma,
+	public int applyDirect(String gramText, String lemma,
 			Set<Integer> paradigmCollector, Flags flagCollector,
 			List<Header> altLemmasCollector);
 }

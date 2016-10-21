@@ -16,9 +16,22 @@ import java.util.Set;
  *
  * @author Lauma
  */
-public class ThirdPersVerbRule implements Rule
+public class ThirdPersVerbRule implements EndingRule
 {
+	/**
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
+	 */
+	protected final String patternText;
+
+	/**
+	 * Likums šablonam, kas sākas ar "tikai 3. pers.,".
+	 */
     protected BaseRule thirdPersOnly;
+
+	/**
+	 * Likums šablonam, kas sākas ar "parasti 3. pers.,".
+	 */
     protected BaseRule thirdPersUsually;
 
     /**
@@ -37,6 +50,7 @@ public class ThirdPersVerbRule implements Rule
     public ThirdPersVerbRule(String patternText, String lemmaEnding, Set<Integer> paradigms,
             Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags)
     {
+		this.patternText = patternText;
         thirdPersUsually = BaseRule.simple(
                 "parasti 3. pers., " + patternText, ".*" + lemmaEnding, paradigms,
                 new HashSet<Tuple<String, String>>()
@@ -144,7 +158,7 @@ public class ThirdPersVerbRule implements Rule
      */
     @Override
     public int applyDirect(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, Flags flagCollector)
+            Set<Integer> paradigmCollector, Flags flagCollector)
     {
         int newBegin = thirdPersUsually.applyDirect(
                 gramText, lemma, paradigmCollector, flagCollector);
@@ -168,7 +182,7 @@ public class ThirdPersVerbRule implements Rule
      */
     @Override
     public int applyOptHyphens(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, Flags flagCollector)
+            Set<Integer> paradigmCollector, Flags flagCollector)
     {
         int newBegin = thirdPersUsually.applyOptHyphens(
                 gramText, lemma, paradigmCollector, flagCollector);
@@ -177,4 +191,30 @@ public class ThirdPersVerbRule implements Rule
                     gramText, lemma, paradigmCollector, flagCollector);
         return newBegin;
     }
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		int res = 0;
+		if (thirdPersOnly != null) res = res + thirdPersOnly.getUsageCount();
+		if (thirdPersUsually != null) res = res + thirdPersUsually.getUsageCount();
+		return res;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s\"",
+				this.getClass().getSimpleName(), patternText);
+	}
 }

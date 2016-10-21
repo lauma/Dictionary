@@ -1,11 +1,10 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaSubRule;
 import lv.ailab.dict.utils.Tuple;
+
+import java.util.ArrayList;
 
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
@@ -25,6 +24,18 @@ import lv.ailab.dict.utils.Tuple;
  */
 public class AltLemmaRules
 {
+	/**
+	 * Metode visu klasē iekļauto likumu iegūšanai pareizā secībā.
+	 * @return saraksts ar likumu blokiem.
+	 */
+	public static ArrayList<AltLemmaRule[]> getAll()
+	{
+		ArrayList<AltLemmaRule[]> res = new ArrayList<>(2);
+		res.add(pluralToSingular);
+		res.add(mascToFem);
+		return res;
+	}
+
 	/**
 	 * Likumi formā:
 	 * -ņu, vsk. dižtauriņš, -ņa, v.

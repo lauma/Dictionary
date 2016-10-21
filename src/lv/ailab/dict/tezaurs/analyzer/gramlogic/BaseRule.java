@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
  * Izveidots 2015-10-26.
  * @author Lauma
  */
-public class BaseRule implements Rule
+public class BaseRule implements EndingRule
 {
     /**
      * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
@@ -59,6 +60,11 @@ public class BaseRule implements Rule
      * šablonam atbilstība tiek fiksēta, bet lemmu šabloniem - nē.
      */
     protected final String errorMessage;
+
+	/**
+	 * Skaitītājs, kas norāda, cik reižu likums ir ticis lietots (apply).
+	 */
+	protected int usageCount = 0;
 
     /**
      * @param pattern		teksts, ar kuru jāsākas gramatikai
@@ -216,7 +222,6 @@ public class BaseRule implements Rule
 				alwaysFlags);
 	}
 
-
 	/**
      * Piemērot likumu bez papildus maģijas.
      * @param gramText          apstrādājamā gramatika
@@ -230,7 +235,7 @@ public class BaseRule implements Rule
      */
     @Override
     public int applyDirect(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, Flags flagCollector)
+            Set<Integer> paradigmCollector, Flags flagCollector)
     {
         return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
     }
@@ -248,7 +253,7 @@ public class BaseRule implements Rule
      */
     @Override
     public int applyOptHyphens(String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, Flags flagCollector)
+            Set<Integer> paradigmCollector, Flags flagCollector)
     {
         return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector);
     }
@@ -269,7 +274,7 @@ public class BaseRule implements Rule
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     protected int apply(Pattern gramPattern, String gramText, String lemma,
-            HashSet<Integer> paradigmCollector, Flags flagCollector)
+            Set<Integer> paradigmCollector, Flags flagCollector)
 	{
 		try
 		{
@@ -300,6 +305,7 @@ public class BaseRule implements Rule
 					for (Tuple<String, String> t : alwaysFlags)
 						flagCollector.add(t.first, t.second);
 			}
+			if (newBegin > -1) usageCount++;
 			return newBegin;
 		} catch (Exception e)
 		{
@@ -307,4 +313,27 @@ public class BaseRule implements Rule
 			throw e;
 		}
     }
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		return usageCount;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s\"",
+				this.getClass().getSimpleName(), patternText);
+	}
 }

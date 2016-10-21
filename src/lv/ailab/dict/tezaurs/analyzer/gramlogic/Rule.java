@@ -1,48 +1,34 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
-import java.util.HashSet;
+import lv.ailab.dict.struct.Header;
+
+import java.util.List;
+import java.util.Set;
 
 /**
- * Gramatiku apstrādes likums, kurš var dot jaunus karodziņus un paradigmas.
- * @author Lauma
+ * Vispārīgais likumu interfeiss: likumiem var paprasīt, cik reižu tie ir tikuši
+ * lietoti un kā tos sauc. apply() šeit nav pievienots tāpēc, ka pa realizācijām
+ * atšķiras nepieciešamie parametri. Nākotnē to varētu mainīt.
  *
+ * Izveidots 2016-10-21.
+ * @author Lauma
  */
-public interface Rule {
+public interface Rule
+{
+	/**
+	 * Metode, kas ļauj uzzināt, cik reižu likums ir lietots.
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	int getUsageCount();
 
 	/**
-	 * Piemērot likumu bez papildus maģijas.
-	 * @param gramText          apstrādājamā gramatika
-	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
-	 *                          lemma
-	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
-	 *                          gramatika un lemma atbilst šim likumam
-	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
-	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
-	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem. Iesakāmā realizācija satur likumā izmantoto šablonu un, ja vajag,
+	 * arī galotņu nosacījumus, klases vārdu, utt.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
 	 */
-	int applyDirect (
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			Flags flagCollector);
-	
-	/**
-	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
-	 * @param gramText          apstrādājamā gramatika
-	 * @param lemma             hederim, kurā atrodas gramatika, atbilstošā
-	 *                          lemma
-	 * @param paradigmCollector kolekcija, kurā pielikt paradigmu gadījumā, ja
-	 *                          gramatika un lemma atbilst šim likumam
-	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
-	 *                          vismaz gramatika atbilst šim likumam
-	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
-	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
-	 */
-	int applyOptHyphens(
-			String gramText, String lemma,
-			HashSet<Integer> paradigmCollector,
-			Flags flagCollector);
-	
-	
+	String getStrReprezentation();
+
 }

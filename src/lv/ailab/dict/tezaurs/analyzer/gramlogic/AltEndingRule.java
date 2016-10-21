@@ -26,6 +26,11 @@ import java.util.regex.Pattern;
 public class AltEndingRule implements AltLemmaRule
 {
 	/**
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
+	 */
+	protected final String patternText;
+	/**
 	 * Nokompilēts šablons, kuram jāatbilst grmatikai, lai šis likums būtu
 	 * piemērojams.
 	 */
@@ -44,11 +49,17 @@ public class AltEndingRule implements AltLemmaRule
 	 */
 	protected final String errorMessage;
 
+	/**
+	 * Skaitītājs, kas norāda, cik reižu likums ir ticis lietots (applyDirect).
+	 */
+	protected int usageCount = 0;
+
 	public AltEndingRule(String patternText, List<AltLemmaSubRule> lemmaLogic)
 	{
 		if (lemmaLogic == null)
 			throw new IllegalArgumentException (
 					"Nav paredzēts, ka BaseRule tiek viedots vispār bez lemmu nosacījumiem!");
+		this.patternText = patternText;
 		this.pattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
 		this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
 
@@ -221,7 +232,7 @@ public class AltEndingRule implements AltLemmaRule
 	 * daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
-	public int apply(String gramText, String lemma,
+	public int applyDirect(String gramText, String lemma,
 			Set<Integer> paradigmCollector, Flags flagCollector,
 			List<Header> altLemmasCollector)
 	{
@@ -258,6 +269,30 @@ public class AltEndingRule implements AltLemmaRule
 				newBegin = 0;
 			}
 		}
+		if (newBegin > -1) usageCount++;
 		return newBegin;
+	}
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		return usageCount;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s\"",
+				this.getClass().getSimpleName(), patternText);
 	}
 }

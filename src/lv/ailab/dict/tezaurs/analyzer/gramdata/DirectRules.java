@@ -15,10 +15,16 @@ import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.utils.Tuple;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * TGram.processBeginingWithPatterns(String, String)
- * Likumi kas jālieto ar Rule.applyDirect().
+ * Likumi kas jālieto ar EndingRule.applyDirect().
+ * Ja vienai lemmai atbilst vairāki likumi (piemēram, verbiem ir reizēm ir
+ * norādīta locīšana ar paralēlformām un reizēm bez), tad visiem likumiem jābūt
+ * vienā klasē - vai nu OptHypernRules vai DirectRules, bet ne juku jukām.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.
@@ -28,9 +34,53 @@ import lv.ailab.dict.utils.Tuple;
 public class DirectRules
 {
 	/**
+	 * Metode klasē iekļauto nosacīti drošo (var lietot pirms citiem likumiem,
+	 * ja vien tiek ievērota šeit dotā secība) likumu bloku iegūšanai pareizā
+	 * secībā.
+	 * @return saraksts ar likumu blokiem.
+	 */
+	public static List<EndingRule[]> getAllSafe()
+	{
+		List<EndingRule[]> res = new ArrayList<>();
+		// Vairākkonjugāciju likumi jāliek pirms vienas konj. likumiem, jo var
+		// sanākt, ka viens likums ir otra prefikss.
+		res.add(directMultiConjVerb);
+		res.add(reflMultiConjVerb);
+
+		res.add(directFirstConjVerb);
+		res.add(directSecondConjVerb);
+		res.add(directThirdConjVerb);
+		res.add(reflFirstConjVerb);
+		res.add(reflSecondConjVerb);
+		res.add(reflThirdConjVerb);
+
+		res.add(pronomen);
+		res.add(numeral);
+
+		res.add(other);
+
+		res.add(secondDeclNoun);
+		res.add(fifthDeclNoun);
+		res.add(nounMultiDecl);
+
+		return res;
+	}
+	/**
+	 * Metode klasē iekļauto nedrošo (ir citu likumu prefiksi, jālieto biegās)
+	 * likumu bloku iegūšanai pareizā secībā.
+	 * @return saraksts ar likumu blokiem.
+	 */
+	public static List<EndingRule[]> getAllDangeros()
+	{
+		List<EndingRule[]> res = new ArrayList<>(1);
+		res.add(dangerous);
+		return res;
+	}
+
+	/**
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
-	public static final Rule[] other = {
+	public static final EndingRule[] other = {
 		VerbDoubleRule.of(
 				"esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt", null,
 				"būt", 29,
@@ -208,7 +258,7 @@ public class DirectRules
 	 * vārdšķirām.
 	 * Tiek ļoti cerēts, ka te ir visi.
 	 */
-	public static final Rule[] pronomen = {
+	public static final EndingRule[] pronomen = {
 			// TODO pakāpeniski izravēt dubultlikumus
 		BaseRule.of("vietn., -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // kurš, kurš, mans, viņš
@@ -305,7 +355,7 @@ public class DirectRules
 	 * pieliekot vārdšķiru, lai nesajūk ar citām vārdšķirām.
 	 * Tiek ļoti cerēts, ka te ir visi.
 	 */
-	public static final Rule[] numeral = {
+	public static final EndingRule[] numeral = {
 		// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
 		/*BaseRule.of("nelok.; pamata skait.", ".*t", 29,
 				null, new Tuple[]{TFeatures.POS__CARD_NUMERAL, TFeatures.NON_INFLECTIVE}), // deviņsimt
@@ -322,8 +372,8 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM}), // tūkstotis
 		//BaseRule.of("-as, s.; pamata skait.", "viena", 0,
 		//		null, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__CARD_NUMERAL, TFeatures.ENTRYWORD__FEM}), // viena (iespējams, ka šito var vispār var izmest?)
-		BaseRule.of("nulles, dsk. ģen. nuļļu, s.", "nulle", 9,
-				new Tuple[]{TFeatures.POS__NOUN, TFeatures.CONTAMINATION__CARD_NUM},
+		GenNoun.any("nulles, dsk. ģen. nuļļu, s.", "nulle", 9,
+				new Tuple[]{TFeatures.CONTAMINATION__CARD_NUM},
 				new Tuple[]{TFeatures.GENDER__FEM}), // nulle
 		// Puse un ??daļa arī kļūst par lietvārdiem, turklāt pat bez
 		// kontaminācijas, 		//
@@ -353,7 +403,7 @@ public class DirectRules
 	 * Paradigm 9: Lietvārds 5. deklinācija -e
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
-	public static final Rule[] fifthDeclNoun = {
+	public static final EndingRule[] fifthDeclNoun = {
 		FifthDecl.std("-ķe, -es, dsk. ģen. -ķu, s.", ".*ķe"), //ciniķe
 
 		// Standartizētie
@@ -433,7 +483,7 @@ public class DirectRules
 	/**
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
-	public static final Rule[] secondDeclNoun = {
+	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.std("-bja, dsk. ģen. -bju, v.", ".*bis"), //ledusurbis
 		SecondDecl.std("-ča, dsk. ģen. -ču, v.", ".*cis"), //labrocis
 		SecondDecl.std("-ļa, dsk. ģen. -ļu, v.", ".*lis"), //brokolis
@@ -459,7 +509,7 @@ public class DirectRules
 	 * Visiem likumiem ir iespējami vairāki galotņu varianti, bet uzskaitīti
 	 * ir tikai vārdnīcā sastaptie.
 	 */
-	public static final Rule[] nounMultiDecl = {
+	public static final EndingRule[] nounMultiDecl = {
 		// Vienskaitlis, vīriešu dzimte
 		// Ar mijām
 		GenNoun.any("-ļa, v.", new SimpleSubRule[]{
@@ -564,7 +614,7 @@ public class DirectRules
 	 * Šajā masīvā jāievēro likumu secība, citādi slikti būs. Šo masīvu jālieto
 	 * pašu pēdējo.
 	 */
-	public static final Rule[] dangerous = {
+	public static final EndingRule[] dangerous = {
 		// Paradigma: 9 - Lietvārds 5. deklinācija -e siev. dz.
 		FifthDecl.std("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
@@ -602,7 +652,7 @@ public class DirectRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 15: Darbības vārdi 1. konjugācija tiešie
 	 */
-	public static final Rule[] directFirstConjVerb = {
+	public static final EndingRule[] directFirstConjVerb = {
 		// Darbības vārdu specifiskie likumi, sakārtoti pa tipiem un alfabētiski
 		// pēc nenoteiksmes.
 		// Visu personu formas.
@@ -636,7 +686,7 @@ public class DirectRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 	 */
-	public static final Rule[] directSecondConjVerb = {
+	public static final EndingRule[] directSecondConjVerb = {
 		// Galotņu šabloni.
 		SecondConj.direct("-āju, -ā,", "-ā, pag. -āju", "āt"), //aijāt, aizkābāt
 		SecondConj.direct("-ēju, -ē,", "-ē, pag. -ēju", "ēt"), //abonēt, adsorbēt
@@ -668,7 +718,7 @@ public class DirectRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 	 */
-	public static final Rule[] directThirdConjVerb = {
+	public static final EndingRule[] directThirdConjVerb = {
 		// Visām personām.
 		ThirdConj.direct("-u, -i,", "-a, pag. -īju", "īt", false), //aizsūtīt
 		ThirdConj.direct("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
@@ -687,7 +737,7 @@ public class DirectRules
 	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
 	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
-	public static final Rule[] directMultiConjVerb = {
+	public static final EndingRule[] directMultiConjVerb = {
 		// Galotņu šabloni.
 		SecondThirdConj.directAllPersParallel(
 				"-īju, -ī, -ī, arī -u, -i, -a, pag. -īju", "īt", false), // aprobīt
@@ -706,7 +756,7 @@ public class DirectRules
 	 * pirmos.
 	 * Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflFirstConjVerb = {
+	public static final EndingRule[] reflFirstConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Standartizētie.
 		// A
@@ -814,7 +864,7 @@ public class DirectRules
 	 * pirmos.
 	 * Paradigm 19: Darbības vārdi 2. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflSecondConjVerb = {
+	public static final EndingRule[] reflSecondConjVerb = {
 		// Galotņu šabloni.
 		// Likumi, kam ir visu personu forma.
 		SecondConj.refl("-ojos, -ojies,", "-ojas, pag. -ojos", "oties"), //aiztuntuļoties, apgrēkoties
@@ -863,7 +913,7 @@ public class DirectRules
 	 * pirmos.
 	 * Paradigm 20: Darbības vārdi 3. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflThirdConjVerb = {
+	public static final EndingRule[] reflThirdConjVerb = {
 		// Galotņu šabloni.
 		ThirdConj.refl(
 				"-os, -ies,", "-as, pag. -ājos", "āties", false), //sadziedāties
@@ -1203,7 +1253,7 @@ public class DirectRules
 	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
 	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
-	public static final Rule[] reflMultiConjVerb = {
+	public static final EndingRule[] reflMultiConjVerb = {
 		// Galotņu šabloni.
 		// Visām personām (3. personas likumi netiek atvasināti).
 		SecondThirdConj.reflAllPersParallel(

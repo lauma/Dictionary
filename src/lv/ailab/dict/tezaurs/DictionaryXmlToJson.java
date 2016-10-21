@@ -23,6 +23,11 @@ import java.util.ArrayList;
 
 import lv.ailab.dict.tezaurs.analyzer.FirstConjStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
+import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
+import lv.ailab.dict.tezaurs.analyzer.gramdata.DirectRules;
+import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
@@ -38,6 +43,7 @@ import org.w3c.dom.Node;
 public class DictionaryXmlToJson
 {
 	public final static String[] XML_FILES = {"entries", "references"};
+	public final static boolean PRINT_ALL_RULE_STATS = false;
 	public final static boolean PRINT_SINGLE_XML = false;
 	public final static boolean PRINT_SINGLE_JSON = false;
 
@@ -113,11 +119,14 @@ public class DictionaryXmlToJson
 		String path = args[0];
 		if (!path.endsWith("/") && !path.endsWith("\\"))
 			path = path + "\\";
+		String ruleStatsPath = path + "rule_stats.txt";
 		String completeXmlPath = path + "analyzed_tezaurs.xml";
 		String completeJsonPath = path + "analyzed_tezaurs.json";
 		StaxWriter completeXmlOut = null;
 		BufferedWriter completeJsonOut = null;
 
+		BufferedWriter ruleStatsOut = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream(ruleStatsPath), "UTF-8"));
 		if (PRINT_SINGLE_XML) completeXmlOut = new StaxWriter(completeXmlPath);
 		if (PRINT_SINGLE_JSON) completeJsonOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(completeJsonPath), "UTF-8"));
@@ -239,8 +248,58 @@ public class DictionaryXmlToJson
 			completeJsonOut.close();
 		}
 		if (PRINT_FIRST_CONJ_DIRECT || PRINT_FIRST_CONJ_REFL)
-			System.out.println("Drukā 1. konjugācijas statistikas");
+			System.out.println("Drukā 1. konjugācijas statistikas...");
 		firstConjSC.printContents(path, "tezaurs");
+
+		System.out.println("Drukā likumu lietojuma statistikas...");
+		printRuleStats(ruleStatsOut);
+		ruleStatsOut.close();
+
 		System.out.println("Viss pabeigts!");
+	}
+
+	protected static void printRuleStats(BufferedWriter out) throws IOException
+	{
+		out.write(AltLemmaRules.class.getCanonicalName());
+		out.newLine();
+		for (AltLemmaRule[] rules : AltLemmaRules.getAll())
+			for (AltLemmaRule r : rules)
+				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
+				{
+					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
+					out.write("\t" + r.getUsageCount());
+					out.newLine();
+				}
+
+		out.newLine();
+		out.write(OptHypernRules.class.getCanonicalName());
+		out.newLine();
+		for (EndingRule[] rules : OptHypernRules.getAll())
+			for (EndingRule r : rules)
+				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
+				{
+					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
+					out.write("\t" + r.getUsageCount());
+					out.newLine();
+				}
+		out.newLine();
+		out.write(DirectRules.class.getCanonicalName());
+		out.newLine();
+		for (EndingRule[] rules : DirectRules.getAllSafe())
+			for (EndingRule r : rules)
+				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
+				{
+					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
+					out.write("\t" + r.getUsageCount());
+					out.newLine();
+				}
+		for (EndingRule[] rules : DirectRules.getAllDangeros())
+			for (EndingRule r : rules)
+				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
+				{
+					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
+					out.write("\t" + r.getUsageCount());
+					out.newLine();
+				}
 	}
 }

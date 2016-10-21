@@ -11,10 +11,15 @@ import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
+import java.util.ArrayList;
+
 /**
  * Gramatiku apstrādes likumi. Lasāmības labad izdalīti atsevišķi no
  * TGram.processBeginingWithPatterns(String, String)
- * Likumi kas jālieto ar Rule.applyOptHyphens().
+ * Likumi kas jālieto ar EndingRule.applyOptHyphens().
+ * Ja vienai lemmai atbilst vairāki likumi (piemēram, verbiem ir reizēm ir
+ * norādīta locīšana ar paralēlformām un reizēm bez), tad visiem likumiem jābūt
+ * vienā klasē - vai nu OptHypernRules vai DirectRules, bet ne juku jukām.
  *
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā, vai konkrēti
@@ -25,9 +30,38 @@ import lv.ailab.dict.utils.Tuple;
 public class OptHypernRules
 {
 	/**
+	 * Metode klasē iekļauto likumu bloku iegūšanai pareizā secībā.
+	 * @return saraksts ar likumu blokiem.
+	 */
+	public static ArrayList<EndingRule[]> getAll()
+	{
+		ArrayList<EndingRule[]> res = new ArrayList<>();
+		// Vairākkonjugāciju likumi jāliek pirms vienas konj. likumiem, jo var
+		// sanākt, ka viens likums ir otra prefikss.
+		res.add(directMultiConjVerb);
+		res.add(reflMultiConjVerb);
+
+		res.add(directFirstConjVerb);
+		res.add(directSecondConjVerb);
+		res.add(directThirdConjVerb);
+		res.add(reflFirstConjVerb);
+		res.add(reflSecondConjVerb);
+		res.add(reflThirdConjVerb);
+
+		res.add(other);
+
+		res.add(secondDeclNoun);
+		res.add(thirdDeclNoun);
+		res.add(fifthDeclNoun);
+		res.add(sixthDeclNoun);
+
+		return res;
+	}
+
+	/**
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
-	public static final Rule[] other = {
+	public static final EndingRule[] other = {
 		VerbDoubleRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB}, null), //apiet
@@ -54,7 +88,7 @@ public class OptHypernRules
 	 * Paradigm 9: Lietvārds 5. deklinācija -e
 	 * Likumi formā "-es, dsk. ģen. -ču, s.".
 	 */
-	public static final Rule[] fifthDeclNoun = {
+	public static final EndingRule[] fifthDeclNoun = {
 		// Ar mijām
 		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe, aļģe
 		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
@@ -74,7 +108,6 @@ public class OptHypernRules
 		FifthDecl.std("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
 		FifthDecl.std("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
 		FifthDecl.std("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
-		FifthDecl.std("-nulles, dsk. ģen. -nuļļu, s.", ".*nulle"), // nulle
 		FifthDecl.std("-ores, dsk. ģen. -oru, s.", ".*ore"), // ore
 		FifthDecl.std("-resnes, dsk. ģen. -rešņu, s.", ".*resne"), // resne
 		FifthDecl.std("-teces, dsk. ģen. -teču, s.", ".*tece"), // tece
@@ -92,7 +125,7 @@ public class OptHypernRules
 	 * Paradigmas 11, 35.: Lietvārds 6.. deklinācija, siev.dz.
 	 * Likumi formā "-acs, dsk. ģen. -acu, s.".
 	 */
-	public static final Rule[] sixthDeclNoun = {
+	public static final EndingRule[] sixthDeclNoun = {
 		// Ar mijām
 		SixthDecl.std("-avs, dsk. ģen. -avju, s.", ".*avs"), //avs
 		SixthDecl.std("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
@@ -172,7 +205,7 @@ public class OptHypernRules
 	/**
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
-	public static final Rule[] secondDeclNoun = {
+	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
@@ -184,7 +217,7 @@ public class OptHypernRules
 	/**
 	 * Paradigm 6: Lietvārds 3. deklinācija -us
 	 */
-	public static final Rule[] thirdDeclNoun = {
+	public static final EndingRule[] thirdDeclNoun = {
 			ThirdDecl.std("-alus, v.", ".*alus"), // alus
 
 	};
@@ -194,7 +227,7 @@ public class OptHypernRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 15: Darbības vārdi 1. konjugācija tiešie
 	 */
-	public static final Rule[] directFirstConjVerb = {
+	public static final EndingRule[] directFirstConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Netoteiksmes homoformas.
 		FirstConj.directHomof("-aužu, -aud,", "-auž, pag. -audu", "aust",
@@ -882,7 +915,7 @@ public class OptHypernRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 	 */
-	public static final Rule[] directSecondConjVerb = {
+	public static final EndingRule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
 		SecondConj.directAllPersParallel(
@@ -935,7 +968,7 @@ public class OptHypernRules
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.
 	 * Paradigm 17: Darbības vārdi 3. konjugācija tiešie
 	 */
-	public static final Rule[] directThirdConjVerb = {
+	public static final EndingRule[] directThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
 		ThirdConj.directAllPersParallel(
@@ -1562,7 +1595,7 @@ public class OptHypernRules
 	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
 	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
-	public static final Rule[] directMultiConjVerb = {
+	public static final EndingRule[] directMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Šobrīd sarezgitās struktūras dēļ 3. personas likums netiek atvasinats.
 			// TODO uztaisīt verbu likumu, kas atvasina 3. personas likumu.
@@ -1727,7 +1760,7 @@ public class OptHypernRules
 	 * pirmos.
 	 * Paradigm 18: Darbības vārdi 1. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflFirstConjVerb = {
+	public static final EndingRule[] reflFirstConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Nenoteiksmes homoformas.
 		FirstConj.reflHomof("-aužos, -audies,", "-aužas, pag. -audos", "austies",
@@ -2085,7 +2118,7 @@ public class OptHypernRules
 	 * pirmos.
 	 * Paradigm 19: Darbības vārdi 2. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflSecondConjVerb = {
+	public static final EndingRule[] reflSecondConjVerb = {
 			SecondConj.refl(
 					"-knābājos, -knābājies,", "-knābājas, pag. -knābājos", "knābāties"), // pieknābāties
 			SecondConj.refl(
@@ -2102,7 +2135,7 @@ public class OptHypernRules
 	 * pirmos.
 	 * Paradigm 20: Darbības vārdi 3. konjugācija atgriezeniski
 	 */
-	public static final Rule[] reflThirdConjVerb = {
+	public static final EndingRule[] reflThirdConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
 		ThirdConj.reflAllPersParallel(
@@ -2189,7 +2222,7 @@ public class OptHypernRules
 	 * Vārdi ar vairāk kā vienu paradigmu. Šie likumi jālieto pirms
 	 * atbilstošajiem vienas paradigmas likumiem.
 	 */
-	public static final Rule[] reflMultiConjVerb = {
+	public static final EndingRule[] reflMultiConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		SecondThirdConj.reflAllPersParallel(
 				"-gailējos, -gailējies, -gailējās, arī -gailos, -gailies, -gailas, pag. -gailējos",

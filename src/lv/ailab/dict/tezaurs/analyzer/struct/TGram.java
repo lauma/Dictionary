@@ -21,15 +21,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
-import lv.ailab.dict.struct.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.Rule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import org.w3c.dom.Node;
@@ -202,178 +200,46 @@ public class TGram extends Gram
 
 		// Likumi, kuros tiek dots vēl viens lemmas variants - kā pilns vārds
 		// vai ar papildus galotņu palīdzību.
-		for (AltLemmaRule r : AltLemmaRules.pluralToSingular)
+		for (AltLemmaRule[] rules : AltLemmaRules.getAll())
 		{
+			for (AltLemmaRule r : rules)
+			{
+				if (newBegin != -1) break;
+				newBegin = r.applyDirect(gramText, lemma, paradigm, flags, altLemmas);
+			}
 			if (newBegin != -1) break;
-			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
-		}
-		for (AltLemmaRule r : AltLemmaRules.mascToFem)
-		{
-			if (newBegin != -1) break;
-			newBegin = r.apply(gramText, lemma, paradigm, flags, altLemmas);
 		}
 
 		// Likumi, kuros citu lemmu variantu nav.
-		// Darbības vārdi.
-		for (Rule s : DirectRules.directMultiConjVerb)
+		for (EndingRule[] rules : OptHypernRules.getAll())
 		{
+			for (EndingRule r : rules)
+			{
+				if (newBegin != -1) break;
+				newBegin = r.applyOptHyphens(gramText, lemma, paradigm, flags);
+			}
 			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
-		for (Rule s : DirectRules.directFirstConjVerb)
+		for (EndingRule[] rules : DirectRules.getAllSafe())
 		{
+			for (EndingRule r : rules)
+			{
+				if (newBegin != -1) break;
+				newBegin = r.applyDirect(gramText, lemma, paradigm, flags);
+			}
 			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.directSecondConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.directThirdConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.reflMultiConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.reflFirstConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.reflSecondConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : DirectRules.reflThirdConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-
-		for (Rule s : OptHypernRules.directMultiConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.directFirstConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.directSecondConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.directThirdConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.reflMultiConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.reflFirstConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.reflSecondConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.reflThirdConjVerb)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-
-		// Vietniekvārdi.
-		for (Rule s : DirectRules.pronomen)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		// Skaitļa vārdi.
-		for (Rule s : DirectRules.numeral)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-
-		// Kaut kādi sarežģītie likumi.
-		for (Rule s : DirectRules.other)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.other)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-
-		// "-??a, v.", "-??u, s.", "-??u, v."
-		// "-es, dsk. ģen. -??u, s."
-		// Paradigmas: 3
-		for (Rule s : DirectRules.secondDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.secondDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-
-		// Paradigma: 6
-		for (Rule s : OptHypernRules.thirdDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-
-		// Paradigmas: 9
-		for (Rule s : DirectRules.fifthDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
-		}
-		for (Rule s : OptHypernRules.fifthDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-		// Paradigmas: 11
-		for (Rule s : OptHypernRules.sixthDeclNoun)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyOptHyphens(gramText, lemma, paradigm, flags);
-		}
-
-		// Paradigmas: 1, 2, 3, 5, 9
-		for (Rule s : DirectRules.nounMultiDecl)
-		{
-			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
 
 		// === Bīstamie likumi =================================================
 		// Likumi, kas ir prefiksi citiem likumiem
-		for (Rule s : DirectRules.dangerous)
+		for (EndingRule[] rules : DirectRules.getAllDangeros())
 		{
+			for (EndingRule r : rules)
+			{
+				if (newBegin != -1) break;
+				newBegin = r.applyDirect(gramText, lemma, paradigm, flags);
+			}
 			if (newBegin != -1) break;
-			newBegin = s.applyDirect(gramText, lemma, paradigm, flags);
 		}
 
 		// === Pēcapstrāde =====================================================

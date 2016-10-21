@@ -20,9 +20,22 @@ import java.util.Set;
  * Izveidots 2016-10-12.
  * @author Lauma
  */
-public class PluralVerbRule implements Rule
+public class PluralVerbRule implements EndingRule
 {
+	/**
+	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
+	 * piemērojams.
+	 */
+	protected final String patternText;
+
+	/**
+	 * Likums šablonam, kas sākas ar "tikai dsk.,".
+	 */
 	protected BaseRule pluralOnly;
+
+	/**
+	 * Likums šablonam, kas sākas ar "parasti dsk.,".
+	 */
 	protected BaseRule pluralUsually;
 
 	/**
@@ -49,6 +62,7 @@ public class PluralVerbRule implements Rule
 			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
 			FirstConjStems stems)
 	{
+		this.patternText = patternText;
 		this.stems = stems;
 		boolean singular3Pers = patternText.contains(" vai vsk. 3. pers. ");
 		pluralUsually = BaseRule.simple(
@@ -204,7 +218,7 @@ public class PluralVerbRule implements Rule
 	 */
 	@Override
 	public int applyDirect(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = pluralUsually.applyDirect(
 				gramText, lemma, paradigmCollector, flagCollector);
@@ -230,7 +244,7 @@ public class PluralVerbRule implements Rule
 	 */
 	@Override
 	public int applyOptHyphens(String gramText, String lemma,
-			HashSet<Integer> paradigmCollector, Flags flagCollector)
+			Set<Integer> paradigmCollector, Flags flagCollector)
 	{
 		int newBegin = pluralUsually.applyOptHyphens(
 				gramText, lemma, paradigmCollector, flagCollector);
@@ -240,5 +254,31 @@ public class PluralVerbRule implements Rule
 		if (newBegin != -1 && stems != null)
 			stems.addStemFlags(lemma, flagCollector);
 		return newBegin;
+	}
+
+	/**
+	 * Cik reižu likums ir lietots?
+	 * @return skaits, cik reižu likums ir lietots.
+	 */
+	@Override
+	public int getUsageCount()
+	{
+		int res = 0;
+		if (pluralOnly != null) res = res + pluralOnly.getUsageCount();
+		if (pluralUsually != null) res = res + pluralUsually.getUsageCount();
+		return res;
+	}
+
+	/**
+	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
+	 * citiem.
+	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
+	 * izdrukās.
+	 */
+	@Override
+	public String getStrReprezentation()
+	{
+		return String.format("%s \"%s\"",
+				this.getClass().getSimpleName(), patternText);
 	}
 }

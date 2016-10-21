@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Te būs likumi, ko neizdodas izlikt smukajos, parametrizējamajos Rule
+ * Te būs likumi, ko neizdodas izlikt smukajos, parametrizējamajos EndingRule
  * objektos, bet tā vietā tie palikuši kā atsevišķas funkcijas.
  * Lai karodziņu vērtības nebūtu izkaisītas pa visurieni, šajā klasē tiek
  * lietotas tikai vērtības, kas ieviestas TValues uzskaitījumā.

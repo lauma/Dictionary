@@ -48,9 +48,10 @@ public class DictionaryXmlToJson
 	public final static boolean PRINT_SINGLE_JSON = false;
 
 	// Parametri, kas attiecināmi ur GeneralStatsCollector.
-	public final static boolean PRINT_WORDLISTS = false;
+	public final static boolean PRINT_WORDLISTS = true;
 
 	public final static boolean PRINT_PRONONCATIONS = false;
+	public final static boolean PRINT_INFL_WEARDNESS = true;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;
 	//public final static boolean PRINT_FIRST_CONJ = false;
 	public final static boolean PRINT_NON_INFL = false;
@@ -156,7 +157,7 @@ public class DictionaryXmlToJson
 					PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL, PRINT_WITH_REGEXP,
 					PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
 					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,
-					PRINT_OTHER_LEMMAS,	wordlistOut);
+					PRINT_OTHER_LEMMAS,	PRINT_INFL_WEARDNESS, wordlistOut);
 
 			StaxReader dicReader = new StaxReader(inputFile);
 

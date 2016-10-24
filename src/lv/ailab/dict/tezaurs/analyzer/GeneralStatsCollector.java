@@ -71,6 +71,10 @@ public class GeneralStatsCollector
 	 */
 	public final boolean describeWithOtherLemmas;
 	/**
+	 * Karodziņš, vai savākt locīšanas īpatnības.
+	 */
+	public final boolean collectInfllWeardness;
+	/**
 	 * Plūsma, kurā rakstīt vārdu sarakstu. Ja null, tad pieņem, ka vārdu
 	 * sarakstu nevajag.
 	 */
@@ -111,6 +115,10 @@ public class GeneralStatsCollector
 	 */
 	public ArrayList<Trio<String, String, ArrayList<String>>> entriesWithSelectedFeature = new ArrayList<>();
 
+	/**
+	 */
+	public HashSet<String> inflWeardness = new HashSet<>();
+
 	public GeneralStatsCollector( boolean collectPrononcations,
 			//boolean collectFirstConjAll,
 			boolean collectFifthDeclExceptions,
@@ -119,6 +127,7 @@ public class GeneralStatsCollector
 			ArrayList<Tuple<String, String>> collectFeature,
 			ArrayList<Tuple<String, String>> descriptionFeatures,
 			boolean describeWithParadigms, boolean describeWithOtherLemmas,
+			boolean collectInflectionalWieardness,
 			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
@@ -132,6 +141,7 @@ public class GeneralStatsCollector
 		this.describeWithFeatures = descriptionFeatures;
 		this.describeWithParadigms = describeWithParadigms;
 		this.describeWithOtherLemmas = describeWithOtherLemmas;
+		this.collectInfllWeardness = collectInflectionalWieardness;
 		this.wordlistOut = wordlistOutput;
 	}
 
@@ -155,6 +165,8 @@ public class GeneralStatsCollector
 				hasMultipleParadigmFlag++;
 			binaryFlags.addAll(bf);
 		}
+		if (collectInfllWeardness && entryFlags.testKey(TKeys.INFLECTION_WEARDNES))
+			inflWeardness.addAll(entryFlags.getAll(TKeys.INFLECTION_WEARDNES));
 
         if (entryFlags.getAll(TKeys.INFLECT_AS) != null &&
 				entryFlags.getAll(TKeys.INFLECT_AS).size() > 0)
@@ -302,10 +314,22 @@ public class GeneralStatsCollector
 		}
 		else line.append("NULL");
 		line.append("\t");
-		if (entry.head.getDirectParadigms().size() == 1)
+		HashSet<Integer> paradigms = entry.head.getDirectParadigms();
+
+		if (paradigms.size() == 1)
 			// Nē, nu stulbi kaut kā taisīt mapošanu, ja objekts ir tikai viens
 			// Bet varbūt ka tā ir labāk nākotnei
 			line.append(entry.head.gram.paradigm.stream()
+					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
+					.orElse("NULL"));
+		else if (paradigms.size() == 2 && paradigms.contains(0))
+			line.append(entry.head.gram.paradigm.stream().filter(p -> p != 0)
+					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
+					.orElse("NULL"));
+		else if (paradigms.size() == 2 && (paradigms.contains(16) && paradigms.contains(17)
+				|| paradigms.contains(19) && paradigms.contains(20)))
+			// TODO smukāk izvēlēties, kuru drukāt.
+			line.append(entry.head.gram.paradigm.stream().filter(p -> p != 17 && p != 20)
 					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
 					.orElse("NULL"));
 		else line.append("NULL");
@@ -380,13 +404,17 @@ public class GeneralStatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.INFLECTION_WEARDNES))
 		{
-			line.append(TKeys.INFLECTION_WEARDNES);
-			line.append("=");
+			//line.append(TKeys.INFLECTION_WEARDNES);
+			//line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.INFLECTION_WEARDNES)));
 		}
 		else line.append("NULL");
-
+		line.append("\t");
+		// LLVV izrunas
+		if (entry.head.lemma.pronunciation != null && entry.head.lemma.pronunciation.length > 0)
+			line.append(String.join(",", entry.head.lemma.pronunciation));
+		else line.append("NULL");
 		line.append("\n");
 		wordlistOut.write(line.toString().replace(" ", "_"));
 	}
@@ -409,7 +437,7 @@ public class GeneralStatsCollector
         out.write(",\n\"Unikālu \\\"Locīt kā...\\\" karodziņu skaits\":" +
                 binaryFlags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
         out.write(",\n\"Šķirkļi ar \\\"Locīt kā...\\\" karodziņiem\":" + hasLociitKaaFlag);
-		out.write(",\n\"Unikālo pārīskarodziņu atslēgu skaits\":" + pairingKeys
+		out.write(",\n\"Unikālo pārīškarodziņu atslēgu skaits\":" + pairingKeys
 				.size());
         out.write(",\n\"Izrunas transkripciju kopskaits\":" + pronunciations.size());
 
@@ -438,6 +466,14 @@ public class GeneralStatsCollector
 			out.write("\"],");
 		}
 		out.write("\n]");
+
+		if (collectInfllWeardness)
+		{
+			out.write(",\n\"Locīšanas īpatnību uzskaitījums\":[\n");
+			out.write(inflWeardness.stream().map(s -> "\"" + JSONObject.escape(s) + "\"")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+			out.write("\n]");
+		}
 
 		if (collectPrononcations)
 		{

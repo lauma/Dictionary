@@ -103,6 +103,7 @@ public class TValues extends Values
 	public final static String PARALLEL_FORMS = "Paralēlās formas"; // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
 	public final static String FROZEN_FORM = "Sastingusi forma"; // Paredzēts morfoimporta atvieglošanai, cerams, ka pabeidzot darbu ar tēzauru, šis vairs nebūs vajadzīgs
 	public final static String FIRST_CONJ_PARALLELFORM = "1. konjugācijas paralēlforma"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
+	public final static String SECOND_THIRD_CONJ = "2., 3. konjugācijas paralelitāte"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	public final static String INFINITIVE_HOMOFORMS = "Nenoteiksmes homoformas"; // Paredzēts morfoimporta atvieglošanai
 	public final static String HAS_PRESENT_SOUNDCHANGE = "Tagadnes mija ir"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
 	public final static String OPT_PRESENT_SOUNDCHANGE = "Fakultatīva tagadnes mija"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.

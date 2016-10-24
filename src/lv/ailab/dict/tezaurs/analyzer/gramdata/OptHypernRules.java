@@ -168,7 +168,7 @@ public class OptHypernRules
 		SixthDecl.std("-olekts, dsk. ģen. -olekšu, s.", ".*olekts"), // olekts
 		SixthDecl.std("-pāksts, dsk. ģen. -pākšu, s.", ".*pāksts"), // pāksts
 		SixthDecl.std("-palts, dsk. ģen. -palšu, s.", ".*palts"), // palts
-		SixthDecl.std("-pirts, dsk. ģen. -piršu, s.", ".*pirts"), // asinspirts
+		SixthDecl.std("-pirts, dsk. ģen. -pirtu, s.", ".*pirts"), // asinspirts
 		SixthDecl.std("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
 		SixthDecl.std("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
 		SixthDecl.std("-pults, dsk. ģen. -pulšu, s.", ".*pults"), // operatorpults

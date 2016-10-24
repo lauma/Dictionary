@@ -339,8 +339,8 @@ public class GeneralStatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.INFINITIVE_STEM))
 		{
-			line.append(TKeys.INFINITIVE_STEM);
-			line.append("=");
+			//line.append(TKeys.INFINITIVE_STEM);
+			//line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITIVE_STEM)));
 		}
@@ -349,8 +349,8 @@ public class GeneralStatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PRESENT_STEMS))
 		{
-			line.append(TKeys.PRESENT_STEMS);
-			line.append("=");
+			//line.append(TKeys.PRESENT_STEMS);
+			//line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEMS)));
 		}
@@ -359,8 +359,8 @@ public class GeneralStatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PAST_STEMS))
 		{
-			line.append(TKeys.PAST_STEMS);
-			line.append("=");
+			//line.append(TKeys.PAST_STEMS);
+			//line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEMS)));
 		}
@@ -369,8 +369,8 @@ public class GeneralStatsCollector
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.VERB_PREFIX))
 		{
-			line.append(TKeys.VERB_PREFIX);
-			line.append("=");
+			//line.append(TKeys.VERB_PREFIX);
+			//line.append("=");
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.VERB_PREFIX)));
 		}

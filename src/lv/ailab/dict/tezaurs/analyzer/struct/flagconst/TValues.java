@@ -78,7 +78,7 @@ public class TValues extends Values
 
 
 	public final static String INFINITIVE = "Nenoteiksme";
-	public final static String THIRD_PERSON = "3. persona";
+	public final static String THIRD_PERSON = "Trešā persona";
 	public final static String PERSON_FORM = "Personas forma"; // Tipiski darbības vārdiem
 	public final static String PASSIVE_VOICE = "Ciešamā kārta"; // Ciešamās kārtas forma
 	public final static String IMPERATIVE = "Pavēles izteiksme"; // Pavēles izteiksmes forma
@@ -102,8 +102,8 @@ public class TValues extends Values
 
 	public final static String PARALLEL_FORMS = "Paralēlās formas"; // Paredzēts morfoimporta atvieglošanai, šobrīd pamatā darbības vārdiem
 	public final static String FROZEN_FORM = "Sastingusi forma"; // Paredzēts morfoimporta atvieglošanai, cerams, ka pabeidzot darbu ar tēzauru, šis vairs nebūs vajadzīgs
-	public final static String FIRST_CONJ_PARALLELFORM = "1. konjugācijas paralēlforma"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
-	public final static String SECOND_THIRD_CONJ = "2., 3. konjugācijas paralelitāte"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
+	public final static String FIRST_CONJ_PARALLELFORM = "Pirmās konjugācijas paralēlforma"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
+	public final static String SECOND_THIRD_CONJ = "Otrās un trešās konjugācijas paralelitāte"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	public final static String INFINITIVE_HOMOFORMS = "Nenoteiksmes homoformas"; // Paredzēts morfoimporta atvieglošanai
 	public final static String HAS_PRESENT_SOUNDCHANGE = "Tagadnes mija ir"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
 	public final static String OPT_PRESENT_SOUNDCHANGE = "Fakultatīva tagadnes mija"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
@@ -141,5 +141,5 @@ public class TValues extends Values
 	public final static String NUMERAL_AND_ADVERB = "Skaitļa vārds un apstākļa vārds"; // Iesaistīšanās divu nosacījumu grupā.
 	public final static String NUMERAL_AND_ADJECTIVE = "Skaitļa vārds un īpašības vārds"; // Iesaistīšanās divu nosacījumu grupā.
 	public final static String NOUN_WITH_PREPOSITION = "Lietvārds un prievārds"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
-	public final static String PLURAL_OR_THIRD_PERS = "Daudzskaitlis vai 3. persona"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
+	public final static String PLURAL_OR_THIRD_PERS = "Daudzskaitlis vai trešā persona"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
 }

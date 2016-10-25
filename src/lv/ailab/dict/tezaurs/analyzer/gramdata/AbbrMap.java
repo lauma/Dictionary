@@ -94,6 +94,7 @@ public class AbbrMap {
 		pairingFlags.put("adj.", TFeatures.POS__ADJ);
 		pairingFlags.put("adv.", Tuple.of(TKeys.POS, TValues.ADVERB));
 		pairingFlags.put("apst.", Tuple.of(TKeys.POS, TValues.ADVERB));
+		pairingFlags.put("darb.", TFeatures.POS__VERB);
 		pairingFlags.put("divd.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("Divd.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("interj.", Tuple.of(TKeys.POS, TValues.INTERJECTION));
@@ -117,6 +118,7 @@ public class AbbrMap {
 		pairingFlags.put("refl. darb.", TFeatures.POS__REFL_VERB);
 		pairingFlags.put("refl. darb.", TFeatures.POS__VERB);
 
+		pairingFlags.put("pron.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietniekv.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("atgriez. vietn.", TFeatures.POS__REFL_PRONOUN);
@@ -265,6 +267,7 @@ public class AbbrMap {
 		pairingFlags.put("biškop.", Tuple.of(TKeys.DOMAIN, "Biškopība"));
 		pairingFlags.put("bot.", Tuple.of(TKeys.DOMAIN, "Botānika"));
 		pairingFlags.put("būvn.", Tuple.of(TKeys.DOMAIN, "Būvniecība"));
+		pairingFlags.put("celtn.", Tuple.of(TKeys.DOMAIN, "Celtniecība"));
 		pairingFlags.put("dārzk.", Tuple.of(TKeys.DOMAIN, "Dārzkopība"));
 		pairingFlags.put("dzelzc.", Tuple.of(TKeys.DOMAIN, "Dzelzceļš"));
 		pairingFlags.put("dzc.", Tuple.of(TKeys.DOMAIN, "Dzelzceļš"));
@@ -273,6 +276,7 @@ public class AbbrMap {
 		pairingFlags.put("ekon.", Tuple.of(TKeys.DOMAIN, "Ekonomika"));
 		pairingFlags.put("el.", Tuple.of(TKeys.DOMAIN, "Elektrotehnika"));
 		pairingFlags.put("elektron.", Tuple.of(TKeys.DOMAIN, "Elektronika"));
+		pairingFlags.put("ent.", Tuple.of(TKeys.DOMAIN, "Entomoloģija"));
 		pairingFlags.put("etn.", Tuple.of(TKeys.DOMAIN, "Etnogrāfija"));
 		pairingFlags.put("farm.", Tuple.of(TKeys.DOMAIN, "Farmakoloģija"));
 		pairingFlags.put("filol.", Tuple.of(TKeys.DOMAIN, "Filoloģija"));
@@ -282,14 +286,17 @@ public class AbbrMap {
 		pairingFlags.put("fiziol.", Tuple.of(TKeys.DOMAIN, "Fizioloģija"));
 		pairingFlags.put("fizk.", Tuple.of(TKeys.DOMAIN, "Fiziskā kultūra un sports"));
 		pairingFlags.put("folkl.", Tuple.of(TKeys.DOMAIN, "Folklora"));
+		pairingFlags.put("fot.", Tuple.of(TKeys.DOMAIN, "Fototehnika"));
 		pairingFlags.put("fotogr.", Tuple.of(TKeys.DOMAIN, "Fotogrāfija"));
 		pairingFlags.put("foto", Tuple.of(TKeys.DOMAIN, "Fotogrāfija"));
+		pairingFlags.put("glezn.", Tuple.of(TKeys.DOMAIN, "Glezniecība"));
 		pairingFlags.put("ģenēt.", Tuple.of(TKeys.DOMAIN, "Ģenētika"));
 		pairingFlags.put("ģeod.", Tuple.of(TKeys.DOMAIN, "Ģeodēzija"));
 		pairingFlags.put("ģeogr.", Tuple.of(TKeys.DOMAIN, "Ģeogrāfija"));
 		pairingFlags.put("ģeol.", Tuple.of(TKeys.DOMAIN, "Ģeoloģija"));
 		pairingFlags.put("ģeom.", Tuple.of(TKeys.DOMAIN, "Ģeometrija"));
 		pairingFlags.put("grāmatv.", Tuple.of(TKeys.DOMAIN, "Grāmatvedība"));
+		pairingFlags.put("herald.", Tuple.of(TKeys.DOMAIN, "Heraldika"));
 		pairingFlags.put("hidr.", Tuple.of(TKeys.DOMAIN, "Hidroloģija"));
 		pairingFlags.put("hidrotehn.", Tuple.of(TKeys.DOMAIN, "Hidrotehnika"));
 		pairingFlags.put("hist.", Tuple.of(TKeys.DOMAIN, "Historigrāfija"));
@@ -297,6 +304,7 @@ public class AbbrMap {
 		pairingFlags.put("jur.", Tuple.of(TKeys.DOMAIN, "Jurisprudence"));
 		pairingFlags.put("jūrn.", Tuple.of(TKeys.DOMAIN, "Jūrniecība"));
 		pairingFlags.put("jūr.", Tuple.of(TKeys.DOMAIN, "Jūrniecība"));
+		pairingFlags.put("kalnr.", Tuple.of(TKeys.DOMAIN, "Kalnrūpniecība"));
 		pairingFlags.put("kap.", Tuple.of(TKeys.DOMAIN, "Attiecas uz kapitālistisko iekārtu, kapitālistisko sabiedrību"));
 		pairingFlags.put("kardioloģijā", Tuple.of(TKeys.DOMAIN, "Kardioloģija"));
 		pairingFlags.put("kart.", Tuple.of(TKeys.DOMAIN, "Kartogrāfija"));
@@ -342,26 +350,27 @@ public class AbbrMap {
 		pairingFlags.put("pārt.", Tuple.of(TKeys.DOMAIN, "Pārtika"));
 		pairingFlags.put("pol.", Tuple.of(TKeys.DOMAIN, "Politika"));
 		pairingFlags.put("poligr.", Tuple.of(TKeys.DOMAIN, "Poligrāfija"));
-		pairingFlags.put("polit.", Tuple.of(TKeys.DOMAIN, "Politisks")); // ?
+		pairingFlags.put("polit.", Tuple.of(TKeys.DOMAIN, "Politisks"));
 		pairingFlags.put("psih.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("psihol.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("rel.", Tuple.of(TKeys.DOMAIN, "Reliģija"));
 		pairingFlags.put("siltumt.", Tuple.of(TKeys.DOMAIN, "Siltumtehnika"));
 		pairingFlags.put("social.", Tuple.of(TKeys.DOMAIN, "Socioloģija"));
 		pairingFlags.put("sociol.", Tuple.of(TKeys.DOMAIN, "Socioloģija"));
+		pairingFlags.put("stat.", Tuple.of(TKeys.DOMAIN, "Statistika")); // ?
 		pairingFlags.put("tehn.", Tuple.of(TKeys.DOMAIN, "Tehnika"));
 		pairingFlags.put("tehnol.", Tuple.of(TKeys.DOMAIN, "Tehnoloģija"));
 		pairingFlags.put("telek.", Tuple.of(TKeys.DOMAIN, "Telekomunikācijas"));
 		pairingFlags.put("telev.", Tuple.of(TKeys.DOMAIN, "Televīzija"));
 		pairingFlags.put("tekst.", Tuple.of(TKeys.DOMAIN, "Tekstilrūpniecība"));
 		pairingFlags.put("tekstilr.", Tuple.of(TKeys.DOMAIN, "Tekstilrūpniecība"));
-		pairingFlags.put("teol.", Tuple.of(TKeys.DOMAIN, "Teoloģija"));
 		pairingFlags.put("transp.", Tuple.of(TKeys.DOMAIN, "Transports"));
 		pairingFlags.put("TV", Tuple.of(TKeys.DOMAIN, "Televīzija"));
 		pairingFlags.put("val.", Tuple.of(TKeys.DOMAIN, "Valodniecība"));
 		pairingFlags.put("vet.", Tuple.of(TKeys.DOMAIN, "Veterinārija"));
 		pairingFlags.put("veter.", Tuple.of(TKeys.DOMAIN, "Veterinārija"));
 		pairingFlags.put("zool.", Tuple.of(TKeys.DOMAIN, "Zooloģija"));
+		pairingFlags.put("zvejn.", Tuple.of(TKeys.DOMAIN, "Zvejniecība"));
 
 		pairingFlags.put("angļu", Tuple.of(TKeys.LANGUAGE, "Angļu"));
 		pairingFlags.put("angļu", TFeatures.POS__FOREIGN);
@@ -385,6 +394,8 @@ public class AbbrMap {
 		pairingFlags.put("gr. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("gruz.", Tuple.of(TKeys.LANGUAGE, "Gruzīnu"));
 		pairingFlags.put("gruz.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("ig.", Tuple.of(TKeys.LANGUAGE, "Igauņu"));
+		pairingFlags.put("ig.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ig. val.", Tuple.of(TKeys.LANGUAGE, "Igauņu"));
 		pairingFlags.put("ig. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("it.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));
@@ -393,6 +404,8 @@ public class AbbrMap {
 		pairingFlags.put("jap.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
 		pairingFlags.put("krievu val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("ķīn.", Tuple.of(TKeys.LANGUAGE, "Ķīniešu"));
+		pairingFlags.put("ķīn.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("lat.", Tuple.of(TKeys.LANGUAGE, "Latīņu"));
 		pairingFlags.put("lat.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("latīņu val.", Tuple.of(TKeys.LANGUAGE, "Latīņu"));
@@ -403,6 +416,8 @@ public class AbbrMap {
 		pairingFlags.put("lietuv. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("līb.", Tuple.of(TKeys.LANGUAGE, "Lībiešu"));
 		pairingFlags.put("līb.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("mong.", Tuple.of(TKeys.LANGUAGE, "Mongoļu"));
+		pairingFlags.put("mong.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("poļu val.", Tuple.of(TKeys.LANGUAGE, "Poļu"));
 		pairingFlags.put("poļu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("port.", Tuple.of(TKeys.LANGUAGE, "Portugāļu"));
@@ -453,6 +468,7 @@ public class AbbrMap {
 		pairingFlags.put("mīlin.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Mīlinājuma nokrāsa"));
 		pairingFlags.put("niev.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
 		pairingFlags.put("nievājoši", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
+		pairingFlags.put("nicin.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nicinoša ekspresīvā nokrāsa"));
 		pairingFlags.put("iron.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Ironiska ekspresīvā nokrāsa"));
 		pairingFlags.put("hum.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Humoristiska ekspresīvā nokrāsa"));
 		pairingFlags.put("vienk.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Vienkāršrunas stilistiskā nokrāsa"));
@@ -463,6 +479,7 @@ public class AbbrMap {
 		pairingFlags.put("nelit.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Neliterārs"));
 		pairingFlags.put("žarg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Žargonvārds"));
 		pairingFlags.put("sar.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
+		pairingFlags.put("sarunv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
 		pairingFlags.put("vulg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Vulgārisms"));
 		pairingFlags.put("barb.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Barbarisms"));
 		pairingFlags.put("īsziņās", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));

@@ -69,7 +69,10 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, s.", "les", 9), // ābeles
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // akmeņogles
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
+		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le", "les", 9), // alēles
+		// 35. paradigma: 6. dekl. bez mijas.
+		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "akts", 35), // aktis
 
 		//	Neviennozīmīgie likumi.
 	};

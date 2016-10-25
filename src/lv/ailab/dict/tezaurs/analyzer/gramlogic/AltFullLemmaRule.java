@@ -77,34 +77,6 @@ public class AltFullLemmaRule implements AltLemmaRule
 
 
 	/**
-	 * Speciālgadījums vīriešu dzimtes lietvārdiem ar šķirkļa vārdu daudzskaitlī
-	 * un papildformu vienskaitlī. Tiek pieņemts, ka no dotās lemmas beigām
-	 * jānogriež tieši lemmaEnding apjoma daļa.
-	 */
-	public static AltFullLemmaRule nounPluralToSingularMasc(
-			String patternBegin, String patternEnding, String lemmaEnding,
-			int paradigmId)
-	{
-		Matcher m = Pattern.compile("([^,;]+)[,;].*").matcher(patternEnding);
-		//System.out.println(patternEnding);
-		String altLemmaEnding = "";
-		if (!m.find())
-			System.err.printf(
-					"Neizdevās iegūt galotni papildformu likumam \"%s _?_%s\"\n",
-					patternBegin, patternEnding);
-		else altLemmaEnding = m.group(1);
-
-		return AltFullLemmaRule.of(
-				patternBegin + " ", patternEnding, ".*" + lemmaEnding, altLemmaEnding,
-				lemmaEnding.length(), paradigmId, paradigmId,
-				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
-				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
-	}
-
-
-
-
-	/**
 	 * Likuma piemērošana.
 	 *
 	 * @param gramText           apstrādājamā gramatika

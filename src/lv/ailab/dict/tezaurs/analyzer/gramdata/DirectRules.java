@@ -121,48 +121,6 @@ public class DirectRules
 		GenNoun.any("-as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // žūpa
 
-		// Paradigmas: 1, 2 - 1. deklinācija
-		// Šeit varētu vēlāk vajadzēt likumus paplašināt, ja parādās jauni šķirkļi.
-		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN}), // aerobs
-		GenNoun.any("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
-		GenNoun.any("-a, vsk.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{TFeatures.GENDER__MASC})},
-				null), // aizkars, cīsiņš, sakņkājis
-
-		GenNoun.any("-ļļa, v.", ".*llis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // amarillis
-		GenNoun.any("-ļņa, v.", ".*lnis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // aizsargvalnis
-		GenNoun.any("-šļa, v.", ".*slis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // bauslis
-		GenNoun.any("-šņa, v.", ".*snis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // alksnis
-		GenNoun.any("-ča, v.", ".*cis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // akacis
-		GenNoun.any("-ģa, v.", ".*ģis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // āliņģis
-		GenNoun.any("-ķa, v.", ".*ķis", 3, null, new Tuple[]{TFeatures.GENDER__MASC}), // akadēmiķis
-		GenNoun.any("-ra, v.",  new SimpleSubRule[]{
-				SimpleSubRule.of(".*ris", 3, null),
-				SimpleSubRule.of(".*rs", 1, null)},
-				new Tuple[]{TFeatures.GENDER__MASC}), // aizturis, mūrniekmeistars
-
-		// Paradigmas: 9, 11
-		GenNoun.any("dsk. ģen. -ņu, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ne", new Integer[]{9}, null),
-						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ns", new Integer[]{11}, null)},
-				new Tuple[]{TFeatures.GENDER__FEM}), // ādmine, bākuguns, bārkšsaknes
-		GenNoun.any("dsk. ģen. -šu, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*[ts]e", new Integer[]{9}, null),
-						SimpleSubRule.of(".*[ts]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ts", new Integer[]{11}, null)},
-				new Tuple[]{TFeatures.GENDER__FEM}), //alžīriete, kroņprincese, autiņbiksītes, īsbikses, azots
-		GenNoun.any("dsk. ģen. -ļu, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*le", new Integer[]{9}, null),
-						SimpleSubRule.of(".*les", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ls", new Integer[]{11}, null)},
-				new Tuple[]{TFeatures.GENDER__FEM}), //apakšcentrāle, dziesmuspēles, ezerpils
 
 		// Paradigma: 11 - 6. dekl.
 		SixthDecl.noChange("-ts, dsk. ģen. -tu", ".*ts"), // koloniālvalsts
@@ -265,28 +223,30 @@ public class DirectRules
 			// TODO pakāpeniski izravēt dubultlikumus
 		BaseRule.of("vietn., -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // kurš, kurš, mans, viņš
-		BaseRule.of("vietn., -u, v.", ".*i", 25,
+		BaseRule.of("vietn. -u, v.", ".*i", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL}), // abi
 		BaseRule.of("-a, v.; vietn.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // vienotrs
 		BaseRule.of("-a, v.; nenoteiktais vietn.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // jebkas, jebkurš, jebkāds
-		BaseRule.of("nenoteiktais vietn., -a, v.", ".*[sš]", 25,
-				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // dažs, cits
+		BaseRule.of("nenot. vietn. -a, v.", ".*[sš]", 25,
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // dažs
+		BaseRule.of("nenoteiktais vietn. -a, v.", ".*[sš]", 25,
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // cits
 		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
 				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__MASC}), // šāds, šitāds
-		BaseRule.of("norād. vietn., -a, v.", ".*s", 25,
+		BaseRule.of("norād. vietn. -a, v.", ".*s", 25,
 				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__MASC}), // tāds
 		BaseRule.of("-a, v.; pieder. vietn.", ".*s", 25,
 				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__MASC}), // tavs, savs
 		BaseRule.of("noliedz. vietn., -a, v.", ".*s", 25,
 				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__MASC}), // nekāds
-		BaseRule.of("vispārin. vietn., -a, v.", ".*[sš]", 25,
+		BaseRule.of("vispārin. vietn. -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikkurš, ikkatrs
 
 		BaseRule.of("vietn., -as, s.", ".*a", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM}), // ref: šāda, jebkāda
-		BaseRule.of("vietn., -u, s.", ".*as", 25,
+		BaseRule.of("vietn. -u, s.", ".*as", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL}), // abas
 		BaseRule.of("-as, s.; vietn.", ".*a", 25,
 				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__FEM}), // viņa, kāda
@@ -314,7 +274,7 @@ public class DirectRules
 		BaseRule.of("vietn.; ģen. tā, dat. tam, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tie, ģen. to, dat. tiem, akuz. tos, instr. ar tiem, lok. tajos (arī tais, tanīs), v.",
 				"tas", 25,
 				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // tas
-		BaseRule.of("ģen. tās, dat. tai, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tās, ģen. to, akuz. tās, instr. ar tām, lok. tajās (arī tais, tanīs), s.; norād.",
+		BaseRule.of("ģen. tās, dat. tai, akuz. to, instr. ar to, lok. tai (arī tanī, tajā), dsk. nom. tās, ģen. to, akuz. tās, instr. ar tām, lok. tajās (arī tais, tanīs), s.; norād. vietn.",
 				"tā", 25,
 				new Tuple[]{TFeatures.PARALLEL_FORMS}, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__FEM}), // tas
 		BaseRule.of("ģen. jebkā, dat. jebkam, akuz. jebko, instr. ar jebko; tikai vsk.; nenoteiktais vietn.",
@@ -342,13 +302,13 @@ public class DirectRules
 		BaseRule.of("ģen.; dat. sev, akuz. sevi, instr. ar sevi, lok. sevī; atgriez. vietn.", "sevis", 25,
 				null, new Tuple[]{TFeatures.POS__REFL_PRONOUN}), // sevis
 
-		BaseRule.of("ģen. šitā, dat. šitam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitiem, akuz. šitos, instr. ar šitiem, lok. šitais (arī šitajos, šitos, šitanīs), v., norād. vietn.",
+		BaseRule.of("ģen. šitā, dat. šitam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitiem, akuz. šitos, instr. ar šitiem, lok. šitais (arī šitajos, šitos, šitanīs), v., vietn.",
 				"šitas", 25,
 				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__MASC}), // šitas
-		BaseRule.of("ģen. šitā, dat. šitajam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitajiem, akuz. šitos, instr. ar šitajiem, lok. šitais (arī šitajos, šitanīs), v., norād. vietn.",
+		BaseRule.of("ģen. šitā, dat. šitajam, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitie, ģen. šito, dat. šitajiem, akuz. šitos, instr. ar šitajiem, lok. šitais (arī šitajos, šitanīs), v., vietn.",
 				"šitais", 25,
 				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__MASC}), // šitais
-		BaseRule.of("ģen. šitās, dat. šitai, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitās, ģen. šito, dat. šitām, akuz. šitās, instr. ar šitām, lok. šitais (arī šitajās, šitanīs), s., norād. vietn.",
+		BaseRule.of("ģen. šitās, dat. šitai, akuz. šito, instr. ar šito, lok. šitai (arī šitanī, šitajā), dsk. nom. šitās, ģen. šito, dat. šitām, akuz. šitās, instr. ar šitām, lok. šitais (arī šitajās, šitanīs), s., vietn.",
 				"šitā", 25,
 				null, new Tuple[]{TFeatures.PARALLEL_FORMS, TFeatures.POS__DEF_PRONOUN, TFeatures.GENDER__FEM}), // šitā
 	};
@@ -427,7 +387,7 @@ public class DirectRules
 		FifthDecl.std("-es, dsk. ģen. -ļļu, s.", ".*lle"), //zaļumballe
 		FifthDecl.std("-es, dsk. ģen. -ļņu, s.", ".*lne"), //nokalne
 		FifthDecl.std("-es, dsk. ģen. -mju, s.", ".*me"), //agronome, krustamzīme
-		FifthDecl.std("-es, dsk. ģen. -pju, s.", ".*pe"), //bērzlapju
+		//FifthDecl.std("-es, dsk. ģen. -pju, s.", ".*pe"), //bērzlape, filantrope
 		FifthDecl.std("-es, dsk. ģen. -smju, s.", ".*sme"), //noslieksme
 		FifthDecl.std("-es, dsk. ģen. -šņu, s.", ".*sne"), //izloksne, aizkrāsne
 		FifthDecl.std("dsk. ģen. -šņu, s.", ".*sne"), //apaļkoksne
@@ -442,8 +402,7 @@ public class DirectRules
 
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
 		//FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //vairs nav, jo atļāva miju.
-		FifthDecl.noChange("-es, dsk. ģen. mufu, s.", ".*mufe"), //mufe
-		FifthDecl.noChange("-es, dsk. ģen. -pu, s.", ".*pe"), // filantrope
+		FifthDecl.noChange("-es, dsk. ģen. mufu, arī mufju, s.", ".*mufe"), //mufe
 		FifthDecl.noChange("-es, dsk. ģen. -su, s.", ".*se"), // bise
 		FifthDecl.noChange("-es, dsk. ģen. -stu, s.", ".*ste"), //abolicioniste
 		FifthDecl.noChange("dsk. ģen. -tu, s.", ".*te"), //artiste
@@ -500,10 +459,17 @@ public class DirectRules
 
 		SecondDecl.std("-bja, v.", ".*bis"), //aizsargdambis
 		SecondDecl.std("-dža, v.", ".*dzis"), //algādzis
-		SecondDecl.std("-ķa, v.", ".*[kķ]is"), //agnostiķis
+		SecondDecl.std("-ļļa, v.", ".*llis"), // amarillis
+		SecondDecl.std("-ļņa, v.", ".*lnis"), // aizsargvalnis
+		SecondDecl.std("-šļa, v.", ".*slis"), // bauslis
+		SecondDecl.std("-šņa, v.", ".*snis"), // alksnis
 		SecondDecl.std("-pja, v.", ".*pis"), //aitkopis
 		SecondDecl.std("-vja, v.", ".*vis"), //aizstāvis
 		SecondDecl.std("-žņa, v.", ".*znis"), //aitkopis
+
+		SecondDecl.std("-ča, v.", ".*cis"), // akacis
+		SecondDecl.std("-ģa, v.", ".*ģis"), // āliņģis
+		SecondDecl.std("-ķa, v.", ".*ķis"), //agnostiķis
 		SecondDecl.std("-ža, v.", ".*[dzž]is"), //ādgrauzis
 	};
 
@@ -545,6 +511,18 @@ public class DirectRules
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{2}, null),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // abats, akustiķis, sparguļi, skostiņi,
+
+		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN}), // aerobs
+		GenNoun.any("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
+					new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
+		GenNoun.any("-a, vsk.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{TFeatures.GENDER__MASC})},
+				null), // aizkars, cīsiņš, sakņkājis
 
 		// Daudzkaitlis, vīriešu dzimte
 		// Ar mijām
@@ -609,7 +587,22 @@ public class DirectRules
 						SimpleSubRule.of(".*ķes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
 				new Tuple[]{TFeatures.GENDER__FEM}), // aijas, spēķes, zeķes, konkrēcija
 
-
+		// Sieviešu dzimte, vienskaitlis un daudzskaitlis
+		GenNoun.any("dsk. ģen. -ņu, s.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*ne", new Integer[]{9}, null),
+						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ns", new Integer[]{11}, null)},
+				new Tuple[]{TFeatures.GENDER__FEM}), // ādmine, bākuguns, bārkšsaknes
+		GenNoun.any("dsk. ģen. -šu, s.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*[ts]e", new Integer[]{9}, null),
+						SimpleSubRule.of(".*[ts]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ts", new Integer[]{11}, null)},
+				new Tuple[]{TFeatures.GENDER__FEM}), //alžīriete, kroņprincese, autiņbiksītes, īsbikses, azots
+		GenNoun.any("dsk. ģen. -ļu, s.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*le", new Integer[]{9}, null),
+						SimpleSubRule.of(".*les", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ls", new Integer[]{11}, null)},
+				new Tuple[]{TFeatures.GENDER__FEM}), //apakšcentrāle, dziesmuspēles, ezerpils
 };
 
 	/**
@@ -662,11 +655,10 @@ public class DirectRules
 		FirstConj.direct("-dulbstu, -dulbsti,", "-dulbst, pag. -dulbu", "dulbt"), //sadulbt
 		FirstConj.direct("-dullstu, -dullsti,", "-dullst, pag. -dullu", "dullt"), //apdullt
 		FirstConj.direct("-drūmstu, -drūmsti,", "-drūmst, pag. -drūmu", "drūmt"), //sadrūmt
-		FirstConj.direct("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult
+		//FirstConj.direct("-dulstu, -dulsti,", "-dulst, pag. -dullu", "dult"), //apdult // Baiba izņēma kā kļūdu
 		FirstConj.direct("-kurlstu, -kurlsti,", "-kurlst, pag. -kurlu", "kurlt"), //apkurlt
 		FirstConj.direct("-saustu, -sausti,", "-saust, pag. -sausu", "saust"), //apsaust
 		FirstConj.direct("-slinkstu, -slinksti,", "-slinkst, pag. -slinku", "slinkt"), //apslinkt
-		FirstConj.direct("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //apšņurkt
 		FirstConj.direct("-trakstu, -traksti,", "-trakst, pag. -traku", "trakt"), //aptrakt
 		FirstConj.direct("-trulstu, -trulsti,", "-trulst, pag. -trulu", "trult"), //aptrult
 		FirstConj.direct("-velbju, -velb,", "-velbj, pag. -velbu", "velbt"), //izvelbt
@@ -709,14 +701,6 @@ public class DirectRules
 		SecondConj.directAllPers(
 				"-oju, -o, -o, -ojam, -ojat, pag. -oju; -ojām, -ojāt; pav. -o, -ojiet", "ot"), //acot
 
-		// Darbības vārdu specifiskie likumi.
-		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		// Paralēlās formas.
-		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
-		// galotne "-ē" - 3. konjugācijai būtu bez.
-		SecondConj.direct3PersParallel(
-				"-ē, pag. -ēja (retāk -gluma, 1. konj.)", "glumēt"), //aizglumēt
-
 		// Likumi ar modifikatoru parasti/tikai daudzskaitlī.
 		SecondConj.directPlural("-ojam, -ojat, -o, pag. -ojām", "ot"), // sabizot
 	};
@@ -729,7 +713,6 @@ public class DirectRules
 	public static final EndingRule[] directThirdConjVerb = {
 		// Visām personām.
 		ThirdConj.direct("-u, -i,", "-a, pag. -īju", "īt", false), //aizsūtīt
-		ThirdConj.direct("-u, -i,", "-a; pag. -īju", "īt", false), //apdurstīt
 		ThirdConj.direct("-u, -i,", "-a, pag. -āju", "āt", false), //līcināt
 		ThirdConj.direct("-inu, -ini,", "-ina, pag. -ināju", "ināt", false), //aizsvilināt
 
@@ -847,10 +830,7 @@ public class DirectRules
 		// Standartizētie.
 		// A, B
 		FirstConj.refl3Pers("-blējas, pag. -blējās", "blēties"), //atblēties
-		// C, D
-		FirstConj.refl3Pers("-dūcas, pag. -dūcās", "dūkties"), //aizdūkties
-		// E, F, G, H, I, J, K
-		FirstConj.refl3Pers("-kaucas, pag. -kaucās", "kaukties"), //aizkaukties
+		// C, D, E, F, G, H, I, J, K
 		FirstConj.refl3Pers("-kviecas, pag. -kviecās", "kviekties"), //iekviekties
 		// L, M, N, Ņ
 		FirstConj.refl3Pers("-ņirbjas, pag. -ņirbās", "ņirbties"), //ieņirbties
@@ -1091,7 +1071,6 @@ public class DirectRules
 		ThirdConj.refl3Pers("-dārdas, pag. -dārdējās", "dārdēties", false), //aizdārdēties
 		ThirdConj.refl3Pers("-dimdas, pag. -dimdējās", "dimdēties", false), //iedimdēties
 		ThirdConj.refl3Pers("-dipas, pag. -dipējās", "dipēties", false), //iedipēties
-		ThirdConj.refl3Pers("-drebas, pag. -drebējās", "drebēties", false), //aizdrebēties
 		ThirdConj.refl3Pers("-dunas, pag. -dunējās", "dunēties", false), //iedunēties
 		ThirdConj.refl3Pers("-dzinkstas, pag. -dzinkstējās", "dzinkstēties", false), //iedzinkstēties
 		ThirdConj.refl3Pers("-dzirkstas, pag. -dzirkstējās", "dzirkstēties", false), //iedzirkstēties
@@ -1169,7 +1148,6 @@ public class DirectRules
 		ThirdConj.refl3Pers("-plinkšķas, pag. -plinkšķējās", "plinkšķēties", false), //ieplinkšķēties
 		ThirdConj.refl3Pers("-pliukšas, pag. -pliukšējās", "pliukšēties", false), //iepliukšēties
 		ThirdConj.refl3Pers("-pliukšķas, pag. -pliukšķējās", "pliukšķēties", false), //iepliukšķēties
-		ThirdConj.refl3Pers("-pliukšķas, pag. -pliukšķējās", "pliukšķēties", false), //iepliukšķēties
 		ThirdConj.refl3Pers("-plunkšas, pag. -plunkšējās", "plunkšēties", false), //ieplunkšēties
 		ThirdConj.refl3Pers("-plunkšķas, pag. -plunkšķējās", "plunkšķēties", false), //ieplunkšķēties
 		ThirdConj.refl3Pers("-pļerkšas, pag. -pļerkšējās", "pļerkšēties", false), //iepļerkšēties
@@ -1212,7 +1190,6 @@ public class DirectRules
 		ThirdConj.refl3Pers("-švirkstas, pag. -švirkstējās", "švirkstēties", false), //aizšvirkstēties
 		ThirdConj.refl3Pers("-švīkstas, pag. -švīkstējās", "švīkstēties", false), //iešvīkstēties
 		// T
-		ThirdConj.refl3Pers("-tarkšas, pag. -tarkšējās", "tarkšēties", false), //aiztarkšēties
 		ThirdConj.refl3Pers("-tikšas, pag. -tikšējās", "tikšēties", false), //ietikšēties
 		ThirdConj.refl3Pers("-tikšķas, pag. -tikšķējās", "tikšķēties", false), //ietikšķēties
 		ThirdConj.refl3Pers("-tinkšas, pag. -tinkšējās", "tinkšēties", false), //aiztinkšēties

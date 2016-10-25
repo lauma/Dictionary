@@ -25,4 +25,18 @@ public final class SecondDecl
 				new Tuple[]{TFeatures.POS__NOUN},
 				new Tuple[]{TFeatures.GENDER__MASC});
 	}
+
+	/**
+	 * Izveido BaseRule 2. deklinācijas vīriešu dzimtes lietvārdiem ar
+	 * šķirkļa vārdu vienskaitlī, kam vienskaitļa nominatīvs sakrīt ar ģenitīvu
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
+	 * @return BaseRule ar 4. paradigmu
+	 */
+	public static BaseRule stdNomGen(String patternText, String lemmaRestrictions)
+	{
+		return BaseRule.of(patternText, lemmaRestrictions, 4,
+				new Tuple[]{TFeatures.POS__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC});
+	}
 }

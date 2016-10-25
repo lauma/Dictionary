@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.WithAltLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
@@ -43,15 +44,32 @@ public class AltLemmaRules
 	 */
 	public static final AltLemmaRule[] pluralToSingular = {
 		// 2. paradigma: Lietvārds 1. deklinācija -š
-		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
+		//AltFullLemmaRule.nounPluralToSingularMascStd("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
 		// 3. paradigma: Lietvārds 2. deklinācija -is
-		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
-		AltFullLemmaRule.nounPluralToSingularMasc("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
-		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
-			// -u; vsk. abrazīvs, -a, v.
-		AltFullLemmaRule.nounPluralToSingularMasc("-u; vsk.", "vs, -a, v.", "vi", 1), // abrazīvi
+		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
+		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
+
 		// 1. paradigma: Lietvārds 1. deklinācija -s
-		AltFullLemmaRule.nounPluralToSingularMasc("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
+		WithAltLemma.nounPluralToSingularMascStd("-u; vsk.", "s, -a, v.", "i", 1), // abrazīvi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 1), // aizsargstabiņi
+
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ds", "di", 1), // aktinoīdi
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "hs", "hi", 1), // akritarhi
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ns", "ni", 1), // alohtoni
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ms", "mi", 1), // ampērvijums
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ts", "ti", 1), // alumināti
+
+		// 7. paradigma: 4. dekl.
+		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
+		WithAltLemma.nounPluralToSingularFemStd("vsk.", "a", "as", 7), // angiospermas
+		// 9. paradigma: 5. dekl.
+		WithAltLemma.nounPluralToSingularFemStd("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
+		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, s.", "les", 9), // ābeles
+		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // akmeņogles
+		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
+		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le", "les", 9), // alēles
 
 		//	Neviennozīmīgie likumi.
 	};
@@ -66,8 +84,10 @@ public class AltLemmaRules
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -ce, -ču", "ks", "ce"), // aizsardzībnieks
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -re, -ru", "rs", "re"), // akvizitors
 		AltEndingRule.mascFirstDeclToFemFifthDecl("s. -ste, -stu", "sts", "ste"), // almānists
+		AltEndingRule.mascFirstDeclToFemFifthDecl("-a; s. -te, -šu", "ts", "te"), // akcelerāts
 
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ķa; s. -ķe, -ķu", "ķis", "ķe"), // agonistiķis
+		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša, s. -te, -šu", "tis", "te"), // albiģietis
 		AltEndingRule.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
 		AltEndingRule.of("s. -ā", new AltLemmaSubRule[]{

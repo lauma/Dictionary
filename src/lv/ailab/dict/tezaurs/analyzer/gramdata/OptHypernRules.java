@@ -98,7 +98,8 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] fifthDeclNoun = {
 		// Ar mijām
-		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe, aļģe
+		FifthDecl.std("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), // aļģe
+		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe
 		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
 		FifthDecl.std("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
 		FifthDecl.std("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
@@ -214,6 +215,9 @@ public class OptHypernRules
 	 * Paradigm 3: Lietvārds 2. deklinācija -is
 	 */
 	public static final EndingRule[] secondDeclNoun = {
+		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
+
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
@@ -728,7 +732,7 @@ public class OptHypernRules
 		FirstConj.direct("-šņaucu, -šņauc,", "-šņauc, pag. -šņaucu", "šņaukt"), //iešņaukt
 		FirstConj.direct("-šņācu, -šņāc,", "-šņāc, pag. -šņācu", "šņākt"), //atšņākt
 		FirstConj.direct("-šņāpju, -šņāp,", "-šņāpj, pag. -šņāpu", "šņāpt"), //apšņāpt
-		FirstConj.direct("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //sašņurkt
+		FirstConj.direct("-šņurkstu, -šņurksti,", "-šņurkst, pag. -šņurku", "šņurkt"), //apšņurkt, sašņurkt
 		FirstConj.direct("-šņūcu, -šņūc,", "-šņūc, pag. -šņūcu", "šņūkt"), //iešņūkt
 		FirstConj.direct("-šuju, -šuj,", "-šuj, pag. -šuvu", "šūt"), //aizšūt
 		// T

@@ -197,6 +197,7 @@ public class AbbrMap {
 		binaryFlags.put("vietv.", "Vietvārds");
 
 		binaryFlags.put("nelok.", TValues.NON_INFLECTIVE);
+		binaryFlags.put("lokāms.", "Lokāms vārds");
 
 		pairingFlags.put("akuz.", Tuple.of(TKeys.CASE, TValues.ACUSATIVE));
 		pairingFlags.put("dat.", Tuple.of(TKeys.CASE, TValues.DATIVE));
@@ -320,6 +321,7 @@ public class AbbrMap {
 		pairingFlags.put("lauks.", Tuple.of(TKeys.DOMAIN, "Lauksaimniecība"));
 		pairingFlags.put("lauks. tehn.", Tuple.of(TKeys.DOMAIN, "Lauksaimniecības tehnika"));
 		// TODO: iziet cauri, kas ar to tagots, vai nav daļa jāpārceļ uz lietojuma ierobežojumiem.
+		pairingFlags.put("lingv.", Tuple.of(TKeys.DOMAIN, "Valodniecība"));
 		pairingFlags.put("lit.", Tuple.of(TKeys.DOMAIN, "Literatūra"));
 		pairingFlags.put("literat.", Tuple.of(TKeys.DOMAIN, "Literatūrzinātne"));
 		pairingFlags.put("loģ.", Tuple.of(TKeys.DOMAIN, "Loģika"));
@@ -354,6 +356,7 @@ public class AbbrMap {
 		pairingFlags.put("psih.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("psihol.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("rel.", Tuple.of(TKeys.DOMAIN, "Reliģija"));
+		pairingFlags.put("rūpn.", Tuple.of(TKeys.DOMAIN, "Rūpniecība"));
 		pairingFlags.put("siltumt.", Tuple.of(TKeys.DOMAIN, "Siltumtehnika"));
 		pairingFlags.put("social.", Tuple.of(TKeys.DOMAIN, "Socioloģija"));
 		pairingFlags.put("sociol.", Tuple.of(TKeys.DOMAIN, "Socioloģija"));
@@ -404,6 +407,8 @@ public class AbbrMap {
 		pairingFlags.put("jap.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
 		pairingFlags.put("krievu val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("kr.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
+		pairingFlags.put("kr.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ķīn.", Tuple.of(TKeys.LANGUAGE, "Ķīniešu"));
 		pairingFlags.put("ķīn.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("lat.", Tuple.of(TKeys.LANGUAGE, "Latīņu"));
@@ -436,6 +441,8 @@ public class AbbrMap {
 		pairingFlags.put("sp.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("turku val.", Tuple.of(TKeys.LANGUAGE, "Turku"));
 		pairingFlags.put("turku val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("ukr.", Tuple.of(TKeys.LANGUAGE, "Ukraiņu"));
+		pairingFlags.put("ukr.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ung.", Tuple.of(TKeys.LANGUAGE, "Ungāru"));
 		pairingFlags.put("ung.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("vācu val.", Tuple.of(TKeys.LANGUAGE, "Vācu"));

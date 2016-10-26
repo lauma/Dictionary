@@ -145,6 +145,9 @@ public class FormRestrRule extends StemSlotRule
 				patternToProcess = patternTextMiddle + lemmaStub + patternTextEnding;
 			if (patternToProcess.startsWith(lemmaLogic.altWordEnding))
 				patternToProcess = patternToProcess.substring(lemmaLogic.altWordEnding.length());
+			while (patternToProcess.startsWith(".") || patternToProcess.startsWith(",")
+					|| patternToProcess.startsWith(" "))
+				patternToProcess = patternToProcess.substring(1);
 
 			TLemma restrForm = new TLemma(lemmaStub + lemmaLogic.altWordEnding);
 			THeader restrHeader = new THeader(restrForm, patternToProcess);

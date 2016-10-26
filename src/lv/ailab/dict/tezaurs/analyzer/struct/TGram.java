@@ -321,7 +321,7 @@ public class TGram extends Gram
 		// Ierobežojošo formu likumi.
 		int newBegin = -1;
 		for (FormRestrRule[] rules : FormRestrRules.getAll())
-			for (FormRestrRule r : rules)
+			if (newBegin == -1) for (FormRestrRule r : rules)
 			{
 				newBegin = r.applyDirect(gramText, lemma, paradigm, flags, formRestrictions);
 				if (newBegin > -1) break;

@@ -4,12 +4,15 @@ import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Likums, kas apstrādā gramatikas daļu, kas atbildīga par formu ierobežojumiem,
@@ -95,6 +98,18 @@ public class FormRestrRule extends StemSlotRule
 				new StemSlotSubRule(lemmaRestrict, lemmaEndingCutLength,
 						paradigms, positiveFlags, restrFormEnding,
 						null, restrFormFlags));
+	}
+
+	public static FormRestrRule of(String patternBegin, String patternMiddle,
+			String patternEnding, String lemmaRestrict,
+			int lemmaEndingCutLength, Tuple<String,String>[] positiveFlags,
+			String restrFormEnding, Tuple<String,String>[] restrFormFlags)
+	{
+		return FormRestrRule.simple(patternBegin, patternMiddle, patternEnding, lemmaRestrict,
+				lemmaEndingCutLength, null,
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				restrFormEnding,
+				restrFormFlags == null ? null : new HashSet<>(Arrays.asList(restrFormFlags)));
 	}
 
 	public static FormRestrRule of(String patternBegin, String patternEnding, String lemmaRestrict,

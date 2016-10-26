@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
 
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
@@ -34,9 +35,10 @@ public final class WithAltLemma
 		else altLemmaEnding = m.group(1);
 
 		return AltFullLemmaRule.of(
-				patternBegin + " ", patternEnding, ".*" + lemmaEnding, altLemmaEnding,
-				lemmaEnding.length(), paradigmId, paradigmId,
+				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
+				lemmaEnding.length(), paradigmId,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				altLemmaEnding, paradigmId,
 				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
 	}
 
@@ -59,9 +61,10 @@ public final class WithAltLemma
 		else altLemmaEnding = m.group(1);
 
 		return AltFullLemmaRule.of(
-				patternBegin + " ", patternEnding, ".*" + lemmaEnding, altLemmaEnding,
-				lemmaEnding.length(), paradigmId, paradigmId,
+				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
+				lemmaEnding.length(), paradigmId,
 				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				altLemmaEnding, paradigmId,
 				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
 	}
 
@@ -84,9 +87,51 @@ public final class WithAltLemma
 		else altLemmaEnding = m.group(1);
 
 		return AltFullLemmaRule.of(
-				patternBegin + " ", patternEnding, ".*" + lemmaEnding, altLemmaEnding,
-				lemmaEnding.length(), paradigmId, paradigmId,
+				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
+				lemmaEnding.length(), paradigmId,
 				new Tuple[]{TFeatures.NO_SOUNDCHANGE, TFeatures.GENDER__FEM, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				altLemmaEnding, paradigmId,
 				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
+	}
+
+	/**
+	 * Speciālgadījums lietvārdiem, kam pamatforma ir 1. deklinācijā un
+	 * papildforma - 5. Pirmās deklinācijas paradigmu (1 vai 2) nosaka
+	 * automātiski pēc lemmaEnd pēdējā simbola.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
+	 */
+	public static AltEndingRule mascFirstDeclToFemFifthDecl(
+			String patternText, String lemmaEnd, String altLemmaEnd)
+	{
+		int paradigm = 1;
+		if (lemmaEnd.endsWith("s")) paradigm = 1;
+		else if (lemmaEnd.endsWith("š")) paradigm = 2;
+		else System.err.printf(
+				"Neizdodas pēc galotnes \"%s\" noteikt paradigmu likumam \"%s\"\n",
+				lemmaEnd, patternText);
+		return AltEndingRule.of(patternText, ".*" + lemmaEnd,
+				lemmaEnd.length(), paradigm,
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
+				altLemmaEnd, 9,
+				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
+	}
+
+	/**
+	 * Speciālgadījums lietvārdiem, kam pamatforma ir 2. deklinācijā
+	 * (3. paradigma) un papildforma - 5.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
+	 */
+	public static AltEndingRule mascSeconDeclToFemFifthDecl(
+			String patternText, String lemmaEnd, String altLemmaEnd)
+	{
+		return AltEndingRule.of(patternText, ".*" + lemmaEnd,
+				lemmaEnd.length(), 3,
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
+				altLemmaEnd, 9,
+				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
 	}
 }

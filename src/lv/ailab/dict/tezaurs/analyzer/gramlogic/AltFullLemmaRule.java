@@ -1,18 +1,10 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.struct.Lemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Likumi gramatikām, kas satur pilnu alternatīvo lemmu, nevis tikai galdotnes,
@@ -24,121 +16,74 @@ import java.util.regex.Pattern;
  * Izveidots 2015-10-26.
  * @author Lauma
  */
-public class AltFullLemmaRule implements AltLemmaRule
+public class AltFullLemmaRule extends StemSlotRule
 {
 	/**
-	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
-	 * piemērojams.
+	 * @param patternBegin	neeskepota teksta virkne, ar kuru grmatikai jāsākas,
+	 *                      lai šis likums būtu piemērojams
+	 * @param patternEnding	neeskepota teksta virkne, ar kuru grmatikai
+	 *                      jāturpinās pēc lemmai specifiskās daļas, lai šis
+	 *                      likums būtu piemērojams
+	 * @param lemmaLogic	likuma "otrā puse" - lemmas nosacījumi, piešķiramās
+	 *                      paradigmas un karodziņi, kā arī alternatīvās lemmas
+	 *                      veidošanas dati un tai piešķiramie karodziņi
 	 */
-	protected final String patternTextBegin;
-	/**
-	 * Neeskepota teksta virkne, ar kuru grmatikai jāturpinās pēc lemmai
-	 * specifiskās daļas, lai šis likums būtu piemērojams.
-	 */
-	protected final String patternTextEnding;
-
-	/**
-	 * Likuma "otrā puse" - lemmas nosacījumi, piešķiramās paradigmas un
-	 * karodziņi, kā arī alternatīvās lemmas veidošanas dati un tai piešķiramie
-	 * karodziņi.
-	 */
-	protected final AltLemmaSubRule lemmaLogic;
-
-	/**
-	 * Skaitītājs, kas norāda, cik reižu likums ir ticis lietots (applyDirect).
-	 */
-	protected int usageCount = 0;
-
 	public AltFullLemmaRule(
+			String patternBegin, String patternEnding,
+			StemSlotSubRule lemmaLogic)
+	{
+		super (patternBegin, patternEnding, lemmaLogic);
+	}
+
+	/**
+	 * Ērummetode / alternatīvais konstruktors.
+	 * @param patternBegin			neeskepota teksta virkne, ar kuru grmatikai
+	 *                              jāsākas, lai šis likums būtu piemērojams
+	 * @param patternEnding			neeskepota teksta virkne, ar kuru grmatikai
+	 *                              jāturpinās pēc lemmai specifiskās daļas, lai
+	 *                              šis likums būtu piemērojams
+	 * @param lemmaRestrict			lai likums būtu piemērojams, lemmai jāatbilst
+	 *                              šim šablonam
+	 * @param lemmaEndingCutLength	simbolu skaits, kas tiks noņemts no dotās
+	 *                              lemmas beigām, to izmantojot gramatikas
+	 *                              šablona viedošanai
+	 * @param paradigms				paradigmu ID, ko lieto, ja likums ir
+	 *                              piemērojams (gan gramatikas teksts, gan
+	 *                              lemma atbilst attiecīgajiem šabloniem)
+	 * @param positiveFlags			šos karodziņus uzstāda pamata karodziņu
+	 *                              savācējam, ja gan gramatikas teksts, gan
+	 *                              lemma atbilst attiecīgajiem šabloniem.
+	 * @param altLemmaEnding		teksta virkne kuru izmantos kā izskaņu,
+	 *                              veidojot papildus lemmu
+	 * @param altLemmaParadigms		paradigmu ID, ko lieto papildus izveidotajai
+	 *                              lemmai
+	 * @param altLemmaFlags			šos karodziņus uzstāda papildu pamatformai,
+	 *                              nevis pamatvārdam, ja gan gramatikas teksts,
+	 *                              gan lemma atbilst attiecīgajiem šabloniem
+	 * @return	izveidotais likums
+	 */
+	public static AltFullLemmaRule simple(
 			String patternBegin, String patternEnding, String lemmaRestrict,
-			String altLemmaEnding, int lemmaEndingCutLength, int paradigm,
-			int altLemmaParadigm, Set<Tuple<String, String>> positiveFlags,
+			int lemmaEndingCutLength, Set<Integer> paradigms,
+			Set<Tuple<String, String>> positiveFlags,
+			String altLemmaEnding, Set<Integer> altLemmaParadigms,
 			Set<Tuple<String, String>> altLemmaFlags)
 	{
-		this.patternTextBegin = patternBegin;
-		this.patternTextEnding = patternEnding;
-		this.lemmaLogic = new AltLemmaSubRule(lemmaRestrict,
-				new HashSet<Integer>(){{add(paradigm);}}, positiveFlags,
-				lemmaEndingCutLength, altLemmaEnding,
-				new HashSet<Integer>(){{add(altLemmaParadigm);}}, altLemmaFlags);
+		return new AltFullLemmaRule(patternBegin, patternEnding,
+				new StemSlotSubRule(lemmaRestrict, lemmaEndingCutLength,
+						paradigms, positiveFlags, altLemmaEnding,
+						altLemmaParadigms, altLemmaFlags));
 	}
 
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,
-			String altLemmaEnding, int lemmaEndingCutLength, int paradigmId,
-			int altParadigmId, Tuple<String,String>[] positiveFlags,
-			Tuple<String,String>[] altLemmaFlags)
+			int lemmaEndingCutLength, int paradigmId, Tuple<String,String>[] positiveFlags,
+			String altLemmaEnding, int altParadigmId, Tuple<String,String>[] altLemmaFlags)
 	{
-		return new AltFullLemmaRule(patternBegin, patternEnding, lemmaEnding,
-				altLemmaEnding, lemmaEndingCutLength, paradigmId, altParadigmId,
+		return simple(patternBegin, patternEnding, lemmaEnding,
+				lemmaEndingCutLength, new HashSet<Integer>(){{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				altLemmaEnding, new HashSet<Integer>(){{add(altParadigmId);}},
 				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
-	}
-
-
-	/**
-	 * Likuma piemērošana.
-	 *
-	 * @param gramText           apstrādājamā gramatika
-	 * @param lemma              hederim, kurā atrodas gramatika, atbilstošā
-	 *                           lemma
-	 * @param paradigmCollector  kolekcija, kurā pielikt paradigmu gadījumā,
-	 *                           ja gramatika un lemma atbilst šim likumam
-	 * @param flagCollector      kolekcija, kurā pielikt karodziņus gadījumā,
-	 *                           ja vismaz gramatika atbilst šim likumam
-	 * @param altLemmasCollector kolekcija, kurā ielikt izveidotās papildus
-	 *                           formas un tām raksturīgos karodziņus.
-	 * @return jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
-	 * daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
-	 */
-	@Override
-	public int applyDirect(String gramText, String lemma,
-			Set<Integer> paradigmCollector, Flags flagCollector,
-			List<Header> altLemmasCollector)
-	{
-		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
-		int newBegin = -1;
-
-		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
-		String pattern = patternTextBegin + lemmaStub + patternTextEnding;
-		if (gramText.startsWith(pattern))
-		{
-			newBegin = pattern.length();
-			Lemma altLemma = new TLemma(lemmaStub + lemmaLogic.altLemmaEnding);
-			Flags altParams = new Flags();
-			if (lemmaLogic.altLemmaFlags != null)
-				for (Tuple<String, String> t : lemmaLogic.altLemmaFlags) altParams.add(t);
-			altLemmasCollector.add(new Header(altLemma, lemmaLogic.altLemmaParadigms, altParams));
-
-			paradigmCollector.addAll(lemmaLogic.paradigms);
-			if (lemmaLogic.positiveFlags != null)
-				for (Tuple<String, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
-			if (newBegin > -1) usageCount++;
-			return newBegin;
-		}
-		else return -1;
-	}
-
-	/**
-	 * Cik reižu likums ir lietots?
-	 * @return skaits, cik reižu likums ir lietots.
-	 */
-	@Override
-	public int getUsageCount()
-	{
-		return usageCount;
-	}
-
-	/**
-	 * Metode, kas ļauj dabūt likuma nosaukumu, kas ļautu šo likumu atšķirt no
-	 * citiem.
-	 * @return likuma vienkāršota reprezentācija, kas izmantojama diagnostikas
-	 * izdrukās.
-	 */
-	@Override
-	public String getStrReprezentation()
-	{
-		return String.format("%s \"%s_?_%s\"",
-				this.getClass().getSimpleName(), patternTextBegin, patternTextEnding);
 	}
 }

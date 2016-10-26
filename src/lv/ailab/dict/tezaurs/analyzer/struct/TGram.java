@@ -24,10 +24,13 @@ import java.util.LinkedList;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
+import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.StemSlotRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import org.w3c.dom.Node;
@@ -67,6 +70,11 @@ public class TGram extends Gram
 	 */
 	public static AbbrMap knownAbbr = AbbrMap.getAbbrMap();
 
+	public TGram()
+	{
+		super();
+		leftovers = null;
+	}
 
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
@@ -78,6 +86,7 @@ public class TGram extends Gram
 		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
+		formRestrictions = null;
 		parseGram(lemma);
 	}
 	/**
@@ -90,6 +99,7 @@ public class TGram extends Gram
 		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
+		formRestrictions = null;
 		parseGram(lemma);
 	}
 	
@@ -119,6 +129,14 @@ public class TGram extends Gram
 		try
 		{
 			// Interesanti, vai ar refleksiju šis triks būtu ātrāks?
+			if (gram.formRestrictions != null)
+				for (Header restr : gram.formRestrictions)
+					if (((THeader) restr).hasUnparsedGram()) return true;
+			// Šito šobrīd it kā nevajag, bet nu drošības pēc:
+			if (gram.altLemmas != null)
+				for (Header alt : gram.altLemmas)
+					if (((THeader) alt).hasUnparsedGram()) return true;
+
 			return !((TGram) gram).leftovers.isEmpty();
 		}
 		catch (ClassCastException e)
@@ -135,6 +153,7 @@ public class TGram extends Gram
 	{
 		String correctedGram = correctOCRErrors(freeText);
 		altLemmas = new ArrayList<>();
+		formRestrictions = new ArrayList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))
@@ -200,9 +219,9 @@ public class TGram extends Gram
 
 		// Likumi, kuros tiek dots vēl viens lemmas variants - kā pilns vārds
 		// vai ar papildus galotņu palīdzību.
-		for (AltLemmaRule[] rules : AltLemmaRules.getAll())
+		for (AdditionalHeaderRule[] rules : AltLemmaRules.getAll())
 		{
-			for (AltLemmaRule r : rules)
+			for (AdditionalHeaderRule r : rules)
 			{
 				if (newBegin != -1) break;
 				newBegin = r.applyDirect(gramText, lemma, paradigm, flags, altLemmas);
@@ -268,6 +287,7 @@ public class TGram extends Gram
 	{
 		gramText = gramText.trim();
 		if (gramText.length() < 1) return gramText;
+		// Likumi, kas uzdoti kā funkcijas.
 		boolean found;
 		do
 		{
@@ -296,16 +316,36 @@ public class TGram extends Gram
 				gramText = gramText.trim();
 				found = true;
 			}
-			//System.out.println(lemma + " " + newBegin + " " + gramText);
 		} while (found && gramText.length() > 0);
 
+		// Ierobežojošo formu likumi.
+		int newBegin = -1;
+		for (FormRestrRule[] rules : FormRestrRules.getAll())
+			for (FormRestrRule r : rules)
+			{
+				newBegin = r.applyDirect(gramText, lemma, paradigm, flags, formRestrictions);
+				if (newBegin > -1) break;
+			}
+		// TODO: aiz šitiem likumiem patiesībā vajadzētu palikt tukšam līdz pašām, pašām beigām.
+		if (newBegin > 0)
+		{
+			gramText = gramText.substring(newBegin);
+			if (gramText.startsWith(".") || gramText.startsWith(","))
+				gramText = gramText.substring(1);
+			gramText = gramText.trim();
+			if (!gramText.equals(""))
+			{
+				LinkedList<String> tmp = new LinkedList<>();
+				tmp.add(gramText);
+				leftovers.add(tmp);
+				return "";
+			}
+		}
 		return gramText;
 	}
 
-
-
 	/**
-	 * Gramatikas teksta apstrādes trešais etaps - katras ar semikolu atdalītās
+	 * Gramatikas teksta apstrādes trešais etaps - katras ar komatu atdalītās
 	 * daļas analīze un apstrāde.
 	 * @param gramText	gramatikas teksta fragmens, ko vajag apstrādāt - bez
 	 *                  semikoliem un komatiem

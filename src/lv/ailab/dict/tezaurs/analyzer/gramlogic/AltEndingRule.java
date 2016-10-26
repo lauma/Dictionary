@@ -1,7 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
@@ -23,7 +22,7 @@ import java.util.regex.Pattern;
  * Izveidots 2015-10-26.
  * @author Lauma
  */
-public class AltEndingRule implements AltLemmaRule
+public class AltEndingRule implements AdditionalHeaderRule
 {
 	/**
 	 * Neeskepota teksta virkne, ar kuru grmatikai jāsākas, lai šis likums būtu
@@ -41,7 +40,7 @@ public class AltEndingRule implements AltLemmaRule
 	 * paradigmas un karodziņi, kā arī alternatīvās lemmas veidošanas dati un
 	 * tai piešķiramie karodziņi.
 	 */
-	protected final List<AltLemmaSubRule> lemmaLogic;
+	protected final List<StemSlotSubRule> lemmaLogic;
 
 	/**
 	 * Šo izdrukā, kad liekas, ka likums varētu būt nepilnīgs - gramatikas
@@ -54,7 +53,7 @@ public class AltEndingRule implements AltLemmaRule
 	 */
 	protected int usageCount = 0;
 
-	public AltEndingRule(String patternText, List<AltLemmaSubRule> lemmaLogic)
+	public AltEndingRule(String patternText, List<StemSlotSubRule> lemmaLogic)
 	{
 		if (lemmaLogic == null)
 			throw new IllegalArgumentException (
@@ -64,16 +63,17 @@ public class AltEndingRule implements AltLemmaRule
 		this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
 
 		if (lemmaLogic.size() == 1 && lemmaLogic.get(0).paradigms.size() == 1
-				&& lemmaLogic.get(0).altLemmaParadigms.size() == 1)
+				&& lemmaLogic.get(0).altWordParadigms.size() == 1)
 			errorMessage = "Neizdodas \"%s\" ielikt paradigmā " +
 					lemmaLogic.get(0).paradigms.toArray()[0] +
-					" ar papildus paradigmu " + lemmaLogic.get(0).altLemmaParadigms.toArray()[0] + "\n";
+					" ar papildus paradigmu " + lemmaLogic.get(0).altWordParadigms
+					.toArray()[0] + "\n";
 		else errorMessage = "Neizdodas \"%s\" ielikt kādā no paradigmām " +
 				lemmaLogic.stream().map(t -> t.paradigms).flatMap(m -> m.stream())
 						.distinct().sorted().map(i -> i.toString())
 						.reduce((a, b) -> a + ", " + b).orElse("") +
 				" ar papildus paradigmām " + lemmaLogic.stream()
-						.map(t->t.altLemmaParadigms).flatMap(m -> m.stream()).distinct().sorted()
+						.map(t->t.altWordParadigms).flatMap(m -> m.stream()).distinct().sorted()
 						.map(i -> i.toString()).reduce((a, b) -> a + ", " + b)
 						.orElse("") + "\n";
 	}
@@ -83,14 +83,14 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu.
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			Set<Integer> paradigms, Set<Tuple<String, String>> positiveFlags,
-			int lemmaEndCutLength, String altLemmaEnd,
+			int lemmaEndCutLength, Set<Integer> paradigms,
+			Set<Tuple<String, String>> positiveFlags, String altLemmaEnd,
 			Set<Integer> altLemmaParadigms, Set<Tuple<String, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
-				new ArrayList<AltLemmaSubRule>(){{
-					add( new AltLemmaSubRule(lemmaRestrictions, paradigms,
-							positiveFlags, lemmaEndCutLength, altLemmaEnd,
+				new ArrayList<StemSlotSubRule>(){{
+					add( new StemSlotSubRule(lemmaRestrictions,lemmaEndCutLength,
+							paradigms, positiveFlags, altLemmaEnd,
 							altLemmaParadigms, altLemmaFlags));}});
 	}
 
@@ -99,36 +99,35 @@ public class AltEndingRule implements AltLemmaRule
 	 * nosacījumu ar vienu paradigmu un jaunajai lemmai ari ir viena paradigma
 	 */
 	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			int paradigm, Set<Tuple<String, String>> positiveFlags,
-			int lemmaEndCutLength, String altLemmaEnd,
+			int lemmaEndCutLength, int paradigm,
+			Set<Tuple<String, String>> positiveFlags, String altLemmaEnd,
 			int altLemmaParadigm, Set<Tuple<String, String>> altLemmaFlags)
 	{
 		return new AltEndingRule(patternText,
-				new ArrayList<AltLemmaSubRule>(){{
-					add( new AltLemmaSubRule(lemmaRestrictions,
+				new ArrayList<StemSlotSubRule>(){{
+					add( new StemSlotSubRule(lemmaRestrictions, lemmaEndCutLength,
 							new HashSet<Integer>(){{add(paradigm);}},
-							positiveFlags, lemmaEndCutLength, altLemmaEnd,
+							positiveFlags, altLemmaEnd,
 							new HashSet<Integer>(){{add(altLemmaParadigm);}},
 							altLemmaFlags));}});
 	}
 
-	public static AltEndingRule of(String patternText, AltLemmaSubRule[] lemmaLogic)
+	public static AltEndingRule of(String patternText, StemSlotSubRule[] lemmaLogic)
 	{
 		return new AltEndingRule(patternText,
 				lemmaLogic == null ? null : Arrays.asList(lemmaLogic));
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			Integer[] paradigms, Tuple<String, String>[] positiveFlags,
-			int lemmaEndCutLength, String altLemmaEnd,
-			Integer[] altLemmaParadigms, Tuple<String, String>[] altLemmaFlags)
+			int lemmaEndCutLength, Integer[] paradigms, Tuple<String, String>[] positiveFlags,
+			String altLemmaEnd, Integer[] altLemmaParadigms, Tuple<String, String>[] altLemmaFlags)
 	{
-		return simple(patternText, lemmaRestrictions,
+		return simple(patternText, lemmaRestrictions, lemmaEndCutLength,
 				paradigms == null ? null : new HashSet<>(Arrays
 						.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				lemmaEndCutLength, altLemmaEnd,
+				altLemmaEnd,
 				altLemmaParadigms == null ? null : new HashSet<>(Arrays
 						.asList(altLemmaParadigms)),
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
@@ -136,85 +135,18 @@ public class AltEndingRule implements AltLemmaRule
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
-			int paradigm, Tuple<String, String>[] positiveFlags,
-			int lemmaEndingCutLength, String altLemmaEnding,
-			int altLemmaParadigm, Tuple<String, String>[] altLemmaFlags)
+			int lemmaEndingCutLength, int paradigm, Tuple<String, String>[] positiveFlags,
+			String altLemmaEnding, int altLemmaParadigm, Tuple<String, String>[] altLemmaFlags)
 	{
-		return simple(patternText, lemmaRestrictions, paradigm,
+		return simple(patternText, lemmaRestrictions, lemmaEndingCutLength,
+				paradigm,
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				lemmaEndingCutLength, altLemmaEnding, altLemmaParadigm,
+				altLemmaEnding, altLemmaParadigm,
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
 						.asList(altLemmaFlags)));
 	}
 
-
-
-	/**
-	 * Speciālgadījums lietvārdiem, kam pamatforma ir 1. deklinācijā un
-	 * papildforma - 5. Pirmās deklinācijas paradigmu (1 vai 2) nosaka
-	 * automātiski pēc lemmaEnd pēdējā simbola.
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
-	 */
-	public static AltEndingRule mascFirstDeclToFemFifthDecl(
-			String patternText, String lemmaEnd, String altLemmaEnd)
-	{
-		int paradigm = 1;
-		if (lemmaEnd.endsWith("s")) paradigm = 1;
-		else if (lemmaEnd.endsWith("š")) paradigm = 2;
-		else System.err.printf(
-				"Neizdodas pēc galotnes \"%s\" noteikt paradigmu likumam \"%s\"\n",
-				lemmaEnd, patternText);
-		return AltEndingRule.of(patternText, ".*" + lemmaEnd, paradigm,
-				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
-				lemmaEnd.length(), altLemmaEnd, 9,
-				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
-	}
-
-	/**
-	 * Speciālgadījums lietvārdiem, kam pamatforma ir 2. deklinācijā
-	 * (3. paradigma) un papildforma - 5.
-	 * @param patternText	teksts, ar kuru jāsākas gramatikai
-	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param altLemmaEnd	galotne, ko izmantos, veidojot alternatīvo lemmu
-	 */
-	public static AltEndingRule mascSeconDeclToFemFifthDecl(
-			String patternText, String lemmaEnd, String altLemmaEnd)
-	{
-		return AltEndingRule.of(patternText, ".*" + lemmaEnd, 3,
-				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
-				lemmaEnd.length(), altLemmaEnd, 9,
-				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
-	}
-
-	/*
-	 * Speciālgadījums divdabjiem no is/usi grupas. Lemmas ierobešojums ir
-	 * regulārā izteiksme, kas netiek nekā papildināta.
-	 */
-/*	public static AltEndingRule participleIsMascToFem(
-			String patternText, String lemmaRestrict, String altLemmaEnding,
-			int lemmaEndingCutLength)
-	{
-		return AltEndingRule.of(patternText, lemmaRestrict, 0,
-				new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_IS, TFeatures.GENDER__MASC},
-				lemmaEndingCutLength, altLemmaEnding, 0,
-				new Tuple[]{TFeatures.ENTRYWORD__FEM});
-	}*
-
-	/*
-	 * Speciālgadījums divdabjiem no is/usi grupas. Lemmas ierobešojums ir
-	 * vārda izskaņa, kas par regulāro izteiksmi tiek pārveidota automātiski.
-	 */
-/*	public static AltEndingRule participleIsMascToFem(
-			String patternText, String lemmaEnding, String altLemmaEnding)
-	{
-		return AltEndingRule
-				.participleIsMascToFem(patternText, ".*" + lemmaEnding,
-						altLemmaEnding, lemmaEnding.length());
-
-	}*/
 
 	/**
 	 * Likuma piemērošana.
@@ -242,17 +174,17 @@ public class AltEndingRule implements AltLemmaRule
 		{
 			newBegin = m.group(1).length();
 			boolean matchedLemma = false;
-			for (AltLemmaSubRule rule : lemmaLogic)
+			for (StemSlotSubRule rule : lemmaLogic)
 			{
 				if (rule.lemmaRestrict.matcher(lemma).matches()
 						&& lemma.length() >= rule.lemmaEndingCutLength)
 				{
 					String lemmaStub = lemma.substring(0, lemma.length() - rule.lemmaEndingCutLength);
-					Lemma altLemma = new TLemma(lemmaStub + rule.altLemmaEnding);
+					Lemma altLemma = new TLemma(lemmaStub + rule.altWordEnding);
 					Flags altParams = new Flags();
-					if (rule.altLemmaFlags != null)
-						altParams.addAll(rule.altLemmaFlags);
-					altLemmasCollector.add(new Header(altLemma, rule.altLemmaParadigms, altParams));
+					if (rule.altWordFlags != null)
+						altParams.addAll(rule.altWordFlags);
+					altLemmasCollector.add(new Header(altLemma, rule.altWordParadigms, altParams));
 
 					paradigmCollector.addAll(rule.paradigms);
 					if (rule.positiveFlags != null)

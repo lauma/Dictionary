@@ -1,6 +1,5 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.struct.flagconst.Values;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
@@ -14,11 +13,11 @@ import java.util.HashSet;
  * Singletonklase, kas satur visus zināmos saīsinājumus, tos atšifrējumus, kā
  * arī visus citus karodziņus, kas veidojami no fiksētām teksta virknēm.
  *
- * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un TValues
- * klasē - citās klasēs jālieto atsauces uz TValues klasē definētajām, lai kaut
- * ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
- * @author Lauma
+ * Visas tekstuālās vērtību konstantes drīkst definēt tikai šeit un Values,
+ * TValues klasēs - citās klasēs jālieto atsauces uz TValues klasē definētajām,
+ * lai kaut ko pamainot, nav jadzenās pakaļ pa daudzām klasēm.
  *
+ * @author Lauma
  */
 public class AbbrMap {
 	protected static AbbrMap singleton;

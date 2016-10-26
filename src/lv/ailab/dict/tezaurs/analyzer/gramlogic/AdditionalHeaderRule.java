@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Lauma
  */
-public interface AltLemmaRule extends Rule
+public interface AdditionalHeaderRule extends Rule
 {
 	/**
 	 * Likuma piemērošana pa tiešo, bez maģijas.
@@ -24,12 +24,12 @@ public interface AltLemmaRule extends Rule
 	 *                              ja gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     	kolekcija, kurā pielikt karodziņus gadījumā,
 	 *                              ja vismaz gramatika atbilst šim likumam
-	 * @param altLemmasCollector	kolekcija, kurā ielikt izveidotās papildus
+	 * @param addedLemmasCollector	kolekcija, kurā ielikt izveidotās papildus
 	 *                              formas un tām raksturīgos karodziņus.
 	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	public int applyDirect(String gramText, String lemma,
 			Set<Integer> paradigmCollector, Flags flagCollector,
-			List<Header> altLemmasCollector);
+			List<Header> addedLemmasCollector);
 }

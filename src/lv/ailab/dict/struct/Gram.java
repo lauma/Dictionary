@@ -56,8 +56,17 @@ public class Gram implements HasToJSON, HasToXML
 	 * Karodziņu kopa satur vienīgi tos karodziņus, kas "alternatīvajai lemmai"
 	 * atšķiras no pamata lemmas.
 	 * TODO: filtrēt vienādos.
+	 * TODO: dublēt karodziņus.
 	 */
 	public ArrayList<Header> altLemmas;
+
+	/**
+	 * Struktūra, kas satur norādes, ka elements, ko šī gramatika skaidro,
+	 * attiecas tikai uz noteiktu šķirkļavārdu formu apakškopu. Šis elements
+	 * visbiežāk sastopams gramatikās, kas atrodas pie nozīmēm.
+	 * Visos saprātīgos gadījumos vajadzētu būt ne vairāk kā 1 šādam Header?
+	 */
+	public ArrayList<Header> formRestrictions;
 
 
 	public Gram()
@@ -66,6 +75,7 @@ public class Gram implements HasToJSON, HasToXML
 		flags = null;
 		paradigm = null;
 		altLemmas = null;
+		formRestrictions = null;
 	}
 
 	/**
@@ -89,6 +99,9 @@ public class Gram implements HasToJSON, HasToXML
 		res.addAll(getDirectParadigms());
 		for (Header h : getImplicitHeaders())
 			res.addAll(h.getMentionedParadigms());
+		if (formRestrictions != null && formRestrictions.size() > 0)
+			for (Header h : formRestrictions)
+				res.addAll(h.getMentionedParadigms());
 		return res;
 	}
 
@@ -96,6 +109,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * Savāc altLemmas un, drošības pēc, arī pārbauda vai altLemmu objekti sevī
 	 * neietver kādu gramatiku ar altLemmu. Teorētiski tā gan nevajadzētu būt,
 	 * bet nu drošības pēc.
+	 * TODO: vai šeit vajag iekļaut arī formRestrictions?
 	 */
 	public ArrayList<Header> getImplicitHeaders()
 	{
@@ -142,11 +156,11 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (altLemmas != null && !altLemmas.isEmpty())
+		if (formRestrictions != null && !formRestrictions.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"AltLemmas\":");
-			res.append(JSONUtils.objectsToJSON(altLemmas));
+			res.append("\"FormRestrictions\":");
+			res.append(JSONUtils.objectsToJSON(formRestrictions));
 			hasPrev = true;
 		}
 
@@ -155,6 +169,14 @@ public class Gram implements HasToJSON, HasToXML
 			if (hasPrev) res.append(", ");
 			res.append("\"Flags\":");
 			res.append(JSONUtils.mappingSetToJSON(flags.pairings));
+			hasPrev = true;
+		}
+
+		if (altLemmas != null && !altLemmas.isEmpty())
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"AltLemmas\":");
+			res.append(JSONUtils.objectsToJSON(altLemmas));
 			hasPrev = true;
 		}
 
@@ -209,6 +231,17 @@ public class Gram implements HasToJSON, HasToXML
 			gramN.appendChild(paradigmContN);
 		}
 
+		if (formRestrictions != null && !formRestrictions.isEmpty())
+		{
+			Node formRestrContN = doc.createElement("FormRestrictions");
+			for (Header al: formRestrictions)
+				if (al != null) al.toXML(formRestrContN);
+			gramN.appendChild(formRestrContN);
+		}
+
+		if (flags != null) flags.toXML(gramN);
+
+
 		if (altLemmas != null && !altLemmas.isEmpty())
 		{
 			Node altLemmasContN = doc.createElement("AltLemmas");
@@ -216,8 +249,6 @@ public class Gram implements HasToJSON, HasToXML
 				if (al != null) al.toXML(altLemmasContN); // TODO MLVV kā te var nonākt null?
 			gramN.appendChild(altLemmasContN);
 		}
-
-		if (flags != null) flags.toXML(gramN);
 
 		if (freeText != null && !freeText.isEmpty())
 		{

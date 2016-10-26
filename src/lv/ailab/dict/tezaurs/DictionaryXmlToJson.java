@@ -26,7 +26,7 @@ import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.DirectRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltLemmaRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
@@ -263,8 +263,8 @@ public class DictionaryXmlToJson
 	{
 		out.write(AltLemmaRules.class.getCanonicalName());
 		out.newLine();
-		for (AltLemmaRule[] rules : AltLemmaRules.getAll())
-			for (AltLemmaRule r : rules)
+		for (AdditionalHeaderRule[] rules : AltLemmaRules.getAll())
+			for (AdditionalHeaderRule r : rules)
 				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
 				{
 					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));

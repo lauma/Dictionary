@@ -25,7 +25,6 @@ import java.util.Set;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -74,7 +73,7 @@ public class Header implements HasToJSON, HasToXML
 	{
 		this.lemma = lemma;
 		gram = new Gram();
-		gram.flags= flags;
+		gram.flags = flags;
 		if (paradigm != null && paradigm.size() > 0)
 			gram.paradigm = new HashSet<>(paradigm);
 		else gram.paradigm = null;
@@ -107,7 +106,6 @@ public class Header implements HasToJSON, HasToXML
 		if (gram == null) return new ArrayList<>();
 		return gram.getImplicitHeaders();
 	}
-
 
 	public String toJSON()
 	{

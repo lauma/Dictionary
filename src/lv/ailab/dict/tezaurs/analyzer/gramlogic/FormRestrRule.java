@@ -4,7 +4,6 @@ import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;

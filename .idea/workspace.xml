@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" />
     </list>
     <ignored path="Dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,8 +40,8 @@
       <file leaf-file-name="FormRestrRules.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/FormRestrRules.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="71" column="84" selection-start-line="71" selection-start-column="84" selection-end-line="71" selection-end-column="84" />
+            <state relative-caret-position="370">
+              <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -47,21 +49,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RulesAsFunctions.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RulesAsFunctions.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="141" column="2" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="2" />
+            <state relative-caret-position="173">
+              <caret line="714" column="7" selection-start-line="714" selection-start-column="7" selection-end-line="714" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TGram.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="THeader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="884">
+              <caret line="75" column="32" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TGram.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="379" column="14" selection-start-line="379" selection-start-column="14" selection-end-line="379" selection-end-column="14" />
+            <state relative-caret-position="5440">
+              <caret line="357" column="51" selection-start-line="357" selection-start-column="51" selection-end-line="357" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -70,20 +82,8 @@
       <file leaf-file-name="Restrictions.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/shortcuts/Restrictions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="156" column="48" selection-start-line="156" selection-start-column="48" selection-end-line="156" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FormRestrRule.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-578">
-              <caret line="71" column="7" selection-start-line="68" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
+            <state relative-caret-position="316">
+              <caret line="161" column="45" selection-start-line="161" selection-start-column="45" selection-end-line="161" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -146,19 +146,19 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltLemmaSubRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/AltFullLemmaRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Header.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/StemSlotSubRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/struct/Gram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/shortcuts/WithAltLemma.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/shortcuts/nouns/WithAltLemma.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/StemSlotRule.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/DictionaryXmlToJson.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/DirectRules.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/shortcuts/Restrictions.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/FormRestrRules.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java" />
       </list>
     </option>
   </component>
@@ -810,9 +810,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1456" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.168" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21612903" sideWeight="0.35443038" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3164557" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21612903" sideWeight="0.6455696" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21612903" sideWeight="0.35447153" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.026898734" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21612903" sideWeight="0.64552844" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15645161" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1983871" sideWeight="0.5146771" order="6" side_tool="false" content_ui="combo" x="518" y="128" width="246" height="511" />
@@ -1123,16 +1123,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/StemSlotSubRule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -1209,30 +1199,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2880">
+          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5440">
+          <caret line="357" column="51" selection-start-line="357" selection-start-column="51" selection-end-line="357" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/shortcuts/Restrictions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="156" column="48" selection-start-line="156" selection-start-column="48" selection-end-line="156" selection-end-column="48" />
+        <state relative-caret-position="316">
+          <caret line="161" column="45" selection-start-line="161" selection-start-column="45" selection-end-line="161" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/THeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="75" column="32" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/FormRestrRules.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="71" column="84" selection-start-line="71" selection-start-column="84" selection-end-line="71" selection-end-column="84" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramlogic/FormRestrRule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-578">
-          <caret line="71" column="7" selection-start-line="68" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
+        <state relative-caret-position="370">
+          <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1241,16 +1245,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/gramdata/RulesAsFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="141" column="2" selection-start-line="141" selection-start-column="2" selection-end-line="141" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/struct/TGram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="379" column="14" selection-start-line="379" selection-start-column="14" selection-end-line="379" selection-end-column="14" />
+        <state relative-caret-position="173">
+          <caret line="714" column="7" selection-start-line="714" selection-start-column="7" selection-end-line="714" selection-end-column="7" />
           <folding />
         </state>
       </provider>

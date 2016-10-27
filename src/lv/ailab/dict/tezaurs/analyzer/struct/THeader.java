@@ -73,6 +73,11 @@ public class THeader extends Header
 		super (lemma, paradigm, flags);
 	}
 
+	public THeader(Lemma lemma, int paradigm, Flags flags)
+	{
+		super (lemma, paradigm, flags);
+	}
+
 	public THeader(Lemma lemma, String gramText)
 	{
 		this.lemma = lemma;

@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
@@ -26,57 +27,25 @@ import java.util.regex.Pattern;
 public class RulesAsFunctions
 {
 	/**
-	 * Izanalizē doto formu, nosaka kas tas ir par divdabi un saliek atbilstošos
-	 * karodziņus.
-	 * @param form						analizējamā forma
-	 * @param overallFlagCollector		šeit liek tos karodziņus, kas attiecas
-	 *                                  uz vārnīcas šķirkli
-	 * @param specificFlagCollector		šeit liek tos karodziņus, kas attiecas
-	 *                                  šķirkļa galvenes apakšstruktūru, kas
-	 *                                  attiecas tieši uz šo formu.
-	 * @param usedInFormFrequency		viens no: USUALLY_USED_IN_FORM,
-	 *                                  OFTEN_USED_IN_FORM, USED_ONLY_IN_FORM,
-	 *                                  ALSO_USED_IN_FORM, USED_IN_FORM
-	 * @return 	true, ja viss labi, false - ja šis nav divdabis. Karodziņus liek
-	 * 			tikai, ja true.
+	 * Izanalizē doto formu, nosaka kas tas ir par divdabi.
+	 * @param form	analizējamā forma
+	 * @return 	TValue divdabja tips vai null
 	 */
-	public static boolean determineParticipleType(
-			String form, Flags overallFlagCollector, Flags specificFlagCollector,
-			String usedInFormFrequency)
+	public static String determineParticipleType(String form)
 	{
-		if (!TKeys.USUALLY_USED_IN_FORM.equals(usedInFormFrequency) &&
-				!TKeys.OFTEN_USED_IN_FORM.equals(usedInFormFrequency) &&
-				!TKeys.USED_ONLY_IN_FORM.equals(usedInFormFrequency) &&
-				!TKeys.ALSO_USED_IN_FORM.equals(usedInFormFrequency) &&
-				!TKeys.USED_IN_FORM.equals(usedInFormFrequency))
-			throw new IllegalArgumentException();
-
-		String partType = null;
-
 		if (form.endsWith("damies") || form.endsWith("dams")) //aizvilkties->aizvilkdamies
-			partType = TValues.PARTICIPLE_DAMS;
+			return TValues.PARTICIPLE_DAMS;
 		else if (form.endsWith("ams") || form.endsWith("āms"))
-			partType = TValues.PARTICIPLE_AMS;
+			return TValues.PARTICIPLE_AMS;
 		else if (form.endsWith("ošs")) // garāmbraucošs
-			partType = TValues.PARTICIPLE_OSS;
+			return TValues.PARTICIPLE_OSS;
 		else if (form.endsWith("ts")) // aizdzert->aizdzerts
-			partType = TValues.PARTICIPLE_TS;
+			return TValues.PARTICIPLE_TS;
 		else if (form.endsWith("is") || form.endsWith("ies")) // aizmakt->aizsmacis, pieriesties->pieriesies
-			partType = TValues.PARTICIPLE_IS;
+			return TValues.PARTICIPLE_IS;
 		else if (form.endsWith("ot") || form.endsWith("oties")) // ievērojot
-			partType = TValues.PARTICIPLE_OT;
-		else
-			return false;
-
-		overallFlagCollector.add(TFeatures.POS__VERB);
-		overallFlagCollector.add(usedInFormFrequency, TValues.PARTICIPLE);
-		overallFlagCollector.add(usedInFormFrequency, partType);
-		overallFlagCollector.add(usedInFormFrequency, "\"" + form  + "\"");
-
-		specificFlagCollector.add(TKeys.POS, partType);
-		specificFlagCollector.add(TFeatures.POS__PARTICIPLE);
-
-		return true;
+			return TValues.PARTICIPLE_OT;
+		else return null;
 	}
 
 	/**
@@ -740,12 +709,12 @@ public class RulesAsFunctions
 	 * @param gramText				analizējamais gramatikas teksta fragments
 	 * @param flagCollector 		kolekcija, kurā pielikt karodziņus gadījumā,
 	 *                      		ja gramatikas fragments atbilst šim likumam
-	 * @param altLemmasCollector	kolekcija, kurā pielikt izveidotās
+	 * @param restrFormCollector	kolekcija, kurā pielikt izveidotās
 	 *                              papildlemmas.
 	 * @return	indekss neapstrādātās gramatikas daļas sākumam
 	 */
 	public static int processInParticipleFormFlag(String gramText,
-			Flags flagCollector, List<Header> altLemmasCollector)
+			Flags flagCollector, List<Header> restrFormCollector)
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
@@ -757,7 +726,7 @@ public class RulesAsFunctions
 		Matcher m = flagPattern.matcher(gramText);
 		if (m.matches())
 		{
-			String[] newLemmas = m.group(3).split(", ");
+			String[] forms = m.group(3).split(", ");
 			newBegin = m.group(1).length();
 			String indicator = m.group(2).trim();
 			String usedType = TKeys.USED_IN_FORM;
@@ -765,28 +734,24 @@ public class RulesAsFunctions
 				usedType = TKeys.USUALLY_USED_IN_FORM;
 			else if (indicator.equals("bieži"))
 				usedType = TKeys.OFTEN_USED_IN_FORM;
-			for (String newLemma : newLemmas)
+			for (String wordForm : forms)
 			{
-				Lemma altLemma = new TLemma(newLemma);
-				Flags altParams = new Flags();
+				Lemma lemma = new TLemma(wordForm);
+				Flags flags = new Flags();
 
-				flagCollector.add(TFeatures.POS__VERB);
-				flagCollector.add(usedType, TValues.PARTICIPLE);
-				flagCollector.add(usedType, "\"" + newLemma + "\"");
-				Boolean success = RulesAsFunctions.determineParticipleType(
-						newLemma, flagCollector, altParams, usedType);
-				if (success)
+				flags.add(usedType, TValues.PARTICIPLE);
+				String partType = RulesAsFunctions.determineParticipleType(wordForm);
+				if (partType != null)
 				{
 					newBegin = m.group(1).length();
-					altParams.add(TFeatures.POS__PARTICIPLE);
-					altParams.add(TFeatures.ENTRYWORD__CHANGED_PARADIGM);
-					altLemmasCollector.add(new Header(altLemma, 0, altParams));
+					restrFormCollector.add(new THeader(lemma, null, flags));
+					flagCollector.add(TFeatures.POS__VERB);
 
 				} else
 				{
 					System.err.printf(
-							"Neizdodas ielikt formu \"%s\" paradigmā 0 (Divdabis)\n",
-							newLemma);
+							"Neizdodas ielikt divdabja formu formu \"%s\" uztaisīt kā ierobežojumu\n",
+							wordForm);
 					newBegin = 0;
 				}
 			}

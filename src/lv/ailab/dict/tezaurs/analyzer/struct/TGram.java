@@ -294,7 +294,7 @@ public class TGram extends Gram
 			found = false;
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, flags, altLemmas);
+					gramText, flags, formRestrictions);
 			// aijā - savienojumā "aijā, žūžū"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);
@@ -361,8 +361,9 @@ public class TGram extends Gram
 		{
 			found = false;
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
+			// Kur ir āķis, ka šito vēl vajag?
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, flags, altLemmas);
+					gramText, flags, formRestrictions);
 			//
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);

@@ -17,11 +17,11 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import lv.ailab.dict.struct.Sources;
 import org.w3c.dom.Node;
 
-import lv.ailab.dict.struct.Sources;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Avotu saraksts (lauks avots Tēzaura XML).

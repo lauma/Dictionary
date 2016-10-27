@@ -1,5 +1,8 @@
 package lv.ailab.dict.tezaurs.checker; //Kopīga paka, kurā ir iekļautas visas klases veiksmīgai programmas darbībai
 
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,10 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-
 //bibliotēka *.doc failu apstrādei
-import org.apache.poi.hwpf.HWPFDocument; 
-import org.apache.poi.hwpf.extractor.WordExtractor;
 
 /**
  * Avotu saraksts.

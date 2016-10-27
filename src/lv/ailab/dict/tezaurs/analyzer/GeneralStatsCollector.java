@@ -1,12 +1,12 @@
 package lv.ailab.dict.tezaurs.analyzer;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
-import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.CountingSet;
-import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.utils.Trio;
 import lv.ailab.dict.utils.Tuple;
 import org.json.simple.JSONObject;
@@ -14,7 +14,10 @@ import org.json.simple.JSONObject;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 /**

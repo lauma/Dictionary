@@ -18,14 +18,14 @@
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 
-import java.util.LinkedList;
-import java.util.Set;
-
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * v (vārds) field.

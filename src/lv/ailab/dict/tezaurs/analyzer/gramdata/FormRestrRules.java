@@ -45,9 +45,9 @@ public class FormRestrRules
 	public static final FormRestrRule[] singleLemmaWithPostGram = {
 		// Bīstami, ka šīe var būt doubleLemmaWithPostGram pefiksi.
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
-		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is",
+		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
-		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is",
+		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // acumirklis
 	};
 
@@ -61,17 +61,6 @@ public class FormRestrRules
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // akts
 		Restrictions.noPostGram("parasti lok.:", "ē", "e",
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // aizvārte
-
-		/*Restrictions.participleSimple("parasti divd. formā:", "ojies", "oties"), // aizbadojies
-		Restrictions.participleSimple("parasti divd. formā:", "damies", "ties"), // aizilkdamies
-		Restrictions.participleSimple("parasti divd. formā:", "tis", "st"), // aizvītis
-		Restrictions.participleSimple("parasti divd. formā:", "is", "t"), // aizsmacis
-		Restrictions.participleSimple("parasti divd. formā:", "ts", "t"), // aizdzerts*/
-
-		//Restrictions.participleSimple("divd.:", "damies", "ties"), // aizrīties
-		/*Restrictions.participleSimple("divd. formā:", "damies", "ties"), // aizgūdamies
-		Restrictions.participleSimple("divd. formā:", "ts", "t"), // aizliegts
-		Restrictions.participleSimple("divd. formā:", "tams", "t"), // aizbilstams*/
 
 		Restrictions.noPostGram("ģen.:", "akmens", "akmens",
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // akmens

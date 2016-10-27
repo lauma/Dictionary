@@ -18,9 +18,6 @@
 
 package lv.ailab.dict.tezaurs;
 
-import java.io.*;
-import java.util.ArrayList;
-
 import lv.ailab.dict.tezaurs.analyzer.FirstConjStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
@@ -30,11 +27,17 @@ import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
-import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
+import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 /**
  * Tēzaura gramatiku analīzes rīka ieejas punkts.

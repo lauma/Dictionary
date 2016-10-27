@@ -1,9 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs;
 
 import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.SimpleSubRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 

@@ -1,16 +1,16 @@
 package lv.ailab.dict.tezaurs.io;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import lv.ailab.dict.tezaurs.checker.Stats;
-
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-//bibliotēka *.xls failu apstrādei
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+//bibliotēka *.xls failu apstrādei
 
 /**
  * Objekts, kas nodrošina DictionaryChecker savākto datu izdrukāšanu Excel

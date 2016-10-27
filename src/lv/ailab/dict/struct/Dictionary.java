@@ -17,7 +17,6 @@
  */
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.struct.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

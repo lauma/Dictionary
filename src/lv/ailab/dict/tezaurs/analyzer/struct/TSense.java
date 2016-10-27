@@ -20,7 +20,6 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

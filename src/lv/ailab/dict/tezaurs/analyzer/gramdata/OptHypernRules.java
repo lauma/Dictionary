@@ -1,13 +1,15 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.FirstConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondThirdConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.ThirdConj;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 

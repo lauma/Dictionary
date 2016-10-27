@@ -3,17 +3,16 @@
  */
 package lv.ailab.dict.tezaurs.checker;
 
+import lv.ailab.dict.io.DocLoader;
+import lv.ailab.dict.tezaurs.DictionaryChecker;
+import lv.ailab.dict.tezaurs.io.XlsOutputer;
+import lv.ailab.dict.utils.StringUtils;
+import lv.ailab.dict.utils.Trio;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
-
-
-import lv.ailab.dict.tezaurs.DictionaryChecker;
-import lv.ailab.dict.io.DocLoader;
-import lv.ailab.dict.utils.StringUtils;
-import lv.ailab.dict.tezaurs.io.XlsOutputer;
-import lv.ailab.dict.utils.Trio;
 
 
 //bibliotēka *.doc failu apstrādei

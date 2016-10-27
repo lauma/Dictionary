@@ -17,15 +17,14 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.io;
 
-import java.util.LinkedList;
-
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.struct.TPhrase;
 import lv.ailab.dict.tezaurs.analyzer.struct.TSense;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.LinkedList;
 
 public class Loaders
 {

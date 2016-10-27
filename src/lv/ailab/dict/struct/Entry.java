@@ -18,7 +18,6 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.utils.*;
-
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

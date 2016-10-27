@@ -18,13 +18,16 @@
 package lv.ailab.dict.struct;
 
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import lv.ailab.dict.utils.*;
+import lv.ailab.dict.utils.HasToJSON;
+import lv.ailab.dict.utils.HasToXML;
+import lv.ailab.dict.utils.JSONUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 /**
  * Gramatikas lauks.

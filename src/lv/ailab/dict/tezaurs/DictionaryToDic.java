@@ -1,15 +1,11 @@
 package lv.ailab.dict.tezaurs;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import lv.ailab.dict.io.DocLoader;
+import lv.ailab.dict.tezaurs.checker.Markers;
+
+import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lv.ailab.dict.tezaurs.checker.Markers;
-import lv.ailab.dict.io.DocLoader;
 
 public class DictionaryToDic
 {

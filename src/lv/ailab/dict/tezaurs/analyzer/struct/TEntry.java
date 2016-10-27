@@ -17,17 +17,20 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
-import lv.ailab.dict.struct.*;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.struct.Entry;
+import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.*;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 /**
  * Tēzaura šķirklis, papildināts ar ielādēšanas/apstrādes mehānismiem un

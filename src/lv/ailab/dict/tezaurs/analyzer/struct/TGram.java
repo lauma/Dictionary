@@ -17,25 +17,23 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
+import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.Gram;
+import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
+import lv.ailab.dict.utils.JSONUtils;
+import org.w3c.dom.Node;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.struct.Gram;
-import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.StemSlotRule;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
-import org.w3c.dom.Node;
-
-import lv.ailab.dict.utils.JSONUtils;
 
 /**
  * g (gramatika) lauka ielasīšana un apstrāde.

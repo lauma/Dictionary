@@ -2,7 +2,6 @@ package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.utils.JSONUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,8 +9,6 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * Izveidots 2016-02-03.

@@ -17,11 +17,11 @@
  *******************************************************************************/
 package lv.ailab.dict.utils;
 
+import org.json.simple.JSONObject;
+
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
-import org.json.simple.JSONObject;
 
 public class JSONUtils
 {

@@ -17,12 +17,12 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
-import java.util.*;
-
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.LinkedList;
 
 /**
  * piem (piemērs) un fraz (frazeoloģisms) lauki Tēzaura XML.

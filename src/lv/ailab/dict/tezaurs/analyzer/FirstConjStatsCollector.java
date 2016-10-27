@@ -5,12 +5,13 @@ import lv.ailab.dict.struct.flagconst.Keys;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Objekts, kas uzvāc dažādas statistikas par 1. konjugācijas verbiem Tēzaurā.

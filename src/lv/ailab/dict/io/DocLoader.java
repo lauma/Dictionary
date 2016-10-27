@@ -1,11 +1,11 @@
 package lv.ailab.dict.io;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Object for reading .doc files with dictionary data.

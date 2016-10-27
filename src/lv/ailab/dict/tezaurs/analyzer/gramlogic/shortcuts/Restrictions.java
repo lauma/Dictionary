@@ -24,14 +24,17 @@ public final class Restrictions
 	 * @param patternBegin		šablona sākums bez noslēdzošās atstarpes
 	 * @param patternEnding		šablona beigas formā "izskaņa, pārējais šablons"
 	 * @param lemmaEnding		izskaņa, ar ko jābeidzas lemmai, lai likumu varētu
-	 *                      	piemērot.
+	 *                      	piemērot
+	 * @param positiveFlags		šos karodziņus uzstāda pamata karodziņu
+	 *                          savācējam, ja gan gramatikas teksts, gan lemma
+	 *                          atbilst attiecīgajiem šabloniem
 	 * @param restrFormFlags	karodziņi, ko pievienot ierobežojošajai
 	 *                          vārdformai
 	 * @return
 	 */
 	public static FormRestrRule anyOneForm(
 			String patternBegin, String patternEnding, String lemmaEnding,
-			Tuple<String, String>[] restrFormFlags)
+			Tuple<String, String>[] positiveFlags, Tuple<String, String>[] restrFormFlags)
 	{
 		Matcher m = Pattern.compile("([^., ]*)[,. ].*").matcher(patternEnding);
 		String formEnding = "";
@@ -40,7 +43,7 @@ public final class Restrictions
 					+ "\" neizdodas noteikt vārdformas izskaņu.");
 		else formEnding = m.group(1);
 		return FormRestrRule.of(patternBegin + " ", patternEnding, ".*" + lemmaEnding,
-				lemmaEnding.length(), null, formEnding, restrFormFlags);
+				lemmaEnding.length(), positiveFlags, formEnding, restrFormFlags);
 	}
 
 	/**
@@ -54,13 +57,17 @@ public final class Restrictions
 	 * @param patternEnding		šablona beigas
 	 * @param lemmaEnding		izskaņa, ar ko jābeidzas lemmai, lai likumu
 	 *                      	varētu piemērot
+	 * @param positiveFlags		šos karodziņus uzstāda pamata karodziņu
+	 *                          savācējam, ja gan gramatikas teksts, gan lemma
+	 *                          atbilst attiecīgajiem šabloniem
 	 * @param restrFormFlags	karodziņi, ko pievienot ierobežojošajai
 	 *                          vārdformai
 	 * @return
 	 */
 	public static FormRestrRule anyTwoForm(
 			String patternBegin, String patternMiddle, String patternEnding,
-			String lemmaEnding, Tuple<String, String>[] restrFormFlags)
+			String lemmaEnding, Tuple<String, String>[] positiveFlags,
+			Tuple<String, String>[] restrFormFlags)
 	{
 		Matcher m = Pattern.compile("([^., ]*)[,. ].*").matcher(patternMiddle);
 		String formEnding = "";
@@ -70,7 +77,7 @@ public final class Restrictions
 		else formEnding = m.group(1);
 		return FormRestrRule.of(patternBegin + " ", patternMiddle + " ", patternEnding,
 				".*" + lemmaEnding,
-				lemmaEnding.length(), null, formEnding, restrFormFlags);
+				lemmaEnding.length(), positiveFlags, formEnding, restrFormFlags);
 	}
 
 	/**
@@ -88,7 +95,7 @@ public final class Restrictions
 			String patternEnding, String lemmaEnding)
 	{
 		return anyOneForm("lietv. nozīmē:", patternEnding, lemmaEnding,
-				new Tuple[] {TFeatures.CONTAMINATION__NOUN});
+				null, new Tuple[] {TFeatures.CONTAMINATION__NOUN});
 	}
 
 	/**
@@ -107,7 +114,7 @@ public final class Restrictions
 			String patternMiddle, String patternEnding, String lemmaEnding)
 	{
 		return anyTwoForm("lietv. nozīmē:", patternMiddle, patternEnding,
-				lemmaEnding, new Tuple[] {TFeatures.CONTAMINATION__NOUN});
+				lemmaEnding, null, new Tuple[] {TFeatures.CONTAMINATION__NOUN});
 	}
 
 	/**

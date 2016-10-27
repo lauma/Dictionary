@@ -1,12 +1,12 @@
 package lv.ailab.dict.tezaurs;
 
-import java.io.File;
-import java.io.IOException;
-
 import lv.ailab.dict.tezaurs.checker.DictionaryFragment;
 import lv.ailab.dict.tezaurs.checker.ExceptionList;
 import lv.ailab.dict.tezaurs.checker.ReferenceList;
 import lv.ailab.dict.tezaurs.io.XlsOutputer;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Programmas ārējā saskarne, no kuras FIXME daļu analīzes funkcionalitātes

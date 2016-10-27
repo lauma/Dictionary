@@ -17,14 +17,13 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import java.util.LinkedList;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.JSONUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.print.Doc;
+import java.util.LinkedList;
 
 /**
  * Avotu saraksts.

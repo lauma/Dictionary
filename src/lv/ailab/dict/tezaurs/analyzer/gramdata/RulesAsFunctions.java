@@ -1,13 +1,13 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
+import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 
 import java.util.ArrayList;
 import java.util.List;

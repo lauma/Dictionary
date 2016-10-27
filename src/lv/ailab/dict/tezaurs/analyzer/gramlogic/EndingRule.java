@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+
 import java.util.Set;
 
 /**

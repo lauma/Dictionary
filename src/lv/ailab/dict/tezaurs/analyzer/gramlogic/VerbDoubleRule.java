@@ -1,10 +1,12 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Likums, kas apvieno divus darbības vārdiem raksturīgos gadījumus: vienu visām

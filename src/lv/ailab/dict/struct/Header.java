@@ -17,15 +17,15 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Šķirkļa "galva" - vārds + gramatika

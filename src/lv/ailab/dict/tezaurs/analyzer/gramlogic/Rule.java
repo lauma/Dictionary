@@ -1,11 +1,5 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
-import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.struct.Header;
-
-import java.util.List;
-import java.util.Set;
-
 /**
  * Vispārīgais likumu interfeiss: likumiem var paprasīt, cik reižu tie ir tikuši
  * lietoti un kā tos sauc. apply() šeit nav pievienots tāpēc, ka pa realizācijām

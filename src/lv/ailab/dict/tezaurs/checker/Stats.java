@@ -1,9 +1,9 @@
 package lv.ailab.dict.tezaurs.checker;
 
+import lv.ailab.dict.utils.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lv.ailab.dict.utils.StringUtils;
 
 /**
  * Klase Stats ietver sevī metodes statistikas datu uzkrāšanai un izvadīšanai

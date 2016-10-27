@@ -1,10 +1,10 @@
 package lv.ailab.dict.tezaurs.checker;
 
-import java.util.*;
+import lv.ailab.dict.utils.StringUtils;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lv.ailab.dict.utils.StringUtils;
 
 /**
  * Statisks šķirkļa pārbaudes metožu apvienojums - galvenais pārbaužu bloks.

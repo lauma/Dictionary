@@ -6,7 +6,10 @@ import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Darbošanās ar 1. konjugācijas celmiem, kas katra 1. konjugācijas verba

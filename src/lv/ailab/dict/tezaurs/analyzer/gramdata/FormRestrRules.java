@@ -17,6 +17,8 @@ import java.util.ArrayList;
  * bieži lok.: agrumā
  * ģen.: aizmugures
  * Šie likumi rada formRestrictions Gram objektos.
+ * TODO: Vai kontamināciju, kas atrodas aiz, nevajag izcelt pie pamata karodziņiem?
+ *
  * Izveidots 2016-10-26.
  * @author Lauma
  */
@@ -66,7 +68,7 @@ public class FormRestrRules
 		Restrictions.participleSimple("parasti divd. formā:", "is", "t"), // aizsmacis
 		Restrictions.participleSimple("parasti divd. formā:", "ts", "t"), // aizdzerts*/
 
-		Restrictions.participleSimple("divd.:", "damies", "ties"), // aizrīties
+		//Restrictions.participleSimple("divd.:", "damies", "ties"), // aizrīties
 		/*Restrictions.participleSimple("divd. formā:", "damies", "ties"), // aizgūdamies
 		Restrictions.participleSimple("divd. formā:", "ts", "t"), // aizliegts
 		Restrictions.participleSimple("divd. formā:", "tams", "t"), // aizbilstams*/

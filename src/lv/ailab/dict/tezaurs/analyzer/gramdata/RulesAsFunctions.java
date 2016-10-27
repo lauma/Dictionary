@@ -718,8 +718,8 @@ public class RulesAsFunctions
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)divd\\. formā: (\\p{Ll}+(, \\p{Ll}+)?))([,].*|\\.)?") :
-				Pattern.compile("((parasti |bieži |)divd\\. formā: (\\p{Ll}+))\\.?");
+				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+(, \\p{Ll}+)?))([,].*|\\.)?") :
+				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+))\\.?");
 
 		int newBegin = -1;
 		//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts

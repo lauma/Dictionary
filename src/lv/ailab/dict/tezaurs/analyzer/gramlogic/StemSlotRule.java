@@ -8,6 +8,7 @@ import lv.ailab.dict.utils.Tuple;
 
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Created on 2016-10-26.
@@ -73,7 +74,7 @@ public class StemSlotRule implements AdditionalHeaderRule
 
 		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
 		String pattern = patternTextBegin + lemmaStub + patternTextEnding;
-		if (gramText.startsWith(pattern))
+		if (Pattern.compile("(\\Q" + pattern + "\\E)([;,.].*)?").matcher(gramText).matches())
 		{
 			newBegin = pattern.length();
 			TLemma altLemma = new TLemma(lemmaStub + lemmaLogic.altWordEnding);

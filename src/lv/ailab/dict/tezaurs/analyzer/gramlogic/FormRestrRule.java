@@ -152,7 +152,7 @@ public class FormRestrRule extends StemSlotRule
 			pattern = pattern + lemmaStub + patternTextEnding;
 		pattern = pattern + lemmaStub + patternTextEnding;
 
-		if (gramText.startsWith(pattern))
+		if (Pattern.compile("(\\Q" + pattern  + "\\E)[;,.]?").matcher(gramText).matches())
 		{
 			newBegin = pattern.length();
 			String patternToProcess = patternTextEnding;

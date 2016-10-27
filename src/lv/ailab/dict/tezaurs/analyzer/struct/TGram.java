@@ -333,7 +333,7 @@ public class TGram extends Gram
 			if (gramText.startsWith(".") || gramText.startsWith(","))
 				gramText = gramText.substring(1);
 			gramText = gramText.trim();
-			if (!gramText.equals(""))
+			if (!gramText.equals("")) // Šito būtu jānodrošina jau likumam :)
 			{
 				LinkedList<String> tmp = new LinkedList<>();
 				tmp.add(gramText);

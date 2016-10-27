@@ -197,10 +197,10 @@ public class DirectRules
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[] {30, 0},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-						SimpleSubRule.of(".*[^tšm]ais", new Integer[] {30},
+						SimpleSubRule.of(".*([^tšm]|[^aā]m|[^u]š)ais", new Integer[] {30},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN})},
 				new Tuple[]{TFeatures.GENDER__MASC}),
-			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais,
+			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais, sirmais, svešais
 
 		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// 34 paradigma: Atgriezeniskie lietvārdi -šanās

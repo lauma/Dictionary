@@ -147,7 +147,7 @@ public class FormRestrRule extends StemSlotRule
 		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
 		String pattern = patternTextBegin;
 		if (patternTextMiddle != null)
-			pattern = pattern + lemmaStub + patternTextEnding;
+			pattern = pattern + lemmaStub + patternTextMiddle;
 		pattern = pattern + lemmaStub + patternTextEnding;
 
 		if (Pattern.compile("(\\Q" + pattern  + "\\E)[;,.]?").matcher(gramText).matches())
@@ -161,7 +161,6 @@ public class FormRestrRule extends StemSlotRule
 			while (patternToProcess.startsWith(".") || patternToProcess.startsWith(",")
 					|| patternToProcess.startsWith(" "))
 				patternToProcess = patternToProcess.substring(1);
-
 			TLemma restrForm = new TLemma(lemmaStub + lemmaLogic.altWordEnding);
 			THeader restrHeader = new THeader(restrForm, patternToProcess);
 			restrHeader.gram.freeText = null;

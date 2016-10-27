@@ -74,6 +74,19 @@ public class AltFullLemmaRule extends StemSlotRule
 						paradigms, positiveFlags, altLemmaEnding,
 						altLemmaParadigms, altLemmaFlags));
 	}
+	public static AltFullLemmaRule of(
+			String patternBegin, String patternEnding, String lemmaEnding,
+			int lemmaEndingCutLength, Integer[] paradigms, Tuple<String,String>[] positiveFlags,
+			String altLemmaEnding, Integer[] altParadigms, Tuple<String,String>[] altLemmaFlags)
+	{
+		return simple(patternBegin, patternEnding, lemmaEnding,
+				lemmaEndingCutLength,
+				paradigms == null ? null : new HashSet<Integer>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				altLemmaEnding,
+				altParadigms == null ? null : new HashSet<Integer>(Arrays.asList(altParadigms)),
+				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
+	}
 
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,

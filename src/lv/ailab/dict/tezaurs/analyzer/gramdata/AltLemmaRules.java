@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.StemSlotSubRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.WithAltLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
@@ -85,6 +86,11 @@ public class AltLemmaRules
 	 * s. -ā
 	 */
 	public static final AdditionalHeaderRule[] mascToFem = {
+		AltFullLemmaRule.of("-ā, v., ", "tā, -ās, s.", ".*tais", 4, new Integer[] {30, 0},
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
+				"tā", new Integer[] {40, 0},
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}), // aizturēts/aizturētais
+
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -ce, -ču", "ks", "ce"), // aizsardzībnieks
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -re, -ru", "rs", "re"), // akvizitors

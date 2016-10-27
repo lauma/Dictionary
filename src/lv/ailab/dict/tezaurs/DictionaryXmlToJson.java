@@ -276,7 +276,7 @@ public class DictionaryXmlToJson
 					out.write("\t" + r.getUsageCount());
 					out.newLine();
 				}
-
+		out.newLine();
 		out.write(AltLemmaRules.class.getCanonicalName());
 		out.newLine();
 		for (AdditionalHeaderRule[] rules : AltLemmaRules.getAll())

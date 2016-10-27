@@ -161,7 +161,7 @@ public final class Restrictions
 				lemmaEnding.length(), positiveFlags, patternEnding, restrFormFlags);
 	}
 
-	public static FormRestrRule participleSimple(String patternBegin, String patternEnding,
+/*	public static FormRestrRule participleSimple(String patternBegin, String patternEnding,
 			String lemmaEnding)
 	{
 		String key = TKeys.USED_IN_FORM;
@@ -191,5 +191,5 @@ public final class Restrictions
 				lemmaEnding.length(), null, patternEnding,
 				new Tuple[]{Tuple.of(key, partType),
 						Tuple.of(key, TValues.PARTICIPLE)});
-	}
+	}*/
 }

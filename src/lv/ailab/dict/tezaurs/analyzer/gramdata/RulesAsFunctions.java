@@ -139,7 +139,7 @@ public class RulesAsFunctions
 		return newBegin;
 	}
 
-	public static int processUsuallyInCaseFlag(
+/*	public static int processUsuallyInCaseFlag(
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
@@ -153,7 +153,7 @@ public class RulesAsFunctions
 			flagCollector.add(TKeys.OFTEN_USED_IN_FORM, "\"" + m.group(2) + "\"");
 		}
 		return newBegin;
-	}
+	}*/
 
 	/**
 	 * Izanalizē gramatikas virknes formā:

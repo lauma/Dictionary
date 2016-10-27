@@ -376,8 +376,8 @@ public class TGram extends Gram
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
 					gramText, flags);
 			// agrums->agrumā
-			if(newBegin == -1) newBegin = RulesAsFunctions.processUsuallyInCaseFlag(
-					gramText, flags);
+			//if(newBegin == -1) newBegin = RulesAsFunctions.processUsuallyInCaseFlag(
+			//		gramText, flags);
 			if (newBegin > 0)
 			{
 				gramText = gramText.substring(newBegin);

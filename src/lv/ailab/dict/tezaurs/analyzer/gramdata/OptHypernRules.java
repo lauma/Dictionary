@@ -297,6 +297,10 @@ public class OptHypernRules
 				"\"vērst\" (mainīt virzienu)"), //aizvērst, izvērst 1
 		FirstConj.directHomof("-vēršu, -vērt,", "-vērš, pag. -vērtu", "vērst",
 				"\"vērst\" (mainīt būtību)"), //izvērst 2
+		FirstConj.directHomof("-viešu, -vies,", "-vieš, pag. -viesu", "viest",
+				"\"viest\" (būt par cēloni)"), //ieviest
+		FirstConj.directHomof("-viežu, -vied,", "-viež, pag. -viedu", "viest",
+				"\"viest\" (neskaidri just)"), //saviest 1
 
 		// Izņēmuma izņēmums.
 		VerbDoubleRule.of("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt", 15,
@@ -351,13 +355,6 @@ public class OptHypernRules
 				"-strēdzu, -strēdz, -strēdz, pag. -strēdzu, arī -strēgstu, -strēgsti, -strēgst, pag. -strēgu", "strēgt"), //iestrēgt
 		FirstConj.directAllPersParallel(
 				"-tilpstu, -tilpsti, -tilpst, retāk -telpu, telpi, -telp, pag. -tilpu", "tilpt"), //ietilpt
-		// TODO: sakārtot "viest" un "viesties"
-		FirstConj.directAllPersParallel(
-				"-viešu, -vies, -vieš, retāk -viežu, -vied, -viež, pag. -viedu", "viest"), //saviest
-		FirstConj.directAllPersParallel(
-				"-viešu, -vies, -vieš, retāk -viežu, -vied, -viež, pag. -viesu", "viest"), // viest 1
-		FirstConj.directAllPersParallel(
-				"-viežu, -vied, -viež, retāk -viešu, -vies, -vieš, pag. -viedu", "viest"), // viest 2
 
 		// Izņēmums.
 		VerbDoubleRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "dot", 15,
@@ -775,8 +772,6 @@ public class OptHypernRules
 		FirstConj.direct("-veru, -ver,", "-ver, pag. -vēru", "vērt"), //aizvērt
 		FirstConj.direct("-vēžu, -vēz,", "-vēž, pag. -vēzu", "vēzt"), //apvēzt
 		FirstConj.direct("-viebju, -vieb,", "-viebj, pag. -viebu", "viebt"), //izviebt
-		// TODO: sakārtot "viest" un "viesties"
-		FirstConj.direct("-viešu, -vies,", "-vieš, pag. -viesu", "viest"), //ieviest
 		FirstConj.direct("-vilgstu, -vilgsti,", "-vilgst, pag. -vilgu", "vilgt"), //atvilgt
 		FirstConj.direct("-velku, -velc,", "-velk, pag. -vilku", "vilkt"), //aizvilkt
 		FirstConj.direct("-viļu, -vil,", "-viļ, pag. -vīlu", "vilt"), //aizvilt
@@ -878,6 +873,7 @@ public class OptHypernRules
 		// O, P
 		FirstConj.direct3Pers("-paist, pag. -paisa", "paist"), //paist
 		FirstConj.direct3Pers("-palst, pag. -palsa", "palst"), //nopalst
+		FirstConj.direct3Pers("-pilst, pag. -pila", "pilt"), //pilt
 		// R
 		FirstConj.direct3Pers("-ris, pag. -risa", "rist"), //aprist
 		// S
@@ -2057,7 +2053,12 @@ public class OptHypernRules
 
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
-		// TODO: sakārtot "riest" un "riesties"
+		FirstConj.refl3PersHomof("-viešas, pag. -viesās", "viesties",
+				"\"viesties\" (pakāpeniski veidoties)"), // ieviesties
+		FirstConj.refl3PersHomof("viežas, pag. viedās", "viesties",
+				"\"viesties\" (būt neskaidri jūtamam)"), // viesties 2
+
+			// TODO: sakārtot "riest" un "riesties"
 		FirstConj.refl3PersParallelHomof(
 				"-riešas, pag. -riesās, arī -rietās", "riesties", "\"riesties\" (parastais)"), //aizriesties
 		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "\"riesties\" (parastais)"), // ieriesties 1
@@ -2067,9 +2068,6 @@ public class OptHypernRules
 		FirstConj.refl3PersParallel("-jumjas, pag. -jūmās, arī -jumās", "jumties"), //jumties
 		FirstConj.refl3PersParallel("-nīkas, retāk -nīkstas, pag. -nikās", "nikties"), //apnikties
 		FirstConj.refl3PersParallel("-plešas, pag. -pletās, arī -plētās", "plesties"), //aizplesties
-		// TODO: sakārtot "viest" un "viesties"
-		FirstConj.refl3PersParallel("-viešas, retāk -viežas, pag. -viesās", "viesties"), // viesties 1
-		FirstConj.refl3PersParallel("-viežas, retāk -viešas, pag. -viedās", "viesties"), // viesties 2
 
 		// Standarts
 		// A, B, C, D
@@ -2100,8 +2098,6 @@ public class OptHypernRules
 		FirstConj.refl3Pers("-vāžas, pag. -vāzās", "vāzties"), //uzvāzties
 		FirstConj.refl3Pers("-veicas, pag. -veicās", "veikties"), //izveikties
 		FirstConj.refl3Pers("-velbjas, pag. -velbās", "velbties"), //izvelbties
-		// TODO: sakārtot "viest" un "viesties"
-		FirstConj.refl3Pers("-viešas, pag. -viesās", "viesties"), //ieviesties
 		// Z, Ž
 		FirstConj.refl3Pers("-žmaudzas, pag. -žmaudzās", "žmaugties"), //iežmaugties
 

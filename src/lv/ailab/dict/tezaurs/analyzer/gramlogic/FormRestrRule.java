@@ -6,10 +6,7 @@ import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -49,10 +46,17 @@ public class FormRestrRule extends StemSlotRule
 	 */
 	public FormRestrRule(
 			String patternBegin, String patternMiddle, String patternEnding,
-			StemSlotSubRule lemmaLogic)
+			List<StemSlotSubRule> lemmaLogic)
 	{
 		super(patternBegin, patternEnding, lemmaLogic);
 		this.patternTextMiddle = patternMiddle;
+	}
+
+	public static FormRestrRule simple(String patternBegin, String patternMiddle,
+			String patternEnding, StemSlotSubRule[] lemmaLogic)
+	{
+		return new FormRestrRule(patternBegin, patternMiddle, patternEnding,
+				lemmaLogic == null ? null : Arrays.asList(lemmaLogic));
 	}
 
 	/**
@@ -93,9 +97,9 @@ public class FormRestrRule extends StemSlotRule
 			String restrFormEnding, Set<Tuple<String, String>> restrFormFlags)
 	{
 		return new FormRestrRule(patternBegin, patternMiddle, patternEnding,
-				new StemSlotSubRule(lemmaRestrict, lemmaEndingCutLength,
-						paradigms, positiveFlags, restrFormEnding,
-						null, restrFormFlags));
+				new ArrayList<StemSlotSubRule>(){{add(new StemSlotSubRule(
+						lemmaRestrict, lemmaEndingCutLength, paradigms,
+						positiveFlags, restrFormEnding, null, restrFormFlags));}});
 	}
 
 	public static FormRestrRule of(String patternBegin, String patternMiddle,
@@ -141,46 +145,50 @@ public class FormRestrRule extends StemSlotRule
 			Set<Integer> paradigmCollector, Flags flagCollector,
 			List<Header> formRestrCollector)
 	{
-		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
-
-		int newBegin = -1;
-		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
-		String pattern = patternTextBegin;
-		if (patternTextMiddle != null)
-			pattern = pattern + lemmaStub + patternTextMiddle;
-		pattern = pattern + lemmaStub + patternTextEnding;
-
-		if (Pattern.compile("(\\Q" + pattern  + "\\E)[;,.]?").matcher(gramText).matches())
+		for (StemSlotSubRule curLemmaLogic : lemmaLogic)
+			if (curLemmaLogic.lemmaRestrict.matcher(lemma).matches())
 		{
-			newBegin = pattern.length();
-			String patternToProcess = patternTextEnding;
+			String lemmaStub = lemma.substring(0,
+					lemma.length() - curLemmaLogic.lemmaEndingCutLength);
+			String pattern = patternTextBegin;
 			if (patternTextMiddle != null)
-				patternToProcess = patternTextMiddle + lemmaStub + patternTextEnding;
-			if (patternToProcess.startsWith(lemmaLogic.altWordEnding))
-				patternToProcess = patternToProcess.substring(lemmaLogic.altWordEnding.length());
-			while (patternToProcess.startsWith(".") || patternToProcess.startsWith(",")
-					|| patternToProcess.startsWith(" "))
-				patternToProcess = patternToProcess.substring(1);
-			TLemma restrForm = new TLemma(lemmaStub + lemmaLogic.altWordEnding);
-			THeader restrHeader = new THeader(restrForm, patternToProcess);
-			restrHeader.gram.freeText = null;
-			if (lemmaLogic.altWordFlags != null)
+				pattern = pattern + lemmaStub + patternTextMiddle;
+			pattern = pattern + lemmaStub + patternTextEnding;
+
+			if (Pattern.compile("(\\Q" + pattern + "\\E)[;,.]?")
+					.matcher(gramText).matches())
 			{
-				if (restrHeader.gram.flags == null)
-					restrHeader.gram.flags = new Flags();
-				restrHeader.gram.flags.addAll(lemmaLogic.altWordFlags);
+				int newBegin = pattern.length();
+				String patternToProcess = patternTextEnding;
+				if (patternTextMiddle != null)
+					patternToProcess = patternTextMiddle + lemmaStub + patternTextEnding;
+				if (patternToProcess.startsWith(curLemmaLogic.altWordEnding))
+					patternToProcess = patternToProcess.substring(
+							curLemmaLogic.altWordEnding.length());
+				while (patternToProcess.startsWith(".") || patternToProcess.startsWith(",")
+						|| patternToProcess.startsWith(" "))
+					patternToProcess = patternToProcess.substring(1);
+				TLemma restrForm = new TLemma(lemmaStub + curLemmaLogic.altWordEnding);
+				THeader restrHeader = new THeader(restrForm, patternToProcess);
+				restrHeader.gram.freeText = null;
+				if (curLemmaLogic.altWordFlags != null)
+				{
+					if (restrHeader.gram.flags == null)
+						restrHeader.gram.flags = new Flags();
+					restrHeader.gram.flags.addAll(curLemmaLogic.altWordFlags);
+				}
+
+				formRestrCollector.add(restrHeader);
+
+				if (curLemmaLogic.paradigms != null)
+					paradigmCollector.addAll(curLemmaLogic.paradigms);
+				if (curLemmaLogic.positiveFlags != null)
+					flagCollector.addAll(curLemmaLogic.positiveFlags);
+				usageCount++;
+				return newBegin;
 			}
-
-			formRestrCollector.add(restrHeader);
-
-			if (lemmaLogic.paradigms != null)
-				paradigmCollector.addAll(lemmaLogic.paradigms);
-			if (lemmaLogic.positiveFlags != null)
-				flagCollector.addAll(lemmaLogic.positiveFlags);
-			if (newBegin > -1) usageCount++;
-			return newBegin;
 		}
-		else return -1;
+		return -1;
 	}
 
 

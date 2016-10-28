@@ -6,6 +6,7 @@ import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
 import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.utils.Tuple;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -29,11 +30,11 @@ public class StemSlotRule implements AdditionalHeaderRule
 	protected final String patternTextEnding;
 
 	/**
-	 * Likuma "otrā puse" - lemmas nosacījumi, piešķiramās paradigmas un
-	 * karodziņi, kā arī alternatīvās lemmas veidošanas dati un tai piešķiramie
-	 * karodziņi.
+	 * Masīvs ar likuma "otrājām pusēm"  - lemmas nosacījumi, piešķiramās
+	 * paradigmas un karodziņi, kā arī alternatīvās lemmas veidošanas dati un
+	 * tai piešķiramie karodziņi.
 	 */
-	protected final StemSlotSubRule lemmaLogic;
+	protected final List<StemSlotSubRule> lemmaLogic;
 
 	/**
 	 * Skaitītājs, kas norāda, cik reižu likums ir ticis lietots (applyDirect).
@@ -42,11 +43,15 @@ public class StemSlotRule implements AdditionalHeaderRule
 
 	public StemSlotRule(
 			String patternBegin, String patternEnding,
-			StemSlotSubRule lemmaLogic)
+			List<StemSlotSubRule> lemmaLogic)
 	{
+		if (lemmaLogic == null)
+			throw new IllegalArgumentException (
+					"Nav paredzēts, ka " + getClass().getSimpleName()+
+							" tiek viedots vispār bez lemmu nosacījumiem!");
 		this.patternTextBegin = patternBegin;
 		this.patternTextEnding = patternEnding;
-		this.lemmaLogic = lemmaLogic;
+		this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
 	}
 
 	/**
@@ -69,27 +74,33 @@ public class StemSlotRule implements AdditionalHeaderRule
 			Set<Integer> paradigmCollector, Flags flagCollector,
 			List<Header> altLemmasCollector)
 	{
-		if (!lemmaLogic.lemmaRestrict.matcher(lemma).matches()) return -1;
-		int newBegin = -1;
+		for (StemSlotSubRule curLemmaLogic : lemmaLogic)
+			if (curLemmaLogic.lemmaRestrict.matcher(lemma).matches())
+			{
+				String lemmaStub = lemma.substring(0,
+						lemma.length() - curLemmaLogic.lemmaEndingCutLength);
+				String pattern = patternTextBegin + lemmaStub + patternTextEnding;
+				if (Pattern.compile("(\\Q" + pattern + "\\E)([;,.].*)?")
+						.matcher(gramText).matches())
+				{
+					int newBegin = pattern.length();
+					TLemma altLemma = new TLemma(lemmaStub + curLemmaLogic.altWordEnding);
+					Flags altParams = new Flags();
+					if (curLemmaLogic.altWordFlags != null)
+						altParams.addAll(curLemmaLogic.altWordFlags);
+					altLemmasCollector.add(
+							new THeader(altLemma, curLemmaLogic.altWordParadigms, altParams));
 
-		String lemmaStub = lemma.substring(0, lemma.length() - lemmaLogic.lemmaEndingCutLength);
-		String pattern = patternTextBegin + lemmaStub + patternTextEnding;
-		if (Pattern.compile("(\\Q" + pattern + "\\E)([;,.].*)?").matcher(gramText).matches())
-		{
-			newBegin = pattern.length();
-			TLemma altLemma = new TLemma(lemmaStub + lemmaLogic.altWordEnding);
-			Flags altParams = new Flags();
-			if (lemmaLogic.altWordFlags != null)
-				for (Tuple<String, String> t : lemmaLogic.altWordFlags) altParams.add(t);
-			altLemmasCollector.add(new THeader(altLemma, lemmaLogic.altWordParadigms, altParams));
+					paradigmCollector.addAll(curLemmaLogic.paradigms);
+					if (curLemmaLogic.positiveFlags != null)
+						for (Tuple<String, String> t : curLemmaLogic.positiveFlags)
+							flagCollector.add(t);
 
-			paradigmCollector.addAll(lemmaLogic.paradigms);
-			if (lemmaLogic.positiveFlags != null)
-				for (Tuple<String, String> t : lemmaLogic.positiveFlags) flagCollector.add(t);
-			if (newBegin > -1) usageCount++;
-			return newBegin;
-		}
-		else return -1;
+					usageCount++;
+					return newBegin;
+				}
+			}
+		return -1;
 	}
 
 	/**

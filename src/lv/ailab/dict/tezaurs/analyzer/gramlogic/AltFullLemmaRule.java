@@ -2,9 +2,8 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Likumi gramatikām, kas satur pilnu alternatīvo lemmu, nevis tikai galdotnes,
@@ -24,15 +23,23 @@ public class AltFullLemmaRule extends StemSlotRule
 	 * @param patternEnding	neeskepota teksta virkne, ar kuru grmatikai
 	 *                      jāturpinās pēc lemmai specifiskās daļas, lai šis
 	 *                      likums būtu piemērojams
-	 * @param lemmaLogic	likuma "otrā puse" - lemmas nosacījumi, piešķiramās
-	 *                      paradigmas un karodziņi, kā arī alternatīvās lemmas
-	 *                      veidošanas dati un tai piešķiramie karodziņi
+	 * @param lemmaLogic	saraksts ar likuma "otrājām pusēm" - lemmas
+	 *                      nosacījumi, piešķiramās paradigmas un karodziņi, kā
+	 *                      arī alternatīvās lemmas veidošanas dati un tai
+	 *                      piešķiramie karodziņi
 	 */
 	public AltFullLemmaRule(
 			String patternBegin, String patternEnding,
-			StemSlotSubRule lemmaLogic)
+			List<StemSlotSubRule> lemmaLogic)
 	{
 		super (patternBegin, patternEnding, lemmaLogic);
+	}
+
+	public static AltFullLemmaRule simple(String patternBegin, String patternEnding,
+			StemSlotSubRule[] lemmaLogic)
+	{
+		return new AltFullLemmaRule(patternBegin, patternEnding,
+				lemmaLogic == null ? null : Arrays.asList(lemmaLogic));
 	}
 
 	/**
@@ -70,9 +77,10 @@ public class AltFullLemmaRule extends StemSlotRule
 			Set<Tuple<String, String>> altLemmaFlags)
 	{
 		return new AltFullLemmaRule(patternBegin, patternEnding,
-				new StemSlotSubRule(lemmaRestrict, lemmaEndingCutLength,
+				new ArrayList<StemSlotSubRule>(){{add(new StemSlotSubRule(
+						lemmaRestrict, lemmaEndingCutLength,
 						paradigms, positiveFlags, altLemmaEnding,
-						altLemmaParadigms, altLemmaFlags));
+						altLemmaParadigms, altLemmaFlags));}});
 	}
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,

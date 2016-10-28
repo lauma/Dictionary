@@ -80,7 +80,8 @@ public class BaseRule implements EndingRule
     {
         if (lemmaLogic == null)
             throw new IllegalArgumentException (
-                    "Nav paredzēts, ka BaseRule tiek viedots vispār bez lemmu nosacījumiem!");
+                    "Nav paredzēts, ka " + getClass().getSimpleName()+
+							" tiek viedots vispār bez lemmu nosacījumiem!");
         this.patternText = pattern;
         directPattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
         String regExpPattern = patternText.replace("-", "\\E-?\\Q");

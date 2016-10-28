@@ -57,7 +57,8 @@ public class AltEndingRule implements AdditionalHeaderRule
 	{
 		if (lemmaLogic == null)
 			throw new IllegalArgumentException (
-					"Nav paredzēts, ka BaseRule tiek viedots vispār bez lemmu nosacījumiem!");
+					"Nav paredzēts, ka " + getClass().getSimpleName()+
+							" tiek viedots vispār bez lemmu nosacījumiem!");
 		this.patternText = patternText;
 		this.pattern = Pattern.compile("(\\Q" + patternText + "\\E)([;,.].*)?");
 		this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);

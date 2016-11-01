@@ -19,6 +19,7 @@ public final class WithAltLemma
 	/**
 	 * Likums vīriešu dzimtes lietvārdiem ar šķirkļa vārdu daudzskaitlī un
 	 * papildformu vienskaitlī, locīšana ar deklinācijai atbilstošajām mijām.
+	 * 30. paradigmai pieliek arī noteiktās galotnes karodziņu.
 	 * Tiek pieņemts, ka no dotās lemmas beigām jānogriež tieši lemmaEnding
 	 * apjoma daļa.
 	 */
@@ -33,8 +34,13 @@ public final class WithAltLemma
 					"Neizdevās iegūt galotni papildformu likumam \"%s _?_%s\"\n",
 					patternBegin, patternEnding);
 		else altLemmaEnding = m.group(1);
-
-		return AltFullLemmaRule.of(
+		if (paradigmId == 30) return AltFullLemmaRule.of(
+				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
+				lemmaEnding.length(), paradigmId,
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.DEFINITE_ENDING, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				altLemmaEnding, paradigmId,
+				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR, TFeatures.DEFINITE_ENDING});
+		else return AltFullLemmaRule.of(
 				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
 				lemmaEnding.length(), paradigmId,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},

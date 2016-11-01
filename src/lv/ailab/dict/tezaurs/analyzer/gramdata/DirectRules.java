@@ -46,7 +46,7 @@ public class DirectRules
 	 */
 	public static List<EndingRule[]> getAllSafe()
 	{
-		List<EndingRule[]> res = new ArrayList<>();
+		List<EndingRule[]> res = new ArrayList<>(14);
 		// Vairākkonjugāciju likumi jāliek pirms vienas konj. likumiem, jo var
 		// sanākt, ka viens likums ir otra prefikss.
 		res.add(directMultiConjVerb);
@@ -132,6 +132,8 @@ public class DirectRules
 		GenNoun.any("-vs, -vju", ".*vs", 11, new Tuple[]{TFeatures.GENDER__FEM}, null), //adatzivs
 
 		// Paradigmas: 7, 11
+		GenNoun.any("vsk. -as, s.", ".*a", new Integer[]{7},
+				null, new Tuple[]{TFeatures.GENDER__FEM}), // antibiotikas/antibiotika
 		GenNoun.any("-as, s.", new SimpleSubRule[]{
 					SimpleSubRule.of(".*a", new Integer[]{7}, null),
 					SimpleSubRule.of(".*[^aeiouāēīōū]as", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
@@ -407,6 +409,8 @@ public class DirectRules
 
 		FifthDecl.std("-es, -mju s.", ".*me"), // apakšzeme
 
+		FifthDecl.std("vsk. -es, s.", ".*e"), // antikvitāte
+
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
 		//FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //vairs nav, jo atļāva miju.
 		FifthDecl.noChange("-es, dsk. ģen. mufu, arī mufju, s.", ".*mufe"), //mufe
@@ -473,6 +477,8 @@ public class DirectRules
 		SecondDecl.std("-pja, v.", ".*pis"), //aitkopis
 		SecondDecl.std("-vja, v.", ".*vis"), //aizstāvis
 		SecondDecl.std("-žņa, v.", ".*znis"), //aitkopis
+
+		SecondDecl.std("vsk. -ķa, v.", ".*ķis"), // antibiotiķi/antibiotiķis
 
 		SecondDecl.std("-ča, v.", ".*cis"), // akacis
 		SecondDecl.std("-ģa, v.", ".*ģis"), // āliņģis

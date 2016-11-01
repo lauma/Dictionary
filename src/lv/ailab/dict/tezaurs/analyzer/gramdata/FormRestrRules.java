@@ -6,6 +6,7 @@ import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
+import org.apache.poi.ss.usermodel.RichTextString;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,8 @@ public class FormRestrRules
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
 		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
+		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // apakšā
 		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // acumirklis
 	};

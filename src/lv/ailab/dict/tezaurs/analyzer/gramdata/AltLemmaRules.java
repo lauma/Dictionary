@@ -52,6 +52,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
+		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinuklons
 
 		// 1. paradigma: Lietvārds 1. deklinācija -s
 		WithAltLemma.nounPluralToSingularMascStd("-u; vsk.", "s, -a, v.", "i", 1), // abrazīvi
@@ -63,6 +64,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ns", "ni", 1), // alohtoni
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ms", "mi", 1), // ampērvijums
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ts", "ti", 1), // alumināti
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "īgais", "īgie", 30), // amēbveidīgie
 
 		// 7. paradigma: 4. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
@@ -75,7 +77,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le", "les", 9), // alēles
 		// 35. paradigma: 6. dekl. bez mijas.
-		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "akts", 35), // aktis
+		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 
 		//	Neviennozīmīgie likumi.
 	};

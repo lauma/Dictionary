@@ -550,9 +550,22 @@ public class MLVVEntry extends Entry
 		else res.text = begin;
 
 		// Analizē skaidrojumus.
-		// Te nekāda "lielā" gramatika nav paredzēta.
+		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
+		// pie frāzes, nevis pirmās nozīmes.
 		if (end.startsWith("<i>") && end.contains(" b. "))
-			System.out.printf("Frāzē \"%s\" gramatika ir pirms vairākām nozīmēm, nozīmes netiek sadalītas\n", linePart);
+		{
+			if (end.contains("</i>"))
+			{
+				String gram = end.substring(0, end.indexOf("</i>") + "</i>".length()).trim();
+				if (res.grammar == null)
+				{
+					res.grammar = new MLVVGram(gram);
+					end = end.substring(end.indexOf("</i>") + "</i>".length()).trim();
+				}
+				else
+					System.out.printf("Frāzē \"%s\" ir divas vispārīgās gramatikas, tāpēc nozīmes netiek sadalītas\n", linePart);
+			}
+		}
 
 		String[] gloses = new String[] {end};
 		// Ir vairākas nozīmes.

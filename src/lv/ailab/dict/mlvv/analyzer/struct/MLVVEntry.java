@@ -89,8 +89,8 @@ public class MLVVEntry extends Entry
 				head = m2.group(1);
 				body = m2.group(2);
 				Pattern headpart = Pattern.compile(
-						"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
-						 //((?: cita lemma   | gram. kursīvā  | homonīma indekss   | [izruna]      | "galotne") atstarpe) (pārējais)
+						"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?)|(?:[:,]\\s)?<u>.*?</u>\\.?)\\s*)(.*)");
+						 //((?: cita lemma   | gram. kursīvā  | homonīma indekss   | [izruna]      | "galotne"        | formas ierobežojums  ) atstarpe) (pārējais)
 				m2 = headpart.matcher(body);
 				while (m2.matches())
 				{
@@ -291,8 +291,17 @@ public class MLVVEntry extends Entry
 		{
 			if (linePart.contains("</i>"))
 			{
-				res.grammar = new MLVVGram(linePart.substring(3, linePart.indexOf("</i>")));
-				linePart = linePart.substring(linePart.indexOf("</i>") + 4);
+				Matcher gramMatch = Pattern.compile(
+						"(<i>.*?</i>(?::\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*(?:\\s*<i>.*?</i>[.,;]?)*)*)\\s*(.*)")
+						// (gramatika kursīvā (: pasvītrota forma( [izruna])?(, atkārtota forma( [izruna])?)* pieturz.? (vēl gramatika)*)*) atstarpe (pārējais)
+						.matcher(linePart);
+				if (gramMatch.matches())
+				{
+					res.grammar = new MLVVGram(gramMatch.group(1));
+					linePart = gramMatch.group(2);
+				}
+				else
+					System.out.printf("No fragmenta \"%s\" neizdodas atdalīt gramatiku (šķirklī %s)", linePart, head.lemma.text);
 			}
 			else
 			{

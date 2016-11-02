@@ -191,6 +191,7 @@ public class Normalizer
 		line = line.replaceAll("</i>\\]\\s+<i>", "] ");
 		line = line.replaceAll("</i>\\s+\\[<i>", " [");
 
+
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,
 		// tad kursivē arī aizverošās.
 		// NB! šis nestrādā, ja starp iekavām ir kāds vārds nekursīvā.
@@ -213,6 +214,8 @@ public class Normalizer
 		// Punkti citāta sākumā
 		line = line.replaceAll("\\.\\.\\.<i>(?=\\p{L})", "<i>...");
 		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
+		// Nejauši iekursivēta domuzīme (galotņu šablonos)
+		line = line.replaceAll("\\s+-</i>(?=\\p{L})", "</i> -");
 
 		return line;
 	}

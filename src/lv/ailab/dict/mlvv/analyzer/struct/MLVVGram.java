@@ -81,7 +81,10 @@ public class MLVVGram extends Gram
 					}
 				} else
 				{
-					if (i == bigParts.length - 1) // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
+					boolean hasNextAltLemma = false;
+					for (int j = i + 1; j < bigParts.length; j ++)
+						if (bigParts[j].contains("<b>")) hasNextAltLemma = true;
+					if (!hasNextAltLemma) // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
 					{
 						if (gram.freeText == null) gram.freeText = "";
 						else if (!gram.freeText
@@ -90,7 +93,8 @@ public class MLVVGram extends Gram
 					} else // Aizdomīga situācija, šitā nevajadzētu būt, bet nu tad piekabina
 					       // iepriekš atrastajām alt lemmām.
 					{
-						System.out.printf("Nav skaidrs, uz ko attiecas daļa \"%s\" gramatikā \"%s\"!\n",
+						//if (gram.altLemmas != null && gram.altLemmas.size() > 1)
+							System.out.printf("Nav skaidrs, uz ko attiecas daļa \"%s\" gramatikā \"%s\"!\n",
 								bigParts[i], linePart);
 						if (gram.altLemmas == null || gram.altLemmas.isEmpty())
 						{

@@ -109,6 +109,8 @@ public class Normalizer
 		line = line.replaceAll("</i>\u201d", "\u201d</i>");
 		line = line.replaceAll("</i>\"", "\"</i>");
 
+		// Ja kursīvā ir tikai punkts, tā parasti ir kļūda.
+		line = line.replaceAll("<i>\\.\\s+</i>", ". ");
 		// Parasti arī teikuma/frāzes beigu pieturzīmei jābūt kursīvā, ja
 		// pārējais teksts ir.
 		line = line.replace("</i>.", ".</i>");
@@ -131,6 +133,9 @@ public class Normalizer
 		line = line.replaceAll("</i>\", <i>", "\", ");
 		line = line.replaceAll("</i>\" <i>", "\" ");
 		line = line.replaceAll("</i> \"<i>", "\"");
+
+		line = line.replaceAll("(?<=\\p{L})<i>.\\s+(?=\\p{L})", ". <i>");
+
 
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll(" \\s+", " ");

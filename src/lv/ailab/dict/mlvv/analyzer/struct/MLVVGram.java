@@ -9,6 +9,8 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Izveidots 2016-02-03.
@@ -41,6 +43,55 @@ public class MLVVGram extends Gram
 		if (linePart.isEmpty()) return null;
 
 		MLVVGram gram = new MLVVGram();
+		// ir ierobežojošās formas
+		Matcher gramMatch = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
+					.matcher(linePart);
+		if (gramMatch.matches()) // ir ierobežojošās formas.
+		{
+			linePart = gramMatch.group(1);
+			String restrFirstFlag = gramMatch.group(2).trim();
+			String restrForms = gramMatch.group(3);
+			String restrLastFlags = gramMatch.group(4).trim();
+			String[] restrParts = restrForms.split("(?=<u>)");
+			gram.formRestrictions = new ArrayList<>();
+
+			for (String p : restrParts)
+			{
+				MLVVHeader restr = MLVVHeader.extractSingularHeader(p);
+				restrFirstFlag = restrFirstFlag.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
+				restrLastFlags = restrLastFlags.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
+				if (restrLastFlags.startsWith(";") || restrLastFlags.startsWith(","))
+					restrLastFlags = restrLastFlags.substring(1).trim();
+				if (restrFirstFlag.length() > 0 || restrLastFlags.length() > 0)
+				{
+					MLVVGram restrGram = (MLVVGram)restr.gram;
+					if (restrGram == null) restrGram = new MLVVGram();
+					if (restrGram.flagText != null)
+						restrGram.flagText = restrGram.flagText.trim();
+					if (restrFirstFlag.length() > 0 )
+					{
+						if (restrGram.flagText == null || restrGram.flagText.length() < 1)
+							restrGram.flagText = restrFirstFlag;
+						else restrGram.flagText = restrFirstFlag + "; " + restrGram.flagText;
+					}
+					if (restrLastFlags.length() > 0)
+					{
+						if (restrGram.flagText == null || restrGram.flagText.length() < 1)
+							restrGram.flagText = restrLastFlags;
+						else
+						{
+							restrGram.flagText = restrGram.flagText.trim();
+							if (restrGram.flagText.endsWith(",") || restrGram.flagText.endsWith(";"))
+								restrGram.flagText = restrGram.flagText + " " + restrLastFlags;
+							else restrGram.flagText = restrGram.flagText + "; " + restrLastFlags;
+						}
+					}
+					restr.gram = restrGram;
+				}
+				gram.formRestrictions.add(restr);
+			}
+		}
+
 		if (linePart.contains("<b>")) // Ir altLemmas
 		{
 			// Šādi sadalās tās daļas, kur uz vairākām vārdformām ir viena
@@ -49,7 +100,6 @@ public class MLVVGram extends Gram
 			if (linePart.contains(";")) bigParts = linePart.split(";\\s*");
 			for (int i = 0; i < bigParts.length; i++)
 			{
-
 				if (bigParts[i].contains("<b>"))
 				{
 					int commonStart = bigParts[i].lastIndexOf("<i>");
@@ -123,6 +173,8 @@ public class MLVVGram extends Gram
 	protected static String normalizeGramField(String field)
 	{
 		if (field == null) return null;
+		field = field.trim();
+		if (".".equals(field)) return null;
 		while (field.startsWith(",") || field.startsWith(";"))
 			field = field.substring(1).trim();
 		while (field.endsWith(",") || field.endsWith(";"))

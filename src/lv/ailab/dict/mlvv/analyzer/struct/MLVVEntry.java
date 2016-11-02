@@ -297,7 +297,7 @@ public class MLVVEntry extends Entry
 						.matcher(linePart);
 				if (gramMatch.matches())
 				{
-					res.grammar = new MLVVGram(gramMatch.group(1));
+					res.grammar = MLVVGram.extractFromString(gramMatch.group(1));
 					linePart = gramMatch.group(2);
 				}
 				else

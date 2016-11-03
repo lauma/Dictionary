@@ -37,7 +37,10 @@ public class TPhrase extends Phrase
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("t"))
-				text = field.getTextContent();
+			{
+				if (text == null) text = new LinkedList<>();
+				text.add(field.getTextContent());
+			}
 			else if (fieldname.equals("gram"))
 				grammar = new TGram(field, lemma);
 			else if (fieldname.equals("n"))

@@ -373,6 +373,7 @@ public class MLVVEntry extends Entry
 			{
 				Phrase sample = new Phrase();
 				sample.type = PhraseTypes.SAMPLE;
+				sample.text = new LinkedList<>();
 				String text = m.group(1).trim();
 				if (text.contains(".: "))
 				{
@@ -387,7 +388,7 @@ public class MLVVEntry extends Entry
 							.substring(text.indexOf(".</i>: <i>") + ".</i>: <i>"
 									.length()).trim();
 				}
-				sample.text = text;
+				sample.text.add(text);
 				res.add(sample);
 				linePart = m.group(2);
 				m = splitter.matcher(linePart);
@@ -454,10 +455,11 @@ public class MLVVEntry extends Entry
 
 		Phrase res = new Phrase();
 		res.type = PhraseTypes.TAXON;
+		res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\[(.*)\\](.*)").matcher(linePart);
 		if (m.matches())
 		{
-			res.text = m.group(1).trim();
+			res.text.add(m.group(1).trim());
 			String gloss = m.group(2).trim();
 			String glossEnd = m.group(3).trim();
 			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
@@ -467,10 +469,11 @@ public class MLVVEntry extends Entry
 		}
 		else
 		{
-			res.text = linePart.trim();
-			if (res.text.matches("<i>((?!</i>).)*</i>"))
-				res.text = res.text.substring(3, res.text.length()-4);
-			System.out.printf("Taksons \"%s\" neatbilst apstrādes šablonam\n", res.text);
+			String resText = linePart.trim();
+			if (resText.matches("<i>((?!</i>).)*</i>"))
+				resText = resText.substring(3, resText.length()-4);
+			res.text.add(resText);
+			System.out.printf("Taksons \"%s\" neatbilst apstrādes šablonam\n", resText);
 		}
 		return res;
 
@@ -484,6 +487,7 @@ public class MLVVEntry extends Entry
 
 		Phrase res = new Phrase();
 		res.type = PhraseTypes.QUOTE;
+		res.text = new LinkedList<>();
 		// Izmest tos kursīvus, kas iezīmē papildinājumus citātā (pietiks, ka
 		// tos iezīmē kvadātiekavas).
 		// Šo izdara jau pie normalizācijas.
@@ -494,7 +498,7 @@ public class MLVVEntry extends Entry
 		Matcher m = Pattern.compile("((?:(?:<i>)?\\s*Pārn\\.</i>:\\s*)?)<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)\\.?").matcher(linePart);
 		if (m.matches())
 		{
-			res.text = (m.group(2) + m.group(3)).trim();
+			res.text.add((m.group(2) + m.group(3)).trim());
 			res.source = m.group(4).trim();
 			String gramString = m.group(1).trim().replaceAll("</?i>", "");
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
@@ -502,7 +506,7 @@ public class MLVVEntry extends Entry
 		}
 		else
 		{
-			res.text = linePart;
+			res.text.add(linePart);
 			System.out.printf("Citāts \"%s\" neatbilst apstrādes šablonam\n", linePart);
 		}
 		return res;
@@ -521,11 +525,13 @@ public class MLVVEntry extends Entry
 				System.out.printf(" (lemma \"%s\")", head.lemma.text);
 			System.out.println();
 			Phrase res = new Phrase();
-			res.text = linePart;
+			res.text = new LinkedList<>();
+			res.text.add(linePart);
 			return res;
 		}
 		Phrase res = new Phrase();
 		res.type = phraseType;
+		res.text = new LinkedList<>();
 		String begin = m.group(1).trim();
 		String end = m.group(2).trim();
 
@@ -549,17 +555,17 @@ public class MLVVEntry extends Entry
 				begin = begin.replace("<i>", "");
 				begin = begin.replace("</i>", "");
 				begin = begin.replaceAll("\\s\\s+", " ");
-				res.text = begin;
+				res.text.add(begin);
 			}
 			// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
 			else
 			{
-				res.text = begin.substring(0, begin.indexOf("<i>")).trim();
+				res.text.add(begin.substring(0, begin.indexOf("<i>")).trim());
 				res.grammar = new MLVVGram(begin.substring(begin.indexOf("<i>")).trim());
 			}
 		}
 		// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
-		else res.text = begin;
+		else res.text.add(begin);
 
 		// Analizē skaidrojumus.
 		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto

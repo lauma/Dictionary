@@ -35,9 +35,9 @@ import java.util.Set;
 public class Phrase implements HasToJSON, HasToXML
 {
 	/**
-	 * Skaidrojamā frāze.
+	 * Skaidrojamā frāze - parasti viena, taču reizēm var būt vairākas.
 	 */
-	public String text;
+	public LinkedList<String> text;
 
 	/**
 	 * Neobligātas gramatiskās norādes.
@@ -144,9 +144,10 @@ public class Phrase implements HasToJSON, HasToXML
 		if (text != null)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Text\":\"");
-			res.append(JSONObject.escape(text));
-			res.append("\"");
+			res.append("\"Text\":[");
+			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+				.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			res.append("]");
 			hasPrev = true;
 		}
 
@@ -190,7 +191,13 @@ public class Phrase implements HasToJSON, HasToXML
 		if (text != null)
 		{
 			Node textN = doc.createElement("Text");
-			textN.appendChild(doc.createTextNode(text));
+			for (String var : text)
+			{
+				Node textVar = doc.createElement("Variant");
+				textVar.appendChild(doc.createTextNode(var));
+				textN.appendChild(textVar);
+			}
+			//textN.appendChild(doc.createTextNode(text));
 			phraseN.appendChild(textN);
 		}
 		if (grammar != null) grammar.toXML(phraseN);

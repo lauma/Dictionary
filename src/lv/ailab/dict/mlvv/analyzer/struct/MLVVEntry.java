@@ -367,7 +367,7 @@ public class MLVVEntry extends Entry
 			if (linePart.startsWith("<i>"))
 				linePart = linePart.substring(3).trim();
 			Pattern splitter = Pattern
-					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>)");
+					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
 			Matcher m = splitter.matcher(linePart);
 			while (m.matches())
 			{
@@ -425,19 +425,19 @@ public class MLVVEntry extends Entry
 				res.add(extractTaxon(lineEndPart.substring("<bullet/>".length())));
 			}
 		}
-		else if (lineEndPart != null && lineEndPart.startsWith("<circle/>"))
+		else if (lineEndPart != null && lineEndPart.matches("((<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>.*"))
 		{
-			Pattern quotePat = Pattern.compile("<circle/>\\s*(<i>.*?</i>[.?!]*\\s*\\(.*\\)\\.?)(.*)");
+			Pattern quotePat = Pattern.compile("((?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?)<circle/>\\s*(<i>.*?</i>[.?!]*\\s*\\(.*\\)\\.?)(.*)");
 			Matcher m = quotePat.matcher(lineEndPart);
 			if (m.matches())
 			{
-				res.add(extractQuote(m.group(1)));
-				res.addAll(extractSamples(m.group(2)));
+				res.add(extractQuote(m.group(1) + m.group(2)));
+				res.addAll(extractSamples(m.group(3)));
 			}
 			else
 			{
 				System.out.printf("Citāts \"%s\" neatbilst atdalīšanas šablonam\n", lineEndPart);
-				res.add(extractQuote(lineEndPart.substring("<circle/>".length())));
+				res.add(extractQuote(lineEndPart.replaceFirst("<circle/>", "")));
 			}
 		}
 
@@ -479,7 +479,7 @@ public class MLVVEntry extends Entry
 	protected Phrase extractQuote(String linePart)
 	{
 		if (linePart == null) return null;
-		linePart = linePart.trim();
+		linePart = linePart.replaceAll("\\s+", " ").trim();
 		if (linePart.length() < 1) return null;
 
 		Phrase res = new Phrase();
@@ -491,11 +491,14 @@ public class MLVVEntry extends Entry
 		//linePart = linePart.replace("</i>[", "[");
 		//linePart = linePart.replace("] <i>", "] ");
 		//linePart = linePart.replace("]<i>", "]");
-		Matcher m = Pattern.compile("<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)\\.?").matcher(linePart);
+		Matcher m = Pattern.compile("((?:(?:<i>)?\\s*Pārn\\.</i>:\\s*)?)<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)\\.?").matcher(linePart);
 		if (m.matches())
 		{
-			res.text = (m.group(1) + m.group(2)).trim();
-			res.source = m.group(3).trim();
+			res.text = (m.group(2) + m.group(3)).trim();
+			res.source = m.group(4).trim();
+			String gramString = m.group(1).trim().replaceAll("</?i>", "");
+			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
+			res.grammar = new MLVVGram(gramString);
 		}
 		else
 		{
@@ -725,12 +728,22 @@ public class MLVVEntry extends Entry
 	protected static int getAnyCircleIndex(String linePart)
 	{
 		int bulletIndex = linePart.indexOf("<bullet/>");
+		int circleGramIndex = linePart.indexOf("<i>Pārn.</i>: <circle/>");
+		int circleGramShortIndex = linePart.indexOf("Pārn.</i>: <circle/>");
 		int circleIndex = linePart.indexOf("<circle/>");
 		int res = -1;
-		if (bulletIndex > -1 && circleIndex > -1)
+		if (bulletIndex > -1 && circleGramIndex > -1)
+			res = Math.min(bulletIndex, circleGramIndex);
+		else if (bulletIndex > -1 && circleGramShortIndex > -1)
+			res = Math.min(bulletIndex, circleGramShortIndex);
+		else if (bulletIndex > -1 && circleIndex > -1)
 			res = Math.min(bulletIndex, circleIndex);
 		else if (bulletIndex > -1)
 			res = bulletIndex;
+		else if (circleGramIndex > -1)
+			res = circleGramIndex;
+		else if (circleGramShortIndex > -1)
+			res = circleGramShortIndex;
 		else if (circleIndex > -1)
 			res = circleIndex;
 		return res;

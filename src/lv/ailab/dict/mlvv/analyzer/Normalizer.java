@@ -181,6 +181,8 @@ public class Normalizer
 		}
 
 		line = line.replace("<b>-</b>", "-");
+		line = line.replaceAll("(?<=\\p{L}) -</b>(?=\\p{L})", "</b> -");
+		line = line.replaceAll("(?<!\\p{L}) -</b>(?=\\p{L})", "</b> -");
 		line = line.replace("<b>\u2013</b>", "\u2013");
 		line = line.replace("<b>\u2014</b>", "\u2014");
 

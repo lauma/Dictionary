@@ -330,10 +330,16 @@ public class MLVVEntry extends Entry
 
 		// Tagad vajadzētu sakot definīcijai.
 		// Ja tālāk būs piemēri
-		if (linePart.contains(". <i>"))
+		int nextCircle = getAnyCircleIndex(linePart);
+		int nextItalic = linePart.indexOf(". <i>");
+		int cut = -1;
+		if (nextItalic > -1 && nextItalic < nextCircle) cut = nextItalic + 1;
+		else if (nextCircle > -1) cut = nextCircle;
+		else if (nextItalic > -1) cut = nextItalic + 1;
+		if (cut > -1)
 		{
-			res.gloss = new Gloss(linePart.substring(0, linePart.indexOf(". <i>") + 1).trim());
-			linePart = linePart.substring(linePart.indexOf(". <i>") + 1).trim();
+			res.gloss = new Gloss(linePart.substring(0, cut).trim());
+			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
@@ -373,12 +379,6 @@ public class MLVVEntry extends Entry
 				linePart = linePart
 						.substring(0, linePart.length() - "</i>.".length())
 						+ ".</i>";
-			// Piemēros iekļautās atkursīvotās iekavas uzskata par parastām iekavām.
-			// Šim vajadzētu būt izdarītam jau normalizācijas solī.
-			//linePart = linePart.replace("</i> (<i>", " (");
-			//linePart = linePart.replace("</i>(<i>", "(");
-			//linePart = linePart.replace("</i>) <i>", ") ");
-			//linePart = linePart.replace("</i>)<i>", ")");
 
 			// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
 			if (linePart.startsWith("<i>"))
@@ -433,6 +433,7 @@ public class MLVVEntry extends Entry
 		{
 			Pattern taxonPat = Pattern.compile(
 					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
+					// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
 			Matcher m = taxonPat.matcher(lineEndPart);
 			if (m.matches())
 			{
@@ -447,7 +448,9 @@ public class MLVVEntry extends Entry
 		}
 		else if (lineEndPart != null && lineEndPart.matches("((<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>.*"))
 		{
-			Pattern quotePat = Pattern.compile("((?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?)<circle/>\\s*(<i>.*?</i>[.?!]*\\s*\\(.*\\)\\.?)(.*)");
+			Pattern quotePat = Pattern.compile(
+					"((?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?)<circle/>\\s*((?:(?:\\.{2,3}|\")\\s*)?<i>.*?</i>[.?!\"]*\\s*\\(.*\\)\\.?)(.*)");
+					// Neobligāts Pārn. kursīvā : <circle/> neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors) pārējais
 			Matcher m = quotePat.matcher(lineEndPart);
 			if (m.matches())
 			{
@@ -503,24 +506,21 @@ public class MLVVEntry extends Entry
 	protected Phrase extractQuote(String linePart)
 	{
 		if (linePart == null) return null;
-		linePart = linePart.replaceAll("\\s+", " ").trim();
+		linePart = linePart.replaceAll("\\s\\s+", " ").trim();
 		if (linePart.length() < 1) return null;
 
 		Phrase res = new Phrase();
 		res.type = PhraseTypes.QUOTE;
 		res.text = new LinkedList<>();
-		// Izmest tos kursīvus, kas iezīmē papildinājumus citātā (pietiks, ka
-		// tos iezīmē kvadātiekavas).
-		// Šo izdara jau pie normalizācijas.
-		//linePart = linePart.replace("</i> [", " [");
-		//linePart = linePart.replace("</i>[", "[");
-		//linePart = linePart.replace("] <i>", "] ");
-		//linePart = linePart.replace("]<i>", "]");
-		Matcher m = Pattern.compile("((?:(?:<i>)?\\s*Pārn\\.</i>:\\s*)?)<i>(.*?)</i>([.?!]*)\\s*\\((.*)\\)\\.?").matcher(linePart);
+
+		Matcher m = Pattern.compile(
+				"((?:(?:<i>)?\\s*Pārn\\.</i>:\\s*)?)((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>([.?!\"]*)\\s*\\((.*)\\)\\.?")
+				// Neobligāts Pārn. kursīvā : neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors)
+				.matcher(linePart);
 		if (m.matches())
 		{
-			res.text.add((m.group(2) + m.group(3)).trim());
-			res.source = m.group(4).trim();
+			res.text.add((m.group(2) + m.group(3) + m.group(4)).replaceAll("\\s\\s+", " ").trim());
+			res.source = m.group(5).trim();
 			String gramString = m.group(1).trim().replaceAll("</?i>", "");
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
 			res.grammar = new MLVVGram(gramString);

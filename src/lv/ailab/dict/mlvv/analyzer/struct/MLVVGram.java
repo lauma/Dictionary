@@ -103,10 +103,12 @@ public class MLVVGram extends Gram
 				if (bigParts[i].contains("<b>"))
 				{
 					int commonStart = bigParts[i].lastIndexOf("<i>");
+					int commonEnd = bigParts[i].indexOf("</i>", commonStart);
 					// Ja neatrod kopīgo daļu, tad ir šitā:
 					String common = "";
 					String forSplit = bigParts[i];
-					if (commonStart > -1)
+					// Pēc commonStart vairs nebūtu jāatrodas nevienai galotnei.
+					if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigParts[i].length() -2))
 					{
 						common = bigParts[i].substring(commonStart);
 						forSplit = bigParts[i].substring(0, commonStart);

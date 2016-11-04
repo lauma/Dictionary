@@ -257,13 +257,13 @@ public class MLVVEntry extends Entry
 		senses = new LinkedList<>();
 		for (int senseNumber = 0; senseNumber < sensesParts.length; senseNumber++)
 		{
-			Sense s = extractSingleSense(sensesParts[senseNumber], false);
+			Sense s = extractSingleSense(sensesParts[senseNumber]);
 			if (s != null) senses.add(s);
 			if (numberSenses && (s.ordNumber == null || s.ordNumber.isEmpty()))
 				s.ordNumber = Integer.toString(senseNumber + 1);
 		}
 	}
-	protected Sense extractSingleSense(String linePart, boolean canHaveHeader)
+	protected Sense extractSingleSense(String linePart)
 	{
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
@@ -279,7 +279,7 @@ public class MLVVEntry extends Entry
 			res.subsenses = new LinkedList<>();
 			for (String subP : subsensesParts)
 			{
-				Sense ss = extractSingleSense(subP, true);
+				Sense ss = extractSingleSense(subP);
 				if (ss != null) res.subsenses.add(ss);
 			}
 			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
@@ -287,7 +287,37 @@ public class MLVVEntry extends Entry
 
 		// Nocērp no sākuma saprotamo.
 		// Nozīmes gramatikas apstrāde
-		if (linePart.startsWith("<i>"))
+
+		if (linePart.matches("(<i>((?!=</i>).*)</i>\\s*)?<b>.*")) // Šķirklī "abhāzi", "ārieši".
+		{
+			Pattern headpart = Pattern.compile(
+					"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
+			//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
+			Matcher headMatcher = headpart.matcher(linePart);
+			String header = "";
+			while (headMatcher.matches())
+			{
+				header = header + headMatcher.group(1);
+				linePart = headMatcher.group(2);
+				headMatcher = headpart.matcher(linePart);
+			}
+			String preHeader = null;
+			String realHeder = header;
+			int bIndex =  header.indexOf("<b>");
+			if (bIndex > 0)
+			{
+				preHeader = header.substring(0, bIndex);
+				realHeder = header.substring(bIndex);
+			}
+			MLVVGram resGram = MLVVGram.extractFromString(realHeder);
+			if (preHeader != null && preHeader.trim().length() > 0)
+			{
+				MLVVGram other = new MLVVGram(preHeader);
+				resGram.addTextsBefore(other, true);
+			}
+			res.grammar = resGram;
+		}
+		else if (linePart.startsWith("<i>"))
 		{
 			if (linePart.contains("</i>"))
 			{
@@ -309,23 +339,6 @@ public class MLVVEntry extends Entry
 				res.grammar = new MLVVGram(linePart.substring(3));
 				linePart = "";
 			}
-		}
-		else if (linePart.startsWith("<b>")) // Šķirklī "abhāzi"
-		{
-			if (!canHaveHeader)
-				System.out.printf("Nozīme %s satur neparedzētu treknrakstu (šķirklī %s)\n", linePart, head.lemma.text);
-			Pattern headpart = Pattern.compile(
-					"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
-					//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
-			Matcher headMatcher = headpart.matcher(linePart);
-			String header = "";
-			while (headMatcher.matches())
-			{
-				header = header + headMatcher.group(1);
-				linePart = headMatcher.group(2);
-				headMatcher = headpart.matcher(linePart);
-			}
-			res.grammar = MLVVGram.extractFromString(header);
 		}
 
 		// Tagad vajadzētu sakot definīcijai.

@@ -239,6 +239,42 @@ public class MLVVGram extends Gram
 	}
 
 	/**
+	 * Šai gramatikai pieliek tekstuālo informāciju no citas gramatikas. Ja
+	 * atbilstošie lauki aizpildīti abās gramatikās, tad pievienojamo
+	 * tekstu/elementus liek vispirms.
+	 * @param other				gramatika, ko pievienot.
+	 * @param warnNonEmptyTexts	brīdina, ja abām apvienojamajām gramatikām ir
+	 *                          netukši tie paši teksta lauki
+	 */
+	public void addTextsBefore(MLVVGram other, boolean warnNonEmptyTexts)
+	{
+		if (other.freeText != null && !other.freeText.trim().isEmpty())
+		{
+			if (freeText == null)
+				freeText = other.freeText;
+			else if (warnNonEmptyTexts)
+			{
+				System.out.printf(
+						"Gramatika ar locījumu tekstu \"%s\" mēģina citas gramatikas locījumu tekstu \"%s\"\n",
+						freeText, other.freeText);
+				freeText = other.freeText + "; " + freeText;
+			}
+		}
+		if (other.flagText != null && !other.flagText.trim().isEmpty())
+		{
+			if (flagText == null)
+				flagText = other.flagText;
+			else
+			{
+				System.out.printf(
+						"Gramatika ar karodziņu tekstu \"%s\" mēģina citas gramatikas karodziņu tekstu \"%s\"\n",
+						flagText, other.flagText);
+				flagText = other.flagText + "; " + flagText;
+			}
+		}
+	}
+
+	/**
 	 * Pārrakstīta JSON izvade, lai atspoguļotu flagText lauku.
 	 */
 	@Override

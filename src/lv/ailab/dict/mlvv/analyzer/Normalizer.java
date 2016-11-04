@@ -180,6 +180,10 @@ public class Normalizer
 			m = missDot.matcher(line);
 		}
 
+		line = line.replace("<b>-</b>", "-");
+		line = line.replace("<b>\u2013</b>", "\u2013");
+		line = line.replace("<b>\u2014</b>", "\u2014");
+
 		// <i>Pārn</i>.: <i>
 		line = line.replaceAll("(?<=\\p{L})</i>.: <i>", ".</i>: <i>");
 

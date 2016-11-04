@@ -108,7 +108,7 @@ public class MLVVGram extends Gram
 					String common = "";
 					String forSplit = bigParts[i];
 					// Pēc commonStart vairs nebūtu jāatrodas nevienai galotnei.
-					if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigParts[i].length() -2))
+					if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigParts[i].length() - "</i>".length() - 2))
 					{
 						common = bigParts[i].substring(commonStart);
 						forSplit = bigParts[i].substring(0, commonStart);

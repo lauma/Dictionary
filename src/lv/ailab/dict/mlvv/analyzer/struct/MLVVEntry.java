@@ -428,10 +428,11 @@ public class MLVVEntry extends Entry
 		}
 
 		// Apstrādā to, kas ir aiz tukšā vai pilnā aplīša.
+		// Pirms <circle/> var būt "Pārn.:", bet pirms <bullet/> tādam nevajadzētu būt.
 		if (lineEndPart != null && lineEndPart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013](?:(?!<(/?i|bullet/|circle/)>).)*|\\.)?)(.*)");
+					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
 			Matcher m = taxonPat.matcher(lineEndPart);
 			if (m.matches())
 			{
@@ -481,7 +482,9 @@ public class MLVVEntry extends Entry
 			String gloss = m.group(2).trim();
 			String glossEnd = m.group(3).trim();
 			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
-			else gloss = gloss + " " + glossEnd;
+			else if (glossEnd.matches("\\s*[-\u2013\u2014].+"))gloss = gloss + " " + glossEnd;
+			// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
+			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
 			res.subsenses = new LinkedList<>();
 			res.subsenses.add(new Sense(gloss.trim()));
 		}

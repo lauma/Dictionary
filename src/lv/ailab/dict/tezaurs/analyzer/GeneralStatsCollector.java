@@ -300,11 +300,14 @@ public class GeneralStatsCollector
 		if (wordlistOut == null) return;
 		StringBuilder line = new StringBuilder();
 
+		// [0] šķirkļavārds
 		line.append(entry.head.lemma.text);
 		line.append("\t");
+		// [1] homonīma indekss
 		if (entry.homId != null)line.append(entry.homId);
 		else line.append("0");
 		line.append("\t");
+		// [2] vārdšķira
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.POS))
 		{
@@ -319,6 +322,7 @@ public class GeneralStatsCollector
 		line.append("\t");
 		HashSet<Integer> paradigms = entry.head.getDirectParadigms();
 
+		// [3] paradigma
 		if (paradigms.size() == 1)
 			// Nē, nu stulbi kaut kā taisīt mapošanu, ja objekts ir tikai viens
 			// Bet varbūt ka tā ir labāk nākotnei
@@ -329,14 +333,21 @@ public class GeneralStatsCollector
 			line.append(entry.head.gram.paradigm.stream().filter(p -> p != 0)
 					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
 					.orElse("NULL"));
-		else if (paradigms.size() == 2 && (paradigms.contains(16) && paradigms.contains(17)
-				|| paradigms.contains(19) && paradigms.contains(20)))
+		else if (paradigms.size() == 2 && paradigms.contains(16) && paradigms.contains(17))
 			// TODO smukāk izvēlēties, kuru drukāt.
-			line.append(entry.head.gram.paradigm.stream().filter(p -> p != 17 && p != 20)
-					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
-					.orElse("NULL"));
+			line.append("16");
+		else if (paradigms.size() == 2 && paradigms.contains(19) && paradigms.contains(20))
+			// TODO smukāk izvēlēties, kuru drukāt.
+			line.append("19");
+		else if (paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8))
+			// TODO smukāk izvēlēties, kuru drukāt.
+			line.append("7");
+		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10))
+			// TODO smukāk izvēlēties, kuru drukāt.
+			line.append("9");
 		else line.append("NULL");
 		line.append("\t");
+		// [4] avoti
 		if (entry.sources == null || entry.sources.isEmpty())
 		{
 			if (entry.hasReference()) line.append("REF");
@@ -344,81 +355,92 @@ public class GeneralStatsCollector
 		}
 		else line.append(String.join(",", entry.sources.s));
 		line.append("\t");
+		// [5] joma
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.DOMAIN))
 			line.append(String
 					.join(",", entry.head.gram.flags.getAll(TKeys.DOMAIN)));
 		else line.append("NULL");
 		line.append("\t");
+		// [6] lietojuma ierobežojumi
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.USAGE_RESTRICTIONS))
 			line.append(String.join(",", entry.head.gram.flags
 					.getAll(TKeys.USAGE_RESTRICTIONS)));
 		else line.append("NULL");
 		line.append("\t");
+		// [7] valoda
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.LANGUAGE))
 			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.LANGUAGE)));
 		else line.append("NULL");
 		line.append("\t");
 
-		// Celmi un priedēklis
+		// [8] nenoteiksmes celms
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.INFINITIVE_STEM))
-		{
-			//line.append(TKeys.INFINITIVE_STEM);
-			//line.append("=");
-			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.INFINITIVE_STEM)));
-		}
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.INFINITIVE_STEM)));
 		else line.append("NULL");
 		line.append("\t");
+		// [9] tagadnes celmi
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PRESENT_STEMS))
-		{
-			//line.append(TKeys.PRESENT_STEMS);
-			//line.append("=");
-			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEMS)));
-		}
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.PRESENT_STEMS)));
 		else line.append("NULL");
 		line.append("\t");
+		// [10] pagātnes celmi
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.PAST_STEMS))
-		{
-			//line.append(TKeys.PAST_STEMS);
-			//line.append("=");
-			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEMS)));
-		}
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.PAST_STEMS)));
 		else line.append("NULL");
 		line.append("\t");
+		// [11] priedēklis
 		if (entry.head.gram != null && entry.head.gram.flags != null &&
 				entry.head.gram.flags.testKey(TKeys.VERB_PREFIX))
+			line.append(String.join(",", entry.head.gram.flags.getAll(TKeys.VERB_PREFIX)));
+		else line.append("NULL");
+		line.append("\t");
+		// [12] inflmisc: 3. konjugācijas grupas, 2./5. deklinācijas mijas,
+		// 1. konjugācijas paralēlformas, dzimte, daudzskaitlis.
+		if (entry.head.gram != null && entry.head.gram.flags != null)
 		{
-			//line.append(TKeys.VERB_PREFIX);
-			//line.append("=");
-			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.VERB_PREFIX)));
+			HashSet<String> inflFlags = new HashSet<>();
+			if (entry.head.gram.flags.testKey(TKeys.INFLECTION_WEARDNES))
+				inflFlags.addAll(entry.head.gram.flags.getAll(TKeys.INFLECTION_WEARDNES));
+			if (entry.head.gram.flags.test(TFeatures.GENDER__CO) ||
+					paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8) ||
+					paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10))
+				inflFlags.add(TValues.COGENDER);
+			if (!inflFlags.contains(TValues.COGENDER) && entry.head.gram.flags.testKey(TKeys.GENDER))
+				inflFlags.addAll(entry.head.gram.flags.getAll(TKeys.GENDER));
+			/*if (entry.head.gram.flags.testKey(TKeys.ENTRYWORD_WEARDNES))
+				entry.head.gram.flags.getAll(TKeys.ENTRYWORD_WEARDNES).stream().filter(
+						p -> !p.equals(TValues.CHANGED_PARADIGM)).forEach(inflFlags::add);*/
+			if (entry.head.gram.flags.test(TFeatures.ENTRYWORD__PLURAL))
+				inflFlags.add(TValues.PLURAL);
+			if (entry.head.gram.flags.test(TFeatures.USED_ONLY__SINGULAR))
+				inflFlags.add(TValues.SINGULAR);
+
+			if (inflFlags.isEmpty())line.append("NULL");
+			else line.append(String.join(",", inflFlags));
 		}
 		else line.append("NULL");
 		line.append("\t");
-		// 3. konjugācijas grupas, 2./5. deklinācijas mijas, 1. konjugācijas paralēlformas
-		if (entry.head.gram != null && entry.head.gram.flags != null &&
-				entry.head.gram.flags.testKey(TKeys.INFLECTION_WEARDNES))
-		{
-			//line.append(TKeys.INFLECTION_WEARDNES);
-			//line.append("=");
-			line.append(String
-					.join(",", entry.head.gram.flags.getAll(TKeys.INFLECTION_WEARDNES)));
-		}
-		else line.append("NULL");
-		line.append("\t");
-		// LLVV izrunas
+		// [13] LLVV izrunas
 		if (entry.head.lemma.pronunciation != null && entry.head.lemma.pronunciation.length > 0)
 			line.append(String.join(",", entry.head.lemma.pronunciation));
 		else line.append("NULL");
 		line.append("\n");
+		// Pārbaudes un brīdinajumi
+		String[] fields = line.toString().split("\t");
+		if (fields.length != 14)
+			System.out.printf("Šķirklim %s ir %d lauki!\n", entry.head.lemma.text, fields.length);
+		for (int i = 0; i < fields.length; i++)
+		{
+			if (fields[i].isEmpty())
+				System.out.printf("Šķirklim %s ir %d. lauks ir tukšs!\n", entry.head.lemma.text, i);
+
+		}
 		wordlistOut.write(line.toString().replace(" ", "_"));
 	}
 

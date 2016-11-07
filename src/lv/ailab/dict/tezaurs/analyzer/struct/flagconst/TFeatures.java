@@ -50,6 +50,8 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> CONTAMINATION__NOUN = Tuple.of(TKeys.CONTAMINATION, TValues.NOUN);
 	public static final Tuple<String, String> CONTAMINATION__CARD_NUM = Tuple.of(TKeys.CONTAMINATION, TValues.CARDINAL_NUMERAL);
 
+	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);
+
 	public static final Tuple<String, String> DEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.DEFINITE_ENDING);
 
 	public static final Tuple<String, String> USUALLY_USED__PLURAL = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL);

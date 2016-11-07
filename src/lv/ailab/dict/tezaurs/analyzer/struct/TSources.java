@@ -28,15 +28,10 @@ import java.util.LinkedList;
  */
 public class TSources extends Sources
 {
-	public String orig;
-
 	public TSources(Node avotsNode)
 	{
 		orig = avotsNode.getTextContent();
 		s = parseSources(orig);
-		if (s.size() < 1 && orig.length() > 0)
-			System.err.printf(
-				"Field 'sources' '%s' can't be parsed!\n", orig);
 	}
 
 	/**
@@ -59,11 +54,14 @@ public class TSources extends Sources
 
 	private static LinkedList<String> parseSources (String sourcesText)
 	{
+		if (sourcesText == null) return null;
 		if (sourcesText.startsWith("["))
 			sourcesText = sourcesText.substring(1);
 		if (sourcesText.endsWith("]"))
 			sourcesText = sourcesText.substring(0, sourcesText.length() - 1);
-		
+		sourcesText = sourcesText.trim();
+		if (sourcesText.isEmpty()) return null;
+
 		LinkedList<String> res = new LinkedList<>();
 		res.addAll(Arrays.asList(sourcesText.split(",\\s*")));
 		return res;

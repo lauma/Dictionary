@@ -472,6 +472,7 @@ public class DirectRules
 		SecondDecl.std("-dža, v.", ".*dzis"), //algādzis
 		SecondDecl.std("-ļļa, v.", ".*llis"), // amarillis
 		SecondDecl.std("-ļņa, v.", ".*lnis"), // aizsargvalnis
+		SecondDecl.std("-mja, v.", ".*mis"), // aplamis
 		SecondDecl.std("-šļa, v.", ".*slis"), // bauslis
 		SecondDecl.std("-šņa, v.", ".*snis"), // alksnis
 		SecondDecl.std("-pja, v.", ".*pis"), //aitkopis
@@ -504,7 +505,7 @@ public class DirectRules
 		GenNoun.any("-ņa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ņš", new Integer[]{2}, null),
 						SimpleSubRule.of(".*nis", new Integer[]{3}, null),
-						SimpleSubRule.of(".*suns", new Integer[]{5}, null)},
+						SimpleSubRule.of(".*(suns|sāls|uguns)", new Integer[]{5}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // abesīnis, dižtauriņš, dzinējsuns
 		GenNoun.any("-ša, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*[sšt]is", new Integer[]{3}, null),
@@ -535,7 +536,7 @@ public class DirectRules
 					new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
 		GenNoun.any("-a, vsk.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*suns", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
+						SimpleSubRule.of(".*(suns|sāls|uguns)", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*is", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*š", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, new Tuple[]{TFeatures.GENDER__MASC})},

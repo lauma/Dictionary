@@ -38,6 +38,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Tēzaura gramatiku analīzes rīka ieejas punkts.
@@ -61,15 +62,17 @@ public class DictionaryXmlToJson
 	//public final static boolean PRINT_FIRST_CONJ = false;
 	public final static boolean PRINT_NON_INFL = false;
 
-	public final static String PRINT_WITH_REGEXP = null;
-	//public static String PRINT_WITH_REGEXP = ".*fe";
-
 	public final static ArrayList<Integer> PPRINT_WITH_PARADIGM = null;
 	/*public static ArrayList<Integer> PPRINT_WITH_PARADIGM = new ArrayList<Integer>() {{
 		add (30);
 		add (40);
 		add (41);
 	}};//*/
+
+	public final static Pattern PRINT_WITH_ENTRYWORD = null;
+	//public static Pattern PRINT_WITH_ENTRYWORD = Pattern.compile(".*fe");
+	public final static Pattern PRINT_WITH_GLOSS = null;
+	//public final static Pattern PRINT_WITH_GLOSS = Pattern.compile(".*?(Čehij|Polij|Slovākij|Čehoslovākij).*");
 
 	// Neitrālais: neizgūt neko papildus. Ātrāk un ģenerē pārskatāmākus stats failus.
 	public final static ArrayList<Tuple<String, String>> PRINT_WITH_FEATURE = null;
@@ -159,8 +162,8 @@ public class DictionaryXmlToJson
 			}
 			GeneralStatsCollector genSC = new GeneralStatsCollector(
 					PRINT_PRONONCATIONS, //PRINT_FIRST_CONJ,
-					PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL, PRINT_WITH_REGEXP,
-					PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
+					PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL, PRINT_WITH_ENTRYWORD,
+					PRINT_WITH_GLOSS, PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
 					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,
 					PRINT_OTHER_LEMMAS,	PRINT_INFL_WEARDNESS, wordlistOut);
 

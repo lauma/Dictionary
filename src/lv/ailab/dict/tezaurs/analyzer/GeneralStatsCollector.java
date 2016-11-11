@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
@@ -22,8 +23,10 @@ import java.util.regex.Pattern;
 
 /**
  * Paralēli tēzaura apstrādei var šo to saskaitīt.
- * Created 2015-08-04.
  *
+ * TODO: novienādot izdrukas parametru padošanu priekš "collect with feature", "collect with entryword", "collect with paradigms" un "collect with gloss"
+ *
+ * Izveidots 2015-08-04.
  * @author Lauma
  */
 public class GeneralStatsCollector
@@ -32,10 +35,6 @@ public class GeneralStatsCollector
 	 * Karodziņš, vai savākt izrunas.
 	 */
 	public final boolean collectPrononcations;
-	/*
-	 * Karodziņš, vai savākt 1. konjugāciju.
-	 */
-	//public final boolean collectFirstConjAll;
 	/**
 	 * Karodziņš, vai savākt 5. deklinācijas izņēmumus.
 	 */
@@ -48,7 +47,12 @@ public class GeneralStatsCollector
 	 * Karodziņš, vai savākt šķirkļavārdus/atvasinājumus, kas atbilst noteiktai
 	 * regulārai izteiksmei.
 	 */
-	public final Pattern collectWithRegexp;
+	public final Pattern collectWithEntryWord;
+	/**
+	 * Karodziņš, vai savākt šķirkļavārdus, kam kāda nozīme atbilst noteiktai
+	 * regulārai izteiksmei.
+	 */
+	public final Pattern collectWithGloss;
 	/**
 	 * Saraksts ar paradigmām, pēc kurām atlasīt.
 	 */
@@ -100,10 +104,6 @@ public class GeneralStatsCollector
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
 	 */
 	public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
-	/*
-	 * Darbības vārds, šķirkļavārds, šķirkļa homonīma indekss.
-	 */
-	//public ArrayList<Trio<String, String, String>> firstConj = new ArrayList<>();
     /**
      * Darbības vārds, šķirkļavārds, šķirkļa homonīma indekss.
      */
@@ -123,9 +123,9 @@ public class GeneralStatsCollector
 	public HashSet<String> inflWeardness = new HashSet<>();
 
 	public GeneralStatsCollector( boolean collectPrononcations,
-			//boolean collectFirstConjAll,
 			boolean collectFifthDeclExceptions,
-			boolean collectNonInflWithCase, String collectWithRegexp,
+			boolean collectNonInflWithCase, Pattern collectWithEntryWord,
+			Pattern collectWithGloss,
 			ArrayList<Integer> collectWithParadigms,
 			ArrayList<Tuple<String, String>> collectFeature,
 			ArrayList<Tuple<String, String>> descriptionFeatures,
@@ -134,11 +134,10 @@ public class GeneralStatsCollector
 			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
-		//this.collectFirstConjAll = collectFirstConjAll;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
 		this.collectNonInflWithCase = collectNonInflWithCase;
-		this.collectWithRegexp = collectWithRegexp == null ?
-				null : Pattern.compile(collectWithRegexp);
+		this.collectWithEntryWord = collectWithEntryWord;
+		this.collectWithGloss = collectWithGloss;
 		this.collectWithParadigms = collectWithParadigms;
 		this.collectWithFeatures = collectFeature;
 		this.describeWithFeatures = descriptionFeatures;
@@ -188,12 +187,7 @@ public class GeneralStatsCollector
 		if (collectFifthDeclExceptions || collectNonInflWithCase)
         	for (Header h : entry.getAllHeaders())
         {
-			if (h.gram == null) continue;
-			/*if (collectFirstConjAll &&
-					(h.gram.getDirectParadigms().contains(15) ||
-							h.gram.getDirectParadigms().contains(18)))
-				firstConj.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));//*/
-			if (h.gram.flags == null) continue;
+			if (h.gram == null || h.gram.flags == null) continue;
 
             if (collectFifthDeclExceptions && h.gram.getDirectParadigms().contains(9)
 					&& h.gram.flags.test(TFeatures.NO_SOUNDCHANGE))
@@ -204,11 +198,11 @@ public class GeneralStatsCollector
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 		}
 
-		if (collectWithRegexp != null)
+		if (collectWithEntryWord != null)
 		{
 			for (Header h : entry.getAllHeaders())
 			{
-				if (collectWithRegexp.matcher(h.lemma.text).matches())
+				if (collectWithEntryWord.matcher(h.lemma.text).matches())
 				{
 					ArrayList<String> flags = new ArrayList<>();
 					flags.add("Vārds = " + h.lemma.text);
@@ -221,6 +215,36 @@ public class GeneralStatsCollector
 							entry.head.lemma.text,
 							entry.homId == null ? "REF" : entry.homId,
 							flags));
+				}
+			}
+		}
+
+		if (collectWithGloss != null)
+		{
+			if (entry.senses != null) for (Sense sense : entry.senses)
+			{
+				if (collectWithGloss.matcher(sense.gloss.text).matches())
+					entriesWithSelectedFeature.add(Trio.of(
+							entry.head.lemma.text,
+							entry.homId == null ? "REF" : entry.homId,
+							new ArrayList<String>(){{add("Glosa = " + sense.gloss.text);
+									if (entry.head.gram != null && entry.head.gram.flags != null && entry.head.gram.flags.test(TFeatures.PLACE_NAME) ||
+											sense.grammar != null && sense.grammar.flags != null && sense.grammar.flags.test(TFeatures.PLACE_NAME))
+										add(TFeatures.PLACE_NAME.first + " = " + TFeatures.PLACE_NAME.second);
+									else add(TFeatures.PLACE_NAME.first + " = NULL");}}));
+
+				if (sense.subsenses != null) for (Sense subsense : sense.subsenses)
+				{
+					if (collectWithGloss.matcher(subsense.gloss.text).matches())
+						entriesWithSelectedFeature.add(Trio.of(
+								entry.head.lemma.text,
+								entry.homId == null ? "REF" : entry.homId,
+								new ArrayList<String>(){{add("Glosa = " + subsense.gloss.text);
+									if (entry.head.gram != null && entry.head.gram.flags != null && entry.head.gram.flags.test(TFeatures.PLACE_NAME) ||
+											sense.grammar != null && sense.grammar.flags != null && sense.grammar.flags.test(TFeatures.PLACE_NAME) ||
+											subsense.grammar != null && subsense.grammar.flags != null && subsense.grammar.flags.test(TFeatures.PLACE_NAME))
+										add(TFeatures.PLACE_NAME.first + " = " + TFeatures.PLACE_NAME.second);
+									else add(TFeatures.PLACE_NAME + " = NULL");}}));
 				}
 			}
 		}
@@ -521,16 +545,6 @@ public class GeneralStatsCollector
 					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
 			out.write("\n]");
 		}
-		/*if (collectFirstConjAll && firstConj != null && firstConj.size() > 0)
-		{
-			out.write(",\n\"1. konjugācija\":[\n");
-			out.write(firstConj.stream().map(t ->
-					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
-							.escape(t.second) + "\", \"" + JSONObject
-							.escape(t.third) + "\"]")
-					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
-			out.write("\n]");
-		}*/
 
 		if (collectNonInflWithCase && nonInflWithCase != null
 				&& nonInflWithCase.size() > 0)
@@ -544,7 +558,7 @@ public class GeneralStatsCollector
 			out.write("\n]");
 		}
 
-		if ((collectWithFeatures != null || collectWithRegexp != null || collectWithParadigms != null)
+		if ((collectWithFeatures != null || collectWithEntryWord != null || collectWithParadigms != null || collectWithGloss != null)
 				&& entriesWithSelectedFeature != null
 				&& entriesWithSelectedFeature.size() > 0)
 		{
@@ -554,10 +568,17 @@ public class GeneralStatsCollector
 				title = collectWithFeatures.stream()
 						.map(f -> f.first + " = " + (f.second == null ? "*" : JSONObject.escape(f.second)))
 						.reduce((a, b) -> a + ", " + b).orElse("");
-			if (collectWithRegexp != null)
+			if (collectWithEntryWord != null)
 			{
 				if (title.length() > 0) title = title + ", ";
-				title = title + "Šķirkļavārda izteiksme = " + collectWithRegexp.pattern();
+				title = title + "Šķirkļavārda izteiksme = " + collectWithEntryWord
+						.pattern();
+			}
+			if (collectWithGloss != null)
+			{
+				if (title.length() > 0) title = title + ", ";
+				title = title + "Glosas izteiksme = " + collectWithGloss
+						.pattern();
 			}
 			if (title.length() < 1) title = "Apkopotie šķirkļi";
 			out.write(JSONObject.escape(title));

@@ -74,6 +74,27 @@ public final class FirstConj
 
 	/**
 	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam ar
+	 * nenoteiksmes homoformu bez paralēlajām formām, kam ir norāde par
+	 * lietošanu daudzskaitlī, bet ne vienskaitļa 3. personā.
+	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @param inflectAs		virkne, kas tiks lietota "Locīt kā" karodziņam -
+	 *                      pamata vārda nenoteiksme + skaidrojums homoformu
+	 *                      atšķiršanai
+	 * @return PluralVerbRule ar paradigmu 15
+	 */
+	public static PluralVerbRule directPluralHomof(
+			String patternText, String lemmaEnd, String inflectAs)
+	{
+		FirstConjStems stems = FirstConjStems.singlePP(patternText, lemmaEnd);
+		return PluralVerbRule.of(patternText, lemmaEnd, 15,
+				new Tuple[] {Tuple.of(TKeys.INFLECT_AS, inflectAs),
+						TFeatures.POS__DIRECT_VERB},
+				null, stems);
+	}
+
+	/**
+	 * Izveido PluralVerbRule 1. konjugācijas tiešajam darbības vārdam ar
 	 * paralēlajām formām, kam ir norāde par lietošanu daudzskaitlī, bet ne
 	 * vienskaitļa 3. personā.
 	 * @param patternText	gramatikas daļa ar galotnēm, bez "parasti dsk.,"

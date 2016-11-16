@@ -367,7 +367,7 @@ public class OptHypernRules
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\""), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("lik", "liek", "lik")), //izpalikt
 		VerbDoubleRule.of("-nespēju, -nespēj,", "-nespēj, pag. -nespēju", "nespēt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"spēt\""), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("spē", "spēj", "spēj")), //nespēt
 		VerbDoubleRule.of("-sastopu, -sastopi,", "-sastop, pag. -sastapu", "sastapt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"stapt\""), TFeatures.POS__DIRECT_VERB}, null,
@@ -900,6 +900,8 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-žulgst, pag. -žulga", "žulgt"), //izžulgt
 
 		// Daudzskaitļa formu likumi.
+		FirstConj.directPluralHomof("-lienam, -lienat, -lien, pag. -līdām", "līst", "\"līst\" (zem galda)"), // salīst
+
 		FirstConj.directPluralAllPersParallel(
 				"-sēžam, -sēžat, -sēž, arī -sēstam, -sēstat, -sēst, pag. -sēdām", "sēst"), // sasēst
 		// Ar trešo personu
@@ -910,7 +912,6 @@ public class OptHypernRules
 		// Bez 3. personas
 		FirstConj.directPlural("-bēgam, -bēgat, -bēg, pag. -bēgām", "bēgt"), // sabēgt
 		FirstConj.directPlural("-lecam, -lecat, -lec, pag. -lēcām", "lēkt"), // salēkt
-		FirstConj.directPlural("-lienam, -lienat, -lien, pag. -līdām", "līst"), // salīst
 		FirstConj.directPlural("-mūkam, -mūkat, -mūk, pag. -mukām", "mukt"), // samukt
 		FirstConj.directPlural("-sprūkam, -sprūkat, -sprūk, pag. -sprukām", "sprukt"), // sasprukt
 		FirstConj.directPlural("-sprūstam, -sprūstat, -sprūst, pag. -sprūdām", "sprūst"), // sasprūst
@@ -1790,7 +1791,7 @@ public class OptHypernRules
 		FirstConj.reflHomof("-lienos, -lienies,", "-lienas, pag. -līdos", "līsties",
 				"\"līsties\" (zem galda)"), // palīsties // Liekas, ka otra vārdnīcā nav.
 		FirstConj.reflHomof("-mistos, -misties,", "-mistas, pag. -misos", "misties",
-				"\"mistties\" (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
+				"\"misties\" (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
 		FirstConj.reflHomof("-minos, -minies,", "-minas, pag. -minos", "mīties",
 				"\"mīties\" (pedāļus)"), //aizmīties
 		FirstConj.reflHomof("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties",

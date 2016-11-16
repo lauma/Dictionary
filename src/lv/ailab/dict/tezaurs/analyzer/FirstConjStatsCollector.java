@@ -99,14 +99,6 @@ public class FirstConjStatsCollector
 	 * "Locīt kā" -> priedēklis -> attiecīgie darbības vārdi
 	 */
 	public TreeMap<String,TreeMap<String, TreeSet<String>>> reflByPrefix = new TreeMap<>();
-	/**
-	 * Priedēklis -> 1. konj. verbu skaits.
-	 */
-	public TreeMap<String, Integer> prefixCountsDirect = new TreeMap<>();
-	/**
-	 * Priedēklis -> 1. konj. verbu skaits.
-	 */
-	public TreeMap<String, Integer> prefixCountsRefl = new TreeMap<>();
 
 	//=== Priekš collectPotential ==============================================
 	/**
@@ -205,8 +197,7 @@ public class FirstConjStatsCollector
 			{
 				if (collectDirectByInfinitive) addByInf(directByInf, h);
 				if (collectReflByStems) addByStem(directbyStems, h);
-				if (collectDirectByPrefix) addByPrefix(
-						directByPrefix, prefixCountsDirect,h);
+				if (collectDirectByPrefix) addByPrefix(directByPrefix, h);
 			}
 
 			// Ja ir atpazīts, ka locīs kā atgriezenisko.
@@ -214,8 +205,7 @@ public class FirstConjStatsCollector
 			{
 				if (collectReflByInfinitive) addByInf(reflByInf, h);
 				if (collectReflByStems) addByStem(reflByStems, h);
-				if (collectReflByPrefix) addByPrefix(
-						reflByPrefix, prefixCountsRefl, h);
+				if (collectReflByPrefix) addByPrefix(reflByPrefix, h);
 			}
 
 			// Ja vajag savākt nenoteiksmes celmus.
@@ -351,17 +341,14 @@ public class FirstConjStatsCollector
 	/**
 	 * Pievienot informāciju par doto Header objektu directBySPrefix vai
 	 * reflByPrefix statistiku vākšanas objektā.
-	 * @param whereVerb		datu struktūra, kuru nepieciešams papildināt
-	 *                  	(directByPrefix vai reflByPrefix), ieliekot verbu
-	 * @param whereCount	datu struktūra, kuru nepieciešams papildināt
-	 *                  	(directByPrefix vai reflByPrefix), ieliekot un
-	 *                  	pieskaitot priedēkli
-	 * @param what			Header, par kuru informācija jāpievieno
-	 *                      papildināmajai datu struktūrai
+	 * @param where	datu struktūra, kuru nepieciešams papildināt (directByPrefix
+	 *              vai reflByPrefix), ieliekot verbu
+	 * @param what	Header, par kuru informācija jāpievieno papildināmajai datu
+	 *              struktūrai
 	 */
 	protected void addByPrefix(
-			TreeMap<String,TreeMap<String, TreeSet<String>>> whereVerb,
-			TreeMap<String,Integer> whereCount,	Header what)
+			TreeMap<String,TreeMap<String, TreeSet<String>>> where,
+			Header what)
 	{
 		Set<String> prefs = what.gram.flags.getAll(Keys.VERB_PREFIX);
 		Set<String> infs = what.gram.flags.getAll(TKeys.INFLECT_AS);
@@ -371,19 +358,16 @@ public class FirstConjStatsCollector
 		if (infs.isEmpty()) infs.add("0");
 		for (String inf : infs)
 		{
-			TreeMap<String, TreeSet<String>> prefMap = whereVerb.get(inf);
+			TreeMap<String, TreeSet<String>> prefMap = where.get(inf);
 			if (prefMap == null) prefMap = new TreeMap<>();
 			for (String pref : prefs)
 			{
-				int count = 1;
-				if (whereCount.containsKey(pref)) count = whereCount.get(pref) + 1;
-				whereCount.put(pref, count);
 				TreeSet<String> verbs = prefMap.get(pref);
 				if (verbs == null) verbs = new TreeSet<>();
 				verbs.add(what.lemma.text);
 				prefMap.put(pref, verbs);
 			}
-			whereVerb.put(inf, prefMap);
+			where.put(inf, prefMap);
 		}
 	}
 
@@ -419,6 +403,8 @@ public class FirstConjStatsCollector
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-prefix.txt"), "UTF-8"));
+
+			TreeMap<String, Integer> prefixCountsDirect = getPrefixCounts(directByPrefix);
 			List<String> sortedPrefs = prefixCountsDirect.keySet().stream()
 					.sorted((a, b) -> {
 						if (prefixCountsDirect.get(a) > prefixCountsDirect.get(b)) return -1;
@@ -463,6 +449,7 @@ public class FirstConjStatsCollector
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-prefix.txt"), "UTF-8"));
+			TreeMap<String, Integer> prefixCountsRefl = getPrefixCounts(reflByPrefix);
 			List<String> sortedPrefs = prefixCountsRefl.keySet().stream()
 					.sorted((a, b) -> {
 						if (prefixCountsRefl.get(a) > prefixCountsRefl.get(b)) return -1;
@@ -570,6 +557,28 @@ public class FirstConjStatsCollector
 				where.write("\n");
 			}
 		}
+	}
+
+	/**
+	 * Ērtības metode, kas no directByPrefix vai reflByPrefix dabū priedēkļu
+	 * sastopamības skaitus.
+	 * @param verbsByPrefix	datu struktūra, kur priedēklis ir otrā līmeņa
+	 *                      atslēga, piemēram, directByPrefix vai reflByPrefix
+	 * @return	atbilstme no priedēkļiem uz skaitiem
+	 */
+	protected static TreeMap<String, Integer> getPrefixCounts(
+			TreeMap<String,TreeMap<String, TreeSet<String>>> verbsByPrefix)
+	{
+		TreeMap<String, Integer> prefixCounts = new TreeMap<>();
+		for (String inf : verbsByPrefix.keySet())
+			for (String pref : verbsByPrefix.get(inf).keySet())
+			{
+				int count = 1;
+				if (prefixCounts.containsKey(pref))
+					count = prefixCounts.get(pref) + 1;
+				prefixCounts.put(pref, count);
+			}
+		return prefixCounts;
 	}
 
 	/**

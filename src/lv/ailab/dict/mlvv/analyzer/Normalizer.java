@@ -201,7 +201,6 @@ public class Normalizer
 		line = line.replaceAll("</i>\\(<i>", "(");
 		line = line.replaceAll("</i>\\]\\s+<i>", "] ");
 		line = line.replaceAll("</i>\\s+\\[<i>", " [");
-		line = line.replaceAll("</i>,\\s+<i>", ", ");
 
 
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,

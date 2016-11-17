@@ -169,7 +169,7 @@ public class MLVVEntry extends Entry
 		}
 
 		// Cilme
-		m = Pattern.compile("(.*)\\b[cC]ilme: (.*)").matcher(linePart);
+		m = Pattern.compile("(.*?)\\b[cC]ilme: (.*)").matcher(linePart);
 		if (m.matches())
 		{
 			origin = m.group(2).trim();
@@ -177,7 +177,7 @@ public class MLVVEntry extends Entry
 		}
 
 		// Atvasinājumi
-		m = Pattern.compile("(.*)<square/>(.*)").matcher(linePart);
+		m = Pattern.compile("(.*?)<square/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
 			extractDerivs(m.group(2));
@@ -210,7 +210,7 @@ public class MLVVEntry extends Entry
 	 */
 	protected void extractDerivs(String linePart)
 	{
-		String[] derivTexts = linePart.split("\\s*(?=<b>)");
+		String[] derivTexts = linePart.split("<square/>|\\s*(?=<b>)");
 		if (derivTexts.length < 1) return;
 		derivs = new LinkedList<>();
 		for (String dt :derivTexts)

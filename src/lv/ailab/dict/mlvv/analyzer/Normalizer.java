@@ -82,17 +82,18 @@ public class Normalizer
 			m = p.matcher(line);
 		}
 
-		// Ieikļauj atverošās pēdiņas tekstā pēc <i> taga.
-		p = Pattern.compile("(\\p{L}\\p{M}*)</i>\"");
+		// Iekļauj aizverošās pēdiņas tekstā pēc <i> taga. Pirms vai pēc pēdiņām
+		// iespējams komats.
+		p = Pattern.compile("(\\p{L}\\p{M}*)</i>(,?\",?)");
 		m = p.matcher(line);
 		while (m.find())
 		{
-			String target = m.group(1) + "</i>\"";
-			String replacement = m.group(1) + "\"</i>";
+			String target = m.group(1) + "</i>" + m.group(2);
+			String replacement = m.group(1) + m.group(2) + "</i>";
 			line = line.replace(target, replacement);
 			m = p.matcher(line);
 		}
-		// Iekļauj aizverošās pēdiņas tekstā pirms </i> taga.
+		// Iekļauj atverošās pēdiņas tekstā pirms </i> taga.
 		p = Pattern.compile("\"<i>(\\p{L}\\p{M}*)");
 		m = p.matcher(line);
 		while (m.find())
@@ -198,9 +199,9 @@ public class Normalizer
 		line = line.replaceAll("</i>\\)!\\s+<i>", ")! ");
 		line = line.replaceAll("</i>\\s+\\(<i>", " (");
 		line = line.replaceAll("</i>\\(<i>", "(");
-
 		line = line.replaceAll("</i>\\]\\s+<i>", "] ");
 		line = line.replaceAll("</i>\\s+\\[<i>", " [");
+		line = line.replaceAll("</i>,\\s+<i>", ", ");
 
 
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,

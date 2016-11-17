@@ -150,9 +150,9 @@ public class MLVVEntry extends Entry
 			head.gram = MLVVGram.extractFromString(linePart);
 		} else
 		{
-			System.out
-					.printf("Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n%s\n",
-							linePart);
+			System.out.printf(
+					"Neizdodas izgūt pirmo šķirkļavārdu no šī rindas fragmenta:\n%s\n",
+					linePart);
 			head = null;
 		}
 	}
@@ -174,6 +174,11 @@ public class MLVVEntry extends Entry
 		{
 			origin = m.group(2).trim();
 			linePart = m.group(1).trim();
+			if (origin.contains("<square/>"))
+			{
+				linePart = linePart + " " + origin.substring(origin.indexOf("<square/>")).trim();
+				origin = origin.substring(0, origin.indexOf("<square/>")).trim();
+			}
 		}
 
 		// Atvasinājumi

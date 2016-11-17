@@ -54,6 +54,11 @@ public class Normalizer
 		// haotiski kropļojas kvadrātiekavas.
 		line = line.replace("<openSquareBrack/>", "[");
 		line = line.replace("<closeSquareBrack/>", "]");
+		// Speciālie simboli.
+		line = line.replace("<arrow/>", "\u2192");
+		line = line.replace("<sup>0</sup>", "\u00B0");
+		line = line.replace("<sup>0 </sup>", "\u00B0 ");
+		line = line.replace("<sup> 0</sup>", " \u00B0");
 
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta

@@ -18,7 +18,7 @@
 package lv.ailab.dict.mlvv;
 
 import lv.ailab.dict.io.DocLoader;
-import lv.ailab.dict.mlvv.analyzer.Normalizer;
+import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.struct.Entry;
@@ -42,7 +42,7 @@ public class StructureExtractor
 	public static boolean PRINT_PRONUNCIATION = true;
 
 	public Dictionary dict = new Dictionary();
-	public Normalizer normalizer = new Normalizer();
+	public PreNormalizer normalizer = new PreNormalizer();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.

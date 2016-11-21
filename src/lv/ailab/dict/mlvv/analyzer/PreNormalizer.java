@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  *
  * @author Lauma
  */
-public class Normalizer
+public class PreNormalizer
 {
 	/**
 	 * Tagi, ar kuriem šis normalizators strādā.

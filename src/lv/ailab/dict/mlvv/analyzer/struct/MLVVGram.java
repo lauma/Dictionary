@@ -13,8 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Gram funkcionalitāte papildināta ar jaunu teksta lauku + izgūšanas metodes.
  * Izveidots 2016-02-03.
- *
  * @author Lauma
  */
 public class MLVVGram extends Gram
@@ -36,7 +36,7 @@ public class MLVVGram extends Gram
 		this.freeText = text;
 		separateFlagText();
 	}
-	public static MLVVGram extractFromString(String linePart)
+	public static MLVVGram extract(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();

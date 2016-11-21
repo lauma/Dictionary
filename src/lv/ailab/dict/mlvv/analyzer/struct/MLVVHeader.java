@@ -7,8 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Izveidots 2016-02-03.
+ * Pašlaik te nav būtiski paplašināta Header funkcionalitāte, te ir iznestas
+ * izgūšanas metodes.
  *
+ * Izveidots 2016-02-03.
  * @author Lauma
  */
 public class MLVVHeader extends Header

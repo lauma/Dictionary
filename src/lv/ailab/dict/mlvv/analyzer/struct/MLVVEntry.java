@@ -356,13 +356,13 @@ public class MLVVEntry extends Entry
 		else if (nextItalic > -1) cut = nextItalic + 1;
 		if (cut > -1)
 		{
-			res.gloss = new Gloss(linePart.substring(0, cut).trim());
+			res.gloss = MLVVGloss.extractGloss(linePart.substring(0, cut).trim());
 			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
 		{
-			res.gloss = new Gloss(linePart.trim());
+			res.gloss = MLVVGloss.extractGloss(linePart.trim());
 			linePart = "";
 		}
 
@@ -507,7 +507,7 @@ public class MLVVEntry extends Entry
 			// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
 			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
 			res.subsenses = new LinkedList<>();
-			res.subsenses.add(new Sense(gloss.trim()));
+			res.subsenses.add(new Sense(MLVVGloss.extractGloss(gloss.trim())));
 		}
 		else
 		{
@@ -668,10 +668,10 @@ public class MLVVEntry extends Entry
 					}
 					newSense.grammar = new MLVVGram(senseGramText);
 
-					newSense.gloss = new Gloss(g);
+					newSense.gloss = MLVVGloss.extractGloss(g);
 					res.subsenses.add(newSense);
 				} else
-					res.subsenses.add(new Sense(g));
+					res.subsenses.add(new Sense(MLVVGloss.extractGloss(g)));
 			}
 			// Ja frāzei ir vairākas nozīmes, tās sanumurē.
 			if (res.subsenses != null && res.subsenses.size() > 1)

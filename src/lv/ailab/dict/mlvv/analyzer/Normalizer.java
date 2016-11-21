@@ -30,20 +30,24 @@ import java.util.regex.Pattern;
  */
 public class Normalizer
 {
-	public static String[] tags = {"high", "gray", "sup", "sub", "b", "i", "extended"};
+	/**
+	 * Tagi, ar kuriem šis normalizators strādā.
+	 */
+	public String[] tags = {"high", "gray", "sup", "sub", "b", "i", "extended"};
+
 	/**
 	 *
 	 * @param line viena vārdnīcas faila rindiņa (vienlaicīgi arī šķirklis)
 	 * @return normalizēta rinda
 	 */
-	public static String normalizeLine(String line)
+	public String normalizeLine(String line)
 	{
 		line = correctGeneric(line);
 		line = correctSpecials(line);
 		return line;
 	}
 
-	public static String correctGeneric(String line)
+	public String correctGeneric(String line)
 	{
 		if (line == null) return null;
 		// Novāc BOM.
@@ -59,6 +63,7 @@ public class Normalizer
 		line = line.replace("<sup>0</sup>", "\u00B0");
 		line = line.replace("<sup>0 </sup>", "\u00B0 ");
 		line = line.replace("<sup> 0</sup>", " \u00B0");
+
 
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
@@ -152,7 +157,7 @@ public class Normalizer
 	/**
 	 * Specifisku kļūdu labošana.
 	 */
-	public static String correctSpecials(String line)
+	public String correctSpecials(String line)
 	{
 		if (line == null) return line;
 		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
@@ -236,7 +241,7 @@ public class Normalizer
 		return line;
 	}
 
-	public static String removeUnneededTags(String line)
+	public String removeUnneededTags(String line)
 	{
 		String prevLine = null;
 		do // Ārējais cikls paredzēts, lai tiktu galā ar tukšu tagu virtenēm.

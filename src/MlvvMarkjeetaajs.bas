@@ -51,6 +51,16 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(58117) & ChrW(61606) ' câlçns
+        .Replacement.text = "e,~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     ' Platais e ar ^
     Set oRange = ActiveDocument.Content
     With oRange.Find
@@ -181,6 +191,16 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(825) ' aizðíçrsot
+        .Replacement.text = "ç,"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(58128) ' civilapìçrbs
         .Replacement.text = "ç,"
         .Forward = True
         .Wrap = wdFindContinue

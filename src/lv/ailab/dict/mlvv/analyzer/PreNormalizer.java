@@ -143,7 +143,7 @@ public class PreNormalizer
 		line = line.replaceAll("</i>, <i>", ", ");
 		line = line.replaceAll("</i>\", <i>", "\", ");
 		line = line.replaceAll("</i>\" <i>", "\" ");
-		line = line.replaceAll("</i> \"<i>", "\"");
+		line = line.replaceAll("</i> \"<i>", " \"");
 
 		line = line.replaceAll("(?<=\\p{L})<i>.\\s+(?=\\p{L})", ". <i>");
 
@@ -198,12 +198,14 @@ public class PreNormalizer
 		line = line.replace("<b>\u2014</b>", "\u2014");
 
 		// <i>Pārn</i>.: <i>
-		line = line.replaceAll("(?<=\\p{L})</i>.: <i>", ".</i>: <i>");
+		line = line.replaceAll("(?<=\\p{L})</i>\\.: <i>", ".</i>: <i>");
+		line = line.replaceAll("(?<=\\p{L})</i>\\.: \\(<i>", ".</i>: <i>(");
+		line = line.replaceAll("(?<=\\p{L})\\.</i>: \\(<i>", ".</i>: <i>(");
 
 		// Oriģinālais avots sistemātiski neliek iekavas kursīvā.
 		//line = line.replaceAll("</i> \\(arī <i>", " \\(arī "); // Neviennozīmīgi lietots.
 		line = line.replaceAll("</i>\\)\\s+<i>", ") ");
-		line = line.replaceAll("</i>\\)+<i>", ")");
+		line = line.replaceAll("</i>\\)<i>", ")");
 		line = line.replaceAll("</i>\\)\\.\\s+<i>", "). ");
 		line = line.replaceAll("</i>\\)\\?\\s+<i>", ")? ");
 		line = line.replaceAll("</i>\\)!\\s+<i>", ")! ");
@@ -223,7 +225,6 @@ public class PreNormalizer
 			line = m.group(1) + m.group(2) + "</i>" + m.group(3);
 			m = secondPar.matcher(line);
 		}
-
 		secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\[(?:(?!</i>).)*)</i>(\\]\\.*)(.*)");
 		m = secondPar.matcher(line);
 		while (m.matches())

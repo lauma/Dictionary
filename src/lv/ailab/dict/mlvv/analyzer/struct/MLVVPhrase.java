@@ -28,7 +28,7 @@ public class MLVVPhrase extends Phrase
 	 *                      paziņojumiem)
 	 * @return	izgūtā frāze vai null
 	 */
-	public static MLVVPhrase extractSampleOrPhras(String linePart, String phraseType, String lemma)
+	public static MLVVPhrase extractSampleOrPhrase(String linePart, String phraseType, String lemma)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -326,7 +326,7 @@ public class MLVVPhrase extends Phrase
 						.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?arī\\s?)(?=<i>)");//
 				for (String part : parts)
 				{
-					MLVVPhrase sample = extractSampleOrPhras(
+					MLVVPhrase sample = extractSampleOrPhrase(
 							part, PhraseTypes.SAMPLE, lemma);
 					if (sample != null) res.add(sample);
 				}

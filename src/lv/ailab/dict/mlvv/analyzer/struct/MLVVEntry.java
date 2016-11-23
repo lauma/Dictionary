@@ -231,7 +231,7 @@ public class MLVVEntry extends Entry
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.extractSampleOrPhras(
+			MLVVPhrase p = MLVVPhrase.extractSampleOrPhrase(
 					phraseText.trim(), PhraseTypes.PHRASEOLOGICAL, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
@@ -244,7 +244,7 @@ public class MLVVEntry extends Entry
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.extractSampleOrPhras(
+			MLVVPhrase p = MLVVPhrase.extractSampleOrPhrase(
 					phraseText.trim(), PhraseTypes.STABLE_UNIT, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}

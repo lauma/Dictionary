@@ -42,12 +42,24 @@ public class PreNormalizer
 	 */
 	public String normalizeLine(String line)
 	{
+		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
+		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
+		// marķētājiem.
+		// NB! tags <gray>, kas ir tieši pelēki krāsotiem tekstiem, ir jāatstāj!
+		line = line.replaceAll("</?high>", "");
+		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
+		line = line.replaceAll("\\s+", " ");
+		line = line.trim();
+		line = removeUnneededTags(line);
+		line = replaceSymbols(line);
 		line = correctGeneric(line);
+		line = removeUnneededTags(line);
 		line = correctSpecials(line);
+		line = removeUnneededTags(line);
 		return line;
 	}
 
-	public String correctGeneric(String line)
+	public String replaceSymbols(String line)
 	{
 		if (line == null) return null;
 		// Novāc BOM.
@@ -63,20 +75,12 @@ public class PreNormalizer
 		line = line.replace("<sup>0</sup>", "\u00B0");
 		line = line.replace("<sup>0 </sup>", "\u00B0 ");
 		line = line.replace("<sup> 0</sup>", " \u00B0");
+		return line;
+	}
 
-
-		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
-		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
-		// marķētājiem.
-		// NB! tags <gray>, kas ir tieši pelēki krāsotiem tekstiem, ir jāatstāj!
-		line = line.replaceAll("</?high>", "");
-		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
-		line = line.replaceAll("\\s+", " ");
-		line = line.trim();
-
-		if (line.isEmpty()) return line;
-
-		line = removeUnneededTags(line);
+	public String correctGeneric(String line)
+	{
+		if (line == null || line.isEmpty()) return line;
 
 		// Iebīda pēdējo burtu iekšā <extended> tagā.
 		// Perl bija tā:
@@ -91,6 +95,16 @@ public class PreNormalizer
 			line = line.replace(target, replacement);
 			m = p.matcher(line);
 		}
+
+		// Atboldē vientuļās domuzīmes.
+		line = line.replace("<b>-</b>", "-");
+		line = line.replace("<b><i>-</i></b>", "<i>-</i>");
+		line = line.replaceAll("(?<=\\p{L}) -</b>(?=\\p{L})", "</b> -");
+		line = line.replaceAll("(?<!\\p{L}) -</b>(?=\\p{L})", "</b> -");
+		line = line.replace("<b>\u2013</b>", "\u2013");
+		line = line.replace("<b>\u2014</b>", "\u2014");
+		line = line.replace("<b><i>\u2013</i></b>", "<i>\u2013</i>");
+		line = line.replace("<b><i>\u2014</i></b>", "<i>\u2014</i>");
 
 		// Iekļauj aizverošās pēdiņas tekstā pēc <i> taga. Pirms vai pēc pēdiņām
 		// iespējams komats.
@@ -191,16 +205,14 @@ public class PreNormalizer
 			m = missDot.matcher(line);
 		}
 
-		line = line.replace("<b>-</b>", "-");
-		line = line.replaceAll("(?<=\\p{L}) -</b>(?=\\p{L})", "</b> -");
-		line = line.replaceAll("(?<!\\p{L}) -</b>(?=\\p{L})", "</b> -");
-		line = line.replace("<b>\u2013</b>", "\u2013");
-		line = line.replace("<b>\u2014</b>", "\u2014");
-
 		// <i>Pārn</i>.: <i>
 		line = line.replaceAll("(?<=\\p{L})</i>\\.: <i>", ".</i>: <i>");
 		line = line.replaceAll("(?<=\\p{L})</i>\\.: \\(<i>", ".</i>: <i>(");
 		line = line.replaceAll("(?<=\\p{L})\\.</i>: \\(<i>", ".</i>: <i>(");
+
+		// Vienkārši kols garāka teksta vidū
+		line = line.replaceAll("(?<=\\p{L},?\\s\\p{L}{1,15})</i>:\\s+<i>(?=\\p{L}+,?\\s\\p{L}+)", ": ");
+		line = line.replaceAll("(?<=\\p{L},?\\s\\p{L}{1,15})</i>:<i>(?=\\s\\p{L}+,?\\s\\p{L}+)", ":");
 
 		// Oriģinālais avots sistemātiski neliek iekavas kursīvā.
 		//line = line.replaceAll("</i> \\(arī <i>", " \\(arī "); // Neviennozīmīgi lietots.

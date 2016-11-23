@@ -75,13 +75,24 @@ public class MLVVEntry extends Entry
 
 		// Atdala šķirkļa galvu.
 		String head, body;
-		Matcher m1 = Pattern.compile("(<b>.*?</b>.*?)(<b>1\\.</b>.*)")
+		Matcher multiSenseWithGram = Pattern.compile("(<b>.*?</b>.*?)(<b>1\\.</b>.*)")
 				.matcher(line);
-		if (m1.matches()) // Šķirklis ar numurētām nozīmēm
+		Matcher multiSenseNoGram = Pattern.compile("(<b>(?!</?[ib]>).*)\\s(1\\.</b>.*?<b>2\\.</b>.*)")
+				.matcher(line);
+		// Šķirklis ar numurētām nozīmēm un gramatiku pirms pirmās nozīmes
+		if (multiSenseWithGram.matches())
 		{
-			head = m1.group(1);
-			body = m1.group(2);
-		} else // Šķirklis ar vienu nozīmi.
+			head = multiSenseWithGram.group(1);
+			body = multiSenseWithGram.group(2);
+		}
+		// Šķirklis ir ar numurētām nozīmēm, bet bez gramatikas pirms pirmās nozīmes.
+		else if (multiSenseNoGram.matches())
+		{
+			head = multiSenseNoGram.group(1) + "</b>";
+			body = "<b>" + multiSenseNoGram.group(2);
+		}
+		// Šķirklis ar vienu nozīmi.
+		else
 		{
 			Matcher m2 = Pattern.compile("(<b>.*?</b>\\s*)(.*)").matcher(line);
 			if (m2.matches())

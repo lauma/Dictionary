@@ -145,12 +145,12 @@ public class PreNormalizer
 		line = line.replace("</i>!", "!</i>");
 		//line = line.replace("</i>;", ";</i>");
 
-
 		// Novāc tagu pārrāvumus.
-		line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");
-		line = line.replaceAll("<((\\p{L}\\p{M}*)+)>\\s+</\\1>", " ");
-		line = line.replaceAll("</((\\p{L}\\p{M}*)+)><\\1>", "");
-		line = line.replaceAll("</((\\p{L}\\p{M}*)+)>\\s+<\\1>", " ");
+		line = removeUnneededTags(line);
+		//line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");
+		//line = line.replaceAll("<((\\p{L}\\p{M}*)+)>\\s+</\\1>", " ");
+		//line = line.replaceAll("</((\\p{L}\\p{M}*)+)><\\1>", "");
+		//line = line.replaceAll("</((\\p{L}\\p{M}*)+)>\\s+<\\1>", " ");
 
 		// Specifiskie tagu pārrāvumi.
 		line = line.replaceAll("</i>; <i>", "; ");
@@ -160,50 +160,6 @@ public class PreNormalizer
 		line = line.replaceAll("</i> \"<i>", " \"");
 
 		line = line.replaceAll("(?<=\\p{L})<i>.\\s+(?=\\p{L})", ". <i>");
-
-
-		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
-		line = line.replaceAll(" \\s+", " ");
-		line = line.trim();
-		return line;
-	}
-
-	/**
-	 * Specifisku kļūdu labošana.
-	 */
-	public String correctSpecials(String line)
-	{
-		if (line == null) return line;
-		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
-		Pattern cursiveDot = Pattern.compile("(.*?)<b>(\\s*)(\\d+)\\s*<i>\\s*\\.(\\s*)</i>(\\s*)</b>(.*)");
-		Matcher m = cursiveDot.matcher(line);
-		while (m.matches())
-		{
-			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5) + m.group(6);
-			m = cursiveDot.matcher(line);
-		}
-		line = line.replaceAll(" \\s+", " ");
-		line = line.replace("<i>.</i>", ".");
-
-		// Labojums problēmai, ka pie nozīmes numura treknrakstā ir "pielipis"
-		// iepriekšējais punkts.
-		Pattern prevBoldDot = Pattern.compile("(.*?)<b>([.!?]\\s*)(\\d+)\\s*.(\\s*)</b>(.*)");
-		m = prevBoldDot.matcher(line);
-		while (m.matches())
-		{
-			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5);
-			m = prevBoldDot.matcher(line);
-		}
-
-		// Labojums poblēmai, ka nozīmes numura punkts ir palicis ārā no
-		// treknraksta.
-		Pattern missDot = Pattern.compile("(.*?)(<b>\\d+)</b>\\.(\\s.*)");
-		m = missDot.matcher(line);
-		while (m.matches())
-		{
-			line = m.group(1) + m.group(2) + ".</b>" + m.group(3);
-			m = missDot.matcher(line);
-		}
 
 		// <i>Pārn</i>.: <i>
 		line = line.replaceAll("(?<=\\p{L})</i>\\.: <i>", ".</i>: <i>");
@@ -266,6 +222,49 @@ public class PreNormalizer
 		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
 		// Nejauši iekursivēta domuzīme (galotņu šablonos)
 		line = line.replaceAll("\\s+-</i>(?=\\p{L})", "</i> -");
+
+		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
+		line = line.replaceAll(" \\s+", " ");
+		line = line.trim();
+		return line;
+	}
+
+	/**
+	 * Specifisku kļūdu labošana.
+	 */
+	public String correctSpecials(String line)
+	{
+		if (line == null) return line;
+		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
+		Pattern cursiveDot = Pattern.compile("(.*?)<b>(\\s*)(\\d+)\\s*<i>\\s*\\.(\\s*)</i>(\\s*)</b>(.*)");
+		Matcher m = cursiveDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5) + m.group(6);
+			m = cursiveDot.matcher(line);
+		}
+		line = line.replaceAll(" \\s+", " ");
+		line = line.replace("<i>.</i>", ".");
+
+		// Labojums problēmai, ka pie nozīmes numura treknrakstā ir "pielipis"
+		// iepriekšējais punkts.
+		Pattern prevBoldDot = Pattern.compile("(.*?)<b>([.!?]\\s*)(\\d+)\\s*.(\\s*)</b>(.*)");
+		m = prevBoldDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + "<b>" + m.group(3) + ".</b>" + m.group(4) + m.group(5);
+			m = prevBoldDot.matcher(line);
+		}
+
+		// Labojums poblēmai, ka nozīmes numura punkts ir palicis ārā no
+		// treknraksta.
+		Pattern missDot = Pattern.compile("(.*?)(<b>\\d+)</b>\\.(\\s.*)");
+		m = missDot.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + m.group(2) + ".</b>" + m.group(3);
+			m = missDot.matcher(line);
+		}
 
 		return line;
 	}

@@ -562,6 +562,7 @@ Sub VienkaarshoTaguIeliceejs()
     End With
     
     ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
+    ' ... un tam, ka daþviet ir saliktas dîvainas iekavas.
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "["
@@ -574,9 +575,33 @@ Sub VienkaarshoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(61531)
+        .Replacement.text = "<openSquareBrack/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+
     ' Sasodîts aprisinâjums tam, ka Word reizçm nepareizi eksportç []
+    ' ... un tam, ka daþviet ir saliktas dîvainas iekavas.
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "]"
+        .Replacement.text = "<closeSquareBrack/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(61533)
         .Replacement.text = "<closeSquareBrack/>"
         .Forward = True
         .Wrap = wdFindContinue

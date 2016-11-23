@@ -230,19 +230,35 @@ public class PreNormalizer
 		// Ja vienkāršo operāciju dēļ atverošās iekavas ir nokļuvušas kursīvā,
 		// tad kursivē arī aizverošās.
 		// NB! šis nestrādā, ja starp iekavām ir kāds vārds nekursīvā.
-		Pattern secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)[.!?]*)(.*)");
-		m = secondPar.matcher(line);
+		Pattern parMatcher = Pattern.compile("(.*<i>(?:(?!</i>).)*\\((?:(?!</i>).)*)</i>(\\)[.!?]*)(.*)");
+		m = parMatcher.matcher(line);
 		while (m.matches())
 		{
 			line = m.group(1) + m.group(2) + "</i>" + m.group(3);
-			m = secondPar.matcher(line);
+			m = parMatcher.matcher(line);
 		}
-		secondPar = Pattern.compile("(.*<i>(?:(?!</i>).)*\\[(?:(?!</i>).)*)</i>(\\]\\.*)(.*)");
-		m = secondPar.matcher(line);
+		parMatcher = Pattern.compile("(.*<i>(?:(?!</i>).)*\\[(?:(?!</i>).)*)</i>(\\]\\.*)(.*)");
+		m = parMatcher.matcher(line);
 		while (m.matches())
 		{
 			line = m.group(1) + m.group(2) + "</i>" + m.group(3);
-			m = secondPar.matcher(line);
+			m = parMatcher.matcher(line);
+		}
+		// Ja vienkāršo operāciju dēļ aizverošās iekavas ir nokļuvušas kursīvā,
+		// tad kursivē arī atverošās.
+		parMatcher = Pattern.compile("(.*)\\(<i>((?:(?!</i>).)*\\)(?:(?!</i>).)*</i>.*)");
+		m = parMatcher.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + "<i>(" + m.group(2);
+			m = parMatcher.matcher(line);
+		}
+		parMatcher = Pattern.compile("(.*)\\[<i>((?:(?!</i>).)*\\](?:(?!</i>).)*</i>.*)");
+		m = parMatcher.matcher(line);
+		while (m.matches())
+		{
+			line = m.group(1) + "<i>[" + m.group(2);
+			m = parMatcher.matcher(line);
 		}
 
 		// Punkti citāta sākumā

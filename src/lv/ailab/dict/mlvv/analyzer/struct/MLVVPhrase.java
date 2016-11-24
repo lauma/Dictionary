@@ -346,45 +346,41 @@ public class MLVVPhrase extends Phrase
 				// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",
 				// "<i>frāze</i> - <i>gramatika</i> skaidrojums." un
 				// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
-				String[] subParts = linePart.split("(?=<i>)");
-				LinkedList<String> realParts = new LinkedList<>();
-				realParts.addLast(subParts[0]);
-				for (int i = 1; i < subParts.length; i++)
+				String[] initialParts = linePart.split("(?=<i>)");
+
+				// Vispirms apvieno lieki sadalīto
+				LinkedList<String> concatParts = new LinkedList<>();
+				concatParts.addLast(initialParts[0]);
+				for (int i = 1; i < initialParts.length; i++)
 				{
-					// Vispirms vēl var gadīties, ka tekstuāls piemērs ir
-					// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme,
-					// jo viss ir kursīvā.
-					Matcher resplitter = Pattern
-							.compile("(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?)")
-							.matcher(realParts.getLast());
+					// Un sākotnējais sadalījums bieži ir par daudz gabalos.
+					if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?(arī|saīsināti:)\\s?)")
+							|| concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
+							&& initialParts[i].matches("\\s*<i>.*"))
+							//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
+						concatParts.addLast(concatParts.removeLast() + initialParts[i]);
+					else concatParts.addLast(initialParts[i]);
+				}
+
+				// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
+				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
+				// viss ir kursīvā.
+				Pattern resplitPat1 = Pattern.compile(
+						"(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
+				LinkedList<String> finalParts = new LinkedList<>();
+				for (String concatPart : concatParts)
+				{
+					Matcher resplitter = resplitPat1.matcher(concatPart);
 					if (resplitter.matches())
 					{
-						realParts.removeLast();
-						realParts.addLast(resplitter.group(1));
-						realParts.addLast(resplitter.group(2));
+						finalParts.add(resplitter.group(1));
+						finalParts.add(resplitter.group(2));
 					}
-					// Un sākotnējais sadalījums bieži ir par daudz gabalos.
-					if (realParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?(arī|saīsināti:)\\s?)")
-							|| realParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
-							&& subParts[i].matches("\\s*<i>.*"))
-							//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
-						realParts.addLast(realParts.removeLast() + subParts[i]);
-					else realParts.addLast(subParts[i]);
+					else finalParts.add(concatPart);
 				}
-				// Arī pēdējā daļā var gadīties, ka tekstuāls piemērs ir
-				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme,
-				// jo viss ir kursīvā.
-				Matcher resplitter = Pattern
-						.compile("(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)")
-						.matcher(realParts.getLast());
-				if (resplitter.matches())
-				{
-					realParts.removeLast();
-					realParts.addLast(resplitter.group(1));
-					realParts.addLast(resplitter.group(2));
-				}
+
 				// Apstrādā iegūtās daļas.
-				for (String part : realParts)
+				for (String part : finalParts)
 				{
 					MLVVPhrase sample = extractSampleOrPhrase(
 							part, PhraseTypes.SAMPLE, lemma);

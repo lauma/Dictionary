@@ -40,8 +40,8 @@
       <file leaf-file-name="MLVVPhrase.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="366" column="107" selection-start-line="366" selection-start-column="107" selection-end-line="366" selection-end-column="107" />
+            <state relative-caret-position="442">
+              <caret line="368" column="52" selection-start-line="368" selection-start-column="52" selection-end-line="368" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1114,8 +1114,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="366" column="107" selection-start-line="366" selection-start-column="107" selection-end-line="366" selection-end-column="107" />
+        <state relative-caret-position="442">
+          <caret line="368" column="52" selection-start-line="368" selection-start-column="52" selection-end-line="368" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

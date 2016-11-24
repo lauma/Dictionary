@@ -5,6 +5,8 @@ import lv.ailab.dict.mlvv.analyzer.stringutils.Replacers;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,37 +110,59 @@ public class MLVVPhrase extends Phrase
 				}
 			}
 
-			String[] gloses = new String[]{end};
+			String[] subsenses = new String[]{end};
 			// Ir vairākas nozīmes.
 			if (end.startsWith("a."))
 			{
-				end = end.substring(2).trim();
-				gloses = end.split("\\s[bcdefghijklmnop]\\.\\s");
+				subsenses = end.split("\\s(?=[bcdefghijklmnop]\\.\\s)");
+				// Ja skaidrojums ir formā "a. skaidrojums <i>piemēri b.</i> b. skaidrojums...",
+				// tad var sanākt nepareizs dalījums dalot tā pa prasto.
+				if (end.contains("<i>"))
+				{
+					LinkedList<String> betterGloses = new LinkedList<>();
+					betterGloses.addLast(subsenses[0]);
+					for (int i = 1; i < subsenses.length; i++)
+					{
+						String prev = betterGloses.getLast();
+						if (prev.indexOf("<i>") > prev.indexOf("</i>"))
+							betterGloses.addLast(
+									betterGloses.removeLast() + " " +subsenses[i]);
+						else betterGloses.addLast(subsenses[i]);
+					}
+					subsenses = betterGloses.toArray(new String[betterGloses.size()]);
+				}
+				subsenses = Arrays.stream(subsenses).map(s -> s.substring(2).trim())
+						.toArray(String[]::new);
 			}
 			res.subsenses = new LinkedList<>();
-			for (String g : gloses)
+			for (String subsense : subsenses)
 			{
-				if (end.startsWith("<i>"))
+				if (subsense.contains("</i>") && !subsense.contains("<i>"))
+					subsense = "<i>" + subsense;
+				else if (subsense.contains("<i>") && !subsense.contains("</i>"))
+					subsense = subsense + "</i>";
+				res.subsenses.add(MLVVSense.extract(subsense, lemma));
+				/*if (end.startsWith("<i>"))
 				{
 					Sense newSense = new Sense();
 					String senseGramText = null;
 					if (end.contains("</i>"))
 					{
-						senseGramText = g.substring(0, g.indexOf("</i>") + 4);
-						g = g.substring(g.indexOf("</i>") + 4);
+						senseGramText = subsense.substring(0, subsense.indexOf("</i>") + 4);
+						subsense = subsense.substring(subsense.indexOf("</i>") + 4);
 					} else
 					{
 						System.out.printf(
 								"Frāzē \"%s\" skaidrojumā nevar atrast aizverošo i tagu\n",
 								linePart);
-						senseGramText = g;
-						g = "";
+						senseGramText = subsense;
+						subsense = "";
 					}
 					newSense.grammar = new MLVVGram(senseGramText);
-					newSense.gloss = MLVVGloss.extract(g);
+					newSense.gloss = MLVVGloss.extract(subsense);
 					res.subsenses.add(newSense);
 				} else
-					res.subsenses.add(new Sense(MLVVGloss.extract(g)));
+					res.subsenses.add(new Sense(MLVVGloss.extract(subsense)));//*/
 			}
 			// Ja frāzei ir vairākas nozīmes, tās sanumurē.
 			if (res.subsenses != null && res.subsenses.size() > 1)
@@ -319,12 +343,48 @@ public class MLVVPhrase extends Phrase
 			if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
 			{
 				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
-				// Te ir maģija, lai nesadalītu "a. skaidrojums. b. <i>sar.</i> skaidrojums.",
+				// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",
 				// "<i>frāze</i> - <i>gramatika</i> skaidrojums." un
 				// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
-				String[] parts = linePart
-						.split("(?<!\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?arī\\s?)(?=<i>)");//
-				for (String part : parts)
+				String[] subParts = linePart.split("(?=<i>)");
+				LinkedList<String> realParts = new LinkedList<>();
+				realParts.addLast(subParts[0]);
+				for (int i = 1; i < subParts.length; i++)
+				{
+					// Vispirms vēl var gadīties, ka tekstuāls piemērs ir
+					// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme,
+					// jo viss ir kursīvā.
+					Matcher resplitter = Pattern
+							.compile("(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?)")
+							.matcher(realParts.getLast());
+					if (resplitter.matches())
+					{
+						realParts.removeLast();
+						realParts.addLast(resplitter.group(1));
+						realParts.addLast(resplitter.group(2));
+					}
+					// Un sākotnējais sadalījums bieži ir par daudz gabalos.
+					if (realParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?(arī|saīsināti:)\\s?)")
+							|| realParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
+							&& subParts[i].matches("\\s*<i>.*"))
+							//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
+						realParts.addLast(realParts.removeLast() + subParts[i]);
+					else realParts.addLast(subParts[i]);
+				}
+				// Arī pēdējā daļā var gadīties, ka tekstuāls piemērs ir
+				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme,
+				// jo viss ir kursīvā.
+				Matcher resplitter = Pattern
+						.compile("(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)")
+						.matcher(realParts.getLast());
+				if (resplitter.matches())
+				{
+					realParts.removeLast();
+					realParts.addLast(resplitter.group(1));
+					realParts.addLast(resplitter.group(2));
+				}
+				// Apstrādā iegūtās daļas.
+				for (String part : realParts)
 				{
 					MLVVPhrase sample = extractSampleOrPhrase(
 							part, PhraseTypes.SAMPLE, lemma);
@@ -338,7 +398,7 @@ public class MLVVPhrase extends Phrase
 		if (lineEndPart != null && lineEndPart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
+					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
 			// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
 			Matcher m = taxonPat.matcher(lineEndPart);
 			if (m.matches())

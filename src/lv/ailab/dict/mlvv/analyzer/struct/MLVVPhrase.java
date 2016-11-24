@@ -366,15 +366,25 @@ public class MLVVPhrase extends Phrase
 				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
 				// viss ir kursīvā.
 				Pattern resplitPat1 = Pattern.compile(
-						"(.*<i>(?:(?<!</i>).)*\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
+						"(.*<i>(?:(?:(?<!</i>).)*\\.\\s)?)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
 				LinkedList<String> finalParts = new LinkedList<>();
 				for (String concatPart : concatParts)
 				{
 					Matcher resplitter = resplitPat1.matcher(concatPart);
 					if (resplitter.matches())
 					{
-						finalParts.add(resplitter.group(1));
-						finalParts.add(resplitter.group(2));
+						String preLast = resplitter.group(1);
+						String last = resplitter.group(2);
+						Matcher gramMatcher = Pattern
+								.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}])*\\.</i>:\\s*)?<i>\\s*)")
+								.matcher(preLast);
+						if (gramMatcher.matches())
+						{
+							preLast = gramMatcher.group(1);
+							last = gramMatcher.group(2) + last;
+						}
+						if (!preLast.trim().isEmpty()) finalParts.add(preLast);
+						finalParts.add(last);
 					}
 					else finalParts.add(concatPart);
 				}

@@ -54,7 +54,7 @@ public class MLVVPhrase extends Phrase
 			for (String part : beginParts)
 			{
 				// Frāze pati ir kursīvā
-				if (part.startsWith("<i>"))
+				if (part.startsWith("<i>") || part.startsWith("(<i>"))
 				{
 					// ir ar kolu atdalītā gramatika
 					if (part.contains(".: "))
@@ -142,27 +142,6 @@ public class MLVVPhrase extends Phrase
 				else if (subsense.contains("<i>") && !subsense.contains("</i>"))
 					subsense = subsense + "</i>";
 				res.subsenses.add(MLVVSense.extract(subsense, lemma));
-				/*if (end.startsWith("<i>"))
-				{
-					Sense newSense = new Sense();
-					String senseGramText = null;
-					if (end.contains("</i>"))
-					{
-						senseGramText = subsense.substring(0, subsense.indexOf("</i>") + 4);
-						subsense = subsense.substring(subsense.indexOf("</i>") + 4);
-					} else
-					{
-						System.out.printf(
-								"Frāzē \"%s\" skaidrojumā nevar atrast aizverošo i tagu\n",
-								linePart);
-						senseGramText = subsense;
-						subsense = "";
-					}
-					newSense.grammar = new MLVVGram(senseGramText);
-					newSense.gloss = MLVVGloss.extract(subsense);
-					res.subsenses.add(newSense);
-				} else
-					res.subsenses.add(new Sense(MLVVGloss.extract(subsense)));//*/
 			}
 			// Ja frāzei ir vairākas nozīmes, tās sanumurē.
 			if (res.subsenses != null && res.subsenses.size() > 1)
@@ -383,6 +362,12 @@ public class MLVVPhrase extends Phrase
 							preLast = gramMatcher.group(1);
 							last = gramMatcher.group(2) + last;
 						}
+						if (preLast.indexOf("<i>") > preLast.indexOf("</i>")
+								|| preLast.contains("<i>") && ! preLast.contains("</i>"))
+							preLast = preLast + "</i>";
+						if (last.indexOf("</i>") < last.indexOf("<i>")
+								|| last.contains("</i>") && ! last.contains("<i>"))
+							last = "<i>" + last;
 						if (!preLast.trim().isEmpty()) finalParts.add(preLast);
 						finalParts.add(last);
 					}

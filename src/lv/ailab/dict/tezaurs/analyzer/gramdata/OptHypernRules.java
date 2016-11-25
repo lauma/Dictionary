@@ -1806,7 +1806,7 @@ public class OptHypernRules
 				"\"vērsties\" (mainīt būtību)"), //izvērsties 2
 
 		// Izņēmums.
-		VerbDoubleRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 15,
+		VerbDoubleRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikties\" (patikties kādam)"),
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("tik", "tīk", "tik")), //iepatikties

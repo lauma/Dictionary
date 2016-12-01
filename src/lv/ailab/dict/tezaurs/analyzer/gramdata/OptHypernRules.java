@@ -1886,9 +1886,7 @@ public class OptHypernRules
 		FirstConj.refl("-gūstos, -gūsties,", "-gūstas, pag. -guvos", "gūties"), //aizgūties
 		// Ģ
 		FirstConj.refl("-ģērbjos, -ģērbies,", "-ģērbjas, pag. -ģērbos", "ģērbties"), //apģērbties
-		// H, I, Ī
-		FirstConj.refl("-īdos, -īdies,", "-īdas, pag. -īdējos", "īdēties"), //ieīdēties
-		// J
+		// H, I, Ī, J
 		FirstConj.refl("-jaucos, -jaucies,", "-jaucas, pag. -jaucos", "jaukties"), //iejaukties
 		FirstConj.refl("-jājos, -jājies,", "-jājas, pag. -jājos", "jāties"), //izjāties
 		FirstConj.refl("-jēdzos, -jēdzies,", "-jēdzas, pag. -jēdzos", "jēgties"), //nojēgties
@@ -2179,7 +2177,9 @@ public class OptHypernRules
 		// E, F, G
 		ThirdConj.refl("-grasos, -grasies,", "-grasās, pag. -grasījos", "grasīties", false), //pagrasīties
 		ThirdConj.refl("-gribos, -gribies,", "-gribas, pag. -gribējos", "gribēties", false), //izgribēties
-		// H, I, J, K
+		// H, I
+		ThirdConj.refl("-īdos, -īdies,", "-īdas, pag. -īdējos", "īdēties", false), //ieīdēties
+		// J, K
 		ThirdConj.refl("-kustos, -kusties,", "-kustas, pag. -kustējos", "kustēties", false), //aizkustēties
 		// L
 		ThirdConj.refl("-lāpos, -lāpies,", "-lāpās, pag. -lāpījos", "lāpīties", false), //aplāpīties

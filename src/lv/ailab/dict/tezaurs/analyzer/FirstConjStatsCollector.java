@@ -276,12 +276,14 @@ public class FirstConjStatsCollector
 		boolean hasParallelStems = false;
 		String infinitives = "";
 		Set<String> stemKeys = what.gram.flags.getAll(Keys.INFINITIVE_STEM);
+		if (stemKeys == null) stemKeys = new HashSet<>();
 		infinitives = stemKeys.stream().sorted()
 				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 				.reduce((a, b) -> a + ", " + b).orElse("0");
 
 		String presents = "";
 		stemKeys = what.gram.flags.getAll(Keys.PRESENT_STEMS);
+		if (stemKeys == null) stemKeys = new HashSet<>();
 		if (stemKeys.size() > 1)
 			System.out.println("Pie \"" + what.lemma.text
 					+ "\" ir vairāk kā 1 tagadnes celmu rinda: "
@@ -303,6 +305,7 @@ public class FirstConjStatsCollector
 
 		String pasts = "";
 		stemKeys = what.gram.flags.getAll(Keys.PAST_STEMS);
+		if (stemKeys == null) stemKeys = new HashSet<>();
 		if (stemKeys.size() > 1)
 			System.out.println("Pie \"" + what.lemma.text
 					+ "\" ir vairāk kā 1 pagātnes celmu rinda: "
@@ -599,7 +602,7 @@ public class FirstConjStatsCollector
 		TreeMap<String, Integer>  potPrefs = new TreeMap<>();
 		String[] sortedStems = infinitiveStems.stream()
 				.sorted((a, b) -> b.length() - a.length())
-				.toArray(size -> new String[size]);
+				.toArray(String[]::new);
 
 		for (String potVerb : source)
 		{
@@ -635,6 +638,10 @@ public class FirstConjStatsCollector
 				.sorted((a, b) -> {
 					if (prefixes.contains(a) && !prefixes.contains(b)) return -1;
 					else if (!prefixes.contains(a) && prefixes.contains(b)) return 1;
+					else if ((a.length() == 1 || a.matches("[bcčdfgģhjkķlļmnņprŗsštvzž]+"))
+							&& (b.length() != 1 && !b.matches("[bcčdfgģhjkķlļmnņprŗsštvzž]+"))) return -1;
+					else if ((a.length() != 1 && !a.matches("[bcčdfgģhjkķlļmnņprŗsštvzž]+"))
+							&& (b.length() == 1 || b.matches("[bcčdfgģhjkķlļmnņprŗsštvzž]+"))) return 1;
 					else if (potPrefs.get(a) > potPrefs.get(b)) return -1;
 					else if (potPrefs.get(a) < potPrefs.get(b)) return 1;
 					else return a.compareTo(b);})

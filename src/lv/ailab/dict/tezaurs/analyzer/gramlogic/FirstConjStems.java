@@ -87,18 +87,18 @@ public class FirstConjStems
 	/**
 	 * Konstruktors objektam no jau gatava celmu komplekta, kur katrs celms ir
 	 * vienā eksemplārā.
-	 * @param infinityStem		nenoteiksmes celms
+	 * @param infinitiveStem	nenoteiksmes celms
 	 * @param presentStem		tagadnes celms
 	 * @param pastStem			pagātnes celms
 	 * @return atbilstoši aizpildīts celmu objekts
 	 */
 	public static FirstConjStems of (
-			String infinityStem, String presentStem, String pastStem)
+			String infinitiveStem, String presentStem, String pastStem)
 	{
 		return new FirstConjStems(
-				new ArrayList<String>() {{add(infinityStem);}},
-				new ArrayList<String>() {{add(presentStem);}},
-				new ArrayList<String>() {{add(pastStem);}},
+				new ArrayList<String>() {{if (infinitiveStem != null) add(infinitiveStem);}},
+				new ArrayList<String>() {{if (presentStem != null) add(presentStem);}},
+				new ArrayList<String>() {{if (pastStem != null) add(pastStem);}},
 				false);
 	}
 

@@ -699,7 +699,7 @@ public class DirectRules
 		VerbDoubleRule.of("parasti pag. -sārtu, -sārti, -sārta", null, "sārst", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sārst\""), TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
-				FirstConjStems.of("sārs", null, "sart")), // piesārst
+				FirstConjStems.of("sārs", null, "sārt")), // piesārst
 	};
 
 	/**

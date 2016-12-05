@@ -44,14 +44,14 @@ public class MLVVGram extends Gram
 
 		MLVVGram gram = new MLVVGram();
 		// ir ierobežojošās formas
-		Matcher gramMatch = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
+		Matcher gramMatch = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):((?:</i>)?)\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
 					.matcher(linePart);
 		if (gramMatch.matches()) // ir ierobežojošās formas.
 		{
 			linePart = gramMatch.group(1);
-			String restrFirstFlag = gramMatch.group(2).trim();
-			String restrForms = gramMatch.group(3);
-			String restrLastFlags = gramMatch.group(4).trim();
+			String restrFirstFlag = gramMatch.group(2).trim() + gramMatch.group(3);
+			String restrForms = gramMatch.group(4);
+			String restrLastFlags = gramMatch.group(5).trim();
 			String[] restrParts = restrForms.split("(?=<u>)");
 			gram.formRestrictions = new ArrayList<>();
 

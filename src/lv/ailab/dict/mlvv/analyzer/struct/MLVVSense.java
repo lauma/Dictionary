@@ -84,7 +84,7 @@ public class MLVVSense extends Sense
 			if (linePart.contains("</i>"))
 			{
 				Matcher gramMatch = Pattern.compile(
-						"(<i>.*?</i>(?::\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*(?:\\s*<i>.*?</i>[.,;]?)*)*)\\s*(.*)")
+						"(<i>.*?</i>(?:(?::|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*(?:\\s*<i>.*?</i>[.,;]?)*)*)\\s*(.*)")
 						// (gramatika kursīvā (: pasvītrota forma( [izruna])?(, atkārtota forma( [izruna])?)* pieturz.? (vēl gramatika)*)*) atstarpe (pārējais)
 						.matcher(linePart);
 				if (gramMatch.matches())

@@ -186,6 +186,7 @@ public class MLVVGram extends Gram
 	public void normalizeFreeText()
 	{
 		freeText = normalizeGramField(freeText);
+		if ("arī".equals(freeText)) freeText = null;
 		if (freeText != null && freeText.isEmpty()) freeText = null;
 	}
 

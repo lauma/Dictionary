@@ -109,6 +109,17 @@ public class PreNormalizer
 		line = line.replace("<b>.</b>", ".");
 		line = line.replace("<b><i>.</i></b>", ".");
 
+		// Izkļauj komatus no treknraksta beigām
+		p = Pattern.compile("(\\p{L}\\p{M}*),(\\s*)</b>");
+		m = p.matcher(line);
+		while (m.find())
+		{
+			String target = m.group();
+			String replacement = m.group(1) +"</b>," + m.group(2);
+			line = line.replace(target, replacement);
+			m = p.matcher(line);
+		}
+
 		// Iekļauj aizverošās pēdiņas tekstā pēc <i> taga. Pirms vai pēc pēdiņām
 		// iespējams komats.
 		p = Pattern.compile("(\\p{L}\\p{M}*)</i>(,?\",?)");

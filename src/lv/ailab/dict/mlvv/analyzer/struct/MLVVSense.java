@@ -53,7 +53,7 @@ public class MLVVSense extends Sense
 		if (linePart.matches("(<i>((?!=</i>).*)</i>\\s*)?<b>.*")) // Šķirklī "abhāzi", "ārieši".
 		{
 			Pattern headpart = Pattern.compile(
-					"((?:<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
+					"((?:(?:[,;]?\\s*arī\\s*)?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
 			//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
 			Matcher headMatcher = headpart.matcher(linePart);
 			String header = "";

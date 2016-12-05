@@ -147,7 +147,7 @@ public class MLVVEntry extends Entry
 			head.lemma = new Lemma(m.group(1).trim());
 			String gram = m.group(2);
 			// Homonīma infekss, ja tāds ir.
-			m = Pattern.compile("^<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)")
+			m = Pattern.compile("^<sup>\\s*(?:<b>)?(.*?)(?:</b>)?\\s*</sup>\\s*(.*)")
 					.matcher(gram);
 			if (m.matches())
 			{
@@ -172,10 +172,10 @@ public class MLVVEntry extends Entry
 	{
 		linePart = linePart.trim();
 		// Normatīvais komentārs
-		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>").matcher(linePart);
+		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>(\\.?)").matcher(linePart);
 		if (m.matches())
 		{
-			freeText = m.group(2).trim();
+			freeText = (m.group(2) + m.group(3)).trim();
 			linePart = m.group(1).trim();
 		}
 

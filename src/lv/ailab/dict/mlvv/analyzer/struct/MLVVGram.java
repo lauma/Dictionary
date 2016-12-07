@@ -1,5 +1,7 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
+import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
 import org.json.simple.JSONObject;
@@ -44,14 +46,14 @@ public class MLVVGram extends Gram
 
 		MLVVGram gram = new MLVVGram();
 		// ir ierobežojošās formas
-		Matcher gramMatch = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):((?:</i>)?)\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
+		Matcher gramRestrForms = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):((?:</i>)?)\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
 					.matcher(linePart);
-		if (gramMatch.matches()) // ir ierobežojošās formas.
+		if (gramRestrForms.matches()) // ir ierobežojošās formas.
 		{
-			linePart = gramMatch.group(1);
-			String restrFirstFlag = gramMatch.group(2).trim() + gramMatch.group(3);
-			String restrForms = gramMatch.group(4);
-			String restrLastFlags = gramMatch.group(5).trim();
+			linePart = gramRestrForms.group(1);
+			String restrFirstFlag = gramRestrForms.group(2).trim() + gramRestrForms.group(3);
+			String restrForms = gramRestrForms.group(4);
+			String restrLastFlags = gramRestrForms.group(5).trim();
 			String[] restrParts = restrForms.split("(?=<u>)");
 			gram.formRestrictions = new ArrayList<>();
 
@@ -91,8 +93,32 @@ public class MLVVGram extends Gram
 				gram.formRestrictions.add(restr);
 			}
 		}
+		// Ir altLemma iekavās
+		Matcher gramAltLemmaBraces = Pattern.compile(
+				"(<b>(?:(?!<[bu]>).)*</b>(?:(?!<[bu]>)[^(])*)\\((<b>[^)]+)\\)((?:(?!<[bu]>).)*)")
+				.matcher(linePart);
+		if (gramAltLemmaBraces.matches())
+		{
+			String endPart = Editors.openCursive(gramAltLemmaBraces.group(3));
+			String beginPart = gramAltLemmaBraces.group(1).trim();
+			if (!beginPart.endsWith("</b>") && !endPart.isEmpty())
+				beginPart = beginPart + ";";
+			beginPart = Editors.closeCursive(beginPart);
+			String middlePart = gramAltLemmaBraces.group(2);
+			if (!endPart.isEmpty())
+				middlePart = middlePart + "; ";
+			middlePart = Editors.closeCursive(middlePart);
 
-		if (linePart.contains("<b>")) // Ir altLemmas
+			if (gram.altLemmas == null) gram.altLemmas = new ArrayList<>();
+			Header altLemma = MLVVHeader.extractSingularHeader(
+					PreNormalizer.correctGeneric(beginPart + endPart));
+			if (altLemma!= null) gram.altLemmas.add(altLemma);
+			altLemma = MLVVHeader.extractSingularHeader(
+					PreNormalizer.correctGeneric(middlePart + endPart));
+			if (altLemma!= null) gram.altLemmas.add(altLemma);
+		}
+		// Ir parastā altLemma
+		else if (linePart.contains("<b>"))
 		{
 			// Šādi sadalās tās daļas, kur uz vairākām vārdformām ir viena
 			// vārdšķira.
@@ -225,16 +251,8 @@ public class MLVVGram extends Gram
 		}
 
 		// Satīra visu iegūto.
-		if (flagText != null)
-		{
-			flagText = flagText.replace("<i>", "");
-			flagText = flagText.replace("</i>", "");
-		}
-		if (freeText != null)
-		{
-			freeText = freeText.replace("<i>", "");
-			freeText = freeText.replace("</i>", "");
-		}
+		flagText = Editors.removeCursive(flagText);
+		freeText = Editors.removeCursive(freeText);
 		normalizeFreeText();
 		normalizeFlagText();
 	}

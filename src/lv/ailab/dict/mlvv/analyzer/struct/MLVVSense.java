@@ -105,7 +105,7 @@ public class MLVVSense extends Sense
 			}
 		}
 
-		// Tagad vajadzētu sakot definīcijai.
+		// Tagad vajadzētu sekot definīcijai.
 		// Ja tālāk būs piemēri
 		int nextCircle = Finders.getAnyCircleIndex(linePart);
 		int nextItalic = linePart.indexOf(". <i>");

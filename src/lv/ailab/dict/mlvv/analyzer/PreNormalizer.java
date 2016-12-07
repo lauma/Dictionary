@@ -17,6 +17,8 @@
  *******************************************************************************/
 package lv.ailab.dict.mlvv.analyzer;
 
+import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,15 +34,17 @@ public class PreNormalizer
 {
 	/**
 	 * Tagi, ar kuriem šis normalizators strādā.
+	 * FIXME: Specifiskie kāda taga labojumi tiek veikti arī tad, ja to tagu no šī masīva izņem.
 	 */
-	public String[] tags = {"high", "gray", "sup", "sub", "b", "i", "extended"};
+	protected final static String[] tags = {
+			"high", "gray", "sup", "sub", "b", "i", "extended"};
 
 	/**
 	 *
 	 * @param line viena vārdnīcas faila rindiņa (vienlaicīgi arī šķirklis)
 	 * @return normalizēta rinda
 	 */
-	public String normalizeLine(String line)
+	public static String normalizeLine(String line)
 	{
 		// Aizvāc visus tagus, kas atbild par teksta iekrāsošanu (highlight),
 		// jo pašlaik izskatās, ka tā ir pagaidu informācija, kas paredzēta
@@ -50,16 +54,14 @@ public class PreNormalizer
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll("\\s+", " ");
 		line = line.trim();
-		line = removeUnneededTags(line);
+		line = Editors.removeTagSplits(line, tags);
 		line = replaceSymbols(line);
 		line = correctGeneric(line);
-		line = removeUnneededTags(line);
 		line = correctSpecials(line);
-		line = removeUnneededTags(line);
 		return line;
 	}
 
-	public String replaceSymbols(String line)
+	public static String replaceSymbols(String line)
 	{
 		if (line == null) return null;
 		// Novāc BOM.
@@ -78,7 +80,7 @@ public class PreNormalizer
 		return line;
 	}
 
-	public String correctGeneric(String line)
+	public static String correctGeneric(String line)
 	{
 		if (line == null || line.isEmpty()) return line;
 
@@ -160,7 +162,7 @@ public class PreNormalizer
 		//line = line.replace("</i>;", ";</i>");
 
 		// Novāc tagu pārrāvumus.
-		line = removeUnneededTags(line);
+		line = Editors.removeTagSplits(line, tags);
 		//line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");
 		//line = line.replaceAll("<((\\p{L}\\p{M}*)+)>\\s+</\\1>", " ");
 		//line = line.replaceAll("</((\\p{L}\\p{M}*)+)><\\1>", "");
@@ -236,17 +238,21 @@ public class PreNormalizer
 		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
 		// Nejauši iekursivēta domuzīme (galotņu šablonos)
 		line = line.replaceAll("\\s+-</i>(?=\\p{L})", "</i> -");
+		// Nejauši iekursivēts punkts?
+		line = line.replace(":</i>", "</i>:");
 
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll(" \\s+", " ");
 		line = line.trim();
+
+		line = Editors.removeTagSplits(line, tags);
 		return line;
 	}
 
 	/**
 	 * Specifisku kļūdu labošana.
 	 */
-	public String correctSpecials(String line)
+	public static String correctSpecials(String line)
 	{
 		if (line == null) return line;
 		// Labojums problēmai, ka nozīmes numura punkts reizēm ir kursīvā.
@@ -280,34 +286,9 @@ public class PreNormalizer
 			m = missDot.matcher(line);
 		}
 
+		line = Editors.removeTagSplits(line, tags);
+
 		return line;
 	}
 
-	public String removeUnneededTags(String line)
-	{
-		String prevLine = null;
-		do // Ārējais cikls paredzēts, lai tiktu galā ar tukšu tagu virtenēm.
-		{
-			prevLine = line;
-			for (String tag : tags)
-			{
-				// Iznes ārā no anotētajiem elementiem to galos esošās atstarpes.
-				line = line.replace(" </" + tag + ">", "</" + tag + "> ");
-				line = line.replace("<" + tag + "> ", " <" + tag + ">");
-
-				// Aizvāc nevajadzīgus tagu pārrāvumus un tukšus tagus.
-				String history = line;
-				do
-				{
-					history = line;
-					line = line.replaceAll("<" + tag + "></" + tag + ">", "");
-					line = line.replaceAll("<" + tag + ">\\s+</" + tag + ">", " ");
-					line = line.replaceAll("</" + tag + "><" + tag + ">", "");
-					line = line.replaceAll("</" + tag + ">\\s+<" + tag + ">", " ");
-				} while (!history.equals(line));
-			}
-		}
-		while (!line.equals(prevLine));
-		return line;
-	}
 }

@@ -42,7 +42,6 @@ public class StructureExtractor
 	public static boolean PRINT_PRONUNCIATION = true;
 
 	public Dictionary dict = new Dictionary();
-	public PreNormalizer normalizer = new PreNormalizer();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
@@ -79,7 +78,7 @@ public class StructureExtractor
 	{
 		try
 		{
-			Entry e = MLVVEntry.extractFromString(normalizer.normalizeLine(line));
+			Entry e = MLVVEntry.extractFromString(PreNormalizer.normalizeLine(line));
 			if (e != null)
 			{
 				dict.entries.add(e);
@@ -110,7 +109,7 @@ public class StructureExtractor
 			while (line != null)
 			{
 				if (PRINT_MIDLLE)
-					middleOut.println(normalizer.normalizeLine(line));
+					middleOut.println(PreNormalizer.normalizeLine(line));
 				processLine(line);
 				line = in.readLine();
 			}
@@ -138,7 +137,7 @@ public class StructureExtractor
 			for (String line : lines)
 			{
 				if (PRINT_MIDLLE)
-					MiddleOut.println(normalizer.normalizeLine(line));
+					MiddleOut.println(PreNormalizer.normalizeLine(line));
 				processLine(line);
 			}
 			if (PRINT_MIDLLE)

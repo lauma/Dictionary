@@ -1,11 +1,10 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
-import lv.ailab.dict.mlvv.analyzer.stringutils.Replacers;
+import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -71,7 +70,7 @@ public class MLVVPhrase extends Phrase
 								.trim();
 					}
 
-					res.text.add(Replacers.removeCursive(part));
+					res.text.add(Editors.removeCursive(part));
 				}
 				// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
 				else if (part.contains("<i>"))
@@ -162,11 +161,11 @@ public class MLVVPhrase extends Phrase
 			String begin = colonMatcher.group(1).trim();
 			if (begin.length() > 0) res.grammar = new MLVVGram(begin);
 			String end = colonMatcher.group(2).trim();
-			res.text.add(Replacers.removeCursive(end));
+			res.text.add(Editors.removeCursive(end));
 		}
 		// Frāze bez gramatikas un bez skaidrojuma.
 		else if (simpleMatcher.matches())
-			res.text.add(Replacers.removeCursive(linePart));
+			res.text.add(Editors.removeCursive(linePart));
 		// Nu nesanāca!
 		else
 		{
@@ -362,12 +361,8 @@ public class MLVVPhrase extends Phrase
 							preLast = gramMatcher.group(1);
 							last = gramMatcher.group(2) + last;
 						}
-						if (preLast.indexOf("<i>") > preLast.indexOf("</i>")
-								|| preLast.contains("<i>") && ! preLast.contains("</i>"))
-							preLast = preLast + "</i>";
-						if (last.indexOf("</i>") < last.indexOf("<i>")
-								|| last.contains("</i>") && ! last.contains("<i>"))
-							last = "<i>" + last;
+						preLast = Editors.closeCursive(preLast);
+						last = Editors.openCursive(last);
 						if (!preLast.trim().isEmpty()) finalParts.add(preLast);
 						finalParts.add(last);
 					}

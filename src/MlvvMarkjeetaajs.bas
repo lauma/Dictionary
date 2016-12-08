@@ -2,20 +2,44 @@ Attribute VB_Name = "MlvvMarkjeetaajs"
 Sub Markjeetaajs()
 '
 ' Markjeetaajs Macro
-'
+' Tiek sagaidîts, ka pirms ðî palaiþ "Izrunas"
 ' Ðobrîd ir kaut kâda apðaubâma problçma ar tabulâm - tâs ieved bezgalîgâ
 ' ciklâ dubulto tagu ielicçju.
     Application.ScreenUpdating = False
-    
     Priekshdarbi
-    Izrunas
     VienkaarshoTaguIeliceejs
     DubultoTaguIeliceejs
     MsgBox "Viss gatavs!", 0, "MLVV"
     Application.ScreenUpdating = True
 End Sub
 Sub Izrunas()
+'
+' Izrunas Macro
+' Aiztâj visus izrunu simbolus un nepareizâs kvadrâtiekavas.
+' Zinâmâ problçma: salauþ franèu valodas simbolus cilmç.
     Dim oRange As Range
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(61531)
+        .Replacement.text = "["
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    With oRange.Find
+        .text = ChrW(61533)
+        .Replacement.text = "]"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
     ' Sasodîts aprisinâjums izrunu izgûðanai
     
     ' ---------- 3 simbolu bloki ----------------------------------------

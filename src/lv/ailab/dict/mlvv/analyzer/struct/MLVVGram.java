@@ -46,14 +46,21 @@ public class MLVVGram extends Gram
 
 		MLVVGram gram = new MLVVGram();
 		// ir ierobežojošās formas
-		Matcher gramRestrForms = Pattern.compile("((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):((?:</i>)?)\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
-					.matcher(linePart);
-		if (gramRestrForms.matches()) // ir ierobežojošās formas.
+		Matcher gramFullRestrForms = Pattern.compile(
+				"((?:(?:(?!<u>).)*?[,;]\\s)?)([^;,]+):((?:</i>)?)\\s(<u>.*?)((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
+				.matcher(linePart);
+		Matcher gramSimpleRestrForms = Pattern.compile(
+				"(<i>.*(?:</i>))?:\\s*((?:<i>)?.*</i>\\.?)")
+				.matcher(linePart);
+		Matcher gramAltLemmaBraces = Pattern.compile(
+				"(<b>(?:(?!<[bu]>).)*</b>(?:(?!<[bu]>)[^(])*)\\((<b>[^)]+)\\)((?:(?!<[bu]>).)*)")
+				.matcher(linePart);
+		if (gramFullRestrForms.matches()) // ir ierobežojošās formas.
 		{
-			linePart = gramRestrForms.group(1);
-			String restrFirstFlag = gramRestrForms.group(2).trim() + gramRestrForms.group(3);
-			String restrForms = gramRestrForms.group(4);
-			String restrLastFlags = gramRestrForms.group(5).trim();
+			linePart = gramFullRestrForms.group(1);
+			String restrFirstFlag = gramFullRestrForms.group(2).trim() + gramFullRestrForms.group(3);
+			String restrForms = gramFullRestrForms.group(4);
+			String restrLastFlags = gramFullRestrForms.group(5).trim();
 			String[] restrParts = restrForms.split("(?=<u>)");
 			gram.formRestrictions = new ArrayList<>();
 
@@ -93,11 +100,19 @@ public class MLVVGram extends Gram
 				gram.formRestrictions.add(restr);
 			}
 		}
+		else if (gramSimpleRestrForms.matches())
+		{
+			//System.out.println("Simple restr! " + linePart);
+			String beginPart = Editors.closeCursive(gramSimpleRestrForms.group(1));
+			String endPart = Editors.openCursive(gramSimpleRestrForms.group(2));
+			MLVVHeader restr = new MLVVHeader();
+			restr.gram = MLVVGram.extract(beginPart);
+			gram.formRestrictions = new ArrayList<>();
+			gram.formRestrictions.add(restr);
+			gram.freeText = endPart;
+		}
 		// Ir altLemma iekavās
-		Matcher gramAltLemmaBraces = Pattern.compile(
-				"(<b>(?:(?!<[bu]>).)*</b>(?:(?!<[bu]>)[^(])*)\\((<b>[^)]+)\\)((?:(?!<[bu]>).)*)")
-				.matcher(linePart);
-		if (gramAltLemmaBraces.matches())
+		else if (gramAltLemmaBraces.matches())
 		{
 			String endPart = Editors.openCursive(gramAltLemmaBraces.group(3));
 			String beginPart = gramAltLemmaBraces.group(1).trim();

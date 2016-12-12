@@ -100,8 +100,8 @@ public class MLVVEntry extends Entry
 				head = m2.group(1);
 				body = m2.group(2);
 				Pattern headpart = Pattern.compile(
-						"((?:\\s*(?:\\p{Ll}\\p{M}*)+[.,]|\\(?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|[-,][^.<]*\\.?|(?:[:,]\\s)?<u>.*?</u>\\.?)\\s*)(.*)");
-						 //((?: forma                   | cita lemma         | gram. kursīvā  | homonīma indekss   | [izruna]      | "galotne"        | formas ierobežojums  ) atstarpe) (pārējais)
+						"((?:\\s*(?:\\p{Ll}\\p{M}*)+(?:\\s\\[[^\\]]+\\])?[.,]|\\(?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|[-,][^.<]*\\.?|(?:[:,]\\s)?<u>.*?</u>\\.?)\\s*)(.*)");
+						 //((?: forma ar neobligātu izrunu             | cita lemma         | gram. kursīvā  | homonīma indekss   | [izruna]      | "galotne"        | formas ierobežojums  ) atstarpe) (pārējais)
 				m2 = headpart.matcher(body);
 				while (m2.matches())
 				{

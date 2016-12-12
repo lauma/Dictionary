@@ -38,8 +38,8 @@ public class MLVVHeader extends Header
 			m = Pattern.compile("\\[(.*?)\\]\\s*(.*)").matcher(gramStr);
 			if (m.matches())
 			{
-				res.lemma.pronunciation = new String[]{m.group(1)};
-				// TODO sadalīt izrunas sīkāk
+
+				res.lemma.pronunciation = m.group(1).split(",?\\s+<i>arī</i>\\s*");
 				gramStr = m.group(2);
 			}
 			if (!gramStr.isEmpty())

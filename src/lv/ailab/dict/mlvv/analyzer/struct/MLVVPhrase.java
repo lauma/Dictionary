@@ -5,6 +5,7 @@ import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -185,16 +186,18 @@ public class MLVVPhrase extends Phrase
 	 *                  citu
 	 * @return izgūtā frāze vai null
 	 */
-	public static MLVVPhrase extractTaxon(String linePart)
+	public static ArrayList<MLVVPhrase> extractTaxons(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
 
+		ArrayList<MLVVPhrase> results = new ArrayList<>();
 		MLVVPhrase res = new MLVVPhrase();
+		results.add(res);
 		res.type = PhraseTypes.TAXON;
 		res.text = new LinkedList<>();
-		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\[(.*)\\](.*)").matcher(linePart);
+		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
 		if (m.matches())
 		{
 			res.text.add(m.group(1).trim());
@@ -206,6 +209,9 @@ public class MLVVPhrase extends Phrase
 			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
 			res.subsenses = new LinkedList<>();
 			res.subsenses.add(new Sense(MLVVGloss.extract(gloss.trim())));
+			// TODO vai uzskatāmāk nebūs bez rekursijas?
+			if (m.group(4) != null && !m.group(4).isEmpty())
+				results.addAll(extractTaxons(m.group(4)));
 		}
 		else
 		{
@@ -215,7 +221,7 @@ public class MLVVPhrase extends Phrase
 			res.text.add(resText);
 			System.out.printf("Taksons \"%s\" neatbilst apstrādes šablonam\n", resText);
 		}
-		return res;
+		return results;
 
 	}
 
@@ -389,13 +395,13 @@ public class MLVVPhrase extends Phrase
 			Matcher m = taxonPat.matcher(lineEndPart);
 			if (m.matches())
 			{
-				res.add(MLVVPhrase.extractTaxon(m.group(1)));
+				res.addAll(MLVVPhrase.extractTaxons(m.group(1)));
 				res.addAll(extractPhrases(m.group(2), lemma));
 			}
 			else
 			{
 				System.out.printf("Taksons \"%s\" neatbilst atdalīšanas šablonam\n", lineEndPart);
-				res.add(MLVVPhrase.extractTaxon(lineEndPart.substring("<bullet/>".length())));
+				res.addAll(MLVVPhrase.extractTaxons(lineEndPart.substring("<bullet/>".length())));
 			}
 		}
 		else if (lineEndPart != null && lineEndPart.matches("((<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>.*"))

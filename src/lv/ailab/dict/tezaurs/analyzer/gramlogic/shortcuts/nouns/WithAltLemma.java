@@ -74,6 +74,8 @@ public final class WithAltLemma
 				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
 	}
 
+
+
 	/**
 	 * Likums sieviešu dzimtes lietvārdiem ar šķirkļa vārdu daudzskaitlī un
 	 * papildformu vienskaitlī, locīšana bez deklinācijai atbilstošajām mijām.

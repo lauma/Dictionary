@@ -64,6 +64,8 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ns", "ni", 1), // alohtoni
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ms", "mi", 1), // ampērvijums
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ts", "ti", 1), // alumināti
+
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis", "ļi", 3), // apjomskaitļi
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "īgais", "īgie", 30), // amēbveidīgie
 
 		// 7. paradigma: 4. dekl.
@@ -76,6 +78,8 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le", "les", 9), // alēles
+		// paradigma: 5. dekl. bez mijas
+		WithAltLemma.nounPluralToSingularFemNoChange("-tu, vsk.", "te, -es, s.", "tes", 9), // apaļmute
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 
@@ -97,7 +101,7 @@ public class AltLemmaRules
 					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
 					3, "ā", new Integer[] {40},
 					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING}),
-	}), // aizturēts/aizturētais, akls/aklais
+		}), // aizturēts/aizturētais, akls/aklais
 
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -ce, -ču", "ks", "ce"), // aizsardzībnieks

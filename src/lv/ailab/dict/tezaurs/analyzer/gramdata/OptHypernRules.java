@@ -190,6 +190,9 @@ public class OptHypernRules
 		SixthDecl.std("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
 		SixthDecl.std("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
 
+		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls 2
+		SixthDecl.std("-sāls, s.", ".*sāls"), // gabalsāls 2
+
 		// Bez mijām
 		SixthDecl.noChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
 		SixthDecl.noChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
@@ -218,6 +221,7 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis

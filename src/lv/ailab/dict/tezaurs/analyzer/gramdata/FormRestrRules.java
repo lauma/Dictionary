@@ -39,8 +39,10 @@ public class FormRestrRules
 	}
 
 	public static final FormRestrRule[] doubleLemmaWithPostGram = {
+		// lietv. nozīmē: piedzērušais, -ā, v.; piedzērusī, -ušas, s.
+		Restrictions.nounContDouble("ušais, -ā, v.,", "usī, -ušas, s.", "ies"), // piedzēries
 		// lietv. nozīmē: aizturētais, -ā, v., aizturētā, -ās, s.
-		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturētais
+		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturēts, akls
 	};
 
 	public static final FormRestrRule[] singleLemmaWithPostGram = {

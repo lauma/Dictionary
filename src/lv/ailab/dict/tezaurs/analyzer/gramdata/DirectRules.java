@@ -100,13 +100,18 @@ public class DirectRules
 				null), // būt
 
 		// 1. paradigma: 1. dekl. lietvārdi, -s
+		GenNoun.any("-ja, dsk. ģen. -ju, v.", ".*js", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // algotājs
 		GenNoun.any("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // cepurnieks
+		GenNoun.any("-a, dsk. ģen. -nu, v.", ".*ns", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // aizsargspārns
 		// 6. paradigma: 3. deklinācijas lietvārdi
 		GenNoun.any("-us, v.", ".*us", 6, null, new Tuple[] {TFeatures.GENDER__MASC}), // dienvidus
 
 		// 7. paradigma: 4. dekl. lietvārdi, sieviešu dzimte
+		GenNoun.any("-as, dsk. ģen. -u, s.", ".*a", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // alpa
 		GenNoun.any("-jas, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // kastrētāja
+		GenNoun.any("-as, dsk. ģen. -du, s.", ".*da", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // aldrovanda
 		GenNoun.any("-as, dsk. ģen. -ju, s.", ".*ja", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // vaivadija
+		GenNoun.any("-as, dsk. ģen. -pu, s.", ".*pa", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // aizsarglapa
 		GenNoun.any("-as, dsk. ģen. -stu, s.", ".*sta", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // pasta
 		GenNoun.any("-as, dsk. ģen. -tu, s.", ".*ta", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // placenta
 		GenNoun.any("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {TFeatures.GENDER__FEM}), // apskava
@@ -167,6 +172,7 @@ public class DirectRules
 
 		// Nedefinēta paradigma: divdabji
 		Participle.isUsiIesUsies("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
+		Participle.isUsiIesUsies("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 		Participle.isUsiIesUsies("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
 
 		BaseRule.of("s. -usī", ".*ušais", 0,
@@ -424,9 +430,9 @@ public class DirectRules
 
 			// Vienskaitlis + daudzskaitlis
 		GenNoun.any("-es, dsk. ģen. -pju, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*pe", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
-						SimpleSubRule.of(".*pes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.GENDER__FEM})},
-				null), // aitkope, antilope, tūsklapes
+						SimpleSubRule.of(".*pe", new Integer[]{9}, null),
+						SimpleSubRule.of(".*pes", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
+				new Tuple[]{TFeatures.GENDER__FEM}), // aitkope, antilope, tūsklapes
 
 		// Nejauki, pārāk specifiski gdījumi
 		// Šiem defišu izņemšanas mehānisms īsti neder, jo vienā vietā vajag atstāt.
@@ -447,10 +453,21 @@ public class DirectRules
 		FifthDecl.optChange("-es, dsk. ģen. lešu vai letu", ".*lete"), //lete
 
 		// Nestandartīgie
-		GenNoun.any("-ļu, s.", ".*les", 9,
-			new Tuple[]{TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), //bailes
+		GenNoun.any("-ļu, s.", new SimpleSubRule[]{
+				SimpleSubRule.of(".*les", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*le", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //bailes, abisāle
 
+		GenNoun.any("-ru, s.", new SimpleSubRule[]{
+				SimpleSubRule.of(".*res", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*re", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //apakšīre, asinsdzīres
 
+		GenNoun.any("-vju, s.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*vis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ves", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ve", 9, null)},
+				new Tuple[]{TFeatures.GENDER__FEM}), //apaļgalve, ārdurvis, nestuves
 	};
 
 	/**
@@ -459,6 +476,7 @@ public class DirectRules
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.std("-bja, dsk. ģen. -bju, v.", ".*bis"), //ledusurbis
 		SecondDecl.std("-ča, dsk. ģen. -ču, v.", ".*cis"), //labrocis
+		SecondDecl.std("-ķa, dsk. ģen. -ķu, v.", ".*ķis"), //aizsarglenķis
 		SecondDecl.std("-ļa, dsk. ģen. -ļu, v.", ".*lis"), //brokolis
 		SecondDecl.std("-ņa, dsk. ģen. -ņu, v.", ".*nis"), //bizmanis
 		SecondDecl.std("-pja, dsk. ģen. -pju, v.", ".*pis"), //grāmatskapis
@@ -497,6 +515,7 @@ public class DirectRules
 	public static final EndingRule[] nounMultiDecl = {
 		// Vienskaitlis, vīriešu dzimte
 		// Ar mijām
+		GenNoun.any("-a, dsk. ģen. -u, v.", ".*[^aeiouāēīōū]s", 1, null, new Tuple[]{TFeatures.GENDER__MASC}), // adventists
 		GenNoun.any("vsk. -ņa, v.", ".*nis", 3, null,
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // amerikānis
 		GenNoun.any("-ļa, v.", new SimpleSubRule[]{
@@ -584,6 +603,13 @@ public class DirectRules
 			// NB! Likums neņem vērā 2.deklinācijas izņēmumus bez mijas.
 		// Daudzkaitlis, sieviešu dzimte
 		// Ar mijām
+		GenNoun.any("-ču, s.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*ce", new Integer[]{9}, null),
+						//SimpleSubRule.of(".*čas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ces", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						//SimpleSubRule.of(".*cis", new Integer[]{11}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				},
+				new Tuple[]{TFeatures.GENDER__FEM}), // absistnce
 		GenNoun.any("-ņu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ne", new Integer[]{9}, null),
 						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
@@ -592,15 +618,16 @@ public class DirectRules
 				},
 				new Tuple[]{TFeatures.GENDER__FEM}), // acenes, iemaņas, balodene, robežugunis
 		GenNoun.any("-šu, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*te", new Integer[]{9}, null),
+						SimpleSubRule.of(".*[st]e", new Integer[]{9}, null),
 						SimpleSubRule.of(".*šas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*[st]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*tis", new Integer[]{11}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
 				new Tuple[]{TFeatures.GENDER__FEM}), // ahajiete, aizkulises, autosacīkstes, klaušas, šķūtis
 		GenNoun.any("-žu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*žas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),},
-				new Tuple[]{TFeatures.GENDER__FEM}), // mirādes, graizes, bažas
+						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*ze", new Integer[]{9}, null),},
+				new Tuple[]{TFeatures.GENDER__FEM}), // mirādes, graizes, bažas, aponeiroze
 		// Vispārīgā galotne, kas der visam un neder nekam
 		GenNoun.any("-u, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*a", new Integer[]{7}, null),

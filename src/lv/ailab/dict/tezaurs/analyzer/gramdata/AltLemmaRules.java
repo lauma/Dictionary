@@ -51,8 +51,12 @@ public class AltLemmaRules
 		// 3. paradigma: Lietvārds 2. deklinācija -is
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "cis, -ča, v.", "či", 3), // atomieroči
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
-		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinuklons
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
+		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
 
 		// 1. paradigma: Lietvārds 1. deklinācija -s
 		WithAltLemma.nounPluralToSingularMascStd("-u; vsk.", "s, -a, v.", "i", 1), // abrazīvi
@@ -102,6 +106,16 @@ public class AltLemmaRules
 					3, "ā", new Integer[] {40},
 					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING}),
 		}), // aizturēts/aizturētais, akls/aklais
+		AltFullLemmaRule.simple("-ā, v. ", "ā, -ās, s.", new StemSlotSubRule[]{
+			StemSlotSubRule.of(".*tais", new Integer[] {30, 0},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40, 0},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
+			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING}),
+			}), // balts/baltais
 
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -ce, -ču", "ks", "ce"), // aizsardzībnieks

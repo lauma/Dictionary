@@ -48,24 +48,24 @@ public class TKeys extends Keys
 	 * Ir viens izņēmuma gadījums, kad ir "parasti nelieto".
 	 */
 
-	public final static String USUALLY_USED_IN_FORM = "Parasti lieto noteiktā formā";
+	public final static String USUALLY_USED_IN_FORM = "Parasti lieto noteiktā formā/atvasinājumā";
 	/**
 	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "bieži".
 	 */
-	public final static String OFTEN_USED_IN_FORM = "Bieži lieto noteiktā formā";
+	public final static String OFTEN_USED_IN_FORM = "Bieži lieto noteiktā formā/atvasinājumā";
 	/**
 	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "tikai".
 	 */
-	public final static String USED_ONLY_IN_FORM = "Lieto tikai noteiktā formā";
+	public final static String USED_ONLY_IN_FORM = "Lieto tikai noteiktā formā/atvasinājumā";
 	/**
 	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "arī".
 	 * (Šis nudien ir ļaunums!)
 	 */
-	public final static String ALSO_USED_IN_FORM = "Lieto arī noteiktā formā";
+	public final static String ALSO_USED_IN_FORM = "Lieto arī noteiktā formā/atvasinājumā";
 	/**
 	 * Nespecificēts, vispārīgs formu ierobežojums.
 	 */
-	public final static String USED_IN_FORM = "Lieto noteiktā formā";
+	public final static String USED_IN_FORM = "Lieto noteiktā formā/atvasinājumā";
 
 	/**
 	 * Bieži, reti, pareti.

@@ -221,12 +221,15 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
+
+		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 
 		GenNoun.any("-tēta, v.", ".*tētis", 3,
 					new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tētis

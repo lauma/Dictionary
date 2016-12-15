@@ -100,7 +100,6 @@ public class DirectRules
 				null), // būt
 
 		// 1. paradigma: 1. dekl. lietvārdi, -s
-		GenNoun.any("-ja, dsk. ģen. -ju, v.", ".*js", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // algotājs
 		GenNoun.any("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // cepurnieks
 		GenNoun.any("-a, dsk. ģen. -nu, v.", ".*ns", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // aizsargspārns
 		// 6. paradigma: 3. deklinācijas lietvārdi
@@ -124,6 +123,9 @@ public class DirectRules
 				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //aizbildināšanās
 		GenNoun.any("ģen. -ās, akuz. -os, instr. -os, s.", ".*šanās", 34,
 				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //augšāmcelšanās
+		// 34. paradigma: Atgriezeniskie lietvārdi -umies
+		GenNoun.any("akuz. -os, instr. -os, v.", ".*umies", 33,
+				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__MASC}), //atlūgumies
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		GenNoun.any("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
@@ -172,6 +174,7 @@ public class DirectRules
 
 		// Nedefinēta paradigma: divdabji
 		Participle.isUsiIesUsies("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
+		Participle.isUsiIesUsies("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
 		Participle.isUsiIesUsies("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 		Participle.isUsiIesUsies("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
 
@@ -462,12 +465,22 @@ public class DirectRules
 				SimpleSubRule.of(".*res", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*re", 9, null)},
 			new Tuple[]{TFeatures.GENDER__FEM}), //apakšīre, asinsdzīres
-
+		GenNoun.any("-mju, s.", new SimpleSubRule[]{
+				//SimpleSubRule.of(".*mis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*mes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*me", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //ārzemes, mācītprasme
+		GenNoun.any("-pju, s.", new SimpleSubRule[]{
+				//SimpleSubRule.of(".*pis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*pes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
+				//SimpleSubRule.of(".*pe", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //atsāpes
 		GenNoun.any("-vju, s.", new SimpleSubRule[]{
-						SimpleSubRule.of(".*vis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ves", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ve", 9, null)},
-				new Tuple[]{TFeatures.GENDER__FEM}), //apaļgalve, ārdurvis, nestuves
+				SimpleSubRule.of(".*vis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*ves", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*ve", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //apaļgalve, ārdurvis, nestuves
+
 	};
 
 	/**
@@ -516,6 +529,11 @@ public class DirectRules
 		// Vienskaitlis, vīriešu dzimte
 		// Ar mijām
 		GenNoun.any("-a, dsk. ģen. -u, v.", ".*[^aeiouāēīōū]s", 1, null, new Tuple[]{TFeatures.GENDER__MASC}), // adventists
+		GenNoun.any("-ja, dsk. ģen. -ju, v.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*js", 1, null),
+						SimpleSubRule.of(".*jis", 3, null)},
+				new Tuple[] {TFeatures.GENDER__MASC}), // algotājs
+
 		GenNoun.any("vsk. -ņa, v.", ".*nis", 3, null,
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // amerikānis
 		GenNoun.any("-ļa, v.", new SimpleSubRule[]{
@@ -566,7 +584,7 @@ public class DirectRules
 		GenNoun.any("-ņu, v.", ".*ņi", new Integer[]{1, 2, 3, 4, 5},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC}), // bretoņi
-		GenNoun.any("-šu, dsk., v.", ".*ši", new Integer[]{1, 3},
+		GenNoun.any("-šu, v.", ".*ši", new Integer[]{1, 3},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.PLURAL)}), // alžīrieši
 		// Vispārīgā galotne, kas der visam un neder nekam

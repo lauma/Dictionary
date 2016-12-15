@@ -20,6 +20,7 @@ public class Features
 
 	public static final Tuple<String, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION);
 	public static final Tuple<String, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE);
+	public static final Tuple<String, String> POS__CONJUNCTION = Tuple.of(Keys.POS, Values.CONJUNCTION);
 
 	public static final Tuple<String, String> POS__GEN_ONLY = Tuple.of(Keys.POS, Values.GEN_ONLY);
 

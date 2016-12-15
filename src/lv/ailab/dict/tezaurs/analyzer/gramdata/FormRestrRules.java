@@ -43,6 +43,7 @@ public class FormRestrRules
 		Restrictions.nounContDouble("ušais, -ā, v.,", "usī, -ušas, s.", "ies"), // piedzēries
 		// lietv. nozīmē: aizturētais, -ā, v., aizturētā, -ās, s.
 		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturēts, akls
+		Restrictions.nounContDouble("ais, -ā, v.", "ā, -ās, s.", "s"), // balts
 	};
 
 	public static final FormRestrRule[] singleLemmaWithPostGram = {
@@ -50,8 +51,14 @@ public class FormRestrRules
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
 		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
+		Restrictions.anyOneForm("instr.:", "iem, apst. nozīmē", "i", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL)}), // aplinki
 		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "a", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // apakšā
+		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "s", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // ātrums
+		Restrictions.anyOneForm("lok.:", "ē, apst. nozīmē", "e", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // ārpuse
 		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // acumirklis
 	};
@@ -64,6 +71,8 @@ public class FormRestrRules
 		Restrictions.noPostGram("s., parasti dsk.:", "is", "s",
 				new Tuple[]{TFeatures.GENDER__FEM},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // akts
+		Restrictions.noPostGram("parasti lok.:", "ā", "s",
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // atstatums
 		Restrictions.noPostGram("parasti lok.:", "ē", "e",
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // aizvārte
 
@@ -71,7 +80,25 @@ public class FormRestrRules
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // akmens
 		Restrictions.noPostGram("ģen.:", "es", "e",
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // aizmugure
+		Restrictions.noPostGram("ģen.:", "a", "s",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // agrums
+		Restrictions.noPostGram("ģen.:", "u", "as",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // atvadas
+		Restrictions.noPostGram("dat.:", "ām", "as",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE)}), // atvadas
+		Restrictions.noPostGram("vsk. ģen.:", "a", "s",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE), Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR)}), // ārs
+		Restrictions.noPostGram("lok.:", "ā", "a",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // augša
 		Restrictions.noPostGram("lok.:", "ā", "s",
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // aizsegs
+		Restrictions.noPostGram("vsk. lok.:", "ā", "a",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE), Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR)}), // atšķirība
+
+		Restrictions.noPostGram("pārākajā pakāpē:", "āk", "i",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.COMPARATIVE_DEGREE)}), // ātri
+
+		Restrictions.noPostGram("pavēles formā:", "ies!", "ties",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE)}), // atsūties
 	};
 }

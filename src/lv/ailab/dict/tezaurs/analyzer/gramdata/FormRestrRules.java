@@ -39,7 +39,7 @@ public class FormRestrRules
 	}
 
 	public static final FormRestrRule[] doubleLemmaWithPostGram = {
-		// lietv. nozīmē: piedzērušais, -ā, v.; piedzērusī, -ušas, s.
+		// lietv. nozīmē: piedzērušais, -ā, v., piedzērusī, -ušas, s.
 		Restrictions.nounContDouble("ušais, -ā, v.,", "usī, -ušas, s.", "ies"), // piedzēries
 		// lietv. nozīmē: aizturētais, -ā, v., aizturētā, -ās, s.
 		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturēts, akls
@@ -51,16 +51,28 @@ public class FormRestrRules
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
 		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
+		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "s", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
+		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "š", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
+		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "is", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // brāķis
 		Restrictions.anyOneForm("instr.:", "iem, apst. nozīmē", "i", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL)}), // aplinki
 		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "a", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // apakšā
 		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "s", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // ātrums
+		Restrictions.anyOneForm("lok.:", "ās, apst. nozīmē", "as", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // beigas
 		Restrictions.anyOneForm("lok.:", "ē, apst. nozīmē", "e", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // ārpuse
 		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // acumirklis
+
+		Restrictions.anyOneForm("dsk. ģen.:", "u, adj. nozīmē", "e", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // atspere
 	};
 
 	public static final FormRestrRule[] noPostGram = {
@@ -75,6 +87,13 @@ public class FormRestrRules
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // atstatums
 		Restrictions.noPostGram("parasti lok.:", "ē", "e",
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // aizvārte
+
+		Restrictions.noPostGram("parasti dsk.:", "as", "a",
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL)}), // basņas
+		Restrictions.noPostGram("parasti dsk.:", "es", "e",
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL)}), // banānene
+		Restrictions.noPostGram("parasti dsk.:", "i", "is",
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL)}), // bamperis
 
 		Restrictions.noPostGram("ģen.:", "akmens", "akmens",
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // akmens
@@ -98,7 +117,7 @@ public class FormRestrRules
 		Restrictions.noPostGram("pārākajā pakāpē:", "āk", "i",
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.COMPARATIVE_DEGREE)}), // ātri
 
-		Restrictions.noPostGram("pavēles formā:", "ies!", "ties",
-				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE)}), // atsūties
+		Restrictions.noPostGram("pavēles formā:", "šujies!", "šūties",
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE)}), // atšūties
 	};
 }

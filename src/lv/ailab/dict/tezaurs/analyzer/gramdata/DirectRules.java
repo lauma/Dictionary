@@ -131,6 +131,11 @@ public class DirectRules
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
 		GenNoun.any("-as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // žūpa
+		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -tu, kopdz.", ".*e", new Integer[]{9, 10},
+				new Tuple[]{TFeatures.NO_SOUNDCHANGE},
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // balamute
+		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -žu, kopdz.", ".*e", new Integer[]{9, 10}, null,
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}),// bende
 
 
 		// Paradigma: 11 - 6. dekl.
@@ -156,7 +161,7 @@ public class DirectRules
 					SimpleSubRule.of(".*nes", 9, new Tuple[] {TFeatures.ENTRYWORD__PLURAL}),
 					SimpleSubRule.of(".*nis", 11, new Tuple[] {TFeatures.ENTRYWORD__PLURAL})},
 				new Tuple[] {TFeatures.USED_ONLY__PLURAL, TFeatures.GENDER__FEM}), // aizsargacenes, durtiņas, robežugunis
-		GenNoun.any("-ļļu, s.; tikai dsk.", ".*lles", 9,
+		GenNoun.any("-ļļu, s.", ".*lles", 9,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL},
 				new Tuple[] {TFeatures.USED_ONLY__PLURAL, TFeatures.GENDER__FEM}), // aizsargbrilles
 
@@ -549,6 +554,10 @@ public class DirectRules
 						SimpleSubRule.of(".*ss", new Integer[]{5}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // abrkasis, lemess
 		// Bez mijām
+		GenNoun.any("-ja, v.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*js", new Integer[]{1}, null),
+						SimpleSubRule.of(".*jis", new Integer[]{3}, null)},
+				new Tuple[]{TFeatures.GENDER__MASC}), // bezkājis, kastrētājs
 		GenNoun.any("-ra, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*rs", new Integer[]{1}, null),
 						SimpleSubRule.of(".*ris", new Integer[]{3}, null)},
@@ -588,6 +597,14 @@ public class DirectRules
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.PLURAL)}), // alžīrieši
 		// Vispārīgā galotne, kas der visam un neder nekam
+		GenNoun.any("-ru, v.", new SimpleSubRule[]{
+						//SimpleSubRule.of(".*š", new Integer[]{2}, null),
+						//SimpleSubRule.of(".*(vakari|svari)", new Integer[]{1}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						SimpleSubRule.of(".*turi", new Integer[]{3}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+						//SimpleSubRule.of(".*([ķr]|[aeiāē]j)i", new Integer[]{1, 2, 3, 4}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
+				},
+				new Tuple[]{TFeatures.GENDER__MASC}), // bikšturi
+
 		GenNoun.any("-u, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*š", new Integer[]{2}, null),
 						SimpleSubRule.of(".*(otāji|umi|anti|nieki|[aeiouāēīōū]īdi|isti|mēsli|svārki|plūdi|rati|vecāki|bērni|raksti|vidi|rīti|vakari|vārdi|kapi|augi|svētki|audi|laiki|putni|svari)",

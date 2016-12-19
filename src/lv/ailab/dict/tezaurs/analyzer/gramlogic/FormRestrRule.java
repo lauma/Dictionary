@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * Likums, kas apstrādā gramatikas daļu, kas atbildīga par formu ierobežojumiem,
  * piemēram:
  * lietv. nozīmē: absolūtais, -ā, v.
- * lietv. nozīmē: aizturētais, -ā, v. aizturētā, -ās, s.
+ * lietv. nozīmē: aizturētais, -ā, v., aizturētā, -ās, s.
  * akuz.: acumirkli, apst. nozīmē.
  * bieži lok.: agrumā
  * ģen.: aizmugures
@@ -158,6 +158,7 @@ public class FormRestrRule extends StemSlotRule
 			if (Pattern.compile("(\\Q" + pattern + "\\E)[;,.]?")
 					.matcher(gramText).matches())
 			{
+				// Šis ir gadījums, kad pēc būtības ir viena lemma ar altlemmām.
 				int newBegin = pattern.length();
 				String patternToProcess = patternTextEnding;
 				if (patternTextMiddle != null)

@@ -114,8 +114,8 @@ public class DictionaryXmlToJson
 	public final static boolean PRINT_OTHER_LEMMAS = true;
 
 	// Parametri, kas attiecināmi ur FirstConjStatsCollector.
-	public final static boolean PRINT_FIRST_CONJ_DIRECT = true;
-	public final static boolean PRINT_FIRST_CONJ_REFL = true;
+	public final static boolean PRINT_FIRST_CONJ_DIRECT = false;
+	public final static boolean PRINT_FIRST_CONJ_REFL = false;
 
 
 	/**

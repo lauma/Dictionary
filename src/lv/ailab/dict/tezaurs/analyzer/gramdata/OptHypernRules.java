@@ -100,7 +100,7 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] fifthDeclNoun = {
 		// Ar mijām
-		FifthDecl.std("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), // aļģe
+		//FifthDecl.std("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), // aļģe
 		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe
 		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
 		FifthDecl.std("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
@@ -228,6 +228,7 @@ public class OptHypernRules
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
+		SecondDecl.std("-āža, v.", ".*āzis"), // āzis
 
 		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 
@@ -1860,7 +1861,7 @@ public class OptHypernRules
 		FirstConj.refl("-braucos, -braucies,", "-braucas, pag. -braucos", "braukties"), //izbraukties
 		FirstConj.refl("-brāžos, -brāzies,", "-brāžas, pag. -brāzos", "brāzties"), //aizbrāzties
 		FirstConj.refl("-brienos, -brienies,", "-brienas, pag. -bridos", "bristies"), //atbristies
-		FirstConj.refl("-būros, -buries,", "-buras, pag. -būros", "burties"), //izburties
+		FirstConj.refl("-buros, -buries,", "-buras, pag. -būros", "burties"), //izburties
 		// C
 		FirstConj.refl("-ceļos, -celies,", "-ceļas, pag. -cēlos", "celties"), //apcelties
 		FirstConj.refl("-cenšos, -centies,", "-cenšas, pag. -centos", "censties"), //pacensties

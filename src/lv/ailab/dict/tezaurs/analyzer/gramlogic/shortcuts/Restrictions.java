@@ -2,8 +2,6 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
 
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.regex.Matcher;

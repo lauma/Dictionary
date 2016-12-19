@@ -49,19 +49,30 @@ public class AltLemmaRules
 		// 2. paradigma: Lietvārds 1. deklinācija -š
 		//AltFullLemmaRule.nounPluralToSingularMascStd("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
 		// 3. paradigma: Lietvārds 2. deklinācija -is
+		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "cis, -ča, v.", "či", 3), // atomieroči
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "dis, -ža, v.", "ži", 3), // čemurzieži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
-		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
 
-		// 1. paradigma: Lietvārds 1. deklinācija -s
+		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
+
+		// 1. paradigma: 1. dekl., s
+		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
 		WithAltLemma.nounPluralToSingularMascStd("-u; vsk.", "s, -a, v.", "i", 1), // abrazīvi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
-		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 1), // aizsargstabiņi
+ 		// 2. paradigma: 1. deklš, š
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š, -a, v.", "i", 2), // cekuliņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 2), // aizsargstabiņi
+
+		// 30. paradigma: noteiktā galotne.
+		WithAltLemma.nounPluralToSingularMascStd("-o, vsk.", "īgais, -ā, v.", "īgie", 30), // baložveidīgie
 
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "ds", "di", 1), // aktinoīdi
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "hs", "hi", 1), // akritarhi
@@ -77,13 +88,16 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemStd("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
-		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, s.", "les", 9), // ābeles
-		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // akmeņogles
+		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
+		WithAltLemma.nounPluralToSingularFemStd("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
-		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le", "les", 9), // alēles
+		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		// paradigma: 5. dekl. bez mijas
 		WithAltLemma.nounPluralToSingularFemNoChange("-tu, vsk.", "te, -es, s.", "tes", 9), // apaļmute
+		// 11. paradigma: 6. dekl.
+		WithAltLemma.nounPluralToSingularFemStd("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
+		WithAltLemma.nounPluralToSingularFemStd("-zivju, vsk. ", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 

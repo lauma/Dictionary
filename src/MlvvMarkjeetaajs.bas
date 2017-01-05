@@ -48,7 +48,17 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(58117) & ChrW(61606) & ChrW(61481) ' èûskulçns
-        .Replacement.text = "ç,~"
+        .Replacement.text = "e,~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "ç" & ChrW(61481) & ChrW(61606) ' dzçrvenâjs
+        .Replacement.text = "e,~"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -59,7 +69,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(61606) & ChrW(61592) ' aizcirst/-cçrtu
-        .Replacement.text = "ç,\"
+        .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -69,7 +79,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(61606) & ChrW(61661) ' apcirp/-cçrpu
-        .Replacement.text = "ç,\"
+        .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -79,7 +89,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(61661) & ChrW(61606) ' apsvçrums
-        .Replacement.text = "ç,\"
+        .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -89,7 +99,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(61592) & ChrW(61606) ' bçrndârznieks
-        .Replacement.text = "ç,\"
+        .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -127,7 +137,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(58128) & ChrW(61481) ' aizcirst/-cçrtu
-        .Replacement.text = "ç,~"
+        .Replacement.text = "e,~"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -201,6 +211,16 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(232) & ChrW(825) ' desantkaraspçks
+        .Replacement.text = "e,\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     ' Platais ç
     Set oRange = ActiveDocument.Content
@@ -259,8 +279,18 @@ Sub Izrunas()
     End With
     Set oRange = ActiveDocument.Content
     With oRange.Find
+        .text = "l" & ChrW(771) ' dubultdibens
+        .Replacement.text = "l"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
         .text = "m" & ChrW(61481) ' ampluâ
-        .Replacement.text = "m~"
+        .Replacement.text = "m"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -270,7 +300,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "m" & ChrW(834) ' cimbole
-        .Replacement.text = "m~"
+        .Replacement.text = "m"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -280,7 +310,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "n" & ChrW(61481) ' audience
-        .Replacement.text = "n~"
+        .Replacement.text = "n"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -292,7 +322,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "r" & ChrW(61481) ' adverbs
-        .Replacement.text = "r^^"
+        .Replacement.text = "r"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -302,7 +332,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "r" & ChrW(61534) ' aizargjosla
-        .Replacement.text = "r^^"
+        .Replacement.text = "r"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -310,11 +340,11 @@ Sub Izrunas()
         .Execute Replace:=wdReplaceAll
     End With
     
-        ' \ (grave)
+    ' \ (grave)
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "â" & ChrW(61661) ' apkârt 2
-        .Replacement.text = "â\"
+        .Replacement.text = "a\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -324,7 +354,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "â" & ChrW(61476) ' bârs 2
-        .Replacement.text = "â\"
+        .Replacement.text = "a\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -334,7 +364,17 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "â" & ChrW(61592) ' bçrndârznieks
-        .Replacement.text = "â\"
+        .Replacement.text = "a\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "â" & ChrW(768) ' dârzeòaudzçtâjs
+        .Replacement.text = "a\"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -413,6 +453,16 @@ Sub Izrunas()
     End With
     Set oRange = ActiveDocument.Content
     With oRange.Find
+        .text = ChrW(57642) ' disciplinârsods
+        .Replacement.text = "a~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
         .text = ChrW(7869) ' aizgriezt 1
         .Replacement.text = "e~"
         .Forward = True
@@ -434,7 +484,7 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(241) ' abiturents
-        .Replacement.text = "n~"
+        .Replacement.text = "n"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -467,6 +517,16 @@ Sub Izrunas()
     With oRange.Find
         .text = ChrW(226) ' âbolains
         .Replacement.text = "a^^"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(58073) ' deklasçts
+        .Replacement.text = "e,^^"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True

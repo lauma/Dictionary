@@ -31,25 +31,55 @@ public class MLVVSense extends Sense
 		if (linePart.length() < 1) return null;
 		MLVVSense res = new MLVVSense();
 
-		// Nocērp un apstrādā beigas, lai nemaisās.
-		// Nozīmes nianses
+		// Nocērp un apstrādā beigas, lai nemaisās: nozīmes nianses
+		linePart = res.extractSubsenses(linePart, lemma);
+
+		// Nocērp no sākuma saprotamo: nozīmes gramatikau
+		linePart = res.extractBeginGrammar(linePart, lemma);
+
+		// Tagad vajadzētu sekot definīcijai.
+		linePart = res.extractGloss(linePart);
+
+		// Piemēru analīze.
+		LinkedList<MLVVPhrase> samples = MLVVPhrase.extractPhrases(linePart, lemma);
+		if (samples != null && samples.size() > 0)
+			res.examples = new LinkedList<>(samples);
+		return res;
+	}
+
+	/**
+	 * No apstrādājamās rindiņas nogriež un izparsē ar "<lines/>" atdalītās
+	 * apakšnozīmes.
+	 * @param linePart	apstrādājamā rindiņa (rindiņas daļa).
+	 * @param lemma		reizēm vajag zināt šķirkļa lemmu.
+	 * @return	neapstrādātā (pāri palikusī rindas daļa).
+	 */
+	protected String extractSubsenses(String linePart, String lemma)
+	{
 		if (linePart.contains("<lines/>"))
 		{
 			String[] subsensesParts = linePart.substring(
 					linePart.indexOf("<lines/>") + "<lines/>".length())
 					.trim().split("<lines/>");
-			res.subsenses = new LinkedList<>();
+			if (subsenses == null) subsenses = new LinkedList<>();
 			for (String subP : subsensesParts)
 			{
 				MLVVSense ss = extract(subP, lemma);
-				if (ss != null) res.subsenses.add(ss);
+				if (ss != null) subsenses.add(ss);
 			}
 			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
 		}
+		return linePart;
+	}
 
-		// Nocērp no sākuma saprotamo.
-		// Nozīmes gramatikas apstrāde
-
+	/**
+	 * No apstrādājamās rindiņas sākuma nogriež un izparsē nozīmes gramatiku.
+	 * @param linePart	apstrādājamā rindiņa (rindiņas daļa).
+	 * @param lemma		reizēm vajag zināt šķirkļa lemmu.
+	 * @return	neapstrādātā (pāri palikusī rindas daļa).
+	 */
+	protected String extractBeginGrammar (String linePart, String lemma)
+	{
 		if (linePart.matches("(<i>((?!=</i>).*)</i>\\s*)?<b>.*")) // Šķirklī "abhāzi", "ārieši".
 		{
 			Pattern headpart = Pattern.compile(
@@ -77,7 +107,7 @@ public class MLVVSense extends Sense
 				MLVVGram other = new MLVVGram(preHeader);
 				resGram.addTextsBefore(other, true);
 			}
-			res.grammar = resGram;
+			grammar = resGram;
 		}
 		else if (linePart.startsWith("<i>"))
 		{
@@ -89,7 +119,7 @@ public class MLVVSense extends Sense
 						.matcher(linePart);
 				if (gramMatch.matches())
 				{
-					res.grammar = MLVVGram.extract(gramMatch.group(1));
+					grammar = MLVVGram.extract(gramMatch.group(1));
 					linePart = gramMatch.group(2);
 				}
 				else
@@ -100,36 +130,41 @@ public class MLVVSense extends Sense
 			else
 			{
 				System.out.printf("Nesapārots i tags nozīmē \"%s\"", linePart);
-				res.grammar = new MLVVGram(linePart.substring(3));
+				grammar = new MLVVGram(linePart.substring(3));
 				linePart = "";
 			}
 		}
+		return linePart;
+	}
 
-		// Tagad vajadzētu sekot definīcijai.
-		// Ja tālāk būs piemēri
+	/**
+	 * No apstrādājamās rindiņas sākuma nogriež un izparsē nozīmes skaidrojumu
+	 * (glosu).
+	 * @param linePart	apstrādājamā rindiņa (rindiņas daļa).
+	 * @return	neapstrādātā (pāri palikusī rindas daļa).
+	 */
+	protected String extractGloss(String linePart)
+	{
+		// Noskaidro, vai pēc glosas ir piemēri.
 		int nextCircle = Finders.getAnyCircleIndex(linePart);
 		int nextItalic = linePart.indexOf(". <i>");
 		int cut = -1;
 		if (nextItalic > -1 && nextItalic < nextCircle) cut = nextItalic + 1;
 		else if (nextCircle > -1) cut = nextCircle;
 		else if (nextItalic > -1) cut = nextItalic + 1;
+		// Ja tālāk būs piemēri.
 		if (cut > -1)
 		{
-			res.gloss = MLVVGloss.extract(linePart.substring(0, cut).trim());
+			gloss = MLVVGloss.extract(linePart.substring(0, cut).trim());
 			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
 		{
-			res.gloss = MLVVGloss.extract(linePart.trim());
+			gloss = MLVVGloss.extract(linePart.trim());
 			linePart = "";
 		}
-
-		// Piemēru analīze.
-		LinkedList<MLVVPhrase> samples = MLVVPhrase.extractPhrases(linePart, lemma);
-		if (samples != null && samples.size() > 0)
-			res.examples = new LinkedList<>(samples);
-		return res;
+		return linePart;
 	}
 
 }

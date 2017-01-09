@@ -237,19 +237,21 @@ public class MLVVPhrase extends Phrase
 				for (int i = 1; i < initialParts.length; i++)
 				{
 					// Un sākotnējais sadalījums bieži ir par daudz gabalos.
-					if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(]\\s?(arī|saīsināti:)\\s?)")
+					if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(](</i>)?\\s?(arī|saīsināti:)\\s?)")
 							|| concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
 							&& initialParts[i].matches("\\s*<i>.*"))
 						//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
 						concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-					else concatParts.addLast(initialParts[i]);
+					else
+						concatParts.addLast(initialParts[i]);
 				}
 
 				// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
 				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
 				// viss ir kursīvā.
+				// TODO šitā izteiksme varētu nebūt pareiza.
 				Pattern resplitPat1 = Pattern.compile(
-						"(.*<i>(?:(?:(?<!</i>).)*\\.\\s)?)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
+						"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
 				LinkedList<String> finalParts = new LinkedList<>();
 				for (String concatPart : concatParts)
 				{
@@ -258,6 +260,7 @@ public class MLVVPhrase extends Phrase
 					{
 						String preLast = resplitter.group(1);
 						String last = resplitter.group(2);
+						// TODO šitā izteiksme varētu nebūt pareiza.
 						Matcher gramMatcher = Pattern
 								.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}])*\\.</i>:\\s*)?<i>\\s*)")
 								.matcher(preLast);

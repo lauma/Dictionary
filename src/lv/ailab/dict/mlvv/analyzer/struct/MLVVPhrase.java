@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
  */
 public class MLVVPhrase extends Phrase
 {
-	// TODO: šis ir uzblīdis, vajag sacirst gabaliņos.
 	/**
 	 * Metode, kas izgūst dotā tipa frāzi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
@@ -47,114 +46,12 @@ public class MLVVPhrase extends Phrase
 		{
 			String begin = dashMatcher.group(1).trim();
 			String end = dashMatcher.group(2).trim();
-
-			// Ja vajag, frāzi sadala.
-			String[] beginParts = begin.split("(?<=</i>), arī\\s*<i>");
-			String gramText = "";
-			for (String part : beginParts)
-			{
-				// Frāze pati ir kursīvā
-				if (part.startsWith("<i>") || part.startsWith("(<i>"))
-				{
-					// ir ar kolu atdalītā gramatika
-					if (part.contains(".: "))
-					{
-						if (gramText.length() > 0) gramText = gramText + "; ";
-						gramText = (gramText + part.substring(0, part.indexOf(".: ") + 1)).trim();
-						part = phraseType.substring(part.indexOf(".: ") + 2).trim();
-					} else if (begin.contains(".</i>: <i>"))
-					{
-						if (gramText.length() > 0) gramText = gramText + "; ";
-						gramText = (gramText + part.substring(0, part.indexOf(".</i>: <i>") + 1))
-								.trim();
-						part = part.substring(part.indexOf(".</i>: <i>") + ".</i>: <i>".length())
-								.trim();
-					}
-
-					res.text.add(Editors.removeCursive(part));
-				}
-				// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
-				else if (part.contains("<i>"))
-				{
-					res.text.add(part.substring(0, part.indexOf("<i>")).trim());
-					if (gramText.length() > 0) gramText = gramText + "; ";
-					gramText = (gramText + part.substring(part.indexOf("<i>"))).trim();
-				}
-				// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
-				else res.text.add(part);
-			}
-			if (gramText.length() > 0) res.grammar = new MLVVGram(gramText);
-
+			// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
+			res.extractGramAndText(begin);
 			// Analizē skaidrojumus.
-			// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
-			// pie frāzes, nevis pirmās nozīmes.
-			if (end.startsWith("</i>")) end = end.substring("</i>".length()).trim(); // ja defise nejauši ir kursīvā.
-				//else if (end.startsWith("<i>") && end.contains(" b. "))
-			else
-			{
-				Matcher endMatcher = Pattern
-						.compile("(.*?)(?:</i> | </i>)(a\\.\\s.*?\\sb\\.\\s.*)")
-						.matcher(end);
-				if (endMatcher.matches())
-				{
-					String gram = endMatcher.group(1).trim();
-					if (res.grammar == null)
-					{
-						if (gram.startsWith("<i>")) gram = gram.substring(3);
-						res.grammar = new MLVVGram(gram);
-						end = endMatcher.group(2).trim();
-					} else
-						System.out.printf(
-								"Frāzē \"%s\" ir divas vispārīgās gramatikas, tāpēc nozīmes netiek sadalītas\n",
-								linePart);
-				}
-			}
-
-			String[] subsenses = new String[]{end};
-			// Ir vairākas nozīmes.
-			if (end.startsWith("a."))
-			{
-				subsenses = end.split("\\s(?=[bcdefghijklmnop]\\.\\s)");
-				// Ja skaidrojums ir formā "a. skaidrojums <i>piemēri b.</i> b. skaidrojums...",
-				// tad var sanākt nepareizs dalījums dalot tā pa prasto.
-				if (end.contains("<i>"))
-				{
-					LinkedList<String> betterGloses = new LinkedList<>();
-					betterGloses.addLast(subsenses[0]);
-					for (int i = 1; i < subsenses.length; i++)
-					{
-						String prev = betterGloses.getLast();
-						if (prev.indexOf("<i>") > prev.indexOf("</i>"))
-							betterGloses.addLast(
-									betterGloses.removeLast() + " " +subsenses[i]);
-						else betterGloses.addLast(subsenses[i]);
-					}
-					subsenses = betterGloses.toArray(new String[betterGloses.size()]);
-				}
-				subsenses = Arrays.stream(subsenses).map(s -> s.substring(2).trim())
-						.toArray(String[]::new);
-			}
-			res.subsenses = new LinkedList<>();
-			for (String subsense : subsenses)
-			{
-				if (subsense.contains("</i>") && !subsense.contains("<i>"))
-					subsense = "<i>" + subsense;
-				else if (subsense.contains("<i>") && !subsense.contains("</i>"))
-					subsense = subsense + "</i>";
-				res.subsenses.add(MLVVSense.extract(subsense, lemma));
-			}
-			// Ja frāzei ir vairākas nozīmes, tās sanumurē.
-			if (res.subsenses != null && res.subsenses.size() > 1)
-				for (int senseNumber = 0; senseNumber < res.subsenses.size(); senseNumber++)
-				{
-					Sense sense = res.subsenses.get(senseNumber);
-					if (sense.ordNumber != null)
-						System.out.printf(
-								"Frāzē \"%s\" nozīme ar numuru \"%s\" tiek pārnumurēta par \"%s\"\n",
-								res.text, sense.ordNumber, senseNumber + 1);
-					sense.ordNumber = Integer.toString(senseNumber + 1);
-				}
+			res.extractGramAndGloss(end, lemma, linePart);
 		}
+
 		// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
 		// skaidrojuma.
 		else if (colonMatcher.matches())
@@ -164,9 +61,11 @@ public class MLVVPhrase extends Phrase
 			String end = colonMatcher.group(2).trim();
 			res.text.add(Editors.removeCursive(end));
 		}
+
 		// Frāze bez gramatikas un bez skaidrojuma.
 		else if (simpleMatcher.matches())
 			res.text.add(Editors.removeCursive(linePart));
+
 		// Nu nesanāca!
 		else
 		{
@@ -269,7 +168,7 @@ public class MLVVPhrase extends Phrase
 	 *                  paziņojumiem)
 	 * @return	izgūto frāžu masīvs (tukšs, ja nekā nav)
 	 */
-	public static LinkedList<MLVVPhrase> extractPhrases(String linePart, String lemma)
+	public static LinkedList<MLVVPhrase> extractAllPhrases(String linePart, String lemma)
 	{
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
 		if (linePart != null) linePart = linePart.trim();
@@ -396,7 +295,7 @@ public class MLVVPhrase extends Phrase
 			if (m.matches())
 			{
 				res.addAll(MLVVPhrase.extractTaxons(m.group(1)));
-				res.addAll(extractPhrases(m.group(2), lemma));
+				res.addAll(extractAllPhrases(m.group(2), lemma));
 			}
 			else
 			{
@@ -413,7 +312,7 @@ public class MLVVPhrase extends Phrase
 			if (m.matches())
 			{
 				res.add(MLVVPhrase.extractQuote(m.group(1) + m.group(2)));
-				res.addAll(extractPhrases(m.group(3), lemma));
+				res.addAll(extractAllPhrases(m.group(3), lemma));
 			}
 			else
 			{
@@ -422,5 +321,158 @@ public class MLVVPhrase extends Phrase
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * No apstrādājamās rindiņas daļas izvelk ar kolu vai kursīvu atdalītu
+	 * gramatiku un vienu vai vairākus frāzes tekstus.
+	 * Funkcija oriģināli izstrādāta sarežgītu frāžu (ar skaidrojumiem)
+	 * analīzei.
+	 * @param preDefiseLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
+	 *                          frāžu tekstu formēšanai.
+	 */
+	protected void extractGramAndText(String preDefiseLinePart)
+	{
+		// Ja vajag, frāzi sadala.
+		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>), |(?<=, </i>))arī\\s*<i>");
+		String gramText = "";
+		for (String part : beginParts)
+		{
+			// Frāze pati ir kursīvā
+			if (part.startsWith("<i>") || part.startsWith("(<i>"))
+			{
+				// ir ar kolu atdalītā gramatika
+				if (part.contains(".: "))
+				{
+					if (gramText.length() > 0) gramText = gramText + "; ";
+					gramText = (gramText + part.substring(0, part.indexOf(".: ") + 1)).trim();
+					part = part.substring(part.indexOf(".: ") + 2).trim();
+				} else if (preDefiseLinePart.contains(".</i>: <i>"))
+				{
+					if (gramText.length() > 0) gramText = gramText + "; ";
+					gramText = (gramText + part.substring(0, part.indexOf(".</i>: <i>") + 1))
+							.trim();
+					part = part.substring(part.indexOf(".</i>: <i>") + ".</i>: <i>".length())
+							.trim();
+				}
+
+				text.add(Editors.removeCursive(part));
+			}
+			// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
+			else if (part.contains("<i>"))
+			{
+				text.add(part.substring(0, part.indexOf("<i>")).trim());
+				if (gramText.length() > 0) gramText = gramText + "; ";
+				gramText = (gramText + part.substring(part.indexOf("<i>"))).trim();
+			}
+			// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
+			else text.add(part);
+		}
+		if (gramText.length() > 0) grammar = new MLVVGram(gramText);
+	}
+
+	/**
+	 * No apstrādājamās rindiņas daļas izvelk ar kursīvu atdalītas gramatikas un
+	 * vienu vai vairākas glosas.
+	 * Funkcija oriģināli izstrādāta sarežgītu frāžu (ar skaidrojumiem)
+	 * analīzei.
+	 * @param postDefiseLinePart	rindiņas daļa, kas tiek izmantota gramatikas
+	 *                              un frāžu tekstu formēšanai.
+	 * @param lemma					reizēm vajag zināt šķirkļa lemmu.
+	 */
+	protected void extractGramAndGloss(String postDefiseLinePart, String lemma,
+			String linePartForErrorMsg)
+	{
+		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
+		// pie frāzes, nevis pirmās nozīmes.
+		if (postDefiseLinePart.startsWith("</i>"))
+			postDefiseLinePart = postDefiseLinePart.substring("</i>".length()).trim(); // ja defise nejauši ir kursīvā.
+			//else if (end.startsWith("<i>") && end.contains(" b. "))
+		else
+		{
+			Matcher endMatcher = Pattern
+					.compile("(.*?)(?:</i> | </i>)(a\\.\\s.*?\\sb\\.\\s.*)")
+					.matcher(postDefiseLinePart);
+			if (endMatcher.matches())
+			{
+				String gram = endMatcher.group(1).trim();
+				if (grammar == null)
+				{
+					if (gram.startsWith("<i>")) gram = gram.substring(3);
+					grammar = new MLVVGram(gram);
+					postDefiseLinePart = endMatcher.group(2).trim();
+				} else
+					System.out.printf(
+							"Frāzē \"%s\" ir divas vispārīgās gramatikas, tāpēc nozīmes netiek sadalītas\n",
+							linePartForErrorMsg);
+			}
+		}
+
+		String[] subsenseTexts = new String[]{postDefiseLinePart};
+		// Ir vairākas nozīmes.
+		if (postDefiseLinePart.startsWith("a."))
+		{
+			subsenseTexts = postDefiseLinePart.split("\\s(?=[bcdefghijklmnop]\\.\\s)");
+			// Ja skaidrojums ir formā "a. skaidrojums <i>piemēri b.</i> b. skaidrojums...",
+			// tad var sanākt nepareizs dalījums dalot tā pa prasto.
+			if (postDefiseLinePart.contains("<i>"))
+			{
+				LinkedList<String> betterGloses = new LinkedList<>();
+				betterGloses.addLast(subsenseTexts[0]);
+				for (int i = 1; i < subsenseTexts.length; i++)
+				{
+					String prev = betterGloses.getLast();
+					if (prev.indexOf("<i>") > prev.indexOf("</i>"))
+						betterGloses.addLast(
+								betterGloses.removeLast() + " " +subsenseTexts[i]);
+					else betterGloses.addLast(subsenseTexts[i]);
+				}
+				subsenseTexts = betterGloses.toArray(new String[betterGloses.size()]);
+			}
+			subsenseTexts = Arrays.stream(subsenseTexts)
+					.map(s -> s.substring(2).trim())
+					.toArray(String[]::new);
+		}
+		extractSubsenses(subsenseTexts, lemma);
+	}
+
+	/**
+	 * No rindas fragmentu masīva izgūst apakšnozīmes - no katra fragmenta
+	 * vienu.
+	 * @param subsenseTexts	apstrādājamo rindas fragmentu masīvs.
+	 * @param lemma			veidojot jaunu apakšnozīmi, reizēm vajag zināt
+	 *                      šķirkļa lemmu.
+	 */
+	protected void extractSubsenses(String[] subsenseTexts, String lemma)
+	{
+		// Normalizē un apstrādā izgūtos apakšnozīmju fragmentus.
+		subsenses = new LinkedList<>();
+		for (String subsense : subsenseTexts)
+		{
+			if (subsense.contains("</i>") && !subsense.contains("<i>"))
+				subsense = "<i>" + subsense;
+			else if (subsense.contains("<i>") && !subsense.contains("</i>"))
+				subsense = subsense + "</i>";
+			subsenses.add(MLVVSense.extract(subsense, lemma));
+		}
+		// Ja frāzei ir vairākas nozīmes, tās sanumurē.
+		enumerateGloses();
+	}
+
+	/**
+	 * Ja frāzei ir vairākas nozīmes, tās sanumurē.
+	 */
+	protected void enumerateGloses()
+	{
+		if (subsenses != null && subsenses.size() > 1)
+			for (int senseNumber = 0; senseNumber < subsenses.size(); senseNumber++)
+			{
+				Sense sense = subsenses.get(senseNumber);
+				if (sense.ordNumber != null)
+					System.out.printf(
+							"Frāzē \"%s\" nozīme ar numuru \"%s\" tiek pārnumurēta par \"%s\"\n",
+							text, sense.ordNumber, senseNumber + 1);
+				sense.ordNumber = Integer.toString(senseNumber + 1);
+			}
 	}
 }

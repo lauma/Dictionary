@@ -41,7 +41,7 @@ public class MLVVSense extends Sense
 		linePart = res.extractGloss(linePart);
 
 		// Piemēru analīze.
-		LinkedList<MLVVPhrase> samples = MLVVPhrase.extractPhrases(linePart, lemma);
+		LinkedList<MLVVPhrase> samples = MLVVPhrase.extractAllPhrases(linePart, lemma);
 		if (samples != null && samples.size() > 0)
 			res.examples = new LinkedList<>(samples);
 		return res;
@@ -136,6 +136,7 @@ public class MLVVSense extends Sense
 		}
 		return linePart;
 	}
+
 
 	/**
 	 * No apstrādājamās rindiņas sākuma nogriež un izparsē nozīmes skaidrojumu

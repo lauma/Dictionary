@@ -29,7 +29,7 @@ public class MLVVPhrase extends Phrase
 	 *                      paziņojumiem)
 	 * @return	izgūtā frāze vai null
 	 */
-	public static MLVVPhrase extractSampleOrPhrase(String linePart, String phraseType, String lemma)
+	public static MLVVPhrase parseSampleOrPhrasal(String linePart, String phraseType, String lemma)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -49,7 +49,7 @@ public class MLVVPhrase extends Phrase
 			// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
 			res.extractGramAndText(begin);
 			// Analizē skaidrojumus.
-			res.extractGramAndGloss(end, lemma, linePart);
+			res.parseGramAndGloss(end, lemma, linePart);
 		}
 
 		// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
@@ -85,7 +85,7 @@ public class MLVVPhrase extends Phrase
 	 *                  citu
 	 * @return izgūtā frāze vai null
 	 */
-	public static ArrayList<MLVVPhrase> extractTaxons(String linePart)
+	public static ArrayList<MLVVPhrase> parseTaxons(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -107,10 +107,10 @@ public class MLVVPhrase extends Phrase
 				// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
 			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
 			res.subsenses = new LinkedList<>();
-			res.subsenses.add(new Sense(MLVVGloss.extract(gloss.trim())));
+			res.subsenses.add(new Sense(MLVVGloss.parse(gloss.trim())));
 			// TODO vai uzskatāmāk nebūs bez rekursijas?
 			if (m.group(4) != null && !m.group(4).isEmpty())
-				results.addAll(extractTaxons(m.group(4)));
+				results.addAll(parseTaxons(m.group(4)));
 		}
 		else
 		{
@@ -168,7 +168,7 @@ public class MLVVPhrase extends Phrase
 	 *                  paziņojumiem)
 	 * @return	izgūto frāžu masīvs (tukšs, ja nekā nav)
 	 */
-	public static LinkedList<MLVVPhrase> extractAllPhrases(String linePart, String lemma)
+	public static LinkedList<MLVVPhrase> parseAllPhrases(String linePart, String lemma)
 	{
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
 		if (linePart != null) linePart = linePart.trim();
@@ -277,7 +277,7 @@ public class MLVVPhrase extends Phrase
 				// Apstrādā iegūtās daļas.
 				for (String part : finalParts)
 				{
-					MLVVPhrase sample = extractSampleOrPhrase(
+					MLVVPhrase sample = parseSampleOrPhrasal(
 							part, PhraseTypes.SAMPLE, lemma);
 					if (sample != null) res.add(sample);
 				}
@@ -294,13 +294,13 @@ public class MLVVPhrase extends Phrase
 			Matcher m = taxonPat.matcher(lineEndPart);
 			if (m.matches())
 			{
-				res.addAll(MLVVPhrase.extractTaxons(m.group(1)));
-				res.addAll(extractAllPhrases(m.group(2), lemma));
+				res.addAll(MLVVPhrase.parseTaxons(m.group(1)));
+				res.addAll(parseAllPhrases(m.group(2), lemma));
 			}
 			else
 			{
 				System.out.printf("Taksons \"%s\" neatbilst atdalīšanas šablonam\n", lineEndPart);
-				res.addAll(MLVVPhrase.extractTaxons(lineEndPart.substring("<bullet/>".length())));
+				res.addAll(MLVVPhrase.parseTaxons(lineEndPart.substring("<bullet/>".length())));
 			}
 		}
 		else if (lineEndPart != null && lineEndPart.matches("((<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>.*"))
@@ -312,7 +312,7 @@ public class MLVVPhrase extends Phrase
 			if (m.matches())
 			{
 				res.add(MLVVPhrase.extractQuote(m.group(1) + m.group(2)));
-				res.addAll(extractAllPhrases(m.group(3), lemma));
+				res.addAll(parseAllPhrases(m.group(3), lemma));
 			}
 			else
 			{
@@ -380,7 +380,7 @@ public class MLVVPhrase extends Phrase
 	 *                              un frāžu tekstu formēšanai.
 	 * @param lemma					reizēm vajag zināt šķirkļa lemmu.
 	 */
-	protected void extractGramAndGloss(String postDefiseLinePart, String lemma,
+	protected void parseGramAndGloss(String postDefiseLinePart, String lemma,
 			String linePartForErrorMsg)
 	{
 		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
@@ -433,7 +433,7 @@ public class MLVVPhrase extends Phrase
 					.map(s -> s.substring(2).trim())
 					.toArray(String[]::new);
 		}
-		extractSubsenses(subsenseTexts, lemma);
+		parseSubsenses(subsenseTexts, lemma);
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class MLVVPhrase extends Phrase
 	 * @param lemma			veidojot jaunu apakšnozīmi, reizēm vajag zināt
 	 *                      šķirkļa lemmu.
 	 */
-	protected void extractSubsenses(String[] subsenseTexts, String lemma)
+	protected void parseSubsenses(String[] subsenseTexts, String lemma)
 	{
 		// Normalizē un apstrādā izgūtos apakšnozīmju fragmentus.
 		subsenses = new LinkedList<>();
@@ -453,7 +453,7 @@ public class MLVVPhrase extends Phrase
 				subsense = "<i>" + subsense;
 			else if (subsense.contains("<i>") && !subsense.contains("</i>"))
 				subsense = subsense + "</i>";
-			subsenses.add(MLVVSense.extract(subsense, lemma));
+			subsenses.add(MLVVSense.parse(subsense, lemma));
 		}
 		// Ja frāzei ir vairākas nozīmes, tās sanumurē.
 		enumerateGloses();

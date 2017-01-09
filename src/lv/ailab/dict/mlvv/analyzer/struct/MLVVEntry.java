@@ -64,7 +64,7 @@ public class MLVVEntry extends Entry
 	 * Izanalizē rindu, un atgriež null, ja tajā nekā nav, vai MLVVEntry, ja no
 	 * šīs rindas tādu var izgūt.
 	 */
-	public static MLVVEntry extractFromString(String line)
+	public static MLVVEntry parse(String line)
 	{
 		if (line == null || line.isEmpty()) return null;
 
@@ -125,11 +125,11 @@ public class MLVVEntry extends Entry
 					.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 			return null;
 		}
-		else result.extractHead(head);
+		else result.parseHead(head);
 		if (body.isEmpty())
 			System.out
 					.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
-		else result.extractBody(body);
+		else result.parseBody(body);
 		return result;
 	}
 
@@ -137,7 +137,7 @@ public class MLVVEntry extends Entry
 	 * TODO karodziņi
 	 * TODO izrunas
 	 */
-	protected void extractHead(String linePart)
+	protected void parseHead(String linePart)
 	{
 
 		head = new MLVVHeader();
@@ -158,7 +158,7 @@ public class MLVVEntry extends Entry
 				// Izmet ārā homonīma indeksu.
 				linePart = "<b>" + head.lemma.text + "</b> " + m.group(2);
 			}
-			head.gram = MLVVGram.extract(linePart);
+			head.gram = MLVVGram.parse(linePart);
 		} else
 		{
 			System.out.printf(
@@ -168,7 +168,7 @@ public class MLVVEntry extends Entry
 		}
 	}
 
-	protected void extractBody(String linePart)
+	protected void parseBody(String linePart)
 	{
 		linePart = linePart.trim();
 		// Normatīvais komentārs
@@ -196,7 +196,7 @@ public class MLVVEntry extends Entry
 		m = Pattern.compile("(.*?)<square/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			extractDerivs(m.group(2));
+			parseDerivs(m.group(2));
 			linePart = m.group(1).trim();
 		}
 
@@ -204,7 +204,7 @@ public class MLVVEntry extends Entry
 		m = Pattern.compile("(.*?)<diamond/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			extractPhraseology(m.group(2).trim());
+			parsePhraseology(m.group(2).trim());
 			linePart = m.group(1).trim();
 		}
 
@@ -212,55 +212,55 @@ public class MLVVEntry extends Entry
 		m = Pattern.compile("(.*?)<triangle/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			extractStables(m.group(2).trim());
+			parseStables(m.group(2).trim());
 			linePart = m.group(1).trim();
 		}
 
 		if (linePart.length() > 0)
-		extractSenses(linePart);
+		parseSenses(linePart);
 
 	}
 
 	/**
 	 * TODO vai viena gramatika var attiekties uz vairākām lemmām?
 	 */
-	protected void extractDerivs(String linePart)
+	protected void parseDerivs(String linePart)
 	{
 		String[] derivTexts = linePart.split("<square/>|\\s*(?=<b>)");
 		if (derivTexts.length < 1) return;
 		derivs = new LinkedList<>();
 		for (String dt :derivTexts)
 		{
-			MLVVHeader h = MLVVHeader.extractSingularHeader(dt.trim());
+			MLVVHeader h = MLVVHeader.parseSingularHeader(dt.trim());
 			if (h != null) derivs.add(h);
 		}
 	}
 
-	protected void extractPhraseology(String linePart)
+	protected void parsePhraseology(String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.extractSampleOrPhrase(
+			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
 					phraseText.trim(), PhraseTypes.PHRASEOLOGICAL, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
 	}
 
-	protected void extractStables(String linePart)
+	protected void parseStables(String linePart)
 	{
 		linePart = linePart.trim();
 		String[] phrasesParts = linePart.split("<triangle/>");
 		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.extractSampleOrPhrase(
+			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
 					phraseText.trim(), PhraseTypes.STABLE_UNIT, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
 	}
-	protected void extractSenses(String linePart)
+	protected void parseSenses(String linePart)
 	{
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return;
@@ -275,7 +275,7 @@ public class MLVVEntry extends Entry
 		senses = new LinkedList<>();
 		for (int senseNumber = 0; senseNumber < sensesParts.length; senseNumber++)
 		{
-			MLVVSense s = MLVVSense.extract(sensesParts[senseNumber], head.lemma.text);
+			MLVVSense s = MLVVSense.parse(sensesParts[senseNumber], head.lemma.text);
 			if (s != null) senses.add(s);
 			if (numberSenses && (s.ordNumber == null || s.ordNumber.isEmpty()))
 				s.ordNumber = Integer.toString(senseNumber + 1);

@@ -78,7 +78,7 @@ public class StructureExtractor
 	{
 		try
 		{
-			Entry e = MLVVEntry.extractFromString(PreNormalizer.normalizeLine(line));
+			Entry e = MLVVEntry.parse(PreNormalizer.normalizeLine(line));
 			if (e != null)
 			{
 				dict.entries.add(e);

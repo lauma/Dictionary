@@ -21,7 +21,7 @@ public class MLVVGloss extends Gloss
 	 * @param text
 	 * @return
 	 */
-	public static MLVVGloss extract(String text)
+	public static MLVVGloss parse(String text)
 	{
 		MLVVGloss res = new MLVVGloss(text);
 		res.replaceHomIds();

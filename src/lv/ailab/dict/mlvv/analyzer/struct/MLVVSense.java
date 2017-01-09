@@ -25,7 +25,7 @@ public class MLVVSense extends Sense
 	 *                      paziņojumiem)
 	 * @return	izgūtā nozīme vai null
 	 */
-	public static MLVVSense extract(String linePart, String lemma)
+	public static MLVVSense parse(String linePart, String lemma)
 	{
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
@@ -41,7 +41,7 @@ public class MLVVSense extends Sense
 		linePart = res.extractGloss(linePart);
 
 		// Piemēru analīze.
-		LinkedList<MLVVPhrase> samples = MLVVPhrase.extractAllPhrases(linePart, lemma);
+		LinkedList<MLVVPhrase> samples = MLVVPhrase.parseAllPhrases(linePart, lemma);
 		if (samples != null && samples.size() > 0)
 			res.examples = new LinkedList<>(samples);
 		return res;
@@ -64,7 +64,7 @@ public class MLVVSense extends Sense
 			if (subsenses == null) subsenses = new LinkedList<>();
 			for (String subP : subsensesParts)
 			{
-				MLVVSense ss = extract(subP, lemma);
+				MLVVSense ss = parse(subP, lemma);
 				if (ss != null) subsenses.add(ss);
 			}
 			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
@@ -101,7 +101,7 @@ public class MLVVSense extends Sense
 				preHeader = header.substring(0, bIndex);
 				realHeder = header.substring(bIndex);
 			}
-			MLVVGram resGram = MLVVGram.extract(realHeder);
+			MLVVGram resGram = MLVVGram.parse(realHeder);
 			if (preHeader != null && preHeader.trim().length() > 0)
 			{
 				MLVVGram other = new MLVVGram(preHeader);
@@ -119,7 +119,7 @@ public class MLVVSense extends Sense
 						.matcher(linePart);
 				if (gramMatch.matches())
 				{
-					grammar = MLVVGram.extract(gramMatch.group(1));
+					grammar = MLVVGram.parse(gramMatch.group(1));
 					linePart = gramMatch.group(2);
 				}
 				else
@@ -156,13 +156,13 @@ public class MLVVSense extends Sense
 		// Ja tālāk būs piemēri.
 		if (cut > -1)
 		{
-			gloss = MLVVGloss.extract(linePart.substring(0, cut).trim());
+			gloss = MLVVGloss.parse(linePart.substring(0, cut).trim());
 			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
 		{
-			gloss = MLVVGloss.extract(linePart.trim());
+			gloss = MLVVGloss.parse(linePart.trim());
 			linePart = "";
 		}
 		return linePart;

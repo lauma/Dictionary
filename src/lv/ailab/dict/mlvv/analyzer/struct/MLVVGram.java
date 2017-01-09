@@ -38,7 +38,7 @@ public class MLVVGram extends Gram
 		this.freeText = text;
 		separateFlagText();
 	}
-	public static MLVVGram extract(String linePart)
+	public static MLVVGram parse(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -66,7 +66,7 @@ public class MLVVGram extends Gram
 
 			for (String p : restrParts)
 			{
-				MLVVHeader restr = MLVVHeader.extractSingularHeader(p);
+				MLVVHeader restr = MLVVHeader.parseSingularHeader(p);
 				restrFirstFlag = restrFirstFlag.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 				restrLastFlags = restrLastFlags.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 				if (restrLastFlags.startsWith(";") || restrLastFlags.startsWith(","))
@@ -106,7 +106,7 @@ public class MLVVGram extends Gram
 			String beginPart = Editors.closeCursive(gramSimpleRestrForms.group(1));
 			String endPart = Editors.openCursive(gramSimpleRestrForms.group(2));
 			MLVVHeader restr = new MLVVHeader();
-			restr.gram = MLVVGram.extract(beginPart);
+			restr.gram = MLVVGram.parse(beginPart);
 			gram.formRestrictions = new ArrayList<>();
 			gram.formRestrictions.add(restr);
 			gram.freeText = endPart;
@@ -125,10 +125,10 @@ public class MLVVGram extends Gram
 			middlePart = Editors.closeCursive(middlePart);
 
 			if (gram.altLemmas == null) gram.altLemmas = new ArrayList<>();
-			Header altLemma = MLVVHeader.extractSingularHeader(
+			Header altLemma = MLVVHeader.parseSingularHeader(
 					PreNormalizer.correctGeneric(beginPart + endPart));
 			if (altLemma!= null) gram.altLemmas.add(altLemma);
-			altLemma = MLVVHeader.extractSingularHeader(
+			altLemma = MLVVHeader.parseSingularHeader(
 					PreNormalizer.correctGeneric(middlePart + endPart));
 			if (altLemma!= null) gram.altLemmas.add(altLemma);
 		}
@@ -168,7 +168,7 @@ public class MLVVGram extends Gram
 								smallPart = smallPart.substring(0, smallPart.length()-1).trim();
 							else if (!smallPart.endsWith(",")) smallPart += ",";
 							smallPart = smallPart + " " + common;
-							Header altLemma = MLVVHeader.extractSingularHeader(smallPart);
+							Header altLemma = MLVVHeader.parseSingularHeader(smallPart);
 							if (altLemma!= null) gram.altLemmas.add(altLemma);
 						}
 					}

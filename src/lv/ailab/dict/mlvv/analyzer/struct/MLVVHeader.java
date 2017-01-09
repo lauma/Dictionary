@@ -18,7 +18,7 @@ public class MLVVHeader extends Header
 	/**
 	 * Izgūst vienkārša veida hederi - no virknes <b>lemmma</b> [izruna] grmatika
 	 */
-	public static MLVVHeader extractSingularHeader(String linePart)
+	public static MLVVHeader parseSingularHeader(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();

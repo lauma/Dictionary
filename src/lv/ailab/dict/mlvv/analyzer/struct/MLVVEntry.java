@@ -111,8 +111,7 @@ public class MLVVEntry extends Entry
 				}
 			} else
 			{
-				System.out
-						.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
+				System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 				return null;
 				//throw new IllegalArgumentException("Can't match input line with regexp!");
 			}
@@ -121,14 +120,12 @@ public class MLVVEntry extends Entry
 		body = body.trim();
 		if (head.isEmpty())
 		{
-			System.out
-					.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
+			System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 			return null;
 		}
 		else result.parseHead(head);
 		if (body.isEmpty())
-			System.out
-					.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
+			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
 		else result.parseBody(body);
 		return result;
 	}
@@ -139,7 +136,6 @@ public class MLVVEntry extends Entry
 	 */
 	protected void parseHead(String linePart)
 	{
-
 		head = new MLVVHeader();
 		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())

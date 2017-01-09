@@ -143,6 +143,8 @@ public class MLVVGram extends Gram
 			{
 				if (bigParts[i].contains("<b>"))
 				{
+					if (bigParts[i].matches("</i>\\s*<b>.*"))
+						bigParts[i] = bigParts[i].substring(4).trim();
 					int commonStart = bigParts[i].lastIndexOf("<i>");
 					int commonEnd = bigParts[i].indexOf("</i>", commonStart);
 					// Ja neatrod kopīgo daļu, tad ir šitā:
@@ -166,7 +168,8 @@ public class MLVVGram extends Gram
 							smallPart = smallPart.trim();
 							if (smallPart.matches(".*</b>\\s*,"))
 								smallPart = smallPart.substring(0, smallPart.length()-1).trim();
-							else if (!smallPart.endsWith(",")) smallPart += ",";
+							else if (!smallPart.endsWith(",") && !smallPart.endsWith("</b>"))
+								smallPart += ",";
 							smallPart = smallPart + " " + common;
 							Header altLemma = MLVVHeader.parseSingularHeader(smallPart);
 							if (altLemma!= null) gram.altLemmas.add(altLemma);

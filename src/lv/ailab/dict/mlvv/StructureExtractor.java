@@ -38,6 +38,8 @@ public class StructureExtractor
 	public static String inputDataPath = "./dati/mlvv/";
 	public static String outputDataPath = "./dati/mlvv/result/";
 
+	public static boolean DEBUG = false;
+
 	public static boolean PRINT_MIDLLE = true;
 	public static boolean PRINT_PRONUNCIATION = true;
 
@@ -82,6 +84,7 @@ public class StructureExtractor
 			if (e != null)
 			{
 				dict.entries.add(e);
+				if (DEBUG) System.out.println(e.head.lemma.text);
 				if (PRINT_PRONUNCIATION)
 				{
 					String entryword = e.head.lemma.text;

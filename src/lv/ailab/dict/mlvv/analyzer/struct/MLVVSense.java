@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
  */
 public class MLVVSense extends Sense
 {
-	// TODO: šis ir uzblīdis, vajag sacirst gabaliņos.
 	/**
 	 * Metode, kas izgūst nozīmi vai nozīmes niansi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo nozīmi un

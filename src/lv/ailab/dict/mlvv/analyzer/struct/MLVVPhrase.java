@@ -139,9 +139,9 @@ public class MLVVPhrase extends Phrase
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = PhraseTypes.QUOTE;
 		res.text = new LinkedList<>();
-
+		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
-				"((?:(?:<i>)?\\s*Pārn\\.</i>:\\s*)?)((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>([.?!\"]*)\\s*\\((.*)\\)\\.?")
+				"((?:(?:<i>)?\\s*(:?Pārn|Intr)\\.</i>:\\s*)?)((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>([.?!\"]*)\\s*\\((.*)\\)\\.?")
 				// Neobligāts Pārn. kursīvā : neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors)
 				.matcher(linePart);
 		if (m.matches())
@@ -182,9 +182,11 @@ public class MLVVPhrase extends Phrase
 		}
 
 		// Apstrādā "pamata" piemērus.
-		res.addAll(parseAllSamplesAndPhrasals(linePart, lemma));
+		if (linePart != null && !linePart.isEmpty())
+			res.addAll(parseAllSamplesAndPhrasals(linePart, lemma));
 		// Apstrādā to, kas ir aiz tukšā vai pilnā aplīša.
-		res.addAll(parseAllTaxonsAndQuotes(lineEndPart, lemma));
+		if (lineEndPart != null && !lineEndPart.isEmpty())
+			res.addAll(parseAllTaxonsAndQuotes(lineEndPart, lemma));
 		return res;
 	}
 
@@ -199,93 +201,92 @@ public class MLVVPhrase extends Phrase
 	protected static LinkedList<MLVVPhrase> parseAllSamplesAndPhrasals(
 			String linePart, String lemma)
 	{
+		if (linePart == null) return null;
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
+		if (linePart.trim().isEmpty()) return res;
 
-		if (linePart.length() > 0)
-		{
-			// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
-			// atpakaļ iekšā.
-			if (linePart.endsWith("</i>."))
-				linePart = linePart
-						.substring(0, linePart.length() - "</i>.".length())
+		// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
+		// atpakaļ iekšā.
+		if (linePart.endsWith("</i>."))
+			linePart = linePart.substring(0, linePart.length() - "</i>.".length())
 						+ ".</i>";
 
-			// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
-			if (linePart.startsWith("<i>"))
-				linePart = linePart.substring(3).trim();
-			Pattern splitter = Pattern
-					.compile("((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
-			Matcher m = splitter.matcher(linePart);
-			while (m.matches())
+		// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
+		if (linePart.startsWith("<i>"))
+			linePart = linePart.substring(3).trim();
+		Pattern splitter = Pattern.compile(
+				"((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
+		Matcher m = splitter.matcher(linePart);
+		while (m.matches())
+		{
+			res.add(MLVVPhrase.parseNoGlossSample(m.group(1).trim()));
+			linePart = m.group(2);
+			m = splitter.matcher(linePart);
+		}
+		// Tālāk sadala lielos piemērus ar skaidrojumu
+		if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
+		{
+			if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
+			// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",
+			// "<i>frāze</i> - <i>gramatika</i> skaidrojums." un
+			// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
+			String[] initialParts = linePart.split("(?=<i>)");
+
+			// Vispirms apvieno lieki sadalīto
+			LinkedList<String> concatParts = new LinkedList<>();
+			concatParts.addLast(initialParts[0]);
+			for (int i = 1; i < initialParts.length; i++)
 			{
-				res.add(MLVVPhrase.parseNoGlossSample(m.group(1).trim()));
-				linePart = m.group(2);
-				m = splitter.matcher(linePart);
+				// Un sākotnējais sadalījums bieži ir par daudz gabalos.
+				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(](</i>)?\\s?(arī|saīsināti:)\\s?)")
+						|| concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
+						&& initialParts[i].matches("\\s*<i>.*"))
+					//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
+					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
+				else
+					concatParts.addLast(initialParts[i]);
 			}
-			// Tālāk sadala lielos piemērus ar skaidrojumu
-			if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
+
+			// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
+			// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
+			// viss ir kursīvā.
+			// TODO šitā izteiksme varētu nebūt pareiza.
+			Pattern resplitPat1 = Pattern.compile(
+					"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
+			LinkedList<String> finalParts = new LinkedList<>();
+			for (String concatPart : concatParts)
 			{
-				if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
-				// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",
-				// "<i>frāze</i> - <i>gramatika</i> skaidrojums." un
-				// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
-				String[] initialParts = linePart.split("(?=<i>)");
-
-				// Vispirms apvieno lieki sadalīto
-				LinkedList<String> concatParts = new LinkedList<>();
-				concatParts.addLast(initialParts[0]);
-				for (int i = 1; i < initialParts.length; i++)
+				Matcher resplitter = resplitPat1.matcher(concatPart);
+				if (resplitter.matches())
 				{
-					// Un sākotnējais sadalījums bieži ir par daudz gabalos.
-					if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(](</i>)?\\s?(arī|saīsināti:)\\s?)")
-							|| concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
-							&& initialParts[i].matches("\\s*<i>.*"))
-						//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
-						concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-					else
-						concatParts.addLast(initialParts[i]);
-				}
-
-				// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
-				// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
-				// viss ir kursīvā.
-				// TODO šitā izteiksme varētu nebūt pareiza.
-				Pattern resplitPat1 = Pattern.compile(
-						"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
-				LinkedList<String> finalParts = new LinkedList<>();
-				for (String concatPart : concatParts)
-				{
-					Matcher resplitter = resplitPat1.matcher(concatPart);
-					if (resplitter.matches())
+					String preLast = resplitter.group(1);
+					String last = resplitter.group(2);
+					// TODO šitā izteiksme varētu nebūt pareiza.
+					Matcher gramMatcher = Pattern
+							.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}])*\\.</i>:\\s*)?<i>\\s*)")
+							.matcher(preLast);
+					if (gramMatcher.matches())
 					{
-						String preLast = resplitter.group(1);
-						String last = resplitter.group(2);
-						// TODO šitā izteiksme varētu nebūt pareiza.
-						Matcher gramMatcher = Pattern
-								.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}])*\\.</i>:\\s*)?<i>\\s*)")
-								.matcher(preLast);
-						if (gramMatcher.matches())
-						{
-							preLast = gramMatcher.group(1);
-							last = gramMatcher.group(2) + last;
-						}
-						preLast = Editors.closeCursive(preLast);
-						last = Editors.openCursive(last);
-						if (!preLast.trim().isEmpty()) finalParts.add(preLast);
-						finalParts.add(last);
+						preLast = gramMatcher.group(1);
+						last = gramMatcher.group(2) + last;
 					}
-					else finalParts.add(concatPart);
+					preLast = Editors.closeCursive(preLast);
+					last = Editors.openCursive(last);
+					if (!preLast.trim().isEmpty()) finalParts.add(preLast);
+					finalParts.add(last);
 				}
+				else finalParts.add(concatPart);
+			}
 
-				// Apstrādā iegūtās daļas.
-				for (String part : finalParts)
-				{
-					MLVVPhrase sample = parseSampleOrPhrasal(
-							part, PhraseTypes.SAMPLE, lemma);
-					if (sample != null) res.add(sample);
-				}
+			// Apstrādā iegūtās daļas.
+			for (String part : finalParts)
+			{
+				MLVVPhrase sample = parseSampleOrPhrasal(
+						part, PhraseTypes.SAMPLE, lemma);
+				if (sample != null) res.add(sample);
 			}
 		}
+
 		return res;
 	}
 
@@ -299,12 +300,14 @@ public class MLVVPhrase extends Phrase
 	protected static LinkedList<MLVVPhrase> parseAllTaxonsAndQuotes(
 			String linePart, String lemma)
 	{
+		if (linePart == null) return null;
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
-		// Pirms <circle/> var būt "Pārn.:", bet pirms <bullet/> tādam nevajadzētu būt.
-		if (linePart != null && linePart.startsWith("<bullet/>"))
+		if (linePart.trim().isEmpty()) return res;
+		// Pirms <circle/> var būt "Pārn.:" vai "Intr.:", bet pirms <bullet/> tādam nevajadzētu būt.
+		if (linePart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
+					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
 			// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())
@@ -318,10 +321,10 @@ public class MLVVPhrase extends Phrase
 				res.addAll(MLVVPhrase.parseTaxons(linePart.substring("<bullet/>".length())));
 			}
 		}
-		else if (linePart != null && linePart.matches("((<i>\\s*)?Pārn\\.</i>:\\s*)?<circle/>.*"))
+		else if (linePart.matches("((<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>.*"))
 		{
 			Pattern quotePat = Pattern.compile(
-					"((?:(?:<i>\\s*)?Pārn\\.</i>:\\s*)?)<circle/>\\s*((?:(?:\\.{2,3}|\")\\s*)?<i>.*?</i>[.?!\"]*\\s*\\(.*?\\)\\.?)(.*)");
+					"((?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?)<circle/>\\s*((?:(?:\\.{2,3}|\")\\s*)?<i>.*?</i>[.?!\"]*\\s*\\(.*?\\)\\.?)(.*)");
 			// Neobligāts Pārn. kursīvā : <circle/> neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors) pārējais
 			Matcher m = quotePat.matcher(linePart);
 			if (m.matches())
@@ -334,6 +337,11 @@ public class MLVVPhrase extends Phrase
 				System.out.printf("Citāts \"%s\" neatbilst atdalīšanas šablonam\n", linePart);
 				res.add(MLVVPhrase.extractQuote(linePart.replaceFirst("<circle/>", "")));
 			}
+		}
+		else
+		{
+			System.out.printf("Citāts vai taksons \"%s\" neatbilst atsalīšanas šablonam\n", linePart);
+			res.add(MLVVPhrase.extractQuote(linePart));
 		}
 		return res;
 	}

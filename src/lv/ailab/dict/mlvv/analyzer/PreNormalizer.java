@@ -76,7 +76,13 @@ public class PreNormalizer
 		line = line.replace("<arrow/>", "\u2192");
 		line = line.replace("<sup>0</sup>", "\u00B0");
 		line = line.replace("<sup>0 </sup>", "\u00B0 ");
+		line = line.replace("</i><sup><i>0</i></sup> <i>", "\u00B0 ");
 		line = line.replace("<sup> 0</sup>", " \u00B0");
+
+		//line = line.replace("</i><sup><i>1</i></sup><i>", "\u00B9");
+		line = line.replace("</i><sup><i>2</i></sup><i>", "\u00B2");
+		line = line.replace("</i><sup><i>2</i></sup>", "\u00B2</i>");
+
 		return line;
 	}
 
@@ -108,6 +114,8 @@ public class PreNormalizer
 		line = line.replace("<b><i>\u2013</i></b>", "<i>\u2013</i>");
 		line = line.replace("<b><i>\u2014</i></b>", "<i>\u2014</i>");
 
+		line = line.replace("<b>)</b>", ")");
+		line = line.replace("<b>(</b>", "(");
 		line = line.replace("<b>.</b>", ".");
 		line = line.replace("<b><i>.</i></b>", ".");
 
@@ -188,6 +196,7 @@ public class PreNormalizer
 
 		// Oriģinālais avots sistemātiski neliek iekavas kursīvā.
 		//line = line.replaceAll("</i> \\(arī <i>", " \\(arī "); // Neviennozīmīgi lietots.
+		line = line.replaceAll("</i>\\)\\s+\\(<i>", ") (");
 		line = line.replaceAll("</i>\\)\\s+<i>", ") ");
 		line = line.replaceAll("</i>\\)<i>", ")");
 		line = line.replaceAll("</i>\\)\\.\\s+<i>", "). ");

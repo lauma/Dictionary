@@ -83,7 +83,7 @@ public class MLVVSense extends Sense
 		{
 			Pattern headpart = Pattern.compile(
 					"((?:(?:[,;]?\\s*arī\\s*)?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
-			//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
+					//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
 			Matcher headMatcher = headpart.matcher(linePart);
 			String header = "";
 			while (headMatcher.matches())

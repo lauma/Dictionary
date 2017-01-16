@@ -162,15 +162,21 @@ public class MLVVGram extends Gram
 					// No visiem gabaliem veido altLemmas.
 					if (smallParts.size() > 0)
 					{
+						String subcommon = common;
+						if (subcommon.startsWith("<i>")) subcommon = subcommon.substring(3);
+						if (subcommon.endsWith("</i>")) subcommon = subcommon.substring(0, subcommon.length()-4);
 						if (gram.altLemmas == null) gram.altLemmas = new ArrayList<>();
 						for (String smallPart : smallParts)
 						{
+							Matcher getContent = Pattern.compile("(.*?)[,;]? arī").matcher(smallPart);
+							if (getContent.matches()) smallPart = getContent.group(1);
 							smallPart = smallPart.trim();
 							if (smallPart.matches(".*</b>\\s*,"))
 								smallPart = smallPart.substring(0, smallPart.length()-1).trim();
 							else if (!smallPart.endsWith(",") && !smallPart.endsWith("</b>"))
 								smallPart += ",";
-							smallPart = smallPart + " " + common;
+							if (!smallPart.contains(subcommon))
+								smallPart = smallPart + " " + common;
 							Header altLemma = MLVVHeader.parseSingularHeader(smallPart);
 							if (altLemma!= null) gram.altLemmas.add(altLemma);
 						}
@@ -225,13 +231,25 @@ public class MLVVGram extends Gram
 			field = field.substring(1).trim();
 		while (field.endsWith(",") || field.endsWith(";"))
 			field = field.substring(0, field.length() - 1).trim();
+		// Normāli šitām lietām būtu jābūt normalizētām jau priekšapstrādē, bet
+		// tad, kad lipina kopā vairākas gramatikas, var rasties atkal šitāda
+		// situācija.
+		field = field.replace("</i>, <i>", ", ");
+		field = field.replace("</i>; <i>", "; ");
 		return field;
 	}
 	public void normalizeFreeText()
 	{
+		if (freeText == null) return;
+		if (freeText.isEmpty())
+		{
+			freeText = null;
+			return;
+		}
+		//if (freeText.endsWith(" arī"))
+		//	freeText = freeText.substring(0, freeText.length() - 4);
 		freeText = normalizeGramField(freeText);
 		if ("arī".equals(freeText)) freeText = null;
-		if (freeText != null && freeText.isEmpty()) freeText = null;
 	}
 
 	public void normalizeFlagText()

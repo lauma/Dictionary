@@ -80,23 +80,24 @@ public class MLVVPhrase extends Phrase
 	}
 
 	/**
-	 * Metode, kas no dotā šķirkļa fragmenta izgūst taxona tipa frāzi.
-	 * @param linePart	šķirkļa teksta daļa, kas apraksta tieši šo frāzi un neko
-	 *                  citu
+	 * Metode, kas no dotā šķirkļa fragmenta izgūst vienu vai vairākas taxona
+	 * tipa frāzes.
+	 * @param linePart	šķirkļa teksta daļa, kas apraksta tikai taksona tipa
+	 *                  frāzes un neko citu.
 	 * @return izgūtā frāze vai null
 	 */
 	public static ArrayList<MLVVPhrase> parseTaxons(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
-		if (linePart.length() < 1) return null;
+		if (linePart.isEmpty()) return null;
 
 		ArrayList<MLVVPhrase> results = new ArrayList<>();
 		MLVVPhrase res = new MLVVPhrase();
 		results.add(res);
 		res.type = PhraseTypes.TAXON;
 		res.text = new LinkedList<>();
-		Matcher m = Pattern.compile("<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
+		Matcher m = Pattern.compile("(?:<bullet/>)?\\s*<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
 		if (m.matches())
 		{
 			res.text.add(m.group(1).trim());
@@ -201,9 +202,8 @@ public class MLVVPhrase extends Phrase
 	protected static LinkedList<MLVVPhrase> parseAllSamplesAndPhrasals(
 			String linePart, String lemma)
 	{
-		if (linePart == null) return null;
+		if (linePart == null || linePart.trim().isEmpty()) return null;
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
-		if (linePart.trim().isEmpty()) return res;
 
 		// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
 		// atpakaļ iekšā.
@@ -300,14 +300,13 @@ public class MLVVPhrase extends Phrase
 	protected static LinkedList<MLVVPhrase> parseAllTaxonsAndQuotes(
 			String linePart, String lemma)
 	{
-		if (linePart == null) return null;
+		if (linePart == null || linePart.trim().isEmpty()) return null;
 		LinkedList<MLVVPhrase> res = new LinkedList<>();
-		if (linePart.trim().isEmpty()) return res;
 		// Pirms <circle/> var būt "Pārn.:" vai "Intr.:", bet pirms <bullet/> tādam nevajadzētu būt.
 		if (linePart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"<bullet/>\\s*(<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
+					"(<bullet/>\\s*<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
 			// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())

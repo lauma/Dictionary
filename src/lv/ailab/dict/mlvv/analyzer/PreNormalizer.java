@@ -103,6 +103,8 @@ public class PreNormalizer
 			line = line.replace(target, replacement);
 			m = p.matcher(line);
 		}
+		line = line.replace(",</u>", "</u>,");
+		line = line.replace(", </u>", "</u>, ");
 
 		// Atboldē vientuļās domuzīmes.
 		line = line.replace("<b>-</b>", "-");

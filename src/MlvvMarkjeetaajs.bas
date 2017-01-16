@@ -106,6 +106,17 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    ' Platais e ar \
+    With oRange.Find
+        .text = ChrW(232) & ChrW(61606) & ChrW(61606) ' gïçvs
+        .Replacement.text = "e,\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     ' Platais ç
     Set oRange = ActiveDocument.Content
@@ -382,6 +393,28 @@ Sub Izrunas()
         .Execute Replace:=wdReplaceAll
     End With
     
+    ' Sazinkas.
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "r" & ChrW(61663) ' garenvirziens
+        .Replacement.text = "r"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "ò" & ChrW(61606) ' ieòemties
+        .Replacement.text = "ò"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
     ' ---------- 1 simbola bloki ----------------------------------------
     ' ------------------------------
     ' Uzsvçrta zible
@@ -433,6 +466,18 @@ Sub Izrunas()
     With oRange.Find
         .text = ChrW(553) ' aptaurçts - kïûda?
         .Replacement.text = "e,"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    
+    ' Vienkârði ç
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(231) ' izvçlçties
+        .Replacement.text = "ç"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True

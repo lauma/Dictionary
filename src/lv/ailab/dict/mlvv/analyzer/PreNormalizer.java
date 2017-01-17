@@ -51,9 +51,27 @@ public class PreNormalizer
 		// marķētājiem.
 		// NB! tags <gray>, kas ir tieši pelēki krāsotiem tekstiem, ir jāatstāj!
 		line = line.replaceAll("</?high>", "");
+
+		// Izmet <gray>, kas ir viens otrā iekšā.
+		Pattern doubleGrayPat = Pattern.compile("(.*?<gray>(?:(?!</gray>).)*?)<gray>(.*)", Pattern.DOTALL);
+		Matcher doubleGrayMat = doubleGrayPat.matcher(line);
+		while (doubleGrayMat.matches())
+		{
+			line = doubleGrayMat.group(1) + doubleGrayMat.group(2);
+			doubleGrayMat = doubleGrayPat.matcher(line);
+		}
+		doubleGrayPat = Pattern.compile("(.*?)</gray>((?:(?!<gray>).)*?</gray>.*)", Pattern.DOTALL);
+		doubleGrayMat = doubleGrayPat.matcher(line);
+		while (doubleGrayMat.matches())
+		{
+			line = doubleGrayMat.group(1) + doubleGrayMat.group(2);
+			doubleGrayMat = doubleGrayPat.matcher(line);
+		}
+
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll("\\s+", " ");
 		line = line.trim();
+
 		line = Editors.removeTagSplits(line, tags);
 		line = replaceSymbols(line);
 		line = correctGeneric(line);

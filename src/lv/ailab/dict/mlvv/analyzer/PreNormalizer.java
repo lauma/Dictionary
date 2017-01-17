@@ -68,6 +68,8 @@ public class PreNormalizer
 		if (line.length() > 0 && line.codePointAt(0) == 65279)
 			line = line.substring(1);
 
+		line = line.replace("\u2012", "\u2013");
+
 		// Sasodīts aprisinājums kaut kādiem .doc gļukiem, kuru dēļ eksportējot
 		// haotiski kropļojas kvadrātiekavas.
 		line = line.replace("<openSquareBrack/>", "[");

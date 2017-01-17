@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f649f117-6280-449b-99f8-bd01969dad06" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/GeneralStatsCollector.java" afterPath="$PROJECT_DIR$/src/lv/ailab/dict/tezaurs/analyzer/GeneralStatsCollector.java" />
     </list>
     <ignored path="Dictionary.iws" />
@@ -35,7 +36,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MLVVPhrase.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MLVVPhrase.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="166">
@@ -50,6 +51,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="227">
               <caret line="41" column="78" selection-start-line="41" selection-start-column="78" selection-end-line="41" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreNormalizer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="132" column="83" selection-start-line="132" selection-start-column="83" selection-end-line="132" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -126,13 +137,13 @@
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/stringutils/Finders.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVSense.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGram.java" />
-        <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGloss.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/StructureExtractor.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVEntry.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVHeader.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/stringutils/Editors.java" />
         <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVPhrase.java" />
+        <option value="$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java" />
       </list>
     </option>
   </component>
@@ -1079,14 +1090,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/struct/MLVVGram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="482">
@@ -1141,6 +1144,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="394" column="0" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lv/ailab/dict/mlvv/analyzer/PreNormalizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="132" column="83" selection-start-line="132" selection-start-column="83" selection-end-line="132" selection-end-column="83" />
           <folding />
         </state>
       </provider>

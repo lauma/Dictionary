@@ -1,5 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,6 +24,16 @@ import java.util.regex.Pattern;
  */
 public class MLVVEntry extends Entry
 {
+	/**
+	 * Vai <i> tagus izcelsmē vajag automātiski aizvietot ar apakšsvītrām?
+	 */
+	public static boolean UNDERSCORE_FOR_ORIGIN_CURSIVE = false;
+	/**
+	 * Vai <i> tagus normatīvajā komentārā vajag automātiski aizvietot ar
+	 * apakšsvītrām?
+	 */
+	public static boolean UNDERSCORE_FOR_NORMATIVE_CURSIVE = false;
+
 	/**
 	 * MLVV atšķirībā no citām vārdnīcām tiek šķirti stabili vārdu savienojumi
 	 * no frazeoloģismiem. Entry.phrases tiek lietots stabiliem vārdu
@@ -171,7 +182,7 @@ public class MLVVEntry extends Entry
 		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>(\\.?)").matcher(linePart);
 		if (m.matches())
 		{
-			freeText = (m.group(2) + m.group(3)).trim();
+			parseNormative((m.group(2) + m.group(3)).trim());
 			linePart = m.group(1).trim();
 		}
 
@@ -179,13 +190,14 @@ public class MLVVEntry extends Entry
 		m = Pattern.compile("(.*?)\\b[cC]ilme: (.*)").matcher(linePart);
 		if (m.matches())
 		{
-			origin = m.group(2).trim();
+			String newOrigin = m.group(2).trim();
 			linePart = m.group(1).trim();
-			if (origin.contains("<square/>"))
+			if (newOrigin.contains("<square/>"))
 			{
-				linePart = linePart + " " + origin.substring(origin.indexOf("<square/>")).trim();
-				origin = origin.substring(0, origin.indexOf("<square/>")).trim();
+				linePart = linePart + " " + newOrigin.substring(newOrigin.indexOf("<square/>")).trim();
+				newOrigin = newOrigin.substring(0, newOrigin.indexOf("<square/>")).trim();
 			}
+			parseOrigin(newOrigin);
 		}
 
 		// Atvasinājumi
@@ -278,6 +290,19 @@ public class MLVVEntry extends Entry
 		}
 	}
 
+	protected void parseOrigin(String linePart)
+	{
+		if (UNDERSCORE_FOR_ORIGIN_CURSIVE)
+			origin = Editors.cursiveToUnderscore(linePart);
+		else origin = linePart;
+	}
+
+	protected void parseNormative(String linePart)
+	{
+		if (UNDERSCORE_FOR_NORMATIVE_CURSIVE)
+			freeText = Editors.cursiveToUnderscore(linePart);
+		else freeText = linePart;
+	}
 	// TODO - atstāt kvadrātiekavas vai mest ārā
 
 	/**

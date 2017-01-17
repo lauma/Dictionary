@@ -142,14 +142,17 @@ public class MLVVPhrase extends Phrase
 		res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
-				"((?:(?:<i>)?\\s*(:?Pārn|Intr)\\.</i>:\\s*)?)((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>([.?!\"]*)\\s*\\((.*)\\)\\.?")
-				// Neobligāts Pārn. kursīvā : neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors)
+				"((?:(?:<i>)?\\s*(?:Pārn|Intr)\\.</i>:\\s*)?)"	//  Neobligāts Pārn. kursīvā :
+					+ "((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>"	// neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz.
+					+ "([.?!\"]*)\\s*\\((.*)\\)\\.?")			// (autors).
 				.matcher(linePart);
 		if (m.matches())
 		{
-			res.text.add((m.group(2) + m.group(3) + m.group(4)).replaceAll("\\s\\s+", " ").trim());
+			res.text.add(
+					Editors.removeCursive((m.group(2) + m.group(3) + m.group(4)))
+							.replaceAll("\\s\\s+", " ").trim());
 			res.source = m.group(5).trim();
-			String gramString = m.group(1).trim().replaceAll("</?i>", "");
+			String gramString = Editors.removeCursive(m.group(1)).trim();
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
 			res.grammar = new MLVVGram(gramString);
 		}

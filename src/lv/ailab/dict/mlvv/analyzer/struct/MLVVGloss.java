@@ -1,5 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gloss;
 
 /**
@@ -11,6 +12,11 @@ import lv.ailab.dict.struct.Gloss;
  */
 public class MLVVGloss extends Gloss
 {
+	/**
+	 * Vai <i> tagus vajag automātiski aizvietot ar apakšsvītrām?
+	 */
+	public static boolean UNDERSCORE_FOR_CURSIVE = false;
+
 	public MLVVGloss (String text)
 	{
 		super (text);
@@ -25,6 +31,8 @@ public class MLVVGloss extends Gloss
 	{
 		MLVVGloss res = new MLVVGloss(text);
 		res.replaceHomIds();
+		if (UNDERSCORE_FOR_CURSIVE)
+			res.text = Editors.cursiveToUnderscore(res.text);
 		return res;
 	}
 
@@ -34,4 +42,5 @@ public class MLVVGloss extends Gloss
 		text = text.replaceAll("(?<=\\p{L})\\s*<sup>\\s*2</sup>", " [2]");
 		text = text.replaceAll("(?<=\\p{L})\\s*<sup>\\s*3</sup>", " [3]");
 	}
+
 }

@@ -72,4 +72,15 @@ public class Editors
 		while (!line.equals(prevLine));
 		return line;
 	}
+
+	public static String cursiveToUnderscore(String line)
+	{
+		// Funkcija parasti tiek lietota atsevišķiem vārdiem.
+		line = line.replace("<i> ", " _");
+		line = line.replace("<i>", "_");
+		line = line.replace(".</i>", "_.");
+		line = line.replace(" </i>", "_ ");
+		line = line.replace("</i>", "_");
+		return line;
+	}
 }

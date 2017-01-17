@@ -20,6 +20,7 @@ package lv.ailab.dict.mlvv;
 import lv.ailab.dict.io.DocLoader;
 import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
+import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.utils.Trio;
@@ -38,8 +39,9 @@ public class StructureExtractor
 	public static String inputDataPath = "./dati/mlvv/";
 	public static String outputDataPath = "./dati/mlvv/result/";
 
-	public static boolean DEBUG = false;
+	public static boolean UNDERSCORE_FOR_CURSIVE = true;
 
+	public static boolean DEBUG = false;
 	public static boolean PRINT_MIDLLE = true;
 	public static boolean PRINT_PRONUNCIATION = true;
 
@@ -52,6 +54,9 @@ public class StructureExtractor
 
 	public static void main (String[] args)
 	{
+		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_ORIGIN_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		StructureExtractor extractor = new StructureExtractor();
 		File folder = new File(inputDataPath);
 		if (!folder.exists())

@@ -388,7 +388,7 @@ public class MLVVPhrase extends Phrase
 	protected void extractGramAndText(String preDefiseLinePart)
 	{
 		// Ja vajag, frāzi sadala.
-		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>), |(?<=, </i>))arī\\s*<i>");
+		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>),|(?<=,</i>)) arī\\s*(?=<i>)");
 		String gramText = "";
 		for (String part : beginParts)
 		{
@@ -410,7 +410,9 @@ public class MLVVPhrase extends Phrase
 							.trim();
 				}
 
-				text.add(Editors.removeCursive(part));
+				String newText = Editors.removeCursive(part);
+				if (newText.endsWith(",")) newText = newText.substring(0, newText.length()-1);
+				text.add(newText);
 			}
 			// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
 			else if (part.contains("<i>"))

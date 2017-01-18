@@ -105,14 +105,19 @@ public class MLVVEntry extends Entry
 		// Šķirklis ar vienu nozīmi.
 		else
 		{
-			Matcher m2 = Pattern.compile("(<b>.*?</b>\\s*)(.*)").matcher(line);
+			Matcher m2 = Pattern.compile("(<b>.*?</b>\\*?\\s*)(.*)").matcher(line); // pirmais šķirkļavārds + zvaigznīte jaunvārdiem
 			if (m2.matches())
 			{
 				head = m2.group(1);
 				body = m2.group(2);
 				Pattern headpart = Pattern.compile(
-						"((?:\\s*(?:\\p{Ll}\\p{M}*)+(?:\\s\\[[^\\]]+\\])?[.,]|(?:\\(?|[,;]?\\s*arī\\s*)<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|\\[.*?\\][,.;]?|[-,][^.<]*\\.?|(?:[:,]\\s)?<u>.*?</u>\\.?)\\s*)(.*)");
-						 //((?: forma ar neobligātu izrunu             | cita lemma         | gram. kursīvā  | homonīma indekss   | [izruna]      | "galotne"        | formas ierobežojums  ) atstarpe) (pārējais)
+						"((?:" +
+								"\\s*(?:\\p{Ll}\\p{M}*)+(?:\\s\\[[^\\]]+\\])?[.,]|" +	// forma ar neobligātu izrunu
+								"(?:\\(?|[,;]?\\s*arī\\s*)<b>.*?</b>[,.;]?|" + 			// cita lemma
+								"<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|" + 		// gram. kursīvā | homonīma indekss
+								"\\[.*?\\][,.;]?|[-,][^.<]*\\.?|" + 			// [izruna]
+								"(?:[:,]\\s)?<u>.*?</u>\\.?" +  			//"galotne" | formas ierobežojums
+						")\\s*)(.*)");	// atstarpe pārējais
 				m2 = headpart.matcher(body);
 				while (m2.matches())
 				{

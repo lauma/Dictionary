@@ -285,6 +285,13 @@ public class MLVVGram extends Gram
 				freeText = null;
 			}
 		}
+		// Jaunvārdu zvaigznīte, pieņemsim, ka arī ir karodziņš.
+		if (freeText != null && freeText.startsWith("*"))
+		{
+			if (flagText == null || flagText.isEmpty()) flagText = "*";
+			else flagText = "*, " + flagText;
+			freeText = freeText.substring(1).trim();
+		}
 
 		// Satīra visu iegūto.
 		flagText = Editors.removeCursive(flagText);

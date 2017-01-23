@@ -148,7 +148,7 @@ public class GeneralStatsCollector
 	}
 
 
-    public void countEntry( TEntry entry) throws IOException
+    public void countEntry (TEntry entry) throws IOException
 	{
         overallCount++;
         if (entry.hasParadigm()) hasParadigm++;

@@ -50,8 +50,8 @@ public class DictionaryXmlToJson
 {
 	public final static String[] XML_FILES = {"entries", "references"};
 	public final static boolean PRINT_ALL_RULE_STATS = false;
-	public final static boolean PRINT_SINGLE_XML = false;
-	public final static boolean PRINT_SINGLE_JSON = false;
+	public final static boolean PRINT_SINGLE_XML = true;
+	public final static boolean PRINT_SINGLE_JSON = true;
 
 	// Parametri, kas attiecināmi ur GeneralStatsCollector.
 	public final static boolean PRINT_WORDLISTS = true;
@@ -142,6 +142,7 @@ public class DictionaryXmlToJson
 
 		FirstConjStatsCollector firstConjSC = new FirstConjStatsCollector(
 				PRINT_FIRST_CONJ_DIRECT, PRINT_FIRST_CONJ_REFL);
+		int fileCount = 0;
 		for (String file : XML_FILES)
 		{
 			System.out.println("Sāk apstrādāt failu " + file + ".xml.");
@@ -194,20 +195,14 @@ public class DictionaryXmlToJson
 				firstConjSC.countEntry(entry);
 				entry.printConsistencyReport();
 
-				if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
-				if (PRINT_SINGLE_JSON)
+				if (!entry.inBlacklist())    // Blacklisted entries are not included in output logs.
 				{
-					if (count > 0) completeJsonOut.write(",\n");
-					completeJsonOut.write(entry.toJSON());
-				}
-
-				// Print out all pronunciations.
-				//if (makePronunceList)
-				//	for (String p : entry.collectPronunciations())
-				//		statsOut.write(p + "\t" + entry.head.lemma.text + "\t" + entry.homId + "\n");
-				if (!entry
-						.inBlacklist())    // Blacklisted entries are not included in output logs.
-				{
+					if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
+					if (PRINT_SINGLE_JSON)
+					{
+						if (count > 0 || fileCount > 0) completeJsonOut.write(",\n");
+						completeJsonOut.write(entry.toJSON());
+					}
 					if (entry.hasParadigm() && !entry.hasUnparsedGram())
 					{
 						if (goodCount > 0) goodOut.write(",\n");
@@ -249,6 +244,7 @@ public class DictionaryXmlToJson
 					new FileOutputStream(statsFile), "UTF-8"));
 			genSC.printContents(statsOut);
 			statsOut.close();
+			fileCount++;
 		}
 		if (PRINT_SINGLE_XML) completeXmlOut.finalize();
 		if (PRINT_SINGLE_JSON)

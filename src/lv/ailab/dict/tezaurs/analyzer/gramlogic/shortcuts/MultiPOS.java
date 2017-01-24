@@ -24,12 +24,13 @@ public final class MultiPos
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[] {
 				SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{TFeatures.POS__ADJ}),
-				SimpleSubRule.of(".*ts", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*ošs", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*[āa]ms", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+				SimpleSubRule.of(".*ts", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+				SimpleSubRule.of(".*ošs", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS}),
+				//SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+				SimpleSubRule.of(".*[āa]ms", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS}),
 				SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ})},
 			null);
+		// -dams divdabis izmests, jo tie lokās savādāk.
 	}
 
 }

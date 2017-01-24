@@ -126,24 +126,24 @@ public class AltLemmaRules
 	 */
 	public static final AdditionalHeaderRule[] mascToFem = {
 		AltFullLemmaRule.simple("-ā, v., ", "ā, -ās, s.", new StemSlotSubRule[]{
-			StemSlotSubRule.of(".*tais", new Integer[] {30, 0},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
-					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
+			StemSlotSubRule.of(".*tais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ}),
 		}), // aizturēts/aizturētais, akls/aklais
 		AltFullLemmaRule.simple("-ā, v. ", "ā, -ās, s.", new StemSlotSubRule[]{
-			StemSlotSubRule.of(".*tais", new Integer[] {30, 0},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
-					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
+			StemSlotSubRule.of(".*tais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ}),
 			}), // balts/baltais
 
 		WithAltLemma.mascFirstDeclToFemFifthDecl("s. -te, -šu", "ts", "te"), // abstinents
@@ -156,23 +156,26 @@ public class AltLemmaRules
 		WithAltLemma.mascSeconDeclToFemFifthDecl("-ša, s. -te, -šu", "tis", "te"), // albiģietis
 		WithAltLemma.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
+		AltEndingRule.of("s. -usī", ".*ušais", 5,
+				30, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__PARTICIPLE_IS},
+				"usī", 41, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__PARTICIPLE_IS}), //aizpagājušais
 		AltEndingRule.of("s. -ā", new StemSlotSubRule[]{
-			StemSlotSubRule.of(".*ošais", new Integer[] {30, 0},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
-					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-			//StemSlotSubRule.of(".*tais", new Integer[] {30, 0},
-			//		new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
-			//		3, "ā", new Integer[] {40, 0},
-			//		new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-			StemSlotSubRule.of(".*[aā]mais", new Integer[] {30, 0},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING},
-					3, "ā", new Integer[] {40, 0},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS, TFeatures.DEFINITE_ENDING}),
-			StemSlotSubRule.of(".*[^štm]ais|visupirmais|vispirmais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING},
+			StemSlotSubRule.of(".*ošais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS},
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.DEFINITE_ENDING})
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS}),
+			//StemSlotSubRule.of(".*tais", new Integer[] {30},
+			//		new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
+			//		3, "ā", new Integer[] {40},
+			//		new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+			StemSlotSubRule.of(".*[aā]mais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS}),
+			StemSlotSubRule.of(".*[^štm]ais|visupirmais|vispirmais", new Integer[] {30},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
+					3, "ā", new Integer[] {40},
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ})
 		}), // agrākais, aiznākošais, aiznākamais, beidzamais, visupirmais, pēdējais aizkomentētie vārdnīcā nav sastopami.
 
 	};

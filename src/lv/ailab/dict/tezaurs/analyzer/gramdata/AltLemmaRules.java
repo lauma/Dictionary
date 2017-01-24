@@ -60,14 +60,29 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -a, v.", "ri", 3), // klaķieri
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 
 		// 1. paradigma: 1. dekl., s
 		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
-		WithAltLemma.nounPluralToSingularMascStd("-u; vsk.", "s, -a, v.", "i", 1), // abrazīvi
-		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "s, -a, v.", "i", 1), // aizkari
- 		// 2. paradigma: 1. deklš, š
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "bs, -a, v.", "bi", 1), // būvdarbi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ds, -a, v.", "di", 1), // aizsargcimdi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "gs, -a, v.", "gi", 1), // bišaugi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "js, -a, v.", "ji", 1), // dārzāji
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ks, -a, v.", "ki", 1), // abinieki
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ls, -a, v.", "li", 1), // dvīņkristāli
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ms, -a, v.", "mi", 1), // civillikumi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ns, -a, v.", "ni", 1), // aborigēni
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ps, -a, v.", "pi", 1), // ciltslopi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "rs, -a, v.", "ri", 1), // aizkari
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ss, -a, v.", "si", 1), // onkovīrusi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ts, -a, v.", "ti", 1), // akotmats
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "vs, -a, v.", "vi", 1), // apavi, abrazīvi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zs, -a, v.", "zi", 1), // plagioklazi
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "gs, -a, v.", "gi", 1), // balstaugi
+		// 2. paradigma: 1. dekl., š
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š, -a, v.", "i", 2), // cekuliņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 2), // aizsargstabiņi
 
@@ -97,7 +112,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemNoChange("-tu, vsk.", "te, -es, s.", "tes", 9), // apaļmute
 		// 11. paradigma: 6. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
-		WithAltLemma.nounPluralToSingularFemStd("-zivju, vsk. ", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
+		WithAltLemma.nounPluralToSingularFemStd("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 

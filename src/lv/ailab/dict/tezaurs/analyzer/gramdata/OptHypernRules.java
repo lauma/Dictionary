@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.struct.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
@@ -102,6 +103,7 @@ public class OptHypernRules
 		// Ar mijām
 		//FifthDecl.std("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), // aļģe
 		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe
+		FifthDecl.std("-asins, dsk. ģen. -asiņu, s.", ".*asins"), // asins
 		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
 		FifthDecl.std("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
 		FifthDecl.std("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
@@ -128,6 +130,7 @@ public class OptHypernRules
 		FifthDecl.std("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
 		// Bez mijām
 		FifthDecl.noChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
+		FifthDecl.noChange("-bikts, dsk. ģen. -biktu, s.", ".*bikts"), // bikts
 		FifthDecl.noChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
 		SixthDecl.noChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 	};
@@ -214,13 +217,18 @@ public class OptHypernRules
 
 		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
 		SixthDecl.optChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
+
+		GenNoun.any("-asiņu, s.", ".*asinis", 11,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // asinis
 	};
 
 	/**
-	 * Paradigm 3: Lietvārds 2. deklinācija -is
+	 * Paradigma 3, 4, 5: lietvārdi 2. deklinācijā
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
+		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
 		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
@@ -235,6 +243,8 @@ public class OptHypernRules
 		GenNoun.any("-tēta, v.", ".*tētis", 3,
 					new Tuple[]{TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__MASC}), // tētis
 
+		GenNoun.any("-akmeņu, v.", ".*akmeņi", 4,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__MASC}), // būvakmeņi
 	};
 	/**
 	 * Paradigm 6: Lietvārds 3. deklinācija -us
@@ -803,6 +813,7 @@ public class OptHypernRules
 		FirstConj.direct("-žmaudzu, -žmaudz,", "-žmaudz, pag. -žmaudzu", "žmaugt"), // apžmaugt
 		FirstConj.direct("-žmiedzu, -žmiedz,", "-žmiedz, pag. -žmiedzu", "žmiegt"), // aizžmiegt
 		FirstConj.direct("-žņaudzu, -žņaudz,", "-žņaudz, pag. -žņaudzu", "žņaugt"), // aizžņaugt
+		FirstConj.direct("-žurbstu, -žurbsti,", "-žurbst, pag. -žurbu", "žurbt"), // apžurbt
 		FirstConj.direct("-žūstu, -žūsti,", "-žūst, pag. -žuvu", "žūt"), // apžūt
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.

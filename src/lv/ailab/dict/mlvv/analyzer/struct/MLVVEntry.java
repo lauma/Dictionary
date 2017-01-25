@@ -2,6 +2,8 @@ package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.*;
+import lv.ailab.dict.utils.JSONUtils;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -309,6 +311,85 @@ public class MLVVEntry extends Entry
 		else freeText = linePart;
 	}
 	// TODO - atstāt kvadrātiekavas vai mest ārā
+
+	/**
+	 * Uzbūvē JSON reprezentāciju.
+	 * TODO nebūvēt manuāli
+	 * @return JSON representation
+	 */
+	public String toJSON()
+	{
+		StringBuilder s = new StringBuilder();
+		s.append('{');
+		s.append(head.toJSON());
+		/*if (paradigm != 0) {
+			s.append(String.format(",\"Paradigm\":%d", paradigm));
+			if (analyzer != null) {
+				// generate a list of inflected wordforms and format them as JSON array
+				ArrayList<Wordform> inflections = analyzer.generateInflections(lemma.l, paradigm);
+				s.append(String.format(",\"Inflections\":%s", formatInflections(inflections) ));
+			}
+		}//*/
+
+		if (homId != null)
+		{
+			s.append(", \"ID\":\"");
+			s.append(JSONObject.escape(homId));
+			s.append("\"");
+		}
+
+		if (senses != null && !senses.isEmpty())
+		{
+			s.append(", \"Senses\":");
+			s.append(JSONUtils.objectsToJSON(senses));
+		}
+
+		if (phrases != null && !phrases.isEmpty())
+		{
+			s.append(", \"StablePhrases\":");
+			s.append(JSONUtils.objectsToJSON(phrases));
+		}
+		if (phraseology != null && !phraseology.isEmpty())
+		{
+			s.append(", \"Phraseology\":");
+			s.append(JSONUtils.objectsToJSON(phraseology));
+		}
+
+		if (derivs != null && !derivs.isEmpty())
+		{
+			s.append(", \"Derivatives\":");
+			s.append(JSONUtils.objectsToJSON(derivs));
+		}
+		if (reference != null && reference.length() > 0)
+		{
+			System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			s.append(", \"Reference\":\"");
+			s.append(JSONObject.escape(reference));
+			s.append("\"");
+		}
+		if (origin != null && origin.length() > 0)
+		{
+			s.append(", \"Origin\":\"");
+			s.append(JSONObject.escape(origin));
+			s.append("\"");
+		}
+		if (freeText != null && freeText.length() > 0)
+		{
+			s.append(", \"Normative\":\"");
+			s.append(JSONObject.escape(freeText));
+			s.append("\"");
+		}
+		if (sources != null && !sources.isEmpty())
+		{
+			System.out.printf("Šķirklim \"%s\" norādīti avoti, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			s.append(",");
+			s.append(sources.toJSON());
+		}
+		s.append('}');
+		return s.toString();
+	}
 
 	/**
 	 * Override, lai MLVV šķirkļos nedrukā galvenā header lemmu, jo tā jau ir

@@ -239,15 +239,6 @@ public class Entry implements HasToJSON, HasToXML
 		StringBuilder s = new StringBuilder();
 		s.append('{');
 		s.append(head.toJSON());
-		/*if (paradigm != 0) {
-			s.append(String.format(",\"Paradigm\":%d", paradigm));
-			if (analyzer != null) {
-				// generate a list of inflected wordforms and format them as JSON array
-				ArrayList<Wordform> inflections = analyzer.generateInflections(lemma.l, paradigm);
-				s.append(String.format(",\"Inflections\":%s", formatInflections(inflections) ));
-			}
-		}//*/
-
 		if (homId != null)
 		{
 			s.append(", \"ID\":\"");

@@ -112,11 +112,12 @@ public class Header implements HasToJSON, HasToXML
 		StringBuilder res = new StringBuilder();
 
 		res.append("\"Header\":{");
-		res.append(lemma.toJSON());
+		if (lemma != null) res.append(lemma.toJSON());
 
 		if (gram != null)
 		{
-			res.append(", ");
+			// TODO: kāpēc MLVV lemma var būt null?
+			if (lemma != null) res.append(", ");
 			res.append(gram.toJSON());
 		}
 

@@ -43,6 +43,7 @@ public class StructureExtractor
 
 	public static boolean DEBUG = false;
 	public static boolean PRINT_MIDLLE = true;
+	public static boolean PRINT_JSON = true;
 	public static boolean PRINT_PRONUNCIATION = true;
 
 	public Dictionary dict = new Dictionary();
@@ -193,6 +194,28 @@ public class StructureExtractor
 		{
 			e.printStackTrace(System.err);
 			System.out.println("Neizdodas izdrukāt rezultātu XML failā " + outputDataPath + "mlvv.xml!");
+			success = false;
+		}
+
+		if (PRINT_JSON) try
+		{
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputDataPath + "mlvv.json"), "UTF-8"));
+			out.write("[\n");
+			int count = 0;
+			for (Entry e : dict.entries)
+			{
+				if (count > 0) out.write(",\n");
+				out.write(((MLVVEntry)e).toJSON());
+				count++;
+			}
+			out.write("\n]");
+			out.close();
+
+		} catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+			System.out.println("Neizdodas izdrukāt rezultātu JSON failā " + outputDataPath + "mlvv.json!");
 			success = false;
 		}
 

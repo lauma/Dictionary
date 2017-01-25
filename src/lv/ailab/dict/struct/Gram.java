@@ -186,9 +186,11 @@ public class Gram implements HasToJSON, HasToXML
 		if (freeText != null && freeText.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
+			res.append("\"");
 			if (freeTextFieldName == null || freeTextFieldName.trim().isEmpty())
-				res.append("\"FreeText\":\"");
-			else res.append("\"" + JSONObject.escape(freeTextFieldName) + "\":");
+				res.append("FreeText");
+			else res.append(JSONObject.escape(freeTextFieldName));
+			res.append("\":\"");
 			res.append(JSONObject.escape(freeText));
 			res.append("\"");
 			hasPrev = true;

@@ -112,11 +112,11 @@ public class Header implements HasToJSON, HasToXML
 		StringBuilder res = new StringBuilder();
 
 		res.append("\"Header\":{");
+		// Lemma mēdz būt null iekš FormRestrictions, ja forma nav precīzi izrakstīta.
 		if (lemma != null) res.append(lemma.toJSON());
 
 		if (gram != null)
 		{
-			// TODO: kāpēc MLVV lemma var būt null?
 			if (lemma != null) res.append(", ");
 			res.append(gram.toJSON());
 		}

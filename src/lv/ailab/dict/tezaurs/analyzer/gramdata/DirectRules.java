@@ -114,8 +114,11 @@ public class DirectRules
 		GenNoun.any("ģen. -ās, akuz. -os, instr. -os, s.", ".*šanās", 34,
 				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__FEM}), //augšāmcelšanās
 		// 34. paradigma: Atgriezeniskie lietvārdi -umies
-		GenNoun.any("akuz. -os, instr. -os, v.", ".*umies", 33,
-				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__MASC}), //atlūgumies
+		GenNoun.any("akuz. -os, instr. -os, dsk. -ies, akuz. -os, instr. -os, v.",
+				".*umies", 33,
+				new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__MASC}), // vēlējumies
+		//GenNoun.any("akuz. -os, instr. -os, v.", ".*umies", 33,
+		//		new Tuple[]{TFeatures.POS__REFL_NOUN}, new Tuple[]{TFeatures.GENDER__MASC}), //atlūgumies
 
 		// Paradigma: 11 - 6. dekl.
 		SixthDecl.noChange("-ts, dsk. ģen. -tu", ".*ts"), // koloniālvalsts
@@ -136,9 +139,8 @@ public class DirectRules
 
 		// Nedefinēta paradigma: divdabji
 		Participle.isUsiIesUsies("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
-		Participle.isUsiIesUsies("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
-		Participle.isUsiIesUsies("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 		Participle.isUsiIesUsies("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
+		Participle.isUsiIesUsies("-ušais, s. -usi, -usī", ".*[jt]is"), // caurkritis
 		// TODO: iespējams, ka šim jānokļūst 13/14. paradigmas analogā?
 		BaseRule.of("s. -usies", ".*ies", 0,
 				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies

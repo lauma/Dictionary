@@ -4,6 +4,7 @@ import lv.ailab.dict.struct.flagconst.Features;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.Participle;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.FirstConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondConj;
@@ -94,6 +95,11 @@ public class OptHypernRules
 		//BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
 		//		new Tuple[]{TFeatures.POS__PRONOUN, Tuple.of(TKeys.INFLECT_AS, "\"kas\"")},
 		//		null), //daudzka
+
+		// Nedefinēta paradigma: divdabji
+		Participle.isUsiIesUsies("-augušais; s. -augusi, -augusī", ".*audzis"), // auraudzis
+		Participle.isUsiIesUsies("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
+		Participle.isUsiIesUsies("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e

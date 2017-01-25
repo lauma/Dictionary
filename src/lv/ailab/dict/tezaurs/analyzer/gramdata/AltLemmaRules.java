@@ -100,6 +100,7 @@ public class AltLemmaRules
 
 		// 7. paradigma: 4. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
+		WithAltLemma.nounPluralToSingularFemStd("-u,", "a, -as, s.", "as", 7), // cukurviela
 		WithAltLemma.nounPluralToSingularFemStd("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes

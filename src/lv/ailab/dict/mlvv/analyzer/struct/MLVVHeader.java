@@ -23,13 +23,13 @@ public class MLVVHeader extends Header
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
-		Matcher m = Pattern.compile("<([ub])>(.+?)(\\*?)</\\1>(!?)\\s*(.*)").matcher(linePart);
+		Matcher m = Pattern.compile("<([ub])>(.+?)(\\*?)</\\1>(!?)(\\*?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
 			MLVVHeader res = new MLVVHeader();
 			res.lemma = new Lemma(m.group(2) + m.group(4));
-			String star = m.group(3);
-			String gramStr = m.group(5);
+			String star = m.group(3) + m.group(5);
+			String gramStr = m.group(6);
 
 			// Homonīma infekss, ja tāds ir, šeit tiek ignorēts.
 			m = Pattern.compile("<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gramStr);

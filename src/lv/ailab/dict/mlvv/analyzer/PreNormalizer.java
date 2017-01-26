@@ -99,6 +99,14 @@ public class PreNormalizer
 		line = line.replace("</i><sup><i>0</i></sup> <i>", "\u00B0 ");
 		line = line.replace("<sup> 0</sup>", " \u00B0");
 
+		// Aprisinājums, lai nesajūk ar atsaucēm uz homoformām.
+		line = line.replace("[km<sup>2</sup>]", "[km\u00B2]");
+		line = line.replace("[m<sup>2</sup>]", "[m\u00B2]");
+		line = line.replace("[cm<sup>2</sup>]", "[cm\u00B2]");
+		line = line.replace("[km<sup>3</sup>]", "[km\u00B3]");
+		line = line.replace("[m<sup>3</sup>]", "[m\u00B3]");
+		line = line.replace("[cm<sup>3</sup>]", "[cm\u00B3]");
+
 		//line = line.replace("</i><sup><i>1</i></sup><i>", "\u00B9");
 		line = line.replace("</i><sup><i>2</i></sup><i>", "\u00B2");
 		line = line.replace("</i><sup><i>2</i></sup>", "\u00B2</i>");

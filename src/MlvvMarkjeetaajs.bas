@@ -41,7 +41,19 @@ Sub Izrunas()
     End With
     
     ' Sasodîts aprisinâjums izrunu izgûðanai
-    
+    ' ---------- 4 simbolu bloki ----------------------------------------
+    ' ------------------------------
+    ' Platais ç ar ~
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "u^-o~" ' kore
+        .Replacement.text = "uo~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     ' ---------- 3 simbolu bloki ----------------------------------------
     ' ------------------------------
     ' Platais ç ar ~
@@ -773,6 +785,17 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(-3985)
+        .Replacement.text = "<square/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     NovaaktFormateejumu ("<square/>")
     
     Set oRange = ActiveDocument.Content
@@ -815,6 +838,18 @@ Sub VienkaarshoTaguIeliceejs()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61618)
+        .Replacement.text = "<diamond/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    NovaaktFormateejumu ("<diamond/>")
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "²"
         .Replacement.text = "<diamond/>"
         .Forward = True
         .Wrap = wdFindContinue

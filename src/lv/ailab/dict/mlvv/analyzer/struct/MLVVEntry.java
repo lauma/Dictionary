@@ -186,11 +186,13 @@ public class MLVVEntry extends Entry
 	{
 		linePart = linePart.trim();
 		// Normatīvais komentārs
-		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>(\\.?)").matcher(linePart);
+		Matcher m = Pattern.compile("(.*)<gray>(.*)</gray>(\\.?)(.*)").matcher(linePart);
 		if (m.matches())
 		{
 			parseNormative((m.group(2) + m.group(3)).trim());
 			linePart = m.group(1).trim();
+			if (m.group(4).trim().length() > 0)
+				linePart = linePart + " " + m.group(4).trim();
 		}
 
 		// Cilme

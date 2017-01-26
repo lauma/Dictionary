@@ -36,7 +36,7 @@ public class MLVVPhrase extends Phrase
 		if (linePart.length() < 1) return null;
 		Matcher dashMatcher = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
 		Matcher colonMatcher = Pattern.compile("(.*?</i>):\\s*(<i>.*)").matcher(linePart);
-		Matcher simpleMatcher = Pattern.compile("<i>[^:]*</i>").matcher(linePart);
+		Matcher simpleMatcher = Pattern.compile("<i>[^:]+(:\\s+\"[^:]+)?</i>").matcher(linePart);
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = phraseType;
 		res.text = new LinkedList<>();
@@ -235,27 +235,32 @@ public class MLVVPhrase extends Phrase
 			// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
 			String[] initialParts = linePart.split("(?=<i>)");
 
-			// Vispirms apvieno lieki sadalīto
+			// Vispirms apvieno lieki sadalīto.
 			LinkedList<String> concatParts = new LinkedList<>();
 			concatParts.addLast(initialParts[0]);
 			for (int i = 1; i < initialParts.length; i++)
 			{
-				// Un sākotnējais sadalījums bieži ir par daudz gabalos.
-				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(](</i>)?\\s?(arī|saīsināti:)\\s?)")
-						|| concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
-						&& initialParts[i].matches("\\s*<i>.*"))
-					//&& subParts[i].matches("\\s*<i>((?<!</i>).*)(</i>\\s|\\s</i>)[b-p]\\.\\s.*"))
+				// Apvieno, ja pēdējā daļa beidzas ar elementiem, kas nevar būt frāzes beigās.
+				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,(](</i>)?\\s?(arī|saīsināti:)\\s?)"))
 					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-				else
-					concatParts.addLast(initialParts[i]);
+				// Apvieno, ja pēdējā daļa satur numurētu apakšnozīmi un jaunā daļa sākas kursīvā (frāžu nozīmju piemēri)
+				else if (concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
+						&& initialParts[i].matches("\\s*<i>.*"))
+					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
+				// Apvieno, ja pēdējā daļa beidzas ar u.tml. bez kursīva un tālāk seko kursīvs ar mazo burtu vai defise.
+				else if (concatParts.getLast().matches(".*\\su\\.tml\\.\\)\\s*")
+						&& initialParts[i].matches("\\s*(<i>,?\\s*\\p{Ll}|[\\-\u2014\u2013]).*"))
+					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
+				// Citādi neapvieno.
+				else concatParts.addLast(initialParts[i]);
 			}
 
 			// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
 			// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
 			// viss ir kursīvā.
-			// TODO šitā izteiksme varētu nebūt pareiza.
 			Pattern resplitPat1 = Pattern.compile(
-					"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)");
+					"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)" // Daļa kursīvā, kas beidzas ar punktu
+					+ "(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)"); // Arī pirms domuzīmes ir jāpaliek reālam tekstam no reāliem burtiem.
 			LinkedList<String> finalParts = new LinkedList<>();
 			for (String concatPart : concatParts)
 			{

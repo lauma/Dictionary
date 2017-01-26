@@ -112,10 +112,17 @@ public class MLVVSense extends Sense
 		{
 			if (linePart.contains("</i>"))
 			{
-				Matcher gramMatch = Pattern.compile(
-						"(<i>.*?</i>(?:(?::|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*(?:\\s*<i>.*?</i>[.,;]?)*|(?::\\s*<i>.*?</i>[.,;]?)?)*)\\s*(.*)")
-						// (gramatika kursīvā (: pasvītrota forma( [izruna])?              (, atkārtota forma( [izruna])?)*      pieturz.? (vēl gramatika)*         |ar kolu atdalīta gramatika)*) atstarpe (pārējais)
-						.matcher(linePart);
+				Pattern gramPat = Pattern.compile(
+						"(<i>.*?</i>" // gramatika kursīvā
+							// Dažādas citas lietas, kas var gramatikai pa vidu gadīties:
+							+"(?:"
+								+ "(?:\\s*:|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*"
+								//                   pasvītrota forma( [izruna])?         , atkārtota forma [izruna]?          pieturz.?
+								+ "|\\s*<i>.*?</i>[.,;]?" // vai vēl gramatika
+								+ "|(?::\\s*<i>.*?</i>[.,;]?)?" //vai ar kolu atdalīta gramatika)
+							+")*"
+							+ ")\\s*(.*)"); // atstarpe un pārējais aiz gramatikas
+				Matcher gramMatch = gramPat.matcher(linePart);
 				if (gramMatch.matches())
 				{
 					grammar = MLVVGram.parse(gramMatch.group(1));

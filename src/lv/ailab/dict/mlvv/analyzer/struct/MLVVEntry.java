@@ -301,6 +301,7 @@ public class MLVVEntry extends Entry
 
 	protected void parseOrigin(String linePart)
 	{
+		linePart = Editors.replaceHomIds(linePart, true);
 		if (UNDERSCORE_FOR_ORIGIN_CURSIVE)
 			origin = Editors.cursiveToUnderscore(linePart);
 		else origin = linePart;

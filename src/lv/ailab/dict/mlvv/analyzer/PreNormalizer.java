@@ -74,6 +74,7 @@ public class PreNormalizer
 
 		line = Editors.removeTagSplits(line, tags);
 		line = replaceSymbols(line);
+		//line = Editors.removeTagSplits(line, new String[] {"i"});
 		line = correctGeneric(line);
 		line = correctSpecials(line);
 		return line;
@@ -97,6 +98,7 @@ public class PreNormalizer
 		line = line.replace("<sup>0</sup>", "\u00B0");
 		line = line.replace("<sup>0 </sup>", "\u00B0 ");
 		line = line.replace("</i><sup><i>0</i></sup> <i>", "\u00B0 ");
+		line = line.replace("</i><sup><i>0</i></sup>", "\u00B0</i>");
 		line = line.replace("<sup> 0</sup>", " \u00B0");
 
 		// Aprisinājums, lai nesajūk ar atsaucēm uz homoformām.
@@ -106,10 +108,11 @@ public class PreNormalizer
 		line = line.replace("[km<sup>3</sup>]", "[km\u00B3]");
 		line = line.replace("[m<sup>3</sup>]", "[m\u00B3]");
 		line = line.replace("[cm<sup>3</sup>]", "[cm\u00B3]");
-
-		//line = line.replace("</i><sup><i>1</i></sup><i>", "\u00B9");
-		line = line.replace("</i><sup><i>2</i></sup><i>", "\u00B2");
-		line = line.replace("</i><sup><i>2</i></sup>", "\u00B2</i>");
+		line = line.replace("2<sup>10</sup>", "2\u00B9\u00B0");
+		line = line.replace("<i>y</i><sup><i>2</i></sup>", "<i>y\u00B2</i>");
+		line = line.replace("<i>x</i><sup><i>2</i></sup>", "<i>x\u00B2</i>");
+		line = line.replace(" m</i><sup><i>2</i></sup> <i>", " m\u00B2 ");
+		line = line.replace(" m</i><sup><i>2</i></sup>", " m\u00B2</i>");
 
 		return line;
 	}

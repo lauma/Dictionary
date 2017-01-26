@@ -23,12 +23,13 @@ public class MLVVHeader extends Header
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
-		Matcher m = Pattern.compile("<([ub])>(.+?)</\\1>(!?)\\s*(.*)").matcher(linePart);
+		Matcher m = Pattern.compile("<([ub])>(.+?)(\\*?)</\\1>(!?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
 			MLVVHeader res = new MLVVHeader();
-			res.lemma = new Lemma(m.group(2) + m.group(3));
-			String gramStr = m.group(4);
+			res.lemma = new Lemma(m.group(2) + m.group(4));
+			String star = m.group(3);
+			String gramStr = m.group(5);
 
 			// Homonīma infekss, ja tāds ir, šeit tiek ignorēts.
 			m = Pattern.compile("<sup>\\s*<b>(.*?)</b>\\s*</sup>\\s*(.*)").matcher(gramStr);
@@ -42,9 +43,13 @@ public class MLVVHeader extends Header
 				res.lemma.pronunciation = m.group(1).split(",?\\s+<i>(arī|vai)</i>\\s*");
 				gramStr = m.group(2);
 			}
-			if (!gramStr.isEmpty())
-				res.gram = new MLVVGram(gramStr);
 
+			// Nepazaudēt zvaigznīti.
+			if (!star.isEmpty() && gramStr.isEmpty()) gramStr = "*";
+			else if (!star.isEmpty()) gramStr = "*, " + gramStr;
+
+			// Apstrādāt atlikumu.
+			if (!gramStr.isEmpty()) res.gram = new MLVVGram(gramStr);
 
 			return res;
 		} else

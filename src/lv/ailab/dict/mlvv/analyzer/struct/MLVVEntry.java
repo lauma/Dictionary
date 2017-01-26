@@ -155,11 +155,12 @@ public class MLVVEntry extends Entry
 	protected void parseHead(String linePart)
 	{
 		head = new MLVVHeader();
-		Matcher m = Pattern.compile("<b>(.+?)</b>\\s*(.*)").matcher(linePart);
+		Matcher m = Pattern.compile("<b>(.+?)(\\*?)</b>\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
 			head.lemma = new Lemma(m.group(1).trim());
-			String gram = m.group(2);
+			String star = m.group(2);
+			String gram = m.group(3);
 			// Homonīma infekss, ja tāds ir.
 			m = Pattern.compile("^<sup>\\s*(?:<b>)?(.*?)(?:</b>)?\\s*</sup>\\s*(.*)")
 					.matcher(gram);
@@ -170,7 +171,7 @@ public class MLVVEntry extends Entry
 						head.lemma, homId, m.group(1));
 				homId = m.group(1);
 				// Izmet ārā homonīma indeksu.
-				linePart = "<b>" + head.lemma.text + "</b> " + m.group(2);
+				linePart = "<b>" + head.lemma.text + star + "</b> " + m.group(2);
 			}
 			head.gram = MLVVGram.parse(linePart);
 		} else

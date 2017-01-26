@@ -141,7 +141,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
 	 * @param freeTextFieldName	freeText lauka nosaukums
-	 * @param additional	JSON-noformēts atslēgu vērtību pārītis, ko pievienot
+	 * @param additional		JSON-noformēts atslēgu vērtību pārītis, ko pievienot
 	 *                      izdrukā.
 	 */
 	public String toJSON (String freeTextFieldName, String additional)
@@ -159,6 +159,14 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
+		if (altLemmas != null && !altLemmas.isEmpty())
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"AltLemmas\":");
+			res.append(JSONUtils.objectsToJSON(altLemmas));
+			hasPrev = true;
+		}
+
 		if (formRestrictions != null && !formRestrictions.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
@@ -172,14 +180,6 @@ public class Gram implements HasToJSON, HasToXML
 			if (hasPrev) res.append(", ");
 			res.append("\"Flags\":");
 			res.append(JSONUtils.mappingSetToJSON(flags.pairings));
-			hasPrev = true;
-		}
-
-		if (altLemmas != null && !altLemmas.isEmpty())
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"AltLemmas\":");
-			res.append(JSONUtils.objectsToJSON(altLemmas));
 			hasPrev = true;
 		}
 
@@ -236,6 +236,14 @@ public class Gram implements HasToJSON, HasToXML
 			gramN.appendChild(paradigmContN);
 		}
 
+		if (altLemmas != null && !altLemmas.isEmpty())
+		{
+			Node altLemmasContN = doc.createElement("AltLemmas");
+			for (Header al: altLemmas)
+				if (al != null) al.toXML(altLemmasContN); // TODO MLVV kā te var nonākt null?
+			gramN.appendChild(altLemmasContN);
+		}
+
 		if (formRestrictions != null && !formRestrictions.isEmpty())
 		{
 			Node formRestrContN = doc.createElement("FormRestrictions");
@@ -245,15 +253,6 @@ public class Gram implements HasToJSON, HasToXML
 		}
 
 		if (flags != null) flags.toXML(gramN);
-
-
-		if (altLemmas != null && !altLemmas.isEmpty())
-		{
-			Node altLemmasContN = doc.createElement("AltLemmas");
-			for (Header al: altLemmas)
-				if (al != null) al.toXML(altLemmasContN); // TODO MLVV kā te var nonākt null?
-			gramN.appendChild(altLemmasContN);
-		}
 
 		if (freeText != null && !freeText.isEmpty())
 		{

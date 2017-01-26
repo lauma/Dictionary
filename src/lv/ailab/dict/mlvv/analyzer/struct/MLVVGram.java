@@ -55,7 +55,8 @@ public class MLVVGram extends Gram
 					+ "((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
 				.matcher(linePart);
 		Matcher gramSimpleRestrForms = Pattern.compile(
-				"(<i>.*(?:</i>))?:\\s*((?:<i>)?.*</i>\\.?)")
+				"(<i>.*(?:</i>))?(?<!kopdz\\.\\s?(?:</i>)?\\s?)"	// Daļa pirms kola, bet netrigerot dalījumu, ja kols ir tieši pēc "kopdz."
+						+ ":\\s*((?:<i>)?.*</i>\\.?)")				// Daļa pēc kola.
 				.matcher(linePart);
 		Matcher gramAltLemmaBraces = Pattern.compile(
 				"(<b>(?:(?!<[bu]>).)*</b>(?:(?!<[bu]>)[^(])*)" // pirmā altlemma
@@ -68,8 +69,6 @@ public class MLVVGram extends Gram
 			String restrFirstFlag = gramFullRestrForms.group(2).trim() + gramFullRestrForms.group(3);
 			String restrForms = gramFullRestrForms.group(4);
 			String restrLastFlags = gramFullRestrForms.group(5).trim();
-			if (linePart != null && !linePart.isEmpty())
-				System.out.println("Ignored: " + linePart);
 			MLVVGram tmpGram = MLVVGram.parse(linePart);
 			if (tmpGram != null) gram = tmpGram;
 			gram.parseFullRestrForms(restrFirstFlag, restrForms, restrLastFlags);

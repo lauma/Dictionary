@@ -118,19 +118,23 @@ public class MLVVSense extends Sense
 							+"(?:"
 								+ "(?:\\s*:|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*"
 								//                   pasvītrota forma( [izruna])?         , atkārtota forma [izruna]?          pieturz.?
-								+ "|\\s*<i>.*?</i>[.,;]?" // vai vēl gramatika
-								+ "|(?::\\s*<i>.*?</i>[.,;]?)?" //vai ar kolu atdalīta gramatika)
+								+ "|:?(?:\\s*-\\p{Ll}+[,;])*\\s*<i>.*?</i>[.,;]?" // vai vēl gramatika (iespējams, ar galotnēm, sk. gnīda, aunapiere)
+								//+ "|::\\s*<i>.*?</i>[.,;]?" //vai ar kolu atdalīta gramatika)
 							+")*"
 							+ ")\\s*(.*)"); // atstarpe un pārējais aiz gramatikas
 				Matcher gramMatch = gramPat.matcher(linePart);
 				if (gramMatch.matches())
 				{
 					grammar = MLVVGram.parse(gramMatch.group(1));
+					if (grammar.freeText != null && !grammar.freeText.isEmpty())
+						System.out.printf(
+								"No fragmenta \"%s\" sanāk nozīmes gramatika ar locījumiem \"%s\" (šķirklī %s)\n",
+								linePart, grammar.freeText, lemma);
 					linePart = gramMatch.group(2);
 				}
 				else
 					System.out.printf(
-							"No fragmenta \"%s\" neizdodas atdalīt gramatiku (šķirklī %s)",
+							"No fragmenta \"%s\" neizdodas atdalīt gramatiku (šķirklī %s)\n",
 							linePart, lemma);
 			}
 			else

@@ -116,9 +116,9 @@ public class MLVVEntry extends Entry
 						"((?:" +
 								"\\s*(?:\\p{Ll}\\p{M}*)+(?:\\s\\[[^\\]]+\\])?[.,]|" +	// forma ar neobligātu izrunu
 								"(?:\\(?|[,;]?\\s*arī\\s*)<b>.*?</b>[,.;]?|" + 			// cita lemma
-								"<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|" + 		// gram. kursīvā | homonīma indekss
-								"\\[.*?\\][,.;]?|[-,][^.<]*\\.?|" + 			// [izruna]
-								"(?:[:,]\\s)?<u>.*?</u>\\.?" +  			//"galotne" | formas ierobežojums
+								":?\\s*<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|" + 		// gram. kursīvā | homonīma indekss
+								"\\[.*?\\][,.;]?|[-,][^.<]*\\.?|" + 			// [izruna] | "galotne"
+								"(?:[:,]\\s)?<u>.*?</u>\\.?" +  			//formas ierobežojums
 						")\\s*)(.*)");	// atstarpe pārējais
 				m2 = headpart.matcher(body);
 				while (m2.matches())

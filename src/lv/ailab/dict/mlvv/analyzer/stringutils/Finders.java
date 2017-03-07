@@ -23,7 +23,7 @@ public class Finders
 		int circleIndex = linePart.indexOf("<circle/>");*/
 
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
-		Matcher m = Pattern.compile("((<i>)?(Pārn|Intr)\\.</i>: )?<circle/>").matcher(linePart);
+		Matcher m = Pattern.compile("((<i>)?(Pārn|Intr|Sal)\\.</i>: )?<circle/>").matcher(linePart);
 		int circleIndex = -1;
 		if (m.find()) circleIndex = m.start();
 		int res = -1;

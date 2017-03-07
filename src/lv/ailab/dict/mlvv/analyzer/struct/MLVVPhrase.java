@@ -142,7 +142,7 @@ public class MLVVPhrase extends Phrase
 		res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
-				"((?:(?:<i>)?\\s*(?:Pārn|Intr)\\.</i>:\\s*)?)"	//  Neobligāts Pārn. kursīvā :
+				"((?:(?:<i>)?\\s*(?:Pārn|Intr|Sal)\\.</i>:\\s*)?)"	//  Neobligāts Pārn. kursīvā :
 					+ "((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>"	// neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz.
 					+ "([.?!\"]*)\\s*\\((.*)\\)\\.?")			// (autors).
 				.matcher(linePart);

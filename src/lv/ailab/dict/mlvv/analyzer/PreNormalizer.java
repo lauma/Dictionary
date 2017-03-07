@@ -147,6 +147,7 @@ public class PreNormalizer
 		line = line.replace("<b><i>\u2013</i></b>", "<i>\u2013</i>");
 		line = line.replace("<b><i>\u2014</i></b>", "<i>\u2014</i>");
 
+		line = line.replaceAll("^-<b>", "<b>-");
 		line = line.replace("<b>)</b>", ")");
 		line = line.replace("<b>(</b>", "(");
 		line = line.replace("<b>.</b>", ".");

@@ -314,7 +314,7 @@ public class MLVVPhrase extends Phrase
 		if (linePart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"(<bullet/>\\s*<i>.*?</i>\\s*\\[.*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*|\\.)?)(.*)");
+					"(<bullet/>\\s*<i>.*?</i>\\s*\\[[^\\[\\]]*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*?|\\.)?)(.*)");
 			// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())

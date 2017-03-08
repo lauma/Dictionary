@@ -88,11 +88,16 @@ public class Editors
 
 	public static String replaceHomIds(String line, boolean cursiveAware)
 	{
+
 		line = line.replaceAll("(?<=\\p{L})\\s*<sup>\\s*1</sup>", " [1]");
 		line = line.replaceAll("(?<=\\p{L})\\s*<sup>\\s*2</sup>", " [2]");
 		line = line.replaceAll("(?<=\\p{L})\\s*<sup>\\s*3</sup>", " [3]");
 		if (cursiveAware)
 		{
+			line = line.replaceAll("</i>\\s*<sup>\\s*1</sup>", " [1]</i>");
+			line = line.replaceAll("</i>\\s*<sup>\\s*2</sup>", " [2]</i>");
+			line = line.replaceAll("</i>\\s*<sup>\\s*3</sup>", " [3]</i>");
+
 			//line = line.replaceAll("(?<=\\p{L})</i>\\s*<sup>\\s*<i>1</i></sup><i>", " [1]");
 			//line = line.replaceAll("(?<=\\p{L})</i>\\s*<sup>\\s*<i>2</i></sup><i>", " [2]");
 			line = line.replaceAll("(?<=\\p{L})</i>\\s*<sup>\\s*<i>3</i></sup><i>", " [3]");

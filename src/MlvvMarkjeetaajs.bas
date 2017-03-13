@@ -39,6 +39,17 @@ Sub Izrunas()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    ' Aizstâj non breaking space ar parasto, jo lietots nevietâ.
+    With oRange.Find
+        .text = ChrW(160)
+        .Replacement.text = " "
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     ' Sasodîts aprisinâjums izrunu izgûðanai
     ' ---------- 4 simbolu bloki ----------------------------------------
@@ -340,6 +351,16 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "r" & ChrW(61666) ' nenogurstoðs
+        .Replacement.text = "r"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     ' ^ (circumflex)
     Set oRange = ActiveDocument.Content
@@ -356,6 +377,16 @@ Sub Izrunas()
     With oRange.Find
         .text = "r" & ChrW(61534) ' aizargjosla
         .Replacement.text = "r"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "m" & ChrW(61534) ' neatòemdamies
+        .Replacement.text = "m"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -484,6 +515,16 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(7879) 'nepieredzçts
+        .Replacement.text = "e,^^"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     ' Vienkârði ç
     Set oRange = ActiveDocument.Content
@@ -521,6 +562,16 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(7869) ' aizgriezt 1
+        .Replacement.text = "e~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(283) ' nomaïnieks
         .Replacement.text = "e~"
         .Forward = True
         .Wrap = wdFindContinue
@@ -856,10 +907,19 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
-    NovaaktFormateejumu ("<diamond/>")
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "²"
+        .Replacement.text = "<diamond/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    With oRange.Find
+        .text = ChrW(9674)
         .Replacement.text = "<diamond/>"
         .Forward = True
         .Wrap = wdFindContinue
@@ -995,15 +1055,6 @@ Sub DubultoTaguIeliceejs()
         .Execute Replace:=wdReplaceAll
     End With
     
-    Set oRange = ActiveDocument.Content
-    With oRange.Find
-        .text = "^p</gray>"
-        .Replacement.text = "</gray>^p"
-        .Forward = True
-        .Wrap = wdFindContinue
-        .Execute Replace:=wdReplaceAll
-    End With
-
     Set oRange = ActiveDocument.Range
     With oRange
         .Find.Highlight = True
@@ -1035,6 +1086,16 @@ Sub DubultoTaguIeliceejs()
             .Start = intPosition
         Loop
     End With
+    
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "^p</gray>"
+        .Replacement.text = "</gray>^p"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Execute Replace:=wdReplaceAll
+    End With
+
     NovaaktFormateejumu ("<gray>")
     NovaaktFormateejumu ("</gray>")
         

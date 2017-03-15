@@ -28,7 +28,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
-import lv.ailab.dict.tezaurs.analyzer.io.StaxWriter;
+import lv.ailab.dict.tezaurs.analyzer.io.XmlEntryStreamWriter;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
@@ -131,12 +131,12 @@ public class DictionaryXmlToJson
 		String ruleStatsPath = path + "rule_stats.txt";
 		String completeXmlPath = path + "analyzed_tezaurs.xml";
 		String completeJsonPath = path + "analyzed_tezaurs.json";
-		StaxWriter completeXmlOut = null;
+		XmlEntryStreamWriter completeXmlOut = null;
 		BufferedWriter completeJsonOut = null;
 
 		BufferedWriter ruleStatsOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(ruleStatsPath), "UTF-8"));
-		if (PRINT_SINGLE_XML) completeXmlOut = new StaxWriter(completeXmlPath);
+		if (PRINT_SINGLE_XML) completeXmlOut = new XmlEntryStreamWriter(completeXmlPath);
 		if (PRINT_SINGLE_JSON) completeJsonOut = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(completeJsonPath), "UTF-8"));
 
@@ -197,7 +197,7 @@ public class DictionaryXmlToJson
 
 				if (!entry.inBlacklist())    // Blacklisted entries are not included in output logs.
 				{
-					if (PRINT_SINGLE_XML) completeXmlOut.writeNode(entry);
+					if (PRINT_SINGLE_XML) completeXmlOut.writeNextEntry(entry);
 					if (PRINT_SINGLE_JSON)
 					{
 						if (count > 0 || fileCount > 0) completeJsonOut.write(",\n");

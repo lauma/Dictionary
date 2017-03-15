@@ -308,6 +308,7 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public Element toXML(Document doc)
 	{
+
 		Element entryN = doc.createElement("Entry");
 
 		if (homId != null)

@@ -112,7 +112,9 @@ public class PreNormalizer
 		line = line.replace("<i>y</i><sup><i>2</i></sup>", "<i>y\u00B2</i>");
 		line = line.replace("<i>x</i><sup><i>2</i></sup>", "<i>x\u00B2</i>");
 		line = line.replace(" m</i><sup><i>2</i></sup> <i>", " m\u00B2 ");
+		line = line.replace(" m</i><sup><i>3</i></sup> <i>", " m\u00B3 ");
 		line = line.replace(" m</i><sup><i>2</i></sup>", " m\u00B2</i>");
+		line = line.replace(" m</i><sup><i>3</i></sup>", " m\u00B3</i>");
 
 		return line;
 	}

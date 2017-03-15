@@ -115,7 +115,7 @@ public class MLVVEntry extends Entry
 				Pattern headpart = Pattern.compile(
 						"((?:" +
 								"\\s*(?:\\p{Ll}\\p{M}*)+(?:\\s\\[[^\\]]+\\])?[.,]|" +	// forma ar neobligātu izrunu
-								"(?:\\(?|[,;]?\\s*arī\\s*)<b>.*?</b>[,.;]?|" + 			// cita lemma
+								"(?:\\(?|[,;]?\\s*(?:arī|retāk)\\s*)<b>.*?</b>[,.;]?|" + 			// cita lemma
 								":?\\s*<i>.*?</i>[,.;]?|<sup>.*?</sup>[,.;]?|" + 		// gram. kursīvā | homonīma indekss
 								"\\[.*?\\][,.;]?|[-,][^.<]*\\.?|" + 			// [izruna] | "galotne"
 								"(?:[:,]\\s)?<u>.*?</u>\\.?" +  			//formas ierobežojums

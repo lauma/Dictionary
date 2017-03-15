@@ -204,6 +204,10 @@ public class MLVVGram extends Gram
 			{
 				if (bigParts[i].matches("</i>\\s*<b>.*"))
 					bigParts[i] = bigParts[i].substring(4).trim();
+				String prefixPart = bigParts[i].substring(0, bigParts[i].indexOf("<b>")).trim();
+				bigParts[i] = bigParts[i].substring(bigParts[i].indexOf("<b>"));
+				if (Editors.removeCursive(prefixPart).equals("arī")) prefixPart = "";
+
 				int commonStart = bigParts[i].lastIndexOf("<i>");
 				int commonEnd = bigParts[i].indexOf("</i>", commonStart);
 				// Ja neatrod kopīgo daļu, tad ir šitā:
@@ -236,7 +240,7 @@ public class MLVVGram extends Gram
 							smallPart += ",";
 						if (!smallPart.contains(subcommon))
 							smallPart = smallPart + " " + common;
-						Header altLemma = MLVVHeader.parseSingularHeader(smallPart);
+						Header altLemma = MLVVHeader.parseSingularHeader(smallPart, prefixPart);
 						if (altLemma!= null) altLemmas.add(altLemma);
 					}
 				}

@@ -20,6 +20,13 @@ public class MLVVHeader extends Header
 	 */
 	public static MLVVHeader parseSingularHeader(String linePart)
 	{
+		return parseSingularHeader(linePart, null);
+	}
+	/**
+	 * Izgūst vienkārša veida hederi - no virknes <b>lemmma</b> [izruna] grmatika
+	 */
+	public static MLVVHeader parseSingularHeader(String linePart, String prefix)
+	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
@@ -44,6 +51,14 @@ public class MLVVHeader extends Header
 				gramStr = m.group(2);
 			}
 
+			// Nepazaudēt prefiksu.
+			if (prefix != null && !prefix.isEmpty())
+			{
+				if (gramStr.isEmpty()) gramStr = prefix;
+				else if (gramStr.matches(".*?[,;](</?i>)?")) gramStr = gramStr + " " + prefix;
+				else gramStr = gramStr + "; " + prefix;
+
+			}
 			// Nepazaudēt zvaigznīti.
 			if (!star.isEmpty() && gramStr.isEmpty()) gramStr = "*";
 			else if (!star.isEmpty()) gramStr = "*, " + gramStr;

@@ -104,6 +104,8 @@ public class MLVVPhrase extends Phrase
 			String gloss = m.group(2).trim();
 			String glossEnd = m.group(3).trim();
 			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
+			else if (glossEnd.matches("\\s*[-\u2013\u2014]\\s*"))
+				System.out.printf("Taksonam \"%s\" sanāk tukša skaidrojošā daļa pēc domuzīmes\n", linePart);
 			else if (glossEnd.matches("\\s*[-\u2013\u2014].+"))gloss = gloss + " " + glossEnd;
 				// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
 			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
@@ -218,7 +220,7 @@ public class MLVVPhrase extends Phrase
 		if (linePart.startsWith("<i>"))
 			linePart = linePart.substring(3).trim();
 		Pattern splitter = Pattern.compile(
-				"((?:.(?!</i>)|\\.</i>:\\s<i>)*?[.!?])(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
+				"((?:(?!</i>).|\\.</i>:\\s<i>|</i>:\\s<i>\")*?[.!?]\"?)(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
 		Matcher m = splitter.matcher(linePart);
 		while (m.matches())
 		{
@@ -314,8 +316,12 @@ public class MLVVPhrase extends Phrase
 		if (linePart.startsWith("<bullet/>"))
 		{
 			Pattern taxonPat = Pattern.compile(
-					"(<bullet/>\\s*<i>.*?</i>\\s*\\[[^\\[\\]]*\\](?:\\s+[-\u2013\u2014]?(?:(?!(?:<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>)).)*?|\\.)?)(.*)");
-			// <bullet/> suga kursīvā [latīniskais nos] - skaidrojums līdz nākamajam "bullet" vai "i", vai "circle" un pārējais
+					"(<bullet/>\\s*<i>.*?</i>\\s*\\[[^\\[\\]]*\\]" // bullet, suga kursīvā, latīniskais nosauums kvadrātiekavās.
+						+ "(?:\\s+[-\u2013\u2014]?" // neobligāts skaidrojums parasti sākas ar domuzīmi, kas ievada skaidrojumu
+							+ "(?:(?!<(?:/?i|bullet/)>|(?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>).)*" // skaidrojums nedrīkst saturēt <bullet/>, <i>, </i> un <circle/>.
+							+ "|\\.)?)" // skaidrojuma vietā var būt vienkārši punkts.
+						+ "(.*)"); // pārējais
+
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())
 			{
@@ -375,9 +381,10 @@ public class MLVVPhrase extends Phrase
 			res.grammar = new MLVVGram(linePart
 					.substring(0, linePart.indexOf(".</i>: <i>") + 1));
 			linePart = linePart
-					.substring(linePart.indexOf(".</i>: <i>") + ".</i>: <i>"
-							.length()).trim();
+					.substring(linePart.indexOf(".</i>: <i>") + ".</i>: <i>".length())
+					.trim();
 		}
+		linePart = linePart.replace("</i>: <i>\"", ": \"");
 		res.text.add(linePart);
 		return res;
 	}

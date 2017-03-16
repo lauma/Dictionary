@@ -18,12 +18,11 @@ public class Finders
 	public static int getAnyCircleIndex(String linePart)
 	{
 		int bulletIndex = linePart.indexOf("<bullet/>");
-		/*int circleGramIndex = linePart.indexOf("<i>Pārn.</i>: <circle/>");
-		int circleGramShortIndex = linePart.indexOf("Pārn.</i>: <circle/>");
-		int circleIndex = linePart.indexOf("<circle/>");*/
 
-		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
-		Matcher m = Pattern.compile("((<i>)?(Pārn|Intr|Sal)\\.</i>: )?<circle/>").matcher(linePart);
+		// Oriģināli te bija (Pārn|Intr|Tr|Sal) kā vienīgie atzītie saīsinājumi,
+		// bet tā kā to pašu čeko arī frāžu apstrādes funkcija, tad te ir
+		// atstāts vispārīgais.
+		Matcher m = Pattern.compile("((<i>)?\\p{Lu}\\p{Ll}+\\.</i>: )?<circle/>").matcher(linePart);
 		int circleIndex = -1;
 		if (m.find()) circleIndex = m.start();
 		int res = -1;

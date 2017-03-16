@@ -243,7 +243,7 @@ public class MLVVPhrase extends Phrase
 			for (int i = 1; i < initialParts.length; i++)
 			{
 				// Apvieno, ja pēdējā daļa beidzas ar elementiem, kas nevar būt frāzes beigās.
-				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,?!(](</i>)?\\s?(arī|biežāk|retāk|saīsināti:)\\s?)"))
+				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|\\bpiem\\.,\\s*|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,?!(](</i>)?\\s?(arī|biežāk|retāk|saīsināti:)\\s?)"))
 					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
 				// Apvieno, ja pēdējā daļa satur numurētu apakšnozīmi un jaunā daļa sākas kursīvā (frāžu nozīmju piemēri)
 				else if (concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
@@ -261,19 +261,20 @@ public class MLVVPhrase extends Phrase
 			// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
 			// viss ir kursīvā.
 			Pattern resplitPat1 = Pattern.compile(
-					"(.*<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)" // Daļa kursīvā, kas beidzas ar punktu
+					"(.*?<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)" // Daļa kursīvā, kas beidzas ar punktu
 					+ "(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)"); // Arī pirms domuzīmes ir jāpaliek reālam tekstam no reāliem burtiem.
 			LinkedList<String> finalParts = new LinkedList<>();
 			for (String concatPart : concatParts)
 			{
-				Matcher resplitter = resplitPat1.matcher(concatPart);
-				if (resplitter.matches())
+				String inProgressPart = concatPart;
+				Matcher resplitter = resplitPat1.matcher(inProgressPart);
+				while (resplitter.matches())
 				{
 					String preLast = resplitter.group(1);
 					String last = resplitter.group(2);
 					// TODO šitā izteiksme varētu nebūt pareiza.
 					Matcher gramMatcher = Pattern
-							.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}])*\\.</i>:\\s*)?<i>\\s*)")
+							.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}]\\)?)*\\.</i>:\\s*)?<i>\\s*)")
 							.matcher(preLast);
 					if (gramMatcher.matches())
 					{
@@ -283,9 +284,10 @@ public class MLVVPhrase extends Phrase
 					preLast = Editors.closeCursive(preLast);
 					last = Editors.openCursive(last);
 					if (!preLast.trim().isEmpty()) finalParts.add(preLast);
-					finalParts.add(last);
+					inProgressPart = last;
+					resplitter = resplitPat1.matcher(inProgressPart);
 				}
-				else finalParts.add(concatPart);
+				finalParts.add(inProgressPart);
 			}
 
 			// Apstrādā iegūtās daļas.

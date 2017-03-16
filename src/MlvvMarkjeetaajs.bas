@@ -9,7 +9,7 @@ Sub Markjeetaajs()
     Priekshdarbi
     VienkaarshoTaguIeliceejs
     DubultoTaguIeliceejs
-    MsgBox "Viss gatavs!", 0, "MLVV"
+    MsgBox "Viss gatavs!", 0, "MLVV tagi"
     Application.ScreenUpdating = True
 End Sub
 Sub Izrunas()
@@ -745,6 +745,8 @@ Sub Izrunas()
     End With
     
     ' / (acute)
+    
+    MsgBox "Viss gatavs!", 0, "MLVV izrunas"
 
 End Sub
 

@@ -243,7 +243,7 @@ public class MLVVPhrase extends Phrase
 			for (int i = 1; i < initialParts.length; i++)
 			{
 				// Apvieno, ja pēdējā daļa beidzas ar elementiem, kas nevar būt frāzes beigās.
-				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|\\bpiem\\.,\\s*|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,?!(](</i>)?\\s?(arī|biežāk|retāk|saīsināti:)\\s?)"))
+				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|\\bpiem\\.,\\s*|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,;?!(](</i>)?\\s?(arī|biežāk|retāk|saīsināti:)\\s?)"))
 					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
 				// Apvieno, ja pēdējā daļa satur numurētu apakšnozīmi un jaunā daļa sākas kursīvā (frāžu nozīmju piemēri)
 				else if (concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
@@ -402,7 +402,7 @@ public class MLVVPhrase extends Phrase
 	protected void extractGramAndText(String preDefiseLinePart)
 	{
 		// Ja vajag, frāzi sadala.
-		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
+		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
 		String gramText = "";
 		for (String part : beginParts)
 		{

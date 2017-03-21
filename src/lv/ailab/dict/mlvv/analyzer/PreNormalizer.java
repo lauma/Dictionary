@@ -115,6 +115,7 @@ public class PreNormalizer
 		line = line.replace(" m</i><sup><i>3</i></sup> <i>", " m\u00B3 ");
 		line = line.replace(" m</i><sup><i>2</i></sup>", " m\u00B2</i>");
 		line = line.replace(" m</i><sup><i>3</i></sup>", " m\u00B3</i>");
+		line = line.replaceAll("\\bB<sub>6</sub> vitamīn", " B\u2086 vitamīn");
 
 		return line;
 	}
@@ -205,6 +206,9 @@ public class PreNormalizer
 		line = line.replace("</i>!", "!</i>");
 		//line = line.replace("</i>;", ";</i>");
 
+		// Ja kursīvā ir tikai defise tieši pirms teksta, tā parasti ir kļūda.
+		line = line.replaceAll(" <i>-</i>(?=\\p{L})", " -");
+
 		// Novāc tagu pārrāvumus.
 		line = Editors.removeTagSplits(line, tags);
 		//line = line.replaceAll("<((\\p{L}\\p{M}*)+)></\\1>", "");
@@ -218,6 +222,8 @@ public class PreNormalizer
 		line = line.replaceAll("</i>\", <i>", "\", ");
 		line = line.replaceAll("</i>\" <i>", "\" ");
 		line = line.replaceAll("</i> \"<i>", " \"");
+		line = line.replaceAll("</i>\' <i>", "\' ");
+		line = line.replaceAll("</i> \'<i>", " \'");
 
 		line = line.replaceAll("(?<=\\p{L})<i>.\\s+(?=\\p{L})", ". <i>");
 
@@ -280,7 +286,10 @@ public class PreNormalizer
 
 		// Punkti citāta sākumā
 		line = line.replaceAll("\\.\\.\\.<i>(?=\\p{L})", "<i>...");
+		line = line.replaceAll("\\.\\.<i>\\.(?=\\p{L})", "<i>...");
+		line = line.replaceAll("\\.<i>\\.\\.(?=\\p{L})", "<i>...");
 		line = line.replaceAll("\\.\\.<i>(?=\\p{L})", "<i>..");
+		line = line.replaceAll("\\.<i>\\.(?=\\p{L})", "<i>..");
 		// Nejauši iekursivēta domuzīme (galotņu šablonos)
 		line = line.replaceAll("\\s+-</i>(?=\\p{L})", "</i> -");
 		// Nejauši iekursivēts punkts?

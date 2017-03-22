@@ -137,12 +137,12 @@ public class DirectRules
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.POS__ADJ}), // abēji 2
 
-		// Nedefinēta paradigma: divdabji
-		Participle.isUsiIesUsies("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
-		Participle.isUsiIesUsies("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
-		Participle.isUsiIesUsies("-ušais, s. -usi, -usī", ".*[jt]is"), // caurkritis
-		// TODO: iespējams, ka šim jānokļūst 13/14. paradigmas analogā?
-		BaseRule.of("s. -usies", ".*ies", 0,
+		// Paradigma 42: -is/-usi
+		Participle.isUsi("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
+		Participle.isUsi("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
+		Participle.isUsi("-ušais, s. -usi, -usī", ".*[djt]is"), // caurkritis
+		// Paradigma 43: -ies/-usies
+		BaseRule.of("s. -usies", ".*ies", 43,
 				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies
 
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
@@ -156,7 +156,7 @@ public class DirectRules
 						SimpleSubRule.of(".*ti", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*dami", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*[aā]mi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
-						//SimpleSubRule.of(".*uši", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
+						//SimpleSubRule.of(".*uši", new Integer[]{13, 42}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL})},
 				new Tuple[]{TFeatures.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču

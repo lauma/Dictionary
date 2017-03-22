@@ -97,9 +97,9 @@ public class OptHypernRules
 		//		null), //daudzka
 
 		// Nedefinēta paradigma: divdabji
-		Participle.isUsiIesUsies("-augušais; s. -augusi, -augusī", ".*audzis"), // auraudzis
-		Participle.isUsiIesUsies("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
-		Participle.isUsiIesUsies("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
+		Participle.isUsi("-augušais; s. -augusi, -augusī", ".*audzis"), // auraudzis
+		Participle.isUsi("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
+		Participle.isUsi("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e

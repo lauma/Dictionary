@@ -88,6 +88,16 @@ Sub Izrunas()
         .MatchCase = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "e" & ChrW(771) & ChrW(61606) ' puscilvçks
+        .Replacement.text = "e,~"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     ' Platais ç ar \
     Set oRange = ActiveDocument.Content
     With oRange.Find
@@ -345,6 +355,16 @@ Sub Izrunas()
     With oRange.Find
         .text = "n" & ChrW(61481) ' audience
         .Replacement.text = "n"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "ò" & ChrW(61481) ' rokriòíis
+        .Replacement.text = "ò"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -643,6 +663,16 @@ Sub Izrunas()
     End With
     Set oRange = ActiveDocument.Content
     With oRange.Find
+        .text = ChrW(58111) ' rasçtâjs
+        .Replacement.text = "e,^^"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
         .text = ChrW(234) ' aizgriezt 2
         .Replacement.text = "e^^"
         .Forward = True
@@ -715,6 +745,16 @@ Sub Izrunas()
     End With
     Set oRange = ActiveDocument.Content
     With oRange.Find
+        .text = ChrW(57356) ' ratiòkrçsls
+        .Replacement.text = "i\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
         .text = ChrW(242) ' befstrogonovs
         .Replacement.text = "o\"
         .Forward = True
@@ -757,6 +797,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(61614)
         .Replacement.text = "<arrow/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -819,6 +860,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(61551)
         .Replacement.text = "<square/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -830,6 +872,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(-3928)
         .Replacement.text = "<square/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -841,6 +884,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(9633)
         .Replacement.text = "<square/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -852,6 +896,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(-3985)
         .Replacement.text = "<square/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -896,12 +941,24 @@ Sub VienkaarshoTaguIeliceejs()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(61508)
+        .Replacement.text = "<triangle/>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .MatchWholeWord = True
+        .Execute Replace:=wdReplaceAll
+    End With
     NovaaktFormateejumu ("<triangle/>")
     
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61618)
         .Replacement.text = "<diamond/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -913,6 +970,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = "²"
         .Replacement.text = "<diamond/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -923,6 +981,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(9674)
         .Replacement.text = "<diamond/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -936,6 +995,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(8226)
         .Replacement.text = "<bullet/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -947,6 +1007,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(9679)
         .Replacement.text = "<bullet/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -958,6 +1019,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(-3913)
         .Replacement.text = "<bullet/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -970,6 +1032,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = ChrW(-3945)
         .Replacement.text = "<bullet/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True
@@ -981,6 +1044,7 @@ Sub VienkaarshoTaguIeliceejs()
     With oRange.Find
         .text = "•"
         .Replacement.text = "<bullet/>"
+        .Replacement.Font.Name = "(normal text)"
         .Forward = True
         .Wrap = wdFindContinue
         .Format = True

@@ -249,8 +249,8 @@ public class MLVVPhrase extends Phrase
 				else if (concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
 						&& initialParts[i].matches("\\s*<i>.*"))
 					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-				// Apvieno, ja pēdējā daļa beidzas ar u.tml. bez kursīva un tālāk seko kursīvs ar mazo burtu vai defise.
-				else if (concatParts.getLast().matches(".*\\su\\.tml\\.\\)\\s*")
+				// Apvieno, ja pēdējā daļa beidzas ar komatu vai u.tml. bez kursīva un tālāk seko kursīvs ar mazo burtu vai defise.
+				else if (concatParts.getLast().matches(".*(\\su\\.tml\\.\\)|,)\\s*")
 						&& initialParts[i].matches("\\s*(<i>,?\\s*\\p{Ll}|[\\-\u2014\u2013]).*"))
 					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
 				// Citādi neapvieno.
@@ -428,15 +428,15 @@ public class MLVVPhrase extends Phrase
 				if (newText.endsWith(",")) newText = newText.substring(0, newText.length()-1);
 				text.add(newText);
 			}
-			// Kursīvs sākas kaut kur vidū - tātad kursīvā ir gramatika
-			else if (part.contains("<i>"))
+			// Kursīvs sākas kaut kur vidū un iet līdz beigām - tātad kursīvā ir gramatika
+			else if (part.matches(".*?<i>.*?</i>[.]?\\s*"))
 			{
 				text.add(part.substring(0, part.indexOf("<i>")).trim());
 				if (gramText.length() > 0) gramText = gramText + "; ";
 				gramText = (gramText + part.substring(part.indexOf("<i>"))).trim();
 			}
 			// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
-			else text.add(part);
+			else text.add(Editors.removeCursive(part));
 		}
 		if (gramText.length() > 0) grammar = new MLVVGram(gramText);
 	}

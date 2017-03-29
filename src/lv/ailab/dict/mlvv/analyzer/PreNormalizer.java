@@ -113,8 +113,11 @@ public class PreNormalizer
 		line = line.replace("<i>x</i><sup><i>2</i></sup>", "<i>x\u00B2</i>");
 		line = line.replace(" m</i><sup><i>2</i></sup> <i>", " m\u00B2 ");
 		line = line.replace(" m</i><sup><i>3</i></sup> <i>", " m\u00B3 ");
+		line = line.replace(" cm</i><sup><i>3</i></sup> <i>", " cm\u00B3 ");
 		line = line.replace(" m</i><sup><i>2</i></sup>", " m\u00B2</i>");
 		line = line.replace(" m</i><sup><i>3</i></sup>", " m\u00B3</i>");
+		line = line.replace(" cm</i><sup><i>3</i></sup>", " cm\u00B3</i>");
+		line = line.replaceAll("\\bB<sub>2</sub> vitamīn", " B\u2082 vitamīn");
 		line = line.replaceAll("\\bB<sub>6</sub> vitamīn", " B\u2086 vitamīn");
 
 		return line;
@@ -225,7 +228,7 @@ public class PreNormalizer
 		line = line.replaceAll("</i>\' <i>", "\' ");
 		line = line.replaceAll("</i> \'<i>", " \'");
 
-		line = line.replaceAll("(?<=\\p{L})<i>.\\s+(?=\\p{L})", ". <i>");
+		line = line.replaceAll("(?<=\\p{L}|\\))<i>.\\s+(?=\\p{L}|\\()", ". <i>");
 
 		// <i>Pārn</i>.: <i>
 		line = line.replaceAll("(?<=\\p{L})</i>\\.: <i>", ".</i>: <i>");

@@ -82,7 +82,7 @@ public class MLVVSense extends Sense
 		if (linePart.matches("(<i>((?!=</i>).*)</i>\\s*)?<b>.*")) // Šķirklī "abhāzi", "ārieši".
 		{
 			Pattern headpart = Pattern.compile(
-					"((?:(?:[,;]?\\s*arī\\s*)?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
+					"((?:(?:[,;]?\\s*(?:<i>)?\\s*arī\\s*(?:</i>)?\\s*)?<b>.*?</b>[,.;]?|<i>.*?</i>[,.;]?|\\[.*?\\][,.;]?|(?:[-,][^.<]*\\.?))\\s*)(.*)");
 					//((?: cita lemma    | gram. kursīvā  | [izruna]      | "galotne"       ) atstarpe) (pārējais)
 			Matcher headMatcher = headpart.matcher(linePart);
 			String header = "";
@@ -116,7 +116,7 @@ public class MLVVSense extends Sense
 						"(<i>.*?</i>" // gramatika kursīvā
 							// Dažādas citas lietas, kas var gramatikai pa vidu gadīties:
 							+"(?:"
-								+ "(?:\\s*:|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*"
+								+ "(?:\\s*:|(?<=:</i>))\\s<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?(?:,\\s?(?:<i>\\s?(?:retāk|arī)\\s?</i>\\s?)?<u>.*?</u>!?(?:\\s\\[[^\\]]+\\])?)*[.;,]*"
 								//                   pasvītrota forma( [izruna])?         , atkārtota forma [izruna]?          pieturz.?
 								+ "|:?(?:\\s*-\\p{Ll}+[,;])*\\s*<i>.*?</i>[.,;]?" // vai vēl gramatika (iespējams, ar galotnēm, sk. gnīda, aunapiere)
 								//+ "|::\\s*<i>.*?</i>[.,;]?" //vai ar kolu atdalīta gramatika)

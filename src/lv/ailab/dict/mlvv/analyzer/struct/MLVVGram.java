@@ -4,6 +4,7 @@ import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.utils.StringUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -101,12 +102,21 @@ public class MLVVGram extends Gram
 	protected void parseFullRestrForms(
 			String restrFirstFlag, String restrForms, String restrLastFlags)
 	{
-		String[] restrParts = restrForms.split("(?=<u>)");
+		String[] restrParts = restrForms.split("(?=\\b(retāk|arī)</i>\\s<u>|(?<!\\b(retāk|arī)</i>\\s)<u>)");
 		if (formRestrictions == null) formRestrictions = new ArrayList<>();
 
 		for (String p : restrParts)
 		{
-			MLVVHeader restr = MLVVHeader.parseSingularHeader(p);
+			String prefix = null;
+			if (p.startsWith("retāk</i>"))
+			{
+				prefix = "<i>retāk</i>";
+				p = p.substring("retāk</i>".length()).trim();
+			} else if (p.startsWith("arī</i>"))
+			{
+				p = p.substring("arī</i>".length()).trim();
+			}
+			MLVVHeader restr = MLVVHeader.parseSingularHeader(p, prefix);
 			restrFirstFlag = restrFirstFlag.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 			restrLastFlags = restrLastFlags.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 			if (restrLastFlags.startsWith(";") || restrLastFlags.startsWith(","))

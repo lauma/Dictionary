@@ -213,26 +213,58 @@ public class MLVVGram extends Gram
 		// vārdšķira.
 		String[] bigParts = new String[]{linePart};
 		if (linePart.contains(";")) bigParts = linePart.split(";\\s*");
+		ArrayList<String> preprocBigBarts = new ArrayList<>();
+		// Vispirms apstrādā tos gabalus, kuros nav savu lemmu.
 		for (int i = 0; i < bigParts.length; i++)
 		{
-			if (bigParts[i].contains("<b>"))
+			String bigPart = Editors.openCursive(Editors.closeCursive(bigParts[i]));
+			if (bigPart.contains("<b>")) preprocBigBarts.add(bigPart);
+			else
 			{
-				if (bigParts[i].matches("</i>\\s*<b>.*"))
-					bigParts[i] = bigParts[i].substring(4).trim();
-				String prefixPart = bigParts[i].substring(0, bigParts[i].indexOf("<b>")).trim();
-				bigParts[i] = bigParts[i].substring(bigParts[i].indexOf("<b>"));
+				boolean hasNextAltLemma = false;
+				for (int j = i + 1; j < bigParts.length; j ++)
+					if (bigParts[j].contains("<b>")) hasNextAltLemma = true;
+				if (!hasNextAltLemma) // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
+				{
+					if (freeText == null) freeText = "";
+					else if (!freeText.trim().isEmpty()) freeText += "; ";
+					freeText += bigPart;
+				} else // Aizdomīga situācija, šitā nevajadzētu būt, bet nu tad piekabina
+				// iepriekš atrastajiem fragmentiem, kuros ir lemmas.
+				{
+					System.out.printf("Nav skaidrs, uz ko attiecas daļa \"%s\" gramatikā \"%s\"!\n",
+							bigPart, linePart);
+					if (preprocBigBarts.isEmpty())
+					{
+						if (freeText == null) freeText = "";
+						else if (!freeText.trim().isEmpty()) freeText += "; ";
+						freeText += bigPart;
+					} else for (int j = 0; j < preprocBigBarts.size(); j++)
+						preprocBigBarts.set(j, preprocBigBarts.get(j) + "; " + bigPart);
+				}
+			}
+		}
+		// Apstrādā gramatikas daļas, kurās ir lemmas.
+		for (String bigPart : preprocBigBarts)
+		{
+			if (bigPart.contains("<b>"))
+			{
+				if (bigPart.matches("</i>\\s*<b>.*"))
+					bigPart = bigPart.substring(4).trim();
+				String prefixPart = bigPart.substring(0, bigPart.indexOf("<b>")).trim();
+				bigPart = bigPart.substring(bigPart.indexOf("<b>"));
 				if (Editors.removeCursive(prefixPart).equals("arī")) prefixPart = "";
 
-				int commonStart = bigParts[i].lastIndexOf("<i>");
-				int commonEnd = bigParts[i].indexOf("</i>", commonStart);
+				int commonStart = bigPart.lastIndexOf("<i>");
+				int commonEnd = bigPart.indexOf("</i>", commonStart);
 				// Ja neatrod kopīgo daļu, tad ir šitā:
 				String common = "";
-				String forSplit = bigParts[i];
+				String forSplit = bigPart;
 				// Pēc commonStart vairs nebūtu jāatrodas nevienai galotnei.
-				if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigParts[i].length() - "</i>".length() - 2))
+				if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigPart.length() - "</i>".length() - 2))
 				{
-					common = bigParts[i].substring(commonStart);
-					forSplit = bigParts[i].substring(0, commonStart);
+					common = bigPart.substring(commonStart);
+					forSplit = bigPart.substring(0, commonStart);
 				}
 				ArrayList<String> smallParts = new ArrayList<>(Arrays.asList(
 						forSplit.split("(?<!\\s)\\s*(?=<b>)")));
@@ -260,35 +292,9 @@ public class MLVVGram extends Gram
 					}
 				}
 			} else
-			{
-				boolean hasNextAltLemma = false;
-				for (int j = i + 1; j < bigParts.length; j ++)
-					if (bigParts[j].contains("<b>")) hasNextAltLemma = true;
-				if (!hasNextAltLemma) // Elementi, kas attiecināmi uz visām altLemmām un arī uz pamata šķirkļa vārdu.
-				{
-					if (freeText == null) freeText = "";
-					else if (!freeText.trim().isEmpty()) freeText += "; ";
-					freeText += bigParts[i];
-				} else // Aizdomīga situācija, šitā nevajadzētu būt, bet nu tad piekabina
-				// iepriekš atrastajām alt lemmām.
-				{
-					//if (gram.altLemmas != null && gram.altLemmas.size() > 1)
-					System.out.printf("Nav skaidrs, uz ko attiecas daļa \"%s\" gramatikā \"%s\"!\n",
-							bigParts[i], linePart);
-					if (altLemmas == null || altLemmas.isEmpty())
-					{
-						if (freeText == null) freeText = "";
-						else if (!freeText.trim().isEmpty()) freeText += "; ";
-						freeText += bigParts[i];
-					} else for (Header al : altLemmas)
-					{
-						if (al.gram.freeText == null) al.gram.freeText = "";
-						else if (!al.gram.freeText
-								.trim().isEmpty()) al.gram.freeText += "; ";
-						al.gram.freeText += bigParts[i];
-					}
-				}
-			}
+				// Šitā nevajadzētu būt, jo taču visus šitos apstrādāja iepriekšējā ciklā.
+				System.out.printf("Loģikas kļūda, apstrādājot gramatikas fragmentu \"%s\" gramatikā \"%s\"!\n",
+						bigPart, linePart);
 		}
 	}
 
@@ -356,7 +362,8 @@ public class MLVVGram extends Gram
 				lastIClose == freeText.length() - "</i>".length() ||
 				lastIClose == freeText.length() - "</i>".length() - 1))
 		{
-			if (!freeText.contains(" -"))
+			if (!freeText.contains(" -") && ! freeText.startsWith("-") &&
+					freeText.matches(".*?\\.\\s*[,;]?\\s*"))
 			{
 				flagText = freeText;
 				freeText = null;

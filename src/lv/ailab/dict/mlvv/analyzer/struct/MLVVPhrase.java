@@ -36,7 +36,7 @@ public class MLVVPhrase extends Phrase
 		if (linePart.length() < 1) return null;
 		Matcher dashMatcher = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
 		Matcher colonMatcher = Pattern.compile("(.*?</i>):\\s*(<i>.*)").matcher(linePart);
-		Matcher simpleMatcher = Pattern.compile("<i>[^:]+(:\\s+\"[^:]+)?</i>").matcher(linePart);
+		Matcher simpleMatcher = Pattern.compile("<i>[^:]+(:\\s+[\"\u201e\u201d][^:]+)?</i>").matcher(linePart);
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = phraseType;
 		res.text = new LinkedList<>();
@@ -145,8 +145,8 @@ public class MLVVPhrase extends Phrase
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
 				"((?:(?:<i>)?\\s*(?:Pārn|Intr|Tr|Sal)\\.</i>:\\s*)?)"	//  Neobligāts Pārn. kursīvā :
-					+ "((?:(?:\\.{2,3}|\")\\s*)?)<i>(.*?)</i>"	// neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz.
-					+ "([.?!\"]*)\\s*\\((.*)\\)\\.?")			// (autors).
+					+ "((?:(?:\\.{2,3}|[\"\u201e\u201d])\\s*)?)<i>(.*?)</i>"	// neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz.
+					+ "([.?!\"\u201e\u201d]*)\\s*\\((.*)\\)\\.?")			// (autors).
 				.matcher(linePart);
 		if (m.matches())
 		{
@@ -339,7 +339,7 @@ public class MLVVPhrase extends Phrase
 		else if (linePart.matches("((<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>.*"))
 		{
 			Pattern quotePat = Pattern.compile(
-					"((?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?)<circle/>\\s*((?:(?:\\.{2,3}|\")\\s*)?<i>.*?</i>[.?!\"]*\\s*\\(.*?\\)\\.?)(.*)");
+					"((?:(?:<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?)<circle/>\\s*((?:(?:\\.{2,3}|[\"\u201e\u201d])\\s*)?<i>.*?</i>[.?!\"\u201e\u201d]*\\s*\\(.*?\\)\\.?)(.*)");
 			// Neobligāts Pārn. kursīvā : <circle/> neobligātas pieturzīmes <i> citāta teksts </i> neobligātas pieturz. (autors) pārējais
 			Matcher m = quotePat.matcher(linePart);
 			if (m.matches())

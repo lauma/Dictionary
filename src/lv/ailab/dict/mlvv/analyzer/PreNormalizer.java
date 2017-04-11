@@ -209,6 +209,12 @@ public class PreNormalizer
 		line = line.replace("</i>!", "!</i>");
 		//line = line.replace("</i>;", ";</i>");
 
+		// Pēdiņām jābūt kursīvā kopā ar vārdu/frāzi.
+		line = line.replaceAll("\u201e<i>", "<i>\u201e");
+		line = line.replaceAll("\"<i>", "<i>\"");
+		line = line.replaceAll("</i>\u201d", "\u201d</i>");
+		line = line.replaceAll("</i>\"", "\"</i>");
+
 		// Ja kursīvā ir tikai defise tieši pirms teksta, tā parasti ir kļūda.
 		line = line.replaceAll(" <i>-</i>(?=\\p{L})", " -");
 

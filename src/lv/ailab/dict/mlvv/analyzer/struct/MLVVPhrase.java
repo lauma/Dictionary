@@ -402,7 +402,26 @@ public class MLVVPhrase extends Phrase
 	protected void extractGramAndText(String preDefiseLinePart)
 	{
 		// Ja vajag, frāzi sadala.
-		String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
+		Pattern phrasesplitter = Pattern.compile("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
+		ArrayList<String> beginParts = new ArrayList<>();
+		Matcher tmp = phrasesplitter.matcher(preDefiseLinePart);
+		int whereToStart = 0;
+		while (tmp.find(whereToStart))
+		{
+			String begin = preDefiseLinePart.substring(0, tmp.start());
+			String end = preDefiseLinePart.substring(tmp.end());
+			if (begin.matches(".*\\([^\\)]*"))
+				whereToStart = tmp.end();
+			else
+			{
+				beginParts.add(begin);
+				preDefiseLinePart = end;
+				whereToStart = 0;
+				tmp = phrasesplitter.matcher(preDefiseLinePart);
+			}
+		}
+		beginParts.add(preDefiseLinePart);
+		//String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
 		String gramText = "";
 		for (String part : beginParts)
 		{

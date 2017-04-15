@@ -249,11 +249,13 @@ public class MLVVGram extends Gram
 		{
 			if (bigPart.contains("<b>"))
 			{
-				if (bigPart.matches("</i>\\s*<b>.*"))
-					bigPart = bigPart.substring(4).trim();
+				Matcher removeStartSpam = Pattern.compile("(?:,?\\s*|:</i>\\s*|(?:<i>)?arī(?:</i>|\\s+))*(<b>.*)").matcher(bigPart);
+				if (removeStartSpam.matches()) bigPart = removeStartSpam.group(1);
+				//if (bigPart.matches("</i>\\s*<b>.*"))
+				//	bigPart = bigPart.substring(4).trim();
 				String prefixPart = bigPart.substring(0, bigPart.indexOf("<b>")).trim();
 				bigPart = bigPart.substring(bigPart.indexOf("<b>"));
-				if (Editors.removeCursive(prefixPart).equals("arī")) prefixPart = "";
+				//if (Editors.removeCursive(prefixPart).equals("arī")) prefixPart = "";
 
 				int commonStart = bigPart.lastIndexOf("<i>");
 				int commonEnd = bigPart.indexOf("</i>", commonStart);
@@ -261,7 +263,7 @@ public class MLVVGram extends Gram
 				String common = "";
 				String forSplit = bigPart;
 				// Pēc commonStart vairs nebūtu jāatrodas nevienai galotnei.
-				if (commonStart > -1 && !(commonEnd != -1 && commonEnd < bigPart.length() - "</i>".length() - 2))
+				if (commonStart > bigPart.lastIndexOf("</b>") && !(commonEnd != -1 && commonEnd < bigPart.length() - "</i>".length() - 2))
 				{
 					common = bigPart.substring(commonStart);
 					forSplit = bigPart.substring(0, commonStart);
@@ -278,7 +280,7 @@ public class MLVVGram extends Gram
 					if (altLemmas == null) altLemmas = new ArrayList<>();
 					for (String smallPart : smallParts)
 					{
-						Matcher getContent = Pattern.compile("(.*?)[,;]? arī").matcher(smallPart);
+						Matcher getContent = Pattern.compile("(.*?)[,;]? (?:<i>)?arī(?:</i>)?").matcher(smallPart);
 						if (getContent.matches()) smallPart = getContent.group(1);
 						smallPart = smallPart.trim();
 						if (smallPart.matches(".*</b>\\s*,"))

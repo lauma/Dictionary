@@ -30,6 +30,7 @@ public class MLVVHeader extends Header
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
+
 		Matcher m = Pattern.compile("<([ub])>(.+?)(\\*?)</\\1>(!?)(\\*?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{

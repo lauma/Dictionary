@@ -140,9 +140,18 @@ Sub Izrunas()
         .Execute Replace:=wdReplaceAll
     End With
     Set oRange = ActiveDocument.Content
-    ' Platais e ar \
     With oRange.Find
         .text = ChrW(232) & ChrW(61606) & ChrW(61606) ' gïçvs
+        .Replacement.text = "e,\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "ç" & ChrW(768) & ChrW(825) ' uzsvçrts
         .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue

@@ -61,7 +61,7 @@ public class MLVVGram extends Gram
 				.matcher(linePart);
 		Matcher gramAltLemmaBraces = Pattern.compile(
 				"(<b>(?:(?!<[bu]>).)*</b>(?:(?!<[bu]>)[^(])*)" // pirmā altlemma
-					+ "\\(((?:<i>(?:(?!<b>).)*</i>)\\s*<b>[^)]+)\\)" // altlemma iekavās
+					+ "\\(((?:<i>(?:(?!<b>).)*</i>)\\s*<b>[^)]+)\\),?" // altlemma iekavās
 					+ "((?:(?!<[bu]>).)*)") // pārējais, kas te drīkst būt
 				.matcher(linePart);
 		if (gramFullRestrForms.matches()) // ir ierobežojošās formas.

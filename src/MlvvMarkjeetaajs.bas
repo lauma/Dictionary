@@ -29,6 +29,7 @@ Sub Izrunas()
         .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(61533)
         .Replacement.text = "]"
@@ -40,6 +41,7 @@ Sub Izrunas()
         .Execute Replace:=wdReplaceAll
     End With
     ' Aizstâj non breaking space ar parasto, jo lietots nevietâ.
+    Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = ChrW(160)
         .Replacement.text = " "
@@ -47,10 +49,9 @@ Sub Izrunas()
         .Wrap = wdFindContinue
         .Format = True
         .MatchCase = True
-        .MatchWholeWord = True
         .Execute Replace:=wdReplaceAll
     End With
-    
+
     ' Sasodîts aprisinâjums izrunu izgûðanai
     ' ---------- 4 simbolu bloki ----------------------------------------
     ' ------------------------------
@@ -152,6 +153,16 @@ Sub Izrunas()
     Set oRange = ActiveDocument.Content
     With oRange.Find
         .text = "ç" & ChrW(768) & ChrW(825) ' uzsvçrts
+        .Replacement.text = "e,\"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "e" & ChrW(825) & ChrW(61606) ' varen
         .Replacement.text = "e,\"
         .Forward = True
         .Wrap = wdFindContinue
@@ -794,6 +805,18 @@ Sub Izrunas()
     End With
     
     ' / (acute)
+    
+    ' Pavisam dîvaini: simbols ir pirms intonçjamâ burta
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = ChrW(61606) & "e" ' zemenâjs
+        .Replacement.text = "e,"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     
     MsgBox "Viss gatavs!", 0, "MLVV izrunas"
 

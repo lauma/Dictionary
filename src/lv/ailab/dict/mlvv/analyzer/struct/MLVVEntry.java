@@ -259,7 +259,7 @@ public class MLVVEntry extends Entry
 	protected void parsePhraseology(String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
-		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
+		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
@@ -272,7 +272,7 @@ public class MLVVEntry extends Entry
 	{
 		linePart = linePart.trim();
 		String[] phrasesParts = linePart.split("<triangle/>");
-		if (phrasesParts.length > 0)  phrases = new LinkedList<>();
+		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(

@@ -408,7 +408,7 @@ public class MLVVPhrase extends Phrase
 		int whereToStart = 0;
 		while (tmp.find(whereToStart))
 		{
-			String begin = preDefiseLinePart.substring(0, tmp.start());
+			String begin = preDefiseLinePart.substring(0, tmp.end());
 			String end = preDefiseLinePart.substring(tmp.end());
 			if (begin.matches(".*\\([^\\)]*"))
 				whereToStart = tmp.end();
@@ -425,6 +425,7 @@ public class MLVVPhrase extends Phrase
 		String gramText = "";
 		for (String part : beginParts)
 		{
+			Matcher endsWithCursive = Pattern.compile("(.*?)(<i>(?:(?!</i>).)*?</i>[.]?)\\s*").matcher(part);
 			// Frāze pati ir kursīvā
 			if (part.startsWith("<i>") || part.startsWith("(<i>"))
 			{
@@ -448,11 +449,12 @@ public class MLVVPhrase extends Phrase
 				text.add(newText);
 			}
 			// Kursīvs sākas kaut kur vidū un iet līdz beigām - tātad kursīvā ir gramatika
-			else if (part.matches(".*?<i>.*?</i>[.]?\\s*"))
+			// Izņēmums "... <i>arī</i> ...)
+			else if (endsWithCursive.matches())
 			{
-				text.add(part.substring(0, part.indexOf("<i>")).trim());
+				text.add(Editors.removeCursive(endsWithCursive.group(1).trim()));
 				if (gramText.length() > 0) gramText = gramText + "; ";
-				gramText = (gramText + part.substring(part.indexOf("<i>"))).trim();
+				gramText = (gramText + endsWithCursive.group(2)).trim();
 			}
 			// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
 			else text.add(Editors.removeCursive(part));

@@ -79,6 +79,12 @@ public class MLVVSense extends Sense
 	 */
 	protected String extractBeginGrammar (String linePart, String lemma)
 	{
+		boolean star = false;
+		if (linePart.startsWith("*"))
+		{
+			star = true;
+			linePart = linePart.substring(1).trim();
+		}
 		if (linePart.matches("(<i>((?!=</i>).*)</i>\\s*)?<b>.*")) // Šķirklī "abhāzi", "ārieši".
 		{
 			Pattern headpart = Pattern.compile(
@@ -143,6 +149,11 @@ public class MLVVSense extends Sense
 				grammar = new MLVVGram(linePart.substring(3));
 				linePart = "";
 			}
+		}
+		if (star)
+		{
+			if (grammar != null)((MLVVGram)grammar).addStar();
+			else grammar = new MLVVGram("*");
 		}
 		return linePart;
 	}

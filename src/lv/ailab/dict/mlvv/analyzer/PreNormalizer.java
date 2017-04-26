@@ -255,6 +255,7 @@ public class PreNormalizer
 		line = line.replaceAll("</i>\\)!\\s+<i>", ")! ");
 		line = line.replaceAll("</i>\\s+\\(<i>", " (");
 		line = line.replaceAll("</i>\\(<i>", "(");
+		line = line.replaceAll("</i>,\\s+\\(<i>", ", (");
 		line = line.replaceAll("</i>\\]\\s+<i>", "] ");
 		line = line.replaceAll("</i>\\s+\\[<i>", " [");
 

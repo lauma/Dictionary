@@ -117,6 +117,12 @@ public class PreNormalizer
 		line = line.replace(" m</i><sup><i>2</i></sup>", " m\u00B2</i>");
 		line = line.replace(" m</i><sup><i>3</i></sup>", " m\u00B3</i>");
 		line = line.replace(" cm</i><sup><i>3</i></sup>", " cm\u00B3</i>");
+		line = line.replaceAll("\\bkm<sup>2</sup>", "km\u00B2");
+		line = line.replaceAll("\\bkm<sup>3</sup>", "km\u00B3");
+		line = line.replaceAll("\\bcm<sup>2</sup>", "cm\u00B2");
+		line = line.replaceAll("\\bcm<sup>3</sup>", "cm\u00B3");
+		line = line.replaceAll("\\bm<sup>2</sup>", "m\u00B2");
+		line = line.replaceAll("\\bm<sup>3</sup>", "m\u00B3");
 		line = line.replaceAll("\\bB<sub>2</sub> vitamīn", " B\u2082 vitamīn");
 		line = line.replaceAll("\\bB<sub>6</sub> vitamīn", " B\u2086 vitamīn");
 
@@ -140,6 +146,10 @@ public class PreNormalizer
 			line = line.replace(target, replacement);
 			m = p.matcher(line);
 		}
+
+		line = line.replace(" *</b>", "</b> *");
+		line = line.replace("*</b>", "</b>*");
+
 		line = line.replace(",</u>", "</u>,");
 		line = line.replace(", </u>", "</u>, ");
 

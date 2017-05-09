@@ -159,6 +159,9 @@ public class PreNormalizer
 		line = line.replace("<b>.</b>", ".");
 		line = line.replace("<b><i>.</i></b>", ".");
 
+		// Izkļauj komatus no treknraksta vidus
+		line = line.replaceAll("(?<=<b>((?!</b>).){1,100}),\\s+", "</b>, <b>");
+
 		// Izkļauj komatus no treknraksta beigām
 		p = Pattern.compile("(\\p{L}\\p{M}*),(\\s*)</b>");
 		m = p.matcher(line);

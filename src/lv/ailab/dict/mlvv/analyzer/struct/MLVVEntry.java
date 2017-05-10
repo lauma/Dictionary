@@ -137,15 +137,24 @@ public class MLVVEntry extends Entry
 		}
 		head = head.trim();
 		body = body.trim();
+		// Izparsē referenci.
+		if (body.isEmpty() && head.matches(".*?<i>[Ss]k(at)?(</i>.|.</i>)\\s+[-\\p{L}]+\\."))
+		{
+			result.reference = head.substring(head.lastIndexOf("</i>") + 4).trim();
+			if (result.reference.endsWith("."))
+				result.reference = result.reference.substring(0, result.reference.length()-1);
+			head = head.substring(0, head.lastIndexOf("<i>"));
+			if (result.reference.isEmpty()) result.reference = null;
+		}
 		if (head.isEmpty())
 		{
 			System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 			return null;
 		}
 		else result.parseHead(head);
-		if (body.isEmpty())
+		if (body.isEmpty() && result.reference == null )
 			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
-		else result.parseBody(body);
+		else if (!body.isEmpty()) result.parseBody(body);
 		return result;
 	}
 
@@ -361,6 +370,14 @@ public class MLVVEntry extends Entry
 			s.append(JSONUtils.objectsToJSON(phraseology));
 		}
 
+		if ((senses == null || senses.isEmpty()) &&
+				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
+		{
+			System.out.printf(
+					"Šķirklim \"%s\" norādītas frāzes, bet nav nozīmes!\n",
+						head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+		}
+
 		if (derivs != null && !derivs.isEmpty())
 		{
 			s.append(", \"Derivatives\":");
@@ -368,8 +385,8 @@ public class MLVVEntry extends Entry
 		}
 		if (reference != null && reference.length() > 0)
 		{
-			System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
-							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			//System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+			//				head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
 			s.append(", \"Reference\":\"");
 			s.append(JSONObject.escape(reference));
 			s.append("\"");
@@ -456,6 +473,13 @@ public class MLVVEntry extends Entry
 			for (Phrase p : phraseology) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
+		if ((senses == null || senses.isEmpty()) &&
+				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
+		{
+			System.out.printf(
+					"Šķirklim \"%s\" norādītas frāzes, bet nav nozīmes!\n",
+					head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+		}
 		if (derivs != null && !derivs.isEmpty())
 		{
 			Node derivContN = doc.createElement("Derivatives");
@@ -464,9 +488,8 @@ public class MLVVEntry extends Entry
 		}
 		if (reference != null && reference.length() > 0)
 		{
-			System.out
-					.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
-							head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
+			//System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
+			//			head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
 			Node refN = doc.createElement("Reference");
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);

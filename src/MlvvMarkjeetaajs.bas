@@ -1197,6 +1197,16 @@ Sub DubultoTaguIeliceejs()
     NovaaktFormateejumu ("<gray>")
     NovaaktFormateejumu ("</gray>")
         
+    Set oRange = ActiveDocument.Content
+    With oRange.Find
+        .text = "¹"
+        .Replacement.text = "<sup>1</sup>"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = True
+        .MatchCase = True
+        .Execute Replace:=wdReplaceAll
+    End With
     Set oldRange = ActiveDocument.Content
     With oldRange.Find
         .text = ""

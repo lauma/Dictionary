@@ -75,6 +75,17 @@ public class MLVVPhrase extends Phrase
 			System.out.println();
 			res.text.add(linePart);
 		}
+		for (String variant : res.text)
+			if (variant == null || variant.isEmpty()) res.text.remove(variant);
+
+		if (res.text.isEmpty())
+		{
+			System.out.printf("Frāzes skaidrojumam \"%s\" nav neviena frāzes teksta",
+					linePart);
+			if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
+			System.out.println();
+		}
+
 		return res;
 
 	}
@@ -100,7 +111,7 @@ public class MLVVPhrase extends Phrase
 		Matcher m = Pattern.compile("(?:<bullet/>)?\\s*<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
 		if (m.matches())
 		{
-			res.text.add(m.group(1).trim());
+			res.text.add(Editors.removeCursive(m.group(1).trim()));
 			String gloss = m.group(2).trim();
 			String glossEnd = m.group(3).trim();
 			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
@@ -120,7 +131,7 @@ public class MLVVPhrase extends Phrase
 			String resText = linePart.trim();
 			if (resText.matches("<i>((?!</i>).)*</i>"))
 				resText = resText.substring(3, resText.length()-4);
-			res.text.add(resText);
+			res.text.add(Editors.removeCursive(resText));
 			System.out.printf("Taksons \"%s\" neatbilst apstrādes šablonam\n", resText);
 		}
 		return results;

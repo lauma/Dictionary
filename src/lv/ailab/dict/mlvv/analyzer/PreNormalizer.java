@@ -185,7 +185,7 @@ public class PreNormalizer
 
 		// Iekļauj aizverošās pēdiņas tekstā pēc <i> taga. Pirms vai pēc pēdiņām
 		// iespējams komats.
-		p = Pattern.compile("(\\p{L}\\p{M}*)</i>(,?\",?)");
+		p = Pattern.compile("(\\p{L}\\p{M}*)</i>([),]?\",?)");
 		m = p.matcher(line);
 		while (m.find())
 		{

@@ -318,6 +318,11 @@ public class PreNormalizer
 		// Nejauši iekursivēts punkts?
 		line = line.replace(":</i>", "</i>:");
 
+		line = line.replace(" <i>-</i> ", " - ");
+		line = line.replace(" <i>\u2014</i> ", " \u2014 ");
+		line = line.replace(" <i>\u2013</i> ", " \u2013 ");
+
+
 		// Aizvāc liekās atstarpes, normalizē visas atstarpes par parasto.
 		line = line.replaceAll(" \\s+", " ");
 		line = line.trim();

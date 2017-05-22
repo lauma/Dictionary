@@ -19,6 +19,7 @@ package lv.ailab.dict.mlvv;
 
 import lv.ailab.dict.io.DocLoader;
 import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
+import lv.ailab.dict.mlvv.analyzer.Validator;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.Dictionary;
@@ -47,6 +48,7 @@ public class StructureExtractor
 	public static boolean PRINT_PRONUNCIATION = true;
 
 	public Dictionary dict = new Dictionary();
+	public Validator val = new Validator();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
@@ -80,13 +82,14 @@ public class StructureExtractor
 						"Ups! Neparedzēta tipa fails \"" + fileName + "\"!");
 		}
 		extractor.printResults();
+		extractor.val.printStats();
 	}
 
 	public void processLine(String line)
 	{
 		try
 		{
-			Entry e = MLVVEntry.parse(PreNormalizer.normalizeLine(line));
+			MLVVEntry e = MLVVEntry.parse(PreNormalizer.normalizeLine(line));
 			if (e != null)
 			{
 				dict.entries.add(e);
@@ -98,7 +101,9 @@ public class StructureExtractor
 					for (String pronun : e.collectPronunciations())
 						pronunciations.add(Trio.of(pronun, entryword, homID));
 				}
+				val.checkEntry(e);
 			}
+
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);

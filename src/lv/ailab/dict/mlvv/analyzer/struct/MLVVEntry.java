@@ -1,5 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.Validator;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.*;
 import lv.ailab.dict.utils.JSONUtils;
@@ -370,13 +371,13 @@ public class MLVVEntry extends Entry
 			s.append(JSONUtils.objectsToJSON(phraseology));
 		}
 
-		if ((senses == null || senses.isEmpty()) &&
+		/*if ((senses == null || senses.isEmpty()) &&
 				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
 		{
 			System.out.printf(
 					"Šķirklim \"%s\" norādītas frāzes, bet nav nozīmes!\n",
 						head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
-		}
+		}*/
 
 		if (derivs != null && !derivs.isEmpty())
 		{
@@ -473,13 +474,13 @@ public class MLVVEntry extends Entry
 			for (Phrase p : phraseology) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
-		if ((senses == null || senses.isEmpty()) &&
+		/*if ((senses == null || senses.isEmpty()) &&
 				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
 		{
 			System.out.printf(
 					"Šķirklim \"%s\" norādītas frāzes, bet nav nozīmes!\n",
 					head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
-		}
+		}*/
 		if (derivs != null && !derivs.isEmpty())
 		{
 			Node derivContN = doc.createElement("Derivatives");

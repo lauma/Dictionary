@@ -20,6 +20,7 @@ public class Validator
 	 * Šķirkļavārds -> atrastie homonīmu indeksi
 	 */
 	protected HashMap<String, ArrayList<Integer>> entrywords = new HashMap<>();
+	protected ArrayList<String> entrywordsInOrder = new ArrayList<>();
 	protected String previousEntryWord = "";
 	protected int allEntryCount = 0;
 	protected int headlessEntryCount = 0;
@@ -71,8 +72,12 @@ public class Validator
 		}
 		else
 		{
+			if (homId > 1)
+				System.out.printf("Šķirklim %s mazākais homonīma numurs ir %s.\n",
+						entryword, homId);
 			entrywords.put(entryword, new ArrayList<Integer>());
 			entrywords.get(entryword).add(homId);
+			entrywordsInOrder.add(entryword);
 		}
 		// Vai šķirkļavārds sastāv no labiem burtiem?
 		// TODO: pārbaudīt visus šķirkļavārdus?
@@ -82,7 +87,6 @@ public class Validator
 					entryword, homId);
 
 		// Tālāk taisa struktūras pārbaudes.
-
 		if (!hasSensesBeforePhrasals(e))
 			System.out.printf(
 					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
@@ -90,6 +94,18 @@ public class Validator
 
 
 		previousEntryWord = entryword + "<" + homId + ">";
+	}
+
+	public void checkAfterAll()
+	{
+		for (String entryword : entrywordsInOrder)
+		{
+			ArrayList<Integer> homIds = entrywords.get(entryword);
+			if (homIds.get(homIds.size()-1) == 1)
+					System.out.printf(
+							"Šķirklim %s lielākais homonīma numurs ir 1.\n",
+							entryword);
+		}
 	}
 	/**
 	 * Vai šķirklim ir galva un šķirkļavārds?
@@ -109,7 +125,7 @@ public class Validator
 	public boolean isHeadWordGood(MLVVEntry e)
 	{
 		return hasHeadWord(e) &&
-				e.head.lemma.text.matches("^[a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž /-]+$");
+				e.head.lemma.text.matches("^-?[a-zA-ZĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž][a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž /.-]*$");
 	}
 
 	/**

@@ -82,6 +82,7 @@ public class StructureExtractor
 						"Ups! Neparedzēta tipa fails \"" + fileName + "\"!");
 		}
 		extractor.printResults();
+		extractor.val.checkAfterAll();
 		extractor.val.printStats();
 	}
 

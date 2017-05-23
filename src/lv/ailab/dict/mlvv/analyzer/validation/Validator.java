@@ -3,6 +3,8 @@ package lv.ailab.dict.mlvv.analyzer.validation;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sense;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,15 +58,16 @@ public class Validator
 			return;
 		}
 
-		String entryword = e.head.lemma.text;
+		// Ja galva ir tad, var pārbaudīt visu ar galvu saistīto.
 		int homId = checkLemmasHomIds(e);
+		String entryword = e.head.lemma.text;
 
-		// Tālāk taisa struktūras pārbaudes.
+		// Tālāk taisa šķirkļa ķermeņa pārbaudes.
 		if (!IndividualChecks.hasSensesBeforePhrasals(e))
 			System.out.printf(
 					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
 					entryword, homId);
-
+		checkItalics(e, entryword + "<" + homId + ">");
 		// Lai nākamais šķirklis zina, kā sauca iepriekšējo.
 		previousEntryWord = entryword + "<" + homId + ">";
 	}
@@ -131,6 +134,55 @@ public class Validator
 		}
 
 		return homId;
+	}
+
+	/**
+	 * Pārbauda atbilstošajos laukos, vai kursīvs ir pareizi sanācis.
+	 * @param e	pārbaudāmais šķirklis
+	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
+	 *                          izdrukāt, ja ir kļūda
+	 */
+	protected void checkItalics (MLVVEntry e, String debugEntryWord)
+	{
+		if (e.senses != null) for (Sense s : e.senses)
+			checkItalics(s, debugEntryWord);
+		if (e.phrases != null) for (Phrase p : e.phrases)
+			checkItalics(p, debugEntryWord);
+		if (e.phraseology != null) for (Phrase p : e.phraseology)
+			checkItalics(p, debugEntryWord);
+		if (!IndividualChecks.hasPairedUnderscores(e.origin))
+			System.out.printf("Šķirklī %s ir nesapārotas _ cilmē \"%s\".\n",
+					debugEntryWord, e.origin);
+		if (!IndividualChecks.hasPairedUnderscores(e.freeText))
+			System.out.printf("Šķirklī %s ir nesapārotas _ normatīvajā komentārā \"%s\".\n",
+					debugEntryWord, e.freeText);
+	}
+
+	/**
+	 * Pārbauda atbilstošajos laukos, vai kursīvs ir pareizi sanācis.
+	 * @param s	pārbaudāmā nozīme
+	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
+	 *                          izdrukāt, ja ir kļūda
+	 */	protected void checkItalics (Sense s, String debugEntryWord)
+	{
+		if (!IndividualChecks.hasPairedUnderscores(s.gloss.text))
+			System.out.printf("Šķirklī %s ir nesapārotas _ glosā \"%s\".\n",
+					debugEntryWord, s.gloss.text);
+		if (s.subsenses != null) for (Sense sub : s.subsenses)
+			checkItalics(sub, debugEntryWord);
+		if (s.examples != null) for (Phrase p : s.examples)
+			checkItalics(p, debugEntryWord);
+	}
+
+	/**
+	 * Pārbauda atbilstošajos laukos, vai kursīvs ir pareizi sanācis.
+	 * @param p	pārbaudāmā frāze
+	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
+	 *                          izdrukāt, ja ir kļūda
+	 */	protected void checkItalics (Phrase p, String debugEntryWord)
+	{
+		if (p.subsenses != null) for (Sense sub : p.subsenses)
+			checkItalics(sub, debugEntryWord);
 	}
 
 	/**

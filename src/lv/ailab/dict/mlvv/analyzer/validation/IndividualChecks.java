@@ -67,7 +67,8 @@ public class IndividualChecks
 	 */
 	public static boolean hasPairedUnderscores(String text)
 	{
-		return text == null || text.isEmpty() || text.split("_").length % 2 == 1;
+		return text == null || text.isEmpty() ||
+				(text.length() - text.replace("_", "").length()) % 2 == 0;
 	}
 
 

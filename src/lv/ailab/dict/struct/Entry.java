@@ -159,7 +159,7 @@ public class Entry implements HasToJSON, HasToXML
 	}
 
 	/**
-	 * Count all flags used in this structure.
+	 * Saskaita visus karodziņus, kas lietoti sajā šķirklī.
 	 */
 	public CountingSet<Tuple<String, String>> getFlagCounts()
 	{

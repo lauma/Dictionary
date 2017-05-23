@@ -76,13 +76,13 @@ public class Editors
 	public static String cursiveToUnderscore(String line)
 	{
 		// Kursīvs šajā stadijā parasti tiek lietots atsevišķiem vārdiem.
-		line = line.replace("<i> ", " _");
-		line = line.replace("<i>", "_");
-		line = line.replace("...</i>", "_...");
-		line = line.replace("..</i>", "_..");
-		line = line.replace(".</i>", "_.");
-		line = line.replace(" </i>", "_ ");
-		line = line.replace("</i>", "_");
+		line = line.replace("<i> ", " __");
+		line = line.replace("<i>", "__");
+		line = line.replace("...</i>", "__...");
+		line = line.replace("..</i>", "__..");
+		line = line.replace(".</i>", "__.");
+		line = line.replace(" </i>", "__ ");
+		line = line.replace("</i>", "__");
 		return line;
 	}
 

@@ -151,10 +151,10 @@ public class Validator
 		if (e.phraseology != null) for (Phrase p : e.phraseology)
 			checkItalics(p, debugEntryWord);
 		if (!IndividualChecks.hasPairedUnderscores(e.origin))
-			System.out.printf("Šķirklī %s ir nesapārotas _ cilmē \"%s\".\n",
+			System.out.printf("Šķirklī %s ir nesapārotas __ cilmē \"%s\".\n",
 					debugEntryWord, e.origin);
 		if (!IndividualChecks.hasPairedUnderscores(e.freeText))
-			System.out.printf("Šķirklī %s ir nesapārotas _ normatīvajā komentārā \"%s\".\n",
+			System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",
 					debugEntryWord, e.freeText);
 	}
 
@@ -166,7 +166,7 @@ public class Validator
 	 */	protected void checkItalics (Sense s, String debugEntryWord)
 	{
 		if (!IndividualChecks.hasPairedUnderscores(s.gloss.text))
-			System.out.printf("Šķirklī %s ir nesapārotas _ glosā \"%s\".\n",
+			System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
 					debugEntryWord, s.gloss.text);
 		if (s.subsenses != null) for (Sense sub : s.subsenses)
 			checkItalics(sub, debugEntryWord);

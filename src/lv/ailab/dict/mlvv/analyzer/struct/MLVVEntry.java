@@ -1,6 +1,5 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
-import lv.ailab.dict.mlvv.analyzer.Validator;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.*;
 import lv.ailab.dict.utils.JSONUtils;

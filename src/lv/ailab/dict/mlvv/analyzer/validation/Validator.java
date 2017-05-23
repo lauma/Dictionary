@@ -1,4 +1,4 @@
-package lv.ailab.dict.mlvv.analyzer;
+package lv.ailab.dict.mlvv.analyzer.validation;
 
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.struct.Entry;
@@ -11,7 +11,6 @@ import java.util.HashMap;
  * Rīks izgūto šķirkļu pārbaudīšanai. Iekšējā atmiņā uzkrāj līdz šim redzētos
  * šķirkļus un to homonīmu indeksus, lai pārliecinātos par unikalitāti.
  *
- * Individuālājās šķirkļa pārbaudēs "true" nozīmē labu šķirkli, "false" sliktu.
  * Izveidots 2017-05-18.
  *
  * @author Lauma
@@ -22,24 +21,63 @@ public class Validator
 	 * Šķirkļavārds -> atrastie homonīmu indeksi
 	 */
 	protected HashMap<String, ArrayList<Integer>> entrywords = new HashMap<>();
+	/**
+	 * Reģistrs, kādā kārtībā šķirkļi tika pievienoti.
+	 */
 	protected ArrayList<String> entrywordsInOrder = new ArrayList<>();
+	/**
+	 * Iepriekšējā apstrādātā sķirkļa šķirkļavārds<homonīma indekss>.
+	 */
 	protected String previousEntryWord = "";
+	/**
+	 * Šķirkļu skaits.
+	 */
 	protected int allEntryCount = 0;
+	/**
+	 * Šķirkļu skaits, kam nebija sķirkļavārda.
+	 */
 	protected int headlessEntryCount = 0;
 
+	/**
+	 * Pārbauda konkrētu šķirkli un reģistrē to atmiņā.
+	 * @param e	pārbaudāmais šķirklis
+	 */
 	public void checkEntry(MLVVEntry e)
 	{
 		allEntryCount++;
+
 		// Vai ir galva?
-		if (!hasHeadWord(e))
+		if (!IndividualChecks.hasHeadWord(e))
 		{
 			System.out.printf(
 					"Konstatēts šķirklis bez šķirkļavārda. Iepriekšējais šķirklis bija %s.\n", previousEntryWord);
 			headlessEntryCount++;
+			// Bez galvas nava labi.
 			return;
 		}
 
-		// Labi, ja ir galva, vai ir homonīma indekss?
+		String entryword = e.head.lemma.text;
+		int homId = checkLemmasHomIds(e);
+
+		// Tālāk taisa struktūras pārbaudes.
+		if (!IndividualChecks.hasSensesBeforePhrasals(e))
+			System.out.printf(
+					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
+					entryword, homId);
+
+		// Lai nākamais šķirklis zina, kā sauca iepriekšējo.
+		previousEntryWord = entryword + "<" + homId + ">";
+	}
+
+	/**
+	 * Pārbauda ar lemmām un šķirkļavārdiem saistīto loģiku.
+	 * Iznests no checkEntry.
+	 * @param e	pārbaudāmais šķirklis
+	 * @return	izparsētais/pieņemtais homonīma indekss
+	 */
+	protected int checkLemmasHomIds (Entry e)
+	{
+		// Vai ir homonīma indekss?
 		String entryword = e.head.lemma.text;
 		String homIdStr = e.homId;
 		if (homIdStr == null || homIdStr.isEmpty()) homIdStr = "0";
@@ -62,13 +100,13 @@ public class Validator
 			{
 				if (homId == 0)
 					System.out.printf("Šķirklis %s atkārtojas vairākkārt.\n",
-						entryword);
+							entryword);
 				else System.out.printf("Šķirklim %s ir gan nenumurēts homonīms, gan homonīms ar numuru %s.\n",
 						entryword, homId);
 			}
 			else if (lastId + 1 != homId)
 				System.out.printf("Šķirklim %s pēc homonīma ar numuru %s seko %s.\n",
-				entryword, lastId, homId);
+						entryword, lastId, homId);
 			homIds.add(homId);
 			entrywords.put(entryword, homIds);
 		}
@@ -85,22 +123,20 @@ public class Validator
 		// Vai šķirkļavārdi sastāv no labiem burtiem?
 		for (Header h : e.getAllHeaders())
 		{
-			if (!hasHeadWord(h) || !isHeadWordGood(h.lemma.text))
+			if (!IndividualChecks.hasHeadWord(h) || !IndividualChecks
+					.isHeadWordGood(h.lemma.text))
 				System.out.printf(
 						"Šķirklim %s<%s> šķirkļavārds %s satur neatļautus burtus.\n",
 						entryword, homId, h.lemma.text);
 		}
 
-		// Tālāk taisa struktūras pārbaudes.
-		if (!hasSensesBeforePhrasals(e))
-			System.out.printf(
-					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
-					entryword, homId);
-
-		// Lai nākamais šķirklis zina, kā sauca iepriekšējo.
-		previousEntryWord = entryword + "<" + homId + ">";
+		return homId;
 	}
 
+	/**
+	 * Pārbaudes atmiņā reģistrētajam vārdnīcas stāvoklim: paziņo, kuriem
+	 * šķirkļiem šobrīd lielākais homonīma indekss ir 1.
+	 */
 	public void checkAfterAll()
 	{
 		for (String entryword : entrywordsInOrder)
@@ -112,50 +148,10 @@ public class Validator
 							entryword);
 		}
 	}
-	/**
-	 * Vai šķirklim ir galva un šķirkļavārds?
-	 * @param e	pārbaudāmais šķirklis
-	 * @return	vai pārbaude ir izieta
-	 */
-	public boolean hasHeadWord(Entry e)
-	{
-		return e != null && e.head != null && e.head.lemma != null
-				&& e.head.lemma.text != null && !e.head.lemma.text.isEmpty();
-	}
-	/**
-	 * Vai šķirkļa hederim ir šķirkļavārds?
-	 * @param h	pārbaudāmais hederis
-	 * @return	vai pārbaude ir izieta
-	 */
-	public boolean hasHeadWord(Header h)
-	{
-		return h != null && h.lemma != null && h.lemma.text != null
-				&& !h.lemma.text.isEmpty();
-	}
-	/**
-	 * Vai pamata šķirkļavārds satur tikai atļautos simbolus?
-	 * @param lemmaText	pārbaudāmais šķirkļavārds
-	 * @return	vai pārbaude ir izieta
-	 */
-	public boolean isHeadWordGood(String lemmaText)
-	{
-		return  lemmaText.matches(
-				"^-?[a-zA-ZĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž][a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž /.\\-]*$");
-	}
 
 	/**
-	 * Vai šķirklī pirms frazeoloģismiem ir dotas nozīmes?
-	 * @param e	pārbaudāmais šķirklis
-	 * @return	vai pārbaude ir izieta
+	 * Izsdrukā šķirkļu skaitus.
 	 */
-	public boolean hasSensesBeforePhrasals(MLVVEntry e)
-	{
-		return (e.senses != null && !e.senses.isEmpty()) ||
-			(e.phrases == null || e.phrases.isEmpty()) &&
-			(e.phraseology == null || e.phraseology.isEmpty());
-
-	}
-
 	public void printStats()
 	{
 		System.out.printf("%s šķirkļi kopā.\n", allEntryCount);

@@ -19,7 +19,7 @@ package lv.ailab.dict.mlvv;
 
 import lv.ailab.dict.io.DocLoader;
 import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
-import lv.ailab.dict.mlvv.analyzer.Validator;
+import lv.ailab.dict.mlvv.analyzer.validation.Validator;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.Dictionary;

@@ -1,6 +1,8 @@
 package lv.ailab.dict.mlvv.analyzer;
 
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
+import lv.ailab.dict.struct.Entry;
+import lv.ailab.dict.struct.Header;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,12 +81,15 @@ public class Validator
 			entrywords.get(entryword).add(homId);
 			entrywordsInOrder.add(entryword);
 		}
-		// Vai šķirkļavārds sastāv no labiem burtiem?
-		// TODO: pārbaudīt visus šķirkļavārdus?
-		if (!isHeadWordGood(e))
-			System.out.printf(
-					"Šķirklim %s<%s> šķirkļavārds satur neatļautus burtus.\n",
-					entryword, homId);
+
+		// Vai šķirkļavārdi sastāv no labiem burtiem?
+		for (Header h : e.getAllHeaders())
+		{
+			if (!hasHeadWord(h) || !isHeadWordGood(h.lemma.text))
+				System.out.printf(
+						"Šķirklim %s<%s> šķirkļavārds %s satur neatļautus burtus.\n",
+						entryword, homId, h.lemma.text);
+		}
 
 		// Tālāk taisa struktūras pārbaudes.
 		if (!hasSensesBeforePhrasals(e))
@@ -92,7 +97,7 @@ public class Validator
 					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
 					entryword, homId);
 
-
+		// Lai nākamais šķirklis zina, kā sauca iepriekšējo.
 		previousEntryWord = entryword + "<" + homId + ">";
 	}
 
@@ -112,20 +117,30 @@ public class Validator
 	 * @param e	pārbaudāmais šķirklis
 	 * @return	vai pārbaude ir izieta
 	 */
-	public boolean hasHeadWord(MLVVEntry e)
+	public boolean hasHeadWord(Entry e)
 	{
 		return e != null && e.head != null && e.head.lemma != null
 				&& e.head.lemma.text != null && !e.head.lemma.text.isEmpty();
 	}
 	/**
-	 * Vai pamata šķirkļavārds satur tikai atļautos simbolus?
-	 * @param e	pārbaudāmais šķirklis
+	 * Vai šķirkļa hederim ir šķirkļavārds?
+	 * @param h	pārbaudāmais hederis
 	 * @return	vai pārbaude ir izieta
 	 */
-	public boolean isHeadWordGood(MLVVEntry e)
+	public boolean hasHeadWord(Header h)
 	{
-		return hasHeadWord(e) &&
-				e.head.lemma.text.matches("^-?[a-zA-ZĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž][a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž /.-]*$");
+		return h != null && h.lemma != null && h.lemma.text != null
+				&& !h.lemma.text.isEmpty();
+	}
+	/**
+	 * Vai pamata šķirkļavārds satur tikai atļautos simbolus?
+	 * @param lemmaText	pārbaudāmais šķirkļavārds
+	 * @return	vai pārbaude ir izieta
+	 */
+	public boolean isHeadWordGood(String lemmaText)
+	{
+		return  lemmaText.matches(
+				"^-?[a-zA-ZĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž][a-zA-Z0-9ĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž /.\\-]*$");
 	}
 
 	/**

@@ -4,6 +4,8 @@ import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.struct.Header;
 
+import java.util.LinkedList;
+
 /**
  * Samestas dažādas sīkpārbaudes šķirkļa datiem. "true" nozīmē labu šķirkli,
  * "false" sliktu.
@@ -61,7 +63,7 @@ public class IndividualChecks
 	}
 
 	/**
-	 * Vai teksta virknē _ ir pāra skaitā?
+	 * Vai teksta virknē __ ir pāra skaitā?
 	 * @param text	pārbaudāmais teksts
 	 * @return	vai pārbaude ir izieta
 	 */
@@ -71,5 +73,23 @@ public class IndividualChecks
 				(text.length() - text.replace("__", "").length()) % 2 == 0;
 	}
 
+	/**
+	 * Vai teksta virknē iekavas ()[]{} ir pareizi lietotas?
+	 * @param text	pārbaudāmais teksts
+	 * @return	vai pārbaude ir izieta
+	 */
+	public static boolean hasBalancedParentheses(String text)
+	{
+		if (text == null) return true;
+		LinkedList<Character> stack = new LinkedList<>();
+		for (char c : text.toCharArray())
+		{
+			if (c == '(' || c == '[' || c == '{') stack.push(c);
+			if (c == ')' && (stack.isEmpty() || stack.pop() != '(')) return false;
+			if (c == ']' && (stack.isEmpty() || stack.pop() != '[')) return false;
+			if (c == '}' && (stack.isEmpty() || stack.pop() != '{')) return false;
+		}
 
+		return stack.isEmpty();
+	}
 }

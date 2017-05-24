@@ -67,7 +67,7 @@ public class Validator
 			System.out.printf(
 					"Šķirklim %s<%s> norādītas frāzes, bet nav nozīmes!\n",
 					entryword, homId);
-		checkItalics(e, entryword + "<" + homId + ">");
+		checkTexts(e, entryword + "<" + homId + ">");
 		// Lai nākamais šķirklis zina, kā sauca iepriekšējo.
 		previousEntryWord = entryword + "<" + homId + ">";
 	}
@@ -142,19 +142,27 @@ public class Validator
 	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
 	 *                          izdrukāt, ja ir kļūda
 	 */
-	protected void checkItalics (MLVVEntry e, String debugEntryWord)
+	protected void checkTexts(MLVVEntry e, String debugEntryWord)
 	{
 		if (e.senses != null) for (Sense s : e.senses)
-			checkItalics(s, debugEntryWord);
+			checkTexts(s, debugEntryWord);
 		if (e.phrases != null) for (Phrase p : e.phrases)
-			checkItalics(p, debugEntryWord);
+			checkTexts(p, debugEntryWord);
 		if (e.phraseology != null) for (Phrase p : e.phraseology)
-			checkItalics(p, debugEntryWord);
+			checkTexts(p, debugEntryWord);
+
 		if (!IndividualChecks.hasPairedUnderscores(e.origin))
 			System.out.printf("Šķirklī %s ir nesapārotas __ cilmē \"%s\".\n",
 					debugEntryWord, e.origin);
+		if (!IndividualChecks.hasBalancedParentheses(e.origin))
+			System.out.printf("Šķirklī %s ir nesapārotas iekavas cilmē \"%s\".\n",
+					debugEntryWord, e.origin);
+
 		if (!IndividualChecks.hasPairedUnderscores(e.freeText))
 			System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",
+					debugEntryWord, e.freeText);
+		if (!IndividualChecks.hasBalancedParentheses(e.freeText))
+			System.out.printf("Šķirklī %s ir nesapārotas iekavas normatīvajā komentārā \"%s\".\n",
 					debugEntryWord, e.freeText);
 	}
 
@@ -163,15 +171,19 @@ public class Validator
 	 * @param s	pārbaudāmā nozīme
 	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
 	 *                          izdrukāt, ja ir kļūda
-	 */	protected void checkItalics (Sense s, String debugEntryWord)
+	 */	protected void checkTexts(Sense s, String debugEntryWord)
 	{
 		if (!IndividualChecks.hasPairedUnderscores(s.gloss.text))
 			System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
 					debugEntryWord, s.gloss.text);
+		if (!IndividualChecks.hasBalancedParentheses(s.gloss.text))
+			System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
+					debugEntryWord, s.gloss.text);
+
 		if (s.subsenses != null) for (Sense sub : s.subsenses)
-			checkItalics(sub, debugEntryWord);
+			checkTexts(sub, debugEntryWord);
 		if (s.examples != null) for (Phrase p : s.examples)
-			checkItalics(p, debugEntryWord);
+			checkTexts(p, debugEntryWord);
 	}
 
 	/**
@@ -179,10 +191,18 @@ public class Validator
 	 * @param p	pārbaudāmā frāze
 	 * @param debugEntryWord	šķirkļavārds<homonīma indekss>, lai būtu ko
 	 *                          izdrukāt, ja ir kļūda
-	 */	protected void checkItalics (Phrase p, String debugEntryWord)
+	 */	protected void checkTexts(Phrase p, String debugEntryWord)
 	{
+		for (String t : p.text)
+		{
+			if (!IndividualChecks.hasBalancedParentheses(t))
+				System.out.printf(
+						"Šķirklī %s ir nesapārotas iekavas piemēra tekstā \"%s\".\n",
+								debugEntryWord, t);
+		}
+
 		if (p.subsenses != null) for (Sense sub : p.subsenses)
-			checkItalics(sub, debugEntryWord);
+			checkTexts(sub, debugEntryWord);
 	}
 
 	/**

@@ -18,6 +18,7 @@
 package lv.ailab.dict.mlvv;
 
 import lv.ailab.dict.io.DocLoader;
+import lv.ailab.dict.mlvv.analyzer.FlagStringCollector;
 import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
 import lv.ailab.dict.mlvv.analyzer.validation.Validator;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
@@ -46,9 +47,11 @@ public class StructureExtractor
 	public static boolean PRINT_MIDLLE = true;
 	public static boolean PRINT_JSON = true;
 	public static boolean PRINT_PRONUNCIATION = true;
+	public static boolean PRINT_FLAGSTRINGS = true;
 
 	public Dictionary dict = new Dictionary();
 	public Validator val = new Validator();
+	public FlagStringCollector flags = new FlagStringCollector();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
@@ -81,9 +84,8 @@ public class StructureExtractor
 			else System.out.println(
 						"Ups! Neparedzēta tipa fails \"" + fileName + "\"!");
 		}
-		extractor.printResults();
 		extractor.val.checkAfterAll();
-		extractor.val.printStats();
+		extractor.printResults();
 	}
 
 	public void processLine(String line)
@@ -103,6 +105,7 @@ public class StructureExtractor
 						pronunciations.add(Trio.of(pronun, entryword, homID));
 				}
 				val.checkEntry(e);
+				flags.addFromEntry(e);
 			}
 
 		} catch (Exception e)
@@ -171,6 +174,7 @@ public class StructureExtractor
 	public void printResults()
 	{
 		System.out.println("Drukā rezultātu...");
+		val.printStats();
 		boolean success = true;
 
 		if (PRINT_PRONUNCIATION && pronunciations != null) try
@@ -186,6 +190,19 @@ public class StructureExtractor
 		{
 			e.printStackTrace(System.err);
 			System.out.println("Neizdodas izdrukāt izrunas failā " + outputDataPath + "pronun.txt!");
+			success = false;
+		}
+
+		if (PRINT_FLAGSTRINGS) try
+		{
+			BufferedWriter out = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(outputDataPath + "flags.txt"), "UTF8"));
+			flags.printToFile(out);
+			out.close();
+		} catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+			System.out.println("Neizdodas izdrukāt karodziņu tekstus failā " + outputDataPath + "flags.txt!");
 			success = false;
 		}
 

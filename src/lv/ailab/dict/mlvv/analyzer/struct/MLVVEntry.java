@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +71,24 @@ public class MLVVEntry extends Entry
 			res.addAll(p.getImplicitHeaders());
 		if (derivs != null) for (Header d : derivs)
 			res.addAll(d.getImplicitHeaders());
+		return res;
+	}
+
+	/**
+	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
+	 */
+	public TreeSet<String> getFlagStrings()
+	{
+		TreeSet<String> res = new TreeSet<>();
+		if (head != null) res.addAll(((MLVVHeader)head).getFlagStrings());
+		if (senses != null) for (Sense s : senses)
+			res.addAll(((MLVVSense)s).getFlagStrings());
+		if (phrases != null) for (Phrase p : phrases)
+			res.addAll(((MLVVPhrase)p).getFlagStrings());
+		if (phraseology != null) for (Phrase p : phraseology)
+			res.addAll(((MLVVPhrase)p).getFlagStrings());
+		if (derivs != null) for (Header d : derivs)
+			res.addAll(((MLVVHeader)d).getFlagStrings());
 		return res;
 	}
 

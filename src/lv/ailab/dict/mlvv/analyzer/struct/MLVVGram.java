@@ -12,6 +12,7 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +41,21 @@ public class MLVVGram extends Gram
 		separateFlagText();
 	}
 
+	/**
+	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
+	 */
+	public TreeSet<String> getFlagStrings()
+	{
+		TreeSet<String> res = new TreeSet<>();
+		if (flagText != null)
+			res.addAll(Arrays.asList(flagText.split("\\s*;\\s*")));
+		if (altLemmas != null) for (Header h : altLemmas)
+			res.addAll(((MLVVHeader)h).getFlagStrings());
+		if (formRestrictions != null) for (Header h : formRestrictions)
+			res.addAll(((MLVVHeader)h).getFlagStrings());
+		return res;
+	}
+
 	public static MLVVGram parse(String linePart)
 	{
 		if (linePart == null) return null;
@@ -52,8 +68,8 @@ public class MLVVGram extends Gram
 				"((?:(?:(?!<u>).)*?[,;]\\s)?)" // kaut kas pirms pasvītrojuma
 					+ "([^;,]+):" // ar kolu atdalīta gramatikas daļa
 					+ "((?:</i>)?)\\s" // aizverošais i, ja vajag
-					+ "(<u>.*?)" // pirmā pasvītrotā forma
-					+ "((?:;\\s(?:(?!</?u>).)*|<i>(?:(?!</?u>|<i>)[^;])*)?)")
+					+ "(<u>.*?)" //pasvītrotās formas (ieskaitot izrunu)
+					+ "((?:;\\s(?:(?!</?u>|\\]).)*|<i>(?:(?!</?u>|<i>|\\])[^;])*)?)")
 				.matcher(linePart);
 		Matcher gramSimpleRestrForms = Pattern.compile(
 				"(<i>.*(?:</i>))?(?<!kopdz\\.\\s?(?:</i>)?\\s?)"	// Daļa pirms kola, bet netrigerot dalījumu, ja kols ir tieši pēc "kopdz."

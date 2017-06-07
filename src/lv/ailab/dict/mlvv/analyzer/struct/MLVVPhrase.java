@@ -8,6 +8,7 @@ import lv.ailab.dict.struct.Sense;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,17 @@ import java.util.regex.Pattern;
  */
 public class MLVVPhrase extends Phrase
 {
+	/**
+	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
+	 */
+	public TreeSet<String> getFlagStrings()
+	{
+		TreeSet<String> res = new TreeSet<>();
+		if (grammar != null) res.addAll(((MLVVGram)grammar).getFlagStrings());
+		if (subsenses != null) for (Sense s : subsenses)
+			res.addAll(((MLVVSense)s).getFlagStrings());
+		return res;
+	}
 	/**
 	 * Metode, kas izgūst dotā tipa frāzi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
@@ -121,7 +133,7 @@ public class MLVVPhrase extends Phrase
 				// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
 			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
 			res.subsenses = new LinkedList<>();
-			res.subsenses.add(new Sense(MLVVGloss.parse(gloss.trim())));
+			res.subsenses.add(new MLVVSense(MLVVGloss.parse(gloss.trim())));
 			// TODO vai uzskatāmāk nebūs bez rekursijas?
 			if (m.group(4) != null && !m.group(4).isEmpty())
 				results.addAll(parseTaxons(m.group(4)));
@@ -277,7 +289,7 @@ public class MLVVPhrase extends Phrase
 			LinkedList<String> finalParts = new LinkedList<>();
 			for (String concatPart : concatParts)
 			{
-				String inProgressPart = concatPart;
+				String inProgressPart = Editors.openCursive(concatPart);
 				Matcher resplitter = resplitPat1.matcher(inProgressPart);
 				while (resplitter.matches())
 				{
@@ -384,19 +396,31 @@ public class MLVVPhrase extends Phrase
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = PhraseTypes.SAMPLE;
 		res.text = new LinkedList<>();
-		if (linePart.contains(".: "))
+		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
+		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);
+		if (m.matches())
+		{
+			res.grammar = new MLVVGram(m.group(1));
+			linePart = m.group(2).trim();
+		}
+		else if (gramConsts.matches())
+		{
+			res.grammar = new MLVVGram(gramConsts.group(1));
+			linePart = gramConsts.group(2).trim();
+		}
+		/*if (linePart.matches(".*\\.: (?!\"|\\p{Ll}).*"))
 		{
 			res.grammar = new MLVVGram(linePart
 					.substring(0, linePart.indexOf(".: ") + 1));
 			linePart = linePart.substring(linePart.indexOf(".: ") + 2).trim();
-		} else if (linePart.contains(".</i>: <i>"))
+		} else if (linePart.matches(".*\\.</i>: <i>(?!\"|\\p{Ll}).*"))
 		{
 			res.grammar = new MLVVGram(linePart
 					.substring(0, linePart.indexOf(".</i>: <i>") + 1));
 			linePart = linePart
 					.substring(linePart.indexOf(".</i>: <i>") + ".</i>: <i>".length())
 					.trim();
-		}
+		}*/
 		linePart = linePart.replace("</i>: <i>\"", ": \"");
 		res.text.add(linePart);
 		return res;
@@ -446,7 +470,7 @@ public class MLVVPhrase extends Phrase
 					if (gramText.length() > 0) gramText = gramText + "; ";
 					gramText = (gramText + part.substring(0, part.indexOf(".: ") + 1)).trim();
 					part = part.substring(part.indexOf(".: ") + 2).trim();
-				} else if (preDefiseLinePart.contains(".</i>: <i>"))
+				} else if (part.contains(".</i>: <i>"))
 				{
 					if (gramText.length() > 0) gramText = gramText + "; ";
 					gramText = (gramText + part.substring(0, part.indexOf(".</i>: <i>") + 1))

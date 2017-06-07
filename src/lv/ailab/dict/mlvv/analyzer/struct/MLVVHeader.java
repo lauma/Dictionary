@@ -3,6 +3,7 @@ package lv.ailab.dict.mlvv.analyzer.struct;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
 
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,15 @@ import java.util.regex.Pattern;
  */
 public class MLVVHeader extends Header
 {
+	/**
+	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
+	 */
+	public TreeSet<String> getFlagStrings()
+	{
+		TreeSet<String> res = new TreeSet<>();
+		if (gram != null) res.addAll(((MLVVGram)gram).getFlagStrings());
+		return res;
+	}
 	/**
 	 * Izgūst vienkārša veida hederi - no virknes <b>lemmma</b> [izruna] grmatika
 	 */

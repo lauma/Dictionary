@@ -1,9 +1,11 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
+import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 
 import java.util.LinkedList;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,27 @@ import java.util.regex.Pattern;
  */
 public class MLVVSense extends Sense
 {
+	public MLVVSense()
+	{
+		super();
+	}
+	public MLVVSense (MLVVGloss gloss)
+	{
+		super(gloss);
+	}
+	/**
+	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
+	 */
+	public TreeSet<String> getFlagStrings()
+	{
+		TreeSet<String> res = new TreeSet<>();
+		if (grammar != null) res.addAll(((MLVVGram)grammar).getFlagStrings());
+		if (subsenses != null) for (Sense s : subsenses)
+			res.addAll(((MLVVSense)s).getFlagStrings());
+		if (examples != null) for (Phrase e : examples)
+			res.addAll(((MLVVPhrase)e).getFlagStrings());
+		return res;
+	}
 	/**
 	 * Metode, kas izgūst nozīmi vai nozīmes niansi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo nozīmi un

@@ -179,7 +179,7 @@ public class DictionaryXmlToJson
 			BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(badOutputFile), "UTF-8"));
 			badOut.write("[\n");
-			if (PRINT_SINGLE_JSON)
+			if (PRINT_SINGLE_JSON && fileCount == 0)
 				completeJsonOut.write("[\n");
 
 			// Process each node.

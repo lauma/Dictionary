@@ -104,6 +104,7 @@ public class AbbrMap {
 		pairingFlags.put("lietv.", TFeatures.POS__NOUN);
 		pairingFlags.put("subst.", TFeatures.POS__NOUN);
 		pairingFlags.put("part.", TFeatures.POS__PARTICLE);
+		pairingFlags.put("partikula", TFeatures.POS__PARTICLE);
 		pairingFlags.put("prep.", TFeatures.POS__PREPOSITION);
 		pairingFlags.put("priev.", TFeatures.POS__PREPOSITION);
 		pairingFlags.put("saiklis.", TFeatures.POS__CONJUNCTION);
@@ -122,6 +123,8 @@ public class AbbrMap {
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietniekv.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("atgriez. vietn.", TFeatures.POS__REFL_PRONOUN);
+		pairingFlags.put("attieksmes vietn.", TFeatures.POS__PRONOUN);
+		pairingFlags.put("attieksmes vietn.", TFeatures.POS__REL_PRONOUN);
 		pairingFlags.put("jaut.", TFeatures.POS__INTERROG_PRONOUN);
 		pairingFlags.put("jaut. vietn.", TFeatures.POS__INTERROG_PRONOUN);
 		pairingFlags.put("nenot. vietn.", TFeatures.POS__INDEF_PRONOUN);
@@ -189,6 +192,8 @@ public class AbbrMap {
 		pairingFlags.put("pieļāvuma saikļa sastāvdaļa.", Tuple.of(TKeys.POS, "Pieļāvuma saikļa sastāvdaļa"));
 		pairingFlags.put("pretstatījuma saiklis.", TFeatures.POS__CONJUNCTION);
 		pairingFlags.put("pretstatījuma saiklis.", Tuple.of(TKeys.POS, "Pretnostatījuma saiklis"));
+		pairingFlags.put("sakārtojuma saiklis", TFeatures.POS__CONJUNCTION);
+		pairingFlags.put("sakārtojuma saiklis", Tuple.of(TKeys.POS, "Sakartojuma saiklis"));
 
 		pairingFlags.put("priev. ar akuz.", TFeatures.POS__PREPOSITION);
 		pairingFlags.put("priev. ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
@@ -266,6 +271,10 @@ public class AbbrMap {
 		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs");
 		binaryFlags.put("tr. un intr. darb. v.", "Nepārejošs");
 		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs un nepārejošs");
+		binaryFlags.put("arī intrans.", "Nepārejošs");
+		binaryFlags.put("arī intrans.", "Pārejošs un nepārejošs");
+		binaryFlags.put("arī trans.", "Pārejošs");
+		binaryFlags.put("arī trans.", "Pārejošs un nepārejošs");
 
 		/*binaryFlags.put("konj.", "Konjugācija");
 		binaryFlags.put("pers.", "Persona");*/
@@ -309,6 +318,7 @@ public class AbbrMap {
 		pairingFlags.put("ekon.", Tuple.of(TKeys.DOMAIN, "Ekonomika"));
 		pairingFlags.put("el.", Tuple.of(TKeys.DOMAIN, "Elektrotehnika"));
 		pairingFlags.put("elektron.", Tuple.of(TKeys.DOMAIN, "Elektronika"));
+		pairingFlags.put("enerģ.", Tuple.of(TKeys.DOMAIN, "Enerģētika"));
 		pairingFlags.put("ent.", Tuple.of(TKeys.DOMAIN, "Entomoloģija"));
 		pairingFlags.put("etn.", Tuple.of(TKeys.DOMAIN, "Etnogrāfija"));
 		pairingFlags.put("farm.", Tuple.of(TKeys.DOMAIN, "Farmakoloģija"));
@@ -442,8 +452,12 @@ public class AbbrMap {
 		pairingFlags.put("ig. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("it.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));
 		pairingFlags.put("it.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("it. val.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));
+		pairingFlags.put("it. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("jap.", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
 		pairingFlags.put("jap.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("jap. val.", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
+		pairingFlags.put("jap. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
 		pairingFlags.put("krievu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("kr.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
@@ -580,6 +594,8 @@ public class AbbrMap {
 		pairingFlags.put("parasti pavēles formā", TFeatures.POS__VERB);
 		pairingFlags.put("parasti pavēles formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā.", TFeatures.POS__VERB);
+		pairingFlags.put("parasti nolieguma formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE_VERB));
+		pairingFlags.put("parasti nolieguma formā.", TFeatures.POS__VERB);
 		pairingFlags.put("pavēles izteiksmē", Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("pavēles izteiksmē", TFeatures.POS__VERB);
 		pairingFlags.put("ar not. gal.", Tuple.of(TKeys.USED_IN_FORM, "Ar noteikto galotni"));
@@ -598,11 +614,16 @@ public class AbbrMap {
 		pairingFlags.put("parasti ar negāciju.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Noliegums"));
 		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
 		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
+		pairingFlags.put("parasti stāstījuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
+		pairingFlags.put("parasti stāstījuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
 		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
 		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
 		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
 		pairingFlags.put("jautājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
 		pairingFlags.put("jautājuma teikumos.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
+		pairingFlags.put("izsaukuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Izsaukuma teikums"));
+		pairingFlags.put("izsaukuma teikumos.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Izsaukuma teikums"));
 		pairingFlags.put("retoriskajos jautājuma teikumos teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
 		pairingFlags.put("retoriskajos jautājuma teikumos teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
 		pairingFlags.put("parasti atkārtojumā", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Atkārtojums"));
@@ -638,6 +659,8 @@ public class AbbrMap {
 		pairingFlags.put("skait. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.NUMERAL));
 		pairingFlags.put("part. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 		pairingFlags.put("part. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
+
+		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PREPOSITION));
 
 		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.PREPOSITION));
 		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));

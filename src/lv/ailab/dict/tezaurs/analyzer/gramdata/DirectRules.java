@@ -146,6 +146,12 @@ public class DirectRules
 				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies
 
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
+		Participle.tsTa("-ais; s. -a, -ā, divd. īp. v. nozīmē", ".*ts"), // nerafinēts
+		BaseRule.of("-ais; s. -a, -ā; divd. īp. v. nozīmē", new SimpleSubRule[]{
+						SimpleSubRule.of(".*ošs", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_OSS}),
+						SimpleSubRule.of(".*ts", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_TS}),
+						SimpleSubRule.of(".*[aā]ms", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_AMS}),},
+				new Tuple[]{TFeatures.CONTAMINATION__ADJECTIVE}), // maskējošs, mazaizsargāts, nezināms, vienreizlietojams
 		MultiPos.adjectiveParticiple("-ais; s. -a, -ā"), // abējāds, acains, agāms
 		MultiPos.adjectiveParticiple("-ais; s. -a; -ā"), // aloģisks
 		MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
@@ -346,6 +352,8 @@ public class DirectRules
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
 		GenNoun.any("-as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // žūpa
+		GenNoun.any("kopdz.: dat. v. -am, s. -ai", ".*a", new Integer[]{7, 8}, null,
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // barista
 
 		// 7. paradigma: 4. dekl. lietvārdi, sieviešu dzimte
 		GenNoun.any("-as, dsk. ģen. -u, s.", ".*a", 7, null, new Tuple[]{TFeatures.GENDER__FEM}), // alpa
@@ -558,6 +566,7 @@ public class DirectRules
 		GenNoun.any("-a, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{1}, null),
 						SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{2}, null),
+						SimpleSubRule.of(".*ti", new Integer[]{1, 2}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
 						SimpleSubRule.of(".*[ģjķr]is", new Integer[]{3}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // abats, akustiķis, sparguļi, skostiņi,
 

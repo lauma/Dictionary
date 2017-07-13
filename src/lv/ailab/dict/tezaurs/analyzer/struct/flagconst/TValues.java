@@ -24,10 +24,11 @@ public class TValues extends Values
 	public final static String PERSONAL_PRONOUN = "Personas vietniekvārds";
 	public final static String POSSESIVE_PRONOUN = "Piederības vietniekvārds";
 	public final static String DEMONSTRATIVE_PRONOUN = "Norādāmais vietniekvārds";
-	public final static String DEFINITE_PRONOUN = "Noteicamais vietniekvārds";
+	public final static String DEFINITE_PRONOUN = "Noteiktais vietniekvārds";
 	public final static String INDEFINITE_PRONOUN = "Nenoteiktais vietniekvārds";
 	public final static String GENRERIC_PRONOUN = "Vispārināmais vietniekvārds";
 	public final static String REFLEXIVE_PRONOUN = "Atgriezeniskais vietniekvārds";
+	public final static String RELATIVE_PRONOUN = "Attieksmes vietniekvārds";
 	public final static String INTERROGATIVE_PRONOUN = "Jautājamais vietniekvārds";
 	public final static String NEGATIVE_PRONOUN = "Noliedzamais vietniekvārds";
 

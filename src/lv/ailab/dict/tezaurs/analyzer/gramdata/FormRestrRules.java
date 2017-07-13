@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * bieži lok.: agrumā
  * ģen.: aizmugures
  * Šie likumi rada formRestrictions Gram objektos.
+ * NB! šie likumi rekursīvi izsauc apaksvirkņu analīzi.
  * TODO: Vai kontamināciju, kas atrodas aiz, nevajag izcelt pie pamata karodziņiem?
  *
  * Izveidots 2016-10-26.
@@ -41,9 +42,15 @@ public class FormRestrRules
 	public static final FormRestrRule[] doubleLemmaWithPostGram = {
 		// lietv. nozīmē: piedzērušais, -ā, v., piedzērusī, -ušas, s.
 		Restrictions.nounContDouble("ušais, -ā, v.,", "usī, -ušas, s.", "ies"), // piedzēries
+		// lietv. nozīmē: beidzamais, -ā, v., beidzamā, -ās, s.
+		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "ais"), // beidzamais
 		// lietv. nozīmē: aizturētais, -ā, v., aizturētā, -ās, s.
 		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturēts, akls
 		Restrictions.nounContDouble("ais, -ā, v.", "ā, -ās, s.", "s"), // balts
+
+			//ģen.: bērna, bērnu, adj. nozīmē
+		Restrictions.anyTwoForm("ģen.:", "a,", "u, adj. nozīmē.", "s",
+				new Tuple[]{TFeatures.CONTAMINATION__ADJECTIVE}, new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bērns
 	};
 
 	public static final FormRestrRule[] singleLemmaWithPostGram = {

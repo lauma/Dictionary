@@ -33,6 +33,7 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__DEF_PRONOUN = Tuple.of(TKeys.POS, TValues.DEFINITE_PRONOUN);
 	public static final Tuple<String, String> POS__INDEF_PRONOUN = Tuple.of(TKeys.POS, TValues.INDEFINITE_PRONOUN);
 	public static final Tuple<String, String> POS__REFL_PRONOUN = Tuple.of(TKeys.POS, TValues.REFLEXIVE_PRONOUN);
+	public static final Tuple<String, String> POS__REL_PRONOUN = Tuple.of(TKeys.POS, TValues.RELATIVE_PRONOUN);
 	public static final Tuple<String, String> POS__GEN_PRONOUN = Tuple.of(TKeys.POS, TValues.GENRERIC_PRONOUN);
 	public static final Tuple<String, String> POS__INTERROG_PRONOUN = Tuple.of(TKeys.POS, TValues.INTERROGATIVE_PRONOUN);
 	public static final Tuple<String, String> POS__NEG_PRONOUN = Tuple.of(TKeys.POS, TValues.NEGATIVE_PRONOUN);
@@ -48,6 +49,7 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__COMPOUND_LAST = Tuple.of(TKeys.POS, TValues.COMPOUND_LAST_PIECE);
 
 	public static final Tuple<String, String> CONTAMINATION__NOUN = Tuple.of(TKeys.CONTAMINATION, TValues.NOUN);
+	public static final Tuple<String, String> CONTAMINATION__ADJECTIVE = Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE);
 	public static final Tuple<String, String> CONTAMINATION__CARD_NUM = Tuple.of(TKeys.CONTAMINATION, TValues.CARDINAL_NUMERAL);
 
 	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);

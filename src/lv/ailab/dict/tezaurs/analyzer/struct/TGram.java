@@ -325,21 +325,20 @@ public class TGram extends Gram
 				if (newBegin > -1) break;
 			}
 		// TODO: aiz šitiem likumiem patiesībā vajadzētu palikt tukšam līdz pašām, pašām beigām.
-		if (newBegin > 0)
+		if (newBegin <= 0) return gramText; // Nebija atbilsmes
+		// Atbilsme bija.
+		gramText = gramText.substring(newBegin);
+		if (gramText.startsWith(".") || gramText.startsWith(","))
+			gramText = gramText.substring(1);
+		gramText = gramText.trim();
+
+		if (!gramText.equals("")) // Šito būtu jānodrošina jau likumam :)
 		{
-			gramText = gramText.substring(newBegin);
-			if (gramText.startsWith(".") || gramText.startsWith(","))
-				gramText = gramText.substring(1);
-			gramText = gramText.trim();
-			if (!gramText.equals("")) // Šito būtu jānodrošina jau likumam :)
-			{
-				LinkedList<String> tmp = new LinkedList<>();
-				tmp.add(gramText);
-				leftovers.add(tmp);
-				return "";
-			}
+			LinkedList<String> tmp = new LinkedList<>();
+			tmp.add(gramText);
+			leftovers.add(tmp);
 		}
-		return gramText;
+		return "";
 	}
 
 	/**

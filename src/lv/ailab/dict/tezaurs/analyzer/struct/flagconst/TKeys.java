@@ -47,7 +47,6 @@ public class TKeys extends Keys
 	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "parasti".
 	 * Ir viens izņēmuma gadījums, kad ir "parasti nelieto".
 	 */
-
 	public final static String USUALLY_USED_IN_FORM = "Parasti lieto noteiktā formā/atvasinājumā";
 	/**
 	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "bieži".

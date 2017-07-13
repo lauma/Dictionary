@@ -1,6 +1,8 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.flagconst.Features;
+import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
+import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
@@ -236,6 +238,7 @@ public class OptHypernRules
 		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
 		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
 		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
+		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 
@@ -257,7 +260,10 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] thirdDeclNoun = {
 			ThirdDecl.std("-alus, v.", ".*alus"), // alus
-
+			GenNoun.any("-pelu, s.", ".*pelus", 31,
+					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), // pelus
+			GenNoun.any("-ragu, s.", ".*ragus", 31,
+					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), // ragus
 	};
 
 	/**

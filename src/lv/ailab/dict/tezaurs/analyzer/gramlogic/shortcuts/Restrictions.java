@@ -70,7 +70,7 @@ public final class Restrictions
 		Matcher m = Pattern.compile("([^., ]*)[,. ].*").matcher(patternMiddle);
 		String formEnding = "";
 		if (!m.matches())
-			System.err.println ("Šablonam \"lietv. nozīmē: _?_" + patternEnding
+			System.err.println ("Šablonam \""+ patternBegin + " _?_" + patternMiddle + " _?_" + patternEnding
 					+ "\" neizdodas noteikt vārdformas izskaņu.");
 		else formEnding = m.group(1);
 		return FormRestrRule.of(patternBegin + " ", patternMiddle + " ", patternEnding,

@@ -87,8 +87,8 @@ public class RulesAsFunctions
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)savienojumā (\"\\p{L}+(,? \\p{L}+)?\"))([.,].*)?") :
-				Pattern.compile("((parasti |bieži |)savienojumā (\"\\p{L}+( \\p{L}+)?\"))([.].*)?");
+				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) (\"\\p{L}+(,? \\p{L}+)?\"))([.,].*)?") :
+				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) (\"\\p{L}+( \\p{L}+)?\"))([.].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);

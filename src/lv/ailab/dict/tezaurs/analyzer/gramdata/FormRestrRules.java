@@ -48,9 +48,6 @@ public class FormRestrRules
 		Restrictions.nounContDouble("ais, -ā, v.,", "ā, -ās, s.", "s"), // aizturēts, akls
 		Restrictions.nounContDouble("ais, -ā, v.", "ā, -ās, s.", "s"), // balts
 
-			//ģen.: bērna, bērnu, adj. nozīmē
-		Restrictions.anyTwoForm("ģen.:", "a,", "u, adj. nozīmē.", "s",
-				new Tuple[]{TFeatures.CONTAMINATION__ADJECTIVE}, new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bērns
 	};
 
 	public static final FormRestrRule[] singleLemmaWithPostGram = {
@@ -60,6 +57,10 @@ public class FormRestrRules
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
 		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "s", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
+		Restrictions.anyOneForm("ģen.:", "u, adj. nozīmē.", "as", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bruņas
+		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē", "s", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // caurmērs
 		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "š", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
 		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "is", null,
@@ -77,9 +78,27 @@ public class FormRestrRules
 		Restrictions.anyOneForm("lok.:", "ī, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // acumirklis
 
+		Restrictions.anyOneForm("parasti lok.:", "ā, apst. nozīmē.", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // daba
+		Restrictions.anyOneForm("parasti lok.:", "ā, apst. nozīmē.", "s", null,
+				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE)}), // čumurs
+
+		Restrictions.anyOneForm("dsk. ģen.:", "u, adj. nozīmē.", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bura
+		Restrictions.anyOneForm("dsk. ģen.:", "u, adj. nozīmē", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // dāmu
+		Restrictions.anyOneForm("dsk. ģen.:", "u, adj. nozīmē.", "as", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // briesmas
 		Restrictions.anyOneForm("dsk. ģen.:", "u, adj. nozīmē", "e", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
 						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // atspere
+		Restrictions.anyOneForm("dsk. ģen.:", "vju, adj. nozīmē", "vis", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // burvis
+
 	};
 
 	public static final FormRestrRule[] noPostGram = {

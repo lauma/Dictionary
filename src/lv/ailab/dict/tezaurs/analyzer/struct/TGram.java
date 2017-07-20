@@ -412,7 +412,7 @@ public class TGram extends Gram
 
 			if (pos.contains(TValues.ADVERB)) paradigm.add(21);
 			if (pos.contains(TValues.PARTICLE)) paradigm.add(28);
-			if (pos.contains(TValues.PREPOSITION)) paradigm.add(26);
+			if (pos.contains(TValues.ADPOSITION)) paradigm.add(26);
 			if (pos.contains(TValues.CONJUNCTION)) paradigm.add(27);
 
 			if (pos.contains(TValues.INTERJECTION)) paradigm.add(38);
@@ -493,6 +493,9 @@ public class TGram extends Gram
 				flags.test(TFeatures.POS__ORD_NUMERAL) ||
 				flags.test(TFeatures.POS__FRACT_NUMERAL))
 			flags.add(TFeatures.POS__NUMERAL);
+
+		if (flags.test(TFeatures.POS__POSTPOSITION))
+			flags.add(TFeatures.POS__ADPOSITION);
 
 		if (flags.test(TKeys.CASE, TValues.GENITIVE) && flags.test(TFeatures.NON_INFLECTIVE))
 		{

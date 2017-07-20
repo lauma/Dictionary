@@ -49,10 +49,14 @@ public class AltLemmaRules
 		// 2. paradigma: Lietvārds 1. deklinācija -š
 		//AltFullLemmaRule.nounPluralToSingularMascStd("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
 		// 3. paradigma: Lietvārds 2. deklinācija -is
+			//-ju, vsk. daudzkājis, -ja, v.
+		WithAltLemma.nounPluralToSingularMascStd("-ju, vsk.", "jis, -ja, v.", "ji", 3), // daudzkāji
+		WithAltLemma.nounPluralToSingularMascStd("-ju, vsk.", "jis, -a, v.", "ji", 3), // desmitkāji
 		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
+		WithAltLemma.nounPluralToSingularMascStd("vsk.", "tis, -ša, v.", "ši", 3), // čečenieši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "cis, -ča, v.", "či", 3), // atomieroči
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "dis, -ža, v.", "ži", 3), // čemurzieži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
@@ -104,6 +108,8 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFemStd("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.
 		WithAltLemma.nounPluralToSingularFemStd("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
+		WithAltLemma.nounPluralToSingularFemStd("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
+		WithAltLemma.nounPluralToSingularFemStd("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
 		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
 		WithAltLemma.nounPluralToSingularFemStd("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
 		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes

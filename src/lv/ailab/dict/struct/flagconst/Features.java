@@ -18,7 +18,7 @@ public class Features
 	public static final Tuple<String, String> POS__VERB = Tuple.of(Keys.POS, Values.VERB);
 	public static final Tuple<String, String> POS__ADV = Tuple.of(Keys.POS, Values.ADVERB);
 
-	public static final Tuple<String, String> POS__PREPOSITION = Tuple.of(Keys.POS, Values.PREPOSITION);
+	public static final Tuple<String, String> POS__ADPOSITION = Tuple.of(Keys.POS, Values.ADPOSITION);
 	public static final Tuple<String, String> POS__PARTICLE = Tuple.of(Keys.POS, Values.PARTICLE);
 	public static final Tuple<String, String> POS__CONJUNCTION = Tuple.of(Keys.POS, Values.CONJUNCTION);
 

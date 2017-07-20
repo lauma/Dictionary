@@ -72,21 +72,21 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] other = {
 		VerbDoubleRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"iet\""), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB}, null), //apiet
 		VerbDoubleRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"iet\""), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__REFL_VERB}, null), //apieties
 
 
 		VerbDoubleRule.of("tagadnes formas nelieto, pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
 				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NO_PRESENT)}), // pabut
 		VerbDoubleRule.of("parasti pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
 				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)}), // pārbūt
 
@@ -209,9 +209,10 @@ public class OptHypernRules
 		SixthDecl.noChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
 		SixthDecl.noChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
 		SixthDecl.noChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss
+		SixthDecl.noChange("-bikts, dsk. ģen. -biktu, s.", ".*bikts"), //bikts
 		SixthDecl.noChange("-dakts, dsk. ģen. -daktu, s.", ".*dakts"), //dakts
+		SixthDecl.noChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //debess 1, padebess
 		SixthDecl.noChange("-grīsts, dsk. ģen. -grīstu, s.", ".*grīsts"), //grīsts
-		SixthDecl.noChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //padebess
 		SixthDecl.noChange("-maksts, dsk. ģen. -makstu, s.", ".*maksts"), //maksts
 		SixthDecl.noChange("-nāss, dsk. ģen. -nāsu, s.", ".*nāss"), //nāss
 		SixthDecl.noChange("-šalts, dsk. ģen. -šaltu, s.", ".*šalts"), // šalts
@@ -241,11 +242,13 @@ public class OptHypernRules
 		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
+		SecondDecl.stdNomGen("-debess, v.", ".*debess"), // debess 2
 
 		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
 		SecondDecl.std("-āža, v.", ".*āzis"), // āzis
+		SecondDecl.std("-ciļņa, v.", ".*cilnis"), // cilnis
 
 		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 

@@ -246,6 +246,7 @@ public class RulesAsFunctions
 			{
 				flagValues.add(TValues.VERB);
 				flagValues.add(TValues.NEGATIVE_VERB);
+				flagValues.add(TValues.NEGATIVE);
 			}
 			else if (flagValueRaw.matches("verba ciešamās kārtas formu\\.?"))
 			{
@@ -495,6 +496,7 @@ public class RulesAsFunctions
 				flagValues.add(TValues.ADVERB);
 				flagValues.add(TValues.VERB);
 				flagValues.add(TValues.NEGATIVE_VERB);
+				flagValues.add(TValues.NEGATIVE);
 				flagValues.add(TValues.ADVERB_AND_NEGVERB);
 			}
 			else if (flagValueRaw.matches("lietv\\., skait\\. vai skait\\. un lietv\\."))
@@ -506,7 +508,7 @@ public class RulesAsFunctions
 			else if (flagValueRaw.matches("lietv\\. lok\\. vai lietv\\. un priev\\."))
 			{
 				flagValues.add(TValues.NOUN);
-				flagValues.add(TValues.PREPOSITION);
+				flagValues.add(TValues.ADPOSITION);
 				flagValues.add(TValues.ORIGINAL_NEEDED);
 			}
 			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\., (akuz\\., )?divsk\\. nom\\., akuz\\.)?"))
@@ -604,6 +606,7 @@ public class RulesAsFunctions
 			{
 				flagCollector.add(key, TValues.VERB);
 				flagCollector.add(key, TValues.NEGATIVE_VERB);
+				flagCollector.add(key, TValues.NEGATIVE);
 				flagCollector.add(key, specificVerbNeg.group(1));
 			}
 			else if (specificOne.matches())
@@ -613,7 +616,7 @@ public class RulesAsFunctions
 					flagCollector.add(key, v.trim());
 				String pos = specificOne.group(1);
 				if (pos.matches("prievārd(u|iem)"))
-					flagCollector.add(key, TValues.PREPOSITION);
+					flagCollector.add(key, TValues.ADPOSITION);
 				else if (pos.matches("apst\\."))
 					flagCollector.add(key, TValues.ADVERB);
 				else if (pos.equals("lietvārdu"))
@@ -631,7 +634,7 @@ public class RulesAsFunctions
 				if (poses.equals("lietv. un priev."))
 				{
 					flagCollector.add(key, TValues.NOUN);
-					flagCollector.add(key, TValues.PREPOSITION);
+					flagCollector.add(key, TValues.ADPOSITION);
 					flagCollector.add(key, TValues.NOUN_WITH_PREPOSITION);
 				} else if (poses.equals("adj., retāk vietn."))
 				{

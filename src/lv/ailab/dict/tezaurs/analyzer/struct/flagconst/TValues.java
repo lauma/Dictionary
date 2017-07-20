@@ -14,6 +14,8 @@ import lv.ailab.dict.struct.flagconst.Values;
  */
 public class TValues extends Values
 {
+	public final static String POSTPOSITION = "Postpozitīvs prievārds";
+
 	public final static String REFLEXIVE_NOUN = "Atgriezeniskais lietvārds";
 	public final static String PROPER = "Īpašvārds";
 	public final static String ORDINAL_NUMERAL = "Kārtas skaitļa vārds";
@@ -70,6 +72,8 @@ public class TValues extends Values
 	public final static String DIALECTICISM = "Dialektisms";
 	public final static String REGIONAL_TERM = "Apvidvārds";
 
+	public final static String NEGATIVE = "Noliegums";
+
 
 	public final static String DUAL = "Divskaitlis";
 
@@ -89,6 +93,7 @@ public class TValues extends Values
 	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
 	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
 
+	public final static String INDEFINITE_ENDING = "Nenoteiktā galotne";
 	public final static String DEFINITE_ENDING = "Noteiktā galotne";
 
 	public final static String ATTRIBUTE = "Apzīmētājs";

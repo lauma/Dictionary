@@ -17,7 +17,7 @@ public class Values
 	public final static String VERB = "Darbības vārds";
 	public final static String ADVERB = "Apstākļa vārds";
 
-	public final static String PREPOSITION = "Prievārds";
+	public final static String ADPOSITION = "Prievārds";
 	public final static String CONJUNCTION = "Saiklis";
 	public final static String PARTICLE = "Partikula";
 	public final static String INTERJECTION = "Izsauksmes vārds";

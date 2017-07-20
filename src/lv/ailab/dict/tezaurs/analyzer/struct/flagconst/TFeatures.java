@@ -14,6 +14,8 @@ import lv.ailab.dict.utils.Tuple;
  */
 public class TFeatures extends Features
 {
+	public static final Tuple<String, String> POS__POSTPOSITION = Tuple.of(TKeys.POS, TValues.POSTPOSITION);
+
 	public static final Tuple<String, String> POS__REFL_NOUN = Tuple.of(TKeys.POS, TValues.REFLEXIVE_NOUN);
 	public static final Tuple<String, String> POS__IRREG_VERB = Tuple.of(TKeys.POS, TValues.IRREGULAR_VERB);
 	public static final Tuple<String, String> POS__DIRECT_VERB = Tuple.of(TKeys.POS, TValues.DIRECT_VERB);
@@ -54,9 +56,14 @@ public class TFeatures extends Features
 
 	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);
 
+	public static final Tuple<String, String> INDEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.INDEFINITE_ENDING);
 	public static final Tuple<String, String> DEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.DEFINITE_ENDING);
 
 	public static final Tuple<String, String> USUALLY_USED__PLURAL = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL);
+	public static final Tuple<String, String> USED__INDEFINITE = Tuple.of(TKeys.USED_IN_FORM, TValues.INDEFINITE_ENDING);
+	public static final Tuple<String, String> USUALLY_USED__INDEFINITE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INDEFINITE_ENDING);
+	public static final Tuple<String, String> USED__DEFINITE = Tuple.of(TKeys.USED_IN_FORM, TValues.DEFINITE_ENDING);
+	public static final Tuple<String, String> USUALLY_USED__DEFINITE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.DEFINITE_ENDING);
 	public static final Tuple<String, String> USUALLY_USED__THIRD_PERS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.THIRD_PERSON);
 	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE);
 	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE_IS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE_IS);

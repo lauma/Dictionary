@@ -91,13 +91,13 @@ public class DirectRules
 		VerbDoubleRule.of(
 				"esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt", null,
 				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.PARALLEL_FORMS,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.PARALLEL_FORMS,
 						TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
 				null), // būt
 		VerbDoubleRule.of(
 				"neesmu, neesi, nav, pag. nebiju", null,
 				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				null), // būt
 
@@ -134,8 +134,11 @@ public class DirectRules
 		Adjective.std("īp. v. -ais; s. -a, -ā"), // aerobs
 		Adjective.std("-ais, īp."), // albīns
 		BaseRule.of("s. -as; adj.", ".*i", new Integer[]{13, 14},
-				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.USUALLY_USED__INDEFINITE},
 				new Tuple[]{TFeatures.POS__ADJ}), // abēji 2
+		BaseRule.of("-ie; s. -as, -ās", ".*i", new Integer[]{13, 14},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.POS__ADJ}), // daudzi
 
 		// Paradigma 42: -is/-usi
 		Participle.isUsi("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
@@ -159,12 +162,12 @@ public class DirectRules
 		MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*oši", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
-						SimpleSubRule.of(".*ti", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*ti", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*dami", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*[aā]mi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*uši", new Integer[]{13, 42}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL})},
+						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE}),
+						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE})},
 				new Tuple[]{TFeatures.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču
 				// Šķiet, ka pēc -t- un -am- nemēdz sekot īpašības vārda galotne š.
 		// Paradigma: 30 - jaundzimušais, pēdējais
@@ -180,8 +183,8 @@ public class DirectRules
 				new Tuple[]{TFeatures.GENDER__MASC}),
 			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais, sirmais, svešais
 
-		// Paradigmas: 30 -  jaundzimušais, pēdējais
 		// 34 paradigma: Atgriezeniskie lietvārdi -šanās
+		// 40 paradigma: Siev. dz. ar not. galotni
 		BaseRule.of("-ās, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*šanās", new Integer[]{34},
 								new Tuple[]{TFeatures.POS__REFL_NOUN}),
@@ -194,6 +197,9 @@ public class DirectRules
 						SimpleSubRule.of(".*([^tšm]|[^aā]m)ā", new Integer[]{40},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN, TFeatures.DEFINITE_ENDING})},
 				new Tuple[]{TFeatures.GENDER__FEM}), // pirmdzimtā, notiesātā, vispirmā, -šanās
+		BaseRule.of("-ušās, s.", ".*usī", 41,
+				new Tuple[]{TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN},
+				new Tuple[]{TFeatures.GENDER__FEM}) // cietusī
 	};
 
 	/**
@@ -214,6 +220,8 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // jebkas, jebkurš, jebkāds
 		BaseRule.of("nenot. vietn. -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // dažs
+		BaseRule.of("nenot. vietn. -as, s.", ".*a", 25,
+				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__FEM}), // daža
 		BaseRule.of("nenoteiktais vietn. -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__INDEF_PRONOUN, TFeatures.GENDER__MASC}), // cits
 		BaseRule.of("-a, v.; norād. vietn.", ".*s", 25,
@@ -587,6 +595,9 @@ public class DirectRules
 		GenNoun.any("-ņu, v.", ".*ņi", new Integer[]{1, 2, 3, 4, 5},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC}), // bretoņi
+		GenNoun.any("-ču, v.", ".*či", new Integer[]{1, 3},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC}), // divriči
 		GenNoun.any("-šu, v.", ".*ši", new Integer[]{1, 3},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.PLURAL)}), // alžīrieši
@@ -669,7 +680,7 @@ public class DirectRules
 		GenNoun.any("-žu, s.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*žas", new Integer[]{7}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ze", new Integer[]{9}, null),},
+						SimpleSubRule.of(".*[dz]e", new Integer[]{9}, null),},
 				new Tuple[]{TFeatures.GENDER__FEM}), // mirādes, graizes, bažas, aponeiroze
 		// Vispārīgā galotne, kas der visam un neder nekam
 		GenNoun.any("-u, s.", new SimpleSubRule[]{
@@ -725,7 +736,7 @@ public class DirectRules
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
 		// Paradigma: 3 - Lietvārds 2. deklinācija -is
-		GenNoun.any("-ņa, dsk. ģen. -ņu", new SimpleSubRule[]{
+	/*	GenNoun.any("-ņa, dsk. ģen. -ņu", new SimpleSubRule[]{
 						SimpleSubRule.of(".*ņi", 3, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*nis", 3, new Tuple[]{TFeatures.GENDER__MASC})},
 				null), //afroamerikāņi, šovmenis
@@ -751,6 +762,7 @@ public class DirectRules
 						SimpleSubRule.of(".*ņš", new Integer[]{2}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*nis", new Integer[]{3}, new Tuple[]{TFeatures.GENDER__MASC})},
 				null), // abolainis, jūrakmens, ļautiņš
+				*/
 	};
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,

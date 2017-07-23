@@ -111,7 +111,6 @@ public class OptHypernRules
 		// Ar mijām
 		//FifthDecl.std("-es, dsk. ģen. -aļģu, s.", ".*aļģe"), // aļģe
 		FifthDecl.std("-aļģes, dsk. ģen. -aļģu, s.", ".*aļģe"), // kramaļģe
-		FifthDecl.std("-asins, dsk. ģen. -asiņu, s.", ".*asins"), // asins
 		FifthDecl.std("-audzes, dsk. ģen. -audžu, s.", ".*audze"), // brūkleņaudze
 		FifthDecl.std("-ātes, dsk. ģen. -āšu, s.", ".*āte"), //āte
 		FifthDecl.std("-balles, dsk. ģen. -baļļu, s.", ".*balle"), // balle 1
@@ -138,7 +137,6 @@ public class OptHypernRules
 		FifthDecl.std("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
 		// Bez mijām
 		FifthDecl.noChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
-		FifthDecl.noChange("-bikts, dsk. ģen. -biktu, s.", ".*bikts"), // bikts
 		FifthDecl.noChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
 		SixthDecl.noChange("-gāzes, dsk. ģen. -gāzu, s.", ".*gāze"), //deggāze
 	};
@@ -149,6 +147,7 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] sixthDeclNoun = {
 		// Ar mijām
+		SixthDecl.std("-asins, dsk. ģen. -asiņu, s.", ".*asins"), // asins
 		SixthDecl.std("-avs, dsk. ģen. -avju, s.", ".*avs"), //avs
 		SixthDecl.std("-birzs, dsk. ģen. -biržu, s.", ".*birzs"), //birzs
 		SixthDecl.std("-blakts, dsk. ģen. -blakšu, s.", ".*blakts"), //blakts

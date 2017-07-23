@@ -427,7 +427,6 @@ public class DirectRules
 
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
 		//FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //vairs nav, jo atļāva miju.
-		FifthDecl.noChange("-es, dsk. ģen. mufu, arī mufju, s.", ".*mufe"), //mufe
 		FifthDecl.noChange("-es, dsk. ģen. -su, s.", ".*se"), // bise
 		FifthDecl.noChange("-es, dsk. ģen. -stu, s.", ".*ste"), //abolicioniste
 		FifthDecl.noChange("dsk. ģen. -tu, s.", ".*te"), //artiste
@@ -452,6 +451,7 @@ public class DirectRules
 		//BaseRule.std("-es, dsk. ģen. -upju, s.", ".*upe"), //dzirnavupe
 
 		// Miju varianti
+		FifthDecl.optChange("-es, dsk. ģen. mufu, arī mufju, s.", ".*mufe"), //mufe
 		FifthDecl.optChange("-es, dsk. ģen. -fu, arī -fju, s.", ".*fe"), //arheogrāfe
 		FifthDecl.optChange("-es, dsk. ģen. -šu vai -tu, s.", ".*te"), //cunfte, manšete
 		FifthDecl.optChange("-es, dsk. ģen. -šu, arī -tu, s.", ".*te"), //torte

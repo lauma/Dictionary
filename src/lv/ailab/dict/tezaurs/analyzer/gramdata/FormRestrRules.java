@@ -55,6 +55,8 @@ public class FormRestrRules
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
 		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
+		Restrictions.anyOneForm("akuz.:", "u, apst. nozīmē", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // diena
 		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "s", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
 		Restrictions.anyOneForm("ģen.:", "u, adj. nozīmē.", "as", null,
@@ -65,6 +67,8 @@ public class FormRestrRules
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // bezspēks
 		Restrictions.anyOneForm("ģen.:", "a, adj. nozīmē.", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // brāķis
+		Restrictions.anyOneForm("ģen.:", "as, adj. nozīmē.", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // diena
 		Restrictions.anyOneForm("instr.:", "iem, apst. nozīmē", "i", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL)}), // aplinki
 		Restrictions.anyOneForm("lok.:", "ā, apst. nozīmē", "a", null,
@@ -98,6 +102,10 @@ public class FormRestrRules
 		Restrictions.anyOneForm("dsk. ģen.:", "vju, adj. nozīmē", "vis", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
 						Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE)}), // burvis
+
+		Restrictions.anyOneForm("dsk. lok.:", "ās, apst. nozīmē.", "a", null,
+				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
+						Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // diena
 
 	};
 

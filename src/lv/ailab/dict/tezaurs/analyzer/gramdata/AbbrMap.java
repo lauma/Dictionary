@@ -686,6 +686,7 @@ public class AbbrMap {
 
 		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.
 		binaryFlags.put("hip.", "Hipotēze");
+		binaryFlags.put("dsk. formas parasti lietojamas vsk. formu nozīmē.", "Daudzskaitļa formas parasti lieto vienskaitļa formu nozīmē");
 	}
 
 }

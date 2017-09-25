@@ -461,6 +461,10 @@ public class DirectRules
 		FifthDecl.optChange("-es, dsk. ģen. lešu vai letu", ".*lete"), //lete
 
 		// Nestandartīgie
+		GenNoun.any("-ķu, s.", new SimpleSubRule[]{
+				SimpleSubRule.of(".*ķes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
+				//SimpleSubRule.of(".*le", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //duļķes
 		GenNoun.any("-ļu, s.", new SimpleSubRule[]{
 				SimpleSubRule.of(".*les", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*le", 9, null)},
@@ -509,6 +513,7 @@ public class DirectRules
 		SecondDecl.std("-ļļa, v.", ".*llis"), // amarillis
 		SecondDecl.std("-ļņa, v.", ".*lnis"), // aizsargvalnis
 		SecondDecl.std("-mja, v.", ".*mis"), // aplamis
+		SecondDecl.std("-šķa, v.", ".*šķis"), // draišķis
 		SecondDecl.std("-šļa, v.", ".*slis"), // bauslis
 		SecondDecl.std("-šņa, v.", ".*snis"), // alksnis
 		SecondDecl.std("-pja, v.", ".*pis"), //aitkopis
@@ -601,6 +606,9 @@ public class DirectRules
 		GenNoun.any("-šu, v.", ".*ši", new Integer[]{1, 3},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.PLURAL)}), // alžīrieši
+		GenNoun.any("-džu, v.", ".*dži", new Integer[]{1, 2, 3},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.PLURAL)}), // dobradži
 		// Vispārīgā galotne, kas der visam un neder nekam
 		GenNoun.any("-ru, v.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*š", new Integer[]{2}, null),

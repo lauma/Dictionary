@@ -103,25 +103,25 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "īgais", "īgie", 30), // amēbveidīgie
 
 		// 7. paradigma: 4. dekl.
-		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
-		WithAltLemma.nounPluralToSingularFemStd("-u,", "a, -as, s.", "as", 7), // cukurviela
-		WithAltLemma.nounPluralToSingularFemStd("vsk.", "a", "as", 7), // angiospermas
+		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
+		WithAltLemma.nounPluralToSingularFem("-u,", "a, -as, s.", "as", 7), // cukurviela
+		WithAltLemma.nounPluralToSingularFem("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.
-		WithAltLemma.nounPluralToSingularFemStd("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
-		WithAltLemma.nounPluralToSingularFemStd("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
-		WithAltLemma.nounPluralToSingularFemStd("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
-		WithAltLemma.nounPluralToSingularFemStd("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
-		WithAltLemma.nounPluralToSingularFemStd("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
-		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
-		WithAltLemma.nounPluralToSingularFemStd("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
-		WithAltLemma.nounPluralToSingularFemStd("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
+		WithAltLemma.nounPluralToSingularFem("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
+		WithAltLemma.nounPluralToSingularFem("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
+		WithAltLemma.nounPluralToSingularFem("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
+		WithAltLemma.nounPluralToSingularFem("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
+		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
+		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
+		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
+		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		// paradigma: 5. dekl. bez mijas
-		WithAltLemma.nounPluralToSingularFemNoChange("-tu, vsk.", "te, -es, s.", "tes", 9), // apaļmute
+		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute
 		// 11. paradigma: 6. dekl.
-		WithAltLemma.nounPluralToSingularFemStd("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
-		WithAltLemma.nounPluralToSingularFemStd("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
+		WithAltLemma.nounPluralToSingularFem("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
+		WithAltLemma.nounPluralToSingularFem("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.
-		WithAltLemma.nounPluralToSingularFemStd("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
+		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 
 		//	Neviennozīmīgie likumi.
 	};

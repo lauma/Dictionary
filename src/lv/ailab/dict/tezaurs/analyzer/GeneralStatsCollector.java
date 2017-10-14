@@ -189,8 +189,7 @@ public class GeneralStatsCollector
         {
 			if (h.gram == null || h.gram.flags == null) continue;
 
-            if (collectFifthDeclExceptions && h.gram.getDirectParadigms().contains(9)
-					&& h.gram.flags.test(TFeatures.NO_SOUNDCHANGE))
+            if (collectFifthDeclExceptions && (h.gram.getDirectParadigms().contains(44) || h.gram.getDirectParadigms().contains(47)))
                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 
 			if (collectNonInflWithCase && h.gram.flags.testKey(TKeys.CASE) &&

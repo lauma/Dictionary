@@ -30,12 +30,12 @@ public final class FifthDecl
 	 * šķirkļa vārdu vienskaitlī bez līdzskaņu mijas.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
-	 * @return BaseRule ar 9. paradigmu
+	 * @return BaseRule ar 44. paradigmu
 	 */
 	public static BaseRule noChange(String patternText, String lemmaRestrictions)
 	{
-		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{TFeatures.POS__NOUN, TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
+		return BaseRule.of(patternText, lemmaRestrictions, 44,
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 
 	/**
@@ -43,11 +43,11 @@ public final class FifthDecl
 	 * šķirkļa vārdu vienskaitlī ar fakultatīvu līdzskaņu miju.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
-	 * @return BaseRule ar 9. paradigmu
+	 * @return BaseRule ar 9. un 44. paradigmu
 	 */
 	public static BaseRule optChange(String patternText, String lemmaRestrictions)
 	{
-		return BaseRule.of(patternText, lemmaRestrictions, 9,
-				new Tuple[]{TFeatures.POS__NOUN, TFeatures.OPT_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
+		return BaseRule.of(patternText, lemmaRestrictions, new Integer[] {9, 44},
+				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 }

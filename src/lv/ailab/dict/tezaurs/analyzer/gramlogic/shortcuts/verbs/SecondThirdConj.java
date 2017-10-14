@@ -20,26 +20,21 @@ public final class SecondThirdConj
 	/**
 	 * Izveido likumu tiešajam darbības vārdam ar paralēlajām formām, kas veido
 	 * pilnu 2. un 3. konjugācijas formu sistēmu, un ir norādītas tikai 3.
-	 * personas formas.
+	 * personas formas, un 3. konjugācijas formās nav tagdnes mijas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmām 16, 17 un tikai 3. personas formām.
+	 * @return likums ar paradigmām 16 un 17, un tikai 3. personas formām.
 	 */
-	public static VerbDoubleRule direct3PersParallel(
-			String patternEnd, String lemmaEnd, boolean presentChange)
+	public static VerbDoubleRule directStd3PersParallel(
+			String patternEnd, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.SECOND_THIRD_CONJ);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
-		if (presentChange)
-			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
-		else
-			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
@@ -50,25 +45,21 @@ public final class SecondThirdConj
 
 	/**
 	 * Izveido VerbDoubleRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā
-	 * un kuram dotas visu personu formas/galotnes.
+	 * un kuram dotas visu personu formas/galotnes, un 3. konjugācijas formām
+	 * nav tagadnes mijas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return	VerbDoubleRule ar paradigmām 16, 17 bez 3. personas likuma
+	 * @return	VerbDoubleRule ar paradigmām 16 un 17 bez 3. personas likuma
 	 */
-	public static VerbDoubleRule directAllPersParallel(
-			String patternText, String lemmaEnd, boolean presentChange)
+	public static VerbDoubleRule directStdAllPersParallel(
+			String patternText, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.SECOND_THIRD_CONJ);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
-		if (presentChange)
-			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
-		else
-			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
@@ -81,26 +72,21 @@ public final class SecondThirdConj
 	/**
 	 * Izveido likumu atgriezeniskajam darbības vārdam ar paralēlajām formām,
 	 * kas veido pilnu 2. un 3. konjugācijas formu sistēmu, un ir norādītas
-	 * tikai 3. personas formas.
+	 * tikai 3. personas formas, un 3. konjugācijas formām nav tagadnes mijas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-	 * @param presentChange	vai tagadnes formās ir līdzskaņu mija
-	 * @return likums ar paradigmām 19, 20 un tikai 3. personas formām
+	 * @return likums ar paradigmām 19 un 20, un tikai 3. personas formām
 	 */
-	public static VerbDoubleRule refl3PersParallel(
-			String patternEnd, String lemmaEnd, boolean presentChange)
+	public static VerbDoubleRule reflStd3PersParallel(
+			String patternEnd, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.SECOND_THIRD_CONJ);
 		posFlags.add(TFeatures.POS__REFL_VERB);
-		if (presentChange)
-			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
-		else
-			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
@@ -110,26 +96,22 @@ public final class SecondThirdConj
 	}
 
 	/**
-     * Izveido VerbDoubleRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā un
-     * kuram dotas visu personu formas/galotnes.
+     * Izveido VerbDoubleRule darbības vārdam, kas ir gan 2, gan 3. konjugācijā
+	 * un kuram dotas visu personu formas/galotnes, un 3. konjugācijas formām
+	 * nav tagadnes mijas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
 	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
      * @param patternText	teksts, ar kuru jāsākas gramatikai
      * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
-     * @param presentChange	vai tagadnes formās ir līdzskaņu mija
 	 * @return	VerbDoubleRule ar paradigmām 19, 20 bez 3. personas likuma
 	 */
-    public static VerbDoubleRule reflAllPersParallel(
-            String patternText, String lemmaEnd, boolean presentChange)
+    public static VerbDoubleRule reflStdAllPersParallel(
+            String patternText, String lemmaEnd)
     {
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.SECOND_THIRD_CONJ);
 		posFlags.add(TFeatures.POS__REFL_VERB);
-		if (presentChange)
-			posFlags.add(TFeatures.HAS_PRESENT_SOUNDCHANGE);
-		else
-			posFlags.add(TFeatures.NO_PRESENT_SOUNDCHANGE);
 		if (RulesAsFunctions.containsFirstConj(patternText))
 			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))

@@ -54,7 +54,7 @@ public final class WithAltLemma
 	 * Tiek pieņemts, ka no dotās lemmas beigām jānogriež tieši lemmaEnding
 	 * apjoma daļa.
 	 */
-	public static AltFullLemmaRule nounPluralToSingularFemStd(
+	public static AltFullLemmaRule nounPluralToSingularFem(
 			String patternBegin, String patternEnding, String lemmaEnding,
 			int paradigmId)
 	{
@@ -76,13 +76,13 @@ public final class WithAltLemma
 
 
 
-	/**
+	/*
 	 * Likums sieviešu dzimtes lietvārdiem ar šķirkļa vārdu daudzskaitlī un
 	 * papildformu vienskaitlī, locīšana bez deklinācijai atbilstošajām mijām.
 	 * Tiek pieņemts, ka no dotās lemmas beigām jānogriež tieši lemmaEnding
 	 * apjoma daļa.
 	 */
-	public static AltFullLemmaRule nounPluralToSingularFemNoChange(
+/*	public static AltFullLemmaRule nounPluralToSingularFemNoChange(
 			String patternBegin, String patternEnding, String lemmaEnding,
 			int paradigmId)
 	{
@@ -100,7 +100,7 @@ public final class WithAltLemma
 				new Tuple[]{TFeatures.NO_SOUNDCHANGE, TFeatures.GENDER__FEM, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
 				altLemmaEnding, paradigmId,
 				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR});
-	}
+	}//*/
 
 	/**
 	 * Speciālgadījums lietvārdiem, kam pamatforma ir 1. deklinācijā un

@@ -111,11 +111,11 @@ public class TValues extends Values
 	public final static String FIRST_CONJ_PARALLELFORM = "Pirmās konjugācijas paralēlforma"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	public final static String SECOND_THIRD_CONJ = "Otrās un trešās konjugācijas paralelitāte"; // Paredzēts morfoimporta atvieglošanai, tikai 2. un 3. konj. darbības vārdiem
 	public final static String INFINITIVE_HOMOFORMS = "Nenoteiksmes homoformas"; // Paredzēts morfoimporta atvieglošanai
-	public final static String HAS_PRESENT_SOUNDCHANGE = "Tagadnes mija ir"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	public final static String OPT_PRESENT_SOUNDCHANGE = "Fakultatīva tagadnes mija"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
-	public final static String NO_PRESENT_SOUNDCHANGE = "Nav tagadnes mijas"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj. Vai šo vajadzētu pārveidot par noklusēto variantu?
-	public final static String NO_SOUNDCHANGE = "Nav mijas"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā vispār nav attiecīgajai paradigmai raksturīgās mijas
-	public final static String OPT_SOUNDCHANGE = "Fakultatīva mija"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā lietojama gan locīšana ar paradigmai raksturīgo miju, gan bez tās
+	//public final static String HAS_PRESENT_SOUNDCHANGE = "Tagadnes mija ir"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
+	//public final static String OPT_PRESENT_SOUNDCHANGE = "Fakultatīva tagadnes mija"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj.
+	//public final static String NO_PRESENT_SOUNDCHANGE = "Nav tagadnes mijas"; // Paredzēts morfoimporta atvieglošanai, tikai 3. konj. Vai šo vajadzētu pārveidot par noklusēto variantu?
+	//public final static String NO_SOUNDCHANGE = "Nav mijas"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā vispār nav attiecīgajai paradigmai raksturīgās mijas
+	//public final static String OPT_SOUNDCHANGE = "Fakultatīva mija"; // Paredzēts morfoimporta atvieglošanai, gadījumiem, kad izņēmuma kārtā lietojama gan locīšana ar paradigmai raksturīgo miju, gan bez tās
 
 	// Sevišķi retās vērtības:
 

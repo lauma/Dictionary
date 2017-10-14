@@ -90,11 +90,11 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> PARALLEL_FORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.PARALLEL_FORMS);
 	public static final Tuple<String, String> FIRST_CONJ_PARALLELFORM = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.FIRST_CONJ_PARALLELFORM);
 	public static final Tuple<String, String> SECOND_THIRD_CONJ = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.SECOND_THIRD_CONJ);
-	public static final Tuple<String, String> HAS_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.HAS_PRESENT_SOUNDCHANGE);
-	public static final Tuple<String, String> NO_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.NO_PRESENT_SOUNDCHANGE);
-	public static final Tuple<String, String> OPT_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.OPT_PRESENT_SOUNDCHANGE);
-	public static final Tuple<String, String> NO_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.NO_SOUNDCHANGE);
-	public static final Tuple<String, String> OPT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.OPT_SOUNDCHANGE);
+	//public static final Tuple<String, String> HAS_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.HAS_PRESENT_SOUNDCHANGE);
+	//public static final Tuple<String, String> NO_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.NO_PRESENT_SOUNDCHANGE);
+	//public static final Tuple<String, String> OPT_PRESENT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.OPT_PRESENT_SOUNDCHANGE);
+	//public static final Tuple<String, String> NO_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.NO_SOUNDCHANGE);
+	//public static final Tuple<String, String> OPT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.OPT_SOUNDCHANGE);
 	public static final Tuple<String, String> FROZEN = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.FROZEN_FORM);
 
 	public static final Tuple<String, String> UNCLEAR_PARADIGM = Tuple.of(TKeys.OTHER_FLAGS, TValues.UNCLEAR_PARADIGM);

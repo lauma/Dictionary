@@ -36,7 +36,6 @@ public final class SixthDecl
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 35,
 				new Tuple[]{TFeatures.POS__NOUN}, new Tuple[]{TFeatures.GENDER__FEM});
-				//new Tuple[]{TFeatures.POS__NOUN, TFeatures.NO_SOUNDCHANGE}, new Tuple[]{TFeatures.GENDER__FEM});
 	}
 
 	/**

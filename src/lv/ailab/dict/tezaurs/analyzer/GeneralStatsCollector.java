@@ -380,9 +380,9 @@ public class GeneralStatsCollector
 			line.append("44");
 		// Fakultatīvā mija.
 		else if (paradigms.size() == 2 && paradigms.contains(17) && paradigms.contains(45))
-			line.append("17");
+			line.append("45");
 		else if (paradigms.size() == 2 && paradigms.contains(20) && paradigms.contains(46))
-			line.append("20");
+			line.append("46");
 		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(44))
 			line.append("9");
 		else if (paradigms.size() == 2 && paradigms.contains(11) && paradigms.contains(35))

@@ -356,18 +356,39 @@ public class GeneralStatsCollector
 			line.append(entry.head.gram.paradigm.stream().filter(p -> p != 0)
 					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
 					.orElse("NULL"));
+		// TODO smukāk izvēlēties, kuru drukāt.
+		// 2. + 3. konj. + fakultatīva mija.
+		else if (paradigms.size() == 3 && paradigms.contains(16) && paradigms.contains(17) && paradigms.contains(45))
+			line.append("45");
+		else if (paradigms.size() == 3 && paradigms.contains(19) && paradigms.contains(20) && paradigms.contains(46))
+			line.append("46");
+		// 2. + 3. konj.
 		else if (paradigms.size() == 2 && paradigms.contains(16) && paradigms.contains(17))
-			// TODO smukāk izvēlēties, kuru drukāt.
-			line.append("16");
+			line.append("17");
+		else if (paradigms.size() == 2 && paradigms.contains(16) && paradigms.contains(45))
+			line.append("45");
 		else if (paradigms.size() == 2 && paradigms.contains(19) && paradigms.contains(20))
-			// TODO smukāk izvēlēties, kuru drukāt.
-			line.append("19");
+			line.append("20");
+		else if (paradigms.size() == 2 && paradigms.contains(19) && paradigms.contains(46))
+			line.append("46");
+		// Kopdzimte.
 		else if (paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8))
-			// TODO smukāk izvēlēties, kuru drukāt.
 			line.append("7");
 		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10))
-			// TODO smukāk izvēlēties, kuru drukāt.
 			line.append("9");
+		else if (paradigms.size() == 2 && paradigms.contains(44) && paradigms.contains(47))
+			line.append("44");
+		// Fakultatīvā mija.
+		else if (paradigms.size() == 2 && paradigms.contains(17) && paradigms.contains(45))
+			line.append("17");
+		else if (paradigms.size() == 2 && paradigms.contains(20) && paradigms.contains(46))
+			line.append("20");
+		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(44))
+			line.append("9");
+		else if (paradigms.size() == 2 && paradigms.contains(11) && paradigms.contains(35))
+			line.append("11");
+		else if (paradigms.size() == 2 && paradigms.contains(3) && paradigms.contains(48))
+			line.append("3");
 		else line.append("NULL");
 		line.append("\t");
 		// [4] avoti
@@ -430,9 +451,18 @@ public class GeneralStatsCollector
 			HashSet<String> inflFlags = new HashSet<>();
 			if (entry.head.gram.flags.testKey(TKeys.INFLECTION_WEARDNES))
 				inflFlags.addAll(entry.head.gram.flags.getAll(TKeys.INFLECTION_WEARDNES));
+			if (paradigms.size() == 2 && paradigms.contains(17) && paradigms.contains(45) ||
+					paradigms.size() == 2 && paradigms.contains(20) && paradigms.contains(46) ||
+					paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(44) ||
+					paradigms.size() == 2 && paradigms.contains(11) && paradigms.contains(35) ||
+					paradigms.size() == 2 && paradigms.contains(3) && paradigms.contains(48) ||
+					paradigms.size() == 3 && paradigms.contains(16) && paradigms.contains(17) && paradigms.contains(45) ||
+					paradigms.size() == 3 && paradigms.contains(19) && paradigms.contains(20) && paradigms.contains(46))
+				inflFlags.add("Fakultatīva mija");
 			if (entry.head.gram.flags.test(TFeatures.GENDER__CO) ||
 					paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8) ||
-					paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10))
+					paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10) ||
+					paradigms.size() == 2 && paradigms.contains(44) && paradigms.contains(47))
 				inflFlags.add(TValues.COGENDER);
 			if (!inflFlags.contains(TValues.COGENDER) && entry.head.gram.flags.testKey(TKeys.GENDER))
 				inflFlags.addAll(entry.head.gram.flags.getAll(TKeys.GENDER));

@@ -357,6 +357,9 @@ public class GeneralStatsCollector
 					.map(Object::toString).reduce((s1, s2) -> s1 + "," + s2)
 					.orElse("NULL"));
 		// TODO smukāk izvēlēties, kuru drukāt.
+		// kopdzimte + fakultatīvā mija
+		else if (paradigms.size() == 4 && paradigms.contains(9) && paradigms.contains(10)&& paradigms.contains(44) && paradigms.contains(47))
+			line.append("9");
 		// 2. + 3. konj. + fakultatīva mija.
 		else if (paradigms.size() == 3 && paradigms.contains(16) && paradigms.contains(17) && paradigms.contains(45))
 			line.append("45");

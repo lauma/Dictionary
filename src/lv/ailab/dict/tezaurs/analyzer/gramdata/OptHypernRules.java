@@ -87,7 +87,8 @@ public class OptHypernRules
 		//		null), //daudzka
 
 		// Nedefinēta paradigma: divdabji
-		Participle.isUsi("-augušais; s. -augusi, -augusī", ".*audzis"), // auraudzis
+		Participle.isUsi("-augušais; s. -augusi, -augusī", ".*audzis"), // cauraudzis
+		Participle.isUsi("-jukušais; s. -jukusi, -jukusi", ".*jucis"), // pusjucis
 		Participle.isUsi("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
 		Participle.isUsi("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 	};
@@ -1295,6 +1296,8 @@ public class OptHypernRules
 		ThirdConj.directStd3PersParallel(
 				"-vīd, pag. -vīdēja (retāk -vīda, 1. konj.)", "vīdēt"), // atvīdēt
 
+		// Standartizētie ar mijām.
+		ThirdConj.directChange3Pers("-vajag, pag. -vajadzēja", "vajadzēt"), //vajadzēt
 		// Standartizētie bez mijām.
 		// A, B
 		ThirdConj.directStd3Pers("-baukš, pag. -baukšēja", "baukšēt"), //nobaukšēt
@@ -1593,7 +1596,6 @@ public class OptHypernRules
 		ThirdConj.directStd3Pers("-ūkš, pag. -ūkšēja", "ūkšēt"), //ūkšēt
 		ThirdConj.directStd3Pers("-ūkšķ, pag. -ūkšķēja", "ūkšķēt"), //ūkšķēt
 		// V
-		ThirdConj.directStd3Pers("-vajag, pag. -vajadzēja", "vajadzēt"), //vajadzēt
 		ThirdConj.directStd3Pers("-vankš, pag. -vankšēja", "vankšēt"), //vankšēt
 		ThirdConj.directStd3Pers("-vankšķ, pag. -vankšķēja", "vankšķēt"), //vankšķēt
 		ThirdConj.directStd3Pers("-vaukš, pag. -vaukšēja", "vaukšēt"), //novaukšēt

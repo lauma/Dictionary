@@ -428,16 +428,7 @@ public class TGram extends Gram
 			if (pos.contains(TValues.CARDINAL_NUMERAL)
 					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
-			// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
-			// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
-			// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
-			// problēmas.
-			if (pos.contains(TValues.GEN_ONLY))
-			{
-				paradigm.add(0);
-				if (!flags.testKey(TKeys.GENDER) || !flags.testKey(TKeys.NUMBER))
-					flags.add(TFeatures.UNCLEAR_PARADIGM);
-			}
+			if (pos.contains(TValues.GEN_ONLY)) paradigm.add(49);
 
 			if (pos.contains(TValues.PIECE_OF_WORD)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
@@ -497,6 +488,10 @@ public class TGram extends Gram
 		if (flags.test(TFeatures.POS__POSTPOSITION))
 			flags.add(TFeatures.POS__ADPOSITION);
 
+		// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
+		// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
+		// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
+		// problēmas.
 		if (flags.test(TKeys.CASE, TValues.GENITIVE) && flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			flags.add(TFeatures.POS__GEN_ONLY);
@@ -535,6 +530,7 @@ public class TGram extends Gram
 				(paradigm.contains(15) || paradigm.contains(18) ||
 						paradigm.contains(16) || paradigm.contains(19) ||
 						paradigm.contains(17) || paradigm.contains(20) ||
+						paradigm.contains(45) || paradigm.contains(46) ||
 						paradigm.contains(29)) &&
 				!(flags.test(TFeatures.POS__DIRECT_VERB) ||
 					flags.test(TFeatures.POS__REFL_VERB)))

@@ -1,7 +1,9 @@
+.DS_Store
+
 /.idea/dictionaries
 /.idea/workspace.xml
 /.idea/tasks.xml
 /Dictionary.zip
 /testpiem
 /out
-*.json
+

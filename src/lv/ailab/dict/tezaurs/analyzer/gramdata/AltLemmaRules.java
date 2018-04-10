@@ -57,15 +57,19 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "tis, -ša, v.", "ši", 3), // čečenieši
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "sis, -ša, v.", "ši", 3), // kvieši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "cis, -ča, v.", "či", 3), // atomieroči
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "dis, -ža, v.", "ži", 3), // čemurzieži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lis, -ļa, v.", "ļi", 3), // dzeguļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zis, -ža, v.", "ži", 3), // dzelži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -a, v.", "ri", 3), // klaķieri
+		WithAltLemma.nounPluralToSingularMascStd("-ru, vsk.", "ris, -a, v.", "ri", 3), // dzimumdziedzeri
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 

@@ -429,11 +429,15 @@ public class TGram extends Gram
 					&& flags.test(TFeatures.NON_INFLECTIVE)) paradigm.add(29); // deviņsimt
 
 			if (pos.contains(TValues.GEN_ONLY)) paradigm.add(49);
+			// Nelokāmie lietvārdi - 12.
+			else if (flags.test(TFeatures.NON_INFLECTIVE) && flags.testKey(TKeys.GENDER)
+					&& !flags.testKey(TKeys.CASE)) paradigm.add(12); // bruto
 
 			if (pos.contains(TValues.PIECE_OF_WORD)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
-
-
+		// Nelokāmie lietvārdi - 12.
+		else if (flags.test(TFeatures.NON_INFLECTIVE) && flags.testKey(TKeys.GENDER)
+				&& !flags.testKey(TKeys.CASE)) paradigm.add(12); // video
 	}
 
 	/**

@@ -104,6 +104,7 @@ public class DirectRules
 		// 1. paradigma: 1. dekl. lietvārdi, -s
 		GenNoun.any("-a, dsk. ģen. -ku, v.", ".*ks", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // cepurnieks
 		GenNoun.any("-a, dsk. ģen. -nu, v.", ".*ns", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // aizsargspārns
+		GenNoun.any("-la, v.", ".*ls", 1, null, new Tuple[] {TFeatures.GENDER__MASC}), // durkls
 		// 6. paradigma: 3. deklinācijas lietvārdi
 		GenNoun.any("-us, v.", ".*us", 6, null, new Tuple[] {TFeatures.GENDER__MASC}), // dienvidus
 
@@ -391,7 +392,7 @@ public class DirectRules
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}),// bende
 
 		// Paradigma: 9 - sieviešu dzimte.
-		FifthDecl.std("-ķe, -es, dsk. ģen. -ķu, s.", ".*ķe"), //ciniķe
+		//FifthDecl.std("-es, dsk. ģen. -ķu, s.", ".*ķe"), //ciniķe
 
 		// Standartizētie
 		FifthDecl.std("-es, dsk. ģen. -ču, s.", ".*[cč]e"), //ābece, veče

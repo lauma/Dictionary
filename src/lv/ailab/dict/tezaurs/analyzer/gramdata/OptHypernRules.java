@@ -106,6 +106,7 @@ public class OptHypernRules
 		FifthDecl.std("-celles, dsk. ģen. -ceļļu, s.", ".*celle"), // celle
 		FifthDecl.std("-cemmes, dsk. ģen. -cemmju, s.", ".*cemme"), // cemme
 		FifthDecl.std("-dēles, dsk. ģen. -dēļu, s.", ".*dēle"), // dēle
+		FifthDecl.std("-duktes, dsk. ģen. -dukšu, s.", ".*dukte"), // dukte
 		FifthDecl.std("-eģes, dsk. ģen. -eģu, s.", ".*eģe"), // eģe
 		FifthDecl.std("-elles, dsk. ģen. -eļļu, s.", ".*elle"), // elle
 		FifthDecl.std("-eņģes, dsk. ģen. -eņģu, s.", ".*eņģe"), // eņģe
@@ -232,6 +233,7 @@ public class OptHypernRules
 		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
 		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
 		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
+		SecondDecl.stdNomGen("-mēness, v.", ".*mēness"), // mēness, pilnmēness
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 		SecondDecl.stdNomGen("-debess, v.", ".*debess"), // debess 2
@@ -255,6 +257,8 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] thirdDeclNoun = {
 			ThirdDecl.std("-alus, v.", ".*alus"), // alus
+			GenNoun.any("-dzirnu, s.", ".*dzirnus", 31,
+					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), // dzirnus
 			GenNoun.any("-pelu, s.", ".*pelus", 31,
 					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), // pelus
 			GenNoun.any("-ragu, s.", ".*ragus", 31,

@@ -109,6 +109,8 @@ public class AbbrMap {
 		pairingFlags.put("priev.", TFeatures.POS__ADPOSITION);
 		pairingFlags.put("saiklis.", TFeatures.POS__CONJUNCTION);
 		pairingFlags.put("saiklis", TFeatures.POS__CONJUNCTION);
+		pairingFlags.put("vienojuma saiklis", Tuple.of(TKeys.POS, "Vienojuma saiklis"));
+		pairingFlags.put("vienojuma saiklis", TFeatures.POS__CONJUNCTION);
 		pairingFlags.put("konj.", Tuple.of(TKeys.POS, TValues.CONJUNCTION));
 		pairingFlags.put("skait.", TFeatures.POS__NUMERAL);
 		pairingFlags.put("daļu skait.", TFeatures.POS__FRACT_NUMERAL);
@@ -352,6 +354,7 @@ public class AbbrMap {
 		pairingFlags.put("inf.", Tuple.of(TKeys.DOMAIN, "Informātika"));
 		pairingFlags.put("jur.", Tuple.of(TKeys.DOMAIN, "Jurisprudence"));
 		pairingFlags.put("jūrn.", Tuple.of(TKeys.DOMAIN, "Jūrniecība"));
+		pairingFlags.put("jūrn. sl.", Tuple.of(TKeys.DOMAIN, "Jūrniecība"));
 		pairingFlags.put("jūr.", Tuple.of(TKeys.DOMAIN, "Jūrniecība"));
 		pairingFlags.put("kalnr.", Tuple.of(TKeys.DOMAIN, "Kalnrūpniecība"));
 		pairingFlags.put("kap.", Tuple.of(TKeys.DOMAIN, "Attiecas uz kapitālistisko iekārtu, kapitālistisko sabiedrību"));
@@ -465,6 +468,8 @@ public class AbbrMap {
 		pairingFlags.put("jap.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("jap. val.", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
 		pairingFlags.put("jap. val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("kirgīzu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
+		pairingFlags.put("kirgīzu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
 		pairingFlags.put("krievu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("kr.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
@@ -564,6 +569,9 @@ public class AbbrMap {
 		pairingFlags.put("nevēl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nevēlams")); // TODO - nevēlamos, neliterāros un žargonus apvienot??
 		pairingFlags.put("nelit.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Neliterārs"));
 		pairingFlags.put("žarg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Žargonvārds"));
+		pairingFlags.put("slengs", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
+		pairingFlags.put("sl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
+		pairingFlags.put("jūrn. sl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
 		pairingFlags.put("sar.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
 		pairingFlags.put("sarunv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
 		pairingFlags.put("vulg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Vulgārisms"));

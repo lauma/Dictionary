@@ -99,6 +99,7 @@ public class AbbrMap {
 		pairingFlags.put("interj.", Tuple.of(TKeys.POS, TValues.INTERJECTION));
 		pairingFlags.put("īp. v.", TFeatures.POS__ADJ);
 		pairingFlags.put("īp.", TFeatures.POS__ADJ);
+		pairingFlags.put("īp. v. ar not. galotni", TFeatures.POS__ADJ);
 		pairingFlags.put("izsauk.", Tuple.of(TKeys.POS, TValues.INTERJECTION));
 		pairingFlags.put("izsauksmes vārds", Tuple.of(TKeys.POS, TValues.INTERJECTION));
 		pairingFlags.put("lietv.", TFeatures.POS__NOUN);
@@ -174,6 +175,8 @@ public class AbbrMap {
 		pairingFlags.put("salikteņu daļa.", TFeatures.POS__PIECE);
 		pairingFlags.put("salikteņu daļa", TFeatures.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu daļa", TFeatures.POS__PIECE);
+		pairingFlags.put("salikteņos", TFeatures.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņos", TFeatures.POS__PIECE);
 
 		pairingFlags.put("vienojuma saikļa sastāvdaļa", TFeatures.POS__CONJUNCTION);
 		pairingFlags.put("vienojuma saikļa sastāvdaļa", Tuple.of(TKeys.POS, "Saikļa sastāvdaļa"));
@@ -616,6 +619,7 @@ public class AbbrMap {
 		pairingFlags.put("ar not. galotni", TFeatures.USED__DEFINITE);
 		pairingFlags.put("ar not. galotni.", TFeatures.USED__DEFINITE);
 		pairingFlags.put("ar noteikto galotni", TFeatures.USED__DEFINITE);
+		pairingFlags.put("īp. v. ar not. galotni", TFeatures.USED__DEFINITE);
 		pairingFlags.put("parasti ar not. galotni.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti ar not. galotni", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti ar noteikto galotni.", TFeatures.USUALLY_USED__DEFINITE);
@@ -660,6 +664,8 @@ public class AbbrMap {
 		pairingFlags.put("lietv. noz.", TFeatures.CONTAMINATION__NOUN);
 		pairingFlags.put("lietv. nozīmē", TFeatures.CONTAMINATION__NOUN);
 		pairingFlags.put("lietv. nozīmē.", TFeatures.CONTAMINATION__NOUN);
+		pairingFlags.put("īpašvārda nozīmē.", TFeatures.CONTAMINATION__NOUN);
+		pairingFlags.put("īpašvārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Īpašvārds"));
 		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.VERB));
 		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Palīgdarbības vārds"));
 		pairingFlags.put("adj. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));

@@ -111,6 +111,7 @@ public class OptHypernRules
 		FifthDecl.std("-elles, dsk. ģen. -eļļu, s.", ".*elle"), // elle
 		FifthDecl.std("-eņģes, dsk. ģen. -eņģu, s.", ".*eņģe"), // eņģe
 		FifthDecl.std("-epiķes, dsk. ģen. -epiķu", ".*epiķe"), // epiķe
+		FifthDecl.std("-ērces, dsk. ģen. -ērču, s.", ".*ērce"), // ērce
 		FifthDecl.std("-ēzes, dsk. ģen. -ēžu, s.", ".*ēze"), // ēze
 		FifthDecl.std("-halles, dsk. ģen. -haļļu, s.", ".*halle"), // halle
 		FifthDecl.std("-indes, dsk. ģen. -inžu, s.", ".*inde"), // inde
@@ -243,6 +244,8 @@ public class OptHypernRules
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
 		SecondDecl.std("-āža, v.", ".*āzis"), // āzis
 		SecondDecl.std("-ciļņa, v.", ".*cilnis"), // cilnis
+		SecondDecl.std("-eža, v.", ".*ezis"), // ezis
+		SecondDecl.std("-naža, v.", ".*nazis"), // ēveļnazis
 
 		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 

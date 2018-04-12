@@ -55,6 +55,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
+		WithAltLemma.nounPluralToSingularMascStd("-šu, vsk.", "sis, -ša, v.", "ši", 3), // gaiļpieši
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "tis, -ša, v.", "ši", 3), // čečenieši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "sis, -ša, v.", "ši", 3), // kvieši
@@ -108,6 +109,7 @@ public class AltLemmaRules
 
 		// 7. paradigma: 4. dekl.
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "a, -as, s.", "as", 7), // akvareļkrāsas
+		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ņa, -as, s.", "ņas", 7), // elementārdaļiņas
 		WithAltLemma.nounPluralToSingularFem("-u,", "a, -as, s.", "as", 7), // cukurviela
 		WithAltLemma.nounPluralToSingularFem("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.

@@ -359,6 +359,8 @@ public class DirectRules
 		// Paradigmas: 7, 8 - kopdzimtes lietvārdi, galotne -a
 		GenNoun.any("ģen. -as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // aitasgalva, aizmārša
+		GenNoun.any("ģen. -as, v. dat. -am, s. dat. -ai; kopdz.", ".*a", new Integer[]{7, 8}, null,
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // tiepša
 		GenNoun.any("-as, v. dat. -am, s. dat. -ai, kopdz.", ".*a", new Integer[]{7, 8}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // žūpa
 		GenNoun.any("kopdz.: dat. v. -am, s. -ai", ".*a", new Integer[]{7, 8}, null,
@@ -385,11 +387,14 @@ public class DirectRules
 	public static final EndingRule[] fifthDeclNoun = {
 		// Paradigmas: 9, 10 - kopdzimtes lietvārdi, galotne -
 		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -tu, kopdz.",
-				".*e", new Integer[]{44, 47}, null,
+				".*te", new Integer[]{44, 47}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // balamute
 		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -žu, kopdz.",
-				".*e", new Integer[]{9, 10}, null,
+				".*de", new Integer[]{9, 10}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}),// bende
+		GenNoun.any("ģen. -es, dat. -em, s. dat. -ei, dsk. ģen. -ču, kopdz.",
+				".*ce", new Integer[]{9, 10}, null,
+				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // ekselence
 
 		// Paradigma: 9 - sieviešu dzimte.
 		//FifthDecl.std("-es, dsk. ģen. -ķu, s.", ".*ķe"), //ciniķe
@@ -514,6 +519,7 @@ public class DirectRules
 		SecondDecl.std("-dža, v.", ".*dzis"), //algādzis
 		SecondDecl.std("-ļļa, v.", ".*llis"), // amarillis
 		SecondDecl.std("-ļņa, v.", ".*lnis"), // aizsargvalnis
+		SecondDecl.std("-ņņa, v.", ".*nnis"), // hunnis
 		SecondDecl.std("-mja, v.", ".*mis"), // aplamis
 		SecondDecl.std("-šķa, v.", ".*šķis"), // draišķis
 		SecondDecl.std("-šļa, v.", ".*slis"), // bauslis
@@ -598,6 +604,9 @@ public class DirectRules
 
 		// Daudzkaitlis, vīriešu dzimte
 		// Ar mijām
+		GenNoun.any("-ļu, v.", ".*ļi", new Integer[]{1, 2, 3, 4, 5},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC}), // akļi
 		GenNoun.any("-ņu, v.", ".*ņi", new Integer[]{1, 2, 3, 4, 5},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC}), // bretoņi

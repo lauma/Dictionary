@@ -38,6 +38,7 @@ import java.util.LinkedList;
  */
 public class TEntry extends Entry
 {
+	public final static String BLACKLIST_LOCATION = "saraksti/blacklist.txt";
 	/**
 	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
 	 * Skatīt arī inBlacklist().
@@ -141,7 +142,7 @@ public class TEntry extends Entry
 			// Blacklist file format - one word (lemma) per line.
 			input = new BufferedReader(
 					new InputStreamReader(
-					new FileInputStream("blacklist.txt"), "UTF-8"));
+					new FileInputStream(BLACKLIST_LOCATION), "UTF-8"));
 			String line;
 			while ((line = input.readLine()) != null)
 			{

@@ -10,7 +10,7 @@
   <property name="out" location="out"/>
   <property name="out.prod" location="out/production"/>
   <property name="testsamples" location="testpiem"/>
-  <property name="lib"   location="lib"/>
+  <property name="lib" location="lib"/>
 
   <path id="project.class.path">
     <fileset dir="lib">

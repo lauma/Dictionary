@@ -64,13 +64,14 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lis, -ļa, v.", "ļi", 3), // dzeguļi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "llis, -ļļa, v.", "ļļi", 3), // traļļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zis, -ža, v.", "ži", 3), // dzelži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -a, v.", "ri", 3), // klaķieri
-		WithAltLemma.nounPluralToSingularMascStd("-ru, vsk.", "ris, -a, v.", "ri", 3), // dzimumdziedzeri
+		WithAltLemma.nounPluralToSingularMascStd("-ru, vsk.", "ris, -ra, v.", "ri", 3), // dzimumdziedzeri
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 
@@ -116,6 +117,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
 		WithAltLemma.nounPluralToSingularFem("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
 		WithAltLemma.nounPluralToSingularFem("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
+		WithAltLemma.nounPluralToSingularFem("-ču, vsk.", "ce, -es, s.", "ces", 9), // mūsmājniece
 		WithAltLemma.nounPluralToSingularFem("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
 		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
@@ -128,6 +130,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
+		WithAltLemma.nounPluralToSingularFem("-utu, vsk.", "uts, -uts, s.", "utis", 35), // dūrējuts
 
 		//	Neviennozīmīgie likumi.
 	};

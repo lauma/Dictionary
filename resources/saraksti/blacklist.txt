@@ -7,3 +7,5 @@ biju
 eima
 eita
 esam
+esi
+esmu

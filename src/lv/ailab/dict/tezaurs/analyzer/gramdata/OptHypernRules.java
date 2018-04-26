@@ -69,17 +69,6 @@ public class OptHypernRules
 	 * Pārējie likumi, kas neatbilst citām grupām.
 	 */
 	public static final EndingRule[] other = {
-		VerbDoubleRule.of("tagadnes formas nelieto, pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
-				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
-						TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NO_PRESENT)}), // pabut
-		VerbDoubleRule.of("parasti pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
-				"būt", 29,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
-						TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)}), // pārbūt
-
 
 		// 25. paradigma: vietniekvārdi.
 		//BaseRule.of("ģen. -kā, dat. -kam, akuz., instr. -ko", ".*kas", 25,
@@ -119,6 +108,7 @@ public class OptHypernRules
 		FifthDecl.std("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
 		FifthDecl.std("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
 		FifthDecl.std("-lodes, dsk. ģen. -ložu, s.", ".*lode"), // deglode
+		FifthDecl.std("-mēres, dsk. ģen. -mēru, s.", ".*mēre"), // mēre
 		FifthDecl.std("-ores, dsk. ģen. -oru, s.", ".*ore"), // ore
 		FifthDecl.std("-resnes, dsk. ģen. -rešņu, s.", ".*resne"), // resne
 		FifthDecl.std("-teces, dsk. ģen. -teču, s.", ".*tece"), // tece
@@ -184,6 +174,7 @@ public class OptHypernRules
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls
 		SixthDecl.std("-silkss, dsk. ģen. -silkšu, s.", ".*silkss"), // silkss
 		SixthDecl.std("-sirds, dsk. ģen. -siržu, s.", ".*sirds"), // sirds
+		SixthDecl.std("-smilts, dsk. ģen. -smilšu, s.", ".*smilts"), // viedsmilts
 		SixthDecl.std("-skansts, dsk. ģen. -skanšu, s.", ".*skansts"), // skansts
 		SixthDecl.std("-skrots, dsk. ģen. -skrošu, s.", ".*skrots"), // skrots
 		SixthDecl.std("-spelts, dsk. ģen. -spelšu, s.", ".*spelts"), // spelts
@@ -192,10 +183,13 @@ public class OptHypernRules
 		SixthDecl.std("-tāss, dsk. ģen. -tāšu, s.", ".*tāss"), // tāss
 		SixthDecl.std("-telts, dsk. ģen. -telšu, s.", ".*telts"), // telts
 		SixthDecl.std("-uguns, dsk. ģen. -uguņu, s.", ".*uguns"), // jāņuguns
+		SixthDecl.std("-vants, dsk. ģen. -vanšu, s.", ".*vants"), // vants
 		SixthDecl.std("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
+		SixthDecl.std("-zints, dsk. ģen. -zinšu, s.", ".*zints"), // zints
 		SixthDecl.std("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
 
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls 2
+		SixthDecl.std("-grants, s.", ".*grants"), // grants
 		SixthDecl.std("-sāls, s.", ".*sāls"), // gabalsāls 2
 
 		// Bez mijām
@@ -223,6 +217,7 @@ public class OptHypernRules
 
 		GenNoun.any("-asiņu, s.", ".*asinis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // asinis
+
 	};
 
 	/**
@@ -230,12 +225,14 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-uguns, dsk. -uguņi, v.", ".*uguns"), // uguns 2
 		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
+		SecondDecl.stdNomGen("-sāls, dsk. -sāļi, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
 		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
 		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
 		SecondDecl.stdNomGen("-mēness, v.", ".*mēness"), // mēness, pilnmēness
-		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // glaubersāls
+		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // gabalsāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 		SecondDecl.stdNomGen("-debess, v.", ".*debess"), // debess 2
 
@@ -246,6 +243,7 @@ public class OptHypernRules
 		SecondDecl.std("-ciļņa, v.", ".*cilnis"), // cilnis
 		SecondDecl.std("-eža, v.", ".*ezis"), // ezis
 		SecondDecl.std("-naža, v.", ".*nazis"), // ēveļnazis
+		SecondDecl.std("-vižņa, v.", ".*viznis"), // viznis
 
 		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 

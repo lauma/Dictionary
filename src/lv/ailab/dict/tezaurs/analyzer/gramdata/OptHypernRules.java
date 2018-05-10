@@ -190,6 +190,7 @@ public class OptHypernRules
 
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls 2
 		SixthDecl.std("-grants, s.", ".*grants"), // grants
+		SixthDecl.std("-ģikts, s.", ".*ģikts"), // ģikts // TODO check!
 		SixthDecl.std("-sāls, s.", ".*sāls"), // gabalsāls 2
 
 		// Bez mijām

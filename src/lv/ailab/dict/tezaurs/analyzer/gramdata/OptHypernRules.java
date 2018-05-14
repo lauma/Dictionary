@@ -104,6 +104,7 @@ public class OptHypernRules
 		FifthDecl.std("-ēzes, dsk. ģen. -ēžu, s.", ".*ēze"), // ēze
 		FifthDecl.std("-halles, dsk. ģen. -haļļu, s.", ".*halle"), // halle
 		FifthDecl.std("-indes, dsk. ģen. -inžu, s.", ".*inde"), // inde
+		FifthDecl.std("dsk. ģen. -īvju, s.", ".*īve"), // īve
 		FifthDecl.std("-īzes, dsk. ģen. -īžu, s.", ".*īze"), // īze
 		FifthDecl.std("-ķelles, dsk. ģen. -ķeļļu, s.", ".*ķelle"), // ķelle
 		FifthDecl.std("-ķemmes, dsk. ģen. -ķemmju, s.", ".*ķemme"), // ķemme
@@ -144,6 +145,7 @@ public class OptHypernRules
 		SixthDecl.std("-govs, dsk. ģen. -govju, s.", ".*govs"), //govs
 		SixthDecl.std("-grunts, dsk. ģen. -grunšu, s.", ".*grunts"), //grunts
 		SixthDecl.std("-guns, dsk. ģen. -guņu", ".*guns"), //guns
+		SixthDecl.std("dsk. ģen. -ģinšu", ".*ģints"), //ģints
 		SixthDecl.std("-igvāts, dsk. ģen. -igvāšu, s.", ".*igvāts"), //igvāts
 		SixthDecl.std("-ilkss, dsk. ģen. -ilkšu, s.", ".*ilkss"), //ilkss
 		SixthDecl.std("-izkapts, dsk. ģen. -izkapšu, s.", ".*izkapts"), //izkapts

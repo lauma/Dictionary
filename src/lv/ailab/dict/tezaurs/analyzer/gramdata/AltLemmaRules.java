@@ -122,6 +122,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
+		WithAltLemma.nounPluralToSingularFem("-džu, vsk.", "dze, -es, s.", "dzes", 9), // izredzes
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		// paradigma: 5. dekl. bez mijas
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute

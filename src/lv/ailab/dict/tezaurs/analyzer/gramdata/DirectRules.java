@@ -132,8 +132,9 @@ public class DirectRules
 
 		// Paradigma 42: -is/-usi
 		Participle.isUsi("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
+		Participle.isUsi("-kušais; s. -kusi, -kusī", ".*cis"), // jauniznācis
 		Participle.isUsi("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
-		Participle.isUsi("-ušais, s. -usi, -usī", ".*[djt]is"), // caurkritis
+		Participle.isUsi("-ušais, s. -usi, -usī", ".*[bdjt]is"), // caurkritis
 		// Paradigma 43: -ies/-usies
 		BaseRule.of("s. -usies", ".*ies", 43,
 				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies
@@ -165,13 +166,16 @@ public class DirectRules
 						SimpleSubRule.of(".*tais", new Integer[] {30},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ušais", new Integer[] {30},
-								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_POS}),
+								new Tuple[]{TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN}),
 						SimpleSubRule.of(".*[aā]mais", new Integer[] {30},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.CONTAMINATION__NOUN, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*([^tšm]|[^aā]m|[^u]š)ais", new Integer[] {30},
 								new Tuple[]{TFeatures.POS__ADJ, TFeatures.CONTAMINATION__NOUN})},
 				new Tuple[]{TFeatures.GENDER__MASC}),
 			//pirmdzimtais, ieslodzītais, cietušais, brīvprātīgais, mīļākais, sirmais, svešais
+		BaseRule.of("-šā, v.", ".*ušais", 30,
+				new Tuple[]{TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN},
+				new Tuple[]{TFeatures.GENDER__MASC}), // iereibušais
 
 		// 34 paradigma: Atgriezeniskie lietvārdi -šanās
 		// 40 paradigma: Siev. dz. ar not. galotni
@@ -260,6 +264,8 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__MASC}), // nekāds
 		BaseRule.of("vispārin. vietn. -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikkurš, ikkatrs
+		BaseRule.of("vispārin. vietn., -a; v.", ".*[sš]", 25,
+				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikviens
 
 		BaseRule.of("vietn., -as, s.", ".*a", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM}), // ref: šāda, jebkāda
@@ -429,6 +435,7 @@ public class DirectRules
 		//FifthDecl.std("-es, dsk. ģen. -ķu, s.", ".*ķe"), //ciniķe
 
 		// Standartizētie
+		FifthDecl.std("dsk. ģen. -ču, s.", ".*[cč]e"), //ietece
 		FifthDecl.std("-es, dsk. ģen. -ču, s.", ".*[cč]e"), //ābece, veče
 		FifthDecl.std("ģen. -es, dat. -ei, dsk. ģen. -ču, s.", ".*[cč]e"), //eminence
 		FifthDecl.std("-es, dsk. ģen. -ģu, s.", ".*[ģ]e"), //aeroloģe
@@ -440,6 +447,7 @@ public class DirectRules
 		FifthDecl.std("dsk. ģen. -ru, s.", ".*re"), // aizsargcepure
 		FifthDecl.std("-es, dsk. ģen. -šu, s.", ".*[sšt]e"), //abate, adrese, larkše, apokalipse, note
 		FifthDecl.std("-es, dsk. ģen. -žu, s.", ".*[dz]e"), //ābolmaize, aģitbrigāde, bilde, pirolīze
+		FifthDecl.std("dsk. ģen. -žu, s.", ".*[dz]e"), //izklaide
 
 		FifthDecl.std("-es, dsk. ģen. -bju, s.", ".*be"), //apdobe
 		FifthDecl.std("-es, dsk. ģen. -džu, s.", ".*dze"), //kāršaudze
@@ -447,12 +455,12 @@ public class DirectRules
 		FifthDecl.std("-es, dsk. ģen. -ļļu, s.", ".*lle"), //zaļumballe
 		FifthDecl.std("-es, dsk. ģen. -ļņu, s.", ".*lne"), //nokalne
 		FifthDecl.std("-es, dsk. ģen. -mju, s.", ".*me"), //agronome, krustamzīme
-		//FifthDecl.std("-es, dsk. ģen. -pju, s.", ".*pe"), //bērzlape, filantrope
 		FifthDecl.std("-es, dsk. ģen. -smju, s.", ".*sme"), //noslieksme
 		FifthDecl.std("-es, dsk. ģen. -šņu, s.", ".*sne"), //izloksne, aizkrāsne
 		FifthDecl.std("dsk. ģen. -šņu, s.", ".*sne"), //apaļkoksne
 		FifthDecl.std("-es, dsk. ģen. -šķu, s.", ".*šķe"), //draišķe
 		FifthDecl.std("-es, dsk. ģen. -šļu, s.", ".*sle"), //gaisagrābsle
+		FifthDecl.std("dsk. ģen. -vju, s.", ".*ve"), //ieskrietuve
 		FifthDecl.std("-es, dsk. ģen. -vju, s.", ".*ve"), //agave, aizstāve
 		FifthDecl.std("-es, dsk. ģen. -žņu, s.", ".*zne"), //asteszvaigzne
 

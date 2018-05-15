@@ -55,6 +55,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
+		WithAltLemma.nounPluralToSingularMascStd("-pji, vsk.", "pis, -pja, v.", "pji", 3), // krampji
 		WithAltLemma.nounPluralToSingularMascStd("-šu, vsk.", "sis, -ša, v.", "ši", 3), // gaiļpieši
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "tis, -ša, v.", "ši", 3), // čečenieši
@@ -65,8 +66,10 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lis, -ļa, v.", "ļi", 3), // dzeguļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "llis, -ļļa, v.", "ļļi", 3), // traļļi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // kapilārviļņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "slis, -šļa, v.", "šļi", 3), // krāšļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zis, -ža, v.", "ži", 3), // dzelži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
@@ -115,14 +118,17 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("vsk.", "a", "as", 7), // angiospermas
 		// 9. paradigma: 5. dekl.
 		WithAltLemma.nounPluralToSingularFem("-bju, vsk.", "be, -es, s.", "bes", 9), // aminoskābes
+		WithAltLemma.nounPluralToSingularFem("-džu, vsk.", "dze, -es, s.", "dzes", 9), // izredzes
 		WithAltLemma.nounPluralToSingularFem("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
 		WithAltLemma.nounPluralToSingularFem("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
 		WithAltLemma.nounPluralToSingularFem("-ču, vsk.", "ce, -es, s.", "ces", 9), // mūsmājniece
 		WithAltLemma.nounPluralToSingularFem("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
 		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
+		WithAltLemma.nounPluralToSingularFem("-pju, vsk.", "pe, -es, s.", "pes", 9), // kotedžtulpes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
-		WithAltLemma.nounPluralToSingularFem("-džu, vsk.", "dze, -es, s.", "dzes", 9), // izredzes
+		WithAltLemma.nounPluralToSingularFem("-vju, vsk.", "ve, -es, s.", "ves", 9), // klauves
+		WithAltLemma.nounPluralToSingularFem("-žu, vsk.", "ze, -es, s.", "zes", 9), // kolagenoze
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		// paradigma: 5. dekl. bez mijas
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute
@@ -202,7 +208,12 @@ public class AltLemmaRules
 					3, "ā", new Integer[] {40},
 					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ})
 		}), // agrākais, aiznākošais, aiznākamais, beidzamais, visupirmais, pēdējais aizkomentētie vārdnīcā nav sastopami.
-
+		AltEndingRule.of("s. izgāšā", new StemSlotSubRule[]{
+					StemSlotSubRule.of(".*izgāšais", new Integer[] {30},
+							new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
+							"izgāšais".length(), "izgāšā", new Integer[] {40},
+							new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ}),
+			}), // izgāšais
 	};
 
 }

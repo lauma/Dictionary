@@ -146,11 +146,18 @@ public class DirectRules
 						SimpleSubRule.of(".*ts", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_TS}),
 						SimpleSubRule.of(".*[aā]ms", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_AMS}),},
 				new Tuple[]{TFeatures.CONTAMINATION__ADJECTIVE}), // maskējošs, mazaizsargāts, nezināms, vienreizlietojams
+		BaseRule.of("-ais; s. -a, -ā; divd. īp. nozīmē", new SimpleSubRule[]{
+						SimpleSubRule.of(".*ošs", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_OSS}),
+						SimpleSubRule.of(".*ts", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_TS}),
+						SimpleSubRule.of(".*[aā]ms", new Integer[]{13}, new Tuple[]{TFeatures.POS__PARTICIPLE, TFeatures.POS__PARTICIPLE_AMS}),},
+				new Tuple[]{TFeatures.CONTAMINATION__ADJECTIVE}), // tiesībsargājošs
+		Adjective.std("-ais; s. -a, -ā; īp. v."), // sovjetisks
+		Adjective.std("-ais; s. -a, -ā; īp."), // albīns
 		MultiPos.adjectiveParticiple("-ais; s. -a, -ā"), // abējāds, acains, agāms
-		MultiPos.adjectiveParticiple("-ais; s. -a; -ā"), // aloģisks
-		MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
-		MultiPos.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
-		MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
+		//MultiPos.adjectiveParticiple("-ais; s. -a; -ā"), // aloģisks
+		//MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
+		//MultiPos.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
+		//MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*oši", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*ti", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE, TFeatures.UNCLEAR_POS}),
@@ -1055,7 +1062,7 @@ public class DirectRules
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS,
 							Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS)}), //konstituēties*/
 		SecondConj.reflPlural(
-				"-ējamies, -ējaties, -ējas, pag. -ējāmies vai vsk. 3. pers., -ējas, pag. -ējās",
+				"-ējamies, -ējaties, -ējas, pag. -ējāmies, vai vsk. 3. pers. -ējas, pag. -ējās",
 				"ēties"), // konstituēties
 		SecondConj.reflPlural(
 				"-ojamies, -ojaties, -ojas, pag. -ojāmies vai vsk. 3. pers., -ojas, pag. -ojās",

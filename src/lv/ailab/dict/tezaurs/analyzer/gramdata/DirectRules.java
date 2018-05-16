@@ -568,6 +568,7 @@ public class DirectRules
 
 		SecondDecl.std("-bja, v.", ".*bis"), //aizsargdambis
 		SecondDecl.std("-dža, v.", ".*dzis"), //algādzis
+		SecondDecl.std("-kļa, v.", ".*klis"), // krīklis
 		SecondDecl.std("-ļļa, v.", ".*llis"), // amarillis
 		SecondDecl.std("-ļņa, v.", ".*lnis"), // aizsargvalnis
 		SecondDecl.std("-ņņa, v.", ".*nnis"), // hunnis

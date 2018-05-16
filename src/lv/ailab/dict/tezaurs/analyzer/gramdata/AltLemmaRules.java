@@ -70,11 +70,13 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "slis, -šļa, v.", "šļi", 3), // krāšļi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "snis, -šņa, v.", "šņi", 3), // kušņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zis, -ža, v.", "ži", 3), // dzelži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -a, v.", "ri", 3), // klaķieri
 		WithAltLemma.nounPluralToSingularMascStd("-ru, vsk.", "ris, -ra, v.", "ri", 3), // dzimumdziedzeri
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -ra, v.", "ri", 3), // kultūrtrēģeri
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 

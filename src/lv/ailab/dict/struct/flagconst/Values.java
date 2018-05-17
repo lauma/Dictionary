@@ -43,6 +43,7 @@ public class Values
 
 	//=== Citi =================================================================
 	public final static String NON_INFLECTIVE = "Nelokāms vārds";
+	public final static String MULTI_INFLECTIVE = "Vairākos punktos lokāms saliktenis";
 
 	//=== 1. konjugācijas informācijas kodēšanai ===============================
 	public final static String STEMS_ARE_ORDERED = "Pēdējie celmi lietojami retāk";

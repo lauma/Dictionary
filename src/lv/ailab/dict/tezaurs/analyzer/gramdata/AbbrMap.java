@@ -652,10 +652,14 @@ public class AbbrMap {
 		pairingFlags.put("parasti saliktajos laikos.", TFeatures.POS__VERB);
 		pairingFlags.put("parasti nenoteiksmē", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
 		pairingFlags.put("parasti nenoteiksmē", TFeatures.POS__VERB);
+		pairingFlags.put("nenoteiksmes formā", Tuple.of(TKeys.USED_IN_FORM, TValues.INFINITIVE));
+		pairingFlags.put("nenoteiksmes formā", TFeatures.POS__VERB);
 		pairingFlags.put("parasti pavēles formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā", TFeatures.POS__VERB);
 		pairingFlags.put("parasti pavēles formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā.", TFeatures.POS__VERB);
+		pairingFlags.put("parasti pavēles izteiksmē", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
+		pairingFlags.put("parasti pavēles izteiksmē", TFeatures.POS__VERB);
 		pairingFlags.put("pavēles izteiksmē", Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("pavēles izteiksmē", TFeatures.POS__VERB);
 		pairingFlags.put("ar nenot. galotni", TFeatures.USED__INDEFINITE);
@@ -748,6 +752,7 @@ public class AbbrMap {
 		pairingFlags.put("part. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 		pairingFlags.put("partikulas nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 		pairingFlags.put("modāla vārda nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
+		pairingFlags.put("modāla vārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 
 		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));

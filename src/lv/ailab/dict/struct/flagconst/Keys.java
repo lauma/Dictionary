@@ -69,4 +69,10 @@ public class Keys
 	 * vārda sākumdaļa, kas nelokās.
 	 */
 	public final static String VERB_PREFIX = "Darbības vārda prefikss";
+
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
+	 * Vairākās vietās lokāmo salikteņu (vecāmāte, šīsaule) locīšanas šablons.
+	 */
+	public final static String MULTIINFLECTION_PATTERN = "Šablons salikteņa vairākpunktu locīšanai";
 }

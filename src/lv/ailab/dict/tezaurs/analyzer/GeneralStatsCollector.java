@@ -476,6 +476,12 @@ public class GeneralStatsCollector
 				inflFlags.add(TValues.PLURAL);
 			if (entry.head.gram.flags.test(TFeatures.USED_ONLY__SINGULAR))
 				inflFlags.add(TValues.SINGULAR);
+			if (entry.head.gram.flags.test(TFeatures.MULTI_INFLECTIVE))
+				inflFlags.add(TValues.MULTI_INFLECTIVE);
+			if (entry.head.gram.flags.testKey(TKeys.MULTIINFLECTION_PATTERN))
+				inflFlags.add(TKeys.MULTIINFLECTION_PATTERN + "=" +
+						entry.head.gram.flags.getAll(TKeys.MULTIINFLECTION_PATTERN).stream()
+								.reduce((a, b) -> a + "|" + b).orElse("\"\""));
 
 			if (inflFlags.isEmpty())line.append("NULL");
 			else line.append(String.join(",", inflFlags));

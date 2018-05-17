@@ -124,6 +124,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
 		WithAltLemma.nounPluralToSingularFem("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
 		WithAltLemma.nounPluralToSingularFem("-ču, vsk.", "ce, -es, s.", "ces", 9), // mūsmājniece
+		WithAltLemma.nounPluralToSingularFem("-ķu, vsk.", "ķe, -es, s.", "ķes", 9), // laimespuķe
 		WithAltLemma.nounPluralToSingularFem("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
 		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes
 		WithAltLemma.nounPluralToSingularFem("-pju, vsk.", "pe, -es, s.", "pes", 9), // kotedžtulpes

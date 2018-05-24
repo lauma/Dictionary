@@ -55,7 +55,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "nis, -ņa, v.", "ņi", 3), // aizvirtņi
 		WithAltLemma.nounPluralToSingularMascStd("-ņu, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // starpviļņi
-		WithAltLemma.nounPluralToSingularMascStd("-pji, vsk.", "pis, -pja, v.", "pji", 3), // krampji
+		WithAltLemma.nounPluralToSingularMascStd("-pju, vsk.", "pis, -pja, v.", "pji", 3), // krampji
 		WithAltLemma.nounPluralToSingularMascStd("-šu, vsk.", "sis, -ša, v.", "ši", 3), // gaiļpieši
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "lis, -ļa, v.", "ļi", 3), // asinsbrālis
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "tis, -ša, v.", "ši", 3), // čečenieši
@@ -81,7 +81,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 
 		// 1. paradigma: 1. dekl., s
-		WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
+		//WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "bs, -a, v.", "bi", 1), // būvdarbi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ds, -a, v.", "di", 1), // aizsargcimdi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "gs, -a, v.", "gi", 1), // bišaugi
@@ -99,6 +99,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "gs, -a, v.", "gi", 1), // balstaugi
 		// 2. paradigma: 1. dekl., š
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š, -a, v.", "i", 2), // cekuliņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ņš, -ņa, v.", "i", 2), // ļautiņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 2), // aizsargstabiņi
 
 		// 30. paradigma: noteiktā galotne.
@@ -124,6 +125,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-ļļu, vsk.", "lle, -es, s.", "lles", 9), // dilles
 		WithAltLemma.nounPluralToSingularFem("-mju, vsk.", "me, -es, s.", "mes", 9), // dienvidzemes
 		WithAltLemma.nounPluralToSingularFem("-ču, vsk.", "ce, -es, s.", "ces", 9), // mūsmājniece
+		WithAltLemma.nounPluralToSingularFem("-ģu, vsk.", "ģe, -es, s.", "ģes", 9), // luģe
 		WithAltLemma.nounPluralToSingularFem("-ķu, vsk.", "ķe, -es, s.", "ķes", 9), // laimespuķe
 		WithAltLemma.nounPluralToSingularFem("-ļu, vsk.", "le, -es, s.", "les", 9), // ābeles, akmeņogles
 		WithAltLemma.nounPluralToSingularFem("-ņu, vsk.", "ne, -es, s.", "nes", 9), // blusenes

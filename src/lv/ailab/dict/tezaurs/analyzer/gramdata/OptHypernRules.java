@@ -125,6 +125,9 @@ public class OptHypernRules
 		// Vīriešu dzimte
 		GenNoun.any("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 47,
 				null, new Tuple[]{TFeatures.GENDER__MASC}), // tēte
+
+		GenNoun.any("-kreļļu, s.", ".*krelles", 9,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // krelles
 	};
 
 	/**
@@ -186,6 +189,7 @@ public class OptHypernRules
 		SixthDecl.std("-telts, dsk. ģen. -telšu, s.", ".*telts"), // telts
 		SixthDecl.std("-uguns, dsk. ģen. -uguņu, s.", ".*uguns"), // jāņuguns
 		SixthDecl.std("-vants, dsk. ģen. -vanšu, s.", ".*vants"), // vants
+		SixthDecl.std("-vakts, dsk. ģen. -vakšu, s.", ".*vakts"), //vakts
 		SixthDecl.std("-vāts, dsk. ģen. -vāšu, s.", ".*vāts"), // vāts
 		SixthDecl.std("-zints, dsk. ģen. -zinšu, s.", ".*zints"), // zints
 		SixthDecl.std("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
@@ -194,6 +198,7 @@ public class OptHypernRules
 		SixthDecl.std("-grants, s.", ".*grants"), // grants
 		SixthDecl.std("-ģikts, s.", ".*ģikts"), // ģikts // TODO check!
 		SixthDecl.std("-sāls, s.", ".*sāls"), // gabalsāls 2
+		SixthDecl.std("-smilts, s.", ".*smilts"), // mālsmilts
 		SixthDecl.std("-uguns, s.", ".*uguns"), // uguns
 
 		// Bez mijām
@@ -211,7 +216,6 @@ public class OptHypernRules
 		SixthDecl.noChange("-takts, dsk. ģen. -taktu, s.", ".*takts"), // pietakts
 		SixthDecl.noChange("-uts, dsk. ģen. -utu, s.", ".*uts"), // uts
 		SixthDecl.noChange("-valsts, dsk. ģen. -valstu, s.", ".*valsts"), //agrārvalsts
-		SixthDecl.noChange("-vakts, dsk. ģen. -vakšu, s.", ".*vakts"), //vakts
 		SixthDecl.noChange("-versts, dsk. ģen. -verstu, s.", ".*versts"), // kvadrātversts
 		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
 		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
@@ -223,6 +227,11 @@ public class OptHypernRules
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // asinis
 		GenNoun.any("-durvju, s.", ".*durvis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // kūtsdurvis
+
+		GenNoun.any("-īkstu, s.", ".*īkstis", 35,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // īkstis
+		GenNoun.any("-utu, s.", ".*utis", 35,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // grauzējutis
 
 	};
 

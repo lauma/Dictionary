@@ -470,7 +470,8 @@ public class DirectRules
 				".*te", new Integer[]{44, 47}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // balamute
 
-		GenNoun.any("ģen. -es, dat. -em, s. dat. -ei, dsk. ģen. -ču, kopdz.",
+			//ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -ču, kopdz.
+		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -ču, kopdz.",
 				".*ce", new Integer[]{9, 10}, null,
 				new Tuple[]{Tuple.of(TKeys.GENDER, TValues.COGENDER)}), // ekselence
 		GenNoun.any("ģen. -es, v. dat. -em, s. dat. -ei, dsk. ģen. -ru, kopdz.",

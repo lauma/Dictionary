@@ -50,6 +50,7 @@ public class AltLemmaRules
 		//AltFullLemmaRule.nounPluralToSingularMascStd("-ņu, vsk.", "ņš, -ņa, v.", "ņi", 2), // dižtauriņi
 		// 3. paradigma: Lietvārds 2. deklinācija -is
 			//-ju, vsk. daudzkājis, -ja, v.
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "sāls, -sāls, v.", "sāļi", 4), // minerālsāļi
 		WithAltLemma.nounPluralToSingularMascStd("-ju, vsk.", "jis, -ja, v.", "ji", 3), // daudzkāji
 		WithAltLemma.nounPluralToSingularMascStd("-ju, vsk.", "jis, -a, v.", "ji", 3), // desmitkāji
 		WithAltLemma.nounPluralToSingularMascStd("-ļu, vsk.", "lis, -ļa, v.", "ļi", 3), // budēļi

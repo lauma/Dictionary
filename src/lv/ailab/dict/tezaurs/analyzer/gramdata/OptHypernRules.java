@@ -225,6 +225,8 @@ public class OptHypernRules
 
 		GenNoun.any("-asiņu, s.", ".*asinis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // asinis
+		GenNoun.any("-blakšu, s.", ".*blaktis", 11,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // mīkstblaktis
 		GenNoun.any("-durvju, s.", ".*durvis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // kūtsdurvis
 

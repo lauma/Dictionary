@@ -12,3 +12,5 @@ esmu
 ir
 iraid
 jābūt
+nav
+nava

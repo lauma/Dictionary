@@ -66,6 +66,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -ja, v.", "ji", 3), // airkāji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ķis, -ķa, v.", "ķi", 3), // ašķi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lis, -ļa, v.", "ļi", 3), // dzeguļi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "dzis, -dža, v.", "dži", 3), // nepārnadži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "llis, -ļļa, v.", "ļļi", 3), // traļļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // kapilārviļņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi

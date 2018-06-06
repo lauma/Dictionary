@@ -306,11 +306,11 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.POS__DEM_PRONOUN, TFeatures.GENDER__MASC}), // tāds
 		BaseRule.of("-a, v.; pieder. vietn.", ".*s", 25,
 				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__MASC}), // tavs, savs
-		BaseRule.of("noliedz. vietn. -a, v.", ".*s", 25,
-				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__MASC}), // nekāds
+		BaseRule.of("noliedz. vietn., -a, v.", ".*s", 25,
+				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__MASC}), // nekāds, neviens
 		BaseRule.of("vispārin. vietn. -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikkurš, ikkatrs
-		BaseRule.of("vispārin. vietn., -a; v.", ".*[sš]", 25,
+		BaseRule.of("vispārin. vietn., -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikviens
 
 		BaseRule.of("vietn., -as, s.", ".*a", 25,
@@ -568,7 +568,11 @@ public class DirectRules
 				SimpleSubRule.of(".*les", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*le", 9, null)},
 			new Tuple[]{TFeatures.GENDER__FEM}), //bailes, abisāle
-
+		GenNoun.any("-šņu, s.", new SimpleSubRule[]{
+				//SimpleSubRule.of(".*snis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				SimpleSubRule.of(".*snes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
+				/*SimpleSubRule.of(".*sne", 9, null)*/},
+				new Tuple[]{TFeatures.GENDER__FEM}), // nogulsnes
 		GenNoun.any("-ru, s.", new SimpleSubRule[]{
 				SimpleSubRule.of(".*res", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*re", 9, null)},

@@ -220,6 +220,8 @@ public class OptHypernRules
 		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
 		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
+		SixthDecl.noChange("-valsts, s.", ".*valsts"), // padomjvalsts
+
 		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
 		SixthDecl.optChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
 
@@ -229,6 +231,8 @@ public class OptHypernRules
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // mīkstblaktis
 		GenNoun.any("-durvju, s.", ".*durvis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // kūtsdurvis
+		GenNoun.any("-krūšu, s.", ".*krūtis", 11,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // pakaļkrūtis
 
 		GenNoun.any("-īkstu, s.", ".*īkstis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // īkstis
@@ -242,6 +246,7 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-debess, dsk. -debeši, v.", ".*debess"), // padebess
 		SecondDecl.stdNomGen("-uguns, dsk. -uguņi, v.", ".*uguns"), // uguns 2
 		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
 		SecondDecl.stdNomGen("-sāls, dsk. -sāļi, v.", ".*sāls"), // glaubersāls

@@ -117,6 +117,8 @@ public class OptHypernRules
 		FifthDecl.std("-usnes, dsk. ģen. -ušņu, s.", ".*usne"), // usne
 		FifthDecl.std("-vātes, dsk. ģen. -vāšu, s.", ".*vāte"), // vāte
 		FifthDecl.std("-zīmes, dsk. ģen. -zīmju, s.", ".*zīme"), // biedruzīme
+
+		FifthDecl.std("-ēdes, s.", ".*ēde"), // pienēde
 		// Bez mijām
 		FifthDecl.noChange("-astes, dsk. ģen. -astu, s.", ".*aste"), // ragaste
 		FifthDecl.noChange("-balles, dsk. ģen. -ballu, s.", ".*balle"), //balle 2
@@ -198,6 +200,7 @@ public class OptHypernRules
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls 2
 		SixthDecl.std("-grants, s.", ".*grants"), // grants
 		SixthDecl.std("-ģikts, s.", ".*ģikts"), // ģikts // TODO check!
+		SixthDecl.std("-nakts, s.", ".*nakts"), // pastarnakts
 		SixthDecl.std("-sāls, s.", ".*sāls"), // gabalsāls 2
 		SixthDecl.std("-smilts, s.", ".*smilts"), // mālsmilts
 		SixthDecl.std("-uguns, s.", ".*uguns"), // uguns
@@ -246,19 +249,21 @@ public class OptHypernRules
 	 */
 	public static final EndingRule[] secondDeclNoun = {
 		SecondDecl.stdNomGen("-akmens, dsk. -akmeņi, v.", ".*akmens"), // akmens
+		SecondDecl.stdNomGen("-asmens, dsk. -asmeņi, v.", ".*asmens"), // asmens, pārasmens
 		SecondDecl.stdNomGen("-debess, dsk. -debeši, v.", ".*debess"), // padebess
+		SecondDecl.stdNomGen("-rudens, dsk. -rudeņi, v.", ".*rudens"), // parudens
+		SecondDecl.stdNomGen("-sāls, dsk. -sāļi, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-uguns, dsk. -uguņi, v.", ".*uguns"), // uguns 2
 		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
-		SecondDecl.stdNomGen("-sāls, dsk. -sāļi, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
-		SecondDecl.stdNomGen("-asmens, v.", ".*asmens"), // asmens
 		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
 		SecondDecl.stdNomGen("-mēness, v.", ".*mēness"), // mēness, pilnmēness
 		SecondDecl.stdNomGen("-sāls, v.", ".*sāls"), // gabalsāls
 		SecondDecl.stdNomGen("-ūdens, v.", ".*ūdens"), // amonjakūdens
 		SecondDecl.stdNomGen("-debess, v.", ".*debess"), // debess 2
 
-		SecondDecl.std("-āķa, v.", ".*āķis"), // ākis
+		SecondDecl.std("-ača, v.", ".*acis"), // pieacis
+		SecondDecl.std("-āķa, v.", ".*āķis"), // āķis
 		SecondDecl.std("-aļņa, v.", ".*alnis"), // alnis
 		SecondDecl.std("-āmja, v.", ".*āmis"), // āmis
 		SecondDecl.std("-āža, v.", ".*āzis"), // āzis

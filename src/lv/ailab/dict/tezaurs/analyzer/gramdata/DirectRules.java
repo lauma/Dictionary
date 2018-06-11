@@ -175,8 +175,9 @@ public class DirectRules
 		Participle.isUsi("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
 		Participle.isUsi("-ušais, s. -usi, -usī", ".*[bdjt]is"), // caurkritis
 		// Paradigma 43: -ies/-usies
-		BaseRule.of("s. -usies", ".*ies", 43,
-				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies
+		Participle.iesUsies("s. -usies", ".*ies"), // izdevies, pusapģērbies
+		//BaseRule.of("s. -usies", ".*ies", 43,
+		//		new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null), // izdevies
 
 		// Paradigmas: 13, 14 - īpašības vārdi vai divdabji
 		Participle.tsTa("-ais; s. -a, -ā, divd. īp. v. nozīmē", ".*ts"), // nerafinēts

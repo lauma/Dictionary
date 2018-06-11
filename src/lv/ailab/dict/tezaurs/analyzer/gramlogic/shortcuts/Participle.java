@@ -30,7 +30,6 @@ public final class Participle
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaRestrictions	regulārā izteiksme, kurai jāarbilst lemmai
 	 * @return BaseRule ar 43. paradigmu un divdabju karodziņiem
-	 * TODO likt šeit tās dzimtes vai nelikt?
 	 */
 	public static BaseRule iesUsies(String patternText, String lemmaRestrictions)
 	{

@@ -717,6 +717,9 @@ public class AbbrMap {
 		pairingFlags.put("parasti nenoteiksmes vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
 		pairingFlags.put("parasti nenoteiksmes vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE));
 		pairingFlags.put("parasti nenoteiksmes vai divd. formā", TFeatures.POS__VERB);
+		pairingFlags.put("parasti nenoteiksmē vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
+		pairingFlags.put("parasti nenoteiksmē vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE));
+		pairingFlags.put("parasti nenoteiksmē vai divd. formā", TFeatures.POS__VERB);
 		pairingFlags.put("parasti pavēles formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā", TFeatures.POS__VERB);
 		pairingFlags.put("parasti pavēles formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));

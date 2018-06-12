@@ -69,6 +69,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "dzis, -dža, v.", "dži", 3), // nepārnadži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "llis, -ļļa, v.", "ļļi", 3), // traļļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lnis, -ļņa, v.", "ļņi", 3), // kapilārviļņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "lnis, -mja, v.", "mji", 3), // pirmgliemji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "nis, -ņa, v.", "ņi", 3), // cukurzirņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pis, -pja, v.", "pji", 3), // biezlapis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "slis, -šļa, v.", "šļi", 3), // krāšļi
@@ -135,6 +136,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "te, -es, s.", "tes", 9), // aktinomicētes
 		WithAltLemma.nounPluralToSingularFem("-šu, vsk.", "se, -es, s.", "ses", 9), // alises
 		WithAltLemma.nounPluralToSingularFem("-vju, vsk.", "ve, -es, s.", "ves", 9), // klauves
+		WithAltLemma.nounPluralToSingularFem("-žu, vsk.", "de, -es, s.", "zes", 9), // pirmpapardes
 		WithAltLemma.nounPluralToSingularFem("-žu, vsk.", "ze, -es, s.", "zes", 9), // kolagenoze
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		// paradigma: 5. dekl. bez mijas

@@ -368,6 +368,8 @@ public class AbbrMap {
 		pairingFlags.put("bišk.", Tuple.of(TKeys.DOMAIN, "Biškopība"));
 		pairingFlags.put("biškop.", Tuple.of(TKeys.DOMAIN, "Biškopība"));
 		pairingFlags.put("bot.", Tuple.of(TKeys.DOMAIN, "Botānika"));
+		pairingFlags.put("bur.", Tuple.of(TKeys.DOMAIN, "Burāšana"));
+		pairingFlags.put("bur. sl.", Tuple.of(TKeys.DOMAIN, "Burāšana"));
 		pairingFlags.put("būvn.", Tuple.of(TKeys.DOMAIN, "Būvniecība"));
 		pairingFlags.put("celtn.", Tuple.of(TKeys.DOMAIN, "Celtniecība"));
 		pairingFlags.put("dārzk.", Tuple.of(TKeys.DOMAIN, "Dārzkopība"));
@@ -661,6 +663,7 @@ public class AbbrMap {
 		pairingFlags.put("žarg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Žargonvārds"));
 		pairingFlags.put("slengs", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
 		pairingFlags.put("sl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
+		pairingFlags.put("bur. sl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
 		pairingFlags.put("jūrn. sl.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Slengs"));
 		pairingFlags.put("sar.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
 		pairingFlags.put("sarunv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunvaloda"));
@@ -683,6 +686,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
 		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
 		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa lokatīvs"));
+		pairingFlags.put("parasti lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
 		pairingFlags.put("tikai vsk.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.SINGULAR));
 		pairingFlags.put("arī dsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));	// Ļaunums.
 		pairingFlags.put("parasti dsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
@@ -785,6 +789,9 @@ public class AbbrMap {
 		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
+		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
 		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));

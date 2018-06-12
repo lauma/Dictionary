@@ -569,6 +569,10 @@ public class DirectRules
 				SimpleSubRule.of(".*les", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*le", 9, null)},
 			new Tuple[]{TFeatures.GENDER__FEM}), //bailes, abisāle
+		GenNoun.any("-ņņu, s.", new SimpleSubRule[]{
+				SimpleSubRule.of(".*nnes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
+				//SimpleSubRule.of(".*nne", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //pinnes
 		GenNoun.any("-šņu, s.", new SimpleSubRule[]{
 				//SimpleSubRule.of(".*snis", 11, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
 				SimpleSubRule.of(".*snes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),

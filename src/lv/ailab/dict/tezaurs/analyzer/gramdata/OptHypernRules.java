@@ -77,6 +77,7 @@ public class OptHypernRules
 
 		// Nedefinēta paradigma: divdabji
 		Participle.isUsi("-augušais; s. -augusi, -augusī", ".*audzis"), // cauraudzis
+		Participle.isUsi("-brukušais; s. -brukuši, -brukusī", ".*brucis"), // pussabrucis
 		Participle.isUsi("-jukušais; s. -jukusi, -jukusi", ".*jucis"), // pusjucis
 		Participle.isUsi("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
 		Participle.isUsi("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
@@ -274,6 +275,7 @@ public class OptHypernRules
 		SecondDecl.std("-eža, v.", ".*ezis"), // ezis
 		SecondDecl.std("-naža, v.", ".*nazis"), // ēveļnazis
 		SecondDecl.std("-oļa, v.", ".*olis"), // olis
+		SecondDecl.std("-pūžņa, v.", ".*pūznis"), // pūznis
 		SecondDecl.std("-urbja, v.", ".*urbis"), // kloķurbis
 		SecondDecl.std("-vižņa, v.", ".*viznis"), // viznis
 

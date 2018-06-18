@@ -656,6 +656,7 @@ public class AbbrMap {
 		pairingFlags.put("niev.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
 		pairingFlags.put("nievājoši", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nievājoša ekspresīvā nokrāsa"));
 		pairingFlags.put("nicin.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nicinoša ekspresīvā nokrāsa"));
+		pairingFlags.put("nicinoši", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nicinoša ekspresīvā nokrāsa"));
 		pairingFlags.put("nicīgi", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Nicīga ekspresīvā nokrāsa"));
 		pairingFlags.put("iron.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Ironiska ekspresīvā nokrāsa"));
 		pairingFlags.put("iron. ar mazo burtu", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Ironiska ekspresīvā nokrāsa"));
@@ -680,6 +681,7 @@ public class AbbrMap {
 		pairingFlags.put("paširon.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Pašironija"));
 		pairingFlags.put("lamuvārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 		pairingFlags.put("lamu vārda nozīmē", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
+		pairingFlags.put("lamu vārds", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 
 		// Formu ierobežojumi
 		pairingFlags.put("arī vsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));		// Ļaunums.

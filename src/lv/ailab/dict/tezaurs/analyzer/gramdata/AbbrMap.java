@@ -284,6 +284,7 @@ public class AbbrMap {
 		pairingFlags.put("akuz.", Tuple.of(TKeys.CASE, TValues.ACUSATIVE));
 		pairingFlags.put("dat.", Tuple.of(TKeys.CASE, TValues.DATIVE));
 		pairingFlags.put("ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
+		pairingFlags.put("arī ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
 		pairingFlags.put("instr.", Tuple.of(TKeys.CASE, TValues.INSTRUMENTAL));
 		pairingFlags.put("lok.", Tuple.of(TKeys.CASE, TValues.LOCATIVE));
 		pairingFlags.put("nom.", Tuple.of(TKeys.CASE, TValues.NOMINATIVE));
@@ -319,6 +320,9 @@ public class AbbrMap {
 		
 		pairingFlags.put("s.", TFeatures.GENDER__FEM);
 		pairingFlags.put("v.", TFeatures.GENDER__MASC);
+		pairingFlags.put("v. un s.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
+		//pairingFlags.put("v. un s.", TFeatures.GENDER__FEM);
+		//pairingFlags.put("v. un s.", TFeatures.GENDER__MASC);
 		pairingFlags.put("kopdz.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
 		
 		binaryFlags.put("intrans.", "Nepārejošs");
@@ -533,6 +537,8 @@ public class AbbrMap {
 		pairingFlags.put("ig.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ig. val.", Tuple.of(TKeys.LANGUAGE, "Igauņu"));
 		pairingFlags.put("ig. val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("igauniski", Tuple.of(TKeys.LANGUAGE, "Igauņu"));
+		pairingFlags.put("igauniski", TFeatures.POS__FOREIGN);
 		pairingFlags.put("indiāņu valodās", Tuple.of(TKeys.LANGUAGE, "Indiāņu valodu saime"));
 		pairingFlags.put("indiāņu valodās", TFeatures.POS__FOREIGN);
 		pairingFlags.put("it.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));

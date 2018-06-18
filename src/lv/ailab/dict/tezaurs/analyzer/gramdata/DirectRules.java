@@ -506,6 +506,7 @@ public class DirectRules
 		FifthDecl.std("-es, dsk. ģen. -ļļu, s.", ".*lle"), //zaļumballe
 		FifthDecl.std("-es, dsk. ģen. -ļņu, s.", ".*lne"), //nokalne
 		FifthDecl.std("-es, dsk. ģen. -mju, s.", ".*me"), //agronome, krustamzīme
+		FifthDecl.std("-es, dsk. ģen. -ņņu, s.", ".*nne"), //pinne
 		FifthDecl.std("-es, dsk. ģen. -smju, s.", ".*sme"), //noslieksme
 		FifthDecl.std("-es, dsk. ģen. -šņu, s.", ".*sne"), //izloksne, aizkrāsne
 		FifthDecl.std("dsk. ģen. -šņu, s.", ".*sne"), //apaļkoksne
@@ -561,6 +562,10 @@ public class DirectRules
 		FifthDecl.optChange("-es, dsk. ģen. lešu vai letu", ".*lete"), //lete
 
 		// Nestandartīgie
+		GenNoun.any("-bju, s.", new SimpleSubRule[]{
+				SimpleSubRule.of(".*bes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
+				//SimpleSubRule.of(".*le", 9, null)},
+			new Tuple[]{TFeatures.GENDER__FEM}), //privātdrēbes
 		GenNoun.any("-ķu, s.", new SimpleSubRule[]{
 				SimpleSubRule.of(".*ķes", 9, new Tuple[]{TFeatures.ENTRYWORD__PLURAL})},
 				//SimpleSubRule.of(".*le", 9, null)},

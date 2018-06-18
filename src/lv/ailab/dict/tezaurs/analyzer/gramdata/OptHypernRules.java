@@ -177,6 +177,7 @@ public class OptHypernRules
 		SixthDecl.std("-pirts, dsk. ģen. -pirtu, s.", ".*pirts"), // asinspirts
 		SixthDecl.std("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
 		SixthDecl.std("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
+		SixthDecl.std("-plīts, dsk. ģen. -plīšu, s.", ".*plīts"), // plīts
 		SixthDecl.std("-pults, dsk. ģen. -pulšu, s.", ".*pults"), // operatorpults
 		SixthDecl.std("-rūts, dsk. ģen. -rūšu, s.", ".*rūts"), // rūts
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls
@@ -239,7 +240,7 @@ public class OptHypernRules
 
 		GenNoun.any("-īkstu, s.", ".*īkstis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // īkstis
-		GenNoun.any("-pirkstis, s.", ".*pirkstis", 35,
+		GenNoun.any("-pirkstu, s.", ".*pirkstis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // pirkstis
 		GenNoun.any("-utu, s.", ".*utis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // grauzējutis

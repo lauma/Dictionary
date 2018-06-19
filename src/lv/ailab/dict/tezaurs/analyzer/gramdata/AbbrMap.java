@@ -511,7 +511,7 @@ public class AbbrMap {
 		pairingFlags.put("arābu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ebr.", Tuple.of(TKeys.LANGUAGE, "Ebreju"));
 		pairingFlags.put("ebr.", TFeatures.POS__FOREIGN);
-		pairingFlags.put("farsi val.", Tuple.of(TKeys.LANGUAGE, "Farsi")); // TODO vai persiešu?
+		pairingFlags.put("farsi val.", Tuple.of(TKeys.LANGUAGE, "Persiešu")); // TODO vai persiešu?
 		pairingFlags.put("farsi val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("fr.", Tuple.of(TKeys.LANGUAGE, "Franču"));
 		pairingFlags.put("fr.", TFeatures.POS__FOREIGN);
@@ -745,6 +745,7 @@ public class AbbrMap {
 		pairingFlags.put("ar nenot. galotni", TFeatures.USED__INDEFINITE);
 		pairingFlags.put("ar nenot. galotni.", TFeatures.USED__INDEFINITE);
 		pairingFlags.put("parasti ar nenot. galotni", TFeatures.USUALLY_USED__INDEFINITE);
+		pairingFlags.put("parasti ar nenoteikto galotni", TFeatures.USUALLY_USED__INDEFINITE);
 		pairingFlags.put("ar not. gal.", TFeatures.USED__DEFINITE);
 		pairingFlags.put("ar not. galotni", TFeatures.USED__DEFINITE);
 		pairingFlags.put("ar not. galotni.", TFeatures.USED__DEFINITE);

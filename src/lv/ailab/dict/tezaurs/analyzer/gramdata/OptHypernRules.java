@@ -276,6 +276,7 @@ public class OptHypernRules
 		SecondDecl.std("-naža, v.", ".*nazis"), // ēveļnazis
 		SecondDecl.std("-oļa, v.", ".*olis"), // olis
 		SecondDecl.std("-pūžņa, v.", ".*pūznis"), // pūznis
+		SecondDecl.std("-rešņa, v.", ".*resnis"), // resnis
 		SecondDecl.std("-urbja, v.", ".*urbis"), // kloķurbis
 		SecondDecl.std("-vižņa, v.", ".*viznis"), // viznis
 

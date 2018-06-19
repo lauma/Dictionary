@@ -87,6 +87,7 @@ public class AltLemmaRules
 		// 1. paradigma: 1. dekl., s
 		//WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "bs, -a, v.", "bi", 1), // būvdarbi
+		WithAltLemma.nounPluralToSingularMascStd("-cu, vsk.", "cs, -a, v.", "ci", 1), // raznočinci
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ds, -a, v.", "di", 1), // aizsargcimdi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "gs, -a, v.", "gi", 1), // bišaugi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "js, -a, v.", "ji", 1), // dārzāji
@@ -150,6 +151,7 @@ public class AltLemmaRules
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 		WithAltLemma.nounPluralToSingularFem("-utu, vsk.", "uts, -uts, s.", "utis", 35), // dūrējuts
+		WithAltLemma.nounPluralToSingularFem("-valstu, vsk.", "valsts, -valsts, s.", "utis", 35), // ziemeļvalstis
 
 		//	Neviennozīmīgie likumi.
 	};

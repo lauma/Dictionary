@@ -517,9 +517,9 @@ public class DirectRules
 		FifthDecl.std("-es, dsk. ģen. -žņu, s.", ".*zne"), //asteszvaigzne
 
 		FifthDecl.std("-es, -žu s.", ".*ze"), // apoteoze
-
 		FifthDecl.std("-es, -mju, s.", ".*me"), // apakšzeme
 
+		FifthDecl.std("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
 		FifthDecl.std("vsk. -es, s.", ".*e"), // antikvitāte
 
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
@@ -865,33 +865,13 @@ public class DirectRules
 	 * Šajā masīvā jāievēro likumu secība, citādi slikti būs. Šo masīvu jālieto
 	 * pašu pēdējo.
 	 */
+	@Deprecated
 	public static final EndingRule[] dangerous = {
 		// Paradigma: 9 - Lietvārds 5. deklinācija -e siev. dz.
-		FifthDecl.std("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
+		//FifthDecl.std("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
 			// konflikts ar "astilbe" un "acetilsalicilskābe"
 
-		// Paradigma: 3 - Lietvārds 2. deklinācija -is
-	/*	GenNoun.any("-ņa, dsk. ģen. -ņu", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ņi", 3, new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.GENDER__MASC}),
-						SimpleSubRule.of(".*nis", 3, new Tuple[]{TFeatures.GENDER__MASC})},
-				null), //afroamerikāņi, šovmenis
-			// konflikts ar "bizmanis"
-
 		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
-		// Paradigmas: 9, 7 - vienskaitlī un daudzskaitlī
-		GenNoun.any("-žu", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ži", new Integer[]{1, 3}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*[dz]e", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
-						SimpleSubRule.of(".*[dz]es", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL})},
-				null), // gliemeži, abioģenēze, ablumozes, akolāde, nematodes
-		GenNoun.any("-ņu", new SimpleSubRule[]{
-						SimpleSubRule.of(".*ne", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM}),
-						SimpleSubRule.of(".suņi", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*ņi", new Integer[]{1, 2, 3, 4}, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM}),
-						SimpleSubRule.of(".*nes", new Integer[]{9}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL}),
-						SimpleSubRule.of(".*ņas", new Integer[]{7}, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.ENTRYWORD__PLURAL})},
-				null), // celtņi, agrene, aizlaidnes
-				*/
 	};
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,

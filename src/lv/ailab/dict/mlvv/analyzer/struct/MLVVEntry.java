@@ -45,7 +45,7 @@ public class MLVVEntry extends Entry
 	 */
 	public LinkedList<Phrase> phraseology;
 	/**
-	 * MLVV tiek šķirti divu veidu brīci komentāri - komentārs par vārda cilmi
+	 * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
 	 * (izcelsmi) tiek glabāts MLVVEntry.origin, bet normatīvā lietojuma
 	 * komentārs - Entry.freeText
 	 */

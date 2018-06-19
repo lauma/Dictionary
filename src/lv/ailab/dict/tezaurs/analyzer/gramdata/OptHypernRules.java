@@ -80,7 +80,9 @@ public class OptHypernRules
 		Participle.isUsi("-brukušais; s. -brukuši, -brukusī", ".*brucis"), // pussabrucis
 		Participle.isUsi("-jukušais; s. -jukusi, -jukusi", ".*jucis"), // pusjucis
 		Participle.isUsi("-likušais; s. -likusi, -likusī", ".*licis"), // atpalicis
+		Participle.isUsi("-plaukušais; s. -plaukusi, -plaukusī.", ".*plaucis"), // pusplaucis
 		Participle.isUsi("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
+		Participle.isUsi("-sprāgušais; s. -sprāgusi, -sprāgusī", ".*sprādzis"), // pussprādzis
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e

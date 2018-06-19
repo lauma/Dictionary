@@ -151,7 +151,7 @@ public class AltLemmaRules
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 		WithAltLemma.nounPluralToSingularFem("-utu, vsk.", "uts, -uts, s.", "utis", 35), // dūrējuts
-		WithAltLemma.nounPluralToSingularFem("-valstu, vsk.", "valsts, -valsts, s.", "utis", 35), // ziemeļvalstis
+		WithAltLemma.nounPluralToSingularFem("-valstu, vsk.", "valsts, -valsts, s.", "valstis", 35), // ziemeļvalstis
 
 		//	Neviennozīmīgie likumi.
 	};

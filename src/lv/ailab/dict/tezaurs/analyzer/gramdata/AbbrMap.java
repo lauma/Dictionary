@@ -509,6 +509,8 @@ public class AbbrMap {
 		pairingFlags.put("arābu.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("arābu val.", Tuple.of(TKeys.LANGUAGE, "Arābu"));
 		pairingFlags.put("arābu val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("čigānu val.", Tuple.of(TKeys.LANGUAGE, "Čigānu"));
+		pairingFlags.put("čigānu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("ebr.", Tuple.of(TKeys.LANGUAGE, "Ebreju"));
 		pairingFlags.put("ebr.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("farsi val.", Tuple.of(TKeys.LANGUAGE, "Persiešu")); // TODO vai persiešu?
@@ -679,6 +681,7 @@ public class AbbrMap {
 		pairingFlags.put("vulg.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Vulgārisms"));
 		pairingFlags.put("barb.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Barbarisms"));
 		pairingFlags.put("īsziņās", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));
+		pairingFlags.put("īsziņas", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));
 		pairingFlags.put("senv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sens, reti lietots vārds"));
 		pairingFlags.put("paširon.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Pašironija"));
 		pairingFlags.put("lamuvārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
@@ -747,6 +750,7 @@ public class AbbrMap {
 		pairingFlags.put("ar nenot. galotni", TFeatures.USED__INDEFINITE);
 		pairingFlags.put("ar nenot. galotni.", TFeatures.USED__INDEFINITE);
 		pairingFlags.put("parasti ar nenot. galotni", TFeatures.USUALLY_USED__INDEFINITE);
+		pairingFlags.put("parasti ar nenoteikto gal.", TFeatures.USUALLY_USED__INDEFINITE);
 		pairingFlags.put("parasti ar nenoteikto galotni", TFeatures.USUALLY_USED__INDEFINITE);
 		pairingFlags.put("ar not. gal.", TFeatures.USED__DEFINITE);
 		pairingFlags.put("ar not. galotni", TFeatures.USED__DEFINITE);
@@ -889,6 +893,14 @@ public class AbbrMap {
 		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.NOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
 
 		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
 

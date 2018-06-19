@@ -541,10 +541,12 @@ public class AbbrMap {
 		pairingFlags.put("igauniski", TFeatures.POS__FOREIGN);
 		pairingFlags.put("indiāņu valodās", Tuple.of(TKeys.LANGUAGE, "Indiāņu valodu saime"));
 		pairingFlags.put("indiāņu valodās", TFeatures.POS__FOREIGN);
-		pairingFlags.put("it.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));
+		pairingFlags.put("it.", Tuple.of(TKeys.LANGUAGE, "Itāļu"));
 		pairingFlags.put("it.", TFeatures.POS__FOREIGN);
-		pairingFlags.put("it. val.", Tuple.of(TKeys.LANGUAGE, "Itāļu/Itāliešu"));
+		pairingFlags.put("it. val.", Tuple.of(TKeys.LANGUAGE, "Itāļu"));
 		pairingFlags.put("it. val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("itāļu", Tuple.of(TKeys.LANGUAGE, "Itāļu"));
+		pairingFlags.put("itāļu", TFeatures.POS__FOREIGN);
 		pairingFlags.put("jap.", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
 		pairingFlags.put("jap.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("japāņu", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
@@ -905,6 +907,8 @@ public class AbbrMap {
 		binaryFlags.put("nelit. arī vsk.", "Vienskaitļa formas lieto sarunvalodā");
 		binaryFlags.put("apv. arī vsk.", "Vienskaitļa formas lieto dialektos");
 		binaryFlags.put("lit. val. tikai dsk.", "Vienskaitļa formas lieto sarunvalodā");
+
+		//pairingFlags.put("angļu val. \"byte\"", Tuple.of(TKeys.ETYMOLOGY, "angļu val. \"byte\""));
 	}
 
 }

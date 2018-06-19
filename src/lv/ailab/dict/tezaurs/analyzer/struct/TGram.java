@@ -353,7 +353,8 @@ public class TGram extends Gram
 	{
 		gramText = gramText.trim();
 		if (gramText.length() < 1) return gramText;
-		boolean found = false;
+		boolean found = RulesAsFunctions.matchEtymologyFlag(gramText, flags);
+		if (found) return "";
 		do
 		{
 			found = false;

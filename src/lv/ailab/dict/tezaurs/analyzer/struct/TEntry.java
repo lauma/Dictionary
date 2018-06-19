@@ -17,12 +17,10 @@
  *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
-import lv.ailab.dict.struct.Entry;
-import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.struct.Phrase;
-import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.struct.*;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -89,6 +87,17 @@ public class TEntry extends Entry
 
 		if (head == null)
 			System.err.printf("Šķirklis bez šķirkļa vārda / šķirkļa galvas:\n%s\n", sNode.toString());
+
+		// Move etymology from gram to its own field.
+		else if (head != null && head.gram != null && head.gram.flags != null &&
+				head.gram.flags.testKey(TKeys.ETYMOLOGY))
+		{
+			HashSet<String> etym = head.gram.flags.getAll(TKeys.ETYMOLOGY);
+			if (etym.size() > 1)
+				System.err.printf("Šķirklī \"%s\" ir vairāki etimoloģijas lauki\n", head.lemma.text);
+			etymology = etym.stream().reduce((a, b) -> a + "; " + b).orElse(null);
+			head.gram.flags.pairings.removeAll(TKeys.ETYMOLOGY);
+		}
 	}
 	
 	/**
@@ -188,11 +197,16 @@ public class TEntry extends Entry
 	 */
 	public void printConsistencyReport()
 	{
-		if (getUsedFlags().test(TFeatures.UNCLEAR_PARADIGM)
+		Flags usedFlags = getUsedFlags();
+		if (usedFlags.test(TFeatures.UNCLEAR_PARADIGM)
 				&& !hasMultipleParadigms()
 				&& !getMentionedParadigms().contains(0))
 			System.err.printf(
 					"Šķirklī \"%s\" ir neskaidro paradigmu karodziņš, bet nav vairāku paradigmu.\n",
+					head.lemma.text);
+		if (usedFlags.testKey(TKeys.ETYMOLOGY))
+			System.err.printf(
+					"Šķirklī \"%s\" ir etimoloģijas karodziņš.\n",
 					head.lemma.text);
 	}
 

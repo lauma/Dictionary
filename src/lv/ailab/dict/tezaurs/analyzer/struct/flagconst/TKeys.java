@@ -94,4 +94,10 @@ public class TKeys extends Keys
 	public final static String INFLECT_AS = "Locīt kā";
 
 	// TODO: varbūt arī INFLECTION_WEARDNES un INFLECT_AS vajag pārcelt uz Keys?
+
+	/**
+	 * Paredzēts etimoloģijas izgūšanai.
+	 * Pēc gramatiku apstrādes šos jāizceļ uz Entry.etymology lauku.
+	 */
+	public final static String ETYMOLOGY = "Etimoloģiskas norādes";
 }

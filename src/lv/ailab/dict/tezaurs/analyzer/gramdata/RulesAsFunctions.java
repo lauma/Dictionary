@@ -8,6 +8,7 @@ import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
+import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,17 @@ public class RulesAsFunctions
 		return gramText.matches(".*\\b1\\.\\s*konj\\..*");
 	}
 
+	public static boolean matchEtymologyFlag(String gramFragment, Flags flagCollector)
+	{
+		if (gramFragment.matches(
+				"(angļu|latīņu|sanskr\\.|senebr\\.|spāņu|vācu)( val\\.)? \"[ \\p{Ll}]+\""
+						+ "( - deminutīvs no \"[ \\p{Ll}]+\")?\\.?"))
+		{
+			flagCollector.add(Tuple.of(TKeys.ETYMOLOGY, gramFragment));
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Izanalizē gramatikas virknes formā:

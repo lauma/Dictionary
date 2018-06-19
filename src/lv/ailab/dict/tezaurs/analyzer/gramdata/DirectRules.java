@@ -733,7 +733,10 @@ public class DirectRules
 						SimpleSubRule.of(".*mēneši", new Integer[]{3, 4}, new Tuple[]{TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ši", new Integer[]{1, 3}, new Tuple[]{ TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL})},
 				new Tuple[]{TFeatures.GENDER__MASC}), // alžīrieši
-		GenNoun.any("-džu, v.", ".*dži", new Integer[]{1, 2, 3},
+		GenNoun.any("-bju, v.", ".*bji", new Integer[]{1, 2, 3},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC}), // lībji
+		GenNoun.any("-džu, v.", ".*dži", new Integer[]{2, 3},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC}), // dobradži
 		// Vispārīgā galotne, kas der visam un neder nekam

@@ -86,4 +86,19 @@ public class MappingSet<K, V>
 		for (K key: data.keySet())
 			putAll(key, data.getAll(key));
 	}
+
+	public HashSet<V> removeAll(K key)
+	{
+		return map.remove(key);
+	}
+
+	public boolean remove(K key, V value)
+	{
+		if (!map.containsKey(key)) return false;
+		if (!map.get(key).contains(value)) return false;
+		boolean returnValue = map.get(key).remove(value);
+		if (map.get(key).isEmpty()) map.remove(key);
+		return returnValue;
+	}
+
 }

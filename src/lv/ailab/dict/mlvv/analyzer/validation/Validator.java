@@ -158,12 +158,12 @@ public class Validator
 			System.out.printf("Šķirklī %s ir nesapārotas iekavas cilmē \"%s\".\n",
 					debugEntryWord, e.etymology);
 
-		if (!IndividualChecks.hasPairedUnderscores(e.freeText))
+		if (!IndividualChecks.hasPairedUnderscores(e.normative))
 			System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",
-					debugEntryWord, e.freeText);
-		if (!IndividualChecks.hasBalancedParentheses(e.freeText))
+					debugEntryWord, e.normative);
+		if (!IndividualChecks.hasBalancedParentheses(e.normative))
 			System.out.printf("Šķirklī %s ir nesapārotas iekavas normatīvajā komentārā \"%s\".\n",
-					debugEntryWord, e.freeText);
+					debugEntryWord, e.normative);
 	}
 
 	/**

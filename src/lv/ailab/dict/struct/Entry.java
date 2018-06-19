@@ -62,11 +62,11 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public LinkedList<Header> derivs;
 
-	/**
+	/*
 	 * Papildus teksts, kas nu šķirklī var būt vajadzīgs.
 	 * Tēzaurā nelieto.
 	 */
-	public String freeText;
+	//public String freeText;
 
 	/**
 	 * Brīvā tekstā norāde par etimoloģiju uc. izcelsmi.
@@ -280,12 +280,12 @@ public class Entry implements HasToJSON, HasToXML
 			s.append(JSONObject.escape(reference));
 			s.append("\"");
 		}
-		if (freeText != null && freeText.length() > 0)
+		/*if (freeText != null && freeText.length() > 0)
 		{
 			s.append(", \"FreeText\":\"");
 			s.append(JSONObject.escape(freeText));
 			s.append("\"");
-		}
+		}*/
 		if (sources != null && !sources.isEmpty())
 		{
 			s.append(",");
@@ -372,12 +372,12 @@ public class Entry implements HasToJSON, HasToXML
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);
 		}
-		if (freeText != null && freeText.length() > 0)
+		/*if (freeText != null && freeText.length() > 0)
 		{
 			Node freeTextN = doc.createElement("FreeText");
 			freeTextN.appendChild(doc.createTextNode(freeText));
 			parent.appendChild(freeTextN);
-		}
+		}*/
 		if (sources != null && !sources.isEmpty()) sources.toXML(parent);
 
 	}

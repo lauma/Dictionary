@@ -20,10 +20,6 @@ import java.util.regex.Pattern;
  * Piemēri: miers (vairāki stabilie savienojumi), māja (vairākas nozīmes frāzei)
  * mākoņains (vairāki atvasinājumi)
  *
- * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
- * (izcelsmi) tiek glabāts Entry.etymology, bet normatīvā lietojuma komentārs -
- * Entry.freeText
- *
  * Izveidots 2016-02-02.
  * @author Lauma
  *
@@ -47,6 +43,13 @@ public class MLVVEntry extends Entry
 	 * frazeoloģismiem (atsalīts ar rombu).
 	 */
 	public LinkedList<Phrase> phraseology;
+
+	/**
+	 * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
+	 * (izcelsmi) tiek glabāts Entry.etymology, bet normatīvā lietojuma
+	 * komentārs - MLVV.normative
+	 */
+	public String normative;
 
 	/**
 	 * Savāc izsecinātos hederus (altLemmas) - šis ir drošības pēc pārrakstīts,
@@ -337,8 +340,8 @@ public class MLVVEntry extends Entry
 	protected void parseNormative(String linePart)
 	{
 		if (UNDERSCORE_FOR_NORMATIVE_CURSIVE)
-			freeText = Editors.cursiveToUnderscore(linePart);
-		else freeText = linePart;
+			normative = Editors.cursiveToUnderscore(linePart);
+		else normative = linePart;
 	}
 	// TODO - atstāt kvadrātiekavas vai mest ārā
 
@@ -412,10 +415,10 @@ public class MLVVEntry extends Entry
 			s.append(JSONObject.escape(etymology));
 			s.append("\"");
 		}
-		if (freeText != null && freeText.length() > 0)
+		if (normative != null && normative.length() > 0)
 		{
 			s.append(", \"Normative\":\"");
-			s.append(JSONObject.escape(freeText));
+			s.append(JSONObject.escape(normative));
 			s.append("\"");
 		}
 		if (sources != null && !sources.isEmpty())
@@ -512,13 +515,13 @@ public class MLVVEntry extends Entry
 		if (etymology != null && etymology.length() > 0)
 		{
 			Node etymNode = doc.createElement("Etymology");
-			etymNode.appendChild(doc.createTextNode(this.etymology));
+			etymNode.appendChild(doc.createTextNode(etymology));
 			parent.appendChild(etymNode);
 		}
-		if (freeText != null && freeText.length() > 0)
+		if (normative != null && normative.length() > 0)
 		{
 			Node freeTextN = doc.createElement("Normative");
-			freeTextN.appendChild(doc.createTextNode(freeText));
+			freeTextN.appendChild(doc.createTextNode(normative));
 			parent.appendChild(freeTextN);
 		}
 		if (sources != null && !sources.isEmpty())

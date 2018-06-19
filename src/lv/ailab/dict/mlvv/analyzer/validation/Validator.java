@@ -151,12 +151,12 @@ public class Validator
 		if (e.phraseology != null) for (Phrase p : e.phraseology)
 			checkTexts(p, debugEntryWord);
 
-		if (!IndividualChecks.hasPairedUnderscores(e.origin))
+		if (!IndividualChecks.hasPairedUnderscores(e.etymology))
 			System.out.printf("Šķirklī %s ir nesapārotas __ cilmē \"%s\".\n",
-					debugEntryWord, e.origin);
-		if (!IndividualChecks.hasBalancedParentheses(e.origin))
+					debugEntryWord, e.etymology);
+		if (!IndividualChecks.hasBalancedParentheses(e.etymology))
 			System.out.printf("Šķirklī %s ir nesapārotas iekavas cilmē \"%s\".\n",
-					debugEntryWord, e.origin);
+					debugEntryWord, e.etymology);
 
 		if (!IndividualChecks.hasPairedUnderscores(e.freeText))
 			System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",

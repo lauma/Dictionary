@@ -69,6 +69,11 @@ public class Entry implements HasToJSON, HasToXML
 	public String freeText;
 
 	/**
+	 * Brīvā tekstā norāde par etimoloģiju uc. izcelsmi.
+	 */
+	public String etymology;
+
+	/**
 	 * Atsauce uz citu šķirkli (Tēzaura XML -  ref).
 	 * MLVV nelieto.
 	 * TODO vai šeit var atdalīti atsevišķi homonīma numuru?
@@ -263,6 +268,12 @@ public class Entry implements HasToJSON, HasToXML
 			s.append(", \"Derivatives\":");
 			s.append(JSONUtils.objectsToJSON(derivs));
 		}
+		if (etymology != null && etymology.length() > 0)
+		{
+			s.append(", \"Etymology\":\"");
+			s.append(JSONObject.escape(etymology));
+			s.append("\"");
+		}
 		if (reference != null && reference.length() > 0)
 		{
 			s.append(", \"Reference\":\"");
@@ -348,6 +359,12 @@ public class Entry implements HasToJSON, HasToXML
 			Node derivContN = doc.createElement("Derivatives");
 			for (Header d : derivs) d.toXML(derivContN);
 			parent.appendChild(derivContN);
+		}
+		if (etymology != null && etymology.length() > 0)
+		{
+			Node freeTextN = doc.createElement("Etymology");
+			freeTextN.appendChild(doc.createTextNode(etymology));
+			parent.appendChild(freeTextN);
 		}
 		if (reference != null && reference.length() > 0)
 		{

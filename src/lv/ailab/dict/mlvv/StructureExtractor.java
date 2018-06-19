@@ -61,7 +61,7 @@ public class StructureExtractor
 	public static void main (String[] args)
 	{
 		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MLVVEntry.UNDERSCORE_FOR_ORIGIN_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		StructureExtractor extractor = new StructureExtractor();
 		File folder = new File(inputDataPath);

@@ -16,10 +16,13 @@ import java.util.regex.Pattern;
 
 /**
  * MLVV šķirkļa struktūra + word izguve.
- * TODO: vai origin un nevajadzētu izcelt uz Entry?
  * TODO: uzrakstīt smuku json eksportu
  * Piemēri: miers (vairāki stabilie savienojumi), māja (vairākas nozīmes frāzei)
  * mākoņains (vairāki atvasinājumi)
+ *
+ * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
+ * (izcelsmi) tiek glabāts Entry.etymology, bet normatīvā lietojuma komentārs -
+ * Entry.freeText
  *
  * Izveidots 2016-02-02.
  * @author Lauma
@@ -30,7 +33,7 @@ public class MLVVEntry extends Entry
 	/**
 	 * Vai <i> tagus izcelsmē vajag automātiski aizvietot ar apakšsvītrām?
 	 */
-	public static boolean UNDERSCORE_FOR_ORIGIN_CURSIVE = false;
+	public static boolean UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = false;
 	/**
 	 * Vai <i> tagus normatīvajā komentārā vajag automātiski aizvietot ar
 	 * apakšsvītrām?
@@ -44,13 +47,6 @@ public class MLVVEntry extends Entry
 	 * frazeoloģismiem (atsalīts ar rombu).
 	 */
 	public LinkedList<Phrase> phraseology;
-	/**
-	 * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
-	 * (izcelsmi) tiek glabāts MLVVEntry.origin, bet normatīvā lietojuma
-	 * komentārs - Entry.freeText
-	 */
-	public String origin;
-
 
 	/**
 	 * Savāc izsecinātos hederus (altLemmas) - šis ir drošības pēc pārrakstīts,
@@ -230,14 +226,14 @@ public class MLVVEntry extends Entry
 		m = Pattern.compile("(.*?)\\b[cC]ilme: (.*)").matcher(linePart);
 		if (m.matches())
 		{
-			String newOrigin = m.group(2).trim();
+			String newEtymology = m.group(2).trim();
 			linePart = m.group(1).trim();
-			if (newOrigin.contains("<square/>"))
+			if (newEtymology.contains("<square/>"))
 			{
-				linePart = linePart + " " + newOrigin.substring(newOrigin.indexOf("<square/>")).trim();
-				newOrigin = newOrigin.substring(0, newOrigin.indexOf("<square/>")).trim();
+				linePart = linePart + " " + newEtymology.substring(newEtymology.indexOf("<square/>")).trim();
+				newEtymology = newEtymology.substring(0, newEtymology.indexOf("<square/>")).trim();
 			}
-			parseOrigin(newOrigin);
+			parseEtymology(newEtymology);
 		}
 
 		// Atvasinājumi
@@ -330,12 +326,12 @@ public class MLVVEntry extends Entry
 		}
 	}
 
-	protected void parseOrigin(String linePart)
+	protected void parseEtymology(String linePart)
 	{
 		linePart = Editors.replaceHomIds(linePart, true);
-		if (UNDERSCORE_FOR_ORIGIN_CURSIVE)
-			origin = Editors.cursiveToUnderscore(linePart);
-		else origin = linePart;
+		if (UNDERSCORE_FOR_ETYMOLOGY_CURSIVE)
+			etymology = Editors.cursiveToUnderscore(linePart);
+		else etymology = linePart;
 	}
 
 	protected void parseNormative(String linePart)
@@ -410,10 +406,10 @@ public class MLVVEntry extends Entry
 			s.append(JSONObject.escape(reference));
 			s.append("\"");
 		}
-		if (origin != null && origin.length() > 0)
+		if (etymology != null && etymology.length() > 0)
 		{
-			s.append(", \"Origin\":\"");
-			s.append(JSONObject.escape(origin));
+			s.append(", \"Etymology\":\"");
+			s.append(JSONObject.escape(etymology));
 			s.append("\"");
 		}
 		if (freeText != null && freeText.length() > 0)
@@ -513,11 +509,11 @@ public class MLVVEntry extends Entry
 			refN.appendChild(doc.createTextNode(reference));
 			parent.appendChild(refN);
 		}
-		if (origin != null && origin.length() > 0)
+		if (etymology != null && etymology.length() > 0)
 		{
-			Node originN = doc.createElement("Origin");
-			originN.appendChild(doc.createTextNode(origin));
-			parent.appendChild(originN);
+			Node etymNode = doc.createElement("Etymology");
+			etymNode.appendChild(doc.createTextNode(this.etymology));
+			parent.appendChild(etymNode);
 		}
 		if (freeText != null && freeText.length() > 0)
 		{

@@ -332,6 +332,7 @@ public class AbbrMap {
 		binaryFlags.put("trans.", "Pārejošs");
 		binaryFlags.put("pārej.", "Pārejošs");
 		binaryFlags.put("tr.", "Pārejošs");
+		binaryFlags.put("tr. darb.", "Pārejošs");
 		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs");
 		binaryFlags.put("tr. un intr. darb. v.", "Nepārejošs");
 		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs un nepārejošs");
@@ -639,11 +640,12 @@ public class AbbrMap {
 		pairingFlags.put("arī bērnu valodā", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Bērnu valoda"));
 		pairingFlags.put("parasti bērnu val.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Bērnu valoda"));
 		pairingFlags.put("sar. ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
+		pairingFlags.put("sarunā ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
+		pairingFlags.put("sarunās ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
 		pairingFlags.put("parasti sar. ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
 		pairingFlags.put("parasti sar. ar bērniem.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
 		pairingFlags.put("parasti sarunā ar bērnu", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
 		pairingFlags.put("parasti sarunā ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
-		pairingFlags.put("sarunā ar bērniem", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sarunā ar bērniem"));
 		pairingFlags.put("apv.", TFeatures.USAGE_RESTR__REGIONAL);
 		pairingFlags.put("vēst.", Tuple.of(TKeys.USAGE_RESTRICTIONS, TValues.HISTORICAL));
 		// TODO vēst. laikam ir domēns nevis ierobežojums!!!!!!!!!
@@ -762,6 +764,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti ar not. gal.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti ar not. galotni.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti ar not. galotni", TFeatures.USUALLY_USED__DEFINITE);
+		pairingFlags.put("parasti ar noteikto gal.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti ar noteikto galotni.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("pārākajā pakāpē.", Tuple.of(TKeys.USED_IN_FORM, "Pārākā pakāpe"));
 		pairingFlags.put("parasti ar lielo sākumburtu", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Ar lielo sākumburtu"));

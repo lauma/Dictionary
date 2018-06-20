@@ -524,7 +524,7 @@ public class RulesAsFunctions
 				flagValues.add(TValues.ADPOSITION);
 				flagValues.add(TValues.ORIGINAL_NEEDED);
 			}
-			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\., (akuz\\., )?divsk\\. nom\\., akuz\\.)?"))
+			else if (flagValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\.(, akuz\\.)?)?"))
 			{
 				flagValues.add(TValues.NOUN);
 				flagValues.add(TValues.NUMERAL);

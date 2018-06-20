@@ -1785,7 +1785,7 @@ public class OptHypernRules
 		SecondThirdConj.directStd3PersParallel(
 				"-gail, arī -gailē, pag. -gailēja", "gailēt"), // izgailēt
 		SecondThirdConj.directStd3PersParallel(
-				"-gaidē, arī -gald, pag. -galdēja", "galdēt"), // sagaldēt
+				"-galdē, arī -gald, pag. -galdēja", "galdēt"), // sagaldēt
 		// H, I, J
 		SecondThirdConj.directStd3PersParallel(
 				"-junda, arī -jundī, pag. -jundīja", "jundīt"), // iejundīt

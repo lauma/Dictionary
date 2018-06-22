@@ -4,6 +4,11 @@ import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.utils.JSONUtils;
+import org.json.simple.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +26,10 @@ import java.util.regex.Pattern;
  */
 public class MLVVPhrase extends Phrase
 {
+	/**
+	 * Skaidrojamā frāze latīniski - tikai taksoniem.
+	 */
+	public LinkedList<String> sciName;
 	/**
 	 * Savāc elementā izmantotos "flagText". Semikolu uzskata par atdalītāju.
 	 */
@@ -120,20 +129,26 @@ public class MLVVPhrase extends Phrase
 		results.add(res);
 		res.type = PhraseTypes.TAXON;
 		res.text = new LinkedList<>();
+		res.sciName = new LinkedList<>();
 		Matcher m = Pattern.compile("(?:<bullet/>)?\\s*<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
 		if (m.matches())
 		{
 			res.text.add(Editors.removeCursive(m.group(1).trim()));
-			String gloss = m.group(2).trim();
-			String glossEnd = m.group(3).trim();
-			if (glossEnd.equals(".")) gloss = gloss + glossEnd;
-			else if (glossEnd.matches("\\s*[-\u2013\u2014]\\s*"))
+			String sciNames = Editors.removeCursive(m.group(2).trim());
+			if (!sciNames.isEmpty())
+				res.sciName.addAll(Arrays.asList(sciNames.split("\\s*[;,](\\s*arī)?\\s*")));
+			String gloss = m.group(3).trim();
+			if (gloss.equals(".")) gloss = null;
+			else if (gloss.matches("[-\u2013\u2014]"))
 				System.out.printf("Taksonam \"%s\" sanāk tukša skaidrojošā daļa pēc domuzīmes\n", linePart);
-			else if (glossEnd.matches("\\s*[-\u2013\u2014].+"))gloss = gloss + " " + glossEnd;
+			else if (gloss.matches("[-\u2013\u2014].+"))
+				gloss = gloss.substring(1).trim();
 				// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
-			else if (glossEnd.trim().length() > 0) gloss = gloss + " \u2013 " + glossEnd.trim();
-			res.subsenses = new LinkedList<>();
-			res.subsenses.add(new MLVVSense(MLVVGloss.parse(gloss.trim())));
+			if (gloss != null)
+			{
+				res.subsenses = new LinkedList<>();
+				res.subsenses.add(new MLVVSense(MLVVGloss.parse(gloss.trim())));
+			}
 			// TODO vai uzskatāmāk nebūs bez rekursijas?
 			if (m.group(4) != null && !m.group(4).isEmpty())
 				results.addAll(parseTaxons(m.group(4)));
@@ -600,5 +615,121 @@ public class MLVVPhrase extends Phrase
 							text, sense.ordNumber, senseNumber + 1);
 				sense.ordNumber = Integer.toString(senseNumber + 1);
 			}
+	}
+
+	/**
+	 * Ja text ir "", tad to vienalga izdrukā.
+	 * TODO vai tā ir labi?
+	 */
+	@Override
+	public String toJSON()
+	{
+		StringBuilder res = new StringBuilder();
+		boolean hasPrev = false;
+
+		if (type != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Type\":\"");
+			res.append(JSONObject.escape(type));
+			res.append("\"");
+			hasPrev = true;
+		}
+
+		if (text != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Text\":[");
+			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			res.append("]");
+			hasPrev = true;
+		}
+
+		if (sciName != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"SciName\":[");
+			res.append(sciName.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			res.append("]");
+			hasPrev = true;
+		}
+
+		if (grammar != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append(grammar.toJSON());
+			hasPrev = true;
+		}
+
+		if (subsenses != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Senses\":");
+			res.append(JSONUtils.objectsToJSON(subsenses));
+			hasPrev = true;
+		}
+
+		if (source != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"Source\":\"");
+			res.append(JSONObject.escape(source));
+			res.append("\"");
+			hasPrev = true;
+		}
+
+		//res.append("}");
+		return res.toString();
+	}
+
+	/**
+	 * Ja text ir "", tad to vienalga izdrukā.
+	 * TODO vai tā ir labi?
+	 */
+	public void toXML(Node parent)
+	{
+		Document doc = parent.getOwnerDocument();
+		Element phraseN = doc.createElement("Phrase");
+		if (type != null) phraseN.setAttribute("Type", type);
+		if (text != null)
+		{
+			Node textN = doc.createElement("Text");
+			for (String var : text)
+			{
+				Node textVar = doc.createElement("Variant");
+				textVar.appendChild(doc.createTextNode(var));
+				textN.appendChild(textVar);
+			}
+			//textN.appendChild(doc.createTextNode(text));
+			phraseN.appendChild(textN);
+		}
+		if (sciName != null)
+		{
+			Node textN = doc.createElement("SciName");
+			for (String var : sciName)
+			{
+				Node textVar = doc.createElement("Variant");
+				textVar.appendChild(doc.createTextNode(var));
+				textN.appendChild(textVar);
+			}
+			//textN.appendChild(doc.createTextNode(text));
+			phraseN.appendChild(textN);
+		}
+		if (grammar != null) grammar.toXML(phraseN);
+		if (subsenses != null)
+		{
+			Node sensesContN = doc.createElement("Senses");
+			for (Sense s : subsenses) s.toXML(sensesContN);
+			phraseN.appendChild(sensesContN);
+		}
+		if (source != null)
+		{
+			Node sourceN = doc.createElement("Source");
+			sourceN.setTextContent(source);
+			phraseN.appendChild(sourceN);
+		}
+		parent.appendChild(phraseN);
 	}
 }

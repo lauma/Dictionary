@@ -140,11 +140,14 @@ public class MLVVPhrase extends Phrase
 			String gloss = m.group(3).trim();
 			if (gloss.equals(".")) gloss = null;
 			else if (gloss.matches("[-\u2013\u2014]"))
+			{
 				System.out.printf("Taksonam \"%s\" sanāk tukša skaidrojošā daļa pēc domuzīmes\n", linePart);
+				gloss = null;
+			}
 			else if (gloss.matches("[-\u2013\u2014].+"))
 				gloss = gloss.substring(1).trim();
 				// TODO: iespējams, ka te vajag brīdinājumu par trūkstošu domuzīmi.
-			if (gloss != null)
+			if (gloss != null && !gloss.isEmpty())
 			{
 				res.subsenses = new LinkedList<>();
 				res.subsenses.add(new MLVVSense(MLVVGloss.parse(gloss.trim())));

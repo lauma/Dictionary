@@ -186,6 +186,8 @@ public class AbbrMap {
 		pairingFlags.put("salikteņos", TFeatures.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņos", TFeatures.POS__PIECE);
 
+		pairingFlags.put("vārdu daļa", TFeatures.POS__PIECE);
+
 		pairingFlags.put("pāru saikļa sastāvdaļa.", TFeatures.POS__CONJUNCTION);
 		pairingFlags.put("pāru saikļa sastāvdaļa.", Tuple.of(TKeys.POS, "Saikļa sastāvdaļa"));
 		pairingFlags.put("pāru saikļa sastāvdaļa.", Tuple.of(TKeys.POS, "Pāru saikļa sastāvdaļa"));
@@ -580,6 +582,8 @@ public class AbbrMap {
 		pairingFlags.put("līb.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("mong.", Tuple.of(TKeys.LANGUAGE, "Mongoļu"));
 		pairingFlags.put("mong.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("norv. val.",  Tuple.of(TKeys.LANGUAGE, "Norvēģu"));
+		pairingFlags.put("norv. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("polinēziešu", Tuple.of(TKeys.LANGUAGE, "Polinēziešu"));
 		pairingFlags.put("polinēziešu", TFeatures.POS__FOREIGN);
 		pairingFlags.put("poļu", Tuple.of(TKeys.LANGUAGE, "Poļu"));

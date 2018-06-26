@@ -227,6 +227,7 @@ public class OptHypernRules
 		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
 		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
+		SixthDecl.noChange("-balss, s.", ".*valss"), // sirdsbalss
 		SixthDecl.noChange("-valsts, s.", ".*valsts"), // padomjvalsts
 
 		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
@@ -277,6 +278,7 @@ public class OptHypernRules
 		SecondDecl.std("-eža, v.", ".*ezis"), // ezis
 		SecondDecl.std("-naža, v.", ".*nazis"), // ēveļnazis
 		SecondDecl.std("-oļa, v.", ".*olis"), // olis
+		SecondDecl.std("-pūšļa, v.", ".*pūslis"), // pūslis
 		SecondDecl.std("-pūžņa, v.", ".*pūznis"), // pūznis
 		SecondDecl.std("-rešņa, v.", ".*resnis"), // resnis
 		SecondDecl.std("-urbja, v.", ".*urbis"), // kloķurbis
@@ -296,6 +298,7 @@ public class OptHypernRules
 	public static final EndingRule[] thirdDeclNoun = {
 			ThirdDecl.std("-alus, v.", ".*alus"), // alus
 			ThirdDecl.std("-klepus, v.", ".*klepus"), // klepus
+			ThirdDecl.std("-tirgus, v.", ".*tirgus"), // sīktirgus
 			GenNoun.any("-dzirnu, s.", ".*dzirnus", 31,
 					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[]{TFeatures.GENDER__FEM}), // dzirnus
 			GenNoun.any("-pelu, s.", ".*pelus", 31,

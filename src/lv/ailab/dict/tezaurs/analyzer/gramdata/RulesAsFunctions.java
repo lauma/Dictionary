@@ -78,7 +78,7 @@ public class RulesAsFunctions
 	{
 		// TODO: afrikandu?
 		if (gramFragment.matches(
-				"(afrikānsu|angļu|it\\.|lat\\.|latīņu|sanskr\\.|senebr\\.|spāņu|vācu|zviedru)( val\\.)? \"[- \\p{Ll}]+\""
+				"(afrikandu|angļu|it\\.|lat\\.|latīņu|sanskr\\.|senebr\\.|spāņu|vācu|zviedru)( val\\.)? \"[- \\p{Ll}]+\""
 						+ "( - deminutīvs no \"[ \\p{Ll}]+\")?\\.?"))
 		{
 			flagCollector.add(Tuple.of(TKeys.ETYMOLOGY, gramFragment));

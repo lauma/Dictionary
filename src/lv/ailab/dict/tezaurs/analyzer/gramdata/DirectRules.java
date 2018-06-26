@@ -243,7 +243,11 @@ public class DirectRules
 				new Tuple[]{TFeatures.GENDER__FEM}), // cietusī
 		BaseRule.of("-šās, s.", ".*usī", 41,
 				new Tuple[]{TFeatures.POS__PARTICIPLE_IS, TFeatures.CONTAMINATION__NOUN},
-				new Tuple[]{TFeatures.GENDER__FEM}) // jaundzimusī
+				new Tuple[]{TFeatures.GENDER__FEM}), // jaundzimusī
+
+		// UNKNOWN paradigm: -dams, -dama, -damies, -damās participles.
+		Participle.damsDamaDamiesDamas("s. -dama", ".*dams"), // pusjokodams
+		Participle.damsDamaDamiesDamas("s. -damās", ".*damies") // pusjokodamies
 	};
 
 	public static final EndingRule[] be = {
@@ -729,6 +733,9 @@ public class DirectRules
 		GenNoun.any("-ču, v.", ".*či", new Integer[]{1, 3},
 				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
 				new Tuple[]{TFeatures.GENDER__MASC}), // divriči
+		GenNoun.any("-ķu, v.", ".*ķi", new Integer[]{1, 3},
+				new Tuple[]{TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM},
+				new Tuple[]{TFeatures.GENDER__MASC}), // saussveķi
 		GenNoun.any("-šu, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*mēneši", new Integer[]{3, 4}, new Tuple[]{TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL}),
 						SimpleSubRule.of(".*ši", new Integer[]{1, 3}, new Tuple[]{ TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL})},

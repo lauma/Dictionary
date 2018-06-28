@@ -202,6 +202,7 @@ public class OptHypernRules
 		SixthDecl.std("-zivs, dsk. ģen. -zivju, s.", ".*zivs"), // haizivs
 
 		SixthDecl.std("-sāls, dsk. ģen. -sāļu, s.", ".*sāls"), // sāls 2
+		SixthDecl.std("-dzelzs, s.", ".*dzelzs"), // stiegrdzelzs
 		SixthDecl.std("-grants, s.", ".*grants"), // grants
 		SixthDecl.std("-ģikts, s.", ".*ģikts"), // ģikts // TODO check!
 		SixthDecl.std("-nakts, s.", ".*nakts"), // pastarnakts
@@ -246,6 +247,8 @@ public class OptHypernRules
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // īkstis
 		GenNoun.any("-pirkstu, s.", ".*pirkstis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // pirkstis
+		GenNoun.any("-spirkstu, s.", ".*spirkstis", 35,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // spirkstis
 		GenNoun.any("-utu, s.", ".*utis", 35,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // grauzējutis
 

@@ -691,6 +691,7 @@ public class AbbrMap {
 		pairingFlags.put("senv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sens, reti lietots vārds"));
 		pairingFlags.put("paširon.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Pašironija"));
 		pairingFlags.put("lamuvārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
+		pairingFlags.put("lamu vārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 		pairingFlags.put("lamu vārda nozīmē", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 		pairingFlags.put("lamu vārds", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 
@@ -871,6 +872,7 @@ public class AbbrMap {
 		pairingFlags.put("apst. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("adv. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("adv. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
+		pairingFlags.put("adv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("interj. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
 		pairingFlags.put("izsauk. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
 		pairingFlags.put("izsauk. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));

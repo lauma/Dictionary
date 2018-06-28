@@ -227,7 +227,7 @@ public class OptHypernRules
 		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
 		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
-		SixthDecl.noChange("-balss, s.", ".*valss"), // sirdsbalss
+		SixthDecl.noChange("-balss, s.", ".*balss"), // sirdsbalss
 		SixthDecl.noChange("-valsts, s.", ".*valsts"), // padomjvalsts
 
 		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts

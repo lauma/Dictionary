@@ -147,6 +147,8 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute
 		// 11. paradigma: 6. dekl.
 		WithAltLemma.nounPluralToSingularFem("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
+		WithAltLemma.nounPluralToSingularFem("smilkšu, vsk.", "smilkts, smilkts, s.", "smilktis", 11), // smilktis
+		WithAltLemma.nounPluralToSingularFem("smilšu, vsk.", "smilts, smilts, s.", "smiltis", 11), // smiltis
 		WithAltLemma.nounPluralToSingularFem("-smilšu, vsk.", "smilts, -smilts, s.", "smiltis", 11), // putekļsmiltis
 		WithAltLemma.nounPluralToSingularFem("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.

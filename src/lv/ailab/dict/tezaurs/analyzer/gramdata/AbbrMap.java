@@ -856,6 +856,8 @@ public class AbbrMap {
 		pairingFlags.put("lietv. nozīmē.", TFeatures.CONTAMINATION__NOUN);
 		pairingFlags.put("īpašvārda nozīmē.", TFeatures.CONTAMINATION__NOUN);
 		pairingFlags.put("īpašvārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Īpašvārds"));
+		pairingFlags.put("parasti īpašvārda nozīmē.", TFeatures.CONTAMINATION__NOUN);
+		pairingFlags.put("parast īpašvārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Īpašvārds"));
 		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.VERB));
 		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.CONTAMINATION, "Palīgdarbības vārds"));
 		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.VERB));

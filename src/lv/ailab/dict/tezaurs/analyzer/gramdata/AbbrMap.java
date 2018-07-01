@@ -412,7 +412,7 @@ public class AbbrMap {
 		pairingFlags.put("herald.", Tuple.of(TKeys.DOMAIN, "Heraldika"));
 		pairingFlags.put("hidr.", Tuple.of(TKeys.DOMAIN, "Hidroloģija"));
 		pairingFlags.put("hidrotehn.", Tuple.of(TKeys.DOMAIN, "Hidrotehnika"));
-		pairingFlags.put("hist.", Tuple.of(TKeys.DOMAIN, "Historigrāfija"));
+		pairingFlags.put("hist.", Tuple.of(TKeys.DOMAIN, "Historiogrāfija"));
 		pairingFlags.put("inf.", Tuple.of(TKeys.DOMAIN, "Informātika"));
 		pairingFlags.put("jlat.", Tuple.of(TKeys.DOMAIN, "Jaunlatīņu literatūra"));
 		pairingFlags.put("jur.", Tuple.of(TKeys.DOMAIN, "Jurisprudence"));

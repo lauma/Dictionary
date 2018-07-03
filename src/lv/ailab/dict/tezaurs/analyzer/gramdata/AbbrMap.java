@@ -469,7 +469,7 @@ public class AbbrMap {
 		pairingFlags.put("pārt.", Tuple.of(TKeys.DOMAIN, "Pārtika"));
 		pairingFlags.put("pol.", Tuple.of(TKeys.DOMAIN, "Politika"));
 		pairingFlags.put("poligr.", Tuple.of(TKeys.DOMAIN, "Poligrāfija"));
-		pairingFlags.put("polit.", Tuple.of(TKeys.DOMAIN, "Politisks"));
+		pairingFlags.put("polit.", Tuple.of(TKeys.DOMAIN, "Politika")); // Bija "Politisks"
 		pairingFlags.put("psih.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("psihol.", Tuple.of(TKeys.DOMAIN, "Psiholoģija"));
 		pairingFlags.put("psihoan.", Tuple.of(TKeys.DOMAIN, "Psihoanalīze"));

@@ -150,6 +150,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("smilkšu, vsk.", "smilkts, smilkts, s.", "smilktis", 11), // smilktis
 		WithAltLemma.nounPluralToSingularFem("smilšu, vsk.", "smilts, smilts, s.", "smiltis", 11), // smiltis
 		WithAltLemma.nounPluralToSingularFem("-smilšu, vsk.", "smilts, -smilts, s.", "smiltis", 11), // putekļsmiltis
+		WithAltLemma.nounPluralToSingularFem("sprikšu, vsk.", "spriksts, spriksts, s.", "sprikstis", 11), // sprikstis
 		WithAltLemma.nounPluralToSingularFem("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis

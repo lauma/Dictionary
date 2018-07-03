@@ -786,6 +786,7 @@ public class AbbrMap {
 		pairingFlags.put("nolieg. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
 		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
+		pairingFlags.put("parasti pamudinājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Pamudinājuma teikums"));
 		pairingFlags.put("parasti stāstījuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
 		pairingFlags.put("parasti stāstījuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
 		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));

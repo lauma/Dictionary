@@ -83,6 +83,7 @@ public class OptHypernRules
 		Participle.isUsi("-plaukušais; s. -plaukusi, -plaukusī.", ".*plaucis"), // pusplaucis
 		Participle.isUsi("-plukušais; s. -plukusi, -plukusī", ".*plucis"), // applucis
 		Participle.isUsi("-sprāgušais; s. -sprāgusi, -sprāgusī", ".*sprādzis"), // pussprādzis
+		Participle.isUsi("-tikušais; s. -tikusi, -tikusī", ".*ticis"), // pussprādzis
 	};
 	/**
 	 * Paradigm 9: Lietvārds 5. deklinācija -e
@@ -228,8 +229,10 @@ public class OptHypernRules
 		SixthDecl.noChange("-vēsts, dsk. ģen. -vēstu, s.", ".*vēsts"), // vēsts
 		SixthDecl.noChange("-zoss, dsk. ģen. -zosu, s.", ".*zoss"), // mežazoss
 
+		SixthDecl.noChange("-auss, s.", ".*auss"), // zaķauss
 		SixthDecl.noChange("-balss, s.", ".*balss"), // sirdsbalss
 		SixthDecl.noChange("-valsts, s.", ".*valsts"), // padomjvalsts
+		SixthDecl.noChange("-žults, s.", ".*žults"), // žults
 
 		SixthDecl.optChange("-dūksts, dsk. ģen. -dūkstu, arī -dūkšu, s.", ".*dūksts"), //dūksts
 		SixthDecl.optChange("-dzeņauksts, dsk. ģen. -dzeņaukstu, arī -dzeņaukšu, s.", ".*dzeņauksts"), //dzeņauksts
@@ -265,6 +268,7 @@ public class OptHypernRules
 		SecondDecl.stdNomGen("-sāls, dsk. -sāļi, v.", ".*sāls"), // glaubersāls
 		SecondDecl.stdNomGen("-uguns, dsk. -uguņi, v.", ".*uguns"), // uguns 2
 		SecondDecl.stdNomGen("-ūdens, dsk. -ūdeņi, v.", ".*ūdens"), // notekūdens
+		SecondDecl.stdNomGen("-zibens, dsk. -zibeņi, v.", ".*zibens"), // notekūdens
 		SecondDecl.stdNomGen("-sāls, dsk. ģen. -sāļu, v.", ".*sāls"), // akmenssals
 		SecondDecl.stdNomGen("-akmens, v.", ".*akmens"), // būvakmens
 		SecondDecl.stdNomGen("-mēness, v.", ".*mēness"), // mēness, pilnmēness
@@ -284,8 +288,14 @@ public class OptHypernRules
 		SecondDecl.std("-pūšļa, v.", ".*pūslis"), // pūslis
 		SecondDecl.std("-pūžņa, v.", ".*pūznis"), // pūznis
 		SecondDecl.std("-rešņa, v.", ".*resnis"), // resnis
+		SecondDecl.std("-tešļa, v.", ".*teslis"), // teslis
 		SecondDecl.std("-urbja, v.", ".*urbis"), // kloķurbis
+		SecondDecl.std("-ūpja, v.", ".*ūpis"), // ūpis
+		SecondDecl.std("-viļņa, v.", ".*vilnis"), // vilnis
 		SecondDecl.std("-vižņa, v.", ".*viznis"), // viznis
+		SecondDecl.std("-zižļa, v.", ".*zizlis"), // zizlis
+		SecondDecl.std("-zuša, v.", ".*zutis"), // zutis
+		SecondDecl.std("-zviļņa, v.", ".*zvilnis"), // zvilnis
 
 		GenNoun.any("-suņa, v.", ".*suns", 5, null, new Tuple[]{TFeatures.GENDER__MASC}),
 

@@ -107,22 +107,38 @@ public class DirectRules
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.MULTI_INFLECTIVE,
 						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"labs[13] vakars[1]\"")},
 				null), //labsvakars
-		GenNoun.any("šāssaules, arī šīssaules, s.", "šīsaule", 9,
+		GenNoun.any("šāsmājas, arī šīsmājas, s.", "šīmāja", 7,
 				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE, TFeatures.PARALLEL_FORMS,
-						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] saule[9]\"")},
-				null), //šīsaule
+						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] māja[7]\"")},
+				null), //šīmāja
 		GenNoun.any("šāspasaules, arī šīspasaules, s.", "šīpasaule", 9,
 				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE, TFeatures.PARALLEL_FORMS,
 						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] pasaule[9]\"")},
 				null), //šīpasaule
+		GenNoun.any("šāspuses, arī šīspuses, s.", "šīpuse", 9,
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE, TFeatures.PARALLEL_FORMS,
+						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] puse[9]\"")},
+				null), //šīpuse
+		GenNoun.any("šāssaules, arī šīssaules, s.", "šīsaule", 9,
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE, TFeatures.PARALLEL_FORMS,
+						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] saule[9]\"")},
+				null), //šīsaule
 		GenNoun.any("šāszemes, arī šīszemes, s.", "šīzeme", 9,
 				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE, TFeatures.PARALLEL_FORMS,
 						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"šī[25] zeme[9]\"")},
 				null), //šīzeme
+		GenNoun.any("vecāgada, v.", "vecaisgads", 1,
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.MULTI_INFLECTIVE,
+						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"vecais[30] gads[1]\"")},
+				null), // vecaisgads
 		GenNoun.any("vecātēva, v.", "vecaistēvs", 1,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.MULTI_INFLECTIVE,
 						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"vecais[30] tēvs[1]\"")},
 				null), //vecaistēvs
+		GenNoun.any("vecāsmammas, s.", "vecāmamma", 7,
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE,
+						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"vecā[40] mamma[7]\"")},
+				null), // vecāmamma
 		GenNoun.any("vecāsmātes, dsk. ģen. vecomāšu, s.", "vecāmāte", 9,
 				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.MULTI_INFLECTIVE,
 						Tuple.of(TKeys.MULTIINFLECTION_PATTERN, "\"vecā[40] māte[9]\"")},
@@ -421,6 +437,8 @@ public class DirectRules
 				null), // ceturtais, otrais, nultais
 		BaseRule.of("skait.; s. -a", ".*s", 23,
 				null, new Tuple[]{TFeatures.POS__CARD_NUMERAL}), // otrs
+		BaseRule.of("s. -a; kārtas skait.", ".*s", 23,
+				null, new Tuple[]{TFeatures.POS__ORD_NUMERAL}), // trešs
 		BaseRule.of("s. -a; daļu skait.", ".*s", 23,
 				null, new Tuple[]{TFeatures.POS__FRACT_NUMERAL}), // pusotrs, pustrešs
 
@@ -462,6 +480,7 @@ public class DirectRules
 		GenNoun.any("-as, dsk. ģen. -vu, s.", ".*va", 7, null, new Tuple[] {TFeatures.GENDER__FEM}), // apskava
 
 		// 7. paradigma: 4. dekl. lietvārdi, vīriešu dzimte
+		GenNoun.any("-as, dat. -am, v.", ".*a", 8, null, new Tuple[] {TFeatures.GENDER__MASC}), // vojevoda
 		GenNoun.any("ģen. -as, dat. -am, v.", ".*a", 8, null, new Tuple[] {TFeatures.GENDER__MASC}), // papa
 		GenNoun.any("-as, v.", ".*a", 8, null, new Tuple[] {TFeatures.GENDER__MASC}), // puika
 	};
@@ -685,6 +704,8 @@ public class DirectRules
 						SimpleSubRule.of(".*ss", new Integer[]{5}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // abrkasis, lemess
 		// Bez mijām
+		GenNoun.any("-da, v.", ".*dis", new Integer[]{48},
+				null, new Tuple[]{TFeatures.GENDER__MASC}), // trādirīdis
 		GenNoun.any("-ja, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*js", new Integer[]{1}, null),
 						SimpleSubRule.of(".*jis", new Integer[]{3}, null)},

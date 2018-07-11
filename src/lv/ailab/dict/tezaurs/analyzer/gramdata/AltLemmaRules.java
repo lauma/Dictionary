@@ -76,14 +76,18 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "slis, -šļa, v.", "šļi", 3), // krāšļi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "snis, -šņa, v.", "šņi", 3), // kušņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "tis, -ša, v.", "ši", 3), // asinsķermenīši
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "vis, -vja, v.", "vji", 3), // vatslāvji
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "zis, -ža, v.", "ži", 3), // dzelži
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "jis, -a, v.", "ji", 3), // galvkājis
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -a, v.", "ri", 3), // klaķieri
 		WithAltLemma.nounPluralToSingularMascStd("-ru, vsk.", "ris, -ra, v.", "ri", 3), // dzimumdziedzeri
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ris, -ra, v.", "ri", 3), // kultūrtrēģeri
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "pūznis, pūžņa, v.", "pūžņi", 3), // pūžņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "viznis, vižņa, v.", "vižņi", 3), // vižņi
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
+			// -o, vsk. vecajais, -ā, v.
+		WithAltLemma.nounPluralToSingularMascStd("-o, vsk.", "ais, -ā, v.", "akmeņi", 30), // vecajie
 
 		// 1. paradigma: 1. dekl., s
 		//WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
@@ -142,16 +146,22 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-vju, vsk.", "ve, -es, s.", "ves", 9), // klauves
 		WithAltLemma.nounPluralToSingularFem("-žu, vsk.", "de, -es, s.", "des", 9), // pirmpapardes
 		WithAltLemma.nounPluralToSingularFem("-žu, vsk.", "ze, -es, s.", "zes", 9), // kolagenoze
+		WithAltLemma.nounPluralToSingularFem("-ru, vsk.", "re, -es, s.", "res", 9), // virsnieres
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
+		WithAltLemma.nounPluralToSingularFem("-ērču, vsk.", "ērce, -ērces, s.", "ērces", 9), // ūdensērces
+		WithAltLemma.nounPluralToSingularFem("zinšu, vsk.","zinte, -es, s.", "zintes", 9), // zintes
 		// paradigma: 5. dekl. bez mijas
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute
 		// 11. paradigma: 6. dekl.
 		WithAltLemma.nounPluralToSingularFem("bārkšu, vsk.", "bārksts, bārksts, s.", "bārkstis", 11), // bārkstis
+		WithAltLemma.nounPluralToSingularFem("-blakšu, vsk.", "blakts, -blakts, s.", "blaktis", 11), // ūdensblaktis
 		WithAltLemma.nounPluralToSingularFem("smilkšu, vsk.", "smilkts, smilkts, s.", "smilktis", 11), // smilktis
 		WithAltLemma.nounPluralToSingularFem("smilšu, vsk.", "smilts, smilts, s.", "smiltis", 11), // smiltis
 		WithAltLemma.nounPluralToSingularFem("-smilšu, vsk.", "smilts, -smilts, s.", "smiltis", 11), // putekļsmiltis
 		WithAltLemma.nounPluralToSingularFem("sprikšu, vsk.", "spriksts, spriksts, s.", "sprikstis", 11), // sprikstis
+		WithAltLemma.nounPluralToSingularFem("vanšu, vsk.", "vants, vants, s.", "vantis", 11), // vantis
 		WithAltLemma.nounPluralToSingularFem("-zivju, vsk.", "zivs, -zivs, s.", "zivis", 11), // bruņzivis
+		WithAltLemma.nounPluralToSingularFem("zinšu, vsk.", "zints, zints, s.", "zintis", 11), // zintis
 		// 35. paradigma: 6. dekl. bez mijas.
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "akts, akts, s.", "aktis", 35), // aktis
 		WithAltLemma.nounPluralToSingularFem("-utu, vsk.", "uts, -uts, s.", "utis", 35), // dūrējuts

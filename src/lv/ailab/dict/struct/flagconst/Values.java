@@ -1,5 +1,9 @@
 package lv.ailab.dict.struct.flagconst;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Vispārīgās (dažādām vārdnīcām izmantojamās) karodziņu vērtības.
  *
@@ -29,10 +33,24 @@ public class Values
 	//=== Skaitlis =============================================================
 	public final static String SINGULAR = "Vienskaitlis";
 	public final static String PLURAL = "Daudzskaitlis";
-
+	public static boolean isNumber(String test)
+	{
+		return allNumbers.contains(test);
+	}
+	public final static Set<String> allNumbers =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(SINGULAR); add(PLURAL);}});
 	//=== Dzmite ===============================================================
 	public final static String FEMININE = "Sieviešu dzimte";
 	public final static String MASCULINE = "Vīriešu dzimte";
+	public static boolean isGender(String test)
+	{
+		return allGenders.contains(test);
+	}
+	public final static Set<String> allGenders =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(FEMININE); add(MASCULINE);}});
+
 
 	//=== Locījums =============================================================
 	public final static String NOMINATIVE = "Nominatīvs";
@@ -40,6 +58,14 @@ public class Values
 	public final static String DATIVE = "Datīvs";
 	public final static String ACUSATIVE = "Akuzatīvs";
 	public final static String LOCATIVE = "Lokatīvs";
+
+	public static boolean isCase(String test)
+	{
+		return allCases.contains(test);
+	}
+	public final static Set<String> allCases =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE);}});
 
 	//=== Citi =================================================================
 	public final static String NON_INFLECTIVE = "Nelokāms vārds";

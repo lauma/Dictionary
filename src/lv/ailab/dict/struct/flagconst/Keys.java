@@ -30,7 +30,7 @@ public class Keys
 	 * Norāda, ja kaut kādu iemeslu dēļ šķirkļavārdu analizējot, to ir izdevies
 	 * noskaidrot. Lielākoties nav pašmērķis.
 	 */
-	public final static String NUMBER = "Skaitlis";
+	//public final static String NUMBER = "Skaitlis";
 	/**
 	 * Gramatiskā kategorija - dzimte: sieviešu, vīriešu un kopdzimte
 	 * (morfoanalizatoram nav, bet tēzauram ir)
@@ -41,7 +41,7 @@ public class Keys
 	/**
 	 * Gramatiskā kategorija - locījums - vietas, kur norādīts fiksēts locījums.
 	 */
-	public final static String CASE = "Locījums";
+	//public final static String CASE = "Locījums";
 
 	//=== Morfoimporta informācija =============================================
 	/**

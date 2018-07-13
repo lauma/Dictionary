@@ -213,6 +213,7 @@ public class OptHypernRules
 
 		// Bez mijām
 		SixthDecl.noChange("-acs, dsk. ģen. -acu, s.", ".*acs"), //uzacs, acs
+		SixthDecl.noChange("-akts, dsk. ģen. -aktu, s.", ".*akts"), //akts
 		SixthDecl.noChange("-ass, dsk. ģen. -asu, s.", ".*ass"), //ass
 		SixthDecl.noChange("-auss, dsk. ģen. -ausu, s.", ".*auss"), //auss
 		SixthDecl.noChange("-balss, dsk. ģen. -balsu, s.", ".*balss"), //atbalss

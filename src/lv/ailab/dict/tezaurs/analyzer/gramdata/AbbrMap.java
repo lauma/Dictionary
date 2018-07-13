@@ -81,7 +81,7 @@ public class AbbrMap {
 		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
 		if (found == null || found.size() != 1) return null;
 		Tuple<String, String> feature = found.iterator().next();
-		if (!feature.first.equals(TKeys.CASE)) return null;
+		if (!TValues.isCase(feature.second)) return null;
 		return feature.second;
 	}
 
@@ -302,33 +302,46 @@ public class AbbrMap {
 		binaryFlags.put("lokāms.", "Lokāms vārds");
 		binaryFlags.put("lokāms", "Lokāms vārds");
 
-		pairingFlags.put("akuz.", Tuple.of(TKeys.CASE, TValues.ACUSATIVE));
-		pairingFlags.put("dat.", Tuple.of(TKeys.CASE, TValues.DATIVE));
-		pairingFlags.put("ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
-		pairingFlags.put("arī ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
-		pairingFlags.put("instr.", Tuple.of(TKeys.CASE, TValues.INSTRUMENTAL));
-		pairingFlags.put("lok.", Tuple.of(TKeys.CASE, TValues.LOCATIVE));
-		pairingFlags.put("nom.", Tuple.of(TKeys.CASE, TValues.NOMINATIVE));
+		pairingFlags.put("akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
+		pairingFlags.put("ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("arī ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
+		pairingFlags.put("lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));
 
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.NUMBER, TValues.PLURAL));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.CASE, TValues.DATIVE));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.NUMBER, TValues.PLURAL));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.NUMBER, TValues.SINGULAR));
+		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
 
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.NUMBER, TValues.DUAL));
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.NUMBER, TValues.PLURAL));
-		pairingFlags.put("divsk.", Tuple.of(TKeys.NUMBER, TValues.DUAL));
-		pairingFlags.put("dsk.", Tuple.of(TKeys.NUMBER, TValues.PLURAL));
-		pairingFlags.put("vsk.", Tuple.of(TKeys.NUMBER, TValues.SINGULAR));
+		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
+		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
 
-		pairingFlags.put("ģen. nelok.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
+		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.SINGULAR));
+
+		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+
+		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
+		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
+		pairingFlags.put("dsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("vsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+
+		pairingFlags.put("ģen. nelok.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		binaryFlags.put("ģen. nelok.", TValues.NON_INFLECTIVE);
-		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.CASE, TValues.GENITIVE));
+		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē.", TValues.NON_INFLECTIVE);
-		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.CASE, TValues.GENITIVE));
+		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē", TValues.NON_INFLECTIVE);
 

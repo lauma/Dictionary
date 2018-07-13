@@ -432,13 +432,13 @@ public class TGram extends Gram
 			if (pos.contains(TValues.GEN_ONLY)) paradigm.add(49);
 			// Nelokāmie lietvārdi - 12.
 			else if (flags.test(TFeatures.NON_INFLECTIVE) && flags.testKey(TKeys.GENDER)
-					&& !flags.testKey(TKeys.CASE)) paradigm.add(12); // bruto
+					&& !flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases)) paradigm.add(12); // bruto
 
 			if (pos.contains(TValues.PIECE_OF_WORD)) paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 		// Nelokāmie lietvārdi - 12.
 		else if (flags.test(TFeatures.NON_INFLECTIVE) && flags.testKey(TKeys.GENDER)
-				&& !flags.testKey(TKeys.CASE)) paradigm.add(12); // video
+				&& !flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases)) paradigm.add(12); // video
 	}
 
 	/**
@@ -497,13 +497,13 @@ public class TGram extends Gram
 		// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 		// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 		// problēmas.
-		if (flags.test(TKeys.CASE, TValues.GENITIVE) && flags.test(TFeatures.NON_INFLECTIVE))
+		if (flags.test(TKeys.USED_IN_FORM, TValues.GENITIVE) && flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			flags.add(TFeatures.POS__GEN_ONLY);
 			if (lemma.endsWith("u"))
-				flags.add(TKeys.NUMBER, TValues.PLURAL);
+				flags.add(TKeys.USED_IN_FORM, TValues.PLURAL);
 			else if (lemma.endsWith("a") || lemma.endsWith("s"))
-				flags.add(TKeys.NUMBER, TValues.SINGULAR);
+				flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
 			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
 			if (lemma.endsWith("a") || lemma.endsWith("us")) // tēvA, jāņA, medus
 				flags.add(TKeys.GENDER, TValues.MASCULINE);
@@ -513,7 +513,7 @@ public class TGram extends Gram
 				System.out.println("Ģenitīvenim ar nestandarta galotni \"" + lemma + "\" nevar noteikt dzimti.");
 			flags.add(TFeatures.FROZEN);
 		}
-		else if (flags.testKey(TKeys.CASE) && flags.test(TFeatures.NON_INFLECTIVE))
+		else if (flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) && flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			if (paradigm.size() > 0)
 				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +

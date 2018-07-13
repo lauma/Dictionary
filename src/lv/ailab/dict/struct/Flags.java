@@ -124,6 +124,19 @@ public class Flags implements HasToXML
 		return test (feature.first, feature.second);
 	}
 
+	/**
+	 * Pārbauda, vai karodziņi satur šādu atslēgu ar kādu no dotajām vērtībām.
+	 * Ja vērtība ir null, pārbauda, vai satur šādu atslēgu.
+	 */
+	public boolean testAnyValue (String key, Set<String> anyValue)
+	{
+		if (anyValue == null || anyValue.isEmpty()) return testKey(key);
+		HashSet<String> found = pairings.getAll(key);
+		if (found == null || found.size() < 1) return false;
+		for (String value : anyValue)
+			return (found.contains(value));
+		return false;
+	}
 	public boolean testKey (String key)
 	{
 		HashSet<String> found = pairings.getAll(key);

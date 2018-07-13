@@ -690,7 +690,8 @@ public class DirectRules
 				new Tuple[] {TFeatures.GENDER__MASC}), // algotājs
 
 		GenNoun.any("vsk. -ņa, v.", ".*nis", 3, null,
-				new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // amerikānis
+				new Tuple[]{TFeatures.GENDER__MASC}), // amerikānis
+				//new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // amerikānis
 		GenNoun.any("-ļa, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*lis", new Integer[]{3}, null)},
 				new Tuple[]{TFeatures.GENDER__MASC}), // acumirklis, (bacils, durkls=kļūda)
@@ -731,7 +732,8 @@ public class DirectRules
 		BaseRule.of("lietv. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
 					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN}), // aerobs
 		GenNoun.any("vsk. -a, v.", ".*[^aeiouāēīōū]s", 1, null,
-					new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
+					new Tuple[]{TFeatures.GENDER__MASC}), // acteks
+					//new Tuple[]{TFeatures.GENDER__MASC, Tuple.of(TKeys.NUMBER, TValues.SINGULAR)}), // acteks
 		GenNoun.any("-a, vsk.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*(akmen|asmen|mēnes|ziben|ūden|ruden)s", new Integer[]{4}, new Tuple[]{TFeatures.GENDER__MASC}),
 						SimpleSubRule.of(".*(suns|sāls|uguns)", new Integer[]{5}, new Tuple[]{TFeatures.GENDER__MASC}),

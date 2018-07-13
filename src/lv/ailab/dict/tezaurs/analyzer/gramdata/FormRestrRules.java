@@ -35,7 +35,7 @@ public class FormRestrRules
 		ArrayList<FormRestrRule[]> res = new ArrayList<>(3);
 		res.add(doubleLemmaWithPostGram);
 		res.add(singleLemmaWithPostGram);
-		res.add(noPostGram);
+		//res.add(noPostGram);
 		return res;
 	}
 
@@ -53,7 +53,7 @@ public class FormRestrRules
 	public static final FormRestrRule[] singleLemmaWithPostGram = {
 		// Bīstami, ka šīe var būt doubleLemmaWithPostGram pefiksi.
 		Restrictions.nounContSimple("ais, -ā, v.", "s"), // absolūtais
-		Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
+		/*Restrictions.anyOneForm("akuz.:", "i, apst. nozīmē", "is", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // acumirklis
 		Restrictions.anyOneForm("akuz.:", "u, apst. nozīmē", "a", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE)}), // diena
@@ -105,7 +105,7 @@ public class FormRestrRules
 
 		Restrictions.anyOneForm("dsk. lok.:", "ās, apst. nozīmē.", "a", null,
 				new Tuple[]{Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL),
-						Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // diena
+						Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE)}), // diena*/
 
 	};
 

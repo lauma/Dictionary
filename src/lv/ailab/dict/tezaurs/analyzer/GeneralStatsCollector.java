@@ -192,7 +192,7 @@ public class GeneralStatsCollector
             if (collectFifthDeclExceptions && (h.gram.getDirectParadigms().contains(44) || h.gram.getDirectParadigms().contains(47)))
                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 
-			if (collectNonInflWithCase && h.gram.flags.testKey(TKeys.CASE) &&
+			if (collectNonInflWithCase && h.gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) &&
 					h.gram.flags.test(TFeatures.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 		}

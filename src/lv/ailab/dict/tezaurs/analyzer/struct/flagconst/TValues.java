@@ -2,6 +2,10 @@ package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
 
 import lv.ailab.dict.struct.flagconst.Values;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Populārākās karodziņu vērtības - iznestas šeit, lai mazinātu pārakstīšanās
  * risku. Vispopulārākās atrodamas virsklasē Values.
@@ -76,11 +80,31 @@ public class TValues extends Values
 
 
 	public final static String DUAL = "Divskaitlis";
+	public static boolean isNumber(String test)
+	{
+		return allNumbers.contains(test);
+	}
+	public final static Set<String> allNumbers =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(SINGULAR); add(PLURAL); add(DUAL);}});
 
 	public final static String COGENDER = "Kopdzimte";
+	public static boolean isGender(String test)
+	{
+		return allGenders.contains(test);
+	}
+	public final static Set<String> allGenders =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(FEMININE); add(MASCULINE); add(COGENDER);}});
 
 	public final static String INSTRUMENTAL = "Instrumentālis";
-
+	public static boolean isCase(String test)
+	{
+		return allCases.contains(test);
+	}
+	public final static Set<String> allCases =
+			Collections.unmodifiableSet(
+					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL);}});
 
 	public final static String INFINITIVE = "Nenoteiksme";
 	public final static String THIRD_PERSON = "Trešā persona";

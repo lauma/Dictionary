@@ -302,40 +302,6 @@ public class AbbrMap {
 		binaryFlags.put("lokāms.", "Lokāms vārds");
 		binaryFlags.put("lokāms", "Lokāms vārds");
 
-		pairingFlags.put("akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("arī ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
-		pairingFlags.put("lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));
-
-		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-
-		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.SINGULAR));
-
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
-		pairingFlags.put("dsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("vsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-
 		pairingFlags.put("ģen. nelok.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
 		binaryFlags.put("ģen. nelok.", TValues.NON_INFLECTIVE);
 		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
@@ -731,31 +697,82 @@ public class AbbrMap {
 		pairingFlags.put("lamu vārds", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 
 		// Formu ierobežojumi
+		pairingFlags.put("akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
+		pairingFlags.put("ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("arī ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
+		pairingFlags.put("lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));
 		pairingFlags.put("nom. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));		// Ļaunums.
+		pairingFlags.put("parasti akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("parasti lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("parasti vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vokatīvs"));
+
+		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
+		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
+		pairingFlags.put("dsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("vsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("arī dsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));	// Ļaunums.
 		pairingFlags.put("arī vsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));		// Ļaunums.
+		pairingFlags.put("parasti dsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("parasti vsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
 		pairingFlags.put("parasti vsk", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
 		pairingFlags.put("par. vsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa ģenitīvs"));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa lokatīvs"));
-		pairingFlags.put("parasti lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("tikai dsk.", TFeatures.USED_ONLY__PLURAL);
 		pairingFlags.put("tikai vsk.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("arī dsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));	// Ļaunums.
-		pairingFlags.put("parasti dsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
+
+		// TODO: vai vajag kombinētos? piemēram, //pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa ģenitīvs"));		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("vsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
+		pairingFlags.put("vsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
+		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.SINGULAR));
 		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Daudzskaitļa ģenitīvs"));
+		//pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Daudzskaitļa ģenitīvs"));
 		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Daudzskaitļa lokatīvs"));
-		pairingFlags.put("parasti vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vokatīvs"));
-		pairingFlags.put("tikai dsk.", TFeatures.USED_ONLY__PLURAL);
+		//pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Daudzskaitļa lokatīvs"));
+		pairingFlags.put("parasti vsk. akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("parasti vsk. akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.GENITIVE));
+		//pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa ģenitīvs"));		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		//pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa lokatīvs"));
+		pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOMINATIVE));
+		//pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Vienskaitļa nominatīvs"));
+		pairingFlags.put("retāk dsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("retāk dsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("retāk dsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("retāk dsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("retāk vsk. akuz.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.ACUSATIVE));
+		pairingFlags.put("retāk vsk. akuz.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("retāk vsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("retāk vsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
+		pairingFlags.put("retāk vsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("retāk vsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("retāk vsk. nom.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.NOMINATIVE));
+		pairingFlags.put("retāk vsk. nom.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
+
 		pairingFlags.put("tikai v.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.MASCULINE));
 		pairingFlags.put("parasti dem.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Deminutīvs"));
+
 		pairingFlags.put("parasti 3. pers.", TFeatures.USUALLY_USED__THIRD_PERS);
 		pairingFlags.put("tikai 3. pers.", TFeatures.USED_ONLY__THIRD_PERS);
 		pairingFlags.put("parasti nāk. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Nākotne"));
@@ -824,6 +841,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti nolieguma formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("parasti nolieguma formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("nolieg. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
+		pairingFlags.put("nolieguma formā", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
 		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
 		pairingFlags.put("parasti pamudinājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Pamudinājuma teikums"));

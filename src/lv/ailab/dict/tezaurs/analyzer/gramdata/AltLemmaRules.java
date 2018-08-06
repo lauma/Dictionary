@@ -109,7 +109,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularMascStd("vsk.", "gs, -a, v.", "gi", 1), // balstaugi
 		// 2. paradigma: 1. dekl., š
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š, -a, v.", "i", 2), // cekuliņi
-		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ņš, -ņa, v.", "i", 2), // ļautiņi
+		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "ņš, -ņa, v.", "ņi", 2), // ļautiņi
 		WithAltLemma.nounPluralToSingularMascStd("-u, vsk.", "š; -a, v.", "i", 2), // aizsargstabiņi
 
 		// 30. paradigma: noteiktā galotne.

@@ -27,6 +27,7 @@ import org.w3c.dom.NodeList;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -41,7 +42,7 @@ public class TEntry extends Entry
 	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
 	 * Skatīt arī inBlacklist().
 	 */
-	private static HashSet<String> blacklist = initBlacklist();
+	private static HashMap<String, HashSet<Integer>> blacklist = initBlacklist();
 
 	/**
 	 * No XML elementam "s" atbilstošā DOM izveido šķirkļa datu struktūru. Tas
@@ -135,29 +136,40 @@ public class TEntry extends Entry
 
 	public boolean inBlacklist()
 	{
-		//if (sources == null || !sources.s.contains("LLVV")) return true; // FIXME - temporary restriction to focus on LLVV first
-		return blacklist.contains(head.lemma.text);
+		HashSet<Integer> homs = blacklist.get(head.lemma.text);
+		if (homs == null) return false;
+		if (homs.contains(-1)) return true;
+		return homs.contains(homId);
+		//return blacklist.contains(head.lemma.text);
 	}
 	
 	/**
 	 * Constructing a list of lemmas to ignore - basically meant to ease
 	 * development and testing.
+	 * Blacklist file format - one word (lemma) per line with one optional space
+	 * separated homonym index. No homonym index mean all homonyms.
 	 */
-	private static HashSet<String> initBlacklist()
+	private static HashMap<String, HashSet<Integer>> initBlacklist()
 	{
-		HashSet<String> blist = new HashSet<>();
+		HashMap<String, HashSet<Integer>> blist = new HashMap<>();
 		BufferedReader input;
 		try {
-			// Blacklist file format - one word (lemma) per line.
+			// Blacklist file format - one word (lemma) per line with optional
+			// space separated homonym index. No homonym index mean all homonyms.
 			input = new BufferedReader(
 					new InputStreamReader(
 					new FileInputStream(BLACKLIST_LOCATION), "UTF-8"));
 			String line;
 			while ((line = input.readLine()) != null)
 			{
-				//if (currentLine.contains("<s>") || currentLine.contains("</s>") || currentLine.isEmpty())
-				//	continue;
-				blist.add(line.trim());
+				if (line.contains(" "))
+				{
+					String[] parts = line.split(" ");
+					HashSet<Integer> homs = blist.get(parts[0]);
+					if (homs == null) homs = new HashSet<>();
+					if (!homs.contains(-1))homs.add(Integer.parseInt(parts[1]));
+				}
+				else blist.put(line.trim(), new HashSet<Integer>(){{add(-1);}});
 			}		
 			input.close();
 		} catch (Exception e)

@@ -12,6 +12,10 @@ esmu
 ir
 iraid
 jābūt
+jums 3
+man
+mani
+mums
 nav
 nava
 nevaid
@@ -25,11 +29,16 @@ nevaid
 šimie
 šinī
 šīs
-štie
+štie 2
 tajā
 tais
 tamā
 tamās
+tām 2
 tās
+tev
+tevis
+tevi
+tevī
 tie
 to

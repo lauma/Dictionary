@@ -42,7 +42,7 @@ public class TEntry extends Entry
 	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
 	 * Skatīt arī inBlacklist().
 	 */
-	private static HashMap<String, HashSet<Integer>> blacklist = initBlacklist();
+	private static HashMap<String, HashSet<String>> blacklist = initBlacklist();
 
 	/**
 	 * No XML elementam "s" atbilstošā DOM izveido šķirkļa datu struktūru. Tas
@@ -136,9 +136,9 @@ public class TEntry extends Entry
 
 	public boolean inBlacklist()
 	{
-		HashSet<Integer> homs = blacklist.get(head.lemma.text);
+		HashSet<String> homs = blacklist.get(head.lemma.text);
 		if (homs == null) return false;
-		if (homs.contains(-1)) return true;
+		if (homs.contains("-1")) return true;
 		return homs.contains(homId);
 		//return blacklist.contains(head.lemma.text);
 	}
@@ -149,9 +149,9 @@ public class TEntry extends Entry
 	 * Blacklist file format - one word (lemma) per line with one optional space
 	 * separated homonym index. No homonym index mean all homonyms.
 	 */
-	private static HashMap<String, HashSet<Integer>> initBlacklist()
+	private static HashMap<String, HashSet<String>> initBlacklist()
 	{
-		HashMap<String, HashSet<Integer>> blist = new HashMap<>();
+		HashMap<String, HashSet<String>> blist = new HashMap<>();
 		BufferedReader input;
 		try {
 			// Blacklist file format - one word (lemma) per line with optional
@@ -162,14 +162,16 @@ public class TEntry extends Entry
 			String line;
 			while ((line = input.readLine()) != null)
 			{
+				line = line.trim();
 				if (line.contains(" "))
 				{
 					String[] parts = line.split(" ");
-					HashSet<Integer> homs = blist.get(parts[0]);
+					HashSet<String> homs = blist.get(parts[0]);
 					if (homs == null) homs = new HashSet<>();
-					if (!homs.contains(-1))homs.add(Integer.parseInt(parts[1]));
+					if (!homs.contains("-1"))homs.add(parts[1]);
+					blist.put(parts[0].trim(), homs);
 				}
-				else blist.put(line.trim(), new HashSet<Integer>(){{add(-1);}});
+				else blist.put(line, new HashSet<String>(){{add("-1");}});
 			}		
 			input.close();
 		} catch (Exception e)

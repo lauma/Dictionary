@@ -359,39 +359,39 @@ public class GeneralStatsCollector
 		// TODO smukāk izvēlēties, kuru drukāt.
 		// kopdzimte + fakultatīvā mija
 		else if (paradigms.size() == 4 && paradigms.contains(9) && paradigms.contains(10)&& paradigms.contains(44) && paradigms.contains(47))
-			line.append("9");
+			line.append("9,10,44,47");
 		// 2. + 3. konj. + fakultatīva mija.
 		else if (paradigms.size() == 3 && paradigms.contains(16) && paradigms.contains(17) && paradigms.contains(45))
-			line.append("45");
+			line.append("45,17,16");
 		else if (paradigms.size() == 3 && paradigms.contains(19) && paradigms.contains(20) && paradigms.contains(46))
-			line.append("46");
+			line.append("46,20,19");
 		// 2. + 3. konj.
 		else if (paradigms.size() == 2 && paradigms.contains(16) && paradigms.contains(17))
-			line.append("17");
+			line.append("17,16");
 		else if (paradigms.size() == 2 && paradigms.contains(16) && paradigms.contains(45))
-			line.append("45");
+			line.append("45,16");
 		else if (paradigms.size() == 2 && paradigms.contains(19) && paradigms.contains(20))
-			line.append("20");
+			line.append("20,19");
 		else if (paradigms.size() == 2 && paradigms.contains(19) && paradigms.contains(46))
-			line.append("46");
+			line.append("46,19");
 		// Kopdzimte.
 		else if (paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8))
-			line.append("7");
+			line.append("7,8");
 		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10))
-			line.append("9");
+			line.append("9,10");
 		else if (paradigms.size() == 2 && paradigms.contains(44) && paradigms.contains(47))
-			line.append("44");
+			line.append("44,47");
 		// Fakultatīvā mija.
 		else if (paradigms.size() == 2 && paradigms.contains(17) && paradigms.contains(45))
-			line.append("45");
+			line.append("45,17");
 		else if (paradigms.size() == 2 && paradigms.contains(20) && paradigms.contains(46))
-			line.append("46");
+			line.append("46,20");
 		else if (paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(44))
-			line.append("9");
+			line.append("9,44");
 		else if (paradigms.size() == 2 && paradigms.contains(11) && paradigms.contains(35))
-			line.append("11");
+			line.append("11,35");
 		else if (paradigms.size() == 2 && paradigms.contains(3) && paradigms.contains(48))
-			line.append("3");
+			line.append("3,48");
 		else line.append("NULL");
 		line.append("\t");
 		// [4] avoti

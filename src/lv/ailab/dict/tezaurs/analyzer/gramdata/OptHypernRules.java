@@ -132,6 +132,8 @@ public class OptHypernRules
 		GenNoun.any("-tētes, dsk. ģen. -tētu, v.", ".*tēte", 47,
 				null, new Tuple[]{TFeatures.GENDER__MASC}), // tēte
 
+		GenNoun.any("-aļģu, s.", ".*aļģes", 9,
+				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // zilaļģes
 		GenNoun.any("-kreļļu, s.", ".*krelles", 9,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // krelles
 	};
@@ -1163,6 +1165,7 @@ public class OptHypernRules
 		ThirdConj.directStd("-dusu, -dusi,", "-dus, pag. -dusēju", "dusēt"), //atdusēt
 		ThirdConj.directStd("-dziedu, -dziedi,", "-dzied, pag. -dziedāju", "dziedāt"), //aizdziedāt
 		ThirdConj.directStd("-dzirdu, -dzirdi,", "-dzird, pag. -dzirdēju", "dzirdēt"), //sadzirdēt
+		ThirdConj.directStd("-džinkstu, -džinksti,", "-džinkst, pag. -džinkstēju", "džinkstēt"), //atdžinkstēt
 		// E, F, G
 		ThirdConj.directStd("-gārkstu, -gārksti,", "-gārkst, pag. -gārkstēju", "gārkstēt"), //gārkstēt
 		ThirdConj.directStd("-glūnu, -glūni,", "-glūn, pag. -glūnēju", "glūnēt"), //apglūnēt

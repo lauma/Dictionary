@@ -736,6 +736,17 @@ public class AbbrMap {
 		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
 		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
+		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
+		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
+		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
+		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
+		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INSTRUMENTAL));
+		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
+		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
 		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
 		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE));
@@ -828,6 +839,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti ar noteikto galotni.", TFeatures.USUALLY_USED__DEFINITE);
 		pairingFlags.put("parasti pārākajā pakāpē.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Pārākā pakāpe"));
 		pairingFlags.put("parasti pārākās pakāpes formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Pārākā pakāpe"));
+		pairingFlags.put("pārākajā pakāpē", Tuple.of(TKeys.USED_IN_FORM, "Pārākā pakāpe"));
 		pairingFlags.put("pārākajā pakāpē.", Tuple.of(TKeys.USED_IN_FORM, "Pārākā pakāpe"));
 		pairingFlags.put("parasti ar lielo sākumburtu", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Ar lielo sākumburtu"));
 		pairingFlags.put("ar lielo sākumburtu", Tuple.of(TKeys.USED_IN_FORM, "Ar lielo sākumburtu"));

@@ -98,13 +98,14 @@ public class TValues extends Values
 					new HashSet(){{add(FEMININE); add(MASCULINE); add(COGENDER);}});
 
 	public final static String INSTRUMENTAL = "Instrumentālis";
+	public final static String NOPRON_INSTRUMENTAL = "Bezprievārda instrumentālis";
 	public static boolean isCase(String test)
 	{
 		return allCases.contains(test);
 	}
 	public final static Set<String> allCases =
 			Collections.unmodifiableSet(
-					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL);}});
+					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL);}});
 
 	public final static String INFINITIVE = "Nenoteiksme";
 	public final static String THIRD_PERSON = "Trešā persona";

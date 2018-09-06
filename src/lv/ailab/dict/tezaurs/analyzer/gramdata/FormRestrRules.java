@@ -33,8 +33,8 @@ public class FormRestrRules
 	public static ArrayList<FormRestrRule[]> getAll()
 	{
 		ArrayList<FormRestrRule[]> res = new ArrayList<>(3);
-		res.add(doubleLemmaWithPostGram);
-		res.add(singleLemmaWithPostGram);
+		//res.add(doubleLemmaWithPostGram);
+		//res.add(singleLemmaWithPostGram);
 		//res.add(noPostGram);
 		return res;
 	}

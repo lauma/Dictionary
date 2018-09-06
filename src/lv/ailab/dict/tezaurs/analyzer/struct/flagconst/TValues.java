@@ -99,13 +99,14 @@ public class TValues extends Values
 
 	public final static String INSTRUMENTAL = "Instrumentālis";
 	public final static String NOPRON_INSTRUMENTAL = "Bezprievārda instrumentālis";
+	public final static String VOCATIVE = "Vokatīvs";
 	public static boolean isCase(String test)
 	{
 		return allCases.contains(test);
 	}
 	public final static Set<String> allCases =
 			Collections.unmodifiableSet(
-					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL);}});
+					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
 	public final static String INFINITIVE = "Nenoteiksme";
 	public final static String THIRD_PERSON = "Trešā persona";
@@ -115,6 +116,7 @@ public class TValues extends Values
 
 	public final static String MAIN_VERB = "Patstāvīgs darbības vārds";
 
+	public final static String POSITIVE_DEGREE = "Pamata pakāpe";
 	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
 	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
 

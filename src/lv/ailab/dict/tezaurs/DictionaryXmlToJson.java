@@ -265,7 +265,7 @@ public class DictionaryXmlToJson
 
 	protected static void printRuleStats(BufferedWriter out) throws IOException
 	{
-		out.write(FormRestrRules.class.getCanonicalName());
+		/*out.write(FormRestrRules.class.getCanonicalName());
 		out.newLine();
 		for (FormRestrRule[] rules : FormRestrRules.getAll())
 			for (FormRestrRule r : rules)
@@ -275,7 +275,7 @@ public class DictionaryXmlToJson
 					out.write("\t" + r.getUsageCount());
 					out.newLine();
 				}
-		out.newLine();
+		out.newLine();*/
 		out.write(AltLemmaRules.class.getCanonicalName());
 		out.newLine();
 		for (AdditionalHeaderRule[] rules : AltLemmaRules.getAll())

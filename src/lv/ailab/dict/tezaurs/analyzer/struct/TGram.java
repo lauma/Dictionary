@@ -316,9 +316,9 @@ public class TGram extends Gram
 				found = true;
 			}
 		} while (found && gramText.length() > 0);
-
+		return gramText;
 		// Ierobežojošo formu likumi.
-		int newBegin = -1;
+		/*int newBegin = -1;
 		for (FormRestrRule[] rules : FormRestrRules.getAll())
 			if (newBegin == -1) for (FormRestrRule r : rules)
 			{
@@ -339,7 +339,7 @@ public class TGram extends Gram
 			tmp.add(gramText);
 			leftovers.add(tmp);
 		}
-		return "";
+		return "";*/
 	}
 
 	/**

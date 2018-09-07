@@ -22,11 +22,9 @@ import lv.ailab.dict.tezaurs.analyzer.FirstConjStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.GeneralStatsCollector;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.DirectRules;
-import lv.ailab.dict.tezaurs.analyzer.gramdata.FormRestrRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
 import lv.ailab.dict.tezaurs.analyzer.io.StaxReader;
 import lv.ailab.dict.tezaurs.analyzer.io.XmlEntryStreamWriter;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
@@ -265,17 +263,6 @@ public class DictionaryXmlToJson
 
 	protected static void printRuleStats(BufferedWriter out) throws IOException
 	{
-		/*out.write(FormRestrRules.class.getCanonicalName());
-		out.newLine();
-		for (FormRestrRule[] rules : FormRestrRules.getAll())
-			for (FormRestrRule r : rules)
-				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
-				{
-					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
-					out.write("\t" + r.getUsageCount());
-					out.newLine();
-				}
-		out.newLine();*/
 		out.write(AltLemmaRules.class.getCanonicalName());
 		out.newLine();
 		for (AdditionalHeaderRule[] rules : AltLemmaRules.getAll())

@@ -23,12 +23,10 @@ import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
-import lv.ailab.dict.tezaurs.analyzer.gramlogic.FormRestrRule;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.JSONUtils;
-import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -85,7 +83,6 @@ public class TGram extends Gram
 		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
-		formRestrictions = null;
 		parseGram(lemma);
 	}
 	/**
@@ -98,7 +95,6 @@ public class TGram extends Gram
 		flags = new Flags();
 		paradigm = new HashSet<>();
 		altLemmas = null;
-		formRestrictions = null;
 		parseGram(lemma);
 	}
 	
@@ -128,6 +124,7 @@ public class TGram extends Gram
 		try
 		{
 			// Interesanti, vai ar refleksiju šis triks būtu ātrāks?
+			// Tēzaurs vairs nelieto formRestrictions, bet nu drošības pēc.
 			if (gram.formRestrictions != null)
 				for (Header restr : gram.formRestrictions)
 					if (((THeader) restr).hasUnparsedGram()) return true;
@@ -152,7 +149,6 @@ public class TGram extends Gram
 	{
 		String correctedGram = correctOCRErrors(freeText);
 		altLemmas = new ArrayList<>();
-		formRestrictions = new ArrayList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))
@@ -293,7 +289,7 @@ public class TGram extends Gram
 			found = false;
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, flags, formRestrictions);
+					gramText, flags);
 			// aijā - savienojumā "aijā, žūžū"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);
@@ -317,29 +313,6 @@ public class TGram extends Gram
 			}
 		} while (found && gramText.length() > 0);
 		return gramText;
-		// Ierobežojošo formu likumi.
-		/*int newBegin = -1;
-		for (FormRestrRule[] rules : FormRestrRules.getAll())
-			if (newBegin == -1) for (FormRestrRule r : rules)
-			{
-				newBegin = r.applyDirect(gramText, lemma, paradigm, flags, formRestrictions);
-				if (newBegin > -1) break;
-			}
-		// TODO: aiz šitiem likumiem patiesībā vajadzētu palikt tukšam līdz pašām, pašām beigām.
-		if (newBegin <= 0) return gramText; // Nebija atbilsmes
-		// Atbilsme bija.
-		gramText = gramText.substring(newBegin);
-		if (gramText.startsWith(".") || gramText.startsWith(","))
-			gramText = gramText.substring(1);
-		gramText = gramText.trim();
-
-		if (!gramText.equals("")) // Šito būtu jānodrošina jau likumam :)
-		{
-			LinkedList<String> tmp = new LinkedList<>();
-			tmp.add(gramText);
-			leftovers.add(tmp);
-		}
-		return "";*/
 	}
 
 	/**
@@ -362,7 +335,7 @@ public class TGram extends Gram
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			// Kur ir āķis, ka šito vēl vajag?
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, flags, formRestrictions);
+					gramText, flags);
 			//
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);

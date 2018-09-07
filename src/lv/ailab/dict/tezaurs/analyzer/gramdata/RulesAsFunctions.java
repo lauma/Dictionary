@@ -725,12 +725,9 @@ public class RulesAsFunctions
 	 * @param gramText				analizējamais gramatikas teksta fragments
 	 * @param flagCollector 		kolekcija, kurā pielikt karodziņus gadījumā,
 	 *                      		ja gramatikas fragments atbilst šim likumam
-	 * @param restrFormCollector	kolekcija, kurā pielikt izveidotās
-	 *                              papildlemmas.
 	 * @return	indekss neapstrādātās gramatikas daļas sākumam
 	 */
-	public static int processInParticipleFormFlag(String gramText,
-			Flags flagCollector, List<Header> restrFormCollector)
+	public static int processInParticipleFormFlag(String gramText, Flags flagCollector)
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
@@ -753,15 +750,14 @@ public class RulesAsFunctions
 			for (String wordForm : forms)
 			{
 				Lemma lemma = new TLemma(wordForm);
-				Flags flags = new Flags();
 
-				flags.add(usedType, TValues.PARTICIPLE);
+				flagCollector.add(usedType, TValues.PARTICIPLE);
 				String partType = RulesAsFunctions.determineParticipleType(wordForm);
 				if (partType != null)
 				{
-					newBegin = m.group(1).length();
-					restrFormCollector.add(new THeader(lemma, null, flags));
+					flagCollector.add(usedType, partType);
 					flagCollector.add(TFeatures.POS__VERB);
+					newBegin = m.group(1).length();
 
 				} else
 				{

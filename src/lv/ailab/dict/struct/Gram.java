@@ -68,6 +68,8 @@ public class Gram implements HasToJSON, HasToXML
 	 * attiecas tikai uz noteiktu šķirkļavārdu formu apakškopu. Šis elements
 	 * visbiežāk sastopams gramatikās, kas atrodas pie nozīmēm.
 	 * Visos saprātīgos gadījumos vajadzētu būt ne vairāk kā 1 šādam Header?
+	 *
+	 * TODO: pārcelt uz MLVVGram.
 	 */
 	public ArrayList<Header> formRestrictions;
 

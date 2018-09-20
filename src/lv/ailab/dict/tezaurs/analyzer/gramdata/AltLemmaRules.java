@@ -87,7 +87,7 @@ public class AltLemmaRules
 
 		WithAltLemma.nounPluralToSingularMascStd("-akmeņu, vsk.", "akmens, -akmens, v.", "akmeņi", 4), // brugakmeņi
 			// -o, vsk. vecajais, -ā, v.
-		WithAltLemma.nounPluralToSingularMascStd("-o, vsk.", "ais, -ā, v.", "akmeņi", 30), // vecajie
+		WithAltLemma.nounPluralToSingularMascStd("-o, vsk.", "ais, -ā, v.", "ie", 30), // vecajie
 
 		// 1. paradigma: 1. dekl., s
 		//WithAltLemma.nounPluralToSingularMascStd("-u, v.; vsk.", "ns", "ni", 1), // antinukloni
@@ -149,7 +149,7 @@ public class AltLemmaRules
 		WithAltLemma.nounPluralToSingularFem("-ru, vsk.", "re, -es, s.", "res", 9), // virsnieres
 		WithAltLemma.nounPluralToSingularFem("-u, vsk.", "e, -es, s.", "es", 9), // brūnaļģes // TODO varbūt te vajag bezmijas paradigmu?
 		WithAltLemma.nounPluralToSingularFem("-ērču, vsk.", "ērce, -ērces, s.", "ērces", 9), // ūdensērces
-		WithAltLemma.nounPluralToSingularFem("zinšu, vsk.","zinte, -es, s.", "zintes", 9), // zintes
+		WithAltLemma.nounPluralToSingularFem("zinšu, vsk.","zinte, zintes, s.", "zintes", 9), // zintes
 		// paradigma: 5. dekl. bez mijas
 		WithAltLemma.nounPluralToSingularFem("-tu, vsk.", "te, -es, s.", "tes", 44), // apaļmute
 		// 11. paradigma: 6. dekl.

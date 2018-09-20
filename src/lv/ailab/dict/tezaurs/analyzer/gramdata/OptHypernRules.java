@@ -691,7 +691,7 @@ public class OptHypernRules
 		FirstConj.direct("-pīkstu, -pīksti,", "-pīkst, pag. -pīku", "pīkt"), //iepīkt
 		FirstConj.direct("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
 		FirstConj.direct("-piržu, -pird,", "-pirž, pag. -pirdu", "pirst"), //aizpirst
-		FirstConj.direct("-pišu, -pis,", "-piš, pag. -pisu", "izpist"), //izpist
+		FirstConj.direct("-pišu, -pis,", "-piš, pag. -pisu", "pist"), //izpist
 		FirstConj.direct("-ploku, -ploc,", "-plok, pag. -plaku", "plakt"), //aizplakt
 		FirstConj.direct("-plaukstu, -plauksti,", "-plaukst, pag. -plauku", "plaukt"), //atplaukt, aizplaukt
 		FirstConj.direct("-plāju, -plāj,", "-plāj, pag. -plāju", "plāt"), //izplāt

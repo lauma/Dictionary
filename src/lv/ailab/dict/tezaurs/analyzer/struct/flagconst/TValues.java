@@ -113,6 +113,7 @@ public class TValues extends Values
 	public final static String SINGULAR_DATIVE = "Vienskaitļa datīvs";
 	public final static String SINGULAR_ACUSATIVE = "Vienskaitļa akuzatīvs";
 	public final static String SINGULAR_LOCATIVE = "Vienskaitļa lokatīvs";
+	public final static String SINGULAR_VOCATIVE = "Vienskaitļa vokatīvs";
 	public final static String PLURAL_GENITIVE = "Daudzskaitļa ģenitīvs";
 	public final static String PLURAL_DATIVE = "Daudzskaitļa datīvs";
 	public final static String PLURAL_INSTRUMENTAL = "Daudzskaitļa instrumentālis";

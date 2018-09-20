@@ -246,6 +246,8 @@ public class OptHypernRules
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // mīkstblaktis
 		GenNoun.any("-durvju, s.", ".*durvis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // kūtsdurvis
+		GenNoun.any("-jūšu, s.", ".*jūtis", 11,
+					new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // jūtis
 		GenNoun.any("-krūšu, s.", ".*krūtis", 11,
 				new Tuple[] {TFeatures.ENTRYWORD__PLURAL}, new Tuple[] {Features.GENDER__FEM}), // pakaļkrūtis
 
@@ -665,6 +667,7 @@ public class OptHypernRules
 		FirstConj.direct("-mirkstu, -mirksti,", "-mirkst, pag. -mirku", "mirkt"), //imirkt
 		FirstConj.direct("-mirstu, -mirsti,", "-mirst, pag. -mirsu", "mirst"), //aizmirst
 		FirstConj.direct("-mirstu, -mirsti,", "-mirst, pag. -miru", "mirt"), //nomirt
+		FirstConj.direct("-mīžu, -mīz,", "-mīž, pag. -mīzu", "mīzt"), //apmīzt
 		FirstConj.direct("-mostu, -mosti,", "-most, pag. -modu", "most"), //most
 		FirstConj.direct("-mūku, -mūc,", "-mūk, pag. -muku", "mukt"), //aizmukt
 		FirstConj.direct("-mulstu, -mulsti,", "-mulst, pag. -mulsu", "mulst"), //apmulst
@@ -687,6 +690,8 @@ public class OptHypernRules
 		FirstConj.direct("-pērku, -pērc,", "-pērk, pag. -pirku", "pirkt"), //appirkt
 		FirstConj.direct("-pīkstu, -pīksti,", "-pīkst, pag. -pīku", "pīkt"), //iepīkt
 		FirstConj.direct("-pinu, -pin,", "-pin, pag. -pinu", "pīt"), //aizpīt
+		FirstConj.direct("-piržu, -pird,", "-pirž, pag. -pirdu", "pirst"), //aizpirst
+		FirstConj.direct("-pišu, -pis,", "-piš, pag. -pisu", "izpist"), //izpist
 		FirstConj.direct("-ploku, -ploc,", "-plok, pag. -plaku", "plakt"), //aizplakt
 		FirstConj.direct("-plaukstu, -plauksti,", "-plaukst, pag. -plauku", "plaukt"), //atplaukt, aizplaukt
 		FirstConj.direct("-plāju, -plāj,", "-plāj, pag. -plāju", "plāt"), //izplāt
@@ -1399,6 +1404,7 @@ public class OptHypernRules
 		// Č
 		ThirdConj.directStd3Pers("-čakst, pag. -čakstēja", "čakstēt"), //nočakstēt
 		ThirdConj.directStd3Pers("-čarkst, pag. -čarkstēja", "čarkstēt"), //čarkstēt
+		ThirdConj.directStd3Pers("-čārkst, pag. -čārkstēja", "čārkstēt"), //čarkstēt
 		ThirdConj.directStd3Pers("-čib, pag. -čibēja", "čibēt"), //izčibēt
 		ThirdConj.directStd3Pers("-čirkst, pag. -čirkstēja", "čirkstēt"), //nočirkstēt
 		ThirdConj.directStd3Pers("-čirpst, pag. -čirpstēja", "čirpstēt"), //čirpstēt
@@ -1713,6 +1719,8 @@ public class OptHypernRules
 		SecondThirdConj.directStdAllPersParallel(
 				"-bedīju, -bedī, -bedī, arī -bedu, -bedi, -beda, pag. -bedīju", "bedīt"), // apbedīt
 		SecondThirdConj.directStdAllPersParallel(
+				"-bezdu, -bezdi, -bezd, arī -bezdēju, -bezdē, -bezdē, pag. -bezdēju", "bezdēt"), // aizbezdēt
+		SecondThirdConj.directStdAllPersParallel(
 				"-brūnu, -brūni, -brūn, arī -brūnēju, -brūnē, -brūnē, pag. -brūnēju", "brūnēt"), // nobrūnēt
 		SecondThirdConj.directStdAllPersParallel(
 				"-ceru, -ceri, -cer, retāk -cerēju, -cerē, -cerē, pag. -cerēju", "cerēt"), // apcerēt
@@ -1932,6 +1940,7 @@ public class OptHypernRules
 		// D
 		FirstConj.refl("-dējos, -dējies,", "-dējas, pag. -dējos", "dēties"), //dēties
 		FirstConj.refl("-dejos, -dejies,", "-dejas, pag. -dējos", "dieties"), //izdieties
+		FirstConj.refl("-diršos, -dirsies,", "-diršas, pag. -dirsos", "dirsties"), //apdirsties
 		FirstConj.refl("-dodos, -dodies,", "-dodas, pag. -devos", "doties"), //atdoties
 		FirstConj.refl("-drāžos, -drāzies,", "-drāžas, pag. -drāzos", "drāzties"), //aizdrāzties
 		FirstConj.refl("-duros, -duries,", "-duras, pag. -dūros", "durties"), //aizdurties
@@ -2000,6 +2009,7 @@ public class OptHypernRules
 		FirstConj.refl("-metos, -meties,", "-metas, pag. -metos", "mesties"), //aizmesties
 		FirstConj.refl("-mērcos, -mērcies,", "-mērcas, pag. -mērcos", "mērkties"), //iemērkties
 		FirstConj.refl("-miedzos, -miedzies,", "-miedzas, pag. -miedzos", "miegties"), //miegties, iemiegties
+		FirstConj.refl("-mīžos, -mīzies,", "-mīžas, pag. -mīzos", "mīzties"), //apmīzties
 		FirstConj.refl("-mostos, -mosties,", "-mostas, pag. -modos", "mosties"), //atmosties
 		// N
 		FirstConj.refl("-nākos, -nācies,", "-nākas, pag. -nācos", "nākties"), //iznākties
@@ -2015,6 +2025,8 @@ public class OptHypernRules
 		FirstConj.refl("-peros, -peries,", "-peras, pag. -pēros", "pērties"), //aizpērties
 		FirstConj.refl("-pērkos, -pērcies,", "-pērkas, pag. -pirkos", "pirkties"), // appirkties
 		FirstConj.refl("-pinos, -pinies,", "-pinas, pag. -pinos", "pīties"), // iepīties
+		FirstConj.refl("-piržos, -pirdies,", "-piržas, pag. -pirdos", "pirsties"), // appirsties
+		FirstConj.refl("-pišos, -pisies,", "-pišas, pag. -pisos", "pisties"), // aizpisties
 		FirstConj.refl("-plēšos, -plēsies,", "-plēšas, pag. -plēsos", "plēsties"), // izplēsties
 		FirstConj.refl("-plijos, -plijies,", "-plijas, pag. -plijos", "plīties"), // uzplīties
 		FirstConj.refl("-plūcos, -plūcies,", "-plūcas, pag. -plūcos", "plūkties"), // izplukties

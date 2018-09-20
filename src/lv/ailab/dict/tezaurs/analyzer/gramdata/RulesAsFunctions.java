@@ -100,8 +100,8 @@ public class RulesAsFunctions
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) (\"\\p{L}+((,| -)? \\p{L}+)*\"))([.,].*)?") :
-				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) (\"\\p{L}+((,| -)? \\p{L}+)*\"))([.].*)?");
+				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
+				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -109,33 +109,17 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String indicator = m.group(2).trim();
-			String usedType = TKeys.USED_IN_FORM;
+			String usedType = TKeys.USED_IN_STRUCT;
 			if (indicator.equals("parasti"))
-				usedType = TKeys.USUALLY_USED_IN_FORM;
+				usedType = TKeys.USUALLY_USED_IN_STRUCT;
 			else if (indicator.equals("bieži"))
-				usedType = TKeys.OFTEN_USED_IN_FORM;
+				usedType = TKeys.OFTEN_USED_IN_STRUCT;
 			String phrase = m.group(3);
 			flagCollector.add(usedType, TValues.PHRASE);
 			flagCollector.add(usedType, "\"" + phrase + "\"");
 		}
 		return newBegin;
 	}
-
-/*	public static int processUsuallyInCaseFlag(
-			String gramText, Flags flagCollector)
-	{
-		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("(bieži lok\\.: (\\w+))([.;].*)?");
-		int newBegin = -1;
-		Matcher	m = flagPattern.matcher(gramText);
-		if (m.matches()) // agrums->agrumā
-		{
-			newBegin = m.group(1).length();
-			flagCollector.add(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE);
-			flagCollector.add(TKeys.OFTEN_USED_IN_FORM, "\"" + m.group(2) + "\"");
-		}
-		return newBegin;
-	}*/
 
 	/**
 	 * Izanalizē gramatikas virknes formā:
@@ -313,6 +297,7 @@ public class RulesAsFunctions
 				flagValues.add(TValues.NOUN);
 				flagValues.add(TValues.GENITIVE);
 				flagValues.add(TValues.PLURAL);
+				flagValues.add(TValues.PLURAL_GENITIVE);
 			}
 			else if (flagValueRaw.matches("lietv\\. akuz\\. vai lok\\."))
 			{
@@ -497,12 +482,15 @@ public class RulesAsFunctions
 			{
 				flagValues.add(TValues.DUAL);
 				flagValues.add(TValues.NOMINATIVE);
+				flagValues.add(TValues.DUAL_NOMINATIVE);
 			}
 			else if (flagValueRaw.matches("divsk\\. nom\\., akuz\\."))
 			{
 				flagValues.add(TValues.DUAL);
 				flagValues.add(TValues.ACUSATIVE);
 				flagValues.add(TValues.NOMINATIVE);
+				flagValues.add(TValues.DUAL_ACUSATIVE);
+				flagValues.add(TValues.DUAL_NOMINATIVE);
 			}
 			else if (flagValueRaw.matches("apst\\. un noliegtu verbu\\.?"))
 			{
@@ -521,6 +509,7 @@ public class RulesAsFunctions
 			else if (flagValueRaw.matches("lietv\\. lok\\. vai lietv\\. un priev\\."))
 			{
 				flagValues.add(TValues.NOUN);
+				flagValues.add(TValues.LOCATIVE);
 				flagValues.add(TValues.ADPOSITION);
 				flagValues.add(TValues.ORIGINAL_NEEDED);
 			}
@@ -669,7 +658,7 @@ public class RulesAsFunctions
 				flagCollector.add(key, TValues.PERSONAL_PRONOUN);
 				flagCollector.add(key, "\"tu\"");
 			}
-			else if (flagValueRaw.matches("atgriez.\\ vietn\\. \"sevis\"\\.?"))
+			else if (flagValueRaw.matches("atgriez\\. vietn\\. \"sevis\"\\.?"))
 			{
 				flagCollector.add(key, TValues.PRONOUN);
 				flagCollector.add(key, TValues.REFLEXIVE_PRONOUN);

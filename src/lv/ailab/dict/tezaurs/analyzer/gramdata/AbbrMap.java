@@ -264,33 +264,10 @@ public class AbbrMap {
 		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", TFeatures.POS__ADPOSITION);
 		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", TFeatures.POS__POSTPOSITION);
 		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("retāk ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("retāk ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("parasti ar dat.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("ar ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DUAL));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOMINATIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa nominatīvs"));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa akuzatīvs"));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ģenitīvā"));
 		pairingFlags.put("priev. ar dat.", TFeatures.POS__ADPOSITION);
 		pairingFlags.put("priev. ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
 		pairingFlags.put("priev. ar instr.", TFeatures.POS__ADPOSITION);
 		pairingFlags.put("priev. ar instr.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
-
-		pairingFlags.put("parasti ar ģen.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
-
 
 		pairingFlags.put("persv.", TFeatures.POS__NOUN);
 		binaryFlags.put("persv.", TValues.PERSON_NAME);
@@ -899,68 +876,97 @@ public class AbbrMap {
 		pairingFlags.put("nolieguma formā", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("parasti uzrunā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.VOCATIVE));
 
-		pairingFlags.put("parasti apst.", Tuple.of(TKeys.USED_IN_FORM, TValues.ADVERB));
+		pairingFlags.put("ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
+		pairingFlags.put("ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
+		pairingFlags.put("ar ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
 		pairingFlags.put("ar instr.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
+		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
+		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
+		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ģenitīvā"));
+
+		pairingFlags.put("parasti ar dat.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.DATIVE));
+		pairingFlags.put("parasti ar ģen.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.GENITIVE));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
+		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
+		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
 		pairingFlags.put("parasti ar negāciju", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE));
 		pairingFlags.put("parasti ar negāciju.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE));
 
-		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
-		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
-		pairingFlags.put("parasti pamudinājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Pamudinājuma teikums"));
-		pairingFlags.put("parasti stāstījuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
-		pairingFlags.put("parasti stāstījuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Stāstījuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Pamudinājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Nolieguma teikums"));
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("retāk ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
+		pairingFlags.put("retāk ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
+		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DUAL));
+		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOMINATIVE));
+		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
+		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa nominatīvs"));
+		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa akuzatīvs"));
+
+		// TODO: iztīrīt šito
+		pairingFlags.put("parasti apst.", Tuple.of(TKeys.USED_IN_FORM, TValues.ADVERB));
+
+		pairingFlags.put("izsaukuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("izsaukuma teikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Pamudinājuma teikums"));		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
+		pairingFlags.put("jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("jautājuma teikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Retorisks jautājuma teikums"));
+
+		pairingFlags.put("parasti izsaukuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
+		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+		pairingFlags.put("parasti jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti jautājuma teikumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti pamudinājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Pamudinājuma teikums"));
+		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
+		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
+		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
+		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
+		pairingFlags.put("parasti stāstījuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Stāstījuma teikums"));
+		pairingFlags.put("parasti stāstījuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Stāstījuma teikums"));
+
+		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("jautājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("jautājuma teikumos.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumā.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Jautājuma teikums"));
-		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Retorisks jautājuma teikums"));
-		pairingFlags.put("izsaukuma teikumos", Tuple.of(TKeys.USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma teikumos.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Izsaukuma teikums"));
-		pairingFlags.put("parasti atkārtojumā", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Atkārtojums"));
-		pairingFlags.put("parasti atkārtojumā.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, "Atkārtojums"));
-		pairingFlags.put("atkārtotā lietojumā.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Atkārtojums"));
-		pairingFlags.put("viena un tā paša vārda atkārtojumā", Tuple.of(TKeys.USED_TOGETHER_WITH, "Atkārtojums"));
-		pairingFlags.put("salīdzinājuma konstrukcijā", Tuple.of(TKeys.USED_TOGETHER_WITH, "Salīdzinājuma konstrukcija"));
 
-		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Palīgteikums"));
+		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
+		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
+		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+
+		pairingFlags.put("atkārtotā lietojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
+		pairingFlags.put("viena un tā paša vārda atkārtojumā", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
+		pairingFlags.put("salīdzinājuma konstrukcijā", Tuple.of(TKeys.USED_IN_STRUCT, "Salīdzinājuma konstrukcija"));
+
+		pairingFlags.put("parasti atkārtojumā", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
+		pairingFlags.put("parasti atkārtojumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
+
+		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Palīgteikums"));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
 
 		// Lietojuma biežums.

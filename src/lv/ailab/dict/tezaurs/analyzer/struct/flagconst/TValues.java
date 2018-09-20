@@ -108,6 +108,8 @@ public class TValues extends Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
+	public final static String DUAL_NOMINATIVE = "Divskaitļa nominatīvs";
+	public final static String DUAL_ACUSATIVE = "Divskaitļa akuzatīvs";
 	public final static String SINGULAR_NOMINATIVE = "Vienskaitļa nominatīvs";
 	public final static String SINGULAR_GENITIVE = "Vienskaitļa ģenitīvs";
 	public final static String SINGULAR_DATIVE = "Vienskaitļa datīvs";

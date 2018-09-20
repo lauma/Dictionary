@@ -67,6 +67,19 @@ public class TKeys extends Keys
 	public final static String USED_IN_FORM = "Lieto noteiktā formā/atvasinājumā";
 
 	/**
+	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "tikai".
+	 */
+	public final static String USUALLY_USED_IN_STRUCT = "Parasti lieto noteikta veida struktūrās";
+	/**
+	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "tikai".
+	 */
+	public final static String OFTEN_USED_IN_STRUCT = "Bieži lieto noteikta veida struktūrās";
+	/**
+	 * Nespecificēts, vispārīgs ierobežojums par lietojumu teikumā vai struktūrā.
+	 */
+	public final static String USED_IN_STRUCT = "Lieto noteikta veida struktūrās";
+
+	/**
 	 * Bieži, reti, pareti.
 	 */
 	public final static String USAGE_FREQUENCY = "Lietojuma biežums";

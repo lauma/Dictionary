@@ -45,7 +45,7 @@ public class DirectRules
 	 * secībā.
 	 * @return saraksts ar likumu blokiem.
 	 */
-	public static List<EndingRule[]> getAllSafe()
+	public static List<EndingRule[]> getAll()
 	{
 		List<EndingRule[]> res = new ArrayList<>(14);
 		// Vairākkonjugāciju likumi jāliek pirms vienas konj. likumiem, jo var
@@ -71,17 +71,6 @@ public class DirectRules
 		res.add(fifthDeclNoun);
 		res.add(nounMultiDecl);
 
-		return res;
-	}
-	/**
-	 * Metode klasē iekļauto nedrošo (ir citu likumu prefiksi, jālieto biegās)
-	 * likumu bloku iegūšanai pareizā secībā.
-	 * @return saraksts ar likumu blokiem.
-	 */
-	public static List<EndingRule[]> getAllDangeros()
-	{
-		List<EndingRule[]> res = new ArrayList<>(1);
-		res.add(dangerous);
 		return res;
 	}
 
@@ -899,19 +888,6 @@ public class DirectRules
 
 	};
 
-	/**
-	 * Likumi, kas ir citu likumu prefiksi.
-	 * Šajā masīvā jāievēro likumu secība, citādi slikti būs. Šo masīvu jālieto
-	 * pašu pēdējo.
-	 */
-	@Deprecated
-	public static final EndingRule[] dangerous = {
-		// Paradigma: 9 - Lietvārds 5. deklinācija -e siev. dz.
-		//FifthDecl.std("-es, s.", ".*e"), //aizture + daudzi piemēri ar mijām
-			// konflikts ar "astilbe" un "acetilsalicilskābe"
-
-		// Vissliktākie šabloni - satur tikai vienu galotni un neko citu.
-	};
 	/**
 	 * Šeit ir izdalīti atsevišķi tiešo darbības vārdu likumi, jo tie ir gari,
 	 * specifiski un nekonfliktē ar citiem likumiem, tāpēc šos izmēģinās pirmos.

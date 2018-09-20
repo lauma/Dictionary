@@ -234,19 +234,7 @@ public class TGram extends Gram
 			}
 			if (newBegin != -1) break;
 		}
-		for (EndingRule[] rules : DirectRules.getAllSafe())
-		{
-			for (EndingRule r : rules)
-			{
-				if (newBegin != -1) break;
-				newBegin = r.applyDirect(gramText, lemma, paradigm, flags);
-			}
-			if (newBegin != -1) break;
-		}
-
-		// === Bīstamie likumi =================================================
-		// Likumi, kas ir prefiksi citiem likumiem
-		for (EndingRule[] rules : DirectRules.getAllDangeros())
+		for (EndingRule[] rules : DirectRules.getAll())
 		{
 			for (EndingRule r : rules)
 			{

@@ -288,15 +288,7 @@ public class DictionaryXmlToJson
 		out.newLine();
 		out.write(DirectRules.class.getCanonicalName());
 		out.newLine();
-		for (EndingRule[] rules : DirectRules.getAllSafe())
-			for (EndingRule r : rules)
-				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
-				{
-					out.write(r.getStrReprezentation().replaceFirst(" ", "\t"));
-					out.write("\t" + r.getUsageCount());
-					out.newLine();
-				}
-		for (EndingRule[] rules : DirectRules.getAllDangeros())
+		for (EndingRule[] rules : DirectRules.getAll())
 			for (EndingRule r : rules)
 				if (r.getUsageCount() == 0 || PRINT_ALL_RULE_STATS)
 				{

@@ -429,13 +429,14 @@ public class DirectRules
 		//MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
 						//SimpleSubRule.of(".*oši", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
+						SimpleSubRule.of(".*vairāki", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE}),
 						SimpleSubRule.of(".*ti", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*dami", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*[aā]mi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_POS}),
 						//SimpleSubRule.of(".*uši", new Integer[]{13, 42}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_IS, TFeatures.ENTRYWORD__PLURAL, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
 						SimpleSubRule.of(".*īgi", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE}),
 						SimpleSubRule.of(".*ēji", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.ENTRYWORD__PLURAL, TFeatures.USUALLY_USED__INDEFINITE})},
-				new Tuple[]{TFeatures.USED_ONLY__PLURAL}), // abēji 1, aizkomentētajiem nebija instanču
+				new Tuple[]{TFeatures.USED_ONLY__PLURAL}), // abēji 1, vairāki, aizkomentētajiem nebija instanču
 		// Šķiet, ka pēc -t- un -am- nemēdz sekot īpašības vārda galotne š.
 
 		BaseRule.of("-ā, s.", ".*ālava", 13,

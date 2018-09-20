@@ -86,7 +86,44 @@ public class RulesAsFunctions
 		}
 		return false;
 	}
+	/**
+	 * Izanalizē gramatikas virknes formā:
+	 * parasti savienojumā "X, Y" vai atkārtojumā "X, X".
+	 * Metode pielāgota gan gramatiku fragmentiem ar komatiem, gan bez.
+	 * @param gramText		analizējamais gramatikas teksta fragments
+	 * @param flagCollector kolekcija, kurā pielikt karodziņus gadījumā, ja
+	 *                      gramatikas fragments atbilst šim likumam
+	 * @return	indekss neapstrādātās gramatikas daļas sākumam
+	 */
+	public static int processInPhraseOrRepFlag(String gramText, Flags flagCollector)
+	{
+		Pattern flagPattern = Pattern.compile(
+				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'] vai (?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
 
+		int newBegin = -1;
+		Matcher m = flagPattern.matcher(gramText);
+		if (m.matches()) // aijā - savienojumā "aijā, žūžū"
+		{
+			newBegin = m.group(1).length();
+			String indicator = m.group(2).trim();
+			String usedType = TKeys.USED_IN_STRUCT;
+			switch (indicator)
+			{
+				case "parasti": usedType = TKeys.USUALLY_USED_IN_STRUCT;
+					break;
+				case "bieži": usedType = TKeys.OFTEN_USED_IN_STRUCT;
+					break;
+				case "arī": usedType = TKeys.ALSO_USED_IN_STRUCT;
+					break;
+			}
+			String phrase1 = m.group(3);
+			String phrase2 = m.group(4);
+			flagCollector.add(usedType, TValues.PHRASE);
+			flagCollector.add(usedType, "\"" + phrase1 + "\"");
+			flagCollector.add(usedType, "\"" + phrase2 + "\"");
+		}
+		return newBegin;
+	}
 	/**
 	 * Izanalizē gramatikas virknes formā:
 	 * parasti savienojumā "X, Y".
@@ -98,10 +135,12 @@ public class RulesAsFunctions
 	 */
 	public static int processInPhraseFlag(String gramText, Flags flagCollector)
 	{
-		boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
-				Pattern.compile("((parasti |bieži |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
+		//boolean hasComma = gramText.contains(",");
+		//Pattern flagPattern = hasComma ?
+		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
+		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
+		Pattern flagPattern = Pattern.compile(
+				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -110,10 +149,15 @@ public class RulesAsFunctions
 			newBegin = m.group(1).length();
 			String indicator = m.group(2).trim();
 			String usedType = TKeys.USED_IN_STRUCT;
-			if (indicator.equals("parasti"))
-				usedType = TKeys.USUALLY_USED_IN_STRUCT;
-			else if (indicator.equals("bieži"))
-				usedType = TKeys.OFTEN_USED_IN_STRUCT;
+			switch (indicator)
+			{
+				case "parasti": usedType = TKeys.USUALLY_USED_IN_STRUCT;
+					break;
+				case "bieži": usedType = TKeys.OFTEN_USED_IN_STRUCT;
+					break;
+				case "arī": usedType = TKeys.ALSO_USED_IN_STRUCT;
+					break;
+			}
 			String phrase = m.group(3);
 			flagCollector.add(usedType, TValues.PHRASE);
 			flagCollector.add(usedType, "\"" + phrase + "\"");
@@ -138,7 +182,7 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |)savienojumā ar (\"\\p{L}+\"(, \"\\p{L}+\")*( u\\. tml\\.)?)\\.?)([,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | - | )\\p{L}+)*\"(, \"\\p{L}+(?:(?:, | - | )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches())
@@ -147,13 +191,14 @@ public class RulesAsFunctions
 			String modifier = m.group(2).trim();
 			String key = TKeys.USED_TOGETHER_WITH;
 			if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
-			String phrase = m.group(3);
-			if (phrase.endsWith(" u. tml."))
+			String phrasesWithStuff = m.group(3);
+			String phrasesOnly = m.group(4);
+			if (phrasesWithStuff.endsWith(" u. tml."))
 			{
-				phrase = phrase.substring(0, phrase.length() - " u. tml.".length());
+				phrasesWithStuff = phrasesWithStuff.substring(0, phrasesWithStuff.length() - " u. tml.".length());
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
 			}
-			String[] words = phrase.split("(?<=\"), (?=\")");
+			String[] words = phrasesOnly.split("(?<=\"), (?=\")");
 			for (String w : words)
 				flagCollector.add(key, w.trim());
 		}

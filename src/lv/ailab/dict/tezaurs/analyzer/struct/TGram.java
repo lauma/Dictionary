@@ -278,6 +278,9 @@ public class TGram extends Gram
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
 					gramText, flags);
+			// bim - parasti savienojumā "bim, bam" vai atkārtojumā "bim, bim"
+			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseOrRepFlag(
+					gramText, flags);
 			// aijā - savienojumā "aijā, žūžū"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, flags);

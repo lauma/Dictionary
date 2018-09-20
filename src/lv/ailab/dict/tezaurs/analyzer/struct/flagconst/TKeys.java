@@ -75,6 +75,11 @@ public class TKeys extends Keys
 	 */
 	public final static String OFTEN_USED_IN_STRUCT = "Bieži lieto noteikta veida struktūrās";
 	/**
+	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "arī".
+	 * (Bieži ļaunums)
+	 */
+	public final static String ALSO_USED_IN_STRUCT = "Lieto arī noteikta veida struktūrās";
+	/**
 	 * Nespecificēts, vispārīgs ierobežojums par lietojumu teikumā vai struktūrā.
 	 */
 	public final static String USED_IN_STRUCT = "Lieto noteikta veida struktūrās";

@@ -108,6 +108,16 @@ public class TValues extends Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
+	public final static String SINGULAR_NOMINATIVE = "Vienskaitļa nominatīvs";
+	public final static String SINGULAR_GENITIVE = "Vienskaitļa ģenitīvs";
+	public final static String SINGULAR_DATIVE = "Vienskaitļa datīvs";
+	public final static String SINGULAR_ACUSATIVE = "Vienskaitļa akuzatīvs";
+	public final static String SINGULAR_LOCATIVE = "Vienskaitļa lokatīvs";
+	public final static String PLURAL_GENITIVE = "Daudzskaitļa ģenitīvs";
+	public final static String PLURAL_DATIVE = "Daudzskaitļa datīvs";
+	public final static String PLURAL_INSTRUMENTAL = "Daudzskaitļa instrumentālis";
+	public final static String PLURAL_LOCATIVE = "Daudzskaitļa lokatīvs";
+
 	public final static String INFINITIVE = "Nenoteiksme";
 	public final static String THIRD_PERSON = "Trešā persona";
 	public final static String PERSON_FORM = "Personas forma"; // Tipiski darbības vārdiem

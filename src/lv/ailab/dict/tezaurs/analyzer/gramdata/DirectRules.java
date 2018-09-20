@@ -746,7 +746,8 @@ public class DirectRules
 		// Ar mijām
 		GenNoun.any("-ļļu, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*koraļļi", new Integer[]{5}, new Tuple[]{TFeatures.ENTRYWORD__PLURAL}),
-						//SimpleSubRule.of(".*ļi", new Integer[]{1, 2, 3}, new Tuple[]{ TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL})},
+						//SimpleSubRule.of(".*ļi", new Integer[]{1, 2, 3}, new Tuple[]{ TFeatures.UNCLEAR_PARADIGM, TFeatures.ENTRYWORD__PLURAL})
+						},
 				new Tuple[]{TFeatures.GENDER__MASC}), // akmenskoraļļi
 
 		GenNoun.any("-ļu, v.", new SimpleSubRule[]{

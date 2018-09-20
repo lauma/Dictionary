@@ -140,7 +140,7 @@ public class RulesAsFunctions
 		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
 		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
+				"((parasti |bieži |arī |)(?:savienojum(?:ā|os)|atkārtojumā) ((\"\\p{L}+((, | - | )\\p{L}+)*\"(?:, \"\\p{L}+((, | - | )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -158,9 +158,15 @@ public class RulesAsFunctions
 				case "arī": usedType = TKeys.ALSO_USED_IN_STRUCT;
 					break;
 			}
-			String phrase = m.group(3);
+			String phrasesWithStuff = m.group(3);
+			if (phrasesWithStuff.endsWith(" u. tml."))
+				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
+			String phrasesOnly = m.group(4);
 			flagCollector.add(usedType, TValues.PHRASE);
-			flagCollector.add(usedType, "\"" + phrase + "\"");
+			String[] phrases = phrasesOnly.split("(?<=\"), (?=\")");
+			for (String p : phrases)
+				flagCollector.add(usedType, p.trim());
+			//flagCollector.add(usedType, "\"" + phrase + "\"");
 		}
 		return newBegin;
 	}
@@ -182,7 +188,7 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | - | )\\p{L}+)*\"(, \"\\p{L}+(?:(?:, | - | )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | - | )\\p{L}+)*\"((?:,| vai) \"\\p{L}+(?:(?:, | - | )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches())
@@ -194,12 +200,9 @@ public class RulesAsFunctions
 			String phrasesWithStuff = m.group(3);
 			String phrasesOnly = m.group(4);
 			if (phrasesWithStuff.endsWith(" u. tml."))
-			{
-				phrasesWithStuff = phrasesWithStuff.substring(0, phrasesWithStuff.length() - " u. tml.".length());
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
-			}
-			String[] words = phrasesOnly.split("(?<=\"), (?=\")");
-			for (String w : words)
+			String[] phrases = phrasesOnly.split("(?<=\")(,| vai)(?=\")");
+			for (String w : phrases)
 				flagCollector.add(key, w.trim());
 		}
 		return newBegin;
@@ -765,7 +768,7 @@ public class RulesAsFunctions
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+(, \\p{Ll}+)?))([,].*|\\.)?") :
+				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+(, \\p{Ll}+)*))([,].*|\\.)?") :
 				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+))\\.?");
 
 		int newBegin = -1;

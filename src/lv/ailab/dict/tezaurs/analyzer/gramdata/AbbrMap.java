@@ -874,6 +874,7 @@ public class AbbrMap {
 		pairingFlags.put("parasti nolieguma formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("nolieg. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("nolieguma formā", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
+		pairingFlags.put("nolieguma formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
 		pairingFlags.put("parasti uzrunā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.VOCATIVE));
 
 		pairingFlags.put("ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
@@ -959,12 +960,15 @@ public class AbbrMap {
 		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
 
+		pairingFlags.put("atkārtojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
 		pairingFlags.put("atkārtotā lietojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
 		pairingFlags.put("viena un tā paša vārda atkārtojumā", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
 		pairingFlags.put("salīdzinājuma konstrukcijā", Tuple.of(TKeys.USED_IN_STRUCT, "Salīdzinājuma konstrukcija"));
 
 		pairingFlags.put("parasti atkārtojumā", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
 		pairingFlags.put("parasti atkārtojumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
+
+		pairingFlags.put("arī atkārtojumā.", Tuple.of(TKeys.ALSO_USED_IN_STRUCT, "Atkārtojums"));
 
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Palīgteikums"));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));

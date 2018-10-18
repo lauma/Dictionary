@@ -140,7 +140,7 @@ public class RulesAsFunctions
 		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
 		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:savienojum(?:ā|os)|atkārtojumā) ((\"\\p{L}+((, | - | )\\p{L}+)*\"(?:, \"\\p{L}+((, | - | )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
+				"((parasti |bieži |arī |)(?:savienojum(?:ā|os)) ((\"\\p{L}+((, | - | )\\p{L}+)*\"(?:, \"\\p{L}+((, | - | )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);

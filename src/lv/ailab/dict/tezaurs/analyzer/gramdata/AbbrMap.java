@@ -582,6 +582,8 @@ public class AbbrMap {
 		pairingFlags.put("senebr.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("sengr.", Tuple.of(TKeys.LANGUAGE, "Sengrieķu"));
 		pairingFlags.put("sengr.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("senpersiešu val.", Tuple.of(TKeys.LANGUAGE, "Senpersiešu"));
+		pairingFlags.put("senpersiešu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("sp. val.", Tuple.of(TKeys.LANGUAGE, "Spāņu"));
 		pairingFlags.put("sp. val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("sp.", Tuple.of(TKeys.LANGUAGE, "Spāņu"));

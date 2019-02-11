@@ -333,78 +333,78 @@ public class OptHypernRules
 	public static final EndingRule[] directFirstConjVerb = {
 		// Pēteris solīja, ka tas strādās.
 		VerbDoubleRule.of("-eju, -ej,", "-iet, pag. -gāju", "iet", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"iet\""), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
 				null,
 				FirstConjStems.of("ie", "ej", "gāj")), //apiet
 
 		// Likumi, kam ir visu formu variants.
 		// Netoteiksmes homoformas.
 		FirstConj.directHomof("-aužu, -aud,", "-auž, pag. -audu", "aust",
-				"\"aust\" (audumu)"), //aizaust 2
+				"aust (audumu)"), //aizaust 2
 		FirstConj.directHomof("-dedzu, -dedz,", "-dedz, pag. -dedzu", "degt",
-				"\"degt\" (kādu citu)"), //aizdegt 1
+				"degt (kādu citu)"), //aizdegt 1
 		FirstConj.directHomof("-degu, -dedz,", "-deg, pag. -degu", "degt",
-				"\"degt\" (pašam)"), //apdegt, aizdegt 2
+				"degt (pašam)"), //apdegt, aizdegt 2
 		FirstConj.directHomof("-dzenu, -dzen,", "-dzen, pag. -dzinu", "dzīt",
-				"\"dzīt\" (lopus)"), //aizdzīt 1
+				"dzīt (lopus)"), //aizdzīt 1
 		FirstConj.directHomof("-iru, -ir,", "-ir, pag. -īru", "irt",
-				"\"irt\" (ar airiem)"), //aizirt 1
+				"irt (ar airiem)"), //aizirt 1
 		FirstConj.directHomof("-lienu, -lien,", "-lien, pag. -līdu",
-				"līst", "\"līst\" (zem galda)"), //aizlīst, ielīst 1
+				"līst", "līst (zem galda)"), //aizlīst, ielīst 1
 		FirstConj.directHomof("-līžu, -līd,", "-līž, pag. -līdu", "līst",
-				"\"līst\" (līdumu)"), //ielīst 2
+				"līst (līdumu)"), //ielīst 2
 		FirstConj.directHomof("-mītu, -mīti,", "-mīt, pag. -mitu", "mist",
-				"\"mist\" (mitināties)"), //iemist, izmist 2
+				"mist (mitināties)"), //iemist, izmist 2
 		FirstConj.directHomof("-mistu, -misti,", "-mist, pag. -misu", "mist",
-				"\"mist\" (krist izmisumā)"), //izmist 1
+				"mist (krist izmisumā)"), //izmist 1
 		FirstConj.directHomof("-minu, -min,", "-min, pag. -minu", "mīt",
-				"\"mīt\" (pedāļus)"), //aizmīt 1
+				"mīt (pedāļus)"), //aizmīt 1
 		FirstConj.directHomof("-miju, -mij,", "-mij, pag. -miju", "mīt",
-				"\"mīt\" (mainīt naudu)"), //aizmīt 2
+				"mīt (mainīt naudu)"), //aizmīt 2
 		FirstConj.directHomof("-sīkstu, -sīksti,", "-sīkst, pag. -sīku", "sīkt",
-				"\"sīkt\" (mazināties)"), //apsīkt
+				"sīkt (mazināties)"), //apsīkt
 		FirstConj.directHomof("-sīcu, -sīc,", "-sīc, pag. -sīcu", "sīkt",
-				"\"sīkt\" (kā odam)"), // sīkt, aizsīkt
+				"sīkt (kā odam)"), // sīkt, aizsīkt
 		FirstConj.directHomof("-spriedzu, -spriedz,", "-spriedz, pag. -spriedzu", "spriegt",
-				"\"spriegt\" (kādu citu)"), //nospriegt, saspriegt 1
+				"spriegt (kādu citu)"), //nospriegt, saspriegt 1
 		FirstConj.directHomof("-spriegstu, -spriegsti,", "-spriegst, pag. -spriegu", "spriegt",
-				"\"spriegt\" (pašam)"), //saspriegt 2
+				"spriegt (pašam)"), //saspriegt 2
 		FirstConj.directHomof("-sprindzu, -sprindz,", "-sprindz, pag. -sprindzu", "springt",
-				"\"springt\" (kādu citu)"), //saspringt 2
+				"springt (kādu citu)"), //saspringt 2
 		FirstConj.directHomof("-springstu, -springsti,", "-springst, pag. -springu", "springt",
-				"\"springt\" (pašam)"), //saspringt 1
+				"springt (pašam)"), //saspringt 1
 		FirstConj.directHomof("-sūtu, -sūti,", "-sūt, pag. -sutu", "sust",
-				"\"sust\" (mitrumā, karstumā)"), //apsust, nosust1
+				"sust (mitrumā, karstumā)"), //apsust, nosust1
 		FirstConj.directHomof("-tieku, -tiec,", "-tiek, pag. -tiku", "tikt",
-				"\"tikt\" (nokļūt kaut kur)"), //aiztikt 1, 2
+				"tikt (nokļūt kaut kur)"), //aiztikt 1, 2
 		FirstConj.directHomof("-tīku, -tīc,", "-tīk, pag. -tiku", "tikt",
-				"\"tikt\" (patikt kādam)"), //patikt
+				"tikt (patikt kādam)"), //patikt
 		// Pēc mokošām pārrunām. Paldies, Vent Zvaigzne, paldies, Aldi Lauzi!
 		FirstConj.directHomof("-verdu, -verd,", "-verd, pag. -virdu", "virst",
-				"\"virst\" (izšļākt)"), //izvirst 2, virst 1 || Tēzaurā neieliktā alternatīva: -verdu, -verd, -verd, retāk -verdu, -vird, -vird, pag. -virdu
+				"virst (izšļākt)"), //izvirst 2, virst 1 || Tēzaurā neieliktā alternatīva: -verdu, -verd, -verd, retāk -verdu, -vird, -vird, pag. -virdu
 		FirstConj.directHomof("-virstu, -virsti,", "-virst, pag. -virtu", "virst",
-				"\"virst\" (zaudēt tikumiskās īpašības)"), //izvirst 1, virst 2
+				"virst (zaudēt tikumiskās īpašības)"), //izvirst 1, virst 2
 		FirstConj.directHomof("-verdu, -verd,", "-verd, pag. -viru", "virt",
-				"\"virt\" (pašam)"), //aizvirt, uzvirt, virt 1
+				"virt (pašam)"), //aizvirt, uzvirt, virt 1
 		FirstConj.directHomof("-viru, -vir,", "-vir, pag. -viru", "virt",
-				"\"virt\" (kādu citu)"), // virt 2
+				"virt (kādu citu)"), // virt 2
 		FirstConj.directHomof("-vēršu, -vērs,", "-vērš, pag. -vērsu", "vērst",
-				"\"vērst\" (mainīt virzienu)"), //aizvērst, izvērst 1
+				"vērst (mainīt virzienu)"), //aizvērst, izvērst 1
 		FirstConj.directHomof("-vēršu, -vērt,", "-vērš, pag. -vērtu", "vērst",
-				"\"vērst\" (mainīt būtību)"), //izvērst 2
+				"vērst (mainīt būtību)"), //izvērst 2
 		FirstConj.directHomof("-viešu, -vies,", "-vieš, pag. -viesu", "viest",
-				"\"viest\" (būt par cēloni)"), //ieviest
+				"viest (būt par cēloni)"), //ieviest
 		FirstConj.directHomof("-viežu, -vied,", "-viež, pag. -viedu", "viest",
-				"\"viest\" (neskaidri just)"), //saviest 1
+				"viest (neskaidri just)"), //saviest 1
 
 		// Izņēmuma izņēmums.
 		VerbDoubleRule.of("-patīku, -patīc,", "-patīk, pag. -patiku", "patikt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikt\" (patikt kādam)"),
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "tikt (patikt kādam)"),
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("tik", "tīk", "tik")), //patikt
 		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.directAllPersParallelHomof(
-				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "\"riest\" (parastais)"), //ieriest 2
+				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "riest (parastais)"), //ieriest 2
 
 		// Paralēlās formas.
 		FirstConj.directAllPersParallel(
@@ -452,25 +452,25 @@ public class OptHypernRules
 
 		// Izņēmums.
 		VerbDoubleRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "dot", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"dot\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("do", "dod", "dev")), //izpārdot
 		VerbDoubleRule.of("-nesajēdzu, -nesajēdz,", "-nesajēdz, pag. -nesajēdzu", "jēgt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"jēgt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "jēgt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("jēg", "jēdz", "jēdz")), //nesajēgt
 		VerbDoubleRule.of("-palieku, -paliec,", "-paliek, pag. -paliku", "likt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"likt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "likt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("lik", "liek", "lik")), //izpalikt
 		VerbDoubleRule.of("-nespēju, -nespēj,", "-nespēj, pag. -nespēju", "nespēt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"spēt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "spēt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("spē", "spēj", "spēj")), //nespēt
 		VerbDoubleRule.of("-sastopu, -sastopi,", "-sastop, pag. -sastapu", "sastapt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"stapt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "stapt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("stap", "stop", "stap")), //sastapt
 		VerbDoubleRule.of("-sašūtu, -sašūti,", "-sašūt, pag. -sašutu", "sašust", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"šust\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "šust"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("šus", "šū", "šut")), //sašust
 		VerbDoubleRule.of("-pazīstu, -pazīsti,", "-pazīst, pag. -pazinu", "zīt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīt\""), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "zīt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("zī", "zīst", "zin")), //atpazīt
 
 		// Standartizētie.
@@ -900,15 +900,15 @@ public class OptHypernRules
 		// Ar paralēlformām.
 		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.direct3PersParallelHomof(
-				"-rieš, pag. -rieta, arī -riesa", "riest", "\"riest\" (parastais)"), // aizriest
+				"-rieš, pag. -rieta, arī -riesa", "riest", "riest (parastais)"), // aizriest
 		// Bez paralēlformām.
-		FirstConj.direct3PersHomof("-aust, pag. -ausa", "aust", "\"aust\" (gaismai)"), //aizaust 1
-		FirstConj.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "\"dzīt\" (ievainojumam)"), //aizdzīt 2
-		FirstConj.direct3PersHomof("-irst, pag. -ira", "irt", "\"irt\" (audumam)"), //irt 2
+		FirstConj.direct3PersHomof("-aust, pag. -ausa", "aust", "aust (gaismai)"), //aizaust 1
+		FirstConj.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "dzīt (ievainojumam)"), //aizdzīt 2
+		FirstConj.direct3PersHomof("-irst, pag. -ira", "irt", "irt (audumam)"), //irt 2
 		// TODO: sakārtot "riest" un "riesties"
-		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "\"riest\" (parastais)"), //ieriest 1
-		FirstConj.direct3PersHomof("-riest, pag. -rieta", "riest", "\"riest\" (izņēmums)"), //pieriest 1
-		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "\"sust\" (žūt)"), //nosust 2
+		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "riest (parastais)"), //ieriest 1
+		FirstConj.direct3PersHomof("-riest, pag. -rieta", "riest", "riest (izņēmums)"), //pieriest 1
+		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "sust (žūt)"), //nosust 2
 
 		// Paralēlformas
 		FirstConj.direct3PersParallel(
@@ -998,7 +998,7 @@ public class OptHypernRules
 		FirstConj.direct3Pers("-žulgst, pag. -žulga", "žulgt"), //izžulgt
 
 		// Daudzskaitļa formu likumi.
-		FirstConj.directPluralHomof("-lienam, -lienat, -lien, pag. -līdām", "līst", "\"līst\" (zem galda)"), // salīst
+		FirstConj.directPluralHomof("-lienam, -lienat, -lien, pag. -līdām", "līst", "līst (zem galda)"), // salīst
 
 		FirstConj.directPluralAllPersParallel(
 				"-sēžam, -sēžat, -sēž, arī -sēstam, -sēstat, -sēst, pag. -sēdām", "sēst"), // sasēst
@@ -1019,11 +1019,11 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		VerbDoubleRule.of(
 				"-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikt\""), TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "teikt"), TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikt
 		VerbDoubleRule.of("parasti pag., -sēdu, -sēdi, -sēda", null, "sēst", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sēst\""), TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "sēst"), TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
 				FirstConjStems.of("sēs", null, "sēd")), // apsēst
 
@@ -1854,37 +1854,37 @@ public class OptHypernRules
 	public static final EndingRule[] reflFirstConjVerb = {
 		/// Pēteris solīja, ka tas strādās.
 		VerbDoubleRule.of("-ejos, -ejies,", "-ietas, pag. -gājos", "ieties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"iet\""), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "iet"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("ie", "ej", "gāj")), //apieties
 
 		// Likumi, kam ir visu formu variants.
 		// Nenoteiksmes homoformas.
 		FirstConj.reflHomof("-aužos, -audies,", "-aužas, pag. -audos", "austies",
-				"\"austies\" (audumam)"), //apausties
+				"austies (audumam)"), //apausties
 		FirstConj.reflHomof("-dzenos, -dzenies,", "-dzenas, pag. -dzinos", "dzīties",
-				"\"dzīties\" (lopiem)"), //aizdzīties
+				"dzīties (lopiem)"), //aizdzīties
 		FirstConj.reflHomof("-iros, -iries,", "-iras, pag. -īros", "irties",
-				"\"irties\" (ar airiem)"), //aizirties
+				"irties (ar airiem)"), //aizirties
 		FirstConj.reflHomof("-lienos, -lienies,", "-lienas, pag. -līdos", "līsties",
-				"\"līsties\" (zem galda)"), // palīsties // Liekas, ka otra vārdnīcā nav.
+				"līsties (zem galda)"), // palīsties // Liekas, ka otra vārdnīcā nav.
 		FirstConj.reflHomof("-mistos, -misties,", "-mistas, pag. -misos", "misties",
-				"\"misties\" (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
+				"misties (krist izmisumā)"), //izmisties // Liekas, ka otra vārdnīcā nav.
 		FirstConj.reflHomof("-minos, -minies,", "-minas, pag. -minos", "mīties",
-				"\"mīties\" (pedāļus)"), //aizmīties
+				"mīties (pedāļus)"), //aizmīties
 		FirstConj.reflHomof("-mijos, -mijies,", "-mijas, pag. -mijos", "mīties",
-				"\"mīties\" (mainīt naudu)"), //apmīties
+				"mīties (mainīt naudu)"), //apmīties
 		FirstConj.reflHomof("-tiekos, -tiecies,", "-tiekas, pag. -tikos", "tikties",
-				"\"tikties\" (satikties ar kādu)"), //satikties
+				"tikties (satikties ar kādu)"), //satikties
 		FirstConj.reflHomof("-tīkos, -tīcies,", "-tīkas, pag. -tikos", "tikties",
-				"\"tikties\" (patikties kādam)"), //tikties, patikties
+				"tikties (patikties kādam)"), //tikties, patikties
 		FirstConj.reflHomof("-vēršos, -vērsies,", "-vēršas, pag. -vērsos", "vērsties",
-				"\"vērsties\" (mainīt virzienu)"), //aizvērsties, izvērsties 1
+				"vērsties (mainīt virzienu)"), //aizvērsties, izvērsties 1
 		FirstConj.reflHomof("-vēršos, -vērties,", "-vēršas, pag. -vērtos", "vērsties",
-				"\"vērsties\" (mainīt būtību)"), //izvērsties 2
+				"vērsties (mainīt būtību)"), //izvērsties 2
 
 		// Izņēmums.
 		VerbDoubleRule.of("-patīkos, -patīcies,", "-patīkas, pag. -patikos", "patikties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"tikties\" (patikties kādam)"),
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "tikties (patikties kādam)"),
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("tik", "tīk", "tik")), //iepatikties
 
@@ -1909,10 +1909,10 @@ public class OptHypernRules
 
 		// Izņēmums.
 		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"zīties\""), TFeatures.POS__REFL_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "zīties"), TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("zī", "zīst", "zin")), //iepazīties
 		VerbDoubleRule.of("-sastopos, -sastopies,", "-sastopas, pag. -sastapos", "sastapties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"stapties\""), TFeatures.POS__REFL_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "stapties"), TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("stap", "stop", "stap")), //sastapties
 
 		// Standartizētie.
@@ -2134,14 +2134,14 @@ public class OptHypernRules
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		FirstConj.refl3PersHomof("-viešas, pag. -viesās", "viesties",
-				"\"viesties\" (pakāpeniski veidoties)"), // ieviesties
+				"viesties (pakāpeniski veidoties)"), // ieviesties
 		FirstConj.refl3PersHomof("viežas, pag. viedās", "viesties",
-				"\"viesties\" (būt neskaidri jūtamam)"), // viesties 2
+				"viesties (būt neskaidri jūtamam)"), // viesties 2
 
 			// TODO: sakārtot "riest" un "riesties"
 		FirstConj.refl3PersParallelHomof(
-				"-riešas, pag. -riesās, arī -rietās", "riesties", "\"riesties\" (parastais)"), //aizriesties
-		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "\"riesties\" (parastais)"), // ieriesties 1
+				"-riešas, pag. -riesās, arī -rietās", "riesties", "riesties (parastais)"), //aizriesties
+		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "riesties (parastais)"), // ieriesties 1
 
 		// Paralēlās formas.
 		FirstConj.refl3PersParallel("-jaušas, pag. -jautās, arī -jaužas, pag. -jaudās", "jausties"), //jausties
@@ -2200,13 +2200,13 @@ public class OptHypernRules
 		// Pilnīgs nestandarts.
 		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos",
 				"teikties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"teikties\""), TFeatures.POS__REFL_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "teikties"), TFeatures.POS__REFL_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikties
 
 		VerbDoubleRule.of("parasti dsk. 3. pers., -sveicas, pag. -sveicās", null,
 				"sveikties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sveikties\""), TFeatures.POS__REFL_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "sveikties"), TFeatures.POS__REFL_VERB},
 				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS},
 				FirstConjStems.of("sveik", "sveic", "sveic")), // apsveikties
 

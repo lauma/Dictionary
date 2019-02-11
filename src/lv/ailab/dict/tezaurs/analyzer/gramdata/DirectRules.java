@@ -181,23 +181,23 @@ public class DirectRules
 		VerbDoubleRule.of(
 				"esmu, esi, ir, 3. pers. nolieguma forma nav, dsk. esam, esat, ir, 3. pers. nolieguma forma nav, pag. biju, biji, bija (arī bij), dsk. bijām, bijāt, bija (arī bij), vajadzības izteiksme jābūt", null,
 				"būt", 50,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.PARALLEL_FORMS,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.PARALLEL_FORMS,
 						TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB},
 				null), // būt
 
 		VerbDoubleRule.of("parasti divd. formā: izbijis, retāk pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
 				"būt", 50,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PARTICIPLE_IS), Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PARTICIPLE),Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PAST), TFeatures.ORIGINAL_NEEDED}), // izbūt
 		VerbDoubleRule.of("tagadnes formas nelieto, pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
 				"būt", 50,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.NO_PRESENT)}), // pabūt, sabūt
 		VerbDoubleRule.of("parasti pag. -biju, -biji, -bija, dsk. -bijām, -bijāt, -bija", null,
 				"būt", 50,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"būt\""), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "būt"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)}), // pārbūt
 
@@ -205,7 +205,7 @@ public class DirectRules
 		VerbDoubleRule.of(
 				"neesmu, neesi, nav, pag. nebiju", null,
 				"būt", 50,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"nebūt\""), TFeatures.POS__IRREG_VERB,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "nebūt"), TFeatures.POS__IRREG_VERB,
 						TFeatures.POS__DIRECT_VERB},
 				null), // nebūt
 	};
@@ -958,7 +958,7 @@ public class DirectRules
 
 		// Pilnīgs nestandarts.
 		VerbDoubleRule.of("parasti pag. -sārtu, -sārti, -sārta", null, "sārst", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "\"sārst\""), TFeatures.POS__DIRECT_VERB},
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "sārst"), TFeatures.POS__DIRECT_VERB},
 				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
 				FirstConjStems.of("sārs", null, "sārt")), // piesārst
 	};
@@ -1102,7 +1102,7 @@ public class DirectRules
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Nenoteiksmes homoformas
 		FirstConj.refl3PersHomof("-sīcas, pag. -sīcās", "sīkties",
-				"\"sīkties\" (kā odam)"), //aizsīkties
+				"sīkties (kā odam)"), //aizsīkties
 		// Paralēlformas.
 		FirstConj.refl3PersParallel("-mejas, arī -mienas, pag. -mējās", "mieties"), // iemieties
 		// TODO pārbaudīt, vai ir pieņemami, ka abas homoformas ir kopā

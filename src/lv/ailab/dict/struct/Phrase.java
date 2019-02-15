@@ -215,4 +215,20 @@ public class Phrase implements HasToJSON, HasToXML
 		}
 		parent.appendChild(phraseN);
 	}
+
+	/**
+	 * Frāžu tipu uzskaitījums un atreferējumi MLVV, LLVV vajadzībām.
+	 * Izveidots 2016-02-11.
+	 *
+	 * @author Lauma
+	 */
+	public static class Type
+	{
+		public final static String PHRASEOLOGICAL = "Frazeoloģisms";
+		public final static String STABLE_UNIT = "Stabila vienība";
+		public final static String SAMPLE = "Piemērs";
+		public final static String TAXON = "Taksons";
+		public final static String QUOTE = "Citāts";
+
+	}
 }

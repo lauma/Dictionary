@@ -290,7 +290,7 @@ public class MLVVEntry extends Entry
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
-					phraseText.trim(), PhraseTypes.PHRASEOLOGICAL, head.lemma.text);
+					phraseText.trim(), Phrase.Type.PHRASEOLOGICAL, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
 	}
@@ -303,7 +303,7 @@ public class MLVVEntry extends Entry
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
-					phraseText.trim(), PhraseTypes.STABLE_UNIT, head.lemma.text);
+					phraseText.trim(), Phrase.Type.STABLE_UNIT, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
 	}

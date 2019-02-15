@@ -45,7 +45,7 @@ public class MLVVPhrase extends Phrase
 	 * Metode, kas izgūst dotā tipa frāzi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
 	 *                      neko citu
-	 * @param phraseType	frāzes tips (PhraseTypes)
+	 * @param phraseType	frāzes tips (Type)
 	 * @param lemma			šķirkļavārds šķirklim, kurā šī frāze atrodas (kļūdu
 	 *                      paziņojumiem)
 	 * @return	izgūtā frāze vai null
@@ -127,7 +127,7 @@ public class MLVVPhrase extends Phrase
 		ArrayList<MLVVPhrase> results = new ArrayList<>();
 		MLVVPhrase res = new MLVVPhrase();
 		results.add(res);
-		res.type = PhraseTypes.TAXON;
+		res.type = Type.TAXON;
 		res.text = new LinkedList<>();
 		res.sciName = new LinkedList<>();
 		Matcher m = Pattern.compile("(?:<bullet/>)?\\s*<i>(.*?)</i>\\s*\\[([^\\]]*)\\](.*?)((?:<i>.*|<bullet/>.*)?)").matcher(linePart);
@@ -181,7 +181,7 @@ public class MLVVPhrase extends Phrase
 		if (linePart.length() < 1) return null;
 
 		MLVVPhrase res = new MLVVPhrase();
-		res.type = PhraseTypes.QUOTE;
+		res.type = Type.QUOTE;
 		res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
@@ -335,7 +335,7 @@ public class MLVVPhrase extends Phrase
 			for (String part : finalParts)
 			{
 				MLVVPhrase sample = parseSampleOrPhrasal(
-						part, PhraseTypes.SAMPLE, lemma);
+						part, Type.SAMPLE, lemma);
 				if (sample != null) res.add(sample);
 			}
 		}
@@ -412,7 +412,7 @@ public class MLVVPhrase extends Phrase
 	protected static MLVVPhrase parseNoGlossSample(String linePart)
 	{
 		MLVVPhrase res = new MLVVPhrase();
-		res.type = PhraseTypes.SAMPLE;
+		res.type = Type.SAMPLE;
 		res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
 		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);

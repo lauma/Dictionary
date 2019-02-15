@@ -32,7 +32,7 @@ public class TPhrase extends Phrase
 	public TPhrase(Node piemNode, String lemma)
 	{
 		super();
-		type = Type.STABLE_UNIT;
+		//type = Type.STABLE_UNIT;
 		NodeList fields = piemNode.getChildNodes(); 
 		for (int i = 0; i < fields.getLength(); i++) {
 			Node field = fields.item(i);
@@ -81,7 +81,7 @@ public class TPhrase extends Phrase
 
 				//if (newMade.grammar != null)
 				//	System.out.println("Ir gramatika! " + field.toString());
-				//if (newMade.examples != null)
+				//if (newMade.phrases != null)
 				//	System.out.println("Ir piemēri! " + field.toString());
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.

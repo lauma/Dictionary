@@ -47,12 +47,16 @@ public class Sense implements HasToJSON, HasToXML
 	 * Nozīmes numurs (ID).
 	 */
 	public String ordNumber;
+	/**
+	 * Piemēru, citātu grupa (neobligāta, Tēzaurā nav).
+	 */
+	public LinkedList<Sample> examples = null;
 
 	/**
-	 * Piemēru, frāžu grupa (neobligāta, Tēzaura XML apzīmēta ar g_piem).
+	 * Stabilu vārdu savienojumu, frazeoloģismu grupa (neobligāta, Tēzaura XML
+	 * apzīmēta ar g_piem).
 	 */
-
-	public LinkedList<Phrase> examples = null;
+	public LinkedList<Phrase> phrases = null;
 	/**
 	 * Apakšnozīmju, nozīmes nianšu grupa ( neobligāta, Tēzaura XML apzīmēta ar
 	 * g_an).
@@ -63,7 +67,7 @@ public class Sense implements HasToJSON, HasToXML
 	{
 		grammar = null;
 		gloss = null;
-		examples = null;
+		phrases = null;
 		subsenses = null;
 		ordNumber = null;
 	}
@@ -72,7 +76,7 @@ public class Sense implements HasToJSON, HasToXML
 	{
 		grammar = null;
 		gloss = new Gloss(glossText);
-		examples = null;
+		phrases = null;
 		subsenses = null;
 		ordNumber = null;
 	}
@@ -81,7 +85,7 @@ public class Sense implements HasToJSON, HasToXML
 	{
 		grammar = null;
 		this.gloss = gloss;
-		examples = null;
+		phrases = null;
 		subsenses = null;
 		ordNumber = null;
 	}
@@ -90,7 +94,7 @@ public class Sense implements HasToJSON, HasToXML
 	{
 		return gloss != null && grammar == null &&
 				(ordNumber == null || ordNumber.equals("")) &&
-				(examples == null || examples.isEmpty()) &&
+				(phrases == null || phrases.isEmpty()) &&
 				(subsenses == null || subsenses.isEmpty());
 	}
 
@@ -109,7 +113,7 @@ public class Sense implements HasToJSON, HasToXML
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (grammar != null)
 			paradigms.addAll(grammar.getMentionedParadigms());
-		if (examples != null) for (Phrase e : examples)
+		if (phrases != null) for (Phrase e : phrases)
 			paradigms.addAll(e.getMentionedParadigms());
 		if (subsenses != null) for (Sense s : subsenses)
 			paradigms.addAll(s.getMentionedParadigms());
@@ -124,7 +128,7 @@ public class Sense implements HasToJSON, HasToXML
 		Flags flags = new Flags();
 		if (grammar != null && grammar.flags != null)
 			flags.addAll(grammar.flags);
-		if (examples != null) for (Phrase e : examples)
+		if (phrases != null) for (Phrase e : phrases)
 			flags.addAll(e.getUsedFlags());
 		if (subsenses != null) for (Sense s : subsenses)
 			flags.addAll(s.getUsedFlags());
@@ -138,7 +142,7 @@ public class Sense implements HasToJSON, HasToXML
 	{
 		ArrayList<Header> res = new ArrayList();
 		if (grammar != null) res.addAll(grammar.getImplicitHeaders());
-		if (examples != null) for (Phrase e : examples)
+		if (phrases != null) for (Phrase e : phrases)
 			res.addAll(e.getImplicitHeaders());
 		if (subsenses != null) for (Sense s : subsenses)
 			res.addAll(s.getImplicitHeaders());
@@ -154,7 +158,7 @@ public class Sense implements HasToJSON, HasToXML
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);
-		if (examples != null) for (Phrase e : examples)
+		if (phrases != null) for (Phrase e : phrases)
 			counts.addAll(e.getFlagCounts());
 		if (subsenses != null) for (Sense s : subsenses)
 			counts.addAll(s.getFlagCounts());
@@ -197,6 +201,14 @@ public class Sense implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
+		if (phrases != null && !phrases.isEmpty())
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"StablePhrases\":");
+			res.append(JSONUtils.objectsToJSON(phrases));
+			hasPrev = true;
+		}
+
 		if (subsenses != null && !subsenses.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
@@ -222,8 +234,14 @@ public class Sense implements HasToJSON, HasToXML
 		if (examples != null && !examples.isEmpty())
 		{
 			Node exContN = doc.createElement("Examples");
-			for (Phrase e : examples) e.toXML(exContN);
+			for (Sample e : examples) e.toXML(exContN);
 			senseN.appendChild(exContN);
+		}
+		if (phrases != null && !phrases.isEmpty())
+		{
+			Node phContN = doc.createElement("StablePhrases");
+			for (Phrase p : phrases) p.toXML(phContN);
+			senseN.appendChild(phContN);
 		}
 
 		if (subsenses != null && !subsenses.isEmpty())

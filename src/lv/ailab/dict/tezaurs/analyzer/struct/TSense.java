@@ -64,7 +64,7 @@ public class TSense extends Sense
 				}
 			}
 			else if (fieldname.equals("g_piem"))
-				examples = Loaders.loadPhrases(field, lemma, "piem");
+				phrases = Loaders.loadPhrases(field, lemma, "piem");
 			else if (fieldname.equals("g_an"))
 				subsenses = Loaders.loadSenses(field, lemma);
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
@@ -85,7 +85,7 @@ public class TSense extends Sense
 		if (sense.grammar != null && TGram.hasUnparsedGram(sense.grammar))
 			return true;
 
-		if (sense.examples != null) for (Phrase e : sense.examples)
+		if (sense.phrases != null) for (Phrase e : sense.phrases)
 		{
 			if (TPhrase.hasUnparsedGram(e)) return true;
 		}

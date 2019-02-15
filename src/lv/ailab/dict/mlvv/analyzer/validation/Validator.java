@@ -182,7 +182,7 @@ public class Validator
 
 		if (s.subsenses != null) for (Sense sub : s.subsenses)
 			checkTexts(sub, debugEntryWord);
-		if (s.examples != null) for (Phrase p : s.examples)
+		if (s.phrases != null) for (Phrase p : s.phrases)
 			checkTexts(p, debugEntryWord);
 	}
 

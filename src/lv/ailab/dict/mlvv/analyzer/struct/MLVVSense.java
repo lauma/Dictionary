@@ -4,6 +4,7 @@ import lv.ailab.dict.mlvv.analyzer.PhrasalExtractor;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.utils.Tuple;
 
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -36,7 +37,7 @@ public class MLVVSense extends Sense
 		if (grammar != null) res.addAll(((MLVVGram)grammar).getFlagStrings());
 		if (subsenses != null) for (Sense s : subsenses)
 			res.addAll(((MLVVSense)s).getFlagStrings());
-		if (examples != null) for (Phrase e : examples)
+		if (phrases != null) for (Phrase e : phrases)
 			res.addAll(((MLVVPhrase)e).getFlagStrings());
 		return res;
 	}
@@ -64,9 +65,12 @@ public class MLVVSense extends Sense
 		linePart = res.extractGloss(linePart);
 
 		// Piemēru analīze.
-		LinkedList<MLVVPhrase> samples = PhrasalExtractor.parseAllPhrases(linePart, lemma);
-		if (samples != null && samples.size() > 0)
-			res.examples = new LinkedList<>(samples);
+		Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> phrasals
+				= PhrasalExtractor.parseAllPhrases(linePart, lemma);
+		if (phrasals != null && phrasals.first.size() > 0)
+			res.examples = new LinkedList<>(phrasals.first);
+		if (phrasals != null && phrasals.second.size() > 0)
+			res.phrases = new LinkedList<>(phrasals.second);
 		return res;
 	}
 

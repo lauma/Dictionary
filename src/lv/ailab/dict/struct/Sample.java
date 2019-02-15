@@ -1,23 +1,9 @@
-/*******************************************************************************
- * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.utils.*;
+import lv.ailab.dict.utils.CountingSet;
+import lv.ailab.dict.utils.HasToJSON;
+import lv.ailab.dict.utils.HasToXML;
+import lv.ailab.dict.utils.Tuple;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,10 +15,12 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /**
- * Frāžu un piemēru skaidrojumi.
+ * Valodas materiāls - piemēri un citāti. Tiek lietoti MLVV un LLVV, bet ne
+ * Tēzaurā.
+ * Izdalīts no Phrase 2019-02-15.
  * @author Lauma
  */
-public class Phrase implements HasToJSON, HasToXML
+public class Sample implements HasToJSON, HasToXML
 {
 	/**
 	 * Skaidrojamā frāze - parasti viena, taču reizēm var būt vairākas.
@@ -45,39 +33,31 @@ public class Phrase implements HasToJSON, HasToXML
 	public Gram grammar;
 
 	/**
-	 * Neobligāti skaidrojumi
+	 * Frāzes tips.
 	 */
-	public LinkedList<Sense> subsenses;
+	public Sample.Type type;
 
 	/**
-	 * Frāzes tips, kas Tēzaurā vienmēr ir "stabila vienība".
-	 */
-	public Type type;
-
-	/**
-	 * Neobligāts autors vai avots (netiek lietots Tēzaurā).
+	 * Neobligāts autors vai avots.
 	 */
 	public String source;
 
 
-	public Phrase()
+	public Sample()
 	{
 		text = null;
 		grammar = null;
-		subsenses = null;
 	}
 
 	/**
 	 * Tikai statistiskām vajadzībām! Savāc visas paradigmas, kas šajā truktūrā
 	 * ir pieminētas.
- 	 */
+	 */
 	protected Set<Integer> getMentionedParadigms()
 	{
 		HashSet<Integer> paradigms = new HashSet<>();
 		if (grammar != null)
 			paradigms.addAll(grammar.getMentionedParadigms());
-		if (subsenses != null) for (Sense s : subsenses)
-			paradigms.addAll(s.getMentionedParadigms());
 		return paradigms;
 	}
 
@@ -89,8 +69,6 @@ public class Phrase implements HasToJSON, HasToXML
 		Flags flags = new Flags();
 		if (grammar != null && grammar.flags != null)
 			flags.addAll(grammar.flags);
-		if (subsenses != null) for (Sense s : subsenses)
-			flags.addAll(s.getUsedFlags());
 		return flags;
 	}
 
@@ -101,8 +79,6 @@ public class Phrase implements HasToJSON, HasToXML
 	{
 		ArrayList<Header> res = new ArrayList();
 		if (grammar != null) res.addAll(grammar.getImplicitHeaders());
-		if (subsenses != null) for (Sense s : subsenses)
-			res.addAll(s.getImplicitHeaders());
 		return res;
 	}
 
@@ -116,8 +92,6 @@ public class Phrase implements HasToJSON, HasToXML
 
 		if (grammar != null && grammar.flags != null)
 			grammar.flags.count(counts);
-		if (subsenses != null) for (Sense s : subsenses)
-			counts.addAll(s.getFlagCounts());
 		return counts;
 	}
 
@@ -129,7 +103,7 @@ public class Phrase implements HasToJSON, HasToXML
 	{
 		StringBuilder res = new StringBuilder();
 
-		//res.append("\"Phrase\":{");
+		//res.append("\"Sample\":{");
 		boolean hasPrev = false;
 
 		if (type != null)
@@ -146,7 +120,7 @@ public class Phrase implements HasToJSON, HasToXML
 			if (hasPrev) res.append(", ");
 			res.append("\"Text\":[");
 			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
-				.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
 			res.append("]");
 			hasPrev = true;
 		}
@@ -155,14 +129,6 @@ public class Phrase implements HasToJSON, HasToXML
 		{
 			if (hasPrev) res.append(", ");
 			res.append(grammar.toJSON());
-			hasPrev = true;
-		}
-
-		if (subsenses != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Senses\":");
-			res.append(JSONUtils.objectsToJSON(subsenses));
 			hasPrev = true;
 		}
 
@@ -186,7 +152,7 @@ public class Phrase implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Element phraseN = doc.createElement("Phrase");
+		Element phraseN = doc.createElement("Sample");
 		if (type != null) phraseN.setAttribute("Type", type.toString());
 		if (text != null)
 		{
@@ -201,12 +167,6 @@ public class Phrase implements HasToJSON, HasToXML
 			phraseN.appendChild(textN);
 		}
 		if (grammar != null) grammar.toXML(phraseN);
-		if (subsenses != null)
-		{
-			Node sensesContN = doc.createElement("Senses");
-			for (Sense s : subsenses) s.toXML(sensesContN);
-			phraseN.appendChild(sensesContN);
-		}
 		if (source != null)
 		{
 			Node sourceN = doc.createElement("Source");
@@ -224,10 +184,8 @@ public class Phrase implements HasToJSON, HasToXML
 	 */
 	public enum Type
 	{
-		PHRASEOLOGICAL("Frazeoloģisms"),
-		STABLE_UNIT("Stabila vienība"),
-		EXPLAINED_SAMPLE("Skaidrots piemērs"),
-		TAXON("Taksons");
+		SAMPLE("Piemērs"),
+		QUOTE("Citāts");
 
 		String s;
 		Type (String value)
@@ -241,11 +199,6 @@ public class Phrase implements HasToJSON, HasToXML
 			return s;
 		}
 
-		//public final static String PHRASEOLOGICAL = "Frazeoloģisms";
-		//public final static String STABLE_UNIT = "Stabila vienība";
-		//public final static String SAMPLE = "Piemērs";
-		//public final static String TAXON = "Taksons";
-		//public final static String QUOTE = "Citāts";
-
 	}
+
 }

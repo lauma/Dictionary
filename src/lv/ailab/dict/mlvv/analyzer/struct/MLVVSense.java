@@ -1,5 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.PhrasalExtractor;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
@@ -63,7 +64,7 @@ public class MLVVSense extends Sense
 		linePart = res.extractGloss(linePart);
 
 		// Piemēru analīze.
-		LinkedList<MLVVPhrase> samples = MLVVPhrase.parseAllPhrases(linePart, lemma);
+		LinkedList<MLVVPhrase> samples = PhrasalExtractor.parseAllPhrases(linePart, lemma);
 		if (samples != null && samples.size() > 0)
 			res.examples = new LinkedList<>(samples);
 		return res;

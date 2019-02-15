@@ -1,5 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
+import lv.ailab.dict.mlvv.analyzer.PhrasalExtractor;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Phrase;
@@ -41,6 +42,7 @@ public class MLVVPhrase extends Phrase
 			res.addAll(((MLVVSense)s).getFlagStrings());
 		return res;
 	}
+
 	/**
 	 * Metode, kas izgūst dotā tipa frāzi no dotās simbolu virknes.
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
@@ -50,14 +52,12 @@ public class MLVVPhrase extends Phrase
 	 *                      paziņojumiem)
 	 * @return	izgūtā frāze vai null
 	 */
-	public static MLVVPhrase parseSampleOrPhrasal(String linePart, Phrase.Type phraseType, String lemma)
+	public static MLVVPhrase parseSpecialPhrasal(String linePart, Phrase.Type phraseType, String lemma)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
 		Matcher dashMatcher = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
-		Matcher colonMatcher = Pattern.compile("(.*?</i>):\\s*(<i>.*)").matcher(linePart);
-		Matcher simpleMatcher = Pattern.compile("<i>[^:]+(:\\s+[\"\u201e\u201d][^:]+)?</i>").matcher(linePart);
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = phraseType;
 		res.text = new LinkedList<>();
@@ -72,21 +72,6 @@ public class MLVVPhrase extends Phrase
 			// Analizē skaidrojumus.
 			res.parseGramAndGloss(end, lemma, linePart);
 		}
-
-		// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
-		// skaidrojuma.
-		else if (colonMatcher.matches())
-		{
-			String begin = colonMatcher.group(1).trim();
-			if (begin.length() > 0) res.grammar = new MLVVGram(begin);
-			String end = colonMatcher.group(2).trim();
-			res.text.add(Editors.removeCursive(end));
-		}
-
-		// Frāze bez gramatikas un bez skaidrojuma.
-		else if (simpleMatcher.matches())
-			res.text.add(Editors.removeCursive(linePart));
-
 		// Nu nesanāca!
 		else
 		{
@@ -106,9 +91,7 @@ public class MLVVPhrase extends Phrase
 			if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
 			System.out.println();
 		}
-
 		return res;
-
 	}
 
 	/**
@@ -207,141 +190,6 @@ public class MLVVPhrase extends Phrase
 		return res;
 	}
 
-	/**
-	 * No simbolu virknes, kas satur dažādas frāzes, izgūst frāžu masīvu.
-	 * @param linePart	šķirkļa daļa, kas jāpārtaisa frāzēs
-	 * @param lemma		šķirkļavārds šķirklim, kurā šī frāze atrodas (kļūdu
-	 *                  paziņojumiem)
-	 * @return	izgūto frāžu masīvs (tukšs, ja nekā nav)
-	 */
-	public static LinkedList<MLVVPhrase> parseAllPhrases(String linePart, String lemma)
-	{
-		LinkedList<MLVVPhrase> res = new LinkedList<>();
-		if (linePart != null) linePart = linePart.trim();
-		if (linePart == null || linePart.length() < 1) return res;
-
-		int beginTaxonOrQuot = Finders.getAnyCircleIndex(linePart);
-		String lineEndPart = null;
-		if (beginTaxonOrQuot > -1)
-		{
-			lineEndPart = linePart.substring(beginTaxonOrQuot);
-			linePart = linePart.substring(0, beginTaxonOrQuot);
-		}
-
-		// Apstrādā "pamata" piemērus.
-		if (linePart != null && !linePart.isEmpty())
-			res.addAll(parseAllSamplesAndPhrasals(linePart, lemma));
-		// Apstrādā to, kas ir aiz tukšā vai pilnā aplīša.
-		if (lineEndPart != null && !lineEndPart.isEmpty())
-			res.addAll(parseAllTaxonsAndQuotes(lineEndPart, lemma));
-		return res;
-	}
-
-	// TODO: šis ir uzblīdis, vajag sacirst gabaliņos.
-	/**
-	 * Izanalizē simbolu virkni, kas satur parastās frāzes - tās, kas dotas ar
-	 * vai bez skaidrojumiem, bet ne taksonus vai citātus.
-	 * @param linePart	apstrādājamā rindiņas daļa.
-	 * @param lemma		individuālo frāžu apstrādē reizēm vajag zināt lemmu.
-	 * @return izgūto frāžu saraksts.
-	 */
-	protected static LinkedList<MLVVPhrase> parseAllSamplesAndPhrasals(
-			String linePart, String lemma)
-	{
-		if (linePart == null || linePart.trim().isEmpty()) return null;
-		LinkedList<MLVVPhrase> res = new LinkedList<>();
-
-		// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
-		// atpakaļ iekšā.
-		if (linePart.endsWith("</i>."))
-			linePart = linePart.substring(0, linePart.length() - "</i>.".length())
-						+ ".</i>";
-
-		// Vispirms jāmēģina atdalīt bezskaidrojumu piemērus.
-		if (linePart.startsWith("<i>"))
-			linePart = linePart.substring(3).trim();
-		Pattern splitter = Pattern.compile(
-				"((?:(?!</i>).|\\.</i>:\\s<i>|</i>:\\s<i>\")*?[.!?]\"?)(\\s\\p{Lu}.*|\\s*</i>|\\s*$)");
-		Matcher m = splitter.matcher(linePart);
-		while (m.matches())
-		{
-			res.add(MLVVPhrase.parseNoGlossSample(m.group(1).trim()));
-			linePart = m.group(2);
-			m = splitter.matcher(linePart);
-		}
-		// Tālāk sadala lielos piemērus ar skaidrojumu
-		if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
-		{
-			if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
-			// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",
-			// "<i>frāze</i> - <i>gramatika</i> skaidrojums." un
-			// "<i>frāze</i>, arī <i>frāze</i> - ..." divos.
-			String[] initialParts = linePart.split("(?=<i>)");
-
-			// Vispirms apvieno lieki sadalīto.
-			LinkedList<String> concatParts = new LinkedList<>();
-			concatParts.addLast(initialParts[0]);
-			for (int i = 1; i < initialParts.length; i++)
-			{
-				// Apvieno, ja pēdējā daļa beidzas ar elementiem, kas nevar būt frāzes beigās.
-				if (concatParts.getLast().matches(".*(\\s[a-p]\\.\\s|\\bpiem\\.,\\s*|[\\-\u2014\u2013]\\s?|\\.</i>:\\s|[,;?!(](</i>)?\\s?(arī|biežāk|retāk|saīsināti:)\\s?)"))
-					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-				// Apvieno, ja pēdējā daļa satur numurētu apakšnozīmi un jaunā daļa sākas kursīvā (frāžu nozīmju piemēri)
-				else if (concatParts.getLast().matches(".*\\s[a-o]\\.\\s((?<!</?i>).)*")
-						&& initialParts[i].matches("\\s*<i>.*"))
-					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-				// Apvieno, ja pēdējā daļa beidzas ar komatu vai u.tml. bez kursīva un tālāk seko kursīvs ar mazo burtu vai defise.
-				else if (concatParts.getLast().matches(".*(\\su\\.tml\\.\\)|,)\\s*")
-						&& initialParts[i].matches("\\s*(<i>,?\\s*\\p{Ll}|[\\-\u2014\u2013]).*"))
-					concatParts.addLast(concatParts.removeLast() + initialParts[i]);
-				// Citādi neapvieno.
-				else concatParts.addLast(initialParts[i]);
-			}
-
-			// Tad sadala to, kas nesadalījās - tekstuāls piemērs var būt
-			// saplūdis kopā ar nākamo piemēru, aiz kā seko domuzīme, ja
-			// viss ir kursīvā.
-			Pattern resplitPat1 = Pattern.compile(
-					"(.*?<i>(?:(?<!</i>).)*(?:</i>)?\\.\\s)" // Daļa kursīvā, kas beidzas ar punktu
-					+ "(\\(?\\p{Lu}[^\\p{Lu}]*[\\-\u2014\u2013]\\s?.*)"); // Arī pirms domuzīmes ir jāpaliek reālam tekstam no reāliem burtiem.
-			LinkedList<String> finalParts = new LinkedList<>();
-			for (String concatPart : concatParts)
-			{
-				String inProgressPart = Editors.openCursive(concatPart);
-				Matcher resplitter = resplitPat1.matcher(inProgressPart);
-				while (resplitter.matches())
-				{
-					String preLast = resplitter.group(1);
-					String last = resplitter.group(2);
-					// TODO šitā izteiksme varētu nebūt pareiza.
-					Matcher gramMatcher = Pattern
-							.compile("(.*?)((?:<i>\\s*\\p{Lu}(?:(?<!/?i>)[^\\p{Lu}]\\)?)*\\.</i>:\\s*)?<i>\\s*)")
-							.matcher(preLast);
-					if (gramMatcher.matches())
-					{
-						preLast = gramMatcher.group(1);
-						last = gramMatcher.group(2) + last;
-					}
-					preLast = Editors.closeCursive(preLast);
-					last = Editors.openCursive(last);
-					if (!preLast.trim().isEmpty()) finalParts.add(preLast);
-					inProgressPart = last;
-					resplitter = resplitPat1.matcher(inProgressPart);
-				}
-				finalParts.add(inProgressPart);
-			}
-
-			// Apstrādā iegūtās daļas.
-			for (String part : finalParts)
-			{
-				MLVVPhrase sample = parseSampleOrPhrasal(
-						part, Type.SAMPLE, lemma);
-				if (sample != null) res.add(sample);
-			}
-		}
-
-		return res;
-	}
 
 	/**
 	 * Izanalizē simbolu virkni, kas satur ar "bumbiņām" atdalītās frāzes -
@@ -350,7 +198,7 @@ public class MLVVPhrase extends Phrase
 	 * @param lemma		individuālo frāžu apstrādē reizēm vajag zināt lemmu.
 	 * @return izgūto frāžu saraksts.
 	 */
-	protected static LinkedList<MLVVPhrase> parseAllTaxonsAndQuotes(
+	public static LinkedList<MLVVPhrase> parseAllTaxonsAndQuotes(
 			String linePart, String lemma)
 	{
 		if (linePart == null || linePart.trim().isEmpty()) return null;
@@ -369,7 +217,7 @@ public class MLVVPhrase extends Phrase
 			if (m.matches())
 			{
 				res.addAll(MLVVPhrase.parseTaxons(m.group(1)));
-				res.addAll(parseAllPhrases(m.group(2), lemma));
+				res.addAll(PhrasalExtractor.parseAllPhrases(m.group(2), lemma));
 			}
 			else
 			{
@@ -386,7 +234,7 @@ public class MLVVPhrase extends Phrase
 			if (m.matches())
 			{
 				res.add(MLVVPhrase.extractQuote(m.group(1) + m.group(2)));
-				res.addAll(parseAllPhrases(m.group(3), lemma));
+				res.addAll(PhrasalExtractor.parseAllPhrases(m.group(3), lemma));
 			}
 			else
 			{
@@ -409,7 +257,7 @@ public class MLVVPhrase extends Phrase
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
 	 *                      neko citu
 	 */
-	protected static MLVVPhrase parseNoGlossSample(String linePart)
+	public static MLVVPhrase parseNoGlossSample(String linePart)
 	{
 		MLVVPhrase res = new MLVVPhrase();
 		res.type = Type.SAMPLE;
@@ -426,19 +274,6 @@ public class MLVVPhrase extends Phrase
 			res.grammar = new MLVVGram(gramConsts.group(1));
 			linePart = gramConsts.group(2).trim();
 		}
-		/*if (linePart.matches(".*\\.: (?!\"|\\p{Ll}).*"))
-		{
-			res.grammar = new MLVVGram(linePart
-					.substring(0, linePart.indexOf(".: ") + 1));
-			linePart = linePart.substring(linePart.indexOf(".: ") + 2).trim();
-		} else if (linePart.matches(".*\\.</i>: <i>(?!\"|\\p{Ll}).*"))
-		{
-			res.grammar = new MLVVGram(linePart
-					.substring(0, linePart.indexOf(".</i>: <i>") + 1));
-			linePart = linePart
-					.substring(linePart.indexOf(".</i>: <i>") + ".</i>: <i>".length())
-					.trim();
-		}*/
 		linePart = linePart.replace("</i>: <i>\"", ": \"");
 		res.text.add(linePart);
 		return res;
@@ -452,7 +287,7 @@ public class MLVVPhrase extends Phrase
 	 * @param preDefiseLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
 	 *                          frāžu tekstu formēšanai.
 	 */
-	protected void extractGramAndText(String preDefiseLinePart)
+	public void extractGramAndText(String preDefiseLinePart)
 	{
 		// Ja vajag, frāzi sadala.
 		Pattern phrasesplitter = Pattern.compile("(?:(?<=</i>)[,;?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
@@ -524,7 +359,7 @@ public class MLVVPhrase extends Phrase
 	 *                              un frāžu tekstu formēšanai.
 	 * @param lemma					reizēm vajag zināt šķirkļa lemmu.
 	 */
-	protected void parseGramAndGloss(String postDefiseLinePart, String lemma,
+	public void parseGramAndGloss(String postDefiseLinePart, String lemma,
 			String linePartForErrorMsg)
 	{
 		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
@@ -685,6 +520,12 @@ public class MLVVPhrase extends Phrase
 
 		//res.append("}");
 		return res.toString();
+	}
+
+	public void variantCleanup()
+	{
+		for (String variant : text)
+			if (variant == null || variant.isEmpty()) text.remove(variant);
 	}
 
 	/**

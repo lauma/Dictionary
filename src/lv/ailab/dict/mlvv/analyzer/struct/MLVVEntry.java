@@ -289,7 +289,7 @@ public class MLVVEntry extends Entry
 		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
+			MLVVPhrase p = MLVVPhrase.parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.PHRASEOLOGICAL, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}
@@ -302,7 +302,7 @@ public class MLVVEntry extends Entry
 		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = MLVVPhrase.parseSampleOrPhrasal(
+			MLVVPhrase p = MLVVPhrase.parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.STABLE_UNIT, head.lemma.text);
 			if (p != null) phrases.add(p);
 		}

@@ -50,9 +50,9 @@ public class Phrase implements HasToJSON, HasToXML
 	public LinkedList<Sense> subsenses;
 
 	/**
-	 * Neobligāts tips (netiek lietots Tēzaurā).
+	 * Frāzes tips, kas Tēzaurā vienmēr ir "stabila vienība".
 	 */
-	public String type;
+	public Type type;
 
 	/**
 	 * Neobligāts autors vai avots (netiek lietots Tēzaurā).
@@ -136,7 +136,7 @@ public class Phrase implements HasToJSON, HasToXML
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"Type\":\"");
-			res.append(JSONObject.escape(type));
+			res.append(JSONObject.escape(type.toString()));
 			res.append("\"");
 			hasPrev = true;
 		}
@@ -187,7 +187,7 @@ public class Phrase implements HasToJSON, HasToXML
 	{
 		Document doc = parent.getOwnerDocument();
 		Element phraseN = doc.createElement("Phrase");
-		if (type != null) phraseN.setAttribute("Type", type);
+		if (type != null) phraseN.setAttribute("Type", type.toString());
 		if (text != null)
 		{
 			Node textN = doc.createElement("Text");
@@ -222,13 +222,31 @@ public class Phrase implements HasToJSON, HasToXML
 	 *
 	 * @author Lauma
 	 */
-	public static class Type
+	public enum Type
 	{
-		public final static String PHRASEOLOGICAL = "Frazeoloģisms";
-		public final static String STABLE_UNIT = "Stabila vienība";
-		public final static String SAMPLE = "Piemērs";
-		public final static String TAXON = "Taksons";
-		public final static String QUOTE = "Citāts";
+		PHRASEOLOGICAL("Frazeoloģisms"),
+		STABLE_UNIT("Stabila vienība"),
+		SAMPLE("Piemērs"),
+		TAXON("Taksons"),
+		QUOTE("Citāts");
+
+		String s;
+		Type (String value)
+		{
+			s = value;
+		}
+
+		@Override
+		public String toString()
+		{
+			return s;
+		}
+
+		//public final static String PHRASEOLOGICAL = "Frazeoloģisms";
+		//public final static String STABLE_UNIT = "Stabila vienība";
+		//public final static String SAMPLE = "Piemērs";
+		//public final static String TAXON = "Taksons";
+		//public final static String QUOTE = "Citāts";
 
 	}
 }

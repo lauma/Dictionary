@@ -32,6 +32,7 @@ public class TPhrase extends Phrase
 	public TPhrase(Node piemNode, String lemma)
 	{
 		super();
+		type = Type.STABLE_UNIT;
 		NodeList fields = piemNode.getChildNodes(); 
 		for (int i = 0; i < fields.getLength(); i++) {
 			Node field = fields.item(i);

@@ -50,7 +50,7 @@ public class MLVVPhrase extends Phrase
 	 *                      paziņojumiem)
 	 * @return	izgūtā frāze vai null
 	 */
-	public static MLVVPhrase parseSampleOrPhrasal(String linePart, String phraseType, String lemma)
+	public static MLVVPhrase parseSampleOrPhrasal(String linePart, Phrase.Type phraseType, String lemma)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -634,7 +634,7 @@ public class MLVVPhrase extends Phrase
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"Type\":\"");
-			res.append(JSONObject.escape(type));
+			res.append(JSONObject.escape(type.toString()));
 			res.append("\"");
 			hasPrev = true;
 		}
@@ -695,7 +695,7 @@ public class MLVVPhrase extends Phrase
 	{
 		Document doc = parent.getOwnerDocument();
 		Element phraseN = doc.createElement("Phrase");
-		if (type != null) phraseN.setAttribute("Type", type);
+		if (type != null) phraseN.setAttribute("Type", type.toString());
 		if (text != null)
 		{
 			Node textN = doc.createElement("Text");

@@ -156,72 +156,72 @@ public class PhrasalExtractor
 			linePart = m.group(2);
 			m = splitter.matcher(linePart);
 		}
-		// Tālāk sadala lielos piemērus ar skaidrojumu
+		// Tālāk sadala lielos piemērus ar skaidrojumu, bet uzmanās, vai
+		// pa vidu tomēr nav mazie.
 		if (linePart.length() > 0 && !linePart.matches("\\s*</i>\\s*"))
 		{
 			LinkedList<String> finalParts = splitExplainedPhrasals(linePart);
+			Pattern dashPhrases = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)");
+			Pattern colonPhrases = Pattern.compile("(.*?</i>):\\s*(<i>.*)");
+			Pattern simplePhrases = Pattern.compile("<i>[^:]+(:\\s+[\"\u201e\u201d][^:]+)?</i>");
+
 			// Apstrādā iegūtās daļas.
 			for (String part : finalParts)
 			{
+				// Ja tukšs, tad neko.
 				if (part == null) continue;
 				part = part.trim();
 				if (part.length() < 1) continue;
 
-				Matcher dashMatcher = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(part);
-				Matcher colonMatcher = Pattern.compile("(.*?</i>):\\s*(<i>.*)").matcher(part);
-				Matcher simpleMatcher = Pattern.compile("<i>[^:]+(:\\s+[\"\u201e\u201d][^:]+)?</i>").matcher(part);
-
 				// Izanalizē frāzi ar skaidrojumu
+				Matcher dashMatcher = dashPhrases.matcher(part);
 				if (dashMatcher.matches())
 				{
-					MLVVPhrase resPhrase = new MLVVPhrase();
-					resPhrase.type = Phrase.Type.EXPLAINED_SAMPLE;
-					resPhrase.text = new LinkedList<>();
-					String begin = dashMatcher.group(1).trim();
-					String end = dashMatcher.group(2).trim();
-					// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
-					resPhrase.extractGramAndText(begin);
-					// Analizē skaidrojumus.
-					resPhrase.parseGramAndGloss(end, lemma, part);
-					resPhrase.variantCleanup();
-					if (resPhrase.text.isEmpty()) warnNoTextVariants(part, lemma);
+					MLVVPhrase resPhrase = MLVVPhrase.makePhrasalFromSplitText(
+							dashMatcher.group(1).trim(), dashMatcher.group(2).trim(),
+							Phrase.Type.EXPLAINED_SAMPLE, lemma, part);
 					res.second.add(resPhrase);
+					continue;
 				}
+
 				// Analizē bezskaidrojumu gadījumus
+				Matcher colonMatcher = colonPhrases.matcher(part);
+				Matcher simpleMatcher = simplePhrases.matcher(part);
+
+				MLVVSample resSample = new MLVVSample();
+				resSample.type = Sample.Type.SAMPLE;
+				resSample.text = new LinkedList<>();
+
+				// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
+				// skaidrojuma.
+				if (colonMatcher.matches())
+				{
+					String begin = colonMatcher.group(1).trim();
+					if (begin.length() > 0) resSample.grammar = new MLVVGram(begin);
+					String end = colonMatcher.group(2).trim();
+					resSample.text.add(Editors.removeCursive(end));
+				}
+				// Frāze bez gramatikas un bez skaidrojuma.
+				else if (simpleMatcher.matches())
+					resSample.text.add(Editors.removeCursive(part));
+
+				// Nu nesanāca!
 				else
 				{
-					MLVVSample resSample = new MLVVSample();
-					resSample.type = Sample.Type.SAMPLE;
-					resSample.text = new LinkedList<>();
-
-					// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
-					// skaidrojuma.
-					if (colonMatcher.matches())
-					{
-						String begin = colonMatcher.group(1).trim();
-						if (begin.length() > 0) resSample.grammar = new MLVVGram(begin);
-						String end = colonMatcher.group(2).trim();
-						resSample.text.add(Editors.removeCursive(end));
-					}
-					// Frāze bez gramatikas un bez skaidrojuma.
-					else if (simpleMatcher.matches())
-					{
-						resSample.text.add(Editors.removeCursive(part));
-					}
-					// Nu nesanāca!
-					else
-					{
-						System.out.printf("Neizdodas izanalizēt piemēru \"%s\"", part);
-						if (lemma != null)
-							System.out.printf(" (lemma \"%s\")", lemma);
-						System.out.println();
-						resSample.text.add(part);
-					}
-
-					resSample.variantCleanup();
-					if (resSample.text.isEmpty()) warnNoTextVariants(part, lemma);
-					res.first.add(resSample);
+					System.out.printf("Neizdodas izanalizēt piemēru \"%s\"", part);
+					if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
+					System.out.println();
+					resSample.text.add(part);
 				}
+
+				resSample.variantCleanup();
+				if (resSample.text.isEmpty())
+				{
+					System.out.printf("No \"%s\" sanāca piemērs bez teksta", linePart);
+					if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
+					System.out.println();
+				}
+				res.first.add(resSample);
 			}
 		}
 		return res;
@@ -297,11 +297,4 @@ public class PhrasalExtractor
 		return finalParts;
 	}
 
-	private static void warnNoTextVariants(String linePart, String lemma)
-	{
-		System.out.printf("Frāzes skaidrojumam \"%s\" nav neviena frāzes teksta",
-				linePart);
-		if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
-		System.out.println();
-	}
 }

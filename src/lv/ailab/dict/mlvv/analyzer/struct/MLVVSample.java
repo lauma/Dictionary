@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class MLVVSample extends Sample
 {
 	/**
-	 * // TODO vai šis nedublējas ar parseSampleOrPhrasal?
 	 * No dotā rindas fragmenta izgūst frāzi bez skaidrojuma, bet ar gramatiku,
 	 * kas, iespējams, atdalīta ar kolu.
 	 * Funkcija oriģināli izstrādāta kā daļa no frāžu bloka analīzes

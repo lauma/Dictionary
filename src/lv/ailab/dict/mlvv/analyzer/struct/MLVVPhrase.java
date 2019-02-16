@@ -1,6 +1,5 @@
 package lv.ailab.dict.mlvv.analyzer.struct;
 
-import lv.ailab.dict.mlvv.analyzer.PhrasalExtractor;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
@@ -151,36 +150,72 @@ public class MLVVPhrase extends Phrase
 	}
 
 	/**
+	 * No apstrādājamās rindiņas daļas izvelk ar kursīvu atdalītas gramatikas un
+	 * vienu vai vairākas glosas.
+	 * Funkcija oriģināli izstrādāta sarežgītu frāžu (ar skaidrojumiem)
+	 * analīzei.
+	 * @param preDashLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
+	 *                          frāžu tekstu formēšanai.
+	 * @param postDashLinePart	rindiņas daļa, kas tiek izmantota gramatikas
+	 *                          un frāžu tekstu formēšanai.
+	 * @param lemma				reizēm vajag zināt šķirkļa lemmu.
+	 * @param linePartForErrorMsg	teksts ko norāda kā oriģināltekstu kļūdu
+	 *                              ziņojumos.
+	 */
+	public static MLVVPhrase makePhrasalFromSplitText(
+			String preDashLinePart, String postDashLinePart, Phrase.Type type,
+			String lemma, String linePartForErrorMsg)
+	{
+		MLVVPhrase resPhrase = new MLVVPhrase();
+		resPhrase.type = type;
+		resPhrase.text = new LinkedList<>();
+		// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
+		resPhrase.extractGramAndText(preDashLinePart);
+		// Analizē skaidrojumus.
+		resPhrase.parseGramAndGloss(postDashLinePart, lemma, linePartForErrorMsg);
+		resPhrase.variantCleanup();
+		// Pabrīdina, ja nu ir sanākusi frāze bez teksta.
+		if (resPhrase.text.isEmpty())
+		{
+			System.out.printf("Frāzes skaidrojumam \"%s\" nav neviena frāzes teksta",
+					linePartForErrorMsg);
+			if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
+			System.out.println();
+		}
+		return resPhrase;
+	}
+
+	/**
 	 * No apstrādājamās rindiņas daļas izvelk ar kolu vai kursīvu atdalītu
 	 * gramatiku un vienu vai vairākus frāzes tekstus.
 	 * Funkcija oriģināli izstrādāta sarežgītu frāžu (ar skaidrojumiem)
 	 * analīzei.
-	 * @param preDefiseLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
+	 * @param preDashLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
 	 *                          frāžu tekstu formēšanai.
 	 */
-	public void extractGramAndText(String preDefiseLinePart)
+	protected void extractGramAndText(String preDashLinePart)
 	{
 		// Ja vajag, frāzi sadala.
 		Pattern phrasesplitter = Pattern.compile("(?:(?<=</i>)[,;?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
 		ArrayList<String> beginParts = new ArrayList<>();
-		Matcher tmp = phrasesplitter.matcher(preDefiseLinePart);
+		Matcher tmp = phrasesplitter.matcher(preDashLinePart);
 		int whereToStart = 0;
 		while (tmp.find(whereToStart))
 		{
-			String begin = preDefiseLinePart.substring(0, tmp.start());
-			String end = preDefiseLinePart.substring(tmp.end());
+			String begin = preDashLinePart.substring(0, tmp.start());
+			String end = preDashLinePart.substring(tmp.end());
 			if (begin.matches(".*\\([^\\)]*"))
 				whereToStart = tmp.end();
 			else
 			{
 				beginParts.add(begin);
-				preDefiseLinePart = end;
+				preDashLinePart = end;
 				whereToStart = 0;
-				tmp = phrasesplitter.matcher(preDefiseLinePart);
+				tmp = phrasesplitter.matcher(preDashLinePart);
 			}
 		}
-		beginParts.add(preDefiseLinePart);
-		//String[] beginParts = preDefiseLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
+		beginParts.add(preDashLinePart);
+		//String[] beginParts = preDashLinePart.split("(?:(?<=</i>)[,?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
 		String gramText = "";
 		for (String part : beginParts)
 		{
@@ -226,23 +261,25 @@ public class MLVVPhrase extends Phrase
 	 * vienu vai vairākas glosas.
 	 * Funkcija oriģināli izstrādāta sarežgītu frāžu (ar skaidrojumiem)
 	 * analīzei.
-	 * @param postDefiseLinePart	rindiņas daļa, kas tiek izmantota gramatikas
-	 *                              un frāžu tekstu formēšanai.
-	 * @param lemma					reizēm vajag zināt šķirkļa lemmu.
+	 * @param postDashLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
+	 *                          frāžu tekstu formēšanai.
+	 * @param lemma				reizēm vajag zināt šķirkļa lemmu.
+	 * @param linePartForErrorMsg    teksts ko norāda kā oriģināltekstu kļūdu
+	 *                               ziņojumos.
 	 */
-	public void parseGramAndGloss(String postDefiseLinePart, String lemma,
+	protected void parseGramAndGloss(String postDashLinePart, String lemma,
 			String linePartForErrorMsg)
 	{
 		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
 		// pie frāzes, nevis pirmās nozīmes.
-		if (postDefiseLinePart.startsWith("</i>"))
-			postDefiseLinePart = postDefiseLinePart.substring("</i>".length()).trim(); // ja defise nejauši ir kursīvā.
+		if (postDashLinePart.startsWith("</i>"))
+			postDashLinePart = postDashLinePart.substring("</i>".length()).trim(); // ja defise nejauši ir kursīvā.
 			//else if (end.startsWith("<i>") && end.contains(" b. "))
 		else
 		{
 			Matcher endMatcher = Pattern
 					.compile("(.*?)(?:</i> | </i>)(a\\.\\s.*?\\sb\\.\\s.*)")
-					.matcher(postDefiseLinePart);
+					.matcher(postDashLinePart);
 			if (endMatcher.matches())
 			{
 				String gram = endMatcher.group(1).trim();
@@ -250,7 +287,7 @@ public class MLVVPhrase extends Phrase
 				{
 					if (gram.startsWith("<i>")) gram = gram.substring(3);
 					grammar = new MLVVGram(gram);
-					postDefiseLinePart = endMatcher.group(2).trim();
+					postDashLinePart = endMatcher.group(2).trim();
 				} else
 					System.out.printf(
 							"Frāzē \"%s\" ir divas vispārīgās gramatikas, tāpēc nozīmes netiek sadalītas\n",
@@ -258,14 +295,14 @@ public class MLVVPhrase extends Phrase
 			}
 		}
 
-		String[] subsenseTexts = new String[]{postDefiseLinePart};
+		String[] subsenseTexts = new String[]{postDashLinePart};
 		// Ir vairākas nozīmes.
-		if (postDefiseLinePart.startsWith("a."))
+		if (postDashLinePart.startsWith("a."))
 		{
-			subsenseTexts = postDefiseLinePart.split("\\s(?=[bcdefghijklmnop]\\.\\s)");
+			subsenseTexts = postDashLinePart.split("\\s(?=[bcdefghijklmnop]\\.\\s)");
 			// Ja skaidrojums ir formā "a. skaidrojums <i>piemēri b.</i> b. skaidrojums...",
 			// tad var sanākt nepareizs dalījums dalot tā pa prasto.
-			if (postDefiseLinePart.contains("<i>"))
+			if (postDashLinePart.contains("<i>"))
 			{
 				LinkedList<String> betterGloses = new LinkedList<>();
 				betterGloses.addLast(subsenseTexts[0]);

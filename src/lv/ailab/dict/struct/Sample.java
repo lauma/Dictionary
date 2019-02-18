@@ -31,15 +31,15 @@ public class Sample implements HasToJSON, HasToXML
 	 */
 	public Gram grammar;
 
-	/**
+	/*
 	 * Frāzes tips.
 	 */
-	public Sample.Type type;
+	//public Sample.Type type;
 
 	/**
 	 * Neobligāts autors vai avots.
 	 */
-	public String source;
+	public String citedSource;
 
 
 	public Sample()
@@ -105,14 +105,14 @@ public class Sample implements HasToJSON, HasToXML
 		//res.append("\"Sample\":{");
 		boolean hasPrev = false;
 
-		if (type != null)
+		/*if (type != null)
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"Type\":\"");
 			res.append(JSONObject.escape(type.toString()));
 			res.append("\"");
 			hasPrev = true;
-		}
+		}*/
 
 		if (text != null)
 		{
@@ -134,11 +134,11 @@ public class Sample implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (source != null)
+		if (citedSource != null)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Source\":\"");
-			res.append(JSONObject.escape(source));
+			res.append("\"CitedSource\":\"");
+			res.append(JSONObject.escape(citedSource));
 			res.append("\"");
 			hasPrev = true;
 		}
@@ -155,7 +155,7 @@ public class Sample implements HasToJSON, HasToXML
 	{
 		Document doc = parent.getOwnerDocument();
 		Element phraseN = doc.createElement("Sample");
-		if (type != null) phraseN.setAttribute("Type", type.toString());
+		//if (type != null) phraseN.setAttribute("Type", type.toString());
 		if (text != null)
 		{
 			Node textN = doc.createElement("Content");
@@ -169,10 +169,10 @@ public class Sample implements HasToJSON, HasToXML
 			phraseN.appendChild(textN);
 		}
 		if (grammar != null) grammar.toXML(phraseN);
-		if (source != null)
+		if (citedSource != null)
 		{
-			Node sourceN = doc.createElement("Source");
-			sourceN.setTextContent(source);
+			Node sourceN = doc.createElement("CitedSource");
+			sourceN.setTextContent(citedSource);
 			phraseN.appendChild(sourceN);
 		}
 		parent.appendChild(phraseN);
@@ -184,7 +184,7 @@ public class Sample implements HasToJSON, HasToXML
 	 *
 	 * @author Lauma
 	 */
-	public enum Type
+/*	public enum Type
 	{
 		SAMPLE("Piemērs"),
 		QUOTE("Citāts");
@@ -201,6 +201,6 @@ public class Sample implements HasToJSON, HasToXML
 			return s;
 		}
 
-	}
+	}*/
 
 }

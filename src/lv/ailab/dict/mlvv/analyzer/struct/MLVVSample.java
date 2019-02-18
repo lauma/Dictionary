@@ -3,7 +3,6 @@ package lv.ailab.dict.mlvv.analyzer.struct;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Sample;
 
-import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +18,7 @@ public class MLVVSample extends Sample
 	public static MLVVSample parseNoGlossSample(String linePart)
 	{
 		MLVVSample res = new MLVVSample();
-		res.type = Type.SAMPLE;
+		//res.type = Type.SAMPLE;
 		//res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
 		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);
@@ -52,7 +51,7 @@ public class MLVVSample extends Sample
 		if (linePart.length() < 1) return null;
 
 		MLVVSample res = new MLVVSample();
-		res.type = Type.QUOTE;
+		//res.type = Type.QUOTE;
 		//res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
@@ -66,7 +65,7 @@ public class MLVVSample extends Sample
 			res.text =
 					Editors.removeCursive((m.group(2) + m.group(3) + m.group(4)))
 							.replaceAll("\\s\\s+", " ").trim();
-			res.source = m.group(5).trim();
+			res.citedSource = m.group(5).trim();
 			String gramString = Editors.removeCursive(m.group(1)).trim();
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
 			res.grammar = new MLVVGram(gramString);

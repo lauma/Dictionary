@@ -6,7 +6,6 @@ import lv.ailab.dict.mlvv.analyzer.struct.MLVVGram;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVPhrase;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVSample;
 import lv.ailab.dict.struct.Phrase;
-import lv.ailab.dict.struct.Sample;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.LinkedList;
@@ -190,7 +189,7 @@ public class PhrasalExtractor
 				Matcher simpleMatcher = simplePhrases.matcher(part);
 
 				MLVVSample resSample = new MLVVSample();
-				resSample.type = Sample.Type.SAMPLE;
+				//resSample.type = Sample.Type.SAMPLE;
 				//resSample.text = new LinkedList<>();
 
 				// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez

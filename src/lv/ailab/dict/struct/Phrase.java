@@ -54,12 +54,6 @@ public class Phrase implements HasToJSON, HasToXML
 	 */
 	public Type type;
 
-	/**
-	 * Neobligāts autors vai avots (netiek lietots Tēzaurā).
-	 */
-	public String source;
-
-
 	public Phrase()
 	{
 		text = null;
@@ -166,15 +160,6 @@ public class Phrase implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (source != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Source\":\"");
-			res.append(JSONObject.escape(source));
-			res.append("\"");
-			hasPrev = true;
-		}
-
 		//res.append("}");
 		return res.toString();
 	}
@@ -206,12 +191,6 @@ public class Phrase implements HasToJSON, HasToXML
 			Node sensesContN = doc.createElement("Senses");
 			for (Sense s : subsenses) s.toXML(sensesContN);
 			phraseN.appendChild(sensesContN);
-		}
-		if (source != null)
-		{
-			Node sourceN = doc.createElement("Source");
-			sourceN.setTextContent(source);
-			phraseN.appendChild(sourceN);
 		}
 		parent.appendChild(phraseN);
 	}

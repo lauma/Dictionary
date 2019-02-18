@@ -20,7 +20,7 @@ public class MLVVSample extends Sample
 	{
 		MLVVSample res = new MLVVSample();
 		res.type = Type.SAMPLE;
-		res.text = new LinkedList<>();
+		//res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
 		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);
 		if (m.matches())
@@ -34,7 +34,8 @@ public class MLVVSample extends Sample
 			linePart = gramConsts.group(2).trim();
 		}
 		linePart = linePart.replace("</i>: <i>\"", ": \"");
-		res.text.add(linePart);
+		//res.text.add(linePart);
+		res.text = linePart;
 		return res;
 	}
 
@@ -52,7 +53,7 @@ public class MLVVSample extends Sample
 
 		MLVVSample res = new MLVVSample();
 		res.type = Type.QUOTE;
-		res.text = new LinkedList<>();
+		//res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
 		Matcher m = Pattern.compile(
 				"((?:(?:<i>)?\\s*(?:Pārn|Intr|Tr|Sal)\\.</i>:\\s*)?)"	//  Neobligāts Pārn. kursīvā :
@@ -61,9 +62,10 @@ public class MLVVSample extends Sample
 				.matcher(linePart);
 		if (m.matches())
 		{
-			res.text.add(
+			//res.text.add(
+			res.text =
 					Editors.removeCursive((m.group(2) + m.group(3) + m.group(4)))
-							.replaceAll("\\s\\s+", " ").trim());
+							.replaceAll("\\s\\s+", " ").trim();
 			res.source = m.group(5).trim();
 			String gramString = Editors.removeCursive(m.group(1)).trim();
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
@@ -71,18 +73,19 @@ public class MLVVSample extends Sample
 		}
 		else
 		{
-			res.text.add(linePart);
+			//res.text.add(linePart);
+			res.text = linePart;
 			System.out.printf("Citāts \"%s\" neatbilst apstrādes šablonam\n", linePart);
 		}
 		return res;
 	}
 
-	/**
+	/*
 	 * Remove empty variants.
 	 */
-	public void variantCleanup()
+	/*public void variantCleanup()
 	{
 		for (String variant : text)
 			if (variant == null || variant.isEmpty()) text.remove(variant);
-	}
+	}*/
 }

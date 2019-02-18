@@ -191,7 +191,7 @@ public class PhrasalExtractor
 
 				MLVVSample resSample = new MLVVSample();
 				resSample.type = Sample.Type.SAMPLE;
-				resSample.text = new LinkedList<>();
+				//resSample.text = new LinkedList<>();
 
 				// Izanalizē frāzi ar gramatiku, kas atdalīta ar kolu, bet bez
 				// skaidrojuma.
@@ -200,11 +200,13 @@ public class PhrasalExtractor
 					String begin = colonMatcher.group(1).trim();
 					if (begin.length() > 0) resSample.grammar = new MLVVGram(begin);
 					String end = colonMatcher.group(2).trim();
-					resSample.text.add(Editors.removeCursive(end));
+					//resSample.text.add(Editors.removeCursive(end));
+					resSample.text = Editors.removeCursive(end);
 				}
 				// Frāze bez gramatikas un bez skaidrojuma.
 				else if (simpleMatcher.matches())
-					resSample.text.add(Editors.removeCursive(part));
+					//resSample.text.add(Editors.removeCursive(part));
+					resSample.text = Editors.removeCursive(part);
 
 				// Nu nesanāca!
 				else
@@ -212,10 +214,11 @@ public class PhrasalExtractor
 					System.out.printf("Neizdodas izanalizēt piemēru \"%s\"", part);
 					if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
 					System.out.println();
-					resSample.text.add(part);
+					//resSample.text.add(part);
+					resSample.text = part;
 				}
 
-				resSample.variantCleanup();
+				//resSample.variantCleanup();
 				if (resSample.text.isEmpty())
 				{
 					System.out.printf("No \"%s\" sanāca piemērs bez teksta", linePart);

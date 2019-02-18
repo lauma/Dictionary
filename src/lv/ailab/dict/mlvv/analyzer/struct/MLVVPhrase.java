@@ -425,15 +425,6 @@ public class MLVVPhrase extends Phrase
 			hasPrev = true;
 		}
 
-		if (source != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append("\"Source\":\"");
-			res.append(JSONObject.escape(source));
-			res.append("\"");
-			hasPrev = true;
-		}
-
 		//res.append("}");
 		return res.toString();
 	}
@@ -477,12 +468,6 @@ public class MLVVPhrase extends Phrase
 			Node sensesContN = doc.createElement("Senses");
 			for (Sense s : subsenses) s.toXML(sensesContN);
 			phraseN.appendChild(sensesContN);
-		}
-		if (source != null)
-		{
-			Node sourceN = doc.createElement("Source");
-			sourceN.setTextContent(source);
-			phraseN.appendChild(sourceN);
 		}
 		parent.appendChild(phraseN);
 	}

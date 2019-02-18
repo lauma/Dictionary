@@ -350,7 +350,7 @@ public class Entry implements HasToJSON, HasToXML
 		}
 		if (phrases != null && !phrases.isEmpty())
 		{
-			Node phrasesContN = doc.createElement("Phrases");
+			Node phrasesContN = doc.createElement("StablePhrases");
 			for (Phrase p : phrases) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}

@@ -11,7 +11,6 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -23,9 +22,9 @@ import java.util.Set;
 public class Sample implements HasToJSON, HasToXML
 {
 	/**
-	 * Skaidrojamā frāze - parasti viena, taču reizēm var būt vairākas.
+	 * Piemēra teksts.
 	 */
-	public LinkedList<String> text;
+	public String text;
 
 	/**
 	 * Neobligātas gramatiskās norādes.
@@ -118,10 +117,13 @@ public class Sample implements HasToJSON, HasToXML
 		if (text != null)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Text\":[");
+			res.append("\"Content\":\"");
+			res.append(JSONObject.escape(text));
+			res.append("\"");
+			/*res.append("\"Text\":[");
 			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
 					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
-			res.append("]");
+			res.append("]");*/
 			hasPrev = true;
 		}
 
@@ -156,14 +158,14 @@ public class Sample implements HasToJSON, HasToXML
 		if (type != null) phraseN.setAttribute("Type", type.toString());
 		if (text != null)
 		{
-			Node textN = doc.createElement("Text");
-			for (String var : text)
+			Node textN = doc.createElement("Content");
+			/*for (String var : text)
 			{
 				Node textVar = doc.createElement("Variant");
 				textVar.appendChild(doc.createTextNode(var));
 				textN.appendChild(textVar);
-			}
-			//textN.appendChild(doc.createTextNode(text));
+			}*/
+			textN.appendChild(doc.createTextNode(text));
 			phraseN.appendChild(textN);
 		}
 		if (grammar != null) grammar.toXML(phraseN);
@@ -176,7 +178,7 @@ public class Sample implements HasToJSON, HasToXML
 		parent.appendChild(phraseN);
 	}
 
-	/**
+	/*
 	 * Frāžu tipu uzskaitījums un atreferējumi MLVV, LLVV vajadzībām.
 	 * Izveidots 2016-02-11.
 	 *

@@ -225,8 +225,9 @@ public class Phrase implements HasToJSON, HasToXML
 	public enum Type
 	{
 		PHRASEOLOGICAL("Frazeoloģisms"),
-		STABLE_UNIT("Stabila vienība"),
-		EXPLAINED_SAMPLE("Skaidrots piemērs"),
+		STABLE_UNIT("Stabils savienojums"),
+		//STABLE_UNIT("Stabila vienība"),
+		//EXPLAINED_SAMPLE("Skaidrots piemērs"),
 		TAXON("Taksons");
 
 		String s;
@@ -240,12 +241,5 @@ public class Phrase implements HasToJSON, HasToXML
 		{
 			return s;
 		}
-
-		//public final static String PHRASEOLOGICAL = "Frazeoloģisms";
-		//public final static String STABLE_UNIT = "Stabila vienība";
-		//public final static String SAMPLE = "Piemērs";
-		//public final static String TAXON = "Taksons";
-		//public final static String QUOTE = "Citāts";
-
 	}
 }

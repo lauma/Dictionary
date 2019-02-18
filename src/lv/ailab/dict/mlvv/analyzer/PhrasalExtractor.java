@@ -179,7 +179,8 @@ public class PhrasalExtractor
 				{
 					MLVVPhrase resPhrase = MLVVPhrase.makePhrasalFromSplitText(
 							dashMatcher.group(1).trim(), dashMatcher.group(2).trim(),
-							Phrase.Type.EXPLAINED_SAMPLE, lemma, part);
+							Phrase.Type.STABLE_UNIT, lemma, part);
+							//Phrase.Type.EXPLAINED_SAMPLE, lemma, part);
 					res.second.add(resPhrase);
 					continue;
 				}

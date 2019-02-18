@@ -108,4 +108,18 @@ public class TPhrase extends Phrase
 		return false;
 	}
 
+	public int countEmptyGloss()
+	{
+		return countEmptyGloss(this);
+	}
+
+	public static int countEmptyGloss(Phrase p)
+	{
+		if (p == null) return 0;
+		int res = 0;
+		if (p.subsenses != null) for (Sense sub : p.subsenses)
+			res = res + TSense.countEmptyGloss(sub);
+		return res;
+	}
+
 }

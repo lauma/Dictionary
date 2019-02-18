@@ -27,6 +27,7 @@ import org.w3c.dom.NodeList;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -158,7 +159,7 @@ public class TEntry extends Entry
 			// space separated homonym index. No homonym index mean all homonyms.
 			input = new BufferedReader(
 					new InputStreamReader(
-					new FileInputStream(BLACKLIST_LOCATION), "UTF-8"));
+					new FileInputStream(BLACKLIST_LOCATION), StandardCharsets.UTF_8));
 			String line;
 			while ((line = input.readLine()) != null)
 			{
@@ -222,6 +223,21 @@ public class TEntry extends Entry
 			System.err.printf(
 					"Šķirklī \"%s\" ir etimoloģijas karodziņš.\n",
 					head.lemma.text);
+	}
+	public int countEmptyGloss()
+	{
+		return countEmptyGloss(this);
+	}
+
+	public static int countEmptyGloss(Entry e)
+	{
+		if (e == null) return 0;
+		int res = 0;
+		if (e.senses != null) for (Sense s : e.senses)
+			 res = res + TSense.countEmptyGloss(s);
+		if (e.phrases != null) for (Phrase p : e.phrases)
+			res = res + TPhrase.countEmptyGloss(p);
+		return res;
 	}
 
 }

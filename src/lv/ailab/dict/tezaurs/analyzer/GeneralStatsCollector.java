@@ -36,6 +36,11 @@ public class GeneralStatsCollector
 	 */
 	public final boolean collectPrononcations;
 	/**
+	 * Karodziņš, vai savākt šķirkļavārdus, kur kādā vietā nozīmes skaidrojums
+	 * ir tukšs.
+	 */
+	public final boolean collectEmptyGlosses;
+	/**
 	 * Karodziņš, vai savākt 5. deklinācijas izņēmumus.
 	 */
 	public final boolean collectFifthDeclExceptions;
@@ -104,7 +109,11 @@ public class GeneralStatsCollector
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
 	 */
 	public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
-    /**
+	/**
+	 * Šķirkļavārds, šķirkļa homonīma indekss, tukšo glosu skaits.
+	 */
+	public ArrayList<Trio<String, String, Integer>> emptyGlosses = new ArrayList<>();
+	/**
      * Darbības vārds, šķirkļavārds, šķirkļa homonīma indekss.
      */
     public ArrayList<Trio<String, String, String>> nonInflWithCase = new ArrayList<>();
@@ -122,7 +131,9 @@ public class GeneralStatsCollector
 	 */
 	public HashSet<String> inflWeardness = new HashSet<>();
 
-	public GeneralStatsCollector( boolean collectPrononcations,
+	public GeneralStatsCollector(
+			boolean collectPrononcations,
+			boolean collectEmptyGlosses,
 			boolean collectFifthDeclExceptions,
 			boolean collectNonInflWithCase, Pattern collectWithEntryWord,
 			Pattern collectWithGloss,
@@ -134,6 +145,7 @@ public class GeneralStatsCollector
 			Writer wordlistOutput)
 	{
 		this.collectPrononcations = collectPrononcations;
+		this.collectEmptyGlosses = collectEmptyGlosses;
 		this.collectFifthDeclExceptions = collectFifthDeclExceptions;
 		this.collectNonInflWithCase = collectNonInflWithCase;
 		this.collectWithEntryWord = collectWithEntryWord;
@@ -181,6 +193,12 @@ public class GeneralStatsCollector
 		if (collectPrononcations)
         	for (String p : entry.collectPronunciations())
             	pronunciations.add(Trio.of(p, entry.head.lemma.text, entry.homId));
+        if (collectEmptyGlosses)
+		{
+			int emptyGlossesCount = TEntry.countEmptyGloss(entry);
+			if (emptyGlossesCount > 0)
+				emptyGlosses.add(Trio.of(entry.head.lemma.text, entry.homId, emptyGlossesCount));
+		}
 
 		// Uzmanīgi, šī ir optimizācija ātrumam: if nosacījums daļēji dublē
 		// iekšā esošos nosacījumus.
@@ -520,10 +538,12 @@ public class GeneralStatsCollector
                 hasMultipleParadigmFlag);
         out.write(",\n\"Šķirkļi bez paradigmām\":" + hasNoParadigm);
         out.write(",\n\"Daļēji atpazīti šķirkļi\":" + hasUnparsedGram);
+		out.write(",\n\"Šķirkļi ar tukšām glosām\":" + emptyGlosses.size());
         out.write(",\n\"Unikālo bināro karodziņu skaits\":" + binaryFlags.size());
-        out.write(",\n\"Unikālu \\\"Locīt kā...\\\" karodziņu skaits\":" +
-                binaryFlags.stream().filter(f -> f.startsWith("Locīt kā ")).count());
-        out.write(",\n\"Šķirkļi ar \\\"Locīt kā...\\\" karodziņiem\":" + hasLociitKaaFlag);
+        out.write(",\n\"Unikālu \\\"Locīt kā\\\" karodziņu skaits\":" +
+				flagCounts.keyStream().filter(t -> TKeys.INFLECT_AS.equals(t.first))
+						.count());//.filter(f -> f.startsWith("Locīt kā ")).count());
+        out.write(",\n\"Šķirkļi ar \\\"Locīt kā\\\" karodziņiem\":" + hasLociitKaaFlag);
 		out.write(",\n\"Unikālo pārīškarodziņu atslēgu skaits\":" + pairingKeys
 				.size());
         out.write(",\n\"Izrunas transkripciju kopskaits\":" + pronunciations.size());
@@ -569,6 +589,16 @@ public class GeneralStatsCollector
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
 							.escape(t.second) + "\", \"" + JSONObject
 							.escape(t.third) + "\"]")
+					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
+			out.write("\n]");
+		}
+
+		if (collectEmptyGlosses)
+		{
+			out.write(",\n\"Šķirkļi ar tukšām glosām\":[\n");
+			out.write(emptyGlosses.stream().map(t ->
+					"\t[\"" + JSONObject.escape(t.first) + "\", \"" + JSONObject
+							.escape(t.second) + "\", \"" + t.third + "\"]")
 					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));
 			out.write("\n]");
 		}

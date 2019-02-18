@@ -55,6 +55,7 @@ public class DictionaryXmlToJson
 	public final static boolean PRINT_WORDLISTS = true;
 
 	public final static boolean PRINT_PRONONCATIONS = false;
+	public final static boolean PRINT_EMPTY_GLOSSES = true;
 	public final static boolean PRINT_INFL_WEARDNESS = true;
 	public final static boolean PRINT_FIFTH_DECL_EXC = false;
 	//public final static boolean PRINT_FIRST_CONJ = false;
@@ -160,7 +161,7 @@ public class DictionaryXmlToJson
 						new FileOutputStream(wordlistFile), "UTF-8"));
 			}
 			GeneralStatsCollector genSC = new GeneralStatsCollector(
-					PRINT_PRONONCATIONS, //PRINT_FIRST_CONJ,
+					PRINT_PRONONCATIONS, PRINT_EMPTY_GLOSSES, //PRINT_FIRST_CONJ,
 					PRINT_FIFTH_DECL_EXC, PRINT_NON_INFL, PRINT_WITH_ENTRYWORD,
 					PRINT_WITH_GLOSS, PPRINT_WITH_PARADIGM, PRINT_WITH_FEATURE,
 					PRINT_WITH_FEATURE_DESC, PRINT_PARADIGMS,

@@ -96,4 +96,22 @@ public class TSense extends Sense
 		return false;
 	}
 
+	public int countEmptyGloss()
+	{
+		return countEmptyGloss(this);
+	}
+
+	public static int countEmptyGloss(Sense s)
+	{
+		if (s == null) return 0;
+		int res = 0;
+		if (s.gloss == null || s.gloss.text == null || s.gloss.text.isEmpty())
+			res++;
+		if (s.subsenses != null) for (Sense sub : s.subsenses)
+			res = res + TSense.countEmptyGloss(sub);
+		if (s.phrases != null) for (Phrase p : s.phrases)
+			res = res +TPhrase.countEmptyGloss(p);
+		return res;
+	}
+
 }

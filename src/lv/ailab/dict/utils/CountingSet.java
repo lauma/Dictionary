@@ -2,6 +2,7 @@ package lv.ailab.dict.utils;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 /**
  * Kopa, kas skaita, cik reižu atsēga ir tikusi pievienota.
@@ -36,12 +37,16 @@ public class CountingSet <K>
 
 	public Integer getCount (K key)
 	{
-		if (map.containsKey(key)) return map.get(key);
-		else return 0;
+		return map.getOrDefault(key, 0);
 	}
 
 	public HashMap getCounts()
 	{
 		return map;
+	}
+
+	public Stream<K> keyStream()
+	{
+		return map.keySet().stream();
 	}
 }

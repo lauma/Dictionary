@@ -123,7 +123,7 @@ public class TezXmlToDetailXmlJson
 		// Parametri, kas attiecināmi ur FirstConjStatsCollector.
 		public final static boolean PRINT_FIRST_CONJ_DIRECT = false;
 		public final static boolean PRINT_FIRST_CONJ_REFL = false;
-	};
+	}
 
 	protected int fileCount = 0;
 	protected FirstConjStatsCollector firstConjSC;
@@ -154,7 +154,6 @@ public class TezXmlToDetailXmlJson
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
 	 *             faili
-	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception
 	{
@@ -170,7 +169,7 @@ public class TezXmlToDetailXmlJson
 		for (String file : Config.XML_FILES)
 			transformer.processFile(path, file);
 
-		transformer.finalize(path);
+		transformer.wrapUpEverything(path);
 		System.out.println("Viss pabeigts!");
 	}
 
@@ -180,7 +179,7 @@ public class TezXmlToDetailXmlJson
 		System.out.println("Sāk apstrādāt failu " + file + ".xml.");
 
 		// Initialize IO.
-		String inputFile = path + file + ".xml";;
+		String inputFile = path + file + ".xml";
 		String goodOutputFile = path + file + "-good.json";
 		String noParadigm = path + file + "-noParadigm.json";
 		String badOutputFile = path + file + "-bad.json";
@@ -191,7 +190,7 @@ public class TezXmlToDetailXmlJson
 		{
 			String wordlistFile = path + file + "-feats.txt";
 			wordlistOut = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(wordlistFile), "UTF-8"));
+					new FileOutputStream(wordlistFile), StandardCharsets.UTF_8));
 		}
 		GeneralStatsCollector genSC = new GeneralStatsCollector(
 				Config.PRINT_PRONONCATIONS, Config.PRINT_EMPTY_GLOSSES, //PRINT_FIRST_CONJ,
@@ -205,13 +204,13 @@ public class TezXmlToDetailXmlJson
 		StaxReader dicReader = new StaxReader(inputFile, "tezaurs", "s");
 
 		BufferedWriter goodOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(goodOutputFile), "UTF-8"));
+				new FileOutputStream(goodOutputFile), StandardCharsets.UTF_8));
 		goodOut.write("[\n");
 		BufferedWriter noParadigmOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(noParadigm), "UTF-8"));
+				new FileOutputStream(noParadigm), StandardCharsets.UTF_8));
 		noParadigmOut.write("[\n");
 		BufferedWriter badOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(badOutputFile), "UTF-8"));
+				new FileOutputStream(badOutputFile), StandardCharsets.UTF_8));
 		badOut.write("[\n");
 		if (Config.PRINT_SINGLE_JSON && fileCount == 0)
 			completeJsonOut.write("[\n");
@@ -249,7 +248,7 @@ public class TezXmlToDetailXmlJson
 
 		System.out.println("Drukā statistiku...");
 		BufferedWriter statsOut = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(statsFile), "UTF-8"));
+				new FileOutputStream(statsFile), StandardCharsets.UTF_8));
 		genSC.printContents(statsOut);
 		statsOut.close();
 		fileCount++;
@@ -291,10 +290,10 @@ public class TezXmlToDetailXmlJson
 		}
 	}
 
-	protected void finalize(String path)
+	protected void wrapUpEverything(String path)
 	throws IOException, XMLStreamException
 	{
-		if (Config.PRINT_SINGLE_XML) completeXmlOut.finalize();
+		if (Config.PRINT_SINGLE_XML) completeXmlOut.finishFile();
 		if (Config.PRINT_SINGLE_JSON)
 		{
 			completeJsonOut.write("\n]");

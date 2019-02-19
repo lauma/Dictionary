@@ -17,7 +17,6 @@ public class DocLoader
 	 * Load contents of dictionary .doc file containing one entry per line.
 	 * @param path wherefrom load.
 	 * @return array of entries.
-	 * @throws IOException
 	 */
 	public static String[] loadDoc(String path)
 			throws IOException
@@ -28,8 +27,7 @@ public class DocLoader
 		HWPFDocument doc = new HWPFDocument(fs.getRoot());
 		WordExtractor entryExtract = new WordExtractor(doc);
 		//WordExtractor entryExtract = new WordExtractor(new HWPFDocument(fis));
-		String[] entries = entryExtract.getParagraphText();
-		return entries;
+		return entryExtract.getParagraphText();
 	}
 
 }

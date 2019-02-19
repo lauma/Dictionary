@@ -6,11 +6,11 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Drukā XMl vārdnīcu ārā pa vienam šķirklim. Lietojot kopā ar StaxReader sanāk,
@@ -29,11 +29,10 @@ public class XmlEntryStreamWriter
 	protected Transformer transf;
 
 	public XmlEntryStreamWriter(String path)
-	throws IOException, XMLStreamException,
-			ParserConfigurationException, TransformerConfigurationException
+	throws IOException, TransformerConfigurationException
 	{
 		outStreamWithEncoding = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(path), "UTF-8"));
+				new FileOutputStream(path), StandardCharsets.UTF_8));
 		outStreamWithEncoding.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
 		outStreamWithEncoding.write("<Dictionary>\n");
 		outStreamWithEncoding.write("<Latvian>\n");
@@ -47,8 +46,7 @@ public class XmlEntryStreamWriter
 	}
 
 	public void writeNextEntry(Entry e)
-	throws ParserConfigurationException, TransformerException,
-			XMLStreamException, IOException
+	throws ParserConfigurationException, TransformerException, IOException
 	{
 		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 		//Element dummyParent = doc.createElement("dictionary");
@@ -70,7 +68,7 @@ public class XmlEntryStreamWriter
 		outStreamWithEncoding.flush();
 	}
 
-	public void finalize() throws XMLStreamException, IOException
+	public void finishFile() throws IOException
 	{
 		outStreamWithEncoding.write("</Latvian>\n");
 		outStreamWithEncoding.write("</Dictionary>\n");

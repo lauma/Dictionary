@@ -29,6 +29,7 @@ import lv.ailab.dict.struct.Dictionary;
 import lv.ailab.dict.utils.Trio;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -71,7 +72,6 @@ public class MlvvDocToDetailXmlJson
 	/**
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
 	 *             faili
-	 * @throws Exception
 	 */
 	public static void main (String[] args)
 	{
@@ -91,7 +91,7 @@ public class MlvvDocToDetailXmlJson
 		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson(path, path + "result/");
 
 		File[] listOfFiles = folder.listFiles();
-		for (File f : listOfFiles)
+		if (listOfFiles != null) for (File f : listOfFiles)
 		{
 			String fileName = f.getName();
 			if (f.isDirectory() || f.getName().startsWith("~")) continue;
@@ -195,8 +195,9 @@ public class MlvvDocToDetailXmlJson
 
 		if (PRINT_PRONUNCIATION && pronunciations != null) try
 		{
-			BufferedWriter out = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(outputDataPath + "pronun.txt"), "UTF8"));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputDataPath + "pronun.txt"),
+					StandardCharsets.UTF_8));
 			for (Trio<String, String, String> p : pronunciations)
 			{
 				out.write(p.first + "\t" + p.second + "\t" + p.third + "\n");
@@ -211,8 +212,9 @@ public class MlvvDocToDetailXmlJson
 
 		if (PRINT_FLAGSTRINGS) try
 		{
-			BufferedWriter out = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(outputDataPath + "flags.txt"), "UTF8"));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputDataPath + "flags.txt"),
+					StandardCharsets.UTF_8));
 			flags.printToFile(out);
 			out.close();
 		} catch (Exception e)
@@ -224,8 +226,9 @@ public class MlvvDocToDetailXmlJson
 
 		if (PRINT_XML) try
 		{
-			PrintWriter out = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(outputDataPath + "mlvv.xml"), "UTF8")));
+			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputDataPath + "mlvv.xml"),
+					StandardCharsets.UTF_8)));
 			dict.toXMLFile(out);
 			out.close();
 
@@ -239,7 +242,8 @@ public class MlvvDocToDetailXmlJson
 		if (PRINT_JSON) try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(outputDataPath + "mlvv.json"), "UTF-8"));
+					new FileOutputStream(outputDataPath + "mlvv.json"),
+					StandardCharsets.UTF_8));
 			dict.toJSONFile(out);
 			out.close();
 

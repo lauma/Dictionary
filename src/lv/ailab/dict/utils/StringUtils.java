@@ -5,12 +5,14 @@ import java.util.regex.Pattern;
 
 /**
  * Palīgmetodes vārdnīcas simbolu virkņu apstrādei.
- * @author Gunārs Danovskis, Lauma
+ * @author Gunārs Danovskis, Lauma Pretkalniņa
  */
 public class StringUtils
 {
 
-	// metode, kas pārbauda kāds skaitlis ir atrodams aiz marķiera kuram to lieto
+	/**
+	 * Pārbauda kāds skaitlis ir atrodams aiz marķiera, kuram to lieto.
+ 	 */
 	public static int findNumber(String s)
 	{
 		String tmp = s;
@@ -22,7 +24,9 @@ public class StringUtils
 		return Integer.parseInt(m.group(0));
 	}
 
-	//metode, kas atrod nākamo vārdu aiz metodei padotā vārda
+	/**
+	 * Atrod nākamo vārdu aiz metodei padotā vārda.
+	 */
 	public static String wordAfter(String entryInf, String word)
 	{
 		String finalWord;
@@ -42,11 +46,13 @@ public class StringUtils
 		return finalWord; //atgriezsts atrastais vārds
 	}
 
-	//metode, kas atrod vārdu skaitu sķirkļī
+	/**
+	 * Atrod vārdu skaitu sķirklī.
+	 */
 	public static int wordCount(String entry)
 	{
 		int count = 1; //pieņam ka ir vismaz vien vārds
-		char character[] = new char[entry.length()];
+		char[] character = new char[entry.length()];
 		//cikls iet pa škirkli pa vienam simbolam
 		for (int i = 0; i < entry.length(); i++)
 		{
@@ -60,7 +66,9 @@ public class StringUtils
 		return count; //atgriež gala vērtību
 	}
 
-	//metode, kas atrod atstarpju skaitu padotajā simbolu virknē
+	/**
+	 * Atrod atstarpju skaitu padotajā simbolu virknē.
+	 */
 	public static int countSpaces(String s)
 	{
 		int count = 0;

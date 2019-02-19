@@ -1,26 +1,23 @@
-package lv.ailab.dict.tezaurs.analyzer.io;
+package lv.ailab.dict.io;
 
-import javanet.staxutils.IndentingXMLStreamWriter;
 import lv.ailab.dict.struct.Entry;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stax.StAXResult;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 /**
- * Drukā Tēzauru ārā pa vienam šķirklim. Lietojot kopā ar StaxReader sanāk, ka
- * atmiņā nekad nav nepieciešams turēt vairāk par vienu šķirkli, tādejādi
- * izvairoties no atmiņas piegruzīšanas ar visa Tēzaura pilno DOM koku, vai,
- * vēl ļaunāk - ar diviem pilniem DOM kokiem (pirms un pēc izmaiņām).
+ * Drukā XMl vārdnīcu ārā pa vienam šķirklim. Lietojot kopā ar StaxReader sanāk,
+ * ka atmiņā nekad nav nepieciešams turēt vairāk par vienu šķirkli, tādejādi
+ * izvairoties no atmiņas piegruzīšanas ar lielas vārdnīcas, piemēram, visa
+ * Tēzaura pilno DOM koku, vai, vēl ļaunāk - ar diviem pilniem DOM kokiem (pirms
+ * un pēc izmaiņām).
  *
  * Izveidots 2016-03-18.
  *

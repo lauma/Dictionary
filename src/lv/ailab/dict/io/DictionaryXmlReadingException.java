@@ -20,5 +20,5 @@ public class DictionaryXmlReadingException extends Exception
     {
         super(message, cause);
     }
-    
+
 }

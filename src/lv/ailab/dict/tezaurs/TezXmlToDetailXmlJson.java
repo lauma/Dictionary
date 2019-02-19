@@ -26,7 +26,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.io.StaxReader;
-import lv.ailab.dict.tezaurs.analyzer.io.XmlEntryStreamWriter;
+import lv.ailab.dict.io.XmlEntryStreamWriter;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;

@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Izveidots 2016-01-28.
  * @author Lauma
  */
-public class StructureExtractor
+public class MlvvDocToDetailXmlJson
 {
 	public static String inputDataPath = "./dati/mlvv/";
 	public static String outputDataPath = "./dati/mlvv/result/";
@@ -63,7 +63,7 @@ public class StructureExtractor
 		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		StructureExtractor extractor = new StructureExtractor();
+		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson();
 		File folder = new File(inputDataPath);
 		if (!folder.exists())
 		{

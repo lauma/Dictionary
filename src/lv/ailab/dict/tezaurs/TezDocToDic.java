@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DictionaryToDic
+public class TezDocToDic
 {
 	public static String inputDataPath = "./dati/";
 	public static String outputDataPath = "./dati/dic/";

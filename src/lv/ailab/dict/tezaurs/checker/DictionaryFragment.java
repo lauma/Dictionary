@@ -4,7 +4,7 @@
 package lv.ailab.dict.tezaurs.checker;
 
 import lv.ailab.dict.io.DocLoader;
-import lv.ailab.dict.tezaurs.DictionaryChecker;
+import lv.ailab.dict.tezaurs.TezDocChecker;
 import lv.ailab.dict.tezaurs.io.XlsOutputer;
 import lv.ailab.dict.utils.StringUtils;
 import lv.ailab.dict.utils.Trio;
@@ -162,7 +162,7 @@ public class DictionaryFragment
 		table.sumTable();
 		table.flush();
 		// Kļūdaino šķirkļu izdrukāšana .klu failā.
-		if (!bad.isEmpty()) bad.printAll(DictionaryChecker.inputDataPath + part1 + ".klu");
+		if (!bad.isEmpty()) bad.printAll(TezDocChecker.inputDataPath + part1 + ".klu");
 	}
 	
 	/**

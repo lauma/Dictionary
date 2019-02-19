@@ -13,7 +13,7 @@ import java.io.IOException;
  * vajadzētu izcelt ārā.
  * @author Lauma, Gunārs Danovskis
  */
-public class DictionaryChecker
+public class TezDocChecker
 {
 	public static String inputDataPath = "./dati/";
 	public static String settingsPath = "./saraksti/";

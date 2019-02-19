@@ -13,7 +13,7 @@ import java.io.IOException;
 //bibliotēka *.xls failu apstrādei
 
 /**
- * Objekts, kas nodrošina DictionaryChecker savākto datu izdrukāšanu Excel
+ * Objekts, kas nodrošina TezDocChecker savākto datu izdrukāšanu Excel
  * failā.
  * @author Lauma, Gunārs Danovskis
  */

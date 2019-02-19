@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
  * Parametrus, kas nav immutable, nevajag censties izpildes laikā mainīt, tas
  * ne pie kā laba nenovedīs.
  */
-public class DictionaryXmlToJson
+public class TezXmlToDetailXmlJson
 {
 	public final static String[] XML_FILES = {"entries", "references"};
 	public final static boolean PRINT_ALL_RULE_STATS = false;

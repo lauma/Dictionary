@@ -10,7 +10,7 @@ import java.io.*;
  *
  * @author Lauma
  */
-public class DictionaryToSingleTxt
+public class TezDocToSingleTxt
 {
 	public static String inputDataPath = "./dati/";
 

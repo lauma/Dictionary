@@ -15,7 +15,7 @@ import java.io.*;
  * Lielākā daļa koda ir paņemta no vecāka projekta, pamainot vienīgi saskarni.
  * @author Normunds Grūzītis, Lauma
  */
-public class DictionaryDic2Xml
+public class TezDicToXml
 {
 	public static String inputDataPath = "./dati/dic/";
 	public static String outputDataPath = "./dati/xml/";
@@ -29,7 +29,7 @@ public class DictionaryDic2Xml
 	protected String currentLine, prevLine;
 	protected boolean parcelts;
 
-	public DictionaryDic2Xml()
+	public TezDicToXml()
 	throws IOException, ParserConfigurationException
 	{
 		try
@@ -71,7 +71,7 @@ public class DictionaryDic2Xml
 		File dicFolder = new File(outputDataPath);
 		if (!dicFolder.exists()) dicFolder.mkdirs();
 
-		DictionaryDic2Xml transformator = new DictionaryDic2Xml();
+		TezDicToXml transformator = new TezDicToXml();
 
 		File[] listOfFiles = folder.listFiles();
 		for (File f : listOfFiles)

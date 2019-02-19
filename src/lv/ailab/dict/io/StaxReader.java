@@ -1,4 +1,4 @@
-package lv.ailab.dict.tezaurs.analyzer.io;
+package lv.ailab.dict.io;
 
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -12,13 +12,15 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.*;
 
 /**
- * Nolasa Tēzaura XML pa vienam šķirklim.
+ * Nolasa vārdnīcas XML pa vienam šķirklim.
  * FIXME Ja risinājums ir par lēnu, atmest katra šķirkļa parsēšanu ar DOM.
  * @author Lauma
  */
 public class StaxReader
 {
     protected XMLEventReader reader;
+    protected String rootTag;
+    protected String entryTag;
     protected boolean finished;
     protected boolean initiated;
 
@@ -26,39 +28,44 @@ public class StaxReader
      * Inicializē lasītāju, nolasa faila galvu.
      * @param path  ceļš uz lasāmo failu
      * @throws FileNotFoundException, XMLStreamException    tehniskas ķibeles
-     * @throws ThesaurusReadingException    Tēzaura XML neatbilst gaidītajam
+     * @throws DictionaryXmlReadingException    Tēzaura XML neatbilst gaidītajam
      */
-    public StaxReader (String path)
-            throws FileNotFoundException, XMLStreamException, ThesaurusReadingException
+    public StaxReader (String path, String rootTag, String entryTag)
+            throws FileNotFoundException, XMLStreamException, DictionaryXmlReadingException
     {
+    	if (rootTag == null || entryTag == null || rootTag.isEmpty() || entryTag.isEmpty())
+			throw new IllegalArgumentException("" +
+					"StaxReader needs names of dictionary's root element and entry element!");
+		this.rootTag = rootTag;
+    	this.entryTag = entryTag;
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         reader = inputFactory.createXMLEventReader(new FileInputStream(path), "UTF8");
 
         XMLEvent e = reader.nextEvent();
         if (!e.isStartDocument())
-            throw new ThesaurusReadingException("Tēzaura XML ir tukšs!");
+            throw new DictionaryXmlReadingException("Vārdnīcas XML ir tukšs!");
 
         while (!e.isStartElement() && reader.hasNext())
         {
             e = reader.nextEvent();
         }
         if (!e.isStartElement())
-            throw new ThesaurusReadingException("Tēzaura XML trūkst saknes elementa!");
+            throw new DictionaryXmlReadingException("Vārdnīcas XML trūkst saknes elementa!");
         StartElement root = e.asStartElement();
-        if (!"tezaurs".equals(root.getName().getLocalPart()))
-            throw new ThesaurusReadingException(
-                    "sagaidāmā saknes elementa \"tezaurs\" vietā atrasts "
+        if (!this.rootTag.equals(root.getName().getLocalPart()))
+            throw new DictionaryXmlReadingException(
+                    "sagaidāmā saknes elementa \"" + this.rootTag + "\" vietā atrasts "
                     + root.getName().getLocalPart() + "!");
         finished = false;
         initiated = true;
     }
 
     /**
-     * Nolasa nākamo <s></s> elementu, ja tāds ir.
+     * Nolasa nākamo <entryTag></entryTag> elementu, ja tāds ir.
      * @return nolasītā elementa DOM koks vai null, ja elementa nav.
      */
     public Node readNexEntry()
-            throws XMLStreamException, ThesaurusReadingException, IOException,
+            throws XMLStreamException, DictionaryXmlReadingException, IOException,
             SAXException, ParserConfigurationException
     {
         StringWriter res = new StringWriter();
@@ -68,18 +75,18 @@ public class StaxReader
         XMLEvent e = getNextInterestingEntry();
         // Speciāladījumu apstrāde.
         if (finished && !e.isEndDocument())
-            throw new ThesaurusReadingException("Tēzaura XML ir vairākas saknes!");
+            throw new DictionaryXmlReadingException("Vārdnīcai XML ir vairākas saknes!");
 
         if (e.isEndDocument())
-            throw new ThesaurusReadingException(
-                    "Tēzaura XML dokuments beidzas bez aizverošā \"tezaurs\" taga!");
+            throw new DictionaryXmlReadingException(
+                    "Vārdnīcas XML dokuments beidzas bez aizverošā \"" + rootTag + "\" taga!");
         if (e.isEndElement())
         {
             EndElement root = e.asEndElement();
             String name = root.getName().getLocalPart();
-            if (!"tezaurs".equals(name))
-                throw new ThesaurusReadingException(
-                        "Aizverošā \"tezaurs\" taga vietā atrasts " + name + "!");
+            if (!rootTag.equals(name))
+                throw new DictionaryXmlReadingException(
+                        "Aizverošā \"" + rootTag + "\" taga vietā atrasts " + name + "!");
             finished = true;
             return null;
         }
@@ -87,9 +94,9 @@ public class StaxReader
         {
             StartElement entry = e.asStartElement();
             String name = entry.getName().getLocalPart();
-            if (!"s".equals(name))
-                throw new ThesaurusReadingException(
-                        "Šķirkļa elementa \"s\" vietā atrasts " + name + "!");
+            if (!entryTag.equals(name))
+                throw new DictionaryXmlReadingException(
+                        "Šķirkļa elementa \"" + entryTag + "\" vietā atrasts " + name + "!");
 
             // Normālais gadījums, kad tiešām ir šķirklis.
             //e.writeAsEncodedUnicode(res);
@@ -98,8 +105,8 @@ public class StaxReader
             {
                 e = reader.nextEvent();
                 if (e.isEndDocument())
-                    throw new ThesaurusReadingException(
-                            "Tēzaura XML ir negaidīti beidzies šķirkļa vidū!");
+                    throw new DictionaryXmlReadingException(
+                            "Vārdnīcas XML ir negaidīti beidzies šķirkļa vidū!");
                 writer.add(e);
                 //e.writeAsEncodedUnicode(res);     // Problēma ar apstrofiem atribūtos.
                 if (e.isEndElement() && e.asEndElement().getName().getLocalPart().equals("s"))

@@ -87,7 +87,7 @@ public class MlvvDocToDetailXmlJson
 		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
 		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson(path, path + "result/");
-		
+
 		File[] listOfFiles = folder.listFiles();
 		for (File f : listOfFiles)
 		{

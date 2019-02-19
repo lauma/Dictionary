@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright: 2013-2019 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa with mostly edited-out parts from Gunars Danovskis and Peteris Paikens
+ * Author: Lauma Pretkalniņa with mostly edited-out parts from Gunārs Danovskis and Pēteris Paikens
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by

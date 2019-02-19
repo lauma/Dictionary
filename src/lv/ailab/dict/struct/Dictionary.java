@@ -26,6 +26,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -79,5 +81,18 @@ public class Dictionary
 		Result target = new StreamResult(out);
 		transformer.transform(src, target);
 
+	}
+
+	public void toJSONFile(BufferedWriter out) throws IOException
+	{
+		out.write("[\n");
+		int count = 0;
+		for (Entry e : entries)
+		{
+			if (count > 0) out.write(",\n");
+			out.write(e.toJSON());
+			count++;
+		}
+		out.write("\n]");
 	}
 }

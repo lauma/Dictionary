@@ -24,7 +24,6 @@ import lv.ailab.dict.mlvv.analyzer.validation.Validator;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.Dictionary;
-import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.utils.Trio;
 
 import java.io.*;
@@ -238,15 +237,7 @@ public class MlvvDocToDetailXmlJson
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath + "mlvv.json"), "UTF-8"));
-			out.write("[\n");
-			int count = 0;
-			for (Entry e : dict.entries)
-			{
-				if (count > 0) out.write(",\n");
-				out.write(((MLVVEntry)e).toJSON());
-				count++;
-			}
-			out.write("\n]");
+			dict.toJSONFile(out);
 			out.close();
 
 		} catch (Exception e)

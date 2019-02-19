@@ -38,8 +38,8 @@ import java.util.ArrayList;
  */
 public class MlvvDocToDetailXmlJson
 {
-	public static String inputDataPath = "./dati/mlvv/";
-	public static String outputDataPath = "./dati/mlvv/result/";
+	public String inputDataPath; //= "./dati/mlvv/";
+	public String outputDataPath; //= "./dati/mlvv/result/";
 
 	public static boolean UNDERSCORE_FOR_CURSIVE = true;
 
@@ -58,22 +58,36 @@ public class MlvvDocToDetailXmlJson
 	 */
 	public ArrayList<Trio<String, String, String>> pronunciations = new ArrayList<>();
 
+	public MlvvDocToDetailXmlJson(String inputPath, String outputPath)
+	{
+		inputDataPath = inputPath;
+		outputDataPath = outputPath;
+		File dicFolder = new File(outputDataPath);
+		if (!dicFolder.exists()) dicFolder.mkdirs();
+	}
+
+	/**
+	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
+	 *             faili
+	 * @throws Exception
+	 */
 	public static void main (String[] args)
 	{
-		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson();
-		File folder = new File(inputDataPath);
+		String path = args[0];
+		if (!path.endsWith("/") && !path.endsWith("\\"))
+			path = path + "\\";
+		File folder = new File(path);
 		if (!folder.exists())
 		{
 			System.out.println(
-					"Ups! Nevar atrast ieejas datu mapi \"" + inputDataPath + "\"!");
+					"Ups! Nevar atrast ieejas datu mapi \"" + path + "\"!");
 			return;
 		}
-
-		File dicFolder = new File(outputDataPath);
-		if (!dicFolder.exists()) dicFolder.mkdirs();
+		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson(path, path + "result/");
+		
 		File[] listOfFiles = folder.listFiles();
 		for (File f : listOfFiles)
 		{

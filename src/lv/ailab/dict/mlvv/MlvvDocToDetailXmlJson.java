@@ -43,7 +43,8 @@ public class MlvvDocToDetailXmlJson
 	public static boolean UNDERSCORE_FOR_CURSIVE = true;
 
 	public static boolean DEBUG = false;
-	public static boolean PRINT_MIDLLE = true;
+	public static boolean PRINT_MIDLLE = false;
+	public static boolean PRINT_XML = true;
 	public static boolean PRINT_JSON = true;
 	public static boolean PRINT_PRONUNCIATION = true;
 	public static boolean PRINT_FLAGSTRINGS = true;
@@ -219,7 +220,7 @@ public class MlvvDocToDetailXmlJson
 			success = false;
 		}
 
-		try
+		if (PRINT_XML) try
 		{
 			PrintWriter out = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputDataPath + "mlvv.xml"), "UTF8")));

@@ -184,7 +184,7 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"((?:,| vai) \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"((?:,| vai| arī) \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches())
@@ -197,7 +197,7 @@ public class RulesAsFunctions
 			String phrasesOnly = m.group(4);
 			if (phrasesWithStuff.endsWith(" u. tml."))
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
-			String[] phrases = phrasesOnly.split("(?<=\")(,| vai)(?=\")");
+			String[] phrases = phrasesOnly.split("(?<=\")(,| vai| arī)(?=\")");
 			for (String w : phrases)
 				flagCollector.add(key, w.trim());
 		}

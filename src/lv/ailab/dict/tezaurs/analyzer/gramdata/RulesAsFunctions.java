@@ -1,17 +1,12 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.struct.Lemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.THeader;
-import lv.ailab.dict.tezaurs.analyzer.struct.TLemma;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,7 +73,7 @@ public class RulesAsFunctions
 	{
 		// TODO: afrikandu?
 		if (gramFragment.matches(
-				"(afrikandu|angļu|arābu|ebreju|fr\\.|it\\.|lat\\.|latīņu|sanskr\\.|senebr\\.|spāņu|vācu|zviedru)( val\\.)? "
+				"(afrikandu|angļu|arābu|ebreju|fr\\.|it\\.|lat\\.|latīņu|sanskr\\.|senebr\\.|spāņu|tibetiešu|vācu|zviedru)( val\\.)? "
 						+ "(\"[- \\p{L}]+\"|- [ \\p{L}]+)"
 						+ "( - deminutīvs no \"[ \\p{Ll}]+\")?\\.?"))
 		{
@@ -99,7 +94,7 @@ public class RulesAsFunctions
 	public static int processInPhraseOrRepFlag(String gramText, Flags flagCollector)
 	{
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'] vai (?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
+				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā):? [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'] vai (?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -141,7 +136,7 @@ public class RulesAsFunctions
 		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
 		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:savienojum(?:ā|os)) ((\"\\p{L}+((, | - | )\\p{L}+)*\"(?:, \"\\p{L}+((, | - | )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
+				"((parasti |bieži |arī |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+((, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+((, | ?- ?| )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -164,7 +159,7 @@ public class RulesAsFunctions
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
 			String phrasesOnly = m.group(4);
 			flagCollector.add(usedType, TValues.PHRASE);
-			String[] phrases = phrasesOnly.split("(?<=\"), (?=\")");
+			String[] phrases = phrasesOnly.split("(?<=\"),(?: arī)? (?=\")");
 			for (String p : phrases)
 				flagCollector.add(usedType, p.trim());
 			//flagCollector.add(usedType, "\"" + phrase + "\"");
@@ -189,7 +184,7 @@ public class RulesAsFunctions
 			String gramText, Flags flagCollector)
 	{
 		//boolean hasComma = gramText.contains(",");
-		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | - | )\\p{L}+)*\"((?:,| vai) \"\\p{L}+(?:(?:, | - | )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
+		Pattern flagPattern = Pattern.compile("((parasti |)savienojum(?:ā|os) ar ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"((?:,| vai) \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?: formām)?( u\\. tml\\.)?)\\.?)([,;].*)?");
 		int newBegin = -1;
 		Matcher	m = flagPattern.matcher(gramText);
 		if (m.matches())
@@ -404,7 +399,7 @@ public class RulesAsFunctions
 				flagValues.add(TValues.ADJECTIVE);
 				flagValues.add(TValues.ADVERB);
 			}
-			else if (flagValueRaw.matches("adj\\. vai apst\\. pārāk(ajā|o) pakāp(ē|i)\\.?"))
+			else if (flagValueRaw.matches("adj\\. vai apst\\. pārāk(ajā|o) pakāp[ēi]\\.?"))
 			{
 				flagValues.add(TValues.ADJECTIVE);
 				flagValues.add(TValues.ADVERB);
@@ -787,7 +782,7 @@ public class RulesAsFunctions
 				usedType = TKeys.OFTEN_USED_IN_FORM;
 			for (String wordForm : forms)
 			{
-				Lemma lemma = new TLemma(wordForm);
+				//Lemma lemma = new TLemma(wordForm);
 
 				flagCollector.add(usedType, TValues.PARTICIPLE);
 				String partType = RulesAsFunctions.determineParticipleType(wordForm);

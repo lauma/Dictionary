@@ -889,9 +889,9 @@ public class AbbrMap {
 
 		pairingFlags.put("parasti ar dat.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.DATIVE));
 		pairingFlags.put("parasti ar ģen.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
-		pairingFlags.put("parasti savienojamā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
+		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
+		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
+		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
 		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
 		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
 		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));

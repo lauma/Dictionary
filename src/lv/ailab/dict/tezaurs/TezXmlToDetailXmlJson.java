@@ -137,8 +137,7 @@ public class TezXmlToDetailXmlJson
 
 	public TezXmlToDetailXmlJson(
 			String resultXmlPath, String resultJsonPath, String statsPath)
-	throws ParserConfigurationException, XMLStreamException,
-			TransformerConfigurationException, IOException
+	throws TransformerConfigurationException, IOException
 	{
 		if (Config.PRINT_SINGLE_XML) completeXmlOut = new XmlEntryStreamWriter(resultXmlPath);
 		else completeXmlOut = null;
@@ -155,7 +154,8 @@ public class TezXmlToDetailXmlJson
 	 * @param args pirmais arguments - ceļš uz vietu, kur stāv apstrādājamie XML
 	 *             faili
 	 */
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
+	throws IOException, TransformerException, SAXException, ParserConfigurationException, DictionaryXmlReadingException, XMLStreamException
 	{
 		String path = args[0];
 		if (!path.endsWith("/") && !path.endsWith("\\"))
@@ -257,8 +257,7 @@ public class TezXmlToDetailXmlJson
 	protected void printEntry(
 			TEntry entry, String fileCode, BufferedWriter goodOut,
 			BufferedWriter noParadigmOut, BufferedWriter badOut)
-	throws ParserConfigurationException, XMLStreamException, IOException,
-			TransformerException
+	throws ParserConfigurationException, IOException, TransformerException
 	{
 		// Blacklisted entries are not included in output logs.
 		if (entry.inBlacklist()) return;
@@ -291,7 +290,7 @@ public class TezXmlToDetailXmlJson
 	}
 
 	protected void wrapUpEverything(String path)
-	throws IOException, XMLStreamException
+	throws IOException
 	{
 		if (Config.PRINT_SINGLE_XML) completeXmlOut.finishFile();
 		if (Config.PRINT_SINGLE_JSON)

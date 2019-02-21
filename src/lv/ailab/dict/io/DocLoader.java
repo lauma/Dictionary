@@ -19,7 +19,7 @@ public class DocLoader
 	 * @return array of entries.
 	 */
 	public static String[] loadDoc(String path)
-			throws IOException
+	throws IOException
 	{
 		File entryFile = new File(path);
 		//FileInputStream fis = new FileInputStream(entryFile.getAbsolutePath());

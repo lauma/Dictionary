@@ -40,7 +40,7 @@ public class CountingSet <K>
 		return map.getOrDefault(key, 0);
 	}
 
-	public HashMap getCounts()
+	public HashMap<K, Integer> getCounts()
 	{
 		return map;
 	}

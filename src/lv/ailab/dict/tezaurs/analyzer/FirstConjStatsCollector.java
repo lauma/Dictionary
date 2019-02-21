@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -171,7 +172,7 @@ public class FirstConjStatsCollector
 			if (h.gram != null) paradigms = h.getDirectParadigms();
 			// Ja vajag vākt potenciālos verbus, tad šeit būvē sarakstus, no kā
 			// izvēlēties.
-			if (collectDirectPotential && collectReflPotential
+			if ((collectDirectPotential || collectReflPotential)
 					&& (paradigms == null || paradigms.isEmpty())
 					&& h.lemma.text.equals(h.lemma.text.toLowerCase()) &&
 					(h.gram == null || h.gram.flags == null
@@ -193,7 +194,7 @@ public class FirstConjStatsCollector
 				prefixes.addAll(h.gram.flags.getAll(TKeys.VERB_PREFIX));
 
 			// Ja ir atpazīts, ka locīs kā tiešo.
-			if (paradigms.contains(15))
+			if (paradigms != null && paradigms.contains(15))
 			{
 				if (collectDirectByInfinitive) addByInf(directByInf, h);
 				if (collectReflByStems) addByStem(directbyStems, h);
@@ -201,7 +202,7 @@ public class FirstConjStatsCollector
 			}
 
 			// Ja ir atpazīts, ka locīs kā atgriezenisko.
-			if (paradigms.contains(18))
+			if (paradigms != null && paradigms.contains(18))
 			{
 				if (collectReflByInfinitive) addByInf(reflByInf, h);
 				if (collectReflByStems) addByStem(reflByStems, h);
@@ -274,14 +275,13 @@ public class FirstConjStatsCollector
 		else prefix = "";
 
 		boolean hasParallelStems = false;
-		String infinitives = "";
 		Set<String> stemKeys = what.gram.flags.getAll(Keys.INFINITIVE_STEM);
 		if (stemKeys == null) stemKeys = new HashSet<>();
-		infinitives = stemKeys.stream().sorted()
+		String infinitives = stemKeys.stream().sorted()
 				.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 				.reduce((a, b) -> a + ", " + b).orElse("0");
 
-		String presents = "";
+		String presents;
 		stemKeys = what.gram.flags.getAll(Keys.PRESENT_STEMS);
 		if (stemKeys == null) stemKeys = new HashSet<>();
 		if (stemKeys.size() > 1)
@@ -291,19 +291,19 @@ public class FirstConjStatsCollector
 					+ "!");
 		if (what.gram.flags.test(TFeatures.STEMS_ARE_ORDERED))
 			presents = stemKeys.stream().sorted()
-					.map(stems -> Arrays.asList(stems.split(",")).stream()
+					.map(stems -> Arrays.stream(stems.split(","))
 							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
 					.reduce((a, b) -> a + ", " + b).orElse("0");
 		else
 			presents = stemKeys.stream().sorted()
-					.map(stems -> Arrays.asList(stems.split(",")).stream()
+					.map(stems -> Arrays.stream(stems.split(","))
 							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 							.sorted()
 							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
 					.reduce((a, b) -> a + ", " + b).orElse("0");
 
-		String pasts = "";
+		String pasts;
 		stemKeys = what.gram.flags.getAll(Keys.PAST_STEMS);
 		if (stemKeys == null) stemKeys = new HashSet<>();
 		if (stemKeys.size() > 1)
@@ -313,14 +313,14 @@ public class FirstConjStatsCollector
 					+ "!");
 		if (what.gram.flags.test(TFeatures.STEMS_ARE_ORDERED))
 			pasts = stemKeys.stream().sorted()
-					.map(stems -> Arrays.asList(stems.split(",")).stream()
+					.map(stems -> Arrays.stream(stems.split(","))
 							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 							.sorted()
 							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
 					.reduce((a, b) -> a + ", " + b).orElse("0");
 		else
 			pasts = stemKeys.stream().sorted()
-					.map(stems -> Arrays.asList(stems.split(",")).stream()
+					.map(stems -> Arrays.stream(stems.split(","))
 							.map(s -> s.startsWith(prefix) ? s.substring(prefix.length()) : s)
 							.sorted()
 							.reduce((s1, s2) -> s1 + "," + s2).orElse("0"))
@@ -379,7 +379,6 @@ public class FirstConjStatsCollector
 	 * @param folderPath		ceļš, kur drukāt
 	 * @param fileNamePrefix	faila prefikss, kuru izmantot izveidotajiem
 	 *                          failiem (piemēram, "entities" vai "references")
-	 * @throws IOException
 	 */
 	public void printContents(String folderPath, String fileNamePrefix)
 	throws IOException
@@ -387,7 +386,8 @@ public class FirstConjStatsCollector
 		if (collectDirectByInfinitive)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-roots.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-roots.txt"),
+					StandardCharsets.UTF_8));
 			printInfMap(out, directByInf);
 			out.flush();
 			out.close();
@@ -396,7 +396,8 @@ public class FirstConjStatsCollector
 		if (collectDirectByStems)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-stems.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-stems.txt"),
+					StandardCharsets.UTF_8));
 			printStemMap(out, directbyStems);
 			out.flush();
 			out.close();
@@ -405,7 +406,8 @@ public class FirstConjStatsCollector
 		if (collectDirectByPrefix)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-prefix.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-by-prefix.txt"),
+					StandardCharsets.UTF_8));
 
 			TreeMap<String, Integer> prefixCountsDirect = getPrefixCounts(directByPrefix);
 			List<String> sortedPrefs = prefixCountsDirect.keySet().stream()
@@ -424,7 +426,8 @@ public class FirstConjStatsCollector
 		if (collectDirectPotential)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-potentials.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_direct-potentials.txt"),
+					StandardCharsets.UTF_8));
 			printPotentials(out, potentialDirect, "t");
 			out.flush();
 			out.close();
@@ -433,7 +436,8 @@ public class FirstConjStatsCollector
 		if (collectReflByInfinitive)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-roots.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-roots.txt"),
+					StandardCharsets.UTF_8));
 			printInfMap(out, reflByInf);
 			out.flush();
 			out.close();
@@ -442,7 +446,8 @@ public class FirstConjStatsCollector
 		if (collectReflByStems)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-stems.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-stems.txt"),
+					StandardCharsets.UTF_8));
 			printStemMap(out, reflByStems);
 			out.flush();
 			out.close();
@@ -451,7 +456,8 @@ public class FirstConjStatsCollector
 		if (collectReflByPrefix)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-prefix.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-by-prefix.txt"),
+					StandardCharsets.UTF_8));
 			TreeMap<String, Integer> prefixCountsRefl = getPrefixCounts(reflByPrefix);
 			List<String> sortedPrefs = prefixCountsRefl.keySet().stream()
 					.sorted((a, b) -> {
@@ -469,7 +475,8 @@ public class FirstConjStatsCollector
 		if (collectReflPotential)
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-potentials.txt"), "UTF-8"));
+					new FileOutputStream(folderPath + "/" + fileNamePrefix + "_refl-potentials.txt"),
+					StandardCharsets.UTF_8));
 			printPotentials(out, potentialRefl, "ties");
 			out.flush();
 			out.close();
@@ -481,7 +488,6 @@ public class FirstConjStatsCollector
 	 * @param where	plusma/fails, kur notiks izdeukāšana
 	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByInf vai
 	 *              reflByInf)
-	 * @throws IOException
 	 */
 	protected static void printInfMap (
 			BufferedWriter where, TreeMap<String, TreeSet<String>> what)
@@ -505,7 +511,6 @@ public class FirstConjStatsCollector
 	 * @param where	plusma/fails, kur notiks izdeukāšana
 	 * @param what	datu struktūra, kuru nepieciešams izdrukāt (directByStem vai
 	 *              reflByStem)
-	 * @throws IOException
 	 */
 	protected static void printStemMap (
 			BufferedWriter where, TreeMap<String, TreeSet<String>> what)
@@ -534,8 +539,7 @@ public class FirstConjStatsCollector
 	 *                      izdrukātajā rezultātā)
 	 * @param yAxisLabels	kolonnu nosaukumi (izsaucējam pašam jārūpējas, lai
 	 *                      yAxisKeys un yAxisLabels garumi un secības sakrīt)
-	 * @throws IOException
-	 */
+=	 */
 	protected static void printPrefixMap (
 			BufferedWriter where,
 			TreeMap<String,TreeMap<String, TreeSet<String>>> what,

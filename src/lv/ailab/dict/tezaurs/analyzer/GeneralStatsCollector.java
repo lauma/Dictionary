@@ -561,8 +561,8 @@ public class GeneralStatsCollector
 		out.write(",\n\"Karodziņi\":[");
 		HashMap<Tuple<String, String>, Integer> counts = flagCounts.getCounts();
 		for (Tuple<String, String> feature : counts.keySet().stream().sorted(
-				(t1, t2) -> (t1.first != null && t1.first.equals(t2.first)) ?
-						t1.second.compareTo(t2.second) : t1.first.compareTo(t2.first)).toArray(i -> new Tuple[i]))
+				(t1, t2) -> (t1.first == t2.first || t1.first.equals(t2.first)) ?
+						t1.second.compareTo(t2.second) : t1.first.compareTo(t2.first)).toArray(Tuple[]::new))
 		{
 			out.write("\n\t[\"");
 			out.write(JSONObject.escape(feature.first));
@@ -654,7 +654,7 @@ public class GeneralStatsCollector
 			out.write(entriesWithSelectedFeature.stream().map(t ->
 					"\t[\"" + JSONObject.escape(t.first) + "\", \"" +
 							JSONObject.escape(t.second) + "\", \"" +
-							t.third.stream().map(f -> JSONObject.escape(f))
+							t.third.stream().map(JSONObject::escape)
 									.reduce((f1, f2) -> f1 + "\", \"" + f2).orElse("") +
 							"\"]")
 					.reduce((t1, t2) -> t1 + ",\n" + t2).orElse(""));

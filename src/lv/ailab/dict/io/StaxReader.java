@@ -32,7 +32,7 @@ public class StaxReader
 	 * @throws DictionaryXmlReadingException    Tēzaura XML neatbilst gaidītajam
 	 */
 	public StaxReader (String path, String rootTag, String entryTag)
-			throws FileNotFoundException, XMLStreamException, DictionaryXmlReadingException
+	throws FileNotFoundException, XMLStreamException, DictionaryXmlReadingException
 	{
 		if (rootTag == null || entryTag == null || rootTag.isEmpty() || entryTag.isEmpty())
 			throw new IllegalArgumentException("" +
@@ -66,7 +66,7 @@ public class StaxReader
 	 * @return nolasītā elementa DOM koks vai null, ja elementa nav.
 	 */
 	public Node readNexEntry()
-			throws XMLStreamException, DictionaryXmlReadingException, IOException,
+	throws XMLStreamException, DictionaryXmlReadingException, IOException,
 			SAXException, ParserConfigurationException
 	{
 		StringWriter res = new StringWriter();
@@ -147,7 +147,7 @@ public class StaxReader
 	 * @return  izparsētais DOM koks
 	 */
 	protected static Node parseNode(String xml)
-			throws ParserConfigurationException, IOException, SAXException
+	throws ParserConfigurationException, IOException, SAXException
 	{
 		try
 		{

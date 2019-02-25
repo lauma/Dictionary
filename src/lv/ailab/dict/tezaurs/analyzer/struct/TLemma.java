@@ -34,7 +34,8 @@ public class TLemma extends Lemma
 		text = vfNode.getTextContent();
 
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		if ("".equals(pronString)) return;
+		this.setPronunciation(pronString);
+		/*if ("".equals(pronString)) return;
 		if (pronString.contains(", arī "))
 			pronunciation = pronString.split(", arī ");
 		else if (pronString.contains(","))
@@ -47,7 +48,7 @@ public class TLemma extends Lemma
 				pronunciation[i] = pronunciation[i].substring(1);
 			if (pronunciation[i].endsWith("]"))
 				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
-		}
+		}*/
 
 	}
 }

@@ -125,4 +125,27 @@ public class Lemma implements HasToJSON, HasToXML
 
 	}
 
+	/**
+	 * Izkasa izrunas no klasiskās vārdnīcas formāta teksta:
+	 * <code>[izruna, arī izruna, izruna]</code>
+	 * @param pronsFromLegacyDict	izrunu teksts formā <code>[izruna, arī izruna, izruna]</code>
+	 */
+	public void setPronunciation(String pronsFromLegacyDict)
+	{
+		if ("".equals(pronsFromLegacyDict)) return;
+		if (pronsFromLegacyDict.contains(", arī "))
+			pronunciation = pronsFromLegacyDict.split(", arī ");
+		else if (pronsFromLegacyDict.contains(","))
+			pronunciation = pronsFromLegacyDict.split(",");
+		else pronunciation = new String[] {pronsFromLegacyDict};
+		for (int i = 0; i < pronunciation.length; i++)
+		{
+			pronunciation[i] = pronunciation[i].trim();
+			if (pronunciation[i].startsWith("["))
+				pronunciation[i] = pronunciation[i].substring(1);
+			if (pronunciation[i].endsWith("]"))
+				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
+		}
+
+	}
 }

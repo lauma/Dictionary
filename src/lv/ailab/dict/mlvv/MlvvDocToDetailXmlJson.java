@@ -40,17 +40,20 @@ import java.util.ArrayList;
  */
 public class MlvvDocToDetailXmlJson
 {
+	public static final class Config
+	{
+		public static boolean DEBUG = false;
+		public static boolean PRINT_MIDLLE = false;
+		public static boolean PRINT_XML = true;
+		public static boolean PRINT_JSON = true;
+		public static boolean PRINT_PRONUNCIATION = true;
+		public static boolean PRINT_FLAGSTRINGS = true;
+
+		public static boolean UNDERSCORE_FOR_CURSIVE = true;
+	}
+
 	public String inputDataPath; //= "./dati/mlvv/";
 	public String outputDataPath; //= "./dati/mlvv/result/";
-
-	public static boolean UNDERSCORE_FOR_CURSIVE = true;
-
-	public static boolean DEBUG = false;
-	public static boolean PRINT_MIDLLE = false;
-	public static boolean PRINT_XML = true;
-	public static boolean PRINT_JSON = true;
-	public static boolean PRINT_PRONUNCIATION = true;
-	public static boolean PRINT_FLAGSTRINGS = true;
 
 	public Dictionary dict = new Dictionary();
 	public Validator val = new Validator();
@@ -85,9 +88,9 @@ public class MlvvDocToDetailXmlJson
 					"Ups! Nevar atrast ieejas datu mapi \"" + path + "\"!");
 			return;
 		}
-		MLVVGloss.UNDERSCORE_FOR_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = UNDERSCORE_FOR_CURSIVE;
-		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = UNDERSCORE_FOR_CURSIVE;
+		MLVVGloss.UNDERSCORE_FOR_CURSIVE = Config.UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = Config.UNDERSCORE_FOR_CURSIVE;
+		MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE = Config.UNDERSCORE_FOR_CURSIVE;
 		MlvvDocToDetailXmlJson extractor = new MlvvDocToDetailXmlJson(path, path + "result/");
 
 		File[] listOfFiles = folder.listFiles();
@@ -112,8 +115,8 @@ public class MlvvDocToDetailXmlJson
 			if (e != null)
 			{
 				dict.entries.add(e);
-				if (DEBUG) System.out.println(e.head.lemma.text);
-				if (PRINT_PRONUNCIATION)
+				if (Config.DEBUG) System.out.println(e.head.lemma.text);
+				if (Config.PRINT_PRONUNCIATION)
 				{
 					String entryword = e.head.lemma.text;
 					String homID = e.homId;
@@ -137,17 +140,17 @@ public class MlvvDocToDetailXmlJson
 		{
 			BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inputDataPath + file.getName()), "UTF8"));
 			PrintWriter middleOut = null;
-			if (PRINT_MIDLLE) middleOut = new PrintWriter(new BufferedWriter(
+			if (Config.PRINT_MIDLLE) middleOut = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputDataPath + file.getName() + ".txt"), "UTF8")));
 			String line = in.readLine();
 			while (line != null)
 			{
-				if (PRINT_MIDLLE)
+				if (Config.PRINT_MIDLLE)
 					middleOut.println(PreNormalizer.normalizeLine(line));
 				processLine(line);
 				line = in.readLine();
 			}
-			if (PRINT_MIDLLE)
+			if (Config.PRINT_MIDLLE)
 			{
 				middleOut.flush();
 				middleOut.close();
@@ -166,15 +169,15 @@ public class MlvvDocToDetailXmlJson
 		{
 			String[] lines = DocLoader.loadDoc(file.getPath());
 			PrintWriter MiddleOut = null;
-			if (PRINT_MIDLLE) MiddleOut = new PrintWriter(new BufferedWriter(
+			if (Config.PRINT_MIDLLE) MiddleOut = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputDataPath + file.getName() + ".txt"), "UTF8")));
 			for (String line : lines)
 			{
-				if (PRINT_MIDLLE)
+				if (Config.PRINT_MIDLLE)
 					MiddleOut.println(PreNormalizer.normalizeLine(line));
 				processLine(line);
 			}
-			if (PRINT_MIDLLE)
+			if (Config.PRINT_MIDLLE)
 			{
 				MiddleOut.flush();
 				MiddleOut.close();
@@ -193,7 +196,7 @@ public class MlvvDocToDetailXmlJson
 		val.printStats();
 		boolean success = true;
 
-		if (PRINT_PRONUNCIATION && pronunciations != null) try
+		if (Config.PRINT_PRONUNCIATION && pronunciations != null) try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath + "pronun.txt"),
@@ -210,7 +213,7 @@ public class MlvvDocToDetailXmlJson
 			success = false;
 		}
 
-		if (PRINT_FLAGSTRINGS) try
+		if (Config.PRINT_FLAGSTRINGS) try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath + "flags.txt"),
@@ -224,7 +227,7 @@ public class MlvvDocToDetailXmlJson
 			success = false;
 		}
 
-		if (PRINT_XML) try
+		if (Config.PRINT_XML) try
 		{
 			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath + "mlvv.xml"),
@@ -239,7 +242,7 @@ public class MlvvDocToDetailXmlJson
 			success = false;
 		}
 
-		if (PRINT_JSON) try
+		if (Config.PRINT_JSON) try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outputDataPath + "mlvv.json"),

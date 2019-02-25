@@ -50,14 +50,14 @@ public class THeader extends Header
 			if (fieldname.equals("vf")) // lemma
 			{
 				if (lemma != null)
-					System.err.printf("vf with lemma \"%s\" contains more than one \'vf\'\n", lemma.text);
+					System.err.printf("vf ar lemmu \"%s\" satur vēl vienu \'vf\'\n", lemma.text);
 				lemma = new TLemma(field);
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
 				postponed.add(field);
 		}
 		if (lemma == null)
-			System.err.printf("Thesaurus v-entry without a lemma :(\n");
+			System.err.printf("Vārdnīcas v elements bez lemmas:\n %s", vNode.toString());
 		
 		for (Node field : postponed)
 		{
@@ -65,7 +65,7 @@ public class THeader extends Header
 			if (fieldname.equals("gram")) // grammar
 				gram = new TGram(field, lemma.text);
 			else System.err.printf(
-					"v entry field %s not processed\n", fieldname);				
+					"Elementā v lauks %s netika apstrādāts\n", fieldname);
 		}				
 	}
 	public THeader(Lemma lemma, Set<Integer> paradigm, Flags flags)

@@ -1,7 +1,6 @@
 package lv.ailab.dict.llvv.struct;
 
 import lv.ailab.dict.llvv.analyzer.PhrasalExtractor;
-import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -43,8 +42,9 @@ public class LLVVSense extends Sense
 					else if (glossFieldname.equals("gram"))
 					{
 						if (grammar != null)
-							System.err.println("\'n\' elements satur gan ārējo \'gram\', gan \'gram\' iekšā \'d\'");
-						grammar = new LLVVGram(field);
+							grammar = new LLVVGram(grammar.freeText + "; " + field.getTextContent());
+							//System.err.println("\'n\' elements satur gan ārējo \'gram\', gan \'gram\' iekšā \'d\'" + nNode.getTextContent());
+						else grammar = new LLVVGram(field);
 					}
 					else if (!glossFieldname.equals("#text")) // Teksta elementus šeit ignorē.
 						System.err.printf("\'d\' elements \'%s\' netiek apstrādāts\n", glossFieldname);

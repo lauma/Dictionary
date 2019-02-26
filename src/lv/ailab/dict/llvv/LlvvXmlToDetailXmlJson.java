@@ -103,7 +103,7 @@ public class LlvvXmlToDetailXmlJson
 					if (fileEntries % 50 == 0)
 						System.out.print("Apstrādātie šķirkļi:\t" + fileEntries + "\r");
 				}
-				System.out.println("Pabeigts.");
+				//System.out.println("Pabeigts.");
 			}
 			else System.out.println(
 					"Ups! Neparedzēta tipa fails \"" + fileName + "\"!");

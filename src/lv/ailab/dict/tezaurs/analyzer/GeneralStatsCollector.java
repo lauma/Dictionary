@@ -238,25 +238,29 @@ public class GeneralStatsCollector
 
 		if (collectWithGloss != null)
 		{
-			if (entry.senses != null) for (Sense sense : entry.senses)
+			if (entry.senses != null)
+				for (Sense sense : entry.senses)
+					for (String glossVariant : sense.gloss.text)
 			{
-				if (collectWithGloss.matcher(sense.gloss.text).matches())
+				if (collectWithGloss.matcher(glossVariant).matches())
 					entriesWithSelectedFeature.add(Trio.of(
 							entry.head.lemma.text,
 							entry.homId == null ? "REF" : entry.homId,
-							new ArrayList<String>(){{add("Glosa = " + sense.gloss.text);
+							new ArrayList<String>(){{add("Glosa = " + glossVariant);
 									if (entry.head.gram != null && entry.head.gram.flags != null && entry.head.gram.flags.test(TFeatures.PLACE_NAME) ||
 											sense.grammar != null && sense.grammar.flags != null && sense.grammar.flags.test(TFeatures.PLACE_NAME))
 										add(TFeatures.PLACE_NAME.first + " = " + TFeatures.PLACE_NAME.second);
 									else add(TFeatures.PLACE_NAME.first + " = NULL");}}));
 
-				if (sense.subsenses != null) for (Sense subsense : sense.subsenses)
+				if (sense.subsenses != null)
+					for (Sense subsense : sense.subsenses)
+						for (String subsGlossVariant : sense.gloss.text)
 				{
-					if (collectWithGloss.matcher(subsense.gloss.text).matches())
+					if (collectWithGloss.matcher(subsGlossVariant).matches())
 						entriesWithSelectedFeature.add(Trio.of(
 								entry.head.lemma.text,
 								entry.homId == null ? "REF" : entry.homId,
-								new ArrayList<String>(){{add("Glosa = " + subsense.gloss.text);
+								new ArrayList<String>(){{add("Glosa = " + subsGlossVariant);
 									if (entry.head.gram != null && entry.head.gram.flags != null && entry.head.gram.flags.test(TFeatures.PLACE_NAME) ||
 											sense.grammar != null && sense.grammar.flags != null && sense.grammar.flags.test(TFeatures.PLACE_NAME) ||
 											subsense.grammar != null && subsense.grammar.flags != null && subsense.grammar.flags.test(TFeatures.PLACE_NAME))

@@ -24,16 +24,13 @@ public class MLVVGloss extends Gloss
 
 	/**
 	 * Izveido glosu un normalizē tajā homonīmu indeksus.
-	 * @param text
-	 * @return
 	 */
 	public static MLVVGloss parse(String text)
 	{
 		text = Editors.replaceHomIds(text, false);
-		MLVVGloss res = new MLVVGloss(text);
 		if (UNDERSCORE_FOR_CURSIVE)
-			res.text = Editors.cursiveToUnderscore(res.text);
-		return res;
+			text = Editors.cursiveToUnderscore(text);
+		return new MLVVGloss(text);
 	}
 
 }

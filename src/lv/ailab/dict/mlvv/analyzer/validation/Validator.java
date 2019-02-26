@@ -118,7 +118,7 @@ public class Validator
 			if (homId > 1)
 				System.out.printf("Šķirklim %s mazākais homonīma numurs ir %s.\n",
 						entryword, homId);
-			entrywords.put(entryword, new ArrayList<Integer>());
+			entrywords.put(entryword, new ArrayList<>());
 			entrywords.get(entryword).add(homId);
 			entrywordsInOrder.add(entryword);
 		}
@@ -173,12 +173,15 @@ public class Validator
 	 *                          izdrukāt, ja ir kļūda
 	 */	protected void checkTexts(Sense s, String debugEntryWord)
 	{
-		if (!IndividualChecks.hasPairedUnderscores(s.gloss.text))
-			System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
-					debugEntryWord, s.gloss.text);
-		if (!IndividualChecks.hasBalancedParentheses(s.gloss.text))
-			System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
-					debugEntryWord, s.gloss.text);
+		for (String glossVariant : s.gloss.text)
+		{
+			if (!IndividualChecks.hasPairedUnderscores(glossVariant))
+				System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
+						debugEntryWord, glossVariant);
+			if (!IndividualChecks.hasBalancedParentheses(glossVariant))
+				System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
+						debugEntryWord, glossVariant);
+		}
 
 		if (s.subsenses != null) for (Sense sub : s.subsenses)
 			checkTexts(sub, debugEntryWord);

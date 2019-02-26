@@ -42,14 +42,14 @@ public class LLVVHeader extends Header
 			if (fieldname.equals("vf")) // lemma
 			{
 				if (lemma != null)
-					System.err.printf("vf ar lemmu \"%s\" satur vēl vienu \'vf\'\n", lemma.text);
+					System.err.printf("\'vf\' ar lemmu \"%s\" satur vēl vienu \'vf\'\n", lemma.text);
 				lemma = new LLVVLemma(field);
 			}
 			else if (!fieldname.equals("#text")) // Teksta elementus šeit ignorē.
 				postponed.add(field);
 		}
 		if (lemma == null)
-			System.err.printf("Vārdnīcas v elements bez lemmas:\n %s", vNode.toString());
+			System.err.printf("Elements \'v\' ir bez lemmas:\n %s", vNode.toString());
 
 		for (Node field : postponed)
 		{
@@ -57,7 +57,7 @@ public class LLVVHeader extends Header
 			if (fieldname.equals("gram")) // grammar
 				gram = new LLVVGram(field);
 			else System.err.printf(
-					"Elementā v lauks %s netika apstrādāts\n", fieldname);
+					"\'v\' elements \'%s\' netika apstrādāts\n", fieldname);
 		}
 	}
 }

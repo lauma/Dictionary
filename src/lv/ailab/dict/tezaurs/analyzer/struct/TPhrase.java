@@ -31,36 +31,41 @@ public class TPhrase extends Phrase
 			{
 				if (subsenses == null) subsenses = new LinkedList<>();
 				TSense newMade = new TSense(field, lemma);
-				if (newMade.gloss.text.matches("\\(a\\).*?\\(b\\).*"))
+				if (newMade.gloss.text.size() > 1)
+					System.err.println("Cenšas sadalīt \'piem\' skaidrojumu vairākās apakšnozīmēs, bet ir vairākas glosas.");
+				for (String glossVariant : newMade.gloss.text) // Te normāli būtu jābūt vienam.
 				{
-					if (!newMade.glossOnly())
-						System.err.println("Cenšas sadalīt \'piem\' skaidrojumu vairākās apakšnozīmēs, lai gan citi lauki  nav tukši.");
-					String text = newMade.gloss.text;
-					int nextOrd = 1;
-					String ids = "abcdefghijklmnop";
-					while(text.startsWith("(" + ids.charAt(0) + ")") &&
-							text.contains("(" + ids.charAt(1) + ")"))
+					if (glossVariant.matches("\\(a\\).*?\\(b\\).*"))
 					{
+						if (!newMade.glossOnly())
+							System.err.println("Cenšas sadalīt \'piem\' skaidrojumu vairākās apakšnozīmēs, lai gan citi lauki nav tukši.");
+						String text = glossVariant;
+						int nextOrd = 1;
+						String ids = "abcdefghijklmnop";
+						while (text.startsWith("(" + ids.charAt(0) + ")") &&
+								text.contains("(" + ids.charAt(1) + ")"))
+						{
+							newMade.ordNumber = Integer.toString(nextOrd);
+							// Te principā varētu pārtaisīt pirmo burtu uz lielo,
+							// bet es neriskēju - ja nu ir kas specifisks?
+							// Saīsinājums vai kas tāds?
+							newMade.gloss = new TGloss(
+									text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim());
+							subsenses.add(newMade);
+							text = text.substring(text.indexOf("(" + ids.charAt(1) + ")"));
+							newMade = new TSense();
+							nextOrd++;
+							ids = ids.substring(1);
+						}
+						// Te principā varētu pārtaisīt pirmo burtu uz lielo, bet es
+						// neriskēju - ja nu ir kas specifisks? Saīsinājums vai kas
+						// tāds?
+						newMade.gloss = new TGloss(text.substring(3).trim());
 						newMade.ordNumber = Integer.toString(nextOrd);
-						// Te principā varētu pārtaisīt pirmo burtu uz lielo,
-						// bet es neriskēju - ja nu ir kas specifisks?
-						// Saīsinājums vai kas tāds?
-						newMade.gloss = new TGloss(
-								text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim());
 						subsenses.add(newMade);
-						text = text.substring(text.indexOf("(" + ids.charAt(1) + ")"));
-						newMade = new TSense();
-						nextOrd++;
-						ids = ids.substring(1);
-					}
-					// Te principā varētu pārtaisīt pirmo burtu uz lielo, bet es
-					// neriskēju - ja nu ir kas specifisks? Saīsinājums vai kas
-					// tāds?
-					newMade.gloss = new TGloss(text.substring(3).trim());
-					newMade.ordNumber = Integer.toString(nextOrd);
-					subsenses.add(newMade);
 
-				} else subsenses.add(newMade);
+					} else subsenses.add(newMade);
+				}
 			}
 			else if (!fieldname.equals("#text")) // Text nodes here are ignored.
 				System.err.printf("\'piem\' elements \'%s\' netiek apstrādāts\n", fieldname);

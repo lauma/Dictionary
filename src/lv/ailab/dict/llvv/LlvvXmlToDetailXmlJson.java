@@ -100,7 +100,7 @@ public class LlvvXmlToDetailXmlJson
 		if (Config.PRINT_XML) try
 		{
 			PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(outputDataPath + "mlvv.xml"),
+					new FileOutputStream(outputDataPath + "llvv.xml"),
 					StandardCharsets.UTF_8)));
 			dict.toXMLFile(out);
 			out.close();
@@ -108,14 +108,14 @@ public class LlvvXmlToDetailXmlJson
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
-			System.out.println("Neizdodas izdrukāt rezultātu XML failā " + outputDataPath + "mlvv.xml!");
+			System.out.println("Neizdodas izdrukāt rezultātu XML failā " + outputDataPath + "llvv.xml!");
 			success = false;
 		}
 
 		if (Config.PRINT_JSON) try
 		{
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(outputDataPath + "mlvv.json"),
+					new FileOutputStream(outputDataPath + "llvv.json"),
 					StandardCharsets.UTF_8));
 			dict.toJSONFile(out);
 			out.close();
@@ -123,7 +123,7 @@ public class LlvvXmlToDetailXmlJson
 		} catch (Exception e)
 		{
 			e.printStackTrace(System.err);
-			System.out.println("Neizdodas izdrukāt rezultātu JSON failā " + outputDataPath + "mlvv.json!");
+			System.out.println("Neizdodas izdrukāt rezultātu JSON failā " + outputDataPath + "llvv.json!");
 			success = false;
 		}
 

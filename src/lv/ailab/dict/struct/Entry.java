@@ -356,7 +356,7 @@ public class Entry implements HasToJSON, HasToXML
 			//refN.appendChild(doc.createTextNode(references));
 			for (String ref : references)
 			{
-				Node refItem = doc.createElement("EntryId");
+				Node refItem = doc.createElement("EntryID");
 				refItem.appendChild(doc.createTextNode(ref));
 				refContainer.appendChild(refItem);
 			}

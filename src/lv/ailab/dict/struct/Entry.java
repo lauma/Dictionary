@@ -1,20 +1,3 @@
-/*******************************************************************************
- * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.utils.*;
@@ -75,10 +58,10 @@ public class Entry implements HasToJSON, HasToXML
 
 	/**
 	 * Atsauce uz citu šķirkli (Tēzaura XML -  ref).
-	 * MLVV nelieto.
+	 * MLVV lieto vienā vietā.
 	 * TODO vai šeit var atdalīti atsevišķi homonīma numuru?
 	 */
-	public String reference;
+	public LinkedList<String> references;
 
 	/**
 	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
@@ -116,11 +99,11 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public boolean hasReference()
 	{
-		return (reference != null && reference.length() > 0);
+		return (references != null && references.size() > 0);
 	}
 
 	/**
-	 * Vai šķirklim ir saturīgs saturs, kas nav reference.
+	 * Vai šķirklim ir saturīgs saturs, kas nav references.
 	 */
 	public boolean hasContents()
 	{
@@ -274,11 +257,12 @@ public class Entry implements HasToJSON, HasToXML
 			s.append(JSONObject.escape(etymology));
 			s.append("\"");
 		}
-		if (reference != null && reference.length() > 0)
+		if (references != null && references.size() > 0)
 		{
-			s.append(", \"Reference\":\"");
-			s.append(JSONObject.escape(reference));
-			s.append("\"");
+			s.append(", \"References\":\"");
+			s.append(references.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			s.append("]");
 		}
 		/*if (freeText != null && freeText.length() > 0)
 		{
@@ -366,11 +350,17 @@ public class Entry implements HasToJSON, HasToXML
 			freeTextN.appendChild(doc.createTextNode(etymology));
 			parent.appendChild(freeTextN);
 		}
-		if (reference != null && reference.length() > 0)
+		if (references != null && references.size() > 0)
 		{
-			Node refN = doc.createElement("Reference");
-			refN.appendChild(doc.createTextNode(reference));
-			parent.appendChild(refN);
+			Node refContainer = doc.createElement("References");
+			//refN.appendChild(doc.createTextNode(references));
+			for (String ref : references)
+			{
+				Node refItem = doc.createElement("EntryId");
+				refItem.appendChild(doc.createTextNode(ref));
+				refContainer.appendChild(refItem);
+			}
+			parent.appendChild(refContainer);
 		}
 		/*if (freeText != null && freeText.length() > 0)
 		{

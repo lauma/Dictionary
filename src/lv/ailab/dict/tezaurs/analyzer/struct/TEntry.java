@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -79,7 +80,11 @@ public class TEntry extends Entry
 			else if (fieldname.equals("g_de")) //atvasinātās formas
 				loadDerivs(field);
 			else if (fieldname.equals("ref")) // atsauce uz citu šķirkli
-				reference = field.getTextContent();
+			{
+				references = new LinkedList<>();
+				references.addAll(Arrays.asList(field.getTextContent().split(", ")));
+				// TODO: vai šeit vajag dalījumu?
+			}
 			else
 				System.err.printf("Šķirklī \"%s\" lauks %s netiek apstrādāts!\n", head.lemma.text, fieldname);
 		}

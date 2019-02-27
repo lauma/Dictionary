@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -158,11 +159,17 @@ public class MLVVEntry extends Entry
 		// Izparsē referenci.
 		if (body.isEmpty() && head.matches(".*?<i>[Ss]k(at)?(</i>.|.</i>)\\s+[-\\p{L}]+\\."))
 		{
-			result.reference = head.substring(head.lastIndexOf("</i>") + 4).trim();
-			if (result.reference.endsWith("."))
-				result.reference = result.reference.substring(0, result.reference.length()-1);
+			String referencesText = head.substring(head.lastIndexOf("</i>") + 4).trim();
+			if (referencesText.endsWith("."))
+				referencesText = referencesText.substring(0, referencesText.length()-1);
 			head = head.substring(0, head.lastIndexOf("<i>"));
-			if (result.reference.isEmpty()) result.reference = null;
+
+			if (!referencesText.isEmpty())
+			{
+				result.references = new LinkedList<>();
+				result.references.addAll(Arrays.asList(referencesText.split(", ")));
+				// TODO: vai šeit vajag dalījumu?
+			}
 		}
 		if (head.isEmpty())
 		{
@@ -170,7 +177,7 @@ public class MLVVEntry extends Entry
 			return null;
 		}
 		else result.parseHead(head);
-		if (body.isEmpty() && result.reference == null )
+		if (body.isEmpty() && result.references == null )
 			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
 		else if (!body.isEmpty()) result.parseBody(body);
 		return result;
@@ -401,13 +408,12 @@ public class MLVVEntry extends Entry
 			s.append(", \"Derivatives\":");
 			s.append(JSONUtils.objectsToJSON(derivs));
 		}
-		if (reference != null && reference.length() > 0)
+		if (references != null && references.size() > 0)
 		{
-			//System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
-			//				head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
-			s.append(", \"Reference\":\"");
-			s.append(JSONObject.escape(reference));
-			s.append("\"");
+			s.append(", \"References\":\"");
+			s.append(references.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			s.append("]");
 		}
 		if (etymology != null && etymology.length() > 0)
 		{
@@ -504,13 +510,17 @@ public class MLVVEntry extends Entry
 			for (Header d : derivs) d.toXML(derivContN);
 			parent.appendChild(derivContN);
 		}
-		if (reference != null && reference.length() > 0)
+		if (references != null && references.size() > 0)
 		{
-			//System.out.printf("Šķirklim \"%s\" norādītas atsauces, lai gan MLVV šo lauku nav paredzēts aizpildīt!\n",
-			//			head != null && head.lemma != null && head.lemma.text != null ? head.lemma.text : "");
-			Node refN = doc.createElement("Reference");
-			refN.appendChild(doc.createTextNode(reference));
-			parent.appendChild(refN);
+			Node refContainer = doc.createElement("References");
+			//refN.appendChild(doc.createTextNode(references));
+			for (String ref : references)
+			{
+				Node refItem = doc.createElement("EntryId");
+				refItem.appendChild(doc.createTextNode(ref));
+				refContainer.appendChild(refItem);
+			}
+			parent.appendChild(refContainer);
 		}
 		if (etymology != null && etymology.length() > 0)
 		{

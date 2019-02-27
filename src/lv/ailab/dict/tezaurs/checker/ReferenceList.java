@@ -54,7 +54,7 @@ public class ReferenceList
         	{
         		String newRef = referTemp[j].substring(0, referTemp[j].indexOf("\t")).trim(); 
         		if (references.contains(newRef))
-        			System.out.println("Reference \"" + newRef + "\" occours more than once in the reference list.");
+        			System.out.println("Reference \"" + newRef + "\" occours more than once in the references list.");
         		references.add(newRef);
         	}  
         }

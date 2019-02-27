@@ -1,10 +1,10 @@
 package lv.ailab.dict.llvv.struct;
 
 import lv.ailab.dict.struct.Entry;
-import lv.ailab.dict.struct.Phrase;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class LLVVEntry extends Entry
@@ -52,10 +52,11 @@ public class LLVVEntry extends Entry
 			}
 			else if (fieldname.equals("ref"))
 			{
-				if (reference != null)
+				if (references != null)
 					System.err.printf("\"Šķirklis \"%s\" satur vairāk kā vienu \'ref\'\n",
 							head.lemma.text);
-				reference = field.getTextContent();
+				references =  new LinkedList<>();
+				references.addAll(Arrays.asList(field.getTextContent().split(", ")));
 			}
 			else
 				System.err.printf("Šķirklī \"%s\" elements \'%s\' netiek apstrādāts!\n",

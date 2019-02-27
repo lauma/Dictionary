@@ -259,7 +259,7 @@ public class Entry implements HasToJSON, HasToXML
 		}
 		if (references != null && references.size() > 0)
 		{
-			s.append(", \"References\":\"");
+			s.append(", \"References\":[");
 			s.append(references.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
 					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
 			s.append("]");

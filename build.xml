@@ -7,6 +7,7 @@
   <!-- set global properties for this build -->
   <property name="main.src" location="src"/>
   <property name="main.resources" location="resources"/>
+  <property name="main.scripts" location="scripts"/>
   <property name="out" location="out"/>
   <property name="out.prod" location="out/production"/>
   <property name="testsamples" location="testpiem"/>
@@ -42,6 +43,11 @@
     <mkdir dir="${out.prod}"/>
     <copy todir="${out.prod}">
       <fileset dir="${main.resources}"/>
+    </copy>
+
+    <mkdir dir="${out.prod}/scripts"/>
+    <copy todir="${out.prod}/scripts">
+      <fileset dir="${main.scripts}"/>
     </copy>
 
     <mkdir dir="${out.prod}/dati"/>

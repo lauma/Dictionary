@@ -91,7 +91,7 @@ public class Lemma implements HasToJSON, HasToXML
 		res.append(String.format("\"Lemma\":\"%s\"", JSONObject.escape(text)));
 		if (pronunciation != null && pronunciation.length > 0)
 		{
-			res.append(", \"Pronunciation\":[\"");
+			res.append(", \"Pronunciations\":[\"");
 			ArrayList<String> escaped = new ArrayList<>();
 			for (String pron : pronunciation)
 				escaped.add(JSONObject.escape(pron));

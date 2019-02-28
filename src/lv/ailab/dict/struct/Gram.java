@@ -156,7 +156,7 @@ public class Gram implements HasToJSON, HasToXML
 		if (paradigm != null && !paradigm.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Paradigm\":");
+			res.append("\"Paradigms\":");
 			res.append(JSONUtils.simplesToJSON(paradigm));
 			hasPrev = true;
 		}

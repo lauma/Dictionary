@@ -197,7 +197,7 @@ public class RulesAsFunctions
 			String phrasesOnly = m.group(4);
 			if (phrasesWithStuff.endsWith(" u. tml."))
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
-			String[] phrases = phrasesOnly.split("(?<=\")(,| vai| arī)(?=\")");
+			String[] phrases = phrasesOnly.split("(?<=\")(, | vai | arī )(?=\")");
 			for (String w : phrases)
 				flagCollector.add(key, w.trim());
 		}

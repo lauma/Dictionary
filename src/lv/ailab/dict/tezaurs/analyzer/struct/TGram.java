@@ -1,20 +1,3 @@
-/*******************************************************************************
- * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import lv.ailab.dict.struct.Flags;
@@ -27,6 +10,7 @@ import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
 import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
 import lv.ailab.dict.utils.JSONUtils;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -529,8 +513,8 @@ public class TGram extends Gram
 	}
 
 	/**
-	 * Gramatikas struktūras JSON reprezentācija, kas iekļauj arī sākotnējo
-	 * gramatikas tekstu.
+	 * Gramatikas struktūras JSON reprezentācija, kas iekļauj arī norādes par
+	 * neapstrādātajiem pārpalikumiem "leftovers".
 	 */
 	@Override
 	public String toJSON()
@@ -553,5 +537,34 @@ public class TGram extends Gram
 			return toJSON(null, additional.toString());
 		}
 		else return toJSON(null, null);
+	}
+
+	/**
+	 * Gramatikas struktūras XML reprezentācija, kas iekļauj arī norādes par
+	 * neapstrādātajiem pārpalikumiem "leftovers".
+	 */
+	@Override
+	public void toXML(Node parent)
+	{
+		if (leftovers != null && !leftovers.isEmpty())
+		{
+			Document doc = parent.getOwnerDocument();
+			Node loContN = doc.createElement("Leftovers");
+			for (LinkedList<String> lo1 : leftovers)
+			{
+				if (lo1 == null || lo1.isEmpty()) continue;
+				Node loSemicolonN = doc.createElement("Leftovers");
+				for (String lo2 : lo1)
+				{
+					if (lo2 == null || lo2.isEmpty()) continue;
+					Node loColonN = doc.createElement("Leftover");
+					loColonN.appendChild(doc.createTextNode(lo2));
+					loSemicolonN.appendChild(loColonN);
+				}
+				loContN.appendChild(loSemicolonN);
+			}
+			toXML(parent, null, loContN);
+		}
+		else toXML(parent, null, null);;
 	}
 }

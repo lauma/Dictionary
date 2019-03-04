@@ -17,7 +17,7 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.struct.flagconst.Keys;
+import lv.ailab.dict.struct.constants.flags.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.MappingSet;

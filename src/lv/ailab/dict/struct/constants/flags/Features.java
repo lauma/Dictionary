@@ -1,4 +1,4 @@
-package lv.ailab.dict.struct.flagconst;
+package lv.ailab.dict.struct.constants.flags;
 
 import lv.ailab.dict.utils.Tuple;
 

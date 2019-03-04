@@ -1,4 +1,4 @@
-package lv.ailab.dict.struct.flagconst;
+package lv.ailab.dict.struct.constants.flags;
 
 /**
  * Vispārīgās (dažādām vārdnīcām izmantojamās) karodziņu grupas (atslēgas).

@@ -1,4 +1,4 @@
-package lv.ailab.dict.llvv.struct;
+package lv.ailab.dict.llvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Lemma;
 import org.w3c.dom.Node;
@@ -24,4 +24,5 @@ public class LLVVLemma extends Lemma
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
 		this.setPronunciation(pronString);
 	}
+
 }

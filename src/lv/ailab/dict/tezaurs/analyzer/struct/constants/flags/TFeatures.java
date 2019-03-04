@@ -1,6 +1,6 @@
-package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
+package lv.ailab.dict.tezaurs.analyzer.struct.constants.flags;
 
-import lv.ailab.dict.struct.flagconst.Features;
+import lv.ailab.dict.struct.constants.flags.Features;
 import lv.ailab.dict.utils.Tuple;
 
 /**

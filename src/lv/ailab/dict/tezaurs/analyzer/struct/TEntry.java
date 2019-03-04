@@ -19,8 +19,8 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import lv.ailab.dict.struct.*;
 import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

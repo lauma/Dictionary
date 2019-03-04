@@ -1,4 +1,4 @@
-package lv.ailab.dict.struct.flagconst;
+package lv.ailab.dict.struct.constants.flags;
 
 import java.util.Collections;
 import java.util.HashSet;

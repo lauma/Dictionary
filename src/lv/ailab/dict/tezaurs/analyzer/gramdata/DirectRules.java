@@ -1,6 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
-import lv.ailab.dict.struct.flagconst.Features;
+import lv.ailab.dict.struct.constants.flags.Features;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.Adjective;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.MultiPos;
@@ -13,9 +13,9 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.FirstConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondThirdConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.ThirdConj;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.flagconst.TValues;
+import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
+import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;

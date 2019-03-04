@@ -3,4 +3,4 @@
  * gramdata.)
  * @author Lauma
  */
-package lv.ailab.dict.tezaurs.analyzer.struct.flagconst;
+package lv.ailab.dict.tezaurs.analyzer.struct.constants.flags;

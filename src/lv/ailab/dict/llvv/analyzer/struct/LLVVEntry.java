@@ -1,4 +1,4 @@
-package lv.ailab.dict.llvv.struct;
+package lv.ailab.dict.llvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Entry;
 import org.w3c.dom.Node;

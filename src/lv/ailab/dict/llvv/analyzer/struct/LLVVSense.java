@@ -1,6 +1,7 @@
 package lv.ailab.dict.llvv.analyzer.struct;
 
 import lv.ailab.dict.llvv.analyzer.PhrasalExtractor;
+import lv.ailab.dict.struct.Gloss;
 import lv.ailab.dict.struct.Sense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,28 +28,8 @@ public class LLVVSense extends Sense
 				grammar = new LLVVGram(field);
 			else if (fieldname.equals("d"))
 			{
-				NodeList glossFields = field.getChildNodes();
-				for (int j = 0; j < glossFields.getLength(); j++)
-				{
-					Node glossField = glossFields.item(j);
-					String glossFieldname = glossField.getNodeName();
-					if (glossFieldname.equals("t"))
-					{
-						if (gloss != null)
-							gloss.text.add(glossField.getTextContent());
-							//System.err.println("\'d\' elements satur vairāk kā vienu \'t\' vai \'n\' - vairāk kā vienu \'t\'");
-						else gloss = new LLVVGloss(glossField);
-					}
-					else if (glossFieldname.equals("gram"))
-					{
-						if (grammar != null)
-							grammar = new LLVVGram(grammar.freeText + "; " + field.getTextContent());
-							//System.err.println("\'n\' elements satur gan ārējo \'gram\', gan \'gram\' iekšā \'d\'" + nNode.getTextContent());
-						else grammar = new LLVVGram(field);
-					}
-					else if (!glossFieldname.equals("#text")) // Teksta elementus šeit ignorē.
-						System.err.printf("\'d\' elements \'%s\' netiek apstrādāts\n", glossFieldname);
-				}
+				if (gloss == null) gloss = new LinkedList<>();
+				gloss.add(new LLVVGloss(field));
 			}
 			else if (fieldname.equals("n"))
 			{

@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Pašlaik te nav būtiski paplašināta Sense funkcionalitāte, te ir iznestas
  * izgūšanas metodes.
+ * TODO pielikt izdrukātāju, kas dusmojas, ja ir vairākas glosas.
  *
  * Izveidots 2016-11-21.
  * @author Lauma
@@ -205,13 +206,15 @@ public class MLVVSense extends Sense
 		// Ja tālāk būs piemēri.
 		if (cut > -1)
 		{
-			gloss = MLVVGloss.parse(linePart.substring(0, cut).trim());
+			gloss = new LinkedList<>();
+			gloss.add(MLVVGloss.parse(linePart.substring(0, cut).trim()));
 			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
 		{
-			gloss = MLVVGloss.parse(linePart.trim());
+			gloss = new LinkedList<>();
+			gloss.add(MLVVGloss.parse(linePart.trim()));
 			linePart = "";
 		}
 		return linePart;

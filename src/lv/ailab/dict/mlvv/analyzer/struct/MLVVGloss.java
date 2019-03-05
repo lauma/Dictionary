@@ -6,6 +6,7 @@ import lv.ailab.dict.struct.Gloss;
 /**
  * Pašlaik te nav būtiski paplašināta Gloss funkcionalitāte, te ir iznestas
  * izgūšanas metodes.
+ * TODO pielikt izdrukātāju, kas dusmojas, ja ir gramatika.
  *
  * Izveidots 2016-11-21.
  * @author Lauma

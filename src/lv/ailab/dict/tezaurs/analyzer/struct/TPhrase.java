@@ -31,9 +31,9 @@ public class TPhrase extends Phrase
 			{
 				if (subsenses == null) subsenses = new LinkedList<>();
 				TSense newMade = new TSense(field, lemma);
-				if (newMade.gloss.text.size() > 1)
+				if (newMade.gloss.size() > 1)
 					System.err.println("Cenšas sadalīt \'piem\' skaidrojumu vairākās apakšnozīmēs, bet ir vairākas glosas.");
-				for (String glossVariant : newMade.gloss.text) // Te normāli būtu jābūt vienam.
+				for (String glossVariant : newMade.gloss.stream().map(g -> g.text).toArray(String[]::new)) // Te normāli būtu jābūt vienam.
 				{
 					if (glossVariant.matches("\\(a\\).*?\\(b\\).*"))
 					{
@@ -49,8 +49,9 @@ public class TPhrase extends Phrase
 							// Te principā varētu pārtaisīt pirmo burtu uz lielo,
 							// bet es neriskēju - ja nu ir kas specifisks?
 							// Saīsinājums vai kas tāds?
-							newMade.gloss = new TGloss(
-									text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim());
+							newMade.gloss = new LinkedList<>();
+							newMade.gloss.add(new TGloss(
+									text.substring(3, text.indexOf("(" + ids.charAt(1) + ")")).trim()));
 							subsenses.add(newMade);
 							text = text.substring(text.indexOf("(" + ids.charAt(1) + ")"));
 							newMade = new TSense();
@@ -60,7 +61,8 @@ public class TPhrase extends Phrase
 						// Te principā varētu pārtaisīt pirmo burtu uz lielo, bet es
 						// neriskēju - ja nu ir kas specifisks? Saīsinājums vai kas
 						// tāds?
-						newMade.gloss = new TGloss(text.substring(3).trim());
+						newMade.gloss = new LinkedList<>();
+						newMade.gloss.add(new TGloss(text.substring(3).trim()));
 						newMade.ordNumber = Integer.toString(nextOrd);
 						subsenses.add(newMade);
 

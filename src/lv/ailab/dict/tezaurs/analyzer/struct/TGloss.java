@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 
 /**
  * d (definīcijas) lauks Tēzaura XML
+ * TODO pielikt izdrukātāju, kas dusmojas, ja ir gramatika.
  */
 public class TGloss extends Gloss
 {

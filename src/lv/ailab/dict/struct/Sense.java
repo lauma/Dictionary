@@ -1,20 +1,3 @@
-/*******************************************************************************
- * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.utils.*;
@@ -41,7 +24,7 @@ public class Sense implements HasToJSON, HasToXML
 	/**
 	 * Nozīmes, skaidrojuma teksts ("definīcija").
 	 */
-	public Gloss gloss;
+	public LinkedList<Gloss> gloss;
 
 	/**
 	 * Nozīmes numurs (ID).
@@ -75,7 +58,8 @@ public class Sense implements HasToJSON, HasToXML
 	public Sense(String glossText)
 	{
 		grammar = null;
-		gloss = new Gloss(glossText);
+		gloss = new LinkedList<>();
+		gloss.add(new Gloss(glossText));
 		phrases = null;
 		subsenses = null;
 		ordNumber = null;
@@ -84,7 +68,8 @@ public class Sense implements HasToJSON, HasToXML
 	public Sense(Gloss gloss)
 	{
 		grammar = null;
-		this.gloss = gloss;
+		this.gloss = new LinkedList<>();
+		this.gloss.add(gloss);
 		phrases = null;
 		subsenses = null;
 		ordNumber = null;
@@ -189,7 +174,8 @@ public class Sense implements HasToJSON, HasToXML
 		if (gloss != null)
 		{
 			if (hasPrev) res.append(", ");
-			res.append(gloss.toJSON());
+			res.append("\"Gloss\":");
+			res.append(JSONUtils.objectsToJSON(gloss));
 			hasPrev = true;
 		}
 
@@ -230,7 +216,12 @@ public class Sense implements HasToJSON, HasToXML
 		if (ordNumber != null) senseN.setAttribute("SenseNumber", ordNumber);
 
 		if (grammar != null) grammar.toXML(senseN);
-		if (gloss != null) gloss.toXML(senseN);
+		if (gloss != null)
+		{
+			Node glossContN = doc.createElement("Gloss");
+			for (Gloss g : gloss) g.toXML(glossContN);
+			senseN.appendChild(glossContN);
+		}
 		if (examples != null && !examples.isEmpty())
 		{
 			Node exContN = doc.createElement("Examples");

@@ -17,13 +17,20 @@ public class Gloss implements HasToJSON, HasToXML
 	/**
 	 * Definīcijas teksts
 	 */
-	public LinkedList<String> text = null;
+	public String text = null;
+
+	/**
+	 * Papildu gramatiskās norādes, reti lietota lieta.
+	 */
+	public Gram grammar = null;
+
 
 	public Gloss(String text)
 	{
-		this.text = new LinkedList<>();
-		this.text.add(text);
+		this.text = text;
 	}
+
+	protected  Gloss() {};
 
 	/**
 	 * Gloss ir viens no retajiem elementiem, ko drukā arī, ja tas ir tukšs.
@@ -31,14 +38,16 @@ public class Gloss implements HasToJSON, HasToXML
 	 */
 	public String toJSON()
 	{
-		if (text == null)
-			return "\"Gloss\":\"\"";
-		//return String.format("\"Gloss\":\"%s\"", JSONObject.escape(text));
 		StringBuilder res = new StringBuilder();
-		res.append("\"Gloss\":[");
-		res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
-				.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
-		res.append("]");
+		res.append("\"GlossText\":\"");
+		if (text != null)
+			res.append(JSONObject.escape(text));
+		res.append("\"");
+		if (grammar != null)
+		{
+			res.append(", ");
+			res.append(grammar.toJSON());
+		}
 		return res.toString();
 	}
 
@@ -49,17 +58,11 @@ public class Gloss implements HasToJSON, HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		Node glossN = doc.createElement("Gloss");
-		//if (text != null) glossN.appendChild(doc.createTextNode(text));
-		if (text != null)
-		{
-			for (String var : text)
-			{
-				Node glossVar = doc.createElement("Variant");
-				glossVar.appendChild(doc.createTextNode(var));
-				glossN.appendChild(glossVar);
-			}
-		}
-		parent.appendChild(glossN);
+		Node glossVariantN = doc.createElement("GlossVariant");
+		Node glossN = doc.createElement("GlossText");
+		if (text != null) glossN.appendChild(doc.createTextNode(text));
+		if (grammar != null) grammar.toXML(glossVariantN);
+		glossVariantN.appendChild(glossN);
+		parent.appendChild(glossVariantN);
 	}
 }

@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.Gloss;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Sense;
 import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
@@ -240,9 +241,9 @@ public class GeneralStatsCollector
 		{
 			if (entry.senses != null)
 				for (Sense sense : entry.senses)
-					for (String glossVariant : sense.gloss.text)
+					for (Gloss glossVariant : sense.gloss)
 			{
-				if (collectWithGloss.matcher(glossVariant).matches())
+				if (collectWithGloss.matcher(glossVariant.text).matches())
 					entriesWithSelectedFeature.add(Trio.of(
 							entry.head.lemma.text,
 							entry.homId == null ? "REF" : entry.homId,
@@ -254,9 +255,9 @@ public class GeneralStatsCollector
 
 				if (sense.subsenses != null)
 					for (Sense subsense : sense.subsenses)
-						for (String subsGlossVariant : sense.gloss.text)
+						for (Gloss subsGlossVariant : sense.gloss)
 				{
-					if (collectWithGloss.matcher(subsGlossVariant).matches())
+					if (collectWithGloss.matcher(subsGlossVariant.text).matches())
 						entriesWithSelectedFeature.add(Trio.of(
 								entry.head.lemma.text,
 								entry.homId == null ? "REF" : entry.homId,

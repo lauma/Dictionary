@@ -1,10 +1,7 @@
 package lv.ailab.dict.mlvv.analyzer.validation;
 
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
-import lv.ailab.dict.struct.Entry;
-import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.struct.Phrase;
-import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.struct.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,12 +170,12 @@ public class Validator
 	 *                          izdrukāt, ja ir kļūda
 	 */	protected void checkTexts(Sense s, String debugEntryWord)
 	{
-		for (String glossVariant : s.gloss.text)
+		for (Gloss glossVariant : s.gloss)
 		{
-			if (!IndividualChecks.hasPairedUnderscores(glossVariant))
+			if (!IndividualChecks.hasPairedUnderscores(glossVariant.text))
 				System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
 						debugEntryWord, glossVariant);
-			if (!IndividualChecks.hasBalancedParentheses(glossVariant))
+			if (!IndividualChecks.hasBalancedParentheses(glossVariant.text))
 				System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
 						debugEntryWord, glossVariant);
 		}

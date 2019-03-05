@@ -293,12 +293,12 @@ public class MLVVEntry extends Entry
 	protected void parsePhraseology(String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
-		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
+		if (phrasesParts.length > 0 && phraseology == null)  phraseology = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.PHRASEOLOGICAL, head.lemma.text);
-			if (p != null) phrases.add(p);
+			if (p != null) phraseology.add(p);
 		}
 	}
 

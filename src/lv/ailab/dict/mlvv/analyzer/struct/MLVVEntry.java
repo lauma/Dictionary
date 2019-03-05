@@ -373,7 +373,7 @@ public class MLVVEntry extends Entry
 
 		if (homId != null)
 		{
-			s.append(", \"ID\":\"");
+			s.append(", \"HomonymNumber\":\"");
 			s.append(JSONObject.escape(homId));
 			s.append("\"");
 		}
@@ -516,7 +516,7 @@ public class MLVVEntry extends Entry
 			//refN.appendChild(doc.createTextNode(references));
 			for (String ref : references)
 			{
-				Node refItem = doc.createElement("EntryID");
+				Node refItem = doc.createElement("EntryRef");
 				refItem.appendChild(doc.createTextNode(ref));
 				refContainer.appendChild(refItem);
 			}

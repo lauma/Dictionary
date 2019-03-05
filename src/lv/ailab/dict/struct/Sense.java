@@ -173,7 +173,7 @@ public class Sense implements HasToJSON, HasToXML
 
 		if (ordNumber != null)
 		{
-			res.append("\"SenseID\":\"");
+			res.append("\"SenseNumber\":\"");
 			res.append(JSONObject.escape(ordNumber));
 			res.append("\"");
 			hasPrev = true;

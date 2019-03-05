@@ -1,5 +1,6 @@
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.struct.constants.PronunciationCoding;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.json.simple.JSONObject;
@@ -131,4 +132,25 @@ public class Lemma implements HasToJSON, HasToXML
 		}
 
 	}
+
+/*	public void normalizePronun(PronunciationCoding targets)
+	{
+		convertPronun(targets, PronunciationCoding.DEFAULT_CODE);
+	}
+
+	public void convertPronun (PronunciationCoding targets, PronunciationCoding replacements)
+	{
+		if (pronunciation == null || pronunciation.length < 1) return;
+		for (int i = 0; i < pronunciation.length; i++)
+		{
+			String normalizedPron = pronunciation[i];
+			normalizedPron = normalizedPron.replace(targets.LEVEL_TONE, replacements.LEVEL_TONE);
+			normalizedPron = normalizedPron.replace(targets.BROKEN_TONE, replacements.BROKEN_TONE);
+			normalizedPron = normalizedPron.replace(targets.FALLING_TONE, replacements.FALLING_TONE);
+			normalizedPron = normalizedPron.replace(targets.RISING_TONE, replacements.RISING_TONE);
+			normalizedPron = normalizedPron.replace(targets.STRESS, replacements.STRESS);
+			normalizedPron = normalizedPron.replace(targets.SYLLABLE_SPLIT, replacements.SYLLABLE_SPLIT);
+			pronunciation[i] = normalizedPron;
+		}
+	}*/
 }

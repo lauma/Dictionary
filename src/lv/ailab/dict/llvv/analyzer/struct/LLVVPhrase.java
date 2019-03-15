@@ -15,10 +15,25 @@ import java.util.LinkedList;
  */
 public class LLVVPhrase extends Phrase
 {
-	public LLVVPhrase(Node piemNode, Type type)
+	public LLVVPhrase(Node piemNode, Type defaultType, boolean usedInSense)
 	{
 		super();
-		this.type = type;
+		String xmlType = ((org.w3c.dom.Element)piemNode).getAttribute("tips");
+		this.type = defaultType;
+		if (xmlType != null && !xmlType.isEmpty())
+		{
+			if (usedInSense)
+				System.err.printf("\'%s\' nozīmē iekšā lietots ar parametru tips=\"%s\", to ignorē\n",
+						piemNode.getNodeName(), xmlType);
+			else
+			{
+				if (xmlType.equals("s") || xmlType.equals("savienojums"))
+					this.type = Type.STABLE_UNIT;
+				else System.err.printf("\'%s\' ar neatpazītu tips=\"%s\"\n",
+							piemNode.getNodeName(), xmlType);
+			}
+		}
+
 		NodeList fields = piemNode.getChildNodes();
 		for (int i = 0; i < fields.getLength(); i++) {
 			Node field = fields.item(i);
@@ -36,7 +51,8 @@ public class LLVVPhrase extends Phrase
 				subsenses.add(new LLVVSense(field));
 			}
 			else if (!fieldname.equals("#text")) // Teksta lauki šeit tiek ignorēti.
-				System.err.printf("\'piem\' elements \'%s\' netiek apstrādāts\n", fieldname);
+				System.err.printf("\'%s\' elements \'%s\' netiek apstrādāts\n",
+						piemNode.getNodeName(), fieldname);
 		}
 	}
 }

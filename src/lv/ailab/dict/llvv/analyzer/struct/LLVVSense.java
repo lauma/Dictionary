@@ -47,7 +47,7 @@ public class LLVVSense extends Sense
 				else if (piemType == PhrasalExtractor.Type.PHRASAL)
 				{
 					if (phrases == null) phrases = new LinkedList<>();
-					phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.STABLE_UNIT));
+					phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.STABLE_UNIT, true));
 				}
 				else
 					System.err.printf("\'piem\' ar tipu \'%s\' netiek apstrādāts\n", piemType);
@@ -56,7 +56,7 @@ public class LLVVSense extends Sense
 			else if (fieldname.equals("fraz"))
 			{
 				if (phrases == null) phrases = new LinkedList<>();
-				phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.PHRASEOLOGICAL));
+				phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.PHRASEOLOGICAL, true));
 			}
 			else if (!fieldname.equals("#text")) // Teksta elementus šeit ignorē.
 				System.err.printf("\'n\' elements \'%s\' netiek apstrādāts\n", fieldname);

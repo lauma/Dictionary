@@ -48,14 +48,14 @@ public class LLVVEntry extends Entry
 			else if (fieldname.equals("fraz"))
 			{
 				if (phrases == null) phrases = new LinkedList<>();
-				phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.PHRASEOLOGICAL));
+				phrases.add(new LLVVPhrase(field, LLVVPhrase.Type.PHRASEOLOGICAL, false));
 			}
 			else if (fieldname.equals("ref"))
 			{
 				if (references != null)
 					System.err.printf("\"Šķirklis \"%s\" satur vairāk kā vienu \'ref\'\n",
 							head.lemma.text);
-				references =  new LinkedList<>();
+				else references =  new LinkedList<>();
 				references.addAll(Arrays.asList(field.getTextContent().split(", ")));
 			}
 			else

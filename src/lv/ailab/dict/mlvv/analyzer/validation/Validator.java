@@ -174,10 +174,10 @@ public class Validator
 		{
 			if (!IndividualChecks.hasPairedUnderscores(glossVariant.text))
 				System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
-						debugEntryWord, glossVariant);
+						debugEntryWord, glossVariant.text);
 			if (!IndividualChecks.hasBalancedParentheses(glossVariant.text))
 				System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
-						debugEntryWord, glossVariant);
+						debugEntryWord, glossVariant.text);
 		}
 
 		if (s.subsenses != null) for (Sense sub : s.subsenses)

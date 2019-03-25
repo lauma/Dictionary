@@ -11,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Programmas ārējā saskarne. Nodrošina struktūras transformēšanas rīka
@@ -25,6 +27,7 @@ public class LlvvXmlToDetailXmlJson
 	{
 		public final static boolean PRINT_XML = true;
 		public final static boolean PRINT_JSON = true;
+		public final static Pattern volumeNo = Pattern.compile("LLVV_(\\d(-\\d)?)_\\d+_\\d+\\.xml");
 	}
 
 	public String inputDataPath;
@@ -73,12 +76,15 @@ public class LlvvXmlToDetailXmlJson
 			if (fileName.endsWith(".xml"))
 			{
 				System.out.println("Sāk apstrādāt failu " + fileName + ".");
+				Matcher volumeFinder = Config.volumeNo.matcher(fileName);
+				String volumeRef = null;
+				if (volumeFinder.matches()) volumeRef = volumeFinder.group(1);
 				int fileEntries = 0;
 				StaxReader dicReader = new StaxReader(inputDataPath + fileName, "llvv", "s");
 				Node entryNode = dicReader.readNexEntry();
 				while (entryNode != null)
 				{
-					LLVVEntry entry = new LLVVEntry(entryNode);
+					LLVVEntry entry = new LLVVEntry(entryNode, volumeRef);
 					dict.entries.add(entry);
 					entryNode = dicReader.readNexEntry();
 					fileEntries++;

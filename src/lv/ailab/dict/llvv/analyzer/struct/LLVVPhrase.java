@@ -38,10 +38,19 @@ public class LLVVPhrase extends Phrase
 		for (int i = 0; i < fields.getLength(); i++) {
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
+			// Tekstam ņem nost pēdējo punktu.
 			if (fieldname.equals("t"))
 			{
 				if (text == null) text = new LinkedList<>();
-				text.add(field.getTextContent());
+				String newText = field.getTextContent();
+				if (newText != null)
+				{
+					newText = newText.trim();
+					if (newText.matches(".*[^.]\\."))
+						newText = newText.substring(0, newText.length() - 1);
+					text.add(newText);
+				}
+
 			}
 			else if (fieldname.equals("gram"))
 				grammar = new LLVVGram(field);

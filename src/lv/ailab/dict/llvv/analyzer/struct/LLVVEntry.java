@@ -1,6 +1,7 @@
 package lv.ailab.dict.llvv.analyzer.struct;
 
 import lv.ailab.dict.struct.Entry;
+import lv.ailab.dict.struct.Sources;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -14,7 +15,7 @@ public class LLVVEntry extends Entry
 	 * ietver arī visu analīzi.
 	 * @param sNode XML DOM elements, kas atbilst "s"
 	 */
-	public LLVVEntry(Node sNode)
+	public LLVVEntry(Node sNode, String volume)
 	{
 		NodeList fields = sNode.getChildNodes();
 		LinkedList<Node> header = new LinkedList<>();
@@ -61,6 +62,16 @@ public class LLVVEntry extends Entry
 			else
 				System.err.printf("Šķirklī \"%s\" elements \'%s\' netiek apstrādāts!\n",
 						head.lemma.text, fieldname);
+		}
+
+		if (volume == null || volume.isEmpty())
+			System.err.printf("Šķirklim \"%s\" ir tukša sējuma atsauce\n",
+					head.lemma.text);
+		else
+		{
+			sources = new Sources();
+			sources.s = new LinkedList<>();
+			sources.s.add(volume);
 		}
 
 	}

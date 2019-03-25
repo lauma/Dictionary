@@ -5,6 +5,8 @@ import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.struct.Header;
 
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Samestas dažādas sīkpārbaudes šķirkļa datiem. "true" nozīmē labu šķirkli,
@@ -91,5 +93,25 @@ public class IndividualChecks
 		}
 
 		return stack.isEmpty();
+	}
+
+	/**
+	 * Pārbauda, vai i tagi savstarpēji nepārklājas un kārtīgi sākas un beidzas.
+	 * Lietojams, ja kursīvs netiek aizstāts ar apakšsvītrām.
+	 */
+	public static boolean hasPairedITags(String text)
+	{
+		if (text == null) return true;
+		Pattern iTags = Pattern.compile("</?i>");
+		boolean isInside = false;
+		Matcher iTagMatcher = iTags.matcher(text);
+		while (iTagMatcher.find())
+		{
+			if ("<i>".equals(iTagMatcher.group()) && !isInside) isInside = true;
+			else if ("</i>".equals(iTagMatcher.group()) && isInside) isInside = false;
+			else if ("</i>".equals(iTagMatcher.group()) && !isInside) return false;
+			else if ("<i>".equals(iTagMatcher.group()) && isInside) return false;
+		}
+		return !isInside;
 	}
 }

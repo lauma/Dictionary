@@ -1,6 +1,8 @@
 package lv.ailab.dict.mlvv.analyzer.validation;
 
+import lv.ailab.dict.mlvv.MlvvDocToDetailXmlJson;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
+import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.*;
 
 import java.util.ArrayList;
@@ -148,16 +150,34 @@ public class Validator
 		if (e.phraseology != null) for (Phrase p : e.phraseology)
 			checkTexts(p, debugEntryWord);
 
-		if (!IndividualChecks.hasPairedUnderscores(e.etymology))
-			System.out.printf("Šķirklī %s ir nesapārotas __ cilmē \"%s\".\n",
-					debugEntryWord, e.etymology);
+		if (MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE)
+		{
+			if (!IndividualChecks.hasPairedUnderscores(e.etymology))
+				System.out.printf("Šķirklī %s ir nesapārotas __ cilmē \"%s\".\n",
+						debugEntryWord, e.etymology);
+		}
+		else
+		{
+			if (!IndividualChecks.hasPairedITags(e.etymology))
+				System.out.printf("Šķirklī %s ir nekorekti <i></i> cilmē \"%s\".\n",
+						debugEntryWord, e.etymology);
+		}
 		if (!IndividualChecks.hasBalancedParentheses(e.etymology))
 			System.out.printf("Šķirklī %s ir nesapārotas iekavas cilmē \"%s\".\n",
 					debugEntryWord, e.etymology);
 
-		if (!IndividualChecks.hasPairedUnderscores(e.normative))
-			System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",
-					debugEntryWord, e.normative);
+		if (MLVVEntry.UNDERSCORE_FOR_NORMATIVE_CURSIVE)
+		{
+			if (!IndividualChecks.hasPairedUnderscores(e.normative))
+				System.out.printf("Šķirklī %s ir nesapārotas __ normatīvajā komentārā \"%s\".\n",
+						debugEntryWord, e.normative);
+		}
+		else
+		{
+			if(!IndividualChecks.hasPairedITags(e.normative))
+				System.out.printf("Šķirklī %s ir nekorekti <i></i> normatīvajā komentārā \"%s\".\n",
+						debugEntryWord, e.normative);
+		}
 		if (!IndividualChecks.hasBalancedParentheses(e.normative))
 			System.out.printf("Šķirklī %s ir nesapārotas iekavas normatīvajā komentārā \"%s\".\n",
 					debugEntryWord, e.normative);
@@ -172,9 +192,18 @@ public class Validator
 	{
 		for (Gloss glossVariant : s.gloss)
 		{
-			if (!IndividualChecks.hasPairedUnderscores(glossVariant.text))
-				System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
-						debugEntryWord, glossVariant.text);
+			if (MLVVGloss.UNDERSCORE_FOR_CURSIVE)
+			{
+				if (!IndividualChecks.hasPairedUnderscores(glossVariant.text))
+					System.out.printf("Šķirklī %s ir nesapārotas __ glosā \"%s\".\n",
+							debugEntryWord, glossVariant.text);
+			}
+			else
+			{
+				if (!IndividualChecks.hasPairedITags(glossVariant.text))
+					System.out.printf("Šķirklī %s ir nekorekti <i></i> glosā \"%s\".\n",
+							debugEntryWord, glossVariant.text);
+			}
 			if (!IndividualChecks.hasBalancedParentheses(glossVariant.text))
 				System.out.printf("Šķirklī %s ir nesapārotas iekavas glosā \"%s\".\n",
 						debugEntryWord, glossVariant.text);

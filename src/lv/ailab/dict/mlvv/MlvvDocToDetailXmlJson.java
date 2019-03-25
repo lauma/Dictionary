@@ -49,7 +49,7 @@ public class MlvvDocToDetailXmlJson
 		public static boolean PRINT_PRONUNCIATION = true;
 		public static boolean PRINT_FLAGSTRINGS = true;
 
-		public static boolean UNDERSCORE_FOR_CURSIVE = true;
+		public static boolean UNDERSCORE_FOR_CURSIVE = false;
 	}
 
 	public String inputDataPath; //= "./dati/mlvv/";

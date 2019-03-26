@@ -16,9 +16,9 @@ public class TezDocToDic
 			"\\s(?=(GR|RU|NO|NS|PI|PN|FS|FR|FN|FP|DS|DE|DG|AN|DN|CD|LI|NG|AG|PG|FG)\\s)|" +
 			"\\s(?=IN\\s([^I]|I[^N]|IN[^\\s]))"; // Otrais gadījums īpaši šķirklim Indija.
 	protected static String[][] cleanupPatterns = {
-			{"(?<=[(\\[])\\s*(@5|@2)\\s", ""},
-			{"\\s(@5|@2)\\s*((?=[;,.?!)\\]])|$)", ""},
-			{"\\s(@5|@2)\\s", " "},
+			//{"(?<=[(\\[])\\s*(@5|@2)\\s", ""},
+			//{"\\s(@5|@2)\\s*((?=[;,.?!)\\]])|$)", ""},
+			//{"\\s(@5|@2)\\s", " "},
 			{"[\u2013\u2014]", "-"},	// Aizstāj n-dash un m-dash ar parasto defisi u002D
 			{"[\u2018\u2019]", "'"},	// Aizstāj ar apastrofu vienpēdiņas
 			{" \\.(?!\\.)", ". "},		// Pārvieto atstarpes aiz punkta

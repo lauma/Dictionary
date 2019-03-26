@@ -29,6 +29,17 @@ public class TezDicToXml
 	protected String currentLine, prevLine;
 	protected boolean parcelts;
 
+	protected static String[][] atToIPatterns = {
+			{"(?<=[(\\[])\\s*@2\\s", "<i>"},
+			{"(?<=[(\\[])\\s*@5\\s", "</i>"},
+			{"\\s@2\\s*(?=[;,.?!)\\]])", "<i>"},
+			{"\\s@5\\s*((?=[;,.?!)\\]])|$)", "</i>"},
+			{"\\s@2\\s", " <i>"},
+			{"\\s@5\\s", "</i> "},
+			{"^@2\\s", "<i>"},
+			{"\\s@5$", "</i>"},
+	};
+
 	public TezDicToXml()
 	throws IOException, ParserConfigurationException
 	{
@@ -190,6 +201,7 @@ public class TezDicToXml
 		String ruLine = null;
 		String grLine = null;
 		entry.entryName = currentLine.substring(2).trim(); // Nocērt šķirkļa vārda VR
+		// Pieņemsim, ka nu šķirkļavārdos @2 nav jāmeklē!
 
 		do
 		{
@@ -201,16 +213,16 @@ public class TezDicToXml
 		} while ((currentLine.indexOf("GR ") == 0) || (currentLine
 				.indexOf("IN ") == 0) || (currentLine.indexOf("RU ") == 0));
 
-		if (inLine != null && inLine.length() > 2)
-			entry.sElem.setAttribute("i", inLine.substring(2).trim());
-
-		Element vfElem = doc.createElement("vf");
-		if (ruLine != null && ruLine.length() > 3)
-			vfElem.setAttribute("ru", ruLine.substring(2).trim());
-		vfElem.setTextContent(entry.entryName);
+		if (inLine != null && inLine.length() > 3)
+			makeAttribute("i", inLine, entry.sElem);
 
 		Element vElem = doc.createElement("v");
+		Element vfElem = doc.createElement("vf");
+		vfElem.setTextContent(entry.entryName);
 		vElem.appendChild(vfElem);
+		if (ruLine != null && ruLine.length() > 3)
+			makeAttribute("ru", ruLine, vfElem);
+
 		if (grLine != null && grLine.length() > 3)
 			makeLeaf("gram", grLine, vElem, true);
 		entry.sElem.appendChild(vElem);
@@ -241,8 +253,6 @@ public class TezDicToXml
 			mkFR(g_fraz);
 		}
 		if (g_fraz != null) entry.sElem.appendChild(g_fraz);
-
-		return;
 	}
 
 	/**
@@ -282,7 +292,7 @@ public class TezDicToXml
 		entry.senseNumber++;
 
 		Element nElem = doc.createElement("n");
-		nElem.setAttribute("nr", String.valueOf(entry.senseNumber));
+		nElem.setAttribute("nr", String.valueOf(entry.senseNumber)); //Te jau ir cipars, tāpēc nevajag ņemties ar kursīvu.
 		Element dElem = doc.createElement("d");
 		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
@@ -502,7 +512,7 @@ public class TezDicToXml
 		if (currentLine.indexOf("DD ") == 0) mkPN(piemElem);
 		deElem.appendChild(piemElem);
 	}
-//--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 
 	/**
@@ -512,7 +522,8 @@ public class TezDicToXml
 	 * @param parent		vecāks, kuram piestiprināt izveidoto elementu
 	 * @param removeDash	vai, ja elementa teksts beidzas ar defisi, to novākt?
 	 */
-	protected void makeLeaf(String name, String line, Element parent, boolean removeDash)
+	protected Element makeLeaf(
+			String name, String line, Element parent, boolean removeDash)
 	{
 		Element leaf = doc.createElement(name);
 		int startIndex = line.indexOf(" ");
@@ -521,8 +532,19 @@ public class TezDicToXml
 				line.substring(line.indexOf(" ")).trim() : "";
 		if (removeDash && contents.endsWith("-"))
 			contents = contents.substring(0, contents.length() - 1).trim();
+		contents = atToItalic(contents).trim();
+
+		if (!"t".equals(name))
+		{
+			String cleanContents = contents.replaceAll("</?i>", "");
+			if (!cleanContents.equals(contents) &&
+					!"gram".equals(name) && !"avots".equals(name))
+				log.printf("Vai %s elementā var būt <i>...</i>?\n", name);
+			contents = cleanContents;
+		}
 		leaf.setTextContent(contents);
 		parent.appendChild(leaf);
+		return leaf;
 	}
 
 	/**
@@ -531,9 +553,43 @@ public class TezDicToXml
 	 * @param line		rindiņa, no kuras iegūt izveidojamā elementa saturu
 	 * @param parent	vecāks, kuram piestiprināt izveidoto elementu
 	 */
-	protected void makeLeaf(String name, String line, Element parent)
+	protected Element makeLeaf(String name, String line, Element parent)
 	{
-		makeLeaf(name, line, parent, false);
+		return makeLeaf(name, line, parent, false);
+	}
+
+	/**
+	 * Izveido jaunu atribūtu ar tekstuālu saturu.
+	 * @param name		izvedojamā atribūtu vārds
+	 * @param line		rindiņa, no kuras iegūt izveidojamā atribūta saturu
+	 *                  (bez divburtu identifikatora)
+	 * @param parent	vecāks, kuram piestiprināt izveidoto atribūtu
+	 */
+	protected void makeAttribute(String name, String line, Element parent)
+	{
+		int startIndex = line.indexOf(" ");
+		String contents = startIndex >= 0 ?
+				line.substring(line.indexOf(" ")).trim() : "";
+		contents = atToItalic(contents).trim();
+		if (contents.contains("@"))
+		{
+			contents = atToItalic(contents).trim();
+			String cleanContents = contents.replaceAll("</?i>", "");
+			if (!cleanContents.equals(contents))
+				log.printf("Vai %s atribūtā var būt <i>...</i>?\n", name);
+			contents = cleanContents;
+		}
+		parent.setAttribute(name, contents);
+	}
+
+	/**
+	 * Aizstāj tekstā @2 un @5 ar <i> un </i>.
+	 */
+	protected static String atToItalic (String text)
+	{
+		for (String[] replPat : atToIPatterns)
+			text = text.replaceAll(replPat[0], replPat[1]);
+		return text;
 	}
 
 	/**

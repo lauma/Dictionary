@@ -58,7 +58,8 @@ public class MLVVHeader extends Header
 			if (m.matches())
 			{
 
-				res.lemma.pronunciation = m.group(1).split(",?\\s+<i>(arī|vai)</i>\\s*");
+				res.lemma.pronunciation = m.group(1).trim()
+						.split(",?\\s+<i>(arī|vai)</i>\\s*");
 				gramStr = m.group(2);
 			}
 

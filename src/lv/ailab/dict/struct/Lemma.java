@@ -117,11 +117,11 @@ public class Lemma implements HasToJSON, HasToXML
 	public void setPronunciation(String pronsFromLegacyDict)
 	{
 		if ("".equals(pronsFromLegacyDict)) return;
-		if (pronsFromLegacyDict.contains(", arī "))
-			pronunciation = pronsFromLegacyDict.split(", arī ");
-		else if (pronsFromLegacyDict.contains(","))
-			pronunciation = pronsFromLegacyDict.split(",");
-		else pronunciation = new String[] {pronsFromLegacyDict};
+		//if (pronsFromLegacyDict.matches(".*( vai |, ).*"))
+			pronunciation = pronsFromLegacyDict.split("(, arī | vai |, (?!arī ))");
+		//else if (pronsFromLegacyDict.contains(", "))
+		//	pronunciation = pronsFromLegacyDict.split(", ");
+		//else pronunciation = new String[] {pronsFromLegacyDict};
 		for (int i = 0; i < pronunciation.length; i++)
 		{
 			pronunciation[i] = pronunciation[i].trim();

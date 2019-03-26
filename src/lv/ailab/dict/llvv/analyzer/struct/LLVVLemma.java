@@ -23,8 +23,12 @@ public class LLVVLemma extends Lemma
 	{
 		text = vfNode.getTextContent();
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		pronString = PronuncNormalizer.normalize(pronString);
 		this.setPronunciation(pronString);
+		if (pronunciation != null) for (int i = 0; i < pronunciation.length; i++)
+		{
+			pronunciation[i] = PronuncNormalizer.normalize(pronunciation[i]);
+		}
+
 	}
 
 }

@@ -11,7 +11,7 @@ public class PronuncNormalizer
 		if (pronunciation.isEmpty()) return pronunciation;
 		pronunciation = pronunciation.replace("`", PronunciationCoding.DEFAULT_CODE.FALLING_TONE);
 		pronunciation = pronunciation.replace("'", PronunciationCoding.DEFAULT_CODE.STRESS);
-		pronunciation = pronunciation.replace(" ", PronunciationCoding.DEFAULT_CODE.STRESS);
+		//pronunciation = pronunciation.replace(" ", PronunciationCoding.DEFAULT_CODE.STRESS);
 		return pronunciation;
 	}
 }

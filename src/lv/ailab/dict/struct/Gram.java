@@ -1,6 +1,7 @@
 package lv.ailab.dict.struct;
 
 
+import lv.ailab.dict.utils.GramPronuncNormalizer;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.JSONUtils;
@@ -253,9 +254,50 @@ public class Gram implements HasToJSON, HasToXML
 		parent.appendChild(gramN);
 	}
 
-/*	public static String normalizePronunCode (String textField)
+	public static String normalizePronunc(
+			String text, GramPronuncNormalizer normalizer)
 	{
-
-	}*/
+		if (text == null || text.isEmpty()) return text;
+		// Apstrāde notiek, gramatiku apstrādājot pa gabaliņam un apstrādātos
+		// gabaliņus pārceļot uz rezultāta mainīgo.
+		StringBuilder processed = new StringBuilder();
+		String toProcess = text;
+		String currentPronunc = "";
+		// Katrai izrunai viena cikla iterācija.
+		while (!toProcess.isEmpty() && toProcess.contains("["))
+		{
+			// Pārceļ nerediģējamo gramatikas daļu pirms izrunas.
+			processed.append(toProcess.substring(0, toProcess.indexOf("[") + 1));
+			toProcess = toProcess.substring(toProcess.indexOf("[") + 1);
+			// Izdala izrunu.
+			if (toProcess.contains("]"))
+			{
+				currentPronunc = toProcess.substring(0, toProcess.indexOf("]"));
+				toProcess = toProcess.substring(toProcess.indexOf("]"));
+			}
+			else
+			{
+				System.err.printf("\'gram\' \"%s\" satur trūkst \']\'\n", text);
+				currentPronunc = toProcess;
+				toProcess = "";
+			}
+			if (currentPronunc.contains("["))
+				System.err.printf("\'gram\' \"%s\" ir par daudz \'[\'\n", text);
+			// Pārveido izrunu un pārceļ to uz apstrādāto.
+			processed.append(normalizer.normalizePronuncs(currentPronunc));
+			// Pārceļ uz apstrādāto izrunas kvadrātiekavu.
+			if (toProcess.startsWith("]"))
+			{
+				processed.append("]");
+				toProcess = toProcess.substring(1);
+			}
+		}
+		// Pārceļ uz apstrādāto to, kas palicis aiz pēdējās izrunas.
+		if (toProcess.contains("]"))
+			System.err.printf("\'gram\' \"%s\" ir par daudz \']\'\n", text);
+		processed.append(toProcess);
+		// Noliek pie vietas apstrādāto.
+		return processed.toString();
+	}
 }
 

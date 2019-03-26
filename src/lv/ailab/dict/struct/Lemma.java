@@ -1,6 +1,7 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.struct.constants.PronunciationCoding;
+import lv.ailab.dict.utils.GramPronuncNormalizer;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.json.simple.JSONObject;
@@ -113,15 +114,15 @@ public class Lemma implements HasToJSON, HasToXML
 	 * Izkasa izrunas no klasiskās vārdnīcas formāta teksta:
 	 * <code>[izruna, arī izruna, izruna]</code>
 	 * @param pronsFromLegacyDict	izrunu teksts formā <code>[izruna, arī izruna, izruna]</code>
+	 * @param normalizer			normalizators, ko pielietot uz izrunu
+	 *                              tekstiem vai null, ja normalizēt nevajag.
 	 */
-	public void setPronunciation(String pronsFromLegacyDict)
+	public void setPronunciation(
+			String pronsFromLegacyDict, GramPronuncNormalizer normalizer)
 	{
 		if ("".equals(pronsFromLegacyDict)) return;
-		//if (pronsFromLegacyDict.matches(".*( vai |, ).*"))
-			pronunciation = pronsFromLegacyDict.split("(, arī | vai |, (?!arī ))");
-		//else if (pronsFromLegacyDict.contains(", "))
-		//	pronunciation = pronsFromLegacyDict.split(", ");
-		//else pronunciation = new String[] {pronsFromLegacyDict};
+		pronunciation = pronsFromLegacyDict.trim().split(
+				"(, arī | vai |, (?!arī ))");
 		for (int i = 0; i < pronunciation.length; i++)
 		{
 			pronunciation[i] = pronunciation[i].trim();
@@ -129,6 +130,8 @@ public class Lemma implements HasToJSON, HasToXML
 				pronunciation[i] = pronunciation[i].substring(1);
 			if (pronunciation[i].endsWith("]"))
 				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
+			if (normalizer != null)
+				pronunciation[i] = normalizer.normalizePronuncs(pronunciation[i]);
 		}
 	}
 }

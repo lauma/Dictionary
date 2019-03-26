@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.struct;
 
 import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import org.w3c.dom.Node;
 
 /**
@@ -17,6 +18,6 @@ public class TLemma extends Lemma
 		text = vfNode.getTextContent();
 
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		this.setPronunciation(pronString);
+		this.setPronunciation(pronString, TPronuncNormalizer.singleton());
 	}
 }

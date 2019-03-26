@@ -3,6 +3,7 @@ package lv.ailab.dict.tezaurs.analyzer.struct;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.*;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
@@ -62,7 +63,8 @@ public class TGram extends Gram
 	 */
 	public TGram(Node gramNode, String lemma)
 	{
-		freeText = gramNode.getTextContent();
+		freeText = normalizePronunc(
+				gramNode.getTextContent(), TPronuncNormalizer.singleton());
 		leftovers = null;
 		flags = new Flags();
 		paradigm = new HashSet<>();
@@ -74,7 +76,7 @@ public class TGram extends Gram
 	 */
 	public void set (String gramText, String lemma)
 	{
-		freeText = gramText;
+		freeText = normalizePronunc(gramText, TPronuncNormalizer.singleton());
 		leftovers = null;
 		flags = new Flags();
 		paradigm = new HashSet<>();

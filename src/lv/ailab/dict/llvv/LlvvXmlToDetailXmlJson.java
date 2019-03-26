@@ -27,6 +27,7 @@ public class LlvvXmlToDetailXmlJson
 	{
 		public final static boolean PRINT_XML = true;
 		public final static boolean PRINT_JSON = true;
+		public final static boolean NORMALIZE_PRONUNCIATIONS = true;
 		public final static Pattern volumeNo = Pattern.compile("LLVV_(\\d(-\\d)?)_\\d+_\\d+\\.xml");
 	}
 
@@ -84,7 +85,7 @@ public class LlvvXmlToDetailXmlJson
 				Node entryNode = dicReader.readNexEntry();
 				while (entryNode != null)
 				{
-					LLVVEntry entry = new LLVVEntry(entryNode, volumeRef);
+					LLVVEntry entry = new LLVVEntry(entryNode, volumeRef, Config.NORMALIZE_PRONUNCIATIONS);
 					dict.entries.add(entry);
 					entryNode = dicReader.readNexEntry();
 					fileEntries++;

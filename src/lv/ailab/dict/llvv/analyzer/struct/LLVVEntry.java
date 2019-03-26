@@ -15,7 +15,7 @@ public class LLVVEntry extends Entry
 	 * ietver arī visu analīzi.
 	 * @param sNode XML DOM elements, kas atbilst "s"
 	 */
-	public LLVVEntry(Node sNode, String volume)
+	public LLVVEntry(Node sNode, String volume, boolean normalizePronunc)
 	{
 		NodeList fields = sNode.getChildNodes();
 		LinkedList<Node> header = new LinkedList<>();

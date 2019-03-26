@@ -1,5 +1,6 @@
 package lv.ailab.dict.llvv.analyzer.struct;
 
+import lv.ailab.dict.llvv.analyzer.PronuncNormalizer;
 import lv.ailab.dict.struct.Lemma;
 import org.w3c.dom.Node;
 
@@ -22,6 +23,7 @@ public class LLVVLemma extends Lemma
 	{
 		text = vfNode.getTextContent();
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
+		pronString = PronuncNormalizer.normalize(pronString);
 		this.setPronunciation(pronString);
 	}
 

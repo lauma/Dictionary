@@ -59,8 +59,7 @@ public class IndividualChecks
 	public static boolean hasSensesBeforePhrasals(MLVVEntry e)
 	{
 		return (e.senses != null && !e.senses.isEmpty()) ||
-			(e.phrases == null || e.phrases.isEmpty()) &&
-			(e.phraseology == null || e.phraseology.isEmpty());
+			(e.phrases == null || e.phrases.isEmpty());// && (e.phraseology == null || e.phraseology.isEmpty());
 
 	}
 

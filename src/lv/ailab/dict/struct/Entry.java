@@ -242,7 +242,7 @@ public class Entry implements HasToJSON, HasToXML
 
 		if (phrases != null && !phrases.isEmpty())
 		{
-			s.append(", \"Phrases\":");
+			s.append(", \"StablePhrases\":");
 			s.append(JSONUtils.objectsToJSON(phrases));
 		}
 

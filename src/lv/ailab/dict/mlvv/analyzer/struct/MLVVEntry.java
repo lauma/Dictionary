@@ -37,13 +37,13 @@ public class MLVVEntry extends Entry
 	 */
 	public static boolean UNDERSCORE_FOR_NORMATIVE_CURSIVE = false;
 
-	/**
+	/*
 	 * MLVV atšķirībā no citām vārdnīcām tiek šķirti stabili vārdu savienojumi
 	 * no frazeoloģismiem. Entry.phrases tiek lietots stabiliem vārdu
 	 * savienojumiem (atdalīts ar trijstūri), bet MLVVEntry.phraseology -
 	 * frazeoloģismiem (atsalīts ar rombu).
 	 */
-	public LinkedList<Phrase> phraseology;
+	//public LinkedList<Phrase> phraseology;
 
 	/**
 	 * MLVV tiek šķirti divu veidu brīvi komentāri - komentārs par vārda cilmi
@@ -67,8 +67,8 @@ public class MLVVEntry extends Entry
 			res.addAll(s.getImplicitHeaders());
 		if (phrases != null) for (Phrase p : phrases)
 			res.addAll(p.getImplicitHeaders());
-		if (phraseology != null) for (Phrase p : phraseology)
-			res.addAll(p.getImplicitHeaders());
+		//if (phraseology != null) for (Phrase p : phraseology)
+		//	res.addAll(p.getImplicitHeaders());
 		if (derivs != null) for (Header d : derivs)
 			res.addAll(d.getImplicitHeaders());
 		return res;
@@ -85,8 +85,8 @@ public class MLVVEntry extends Entry
 			res.addAll(((MLVVSense)s).getFlagStrings());
 		if (phrases != null) for (Phrase p : phrases)
 			res.addAll(((MLVVPhrase)p).getFlagStrings());
-		if (phraseology != null) for (Phrase p : phraseology)
-			res.addAll(((MLVVPhrase)p).getFlagStrings());
+		//if (phraseology != null) for (Phrase p : phraseology)
+		//	res.addAll(((MLVVPhrase)p).getFlagStrings());
 		if (derivs != null) for (Header d : derivs)
 			res.addAll(((MLVVHeader)d).getFlagStrings());
 		return res;
@@ -293,12 +293,13 @@ public class MLVVEntry extends Entry
 	protected void parsePhraseology(String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
-		if (phrasesParts.length > 0 && phraseology == null)  phraseology = new LinkedList<>();
+		//if (phrasesParts.length > 0 && phraseology == null)  phraseology = new LinkedList<>();
+		if (phrasesParts.length > 0 && phrases == null)  phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
 			MLVVPhrase p = MLVVPhrase.parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.PHRASEOLOGICAL, head.lemma.text);
-			if (p != null) phraseology.add(p);
+			if (p != null) phrases.add(p);
 		}
 	}
 
@@ -389,11 +390,11 @@ public class MLVVEntry extends Entry
 			s.append(", \"StablePhrases\":");
 			s.append(JSONUtils.objectsToJSON(phrases));
 		}
-		if (phraseology != null && !phraseology.isEmpty())
+		/*if (phraseology != null && !phraseology.isEmpty())
 		{
 			s.append(", \"Phraseology\":");
 			s.append(JSONUtils.objectsToJSON(phraseology));
-		}
+		}*/
 
 		/*if ((senses == null || senses.isEmpty()) &&
 				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
@@ -491,12 +492,12 @@ public class MLVVEntry extends Entry
 			for (Phrase p : phrases) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
 		}
-		if (phraseology != null && !phraseology.isEmpty())
+		/*if (phraseology != null && !phraseology.isEmpty())
 		{
 			Node phrasesContN = doc.createElement("Phraseology");
 			for (Phrase p : phraseology) p.toXML(phrasesContN);
 			parent.appendChild(phrasesContN);
-		}
+		}*/
 		/*if ((senses == null || senses.isEmpty()) &&
 				((phrases != null && !phrases.isEmpty()) || (phraseology != null && !phraseology.isEmpty())))
 		{

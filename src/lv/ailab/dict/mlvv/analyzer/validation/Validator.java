@@ -147,8 +147,8 @@ public class Validator
 			checkTexts(s, debugEntryWord);
 		if (e.phrases != null) for (Phrase p : e.phrases)
 			checkTexts(p, debugEntryWord);
-		if (e.phraseology != null) for (Phrase p : e.phraseology)
-			checkTexts(p, debugEntryWord);
+		/*if (e.phraseology != null) for (Phrase p : e.phraseology)
+			checkTexts(p, debugEntryWord);*/
 
 		if (MLVVEntry.UNDERSCORE_FOR_ETYMOLOGY_CURSIVE)
 		{

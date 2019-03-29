@@ -28,6 +28,7 @@ public class TezDicToXml
 
 	protected String currentLine, prevLine;
 	protected boolean parcelts;
+	protected Entry currentEntry = null;
 
 	protected static String[][] atToIPatterns = {
 			{"(?<=[(\\[])\\s*@2\\s", "<i>"},
@@ -125,14 +126,18 @@ public class TezDicToXml
 
 			if (currentLine == null) break;
 
+			currentEntry = new Entry();
+			processEntryHeader();
+			processSenses();
+			processEntryFooter();
 
-			Entry entry = processEntry();
-			if (entry.senseNumber > 0) fullEntries.appendChild(entry.sElem);
-			else refEntries.appendChild(entry.sElem);
+			if (currentEntry.senseNumber > 0) fullEntries.appendChild(currentEntry.sElem);
+			else refEntries.appendChild(currentEntry.sElem);
 
-			if (currentLine == null) break;
-			if (currentLine.length() > 0)
-				log.println(currentLine + "  " + entry.entryName);
+			if (currentLine != null && !currentLine.isEmpty())
+				log.printf("Šķirklī \"%s\" palika pāri rindas gabals: %s\n", currentEntry.entryName, currentLine);
+				//log.println(currentLine + "  " + entry.entryName);
+			currentEntry = null;
 		}
 		currentDicIn = null;
 	}
@@ -176,31 +181,16 @@ public class TezDicToXml
 	}
 
 	/**
-	 * Apstrādā šķirkli, sākot ar VR ... rindiņu.
-	 */
-	protected Entry processEntry() throws IOException
-	{
-		Entry res = new Entry();
-
-		processEntryHeader(res);
-		processSenses(res);
-		processEntryFooter(res);
-
-		return res;
-	}
-
-	/**
-	 * Apstrādā šķirkļa galvai atbilstošos datus - šķirkļa vārdu, izrunu,
+	 * Apstrādā aktuālā šķirkļa galvai atbilstošos datus - šķirkļa vārdu, izrunu,
 	 * galveno gramatiku un homonīmu indeksu - un izveido šķirkļa galvu - vf
 	 * elementu.
-	 * @param entry	šķirklis, kam pievienot jaunos elementus
 	 */
-	protected void processEntryHeader(Entry entry) throws IOException
+	protected void processEntryHeader() throws IOException
 	{
 		String inLine = null;
 		String ruLine = null;
 		String grLine = null;
-		entry.entryName = currentLine.substring(2).trim(); // Nocērt šķirkļa vārda VR
+		currentEntry.entryName = currentLine.substring(2).trim(); // Nocērt šķirkļa vārda VR
 		// Pieņemsim, ka nu šķirkļavārdos @2 nav jāmeklē!
 
 		do
@@ -214,36 +204,35 @@ public class TezDicToXml
 				.indexOf("IN ") == 0) || (currentLine.indexOf("RU ") == 0));
 
 		if (inLine != null && inLine.length() > 3)
-			makeAttribute("i", inLine, entry.sElem);
+			makeAttribute("i", inLine, currentEntry.sElem);
 
 		Element vElem = doc.createElement("v");
 		Element vfElem = doc.createElement("vf");
-		vfElem.setTextContent(entry.entryName);
+		vfElem.setTextContent(currentEntry.entryName);
 		vElem.appendChild(vfElem);
 		if (ruLine != null && ruLine.length() > 3)
 			makeAttribute("ru", ruLine, vfElem);
 
 		if (grLine != null && grLine.length() > 3)
 			makeLeaf("gram", grLine, vElem, true);
-		entry.sElem.appendChild(vElem);
+		currentEntry.sElem.appendChild(vElem);
 	}
 
 	/**
-	 * Apstrādā nozīmju bloku un frāžu bloku.
-	 * @param entry	šķirklis, kam pievienot jaunos elementus
+	 * Apstrādā aktuālā šķirkļa nozīmju bloku un frāžu bloku.
 	 */
-	protected void processSenses(Entry entry) throws IOException
+	protected void processSenses() throws IOException
 	{
-		entry.senseNumber = 0;
+		currentEntry.senseNumber = 0;
 		if (currentLine.indexOf("NS ") == 0) currentLine = currentDicIn.readLine();
 
 		Element g_n = null;
 		while (currentLine.indexOf("NO ") == 0)
 		{
 			if (g_n == null) g_n = doc.createElement("g_n");
-			mkNO(g_n, entry);
+			mkNO(g_n);
 		}
-		if (g_n != null) entry.sElem.appendChild(g_n);
+		if (g_n != null) currentEntry.sElem.appendChild(g_n);
 
 		Element g_fraz = null;
 		if (currentLine.indexOf("FS ") == 0) currentLine = currentDicIn.readLine();
@@ -252,14 +241,13 @@ public class TezDicToXml
 			if (g_fraz == null) g_fraz = doc.createElement("g_fraz");
 			mkFR(g_fraz);
 		}
-		if (g_fraz != null) entry.sElem.appendChild(g_fraz);
+		if (g_fraz != null) currentEntry.sElem.appendChild(g_fraz);
 	}
 
 	/**
-	 * Apstrādā šķirkļa "apakšgalu" - atvasinājumus un atsucēm.
-	 * @param entry	šķirklis, kam pievienot jaunos elementus
+	 * Apstrādā aktuālā šķirkļa "apakšgalu" - atvasinājumus un atsucēm.
 	 */
-	protected void processEntryFooter(Entry entry) throws IOException
+	protected void processEntryFooter() throws IOException
 	{
 		Element g_de = null;
 		if (currentLine.indexOf("DS ") == 0) currentLine = currentDicIn.readLine();
@@ -268,18 +256,18 @@ public class TezDicToXml
 			if (g_de == null) g_de = doc.createElement("g_de");
 			mkDE(g_de);
 		}
-		if (g_de != null) entry.sElem.appendChild(g_de);
+		if (g_de != null) currentEntry.sElem.appendChild(g_de);
 
 		if (currentLine != null &&
 				(currentLine.indexOf("DN ") == 0 || currentLine.indexOf("CD ") == 0))
 		{
-			makeLeaf("ref", currentLine, entry.sElem);
+			makeLeaf("ref", currentLine, currentEntry.sElem);
 			currentLine = currentDicIn.readLine();
 		}
 
 		if (currentLine != null && currentLine.indexOf("LI ") == 0)
 		{
-			makeLeaf("avots", currentLine, entry.sElem);
+			makeLeaf("avots", currentLine, currentEntry.sElem);
 			currentLine = currentDicIn.readLine();
 		}
 
@@ -287,12 +275,12 @@ public class TezDicToXml
 
 	//--------------------------------------------------------------------------
 
-	protected void mkNO(Element g_nElem, Entry entry) throws IOException
+	protected void mkNO(Element g_nElem) throws IOException
 	{
-		entry.senseNumber++;
+		currentEntry.senseNumber++;
 
 		Element nElem = doc.createElement("n");
-		nElem.setAttribute("nr", String.valueOf(entry.senseNumber)); //Te jau ir cipars, tāpēc nevajag ņemties ar kursīvu.
+		nElem.setAttribute("nr", String.valueOf(currentEntry.senseNumber)); //Te jau ir cipars, tāpēc nevajag ņemties ar kursīvu.
 		Element dElem = doc.createElement("d");
 		makeLeaf("t", currentLine, dElem);
 		currentLine = currentDicIn.readLine();
@@ -315,15 +303,15 @@ public class TezDicToXml
 			while (currentLine.indexOf("AN ") == 0)
 			{
 				if (g_anElem == null) g_anElem = doc.createElement("g_an");
-				mkAN(g_anElem, entry);
+				mkAN(g_anElem);
 			}
 
-			if (currentLine.indexOf("PG ") == 0) mkPG(null, entry);
+			if (currentLine.indexOf("PG ") == 0) mkPG(null);
 
 			while (currentLine.indexOf("PI ") == 0)
 			{
 				if (g_piemElem == null) g_piemElem = doc.createElement("g_piem");
-				mkPI(g_piemElem, entry);
+				mkPI(g_piemElem);
 			}
 		}
 
@@ -344,7 +332,7 @@ public class TezDicToXml
 	}
 
 
-	protected void mkPG(Element piemElem, Entry entry)
+	protected void mkPG(Element piemElem)
 	throws IOException
 	{
 		boolean apst = false;
@@ -356,7 +344,9 @@ public class TezDicToXml
 				prevLine = currentLine;
 				currentLine = currentDicIn.readLine();
 				apst = true;
-				log.println("!!! " + prevLine + " " + entry.entryName);
+				log.printf("Šķirklī \"%s\" ir slikti ar frāzēm (PG, PN, utt.) kaut kur pie fragmenta: %s\n",
+						currentEntry.entryName, prevLine);
+				//log.println("!!! " + prevLine + " " + currentEntry.entryName);
 			}
 			if (apst)
 			{
@@ -366,7 +356,7 @@ public class TezDicToXml
 					String temp = currentLine;
 					currentLine = prevLine;
 					prevLine = temp;
-					mkPG(piemElem, entry);
+					mkPG(piemElem);
 				}
 				return;
 			}
@@ -375,7 +365,9 @@ public class TezDicToXml
 
 		if (piemElem == null)
 		{
-			log.println("BAD!!! " + currentLine + " " + entry.entryName);
+			log.printf("Šķirklī \"%s\" ir slikti ar frāzēm (PG, PN, utt.) kaut kur pie fragmenta: %s\n",
+					currentEntry.entryName, currentLine);
+			//log.println("BAD!!! " + currentLine + " " + currentEntry.entryName);
 			return;
 		}
 
@@ -387,7 +379,7 @@ public class TezDicToXml
 		} else currentLine = currentDicIn.readLine();
 	}
 
-	protected void mkAN(Element g_anElem, Entry entry) throws IOException
+	protected void mkAN(Element g_anElem) throws IOException
 	{
 		Element nElem = doc.createElement("n");
 		Element dElem = doc.createElement("d");
@@ -401,18 +393,18 @@ public class TezDicToXml
 		}
 
 		nElem.appendChild(dElem);
-		if (currentLine.indexOf("PG ") == 0) mkPG(null, entry);
+		if (currentLine.indexOf("PG ") == 0) mkPG(null);
 		Element g_piem = null;
 		while (currentLine.indexOf("PI ") == 0)
 		{
 			if (g_piem == null) {g_piem = doc.createElement("g_piem");}
-			mkPI(g_piem, entry);
+			mkPI(g_piem);
 		}
 		if (g_piem != null) nElem.appendChild(g_piem);
 		g_anElem.appendChild(nElem);
 	}
 
-	protected void mkPI(Element g_piemElem, Entry entry) throws IOException
+	protected void mkPI(Element g_piemElem) throws IOException
 	{
 		Element piemElem = doc.createElement("piem");
 		makeLeaf("t", currentLine, piemElem, true);
@@ -423,7 +415,7 @@ public class TezDicToXml
 		}
 		else currentLine = currentDicIn.readLine();
 
-		if (currentLine.indexOf("PG ") == 0) mkPG(piemElem, entry);
+		if (currentLine.indexOf("PG ") == 0) mkPG(piemElem);
 		while (currentLine.indexOf("PN ") == 0) mkPN(piemElem);
 		g_piemElem.appendChild(piemElem);
 	}
@@ -526,21 +518,27 @@ public class TezDicToXml
 			String name, String line, Element parent, boolean removeDash)
 	{
 		Element leaf = doc.createElement(name);
+		line = line.trim();
 		int startIndex = line.indexOf(" ");
+		String codeForLog = line;
+		String contents = "";
+		if (startIndex > 0)
+		{
+			codeForLog = line.substring(0, startIndex).trim();
+			contents = line.substring(startIndex).trim();
+		}
 
-		String contents = startIndex >= 0 ?
-				line.substring(line.indexOf(" ")).trim() : "";
 		if (removeDash && contents.endsWith("-"))
 			contents = contents.substring(0, contents.length() - 1).trim();
 		contents = atToItalic(contents).trim();
 
 		if (!"t".equals(name))
 		{
-			String cleanContents = contents.replaceAll("</?i>", "");
-			if (!cleanContents.equals(contents) &&
+			if (contents.matches(".*</?i>.*") &&
 					!"gram".equals(name) && !"avots".equals(name))
-				log.printf("Vai %s elementā var būt <i>...</i>?\n", name);
-			contents = cleanContents;
+				log.printf(
+						"Šķirklī \"%s\", apstrādājot DIC lauku \"%s\", XML elementā \"%s\" sanāca <i>...</i>\n",
+						currentEntry.entryName, codeForLog, name);
 		}
 		leaf.setTextContent(contents);
 		parent.appendChild(leaf);
@@ -553,7 +551,8 @@ public class TezDicToXml
 	 * @param line		rindiņa, no kuras iegūt izveidojamā elementa saturu
 	 * @param parent	vecāks, kuram piestiprināt izveidoto elementu
 	 */
-	protected Element makeLeaf(String name, String line, Element parent)
+	protected Element makeLeaf(
+			String name, String line, Element parent)
 	{
 		return makeLeaf(name, line, parent, false);
 	}
@@ -565,19 +564,27 @@ public class TezDicToXml
 	 *                  (bez divburtu identifikatora)
 	 * @param parent	vecāks, kuram piestiprināt izveidoto atribūtu
 	 */
-	protected void makeAttribute(String name, String line, Element parent)
+	protected void makeAttribute(
+			String name, String line, Element parent)
 	{
+		line = line.trim();
 		int startIndex = line.indexOf(" ");
-		String contents = startIndex >= 0 ?
-				line.substring(line.indexOf(" ")).trim() : "";
+		String codeForLog = line;
+		String contents = "";
+		if (startIndex > 0)
+		{
+			codeForLog = line.substring(0, startIndex).trim();
+			contents = line.substring(startIndex).trim();
+		}
+
 		contents = atToItalic(contents).trim();
 		if (contents.contains("@"))
 		{
 			contents = atToItalic(contents).trim();
-			String cleanContents = contents.replaceAll("</?i>", "");
-			if (!cleanContents.equals(contents))
-				log.printf("Vai %s atribūtā var būt <i>...</i>?\n", name);
-			contents = cleanContents;
+			if (contents.matches(".*</?i>.*"))
+				log.printf(
+						"Šķirklī \"%s\", apstrādājot DIC lauku \"%s\", XML atribūtā \"%s\" sanāca <i>...</i>\n",
+						currentEntry.entryName, codeForLog, name);
 		}
 		parent.setAttribute(name, contents);
 	}

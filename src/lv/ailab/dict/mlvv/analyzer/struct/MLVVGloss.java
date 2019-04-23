@@ -14,7 +14,8 @@ import lv.ailab.dict.struct.Gloss;
 public class MLVVGloss extends Gloss
 {
 	/**
-	 * Vai <i> tagus vajag automātiski aizvietot ar apakšsvītrām?
+	 * Vai <i> tagus vajag automātiski aizvietot ar apakšsvītrām vai labāk ar
+	 * <em>?
 	 */
 	public static boolean UNDERSCORE_FOR_CURSIVE = false;
 
@@ -29,8 +30,7 @@ public class MLVVGloss extends Gloss
 	public static MLVVGloss parse(String text)
 	{
 		text = Editors.replaceHomIds(text, false);
-		if (UNDERSCORE_FOR_CURSIVE)
-			text = Editors.cursiveToUnderscore(text);
+		text = Editors.translateCursive(text, UNDERSCORE_FOR_CURSIVE);
 		return new MLVVGloss(text);
 	}
 

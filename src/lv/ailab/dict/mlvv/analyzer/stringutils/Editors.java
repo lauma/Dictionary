@@ -73,16 +73,25 @@ public class Editors
 		return line;
 	}
 
-	public static String cursiveToUnderscore(String line)
+	public static String translateCursive(String line, boolean underscore)
 	{
 		// Kursīvs šajā stadijā parasti tiek lietots atsevišķiem vārdiem.
-		line = line.replace("<i> ", " __");
-		line = line.replace("<i>", "__");
-		line = line.replace("...</i>", "__...");
-		line = line.replace("..</i>", "__..");
-		line = line.replace(".</i>", "__.");
-		line = line.replace(" </i>", "__ ");
-		line = line.replace("</i>", "__");
+		line = line.replace("<i> ", " <i>");
+		line = line.replace("...</i>", "</i>...");
+		line = line.replace("..</i>", "</i>..");
+		line = line.replace(".</i>", "</i>.");
+		line = line.replace(" </i>", "</i> ");
+		if (underscore)
+		{
+			line = line.replace("<i>", "__");
+			line = line.replace("</i>", "__");
+		}
+		else
+		{
+			line = line.replace("<i>", "<em>");
+			line = line.replace("</i>", "</em>");
+		}
+
 		return line;
 	}
 

@@ -19,6 +19,7 @@ public class TezDicToXml
 {
 	public static String inputDataPath = "./dati/dic/";
 	public static String outputDataPath = "./dati/xml/";
+	public static boolean NO_EM_IN_GRAM = true;
 
 	protected Document doc;
 	protected Element fullEntries;
@@ -30,15 +31,25 @@ public class TezDicToXml
 	protected boolean parcelts;
 	protected Entry currentEntry = null;
 
-	protected static String[][] atToIPatterns = {
-			{"(?<=[(\\[])\\s*@2\\s", "<i>"},
-			{"(?<=[(\\[])\\s*@5\\s", "</i>"},
-			{"\\s@2\\s*(?=[;,.?!)\\]])", "<i>"},
-			{"\\s@5\\s*((?=[;,.?!)\\]])|$)", "</i>"},
-			{"\\s@2\\s", " <i>"},
-			{"\\s@5\\s", "</i> "},
-			{"^@2\\s", "<i>"},
-			{"\\s@5$", "</i>"},
+	protected static String[][] atToEmPatterns = {
+			{"(?<=[(\\[])\\s*@2\\s", "<em>"},
+			{"(?<=[(\\[])\\s*@5\\s", "</em>"},
+			{"\\s@2\\s*(?=[;,.?!)\\]])", "<em>"},
+			{"\\s@5\\s*((?=[;,.?!)\\]])|$)", "</em>"},
+			{"\\s@2\\s", " <em>"},
+			{"\\s@5\\s", "</em> "},
+			{"^@2\\s", "<em>"},
+			{"\\s@5$", "</em>"},
+	};
+	protected static String[][] removeAt = {
+			{"(?<=[(\\[])\\s*@2\\s", ""},
+			{"(?<=[(\\[])\\s*@5\\s", ""},
+			{"\\s@2\\s*(?=[;,.?!)\\]])", ""},
+			{"\\s@5\\s*((?=[;,.?!)\\]])|$)", ""},
+			{"\\s@2\\s", " "},
+			{"\\s@5\\s", " "},
+			{"^@2\\s", ""},
+			{"\\s@5$", ""},
 	};
 
 	public TezDicToXml()
@@ -530,7 +541,11 @@ public class TezDicToXml
 
 		if (removeDash && contents.endsWith("-"))
 			contents = contents.substring(0, contents.length() - 1).trim();
-		contents = atToItalic(contents).trim();
+
+		if ("gram".equals(name) || "avots".equals(name))
+			contents = removeAt(contents).trim();
+		else
+			contents = atToItalic(contents).trim();
 
 		if (!"t".equals(name))
 		{
@@ -590,11 +605,21 @@ public class TezDicToXml
 	}
 
 	/**
-	 * Aizstāj tekstā @2 un @5 ar <i> un </i>.
+	 * Aizstāj tekstā @2 un @5 ar <em> un </em>.
 	 */
 	protected static String atToItalic (String text)
 	{
-		for (String[] replPat : atToIPatterns)
+		for (String[] replPat : atToEmPatterns)
+			text = text.replaceAll(replPat[0], replPat[1]);
+		return text;
+	}
+
+	/**
+	 * Izņem no teksta @2 un @5.
+	 */
+	protected static String removeAt (String text)
+	{
+		for (String[] replPat : removeAt)
 			text = text.replaceAll(replPat[0], replPat[1]);
 		return text;
 	}

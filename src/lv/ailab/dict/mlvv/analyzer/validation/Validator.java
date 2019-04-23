@@ -159,7 +159,7 @@ public class Validator
 		else
 		{
 			if (!IndividualChecks.hasPairedITags(e.etymology))
-				System.out.printf("Šķirklī %s ir nekorekti <i></i> cilmē \"%s\".\n",
+				System.out.printf("Šķirklī %s ir nekorekti <em></em> cilmē \"%s\".\n",
 						debugEntryWord, e.etymology);
 		}
 		if (!IndividualChecks.hasBalancedParentheses(e.etymology))
@@ -175,7 +175,7 @@ public class Validator
 		else
 		{
 			if(!IndividualChecks.hasPairedITags(e.normative))
-				System.out.printf("Šķirklī %s ir nekorekti <i></i> normatīvajā komentārā \"%s\".\n",
+				System.out.printf("Šķirklī %s ir nekorekti <em></em> normatīvajā komentārā \"%s\".\n",
 						debugEntryWord, e.normative);
 		}
 		if (!IndividualChecks.hasBalancedParentheses(e.normative))
@@ -201,7 +201,7 @@ public class Validator
 			else
 			{
 				if (!IndividualChecks.hasPairedITags(glossVariant.text))
-					System.out.printf("Šķirklī %s ir nekorekti <i></i> glosā \"%s\".\n",
+					System.out.printf("Šķirklī %s ir nekorekti <em></em> glosā \"%s\".\n",
 							debugEntryWord, glossVariant.text);
 			}
 			if (!IndividualChecks.hasBalancedParentheses(glossVariant.text))

@@ -28,12 +28,13 @@ import java.util.regex.Pattern;
 public class MLVVEntry extends Entry
 {
 	/**
-	 * Vai <i> tagus izcelsmē vajag automātiski aizvietot ar apakšsvītrām?
+	 * Vai <i> tagus izcelsmē vajag automātiski aizvietot ar apakšsvītrām vai
+	 * labāk ar <em>?
 	 */
 	public static boolean UNDERSCORE_FOR_ETYMOLOGY_CURSIVE = false;
 	/**
 	 * Vai <i> tagus normatīvajā komentārā vajag automātiski aizvietot ar
-	 * apakšsvītrām?
+	 * apakšsvītrām vai labāk ar <em>?
 	 */
 	public static boolean UNDERSCORE_FOR_NORMATIVE_CURSIVE = false;
 
@@ -340,16 +341,12 @@ public class MLVVEntry extends Entry
 	protected void parseEtymology(String linePart)
 	{
 		linePart = Editors.replaceHomIds(linePart, true);
-		if (UNDERSCORE_FOR_ETYMOLOGY_CURSIVE)
-			etymology = Editors.cursiveToUnderscore(linePart);
-		else etymology = linePart;
+		etymology = Editors.translateCursive(linePart, UNDERSCORE_FOR_ETYMOLOGY_CURSIVE);
 	}
 
 	protected void parseNormative(String linePart)
 	{
-		if (UNDERSCORE_FOR_NORMATIVE_CURSIVE)
-			normative = Editors.cursiveToUnderscore(linePart);
-		else normative = linePart;
+			normative = Editors.translateCursive(linePart, UNDERSCORE_FOR_NORMATIVE_CURSIVE);
 	}
 	// TODO - atstāt kvadrātiekavas vai mest ārā
 

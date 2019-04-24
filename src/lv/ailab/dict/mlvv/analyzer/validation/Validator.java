@@ -1,6 +1,5 @@
 package lv.ailab.dict.mlvv.analyzer.validation;
 
-import lv.ailab.dict.mlvv.MlvvDocToDetailXmlJson;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
 import lv.ailab.dict.struct.*;
@@ -158,7 +157,7 @@ public class Validator
 		}
 		else
 		{
-			if (!IndividualChecks.hasPairedITags(e.etymology))
+			if (!IndividualChecks.hasPairedEmTags(e.etymology))
 				System.out.printf("Šķirklī %s ir nekorekti <em></em> cilmē \"%s\".\n",
 						debugEntryWord, e.etymology);
 		}
@@ -174,7 +173,7 @@ public class Validator
 		}
 		else
 		{
-			if(!IndividualChecks.hasPairedITags(e.normative))
+			if(!IndividualChecks.hasPairedEmTags(e.normative))
 				System.out.printf("Šķirklī %s ir nekorekti <em></em> normatīvajā komentārā \"%s\".\n",
 						debugEntryWord, e.normative);
 		}
@@ -200,7 +199,7 @@ public class Validator
 			}
 			else
 			{
-				if (!IndividualChecks.hasPairedITags(glossVariant.text))
+				if (!IndividualChecks.hasPairedEmTags(glossVariant.text))
 					System.out.printf("Šķirklī %s ir nekorekti <em></em> glosā \"%s\".\n",
 							debugEntryWord, glossVariant.text);
 			}

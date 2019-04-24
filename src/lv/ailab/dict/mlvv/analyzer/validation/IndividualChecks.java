@@ -95,21 +95,21 @@ public class IndividualChecks
 	}
 
 	/**
-	 * Pārbauda, vai i tagi savstarpēji nepārklājas un kārtīgi sākas un beidzas.
+	 * Pārbauda, vai em tagi savstarpēji nepārklājas un kārtīgi sākas un beidzas.
 	 * Lietojams, ja kursīvs netiek aizstāts ar apakšsvītrām.
 	 */
-	public static boolean hasPairedITags(String text)
+	public static boolean hasPairedEmTags(String text)
 	{
 		if (text == null) return true;
-		Pattern iTags = Pattern.compile("</?i>");
+		Pattern iTags = Pattern.compile("</?em>");
 		boolean isInside = false;
 		Matcher iTagMatcher = iTags.matcher(text);
 		while (iTagMatcher.find())
 		{
-			if ("<i>".equals(iTagMatcher.group()) && !isInside) isInside = true;
-			else if ("</i>".equals(iTagMatcher.group()) && isInside) isInside = false;
-			else if ("</i>".equals(iTagMatcher.group()) && !isInside) return false;
-			else if ("<i>".equals(iTagMatcher.group()) && isInside) return false;
+			if ("<em>".equals(iTagMatcher.group()) && !isInside) isInside = true;
+			else if ("</em>".equals(iTagMatcher.group()) && isInside) isInside = false;
+			else if ("</em>".equals(iTagMatcher.group()) && !isInside) return false;
+			else if ("<em>".equals(iTagMatcher.group()) && isInside) return false;
 		}
 		return !isInside;
 	}

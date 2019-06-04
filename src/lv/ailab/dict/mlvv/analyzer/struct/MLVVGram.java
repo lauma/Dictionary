@@ -4,7 +4,6 @@ import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
-import lv.ailab.dict.utils.StringUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,6 +11,7 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -119,7 +119,7 @@ public class MLVVGram extends Gram
 			String restrFirstFlag, String restrForms, String restrLastFlags)
 	{
 		String[] restrParts = restrForms.split("(?=\\b(retāk|arī)</i>\\s<u>|(?<!\\b(retāk|arī)</i>\\s)<u>)");
-		if (formRestrictions == null) formRestrictions = new ArrayList<>();
+		if (formRestrictions == null) formRestrictions = new LinkedList<>();
 
 		for (String p : restrParts)
 		{
@@ -179,7 +179,7 @@ public class MLVVGram extends Gram
 		postColonPart = Editors.openCursive(postColonPart);
 		MLVVHeader restr = new MLVVHeader();
 		restr.gram = MLVVGram.parse(preColonPart);
-		if (formRestrictions == null) formRestrictions = new ArrayList<>();
+		if (formRestrictions == null) formRestrictions = new LinkedList<>();
 		formRestrictions.add(restr);
 		freeText = postColonPart;
 	}
@@ -209,7 +209,7 @@ public class MLVVGram extends Gram
 			inBracesPart = inBracesPart + "; ";
 		inBracesPart = Editors.closeCursive(inBracesPart);
 
-		if (altLemmas == null) altLemmas = new ArrayList<>();
+		if (altLemmas == null) altLemmas = new LinkedList<>();
 		Header altLemma = MLVVHeader.parseSingularHeader(
 				PreNormalizer.correctGeneric(beforeBracesPart + afterBracesPart));
 		if (altLemma!= null) altLemmas.add(altLemma);
@@ -293,7 +293,7 @@ public class MLVVGram extends Gram
 					String subcommon = common;
 					if (subcommon.startsWith("<i>")) subcommon = subcommon.substring(3);
 					if (subcommon.endsWith("</i>")) subcommon = subcommon.substring(0, subcommon.length()-4);
-					if (altLemmas == null) altLemmas = new ArrayList<>();
+					if (altLemmas == null) altLemmas = new LinkedList<>();
 					for (String smallPart : smallParts)
 					{
 						Matcher getContent = Pattern.compile("(.*?)[,;]? (?:<i>)?arī(?:</i>)?").matcher(smallPart);

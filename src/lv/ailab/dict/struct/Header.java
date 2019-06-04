@@ -1,14 +1,15 @@
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Šķirkļa "galva" - vārds + gramatika
@@ -113,7 +114,7 @@ public class Header implements HasToJSON, HasToXML
 	 * tā ir iekļauta arī altLemmās, tad apakšklasei vajag šo pārrakstīt.
 	 *
 	 * @param parent DOM virsotne, kurai kā bērnu pievieno jaunizveidoto Header
-	 *               virsotni
+	 *               virsotni.
 	 */
 	public void toXML(Node parent)
 	{
@@ -124,4 +125,29 @@ public class Header implements HasToJSON, HasToXML
 		parent.appendChild(headerN);
 	}
 
+	public static Header fromStdXML(Node headerNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Header result = elemFact.getNewHeader();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) headerNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		// Lemma
+		result.lemma = StdXmlFieldInputHelper.getLemma(fields, elemFact, "Header");
+		// Pronunciations
+		LinkedList<String> tempProns = StdXmlFieldInputHelper.getStringFieldArray(fields,
+				"Header", "Pronunciations", "Pronunciation");
+		if (tempProns != null && !tempProns.isEmpty())
+		{
+			if (result.lemma == null)
+				throw new DictionaryXmlReadingException("Elementā \"Header\" ir \"Pronunciations\", bet nav \"Lemma\"!");
+			result.lemma.pronunciation = tempProns.toArray(new String[0]);
+		}
+		// Gram
+		result.gram = StdXmlFieldInputHelper.getGram(fields, elemFact,
+				"Header");
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "Header");
+		return result;
+	}
 }

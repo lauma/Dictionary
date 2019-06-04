@@ -1,7 +1,6 @@
 package lv.ailab.dict.llvv.analyzer.struct;
 
 import lv.ailab.dict.llvv.analyzer.PhrasalExtractor;
-import lv.ailab.dict.struct.Gloss;
 import lv.ailab.dict.struct.Sense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

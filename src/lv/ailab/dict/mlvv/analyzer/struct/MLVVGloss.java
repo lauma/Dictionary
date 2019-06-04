@@ -19,6 +19,8 @@ public class MLVVGloss extends Gloss
 	 */
 	public static boolean UNDERSCORE_FOR_CURSIVE = false;
 
+	protected  MLVVGloss() {};
+
 	public MLVVGloss (String text)
 	{
 		super (text);

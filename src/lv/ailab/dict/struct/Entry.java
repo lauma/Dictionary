@@ -1,5 +1,8 @@
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
@@ -370,5 +373,41 @@ public class Entry implements HasToJSON, HasToXML
 		}*/
 		if (sources != null && !sources.isEmpty()) sources.toXML(parent);
 
+	}
+
+	public static Entry fromStdXML(Node entryNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Entry result = elemFact.getNewEntry();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) entryNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		// HomonymNumber
+		result.homId = StdXmlFieldInputHelper.getSinglarStringField(fields,
+				"Entry", "HomonymNumber");
+		// Header
+		result.head = StdXmlFieldInputHelper.getSingularHeader(fields, elemFact,
+				"Entry");
+		// Senses
+		result.senses = StdXmlFieldInputHelper.getSenses(fields, elemFact,
+				"Entry", "Senses");
+		// StablePhrases
+		result.phrases = StdXmlFieldInputHelper.getStablePhrases(fields, elemFact,
+				"Entry");
+		//Derivatives
+		result.derivs = StdXmlFieldInputHelper.getHeaderList(fields, elemFact,
+				"Entry", "Derivatives");
+		// Etymology
+		result.etymology = StdXmlFieldInputHelper.getSinglarStringField(fields,
+				"Entry", "Etymology");
+		// References
+		result.references = StdXmlFieldInputHelper.getStringFieldArray(fields,
+				"Entry", "References", "EntryRef");
+		// Sources
+		result.sources = StdXmlFieldInputHelper.getSources(fields, elemFact,
+				"Entry");
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "Entry");
+		return result;
 	}
 }

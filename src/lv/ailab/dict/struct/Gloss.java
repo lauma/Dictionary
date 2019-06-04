@@ -1,12 +1,14 @@
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import java.util.LinkedList;
 
 /**
  * Vārda skaidrojums (šobrīd tikai teksts).
@@ -21,6 +23,7 @@ public class Gloss implements HasToJSON, HasToXML
 
 	/**
 	 * Papildu gramatiskās norādes, reti lietota lieta.
+	 * TODO vienādot lauku nosakumus - citur ir gram
 	 */
 	public Gram grammar = null;
 
@@ -64,5 +67,23 @@ public class Gloss implements HasToJSON, HasToXML
 		if (grammar != null) grammar.toXML(glossVariantN);
 		glossVariantN.appendChild(glossN);
 		parent.appendChild(glossVariantN);
+	}
+
+	public static Gloss fromStdXML(Node glossVarNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Gloss result = elemFact.getNewGloss();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) glossVarNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		// GlossText
+		result.text = StdXmlFieldInputHelper.getSinglarStringField(fields,
+				"GlossVariant", "GlossText");
+		// Gram
+		result.grammar = StdXmlFieldInputHelper.getGram(fields, elemFact,
+				"GlossVariant");
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "GlossVariant");
+		return result;
 	}
 }

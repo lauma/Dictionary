@@ -17,6 +17,9 @@
  *******************************************************************************/
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
@@ -195,6 +198,30 @@ public class Phrase implements HasToJSON, HasToXML
 		parent.appendChild(phraseN);
 	}
 
+	public static Phrase fromStdXML(Node phraseNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Phrase result = elemFact.getNewPhrase();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) phraseNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		// Type
+		String typeStr = StdXmlFieldInputHelper.getSinglarStringField(fields,
+				"Phrase", "Type");
+		if (typeStr != null) result.type = Type.parseString(typeStr);
+		// Text
+		result.text = StdXmlFieldInputHelper.getStringFieldArray(fields,
+				"Phrase", "Text", "Variant");
+		// Gram
+		result.grammar = StdXmlFieldInputHelper.getGram(fields, elemFact, "Phrase");
+		// Senses
+		result.subsenses = StdXmlFieldInputHelper.getSenses(fields, elemFact,
+				"Phrase", "Senses");
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "Phrase");
+		return result;
+	}
+
 	/**
 	 * Frāžu tipu uzskaitījums un atreferējumi MLVV, LLVV vajadzībām.
 	 * Izveidots 2016-02-11.
@@ -219,6 +246,19 @@ public class Phrase implements HasToJSON, HasToXML
 		public String toString()
 		{
 			return s;
+		}
+
+		public static Type parseString (String value)
+		throws DictionaryXmlReadingException
+		{
+			if (value == null) return null;
+			value = value.trim();
+			if (PHRASEOLOGICAL.s.equals(value)) return PHRASEOLOGICAL;
+			if (STABLE_UNIT.s.equals(value)) return STABLE_UNIT;
+			if (TAXON.s.equals(value)) return TAXON;
+			throw new DictionaryXmlReadingException(String.format(
+					"Frāzes tips \"%s\" nav atpazīts!", value));
+
 		}
 	}
 }

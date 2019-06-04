@@ -4,7 +4,6 @@ import lv.ailab.dict.struct.Header;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class LLVVHeader extends Header
 		if (vNodes == null || vNodes.isEmpty()) return;
 
 		gram = new LLVVGram();
-		gram.altLemmas = new ArrayList<>();
+		gram.altLemmas = new LinkedList<>();
 		for (Node vNode : vNodes)
 			gram.altLemmas.add(new LLVVHeader(vNode));
 

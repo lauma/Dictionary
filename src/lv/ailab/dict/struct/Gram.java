@@ -1,16 +1,20 @@
 package lv.ailab.dict.struct;
 
-
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.GramPronuncNormalizer;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.JSONUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 /**
@@ -44,7 +48,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * TODO: filtrēt vienādos.
 	 * TODO: dublēt karodziņus.
 	 */
-	public ArrayList<Header> altLemmas;
+	public LinkedList<Header> altLemmas;
 
 	/**
 	 * Struktūra, kas satur norādes, ka elements, ko šī gramatika skaidro,
@@ -54,7 +58,7 @@ public class Gram implements HasToJSON, HasToXML
 	 *
 	 * TODO: pārcelt uz MLVVGram.
 	 */
-	public ArrayList<Header> formRestrictions;
+	public LinkedList<Header> formRestrictions;
 
 
 	public Gram()
@@ -252,6 +256,35 @@ public class Gram implements HasToJSON, HasToXML
 			gramN.appendChild(additional);
 
 		parent.appendChild(gramN);
+	}
+
+	public static Gram fromStdXML(Node gramNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Gram result = elemFact.getNewGram();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) gramNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		// Paradigms
+		LinkedList<String> tmpPar = StdXmlFieldInputHelper.getStringFieldArray(fields,
+				"Gram", "Paradigms", "Paradigm");
+		if (tmpPar != null) result.paradigm = tmpPar.stream()
+					.map(Integer::parseInt).collect(Collectors.toCollection(HashSet<Integer>::new));
+		// AltLemmas
+		result.altLemmas = StdXmlFieldInputHelper.getHeaderList(fields, elemFact,
+				"Gram", "AltLemmas");
+		// FormRestrictions
+		result.formRestrictions = StdXmlFieldInputHelper.getHeaderList(fields, elemFact,
+				"Gram", "FormRestrictions");
+		// Flags
+		result.flags = StdXmlFieldInputHelper.getFlags(fields, elemFact,
+				"Gram");
+		// FreeText
+		result.freeText = StdXmlFieldInputHelper.getSinglarStringField(fields,
+				"Gram", "FreeText");
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "Gram");
+		return result;
 	}
 
 	public static String normalizePronunc(

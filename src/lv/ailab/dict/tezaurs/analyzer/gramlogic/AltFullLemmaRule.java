@@ -2,7 +2,6 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.utils.Tuple;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

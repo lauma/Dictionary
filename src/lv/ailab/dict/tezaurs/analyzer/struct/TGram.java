@@ -14,7 +14,6 @@ import lv.ailab.dict.utils.JSONUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -134,7 +133,7 @@ public class TGram extends Gram
 	private void parseGram(String lemma)
 	{
 		String correctedGram = correctOCRErrors(freeText);
-		altLemmas = new ArrayList<>();
+		altLemmas = new LinkedList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
 		if (lemma.startsWith("-") || lemma.endsWith("-"))

@@ -1,6 +1,5 @@
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.struct.constants.PronunciationCoding;
 import lv.ailab.dict.utils.GramPronuncNormalizer;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;

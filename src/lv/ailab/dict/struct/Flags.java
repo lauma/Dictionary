@@ -1,30 +1,18 @@
-/*******************************************************************************
- * Copyright 2013-2016 Institute of Mathematics and Computer Science, University of Latvia
- * Author: Lauma Pretkalniņa
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *******************************************************************************/
 package lv.ailab.dict.struct;
 
+import lv.ailab.dict.io.DictionaryXmlReadingException;
+import lv.ailab.dict.io.DomIoUtils;
+import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.struct.constants.flags.Keys;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -180,6 +168,42 @@ public class Flags implements HasToXML
 				}
 			parent.appendChild(flagsContN);
 		}
+	}
+
+	public static Flags fromStdXML(Node flagsNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		Flags result = elemFact.getNewFlags();
+		result.pairings = new MappingSet<>();
+		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) flagsNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		ArrayList<Node> flagNodes = fields.nodeChildren.remove("Flag");
+		if (flagNodes != null) for (Node flagNode : flagNodes)
+		{
+			String key = null;
+			String value = null;
+
+			DomIoUtils.FieldMapping flagFields = DomIoUtils.domElemToHash((Element) flagNode);
+			if (flagFields == null || flagFields.isEmpty()) break;
+
+			ArrayList<String> keyTexts = flagFields.stringChildren.remove("Key");
+			if (keyTexts != null && keyTexts.size() > 1)
+				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Key\"!");
+			if (keyTexts!= null && !keyTexts.isEmpty()) key = keyTexts.get(0);
+
+			ArrayList<String> valueTexts = flagFields.stringChildren.remove("Value");
+			if (valueTexts != null && valueTexts.size() > 1)
+				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Value\"!");
+			if (valueTexts!= null && !valueTexts.isEmpty()) value = valueTexts.get(0);
+
+			StdXmlFieldInputHelper.dieOnNonempty(flagFields, "Flag");
+			result.pairings.put(key, value);
+		}
+		// Warn, if there is something else
+		StdXmlFieldInputHelper.dieOnNonempty(fields, "Flags");
+		if (result.pairings.isEmpty()) return null;
+		return result;
 	}
 
 }

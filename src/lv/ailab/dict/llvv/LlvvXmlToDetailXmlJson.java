@@ -2,8 +2,10 @@ package lv.ailab.dict.llvv;
 
 import lv.ailab.dict.io.DictionaryXmlReadingException;
 import lv.ailab.dict.io.StaxReader;
-import lv.ailab.dict.llvv.struct.LLVVEntry;
+import lv.ailab.dict.llvv.analyzer.LegacyXmlPaser;
+import lv.ailab.dict.llvv.struct.LLVVElementFactory;
 import lv.ailab.dict.struct.Dictionary;
+import lv.ailab.dict.struct.Entry;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -33,7 +35,9 @@ public class LlvvXmlToDetailXmlJson
 
 	public String inputDataPath;
 	public String outputDataPath;
-	public Dictionary dict = new Dictionary();
+	public LLVVElementFactory factory = new LLVVElementFactory();
+	public Dictionary dict = factory.getNewDictionary();
+
 
 	public LlvvXmlToDetailXmlJson (String inputPath, String outputPath)
 	{
@@ -85,7 +89,8 @@ public class LlvvXmlToDetailXmlJson
 				Node entryNode = dicReader.readNexEntry();
 				while (entryNode != null)
 				{
-					LLVVEntry entry = new LLVVEntry(entryNode, volumeRef, Config.NORMALIZE_PRONUNCIATIONS);
+					Entry entry = LegacyXmlPaser.me().parseEntry(factory,
+							entryNode, volumeRef, Config.NORMALIZE_PRONUNCIATIONS);
 					dict.entries.add(entry);
 					entryNode = dicReader.readNexEntry();
 					fileEntries++;

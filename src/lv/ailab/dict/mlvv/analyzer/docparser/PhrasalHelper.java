@@ -1,19 +1,26 @@
-package lv.ailab.dict.mlvv.analyzer;
+package lv.ailab.dict.mlvv.analyzer.docparser;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
+import lv.ailab.dict.mlvv.struct.MLVVElementFactory;
 import lv.ailab.dict.mlvv.struct.MLVVGram;
 import lv.ailab.dict.mlvv.struct.MLVVPhrase;
-import lv.ailab.dict.mlvv.struct.MLVVSample;
 import lv.ailab.dict.struct.Phrase;
+import lv.ailab.dict.struct.Sample;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PhrasalExtractor
+public class PhrasalHelper
 {
+	protected static PhrasalHelper singleton = new PhrasalHelper();
+	public static PhrasalHelper me()
+	{
+		return singleton;
+	}
+
 	/**
 	 * No simbolu virknes, kas satur dažādas frāzes, izgūst frāžu masīvu.
 	 * @param linePart	šķirkļa daļa, kas jāpārtaisa frāzēs
@@ -21,10 +28,10 @@ public class PhrasalExtractor
 	 *                  paziņojumiem)
 	 * @return	izgūto frāžu masīvs (tukšs, ja nekā nav)
 	 */
-	public static Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>>
-		parseAllPhrases(String linePart, String lemma)
+	public Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
+		parseAllPhrases(MLVVElementFactory factory, String linePart, String lemma)
 	{
-		Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> res =
+		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res =
 				Tuple.of(new LinkedList<>(), new LinkedList<>());
 		if (linePart != null) linePart = linePart.trim();
 		if (linePart == null || linePart.length() < 1) return res;
@@ -40,16 +47,16 @@ public class PhrasalExtractor
 		// Apstrādā "pamata" piemērus.
 		if (linePart != null && !linePart.isEmpty())
 		{
-			Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> newRes =
-					parseAllSamplesAndPhrasals(linePart, lemma);
+			Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
+					parseAllSamplesAndPhrasals(factory, linePart, lemma);
 			res.first.addAll(newRes.first);
 			res.second.addAll(newRes.second);
 		}
 		// Apstrādā to, kas ir aiz tukšā vai pilnā aplīša.
 		if (lineEndPart != null && !lineEndPart.isEmpty())
 		{
-			Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> newRes =
-					PhrasalExtractor.parseAllTaxonsAndQuotes(lineEndPart, lemma);
+			Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
+					PhrasalHelper.me().parseAllTaxonsAndQuotes(factory, lineEndPart, lemma);
 			res.first.addAll(newRes.first);
 			res.second.addAll(newRes.second);
 		}
@@ -63,11 +70,12 @@ public class PhrasalExtractor
 	 * @param lemma		individuālo frāžu apstrādē reizēm vajag zināt lemmu.
 	 * @return izgūto piemēru un frāžu saraksti
 	 */
-	public static Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>>
-			parseAllTaxonsAndQuotes(String linePart, String lemma)
+	public Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
+			parseAllTaxonsAndQuotes(
+					MLVVElementFactory factory, String linePart, String lemma)
 	{
 		if (linePart == null || linePart.trim().isEmpty()) return null;
-		Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> res
+		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res
 				= Tuple.of(new LinkedList<>(), new LinkedList<>());
 		// Pirms <circle/> var būt "Pārn.:" vai "Intr.:", bet pirms <bullet/> tādam nevajadzētu būt.
 		if (linePart.startsWith("<bullet/>"))
@@ -82,16 +90,17 @@ public class PhrasalExtractor
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())
 			{
-				res.second.addAll(MLVVPhrase.parseTaxons(m.group(1)));
-				Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> newRes =
-						PhrasalExtractor.parseAllPhrases(m.group(2), lemma);
+				res.second.addAll(PhraseParser.me().parseTaxons(factory, m.group(1)));
+				Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
+						PhrasalHelper.me().parseAllPhrases(factory, m.group(2), lemma);
 				res.first.addAll(newRes.first);
 				res.second.addAll(newRes.second);
 			}
 			else
 			{
 				System.out.printf("Taksons \"%s\" neatbilst atdalīšanas šablonam\n", linePart);
-				res.second.addAll(MLVVPhrase.parseTaxons(linePart.substring("<bullet/>".length())));
+				res.second.addAll(PhraseParser.me().parseTaxons(
+						factory, linePart.substring("<bullet/>".length())));
 			}
 		}
 		else if (linePart.matches("((<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>.*"))
@@ -102,22 +111,25 @@ public class PhrasalExtractor
 			Matcher m = quotePat.matcher(linePart);
 			if (m.matches())
 			{
-				res.first.add(MLVVSample.extractQuote(m.group(1) + m.group(2)));
-				Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> newRes =
-						PhrasalExtractor.parseAllPhrases(m.group(3), lemma);
+				res.first.add(SampleParser.extractQuote(
+						factory, m.group(1) + m.group(2)));
+				Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
+						PhrasalHelper.me().parseAllPhrases(
+								factory, m.group(3), lemma);
 				res.first.addAll(newRes.first);
 				res.second.addAll(newRes.second);
 			}
 			else
 			{
 				System.out.printf("Citāts \"%s\" neatbilst atdalīšanas šablonam\n", linePart);
-				res.first.add(MLVVSample.extractQuote(linePart.replaceFirst("<circle/>", "")));
+				res.first.add(SampleParser.extractQuote(
+						factory, linePart.replaceFirst("<circle/>", "")));
 			}
 		}
 		else
 		{
 			System.out.printf("Citāts vai taksons \"%s\" neatbilst atsalīšanas šablonam\n", linePart);
-			res.first.add(MLVVSample.extractQuote(linePart));
+			res.first.add(SampleParser.extractQuote(factory, linePart));
 		}
 		return res;
 	}
@@ -130,11 +142,12 @@ public class PhrasalExtractor
 	 * @param lemma		individuālo frāžu apstrādē reizēm vajag zināt lemmu.
 	 * @return izgūto frāžu saraksts.
 	 */
-	protected static Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>>
-		parseAllSamplesAndPhrasals(String linePart, String lemma)
+	protected Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
+		parseAllSamplesAndPhrasals(
+				MLVVElementFactory factory, String linePart, String lemma)
 	{
 		if (linePart == null || linePart.trim().isEmpty()) return null;
-		Tuple<LinkedList<MLVVSample>,LinkedList<MLVVPhrase>> res =
+		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res =
 				Tuple.of(new LinkedList<>(), new LinkedList<>());
 
 		// Ja pēdējais punkts ir nejauši palicis ārā no kursīva, to iebāž
@@ -151,7 +164,7 @@ public class PhrasalExtractor
 		Matcher m = splitter.matcher(linePart);
 		while (m.matches())
 		{
-			res.first.add(MLVVSample.parseNoGlossSample(m.group(1).trim()));
+			res.first.add(SampleParser.parseNoGlossSample(factory, m.group(1).trim()));
 			linePart = m.group(2);
 			m = splitter.matcher(linePart);
 		}
@@ -176,7 +189,8 @@ public class PhrasalExtractor
 				Matcher dashMatcher = dashPhrases.matcher(part);
 				if (dashMatcher.matches())
 				{
-					MLVVPhrase resPhrase = MLVVPhrase.makePhrasalFromSplitText(
+					MLVVPhrase resPhrase = PhraseParser.me().makePhrasalFromSplitText(
+							factory,
 							dashMatcher.group(1).trim(), dashMatcher.group(2).trim(),
 							Phrase.Type.STABLE_UNIT, lemma, part);
 							//Phrase.Type.EXPLAINED_SAMPLE, lemma, part);
@@ -188,7 +202,7 @@ public class PhrasalExtractor
 				Matcher colonMatcher = colonPhrases.matcher(part);
 				Matcher simpleMatcher = simplePhrases.matcher(part);
 
-				MLVVSample resSample = new MLVVSample();
+				Sample resSample = new Sample();
 				//resSample.type = Sample.Type.SAMPLE;
 				//resSample.text = new LinkedList<>();
 
@@ -197,7 +211,12 @@ public class PhrasalExtractor
 				if (colonMatcher.matches())
 				{
 					String begin = colonMatcher.group(1).trim();
-					if (begin.length() > 0) resSample.grammar = new MLVVGram(begin);
+					if (begin.length() > 0)
+					{
+						MLVVGram tmp = factory.getNewGram();
+						tmp.reinitialize(begin);
+						resSample.grammar = tmp;
+					}
 					String end = colonMatcher.group(2).trim();
 					//resSample.text.add(Editors.removeCursive(end));
 					resSample.text = Editors.removeCursive(end);
@@ -237,7 +256,7 @@ public class PhrasalExtractor
 	 * @param linePart	apstrādājamā rindiņas daļa.
 	 * @return izgūto frāžu saraksts.
 	 */
-	protected static LinkedList<String> splitExplainedPhrasals(String linePart)
+	protected LinkedList<String> splitExplainedPhrasals(String linePart)
 	{
 		if (!linePart.startsWith("<i>")) linePart = "<i>" + linePart;
 		// Te ir maģija, lai nesadalītu "a. skaidrojums. <i>piem.</i> b. <i>sar.</i> skaidrojums.",

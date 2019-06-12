@@ -20,8 +20,10 @@
 package lv.ailab.dict.mlvv;
 
 import lv.ailab.dict.io.DocLoader;
+import lv.ailab.dict.mlvv.analyzer.docparser.EntryParser;
 import lv.ailab.dict.mlvv.analyzer.FlagStringCollector;
 import lv.ailab.dict.mlvv.analyzer.PreNormalizer;
+import lv.ailab.dict.mlvv.struct.MLVVElementFactory;
 import lv.ailab.dict.mlvv.struct.MLVVEntry;
 import lv.ailab.dict.mlvv.struct.MLVVGloss;
 import lv.ailab.dict.mlvv.analyzer.validation.Validator;
@@ -58,6 +60,7 @@ public class MlvvDocToDetailXmlJson
 	public Dictionary dict = new Dictionary();
 	public Validator val = new Validator();
 	public FlagStringCollector flags = new FlagStringCollector();
+	public MLVVElementFactory factory = new MLVVElementFactory();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
@@ -111,7 +114,7 @@ public class MlvvDocToDetailXmlJson
 	{
 		try
 		{
-			MLVVEntry e = MLVVEntry.parse(PreNormalizer.normalizeLine(line));
+			MLVVEntry e = EntryParser.me().parse(factory, PreNormalizer.normalizeLine(line));
 			if (e != null)
 			{
 				dict.entries.add(e);

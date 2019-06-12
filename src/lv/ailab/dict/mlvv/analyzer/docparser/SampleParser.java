@@ -1,13 +1,21 @@
-package lv.ailab.dict.mlvv.struct;
+package lv.ailab.dict.mlvv.analyzer.docparser;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
+import lv.ailab.dict.mlvv.struct.MLVVElementFactory;
+import lv.ailab.dict.mlvv.struct.MLVVGram;
 import lv.ailab.dict.struct.Sample;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MLVVSample extends Sample
+public class SampleParser
 {
+	protected static SampleParser singleton = new SampleParser();
+	public static SampleParser me()
+	{
+		return singleton;
+	}
+
 	/**
 	 * No dotā rindas fragmenta izgūst frāzi bez skaidrojuma, bet ar gramatiku,
 	 * kas, iespējams, atdalīta ar kolu.
@@ -15,21 +23,26 @@ public class MLVVSample extends Sample
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
 	 *                      neko citu
 	 */
-	public static MLVVSample parseNoGlossSample(String linePart)
+	public static Sample parseNoGlossSample(
+			MLVVElementFactory factory, String linePart)
 	{
-		MLVVSample res = new MLVVSample();
+		Sample res = factory.getNewSample();
 		//res.type = Type.SAMPLE;
 		//res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
 		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			res.grammar = new MLVVGram(m.group(1));
+			MLVVGram tmp = factory.getNewGram();
+			tmp.reinitialize(m.group(1));
+			res.grammar = tmp;
 			linePart = m.group(2).trim();
 		}
 		else if (gramConsts.matches())
 		{
-			res.grammar = new MLVVGram(gramConsts.group(1));
+			MLVVGram tmp = factory.getNewGram();
+			tmp.reinitialize(gramConsts.group(1));
+			res.grammar = tmp;
 			linePart = gramConsts.group(2).trim();
 		}
 		linePart = linePart.replace("</i>: <i>\"", ": \"");
@@ -44,13 +57,13 @@ public class MLVVSample extends Sample
 	 *                  citu
 	 * @return izgūtā frāze vai null
 	 */
-	public static MLVVSample extractQuote(String linePart)
+	public static Sample extractQuote(MLVVElementFactory factory, String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.replaceAll("\\s\\s+", " ").trim();
 		if (linePart.length() < 1) return null;
 
-		MLVVSample res = new MLVVSample();
+		Sample res = factory.getNewSample();
 		//res.type = Type.QUOTE;
 		//res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
@@ -68,7 +81,9 @@ public class MLVVSample extends Sample
 			res.citedSource = m.group(5).trim();
 			String gramString = Editors.removeCursive(m.group(1)).trim();
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
-			res.grammar = new MLVVGram(gramString);
+			MLVVGram tmp = factory.getNewGram();
+			tmp.reinitialize(gramString);
+			res.grammar = tmp;
 		}
 		else
 		{
@@ -78,13 +93,4 @@ public class MLVVSample extends Sample
 		}
 		return res;
 	}
-
-	/*
-	 * Remove empty variants.
-	 */
-	/*public void variantCleanup()
-	{
-		for (String variant : text)
-			if (variant == null || variant.isEmpty()) text.remove(variant);
-	}*/
 }

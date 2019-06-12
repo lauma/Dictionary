@@ -75,6 +75,16 @@ public class Sense implements HasToJSON, HasToXML
 		ordNumber = null;
 	}
 
+	public void reinitialize(Gloss gloss)
+	{
+		grammar = null;
+		this.gloss = new LinkedList<>();
+		this.gloss.add(gloss);
+		phrases = null;
+		subsenses = null;
+		ordNumber = null;
+	}
+
 	public boolean glossOnly()
 	{
 		return gloss != null && grammar == null &&

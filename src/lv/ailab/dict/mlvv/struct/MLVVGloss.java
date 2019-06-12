@@ -1,6 +1,5 @@
 package lv.ailab.dict.mlvv.struct;
 
-import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gloss;
 
 /**
@@ -20,20 +19,4 @@ public class MLVVGloss extends Gloss
 	public static boolean UNDERSCORE_FOR_CURSIVE = false;
 
 	protected  MLVVGloss() {};
-
-	public MLVVGloss (String text)
-	{
-		super (text);
-	}
-
-	/**
-	 * Izveido glosu un normalizē tajā homonīmu indeksus.
-	 */
-	public static MLVVGloss parse(String text)
-	{
-		text = Editors.replaceHomIds(text, false);
-		text = Editors.translateCursive(text, UNDERSCORE_FOR_CURSIVE);
-		return new MLVVGloss(text);
-	}
-
 }

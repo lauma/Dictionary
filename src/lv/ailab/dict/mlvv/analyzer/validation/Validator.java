@@ -1,7 +1,7 @@
 package lv.ailab.dict.mlvv.analyzer.validation;
 
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVGloss;
+import lv.ailab.dict.mlvv.struct.MLVVEntry;
+import lv.ailab.dict.mlvv.struct.MLVVGloss;
 import lv.ailab.dict.struct.*;
 
 import java.util.ArrayList;

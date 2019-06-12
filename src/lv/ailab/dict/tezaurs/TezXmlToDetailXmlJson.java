@@ -29,7 +29,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramdata.DirectRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.OptHypernRules;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
-import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
+import lv.ailab.dict.tezaurs.struct.TEntry;
 import lv.ailab.dict.utils.Tuple;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;

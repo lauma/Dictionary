@@ -13,9 +13,9 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.FirstConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondThirdConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.ThirdConj;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;

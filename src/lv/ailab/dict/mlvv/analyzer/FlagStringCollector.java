@@ -1,6 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer;
 
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
+import lv.ailab.dict.mlvv.struct.MLVVEntry;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

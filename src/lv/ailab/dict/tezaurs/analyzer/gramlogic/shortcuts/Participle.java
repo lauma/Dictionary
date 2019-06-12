@@ -1,7 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
 
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
 /**

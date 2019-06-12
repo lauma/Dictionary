@@ -2,9 +2,9 @@ package lv.ailab.dict.tezaurs.analyzer;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.constants.flags.Keys;
-import lv.ailab.dict.tezaurs.analyzer.struct.TEntry;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
+import lv.ailab.dict.tezaurs.struct.TEntry;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;

@@ -5,7 +5,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.StemSlotSubRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.nouns.WithAltLemma;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;

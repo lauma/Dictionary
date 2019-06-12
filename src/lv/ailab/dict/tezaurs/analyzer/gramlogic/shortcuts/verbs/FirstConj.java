@@ -4,8 +4,8 @@ import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.utils.Tuple;
 
 /**

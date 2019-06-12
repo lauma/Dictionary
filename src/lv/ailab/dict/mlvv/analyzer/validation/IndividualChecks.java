@@ -1,6 +1,6 @@
 package lv.ailab.dict.mlvv.analyzer.validation;
 
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVEntry;
+import lv.ailab.dict.mlvv.struct.MLVVEntry;
 import lv.ailab.dict.struct.Entry;
 import lv.ailab.dict.struct.Header;
 

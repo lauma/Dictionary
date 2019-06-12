@@ -2,7 +2,7 @@ package lv.ailab.dict.llvv;
 
 import lv.ailab.dict.io.DictionaryXmlReadingException;
 import lv.ailab.dict.io.StaxReader;
-import lv.ailab.dict.llvv.analyzer.struct.LLVVEntry;
+import lv.ailab.dict.llvv.struct.LLVVEntry;
 import lv.ailab.dict.struct.Dictionary;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;

@@ -1,9 +1,9 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TFeatures;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TKeys;
-import lv.ailab.dict.tezaurs.analyzer.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;

@@ -2,9 +2,9 @@ package lv.ailab.dict.mlvv.analyzer;
 
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Finders;
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVGram;
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVPhrase;
-import lv.ailab.dict.mlvv.analyzer.struct.MLVVSample;
+import lv.ailab.dict.mlvv.struct.MLVVGram;
+import lv.ailab.dict.mlvv.struct.MLVVPhrase;
+import lv.ailab.dict.mlvv.struct.MLVVSample;
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.utils.Tuple;
 

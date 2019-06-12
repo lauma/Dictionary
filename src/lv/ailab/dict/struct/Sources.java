@@ -1,7 +1,5 @@
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.io.DictionaryXmlReadingException;
-import lv.ailab.dict.io.DomIoUtils;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.JSONUtils;
@@ -59,14 +57,5 @@ public class Sources implements HasToJSON, HasToXML
 			}
 			parent.appendChild(containerN);
 		}
-	}
-
-	public static Sources fromStdXML(Node sourcesNode, GenericElementFactory elemFact)
-	throws DictionaryXmlReadingException
-	{
-		Sources result = elemFact.getNewSources();
-		result.s = DomIoUtils.getPrimitiveArrayFromXml(sourcesNode, "Source");
-		if (result.s != null && result.s.isEmpty()) return null;
-		return result;
 	}
 }

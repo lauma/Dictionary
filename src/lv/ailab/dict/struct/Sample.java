@@ -1,8 +1,5 @@
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.io.DictionaryXmlReadingException;
-import lv.ailab.dict.io.DomIoUtils;
-import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.CountingSet;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
@@ -180,26 +177,6 @@ public class Sample implements HasToJSON, HasToXML
 			phraseN.appendChild(sourceN);
 		}
 		parent.appendChild(phraseN);
-	}
-
-	public static Sample fromStdXML(Node sampleNode, GenericElementFactory elemFact)
-	throws DictionaryXmlReadingException
-	{
-		Sample result = elemFact.getNewSample();
-		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) sampleNode);
-		if (fields == null || fields.isEmpty()) return null;
-
-		// Content
-		result.text = StdXmlFieldInputHelper.getSinglarStringField(fields,
-				"Sample", "Content");
-		// Gram
-		result.grammar = StdXmlFieldInputHelper.getGram(fields, elemFact, "Sample");
-		// CitedSource
-		result.citedSource = StdXmlFieldInputHelper.getSinglarStringField(fields,
-				"Sample", "CitedSource");
-		// Warn, if there is something else
-		StdXmlFieldInputHelper.dieOnNonempty(fields, "Sample");
-		return result;
 	}
 
 	/*

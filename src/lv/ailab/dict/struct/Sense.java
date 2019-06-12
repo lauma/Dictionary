@@ -1,8 +1,5 @@
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.io.DictionaryXmlReadingException;
-import lv.ailab.dict.io.DomIoUtils;
-import lv.ailab.dict.io.StdXmlFieldInputHelper;
 import lv.ailab.dict.utils.*;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
@@ -245,31 +242,5 @@ public class Sense implements HasToJSON, HasToXML
 			senseN.appendChild(subsContN);
 		}
 		parent.appendChild(senseN);
-	}
-
-	public static Sense fromStdXML(Node senseNode, GenericElementFactory elemFact)
-	throws DictionaryXmlReadingException
-	{
-		Sense result = elemFact.getNewSense();
-		DomIoUtils.FieldMapping fields = DomIoUtils.domElemToHash((Element) senseNode);
-		if (fields == null || fields.isEmpty()) return null;
-
-		// SenseNumber
-		result.ordNumber = StdXmlFieldInputHelper.getSinglarStringField(fields,
-				"Sense", "SenseNumber");
-		// Gram
-		result.grammar = StdXmlFieldInputHelper.getGram(fields, elemFact, "Sense");
-		// Gloss
-		result.gloss = StdXmlFieldInputHelper.getGloses(fields, elemFact, "Sense");
-		// Examples
-		result.examples = StdXmlFieldInputHelper.getExamples(fields, elemFact, "Sense");
-		// StablePhrases
-		result.phrases = StdXmlFieldInputHelper.getStablePhrases(fields, elemFact, "Sense");
-		// Subsenses
-		result.subsenses = StdXmlFieldInputHelper.getSenses(fields, elemFact,
-				"Sense", "Subsenses");
-		// Warn, if there is something else
-		StdXmlFieldInputHelper.dieOnNonempty(fields, "Sense");
-		return result;
 	}
 }

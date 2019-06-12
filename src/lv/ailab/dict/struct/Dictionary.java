@@ -1,10 +1,7 @@
 package lv.ailab.dict.struct;
 
-import lv.ailab.dict.io.DictionaryXmlReadingException;
-import lv.ailab.dict.io.DomIoUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Virsstruktūra nelielām vārdnīcām. Nodrošina šķirkļu saraksta uzglabāšanu
@@ -80,29 +76,5 @@ public class Dictionary
 			count++;
 		}
 		out.write("\n]");
-	}
-
-	/**
-	 * Dom pieeja - visu ielasa atmiņā uzreiz.
-	 */
-	public static Dictionary fromStdXml(Document doc, GenericElementFactory elemFact)
-	throws DictionaryXmlReadingException
-	{
-		if (!"Dictionary".equals(doc.getNodeName()))
-			throw new DictionaryXmlReadingException("Nav atrasts XML saknes elements \"Dictionary\"");
-		Node latvianNode = DomIoUtils.getOnlyChildFromXml(doc, "Latvian");
-		if (latvianNode == null)
-			throw new DictionaryXmlReadingException("Nav atrasts XML saknes elements \"Dictionary\\Latvian\"");
-		LinkedList<Node> entries = DomIoUtils.getSingleTypeNodeArrayFromXml(latvianNode, "Entry");
-		if (entries == null || entries.isEmpty())
-			throw new DictionaryXmlReadingException("Nav neviena šķirkļa - elementa \"Entry\"");
-		Dictionary result = elemFact.getNewDictionary();
-		result.entries = new ArrayList<>();
-		for (Node eNode : entries)
-		{
-			Entry e = Entry.fromStdXML(eNode, elemFact);
-			if (e != null) result.entries.add(e);
-		}
-		return result;
 	}
 }

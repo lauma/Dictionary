@@ -1,4 +1,4 @@
-package lv.ailab.dict.tezaurs.analyzer;
+package lv.ailab.dict.tezaurs.analyzer.stats;
 
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.constants.flags.Keys;

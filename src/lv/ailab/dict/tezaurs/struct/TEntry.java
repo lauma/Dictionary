@@ -1,24 +1,18 @@
 package lv.ailab.dict.tezaurs.struct;
 
 import lv.ailab.dict.struct.*;
-import lv.ailab.dict.tezaurs.analyzer.io.Loaders;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 /**
- * Tēzaura šķirklis, papildināts ar ielādēšanas/apstrādes mehānismiem un
- * melnajiem sarakstiem.
+ * Tēzaura šķirklis, papildināts ar melnajiem sarakstiem.
  */
 public class TEntry extends Entry
 {
@@ -27,101 +21,9 @@ public class TEntry extends Entry
 	 * Lemmas šķirkļiem, kurus šobrīd ignorē (neapstrādā).
 	 * Skatīt arī inBlacklist().
 	 */
-	private static HashMap<String, HashSet<String>> blacklist = initBlacklist();
+	protected static HashMap<String, HashSet<String>> blacklist = initBlacklist();
 
-	/**
-	 * No XML elementam "s" atbilstošā DOM izveido šķirkļa datu struktūru. Tas
-	 * ietver arī visu analīzi.
-	 * @param sNode XML DOM elements, kas atbilst "s"
-	 */
-	public TEntry(Node sNode)
-	{
-		NodeList fields = sNode.getChildNodes();
-		LinkedList<Node> postponed = new LinkedList<>();
-		for (int i = 0; i < fields.getLength(); i++)
-		{
-			Node field = fields.item(i);
-			String fieldname = field.getNodeName();
-			if (fieldname.equals("v")) // Šķirkļavārda informācija
-			{
-				if (head != null)
-					System.err.printf("Šķirklis \"%s\" satur vairāk kā vienu \'v\'!\n", head.lemma.text);
-				head = new THeader(field);
-			}
-			else if (!fieldname.equals("#text")) // Teksta elementus ignorē, jo šajā vietā ir tikai atstarpjojums.
-				postponed.add(field);
-		}
-		for (Node field : postponed)
-		{
-			String fieldname = field.getNodeName();
-			if (fieldname.equals("avots")) // avoti
-				sources = new TSources(field);
-			else if (fieldname.equals("g_n")) // visas nozīmes
-				senses = Loaders.loadSenses(field, head.lemma.text);
-			else if (fieldname.equals("g_fraz")) //frazeoloģiskās vienības
-				phrases = Loaders.loadPhrases(field, head.lemma.text, "fraz");
-			else if (fieldname.equals("g_de")) //atvasinātās formas
-				loadDerivs(field);
-			else if (fieldname.equals("ref")) // atsauce uz citu šķirkli
-			{
-				references = new LinkedList<>();
-				references.addAll(Arrays.asList(field.getTextContent().split(", ")));
-				// TODO: vai šeit vajag dalījumu?
-			}
-			else
-				System.err.printf("Šķirklī \"%s\" lauks %s netiek apstrādāts!\n", head.lemma.text, fieldname);
-		}
-		
-		homId = ((org.w3c.dom.Element)sNode).getAttribute("i");
-		if ("".equals(homId)) homId = null;
-
-		if (head == null)
-			System.err.printf("Šķirklis bez šķirkļa vārda / šķirkļa galvas:\n%s\n", sNode.toString());
-
-		// Move etymology from gram to its own field.
-		else if (head != null && head.gram != null && head.gram.flags != null &&
-				head.gram.flags.testKey(TKeys.ETYMOLOGY))
-		{
-			HashSet<String> etym = head.gram.flags.getAll(TKeys.ETYMOLOGY);
-			if (etym.size() > 1)
-				System.err.printf("Šķirklī \"%s\" ir vairāki etimoloģijas lauki\n", head.lemma.text);
-			etymology = etym.stream().reduce((a, b) -> a + "; " + b).orElse(null);
-			head.gram.flags.pairings.removeAll(TKeys.ETYMOLOGY);
-		}
-	}
-	
-	/**
-	 * Process g_de field.
-	 * Derived forms - in Lexicon sense, they are separate lexemes, alternate
-	 * wordforms but with a link to the same dictionary entry. 
-	 */
-	private void loadDerivs(Node allDerivs)
-	{
-		if (derivs == null) derivs = new LinkedList<>();
-		NodeList derivNodes = allDerivs.getChildNodes(); 
-		for (int i = 0; i < derivNodes.getLength(); i++)
-		{
-			Node deriv = derivNodes.item(i);
-			if (deriv.getNodeName().equals("de"))
-			{
-				NodeList derivSubNodes = deriv.getChildNodes(); 
-				for (int j = 0; j < derivSubNodes.getLength(); j++)
-				{
-					Node derivSubNode = derivSubNodes.item(j);
-					if (derivSubNode.getNodeName().equals("v"))
-						derivs.add(new THeader(derivSubNode));
-					else if (!derivSubNode.getNodeName().equals("#text")) // Text nodes here are ignored.
-						System.err.printf(
-							"g_de/de lauks %s netiek apstrādāts, jo tiek sagaidīts 'v'.\n",
-							derivSubNode.getNodeName());
-				}
-			}
-			else if (!deriv.getNodeName().equals("#text")) // Text nodes here are ignored.
-				System.err.printf(
-					"g_de lauks %s netiek apstrādāts, jo tiek sagaidīts 'de'.\n",
-					deriv.getNodeName());
-		}		
-	}	
+	protected TEntry(){};
 
 	public boolean inBlacklist()
 	{
@@ -138,7 +40,7 @@ public class TEntry extends Entry
 	 * Blacklist file format - one word (lemma) per line with one optional space
 	 * separated homonym index. No homonym index mean all homonyms.
 	 */
-	private static HashMap<String, HashSet<String>> initBlacklist()
+	protected static HashMap<String, HashSet<String>> initBlacklist()
 	{
 		HashMap<String, HashSet<String>> blist = new HashMap<>();
 		BufferedReader input;

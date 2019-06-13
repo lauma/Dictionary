@@ -5,10 +5,11 @@ import lv.ailab.dict.utils.GramPronuncNormalizer;
 
 public class TPronuncNormalizer implements GramPronuncNormalizer
 {
-	private static TPronuncNormalizer onlyOne = new TPronuncNormalizer();
-	public static TPronuncNormalizer singleton()
+	protected TPronuncNormalizer(){};
+	protected static TPronuncNormalizer singleton = new TPronuncNormalizer();
+	public static TPronuncNormalizer me()
 	{
-		return onlyOne;
+		return singleton;
 	}
 	public String normalizePronuncs (String pronunciation)
 	{

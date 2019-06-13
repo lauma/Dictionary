@@ -1,15 +1,14 @@
-package lv.ailab.dict.tezaurs.analyzer.io;
+package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
 import lv.ailab.dict.struct.Phrase;
 import lv.ailab.dict.struct.Sense;
-import lv.ailab.dict.tezaurs.struct.TPhrase;
 import lv.ailab.dict.tezaurs.struct.TSense;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.LinkedList;
 
-public class Loaders
+public class LoadingUtils
 {
 	/**
 	 * Loads contents of g_n or g_an field into LinkedList.
@@ -31,7 +30,7 @@ public class Loaders
 			//assume (not tested) that it matches the order in file
 			if (sense.getNodeName().equals("n"))
 			{
-				TSense newSense = new TSense(sense, lemma);
+				TSense newSense = SenseParser.me().parseSense(sense, lemma);
 				res.add(newSense);
 				//if (newSense.gloss == null)
 				//	System.out.println ("Nav gloss! "+ lemma);
@@ -57,7 +56,7 @@ public class Loaders
 		{
 			Node phrase = phraseNodes.item(i);
 			if (phrase.getNodeName().equals(subElemName))
-				res.add(new TPhrase(phrase, lemma));
+				res.add(PhraseParser.me().parsePhrase(phrase, lemma));
 			else if (!phrase.getNodeName().equals("#text")) // Text nodes here are ignored.
 				System.err.printf(
 					"%s lauks %s netiek apstrādāts, jo sagaida tikai '%s'.\n",

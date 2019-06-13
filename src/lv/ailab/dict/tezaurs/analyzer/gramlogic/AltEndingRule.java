@@ -3,7 +3,8 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
-import lv.ailab.dict.tezaurs.struct.TLemma;
+import lv.ailab.dict.tezaurs.struct.TElementFactory;
+import lv.ailab.dict.tezaurs.struct.THeader;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -181,11 +182,14 @@ public class AltEndingRule implements AdditionalHeaderRule
 						&& lemma.length() >= rule.lemmaEndingCutLength)
 				{
 					String lemmaStub = lemma.substring(0, lemma.length() - rule.lemmaEndingCutLength);
-					Lemma altLemma = new TLemma(lemmaStub + rule.altWordEnding);
+					Lemma altLemma = TElementFactory.me().getNewLemma();
+					altLemma.text = lemmaStub + rule.altWordEnding;
 					Flags altParams = new Flags();
 					if (rule.altWordFlags != null)
 						altParams.addAll(rule.altWordFlags);
-					altLemmasCollector.add(new Header(altLemma, rule.altWordParadigms, altParams));
+					THeader tmp = TElementFactory.me().getNewHeader();
+					tmp.reinitialize(TElementFactory.me(), altLemma, rule.altWordParadigms, altParams);
+					altLemmasCollector.add(tmp);
 
 					paradigmCollector.addAll(rule.paradigms);
 					if (rule.positiveFlags != null)

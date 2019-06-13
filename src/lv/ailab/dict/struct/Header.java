@@ -32,31 +32,43 @@ public class Header implements HasToJSON, HasToXML
 		lemma = null;
 		gram = null;
 	}
-	public Header(Lemma lemma, int paradigm, Flags flags)
+	public void reinitialize(
+			GenericElementFactory factory, Lemma lemma, int paradigm, Flags flags)
 	{
 		this.lemma = lemma;
-		gram = new Gram();
-		gram.flags= flags;
+		gram = factory.getNewGram();
+		gram.flags = flags;
 		gram.paradigm = new HashSet<Integer>(){{add(paradigm);}};
 	}
-	public Header(Lemma lemma, Integer[] paradigm, Flags flags)
+
+	public void reinitialize(
+			GenericElementFactory factory, Lemma lemma, Integer[] paradigm, Flags flags)
 	{
 		this.lemma = lemma;
-		gram = new Gram();
-		gram.flags= flags;
-		if (paradigm != null && paradigm.length > 0)
-			gram.paradigm = new HashSet<>(Arrays.asList(paradigm));
-		else gram.paradigm = null;
+		if (paradigm != null && paradigm.length > 0 || !flags.pairings.isEmpty())
+		{
+			gram = factory.getNewGram();
+			gram.flags = flags;
+			if (paradigm != null && paradigm.length > 0)
+				gram.paradigm = new HashSet<>(Arrays.asList(paradigm));
+			else gram.paradigm = null;
+		}
+		else gram = null;
 	}
 
-	public Header(Lemma lemma, Set<Integer> paradigm, Flags flags)
+	public void reinitialize(
+			GenericElementFactory factory, Lemma lemma, Set<Integer> paradigm, Flags flags)
 	{
 		this.lemma = lemma;
-		gram = new Gram();
-		gram.flags = flags;
-		if (paradigm != null && paradigm.size() > 0)
-			gram.paradigm = new HashSet<>(paradigm);
-		else gram.paradigm = null;
+		if (paradigm != null && paradigm.size() > 0 || !flags.pairings.isEmpty())
+		{
+			gram = factory.getNewGram();
+			gram.flags = flags;
+			if (paradigm != null && paradigm.size() > 0)
+				gram.paradigm = new HashSet<>(paradigm);
+			else gram.paradigm = null;
+		}
+		else gram = null;
 	}
 
 	/**

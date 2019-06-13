@@ -2,8 +2,9 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.tezaurs.struct.TElementFactory;
 import lv.ailab.dict.tezaurs.struct.THeader;
-import lv.ailab.dict.tezaurs.struct.TLemma;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Collections;
@@ -84,12 +85,14 @@ public class StemSlotRule implements AdditionalHeaderRule
 						.matcher(gramText).matches())
 				{
 					int newBegin = pattern.length();
-					TLemma altLemma = new TLemma(lemmaStub + curLemmaLogic.altWordEnding);
+					Lemma altLemma = TElementFactory.me().getNewLemma();
+					altLemma.text = lemmaStub + curLemmaLogic.altWordEnding;
 					Flags altParams = new Flags();
 					if (curLemmaLogic.altWordFlags != null)
 						altParams.addAll(curLemmaLogic.altWordFlags);
-					altLemmasCollector.add(
-							new THeader(altLemma, curLemmaLogic.altWordParadigms, altParams));
+					THeader tmp = TElementFactory.me().getNewHeader();
+					tmp.reinitialize(TElementFactory.me(), altLemma, curLemmaLogic.altWordParadigms, altParams);
+					altLemmasCollector.add(tmp);
 
 					paradigmCollector.addAll(curLemmaLogic.paradigms);
 					if (curLemmaLogic.positiveFlags != null)

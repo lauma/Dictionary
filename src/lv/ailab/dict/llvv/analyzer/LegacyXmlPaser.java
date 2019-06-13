@@ -26,10 +26,9 @@ public class LegacyXmlPaser
 	 * ietver arī visu analīzi.
 	 * @param sNode XML DOM elements, kas atbilst "s"
 	 */
-	public Entry parseEntry(
-			LLVVElementFactory factory, Node sNode, String volume, boolean normalizePronunc)
+	public Entry parseEntry(Node sNode, String volume, boolean normalizePronunc)
 	{
-		Entry result = factory.getNewEntry();
+		Entry result = LLVVElementFactory.me().getNewEntry();
 		NodeList fields = sNode.getChildNodes();
 		LinkedList<Node> header = new LinkedList<>();
 		LinkedList<Node> body = new LinkedList<>();
@@ -49,7 +48,7 @@ public class LegacyXmlPaser
 		if (header.isEmpty())
 			System.err.printf("Šķirklis bez šķirkļa vārda / šķirkļa galvas:\n%s\n",
 					sNode.toString());
-		result.head = parseHeader(factory, header);
+		result.head = parseHeader(header);
 
 		for (Node field : body)
 		{
@@ -57,12 +56,12 @@ public class LegacyXmlPaser
 			if (fieldname.equals("n"))
 			{
 				if (result.senses == null) result.senses = new LinkedList<>();
-				result.senses.add(parseSense(factory, field));
+				result.senses.add(parseSense(field));
 			}
 			else if (fieldname.equals("fraz"))
 			{
 				if (result.phrases == null) result.phrases = new LinkedList<>();
-				result.phrases.add(parsePhrase(factory, field, Phrase.Type.PHRASEOLOGICAL, false));
+				result.phrases.add(parsePhrase(field, Phrase.Type.PHRASEOLOGICAL, false));
 			}
 			else if (fieldname.equals("ref"))
 			{
@@ -82,30 +81,30 @@ public class LegacyXmlPaser
 					result.head.lemma.text);
 		else
 		{
-			result.sources = factory.getNewSources();
+			result.sources = LLVVElementFactory.me().getNewSources();
 			result.sources.s = new LinkedList<>();
 			result.sources.s.add(volume);
 		}
 		return result;
 	}
 
-	public Header parseHeader (LLVVElementFactory factory, List<Node> vNodes)
+	public Header parseHeader (List<Node> vNodes)
 	{
 		if (vNodes == null || vNodes.isEmpty()) return null;
-		Header result = factory.getNewHeader();
-		result.gram = factory.getNewGram();
+		Header result = LLVVElementFactory.me().getNewHeader();
+		result.gram = LLVVElementFactory.me().getNewGram();
 		result.gram.altLemmas = new LinkedList<>();
 		for (Node vNode : vNodes)
-			result.gram.altLemmas.add(parseHeader(factory, vNode));
+			result.gram.altLemmas.add(parseHeader(vNode));
 
-		result.lemma = factory.getNewLemma();
+		result.lemma = LLVVElementFactory.me().getNewLemma();
 		result.lemma.text = result.gram.altLemmas.get(0).lemma.text;
 		return result;
 	}
 
-	public Header parseHeader(LLVVElementFactory factory, Node vNode)
+	public Header parseHeader(Node vNode)
 	{
-		Header result = factory.getNewHeader();
+		Header result = LLVVElementFactory.me().getNewHeader();
 		NodeList fields = vNode.getChildNodes();
 		LinkedList<Node> postponed = new LinkedList<>();
 		for (int i = 0; i < fields.getLength(); i++)
@@ -116,7 +115,7 @@ public class LegacyXmlPaser
 			{
 				if (result.lemma != null) System.err.printf(
 						"\'vf\' ar lemmu \"%s\" satur vēl vienu \'vf\'\n", result.lemma.text);
-				result.lemma = parseLemma(factory, field);
+				result.lemma = parseLemma(field);
 			}
 			else if (!fieldname.equals("#text")) // Teksta elementus šeit ignorē.
 				postponed.add(field);
@@ -128,57 +127,57 @@ public class LegacyXmlPaser
 		{
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram")) // grammar
-				result.gram = parseGram(factory, field);
+				result.gram = parseGram(field);
 			else System.err.printf(
 					"\'v\' elements \'%s\' netika apstrādāts\n", fieldname);
 		}
 		return result;
 	}
 
-	public Lemma parseLemma(LLVVElementFactory factory, Node vfNode)
+	public Lemma parseLemma(Node vfNode)
 	{
-		Lemma result = factory.getNewLemma();
+		Lemma result = LLVVElementFactory.me().getNewLemma();
 		result.text = vfNode.getTextContent();
 		String pronString = ((org.w3c.dom.Element)vfNode).getAttribute("ru");
-		result.setPronunciation(pronString, LLVVPronuncNormalizer.singleton());
+		result.setPronunciation(pronString, LLVVPronuncNormalizer.me());
 		return result;
 	}
 
-	public Gram parseGram(LLVVElementFactory factory, Node gramNode)
+	public Gram parseGram(Node gramNode)
 	{
-		Gram result = factory.getNewGram();
+		Gram result = LLVVElementFactory.me().getNewGram();
 		result.freeText = Gram.normalizePronunc(
-				gramNode.getTextContent(), LLVVPronuncNormalizer.singleton());
+				gramNode.getTextContent(), LLVVPronuncNormalizer.me());
 		return result;
 	}
 
-	public Gram parseGram(LLVVElementFactory factory, String gramText)
+	public Gram parseGram(String gramText)
 	{
-		Gram result = factory.getNewGram();
+		Gram result = LLVVElementFactory.me().getNewGram();
 		result.freeText = Gram.normalizePronunc(
-				gramText, LLVVPronuncNormalizer.singleton());
+				gramText, LLVVPronuncNormalizer.me());
 		return result;
 	}
 
-	public Sense parseSense(LLVVElementFactory factory, Node nNode)
+	public Sense parseSense(Node nNode)
 	{
-		Sense result = factory.getNewSense();
+		Sense result = LLVVElementFactory.me().getNewSense();
 		NodeList fields = nNode.getChildNodes();
 		for (int i = 0; i < fields.getLength(); i++)
 		{
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram"))
-				result.grammar = parseGram(factory, field);
+				result.grammar = parseGram(field);
 			else if (fieldname.equals("d"))
 			{
 				if (result.gloss == null) result.gloss = new LinkedList<>();
-				result.gloss.add(parseGloss(factory, field));
+				result.gloss.add(parseGloss(field));
 			}
 			else if (fieldname.equals("n"))
 			{
 				if (result.subsenses == null) result.subsenses = new LinkedList<>();
-				result.subsenses.add(parseSense(factory, field));
+				result.subsenses.add(parseSense(field));
 			}
 			else if (fieldname.equals("piem"))
 			{
@@ -186,12 +185,12 @@ public class LegacyXmlPaser
 				if (piemType == PhrasalExtractor.Type.SAMPLE)
 				{
 					if (result.examples == null) result.examples = new LinkedList<>();
-					result.examples.add(parseSample(factory, field));
+					result.examples.add(parseSample(field));
 				}
 				else if (piemType == PhrasalExtractor.Type.PHRASAL)
 				{
 					if (result.phrases == null) result.phrases = new LinkedList<>();
-					result.phrases.add(parsePhrase(factory, field,
+					result.phrases.add(parsePhrase(field,
 							Phrase.Type.STABLE_UNIT, true));
 				}
 				else
@@ -201,7 +200,7 @@ public class LegacyXmlPaser
 			else if (fieldname.equals("fraz"))
 			{
 				if (result.phrases == null) result.phrases = new LinkedList<>();
-				result.phrases.add(parsePhrase(factory, field,
+				result.phrases.add(parsePhrase(field,
 						Phrase.Type.PHRASEOLOGICAL, true));
 			}
 			else if (!fieldname.equals("#text")) // Teksta elementus šeit ignorē.
@@ -212,9 +211,9 @@ public class LegacyXmlPaser
 		return result;
 	}
 
-	public Gloss parseGloss(LLVVElementFactory factory, Node dNode)
+	public Gloss parseGloss(Node dNode)
 	{
-		Gloss result = factory.getNewGloss();
+		Gloss result = LLVVElementFactory.me().getNewGloss();
 		NodeList glossFields = dNode.getChildNodes();
 		for (int j = 0; j < glossFields.getLength(); j++)
 		{
@@ -236,9 +235,9 @@ public class LegacyXmlPaser
 				if (result.grammar != null)
 				{
 					System.err.println("\'d\' elements satur vairāk kā vienu \'gram\'");
-					result.grammar = parseGram(factory, result.grammar.freeText + "; " + glossField.getTextContent());
+					result.grammar = parseGram(result.grammar.freeText + "; " + glossField.getTextContent());
 				}
-				else result.grammar = parseGram(factory, glossField.getTextContent());
+				else result.grammar = parseGram(glossField.getTextContent());
 			}
 			else if (!glossFieldname.equals("#text")) // Teksta elementus šeit ignorē.
 				System.err.printf("\'d\' elements \'%s\' netiek apstrādāts\n", glossFieldname);
@@ -247,9 +246,9 @@ public class LegacyXmlPaser
 	}
 
 
-	public Sample parseSample(LLVVElementFactory factory, Node piemNode)
+	public Sample parseSample(Node piemNode)
 	{
-		Sample result = factory.getNewSample();
+		Sample result = LLVVElementFactory.me().getNewSample();
 		NodeList fields = piemNode.getChildNodes();
 		for (int i = 0; i < fields.getLength(); i++)
 		{
@@ -265,7 +264,7 @@ public class LegacyXmlPaser
 			{
 				if (result.grammar != null)
 					System.err.println("\'piem\' elements satur vairāk kā vienu \'gram\'");
-				result.grammar = parseGram(factory, field);
+				result.grammar = parseGram(field);
 			}
 			else if (fieldname.equals("bib"))
 			{
@@ -280,10 +279,9 @@ public class LegacyXmlPaser
 	}
 
 	public Phrase parsePhrase(
-			LLVVElementFactory factory, Node piemNode, Phrase.Type defaultType,
-			boolean usedInSense)
+			Node piemNode, Phrase.Type defaultType, boolean usedInSense)
 	{
-		Phrase result = factory.getNewPhrase();
+		Phrase result = LLVVElementFactory.me().getNewPhrase();
 		String xmlType = ((org.w3c.dom.Element)piemNode).getAttribute("tips");
 		result.type = defaultType;
 		if (xmlType != null && !xmlType.isEmpty())
@@ -319,11 +317,11 @@ public class LegacyXmlPaser
 
 			}
 			else if (fieldname.equals("gram"))
-				result.grammar = parseGram(factory, field);
+				result.grammar = parseGram(field);
 			else if (fieldname.equals("n"))
 			{
 				if (result.subsenses == null) result.subsenses = new LinkedList<>();
-				result.subsenses.add(parseSense(factory, field));
+				result.subsenses.add(parseSense(field));
 			}
 			else if (!fieldname.equals("#text")) // Teksta lauki šeit tiek ignorēti.
 				System.err.printf("\'%s\' elements \'%s\' netiek apstrādāts\n",

@@ -35,8 +35,7 @@ public class LlvvXmlToDetailXmlJson
 
 	public String inputDataPath;
 	public String outputDataPath;
-	public LLVVElementFactory factory = new LLVVElementFactory();
-	public Dictionary dict = factory.getNewDictionary();
+	public Dictionary dict = LLVVElementFactory.me().getNewDictionary();
 
 
 	public LlvvXmlToDetailXmlJson (String inputPath, String outputPath)
@@ -89,7 +88,7 @@ public class LlvvXmlToDetailXmlJson
 				Node entryNode = dicReader.readNexEntry();
 				while (entryNode != null)
 				{
-					Entry entry = LegacyXmlPaser.me().parseEntry(factory,
+					Entry entry = LegacyXmlPaser.me().parseEntry(
 							entryNode, volumeRef, Config.NORMALIZE_PRONUNCIATIONS);
 					dict.entries.add(entry);
 					entryNode = dicReader.readNexEntry();

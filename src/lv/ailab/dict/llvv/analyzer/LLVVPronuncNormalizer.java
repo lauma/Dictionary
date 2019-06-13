@@ -5,10 +5,11 @@ import lv.ailab.dict.utils.GramPronuncNormalizer;
 
 public class LLVVPronuncNormalizer implements GramPronuncNormalizer
 {
-	private static LLVVPronuncNormalizer onlyOne = new LLVVPronuncNormalizer();
-	public static LLVVPronuncNormalizer singleton()
+	protected LLVVPronuncNormalizer(){};
+	protected static LLVVPronuncNormalizer singleton = new LLVVPronuncNormalizer();
+	public static LLVVPronuncNormalizer me()
 	{
-		return onlyOne;
+		return singleton;
 	}
 	public String normalizePronuncs (String pronunciation)
 	{

@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 public class PhrasalHelper
 {
+	protected PhrasalHelper(){};
 	protected static PhrasalHelper singleton = new PhrasalHelper();
 	public static PhrasalHelper me()
 	{
@@ -28,8 +29,8 @@ public class PhrasalHelper
 	 *                  paziņojumiem)
 	 * @return	izgūto frāžu masīvs (tukšs, ja nekā nav)
 	 */
-	public Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
-		parseAllPhrases(MLVVElementFactory factory, String linePart, String lemma)
+	public Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> parseAllPhrases(
+			String linePart, String lemma)
 	{
 		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res =
 				Tuple.of(new LinkedList<>(), new LinkedList<>());
@@ -48,7 +49,7 @@ public class PhrasalHelper
 		if (linePart != null && !linePart.isEmpty())
 		{
 			Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
-					parseAllSamplesAndPhrasals(factory, linePart, lemma);
+					parseAllSamplesAndPhrasals(linePart, lemma);
 			res.first.addAll(newRes.first);
 			res.second.addAll(newRes.second);
 		}
@@ -56,7 +57,7 @@ public class PhrasalHelper
 		if (lineEndPart != null && !lineEndPart.isEmpty())
 		{
 			Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
-					PhrasalHelper.me().parseAllTaxonsAndQuotes(factory, lineEndPart, lemma);
+					PhrasalHelper.me().parseAllTaxonsAndQuotes(lineEndPart, lemma);
 			res.first.addAll(newRes.first);
 			res.second.addAll(newRes.second);
 		}
@@ -71,8 +72,7 @@ public class PhrasalHelper
 	 * @return izgūto piemēru un frāžu saraksti
 	 */
 	public Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
-			parseAllTaxonsAndQuotes(
-					MLVVElementFactory factory, String linePart, String lemma)
+			parseAllTaxonsAndQuotes(String linePart, String lemma)
 	{
 		if (linePart == null || linePart.trim().isEmpty()) return null;
 		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res
@@ -90,9 +90,9 @@ public class PhrasalHelper
 			Matcher m = taxonPat.matcher(linePart);
 			if (m.matches())
 			{
-				res.second.addAll(PhraseParser.me().parseTaxons(factory, m.group(1)));
+				res.second.addAll(PhraseParser.me().parseTaxons(m.group(1)));
 				Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
-						PhrasalHelper.me().parseAllPhrases(factory, m.group(2), lemma);
+						PhrasalHelper.me().parseAllPhrases(m.group(2), lemma);
 				res.first.addAll(newRes.first);
 				res.second.addAll(newRes.second);
 			}
@@ -100,7 +100,7 @@ public class PhrasalHelper
 			{
 				System.out.printf("Taksons \"%s\" neatbilst atdalīšanas šablonam\n", linePart);
 				res.second.addAll(PhraseParser.me().parseTaxons(
-						factory, linePart.substring("<bullet/>".length())));
+						linePart.substring("<bullet/>".length())));
 			}
 		}
 		else if (linePart.matches("((<i>\\s*)?\\p{Lu}\\p{Ll}+\\.</i>:\\s*)?<circle/>.*"))
@@ -111,11 +111,9 @@ public class PhrasalHelper
 			Matcher m = quotePat.matcher(linePart);
 			if (m.matches())
 			{
-				res.first.add(SampleParser.extractQuote(
-						factory, m.group(1) + m.group(2)));
+				res.first.add(SampleParser.extractQuote(m.group(1) + m.group(2)));
 				Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> newRes =
-						PhrasalHelper.me().parseAllPhrases(
-								factory, m.group(3), lemma);
+						PhrasalHelper.me().parseAllPhrases(m.group(3), lemma);
 				res.first.addAll(newRes.first);
 				res.second.addAll(newRes.second);
 			}
@@ -123,13 +121,13 @@ public class PhrasalHelper
 			{
 				System.out.printf("Citāts \"%s\" neatbilst atdalīšanas šablonam\n", linePart);
 				res.first.add(SampleParser.extractQuote(
-						factory, linePart.replaceFirst("<circle/>", "")));
+						linePart.replaceFirst("<circle/>", "")));
 			}
 		}
 		else
 		{
 			System.out.printf("Citāts vai taksons \"%s\" neatbilst atsalīšanas šablonam\n", linePart);
-			res.first.add(SampleParser.extractQuote(factory, linePart));
+			res.first.add(SampleParser.extractQuote(linePart));
 		}
 		return res;
 	}
@@ -143,8 +141,7 @@ public class PhrasalHelper
 	 * @return izgūto frāžu saraksts.
 	 */
 	protected Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>>
-		parseAllSamplesAndPhrasals(
-				MLVVElementFactory factory, String linePart, String lemma)
+		parseAllSamplesAndPhrasals(String linePart, String lemma)
 	{
 		if (linePart == null || linePart.trim().isEmpty()) return null;
 		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> res =
@@ -164,7 +161,7 @@ public class PhrasalHelper
 		Matcher m = splitter.matcher(linePart);
 		while (m.matches())
 		{
-			res.first.add(SampleParser.parseNoGlossSample(factory, m.group(1).trim()));
+			res.first.add(SampleParser.parseNoGlossSample(m.group(1).trim()));
 			linePart = m.group(2);
 			m = splitter.matcher(linePart);
 		}
@@ -190,7 +187,6 @@ public class PhrasalHelper
 				if (dashMatcher.matches())
 				{
 					MLVVPhrase resPhrase = PhraseParser.me().makePhrasalFromSplitText(
-							factory,
 							dashMatcher.group(1).trim(), dashMatcher.group(2).trim(),
 							Phrase.Type.STABLE_UNIT, lemma, part);
 							//Phrase.Type.EXPLAINED_SAMPLE, lemma, part);
@@ -213,7 +209,7 @@ public class PhrasalHelper
 					String begin = colonMatcher.group(1).trim();
 					if (begin.length() > 0)
 					{
-						MLVVGram tmp = factory.getNewGram();
+						MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 						tmp.reinitialize(begin);
 						resSample.grammar = tmp;
 					}

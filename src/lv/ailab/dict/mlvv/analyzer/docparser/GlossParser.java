@@ -6,6 +6,7 @@ import lv.ailab.dict.mlvv.struct.MLVVGloss;
 
 public class GlossParser
 {
+	protected GlossParser(){};
 	protected static GlossParser singleton = new GlossParser();
 	public static GlossParser me()
 	{
@@ -15,11 +16,11 @@ public class GlossParser
 	/**
 	 * Izveido glosu un normalizē tajā homonīmu indeksus.
 	 */
-	public MLVVGloss parse(MLVVElementFactory factory, String text)
+	public MLVVGloss parse(String text)
 	{
 		text = Editors.replaceHomIds(text, false);
 		text = Editors.translateCursive(text, MLVVGloss.UNDERSCORE_FOR_CURSIVE);
-		MLVVGloss result = factory.getNewGloss();
+		MLVVGloss result = MLVVElementFactory.me().getNewGloss();
 		result.text = text;
 		return result;
 	}

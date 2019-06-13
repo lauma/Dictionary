@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 public class PhraseParser
 {
+	protected PhraseParser(){};
 	protected static PhraseParser singleton = new PhraseParser();
 	public static PhraseParser me()
 	{
@@ -31,14 +32,13 @@ public class PhraseParser
 	 * @return	izgūtā frāze vai null
 	 */
 	public MLVVPhrase parseSpecialPhrasal(
-			MLVVElementFactory factory, String linePart, Phrase.Type phraseType,
-			String lemma)
+			String linePart, Phrase.Type phraseType, String lemma)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
 		Matcher dashMatcher = Pattern.compile("(.*?)[\\-\u2014\u2013]\\s*(.*)").matcher(linePart);
-		MLVVPhrase res = factory.getNewPhrase();
+		MLVVPhrase res = MLVVElementFactory.me().getNewPhrase();
 		res.type = phraseType;
 		res.text = new LinkedList<>();
 
@@ -48,9 +48,9 @@ public class PhraseParser
 			String begin = dashMatcher.group(1).trim();
 			String end = dashMatcher.group(2).trim();
 			// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
-			extractGramAndText(res, factory, begin);
+			extractGramAndText(res, begin);
 			// Analizē skaidrojumus.
-			parseGramAndGloss(res, factory, end, lemma, linePart);
+			parseGramAndGloss(res, end, lemma, linePart);
 		}
 		// Nu nesanāca!
 		else
@@ -81,14 +81,14 @@ public class PhraseParser
 	 *                  frāzes un neko citu.
 	 * @return izgūtā frāze vai null
 	 */
-	public ArrayList<MLVVPhrase> parseTaxons(MLVVElementFactory factory, String linePart)
+	public ArrayList<MLVVPhrase> parseTaxons(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
 
 		ArrayList<MLVVPhrase> results = new ArrayList<>();
-		MLVVPhrase res = factory.getNewPhrase();
+		MLVVPhrase res = MLVVElementFactory.me().getNewPhrase();
 		results.add(res);
 		res.type = Phrase.Type.TAXON;
 		res.text = new LinkedList<>();
@@ -113,13 +113,13 @@ public class PhraseParser
 			if (gloss != null && !gloss.isEmpty())
 			{
 				res.subsenses = new LinkedList<>();
-				MLVVSense tmp = factory.getNewSense();
-				tmp.reinitialize(GlossParser.me().parse(factory, gloss.trim()));
+				MLVVSense tmp = MLVVElementFactory.me().getNewSense();
+				tmp.reinitialize(GlossParser.me().parse(gloss.trim()));
 				res.subsenses.add(tmp);
 			}
 			// TODO vai uzskatāmāk nebūs bez rekursijas?
 			if (m.group(4) != null && !m.group(4).isEmpty())
-				results.addAll(parseTaxons(factory, m.group(4)));
+				results.addAll(parseTaxons(m.group(4)));
 		}
 		else
 		{
@@ -147,17 +147,16 @@ public class PhraseParser
 	 *                              ziņojumos.
 	 */
 	public MLVVPhrase makePhrasalFromSplitText(
-			MLVVElementFactory factory,
 			String preDashLinePart, String postDashLinePart, Phrase.Type type,
 			String lemma, String linePartForErrorMsg)
 	{
-		MLVVPhrase resPhrase = factory.getNewPhrase();
+		MLVVPhrase resPhrase = MLVVElementFactory.me().getNewPhrase();
 		resPhrase.type = type;
 		resPhrase.text = new LinkedList<>();
 		// Izanalizē frāzes tekstu un pie tā piekārtoto gramatiku.
-		extractGramAndText(resPhrase, factory, preDashLinePart);
+		extractGramAndText(resPhrase, preDashLinePart);
 		// Analizē skaidrojumus.
-		parseGramAndGloss(resPhrase, factory, postDashLinePart, lemma, linePartForErrorMsg);
+		parseGramAndGloss(resPhrase, postDashLinePart, lemma, linePartForErrorMsg);
 		resPhrase.variantCleanup();
 		// Pabrīdina, ja nu ir sanākusi frāze bez teksta.
 		if (resPhrase.text.isEmpty())
@@ -178,8 +177,7 @@ public class PhraseParser
 	 * @param preDashLinePart	rindiņas daļa, kas tiek izmantota gramatikas un
 	 *                          frāžu tekstu formēšanai.
 	 */
-	protected void extractGramAndText(
-			MLVVPhrase phrase, MLVVElementFactory factory, String preDashLinePart)
+	protected void extractGramAndText(MLVVPhrase phrase, String preDashLinePart)
 	{
 		// Ja vajag, frāzi sadala.
 		Pattern phrasesplitter = Pattern.compile("(?:(?<=</i>)[,;?!]|(?<=[,;?!]</i>)) (?:arī|biežāk|retāk)\\s*(?=<i>)");
@@ -241,7 +239,7 @@ public class PhraseParser
 		}
 		if (gramText.length() > 0)
 		{
-			MLVVGram tmpGr = factory.getNewGram();
+			MLVVGram tmpGr = MLVVElementFactory.me().getNewGram();
 			tmpGr.reinitialize(gramText);
 			phrase.grammar = tmpGr;
 		}
@@ -259,8 +257,8 @@ public class PhraseParser
 	 *                               ziņojumos.
 	 */
 	protected void parseGramAndGloss(
-			MLVVPhrase phrase, MLVVElementFactory factory,
-			String postDashLinePart, String lemma, String linePartForErrorMsg)
+			MLVVPhrase phrase, String postDashLinePart, String lemma,
+			String linePartForErrorMsg)
 	{
 		// Ja te ir lielā gramatika un vairākas nozīmes, tad gramatiku piekārto
 		// pie frāzes, nevis pirmās nozīmes.
@@ -278,7 +276,7 @@ public class PhraseParser
 				if (phrase.grammar == null)
 				{
 					if (gram.startsWith("<i>")) gram = gram.substring(3);
-					MLVVGram tmp = factory.getNewGram();
+					MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 					tmp.reinitialize(gram);
 					phrase.grammar = tmp;
 					postDashLinePart = endMatcher.group(2).trim();
@@ -314,7 +312,7 @@ public class PhraseParser
 					.map(s -> s.substring(2).trim())
 					.toArray(String[]::new);
 		}
-		parseSubsenses(phrase, factory, subsenseTexts, lemma);
+		parseSubsenses(phrase, subsenseTexts, lemma);
 	}
 
 	/**
@@ -325,8 +323,7 @@ public class PhraseParser
 	 *                      šķirkļa lemmu.
 	 */
 	protected void parseSubsenses(
-			MLVVPhrase phrase, MLVVElementFactory factory,
-			String[] subsenseTexts, String lemma)
+			MLVVPhrase phrase, String[] subsenseTexts, String lemma)
 	{
 		// Normalizē un apstrādā izgūtos apakšnozīmju fragmentus.
 		phrase.subsenses = new LinkedList<>();
@@ -336,7 +333,7 @@ public class PhraseParser
 				subsense = "<i>" + subsense;
 			else if (subsense.contains("<i>") && !subsense.contains("</i>"))
 				subsense = subsense + "</i>";
-			phrase.subsenses.add(SenseParser.me().parse(factory, subsense, lemma));
+			phrase.subsenses.add(SenseParser.me().parse(subsense, lemma));
 		}
 		// Ja frāzei ir vairākas nozīmes, tās sanumurē.
 		phrase.enumerateGloses();

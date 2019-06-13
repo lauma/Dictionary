@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class HeaderParser
 {
+	protected HeaderParser(){};
 	protected static HeaderParser singleton = new HeaderParser();
 	public static HeaderParser me()
 	{
@@ -19,17 +20,15 @@ public class HeaderParser
 	/**
 	 * Izgūst vienkārša veida hederi - no virknes <b>lemmma</b> [izruna] grmatika
 	 */
-	public MLVVHeader parseSingularHeader(
-			MLVVElementFactory factory, String linePart)
+	public MLVVHeader parseSingularHeader(String linePart)
 	{
-		return parseSingularHeader(factory, linePart, null);
+		return parseSingularHeader(linePart, null);
 	}
 
 	/**
 	 * Izgūst vienkārša veida hederi - no virknes <b>lemmma</b> [izruna] grmatika
 	 */
-	public MLVVHeader parseSingularHeader(
-			MLVVElementFactory factory, String linePart, String prefix)
+	public MLVVHeader parseSingularHeader(String linePart, String prefix)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
@@ -38,7 +37,7 @@ public class HeaderParser
 		Matcher m = Pattern.compile("<([ub])>(.+?)(\\*?)</\\1>(!?)(\\*?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			MLVVHeader res = factory.getNewHeader();
+			MLVVHeader res = MLVVElementFactory.me().getNewHeader();
 			res.lemma = new Lemma(m.group(2) + m.group(4));
 			String star = m.group(3) + m.group(5);
 			String gramStr = m.group(6);
@@ -72,7 +71,7 @@ public class HeaderParser
 			// Apstrādāt atlikumu.
 			if (!gramStr.isEmpty())
 			{
-				MLVVGram tmp = factory.getNewGram();
+				MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 				tmp.reinitialize(gramStr);
 				res.gram = tmp;
 			}

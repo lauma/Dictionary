@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class SenseParser
 {
+	protected SenseParser(){};
 	protected static SenseParser singleton = new SenseParser();
 	public static SenseParser me()
 	{
@@ -28,25 +29,24 @@ public class SenseParser
 	 *                      paziņojumiem)
 	 * @return	izgūtā nozīme vai null
 	 */
-	public MLVVSense parse(
-			MLVVElementFactory factory, String linePart, String lemma)
+	public MLVVSense parse(String linePart, String lemma)
 	{
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return null;
-		MLVVSense res = factory.getNewSense();
+		MLVVSense res = MLVVElementFactory.me().getNewSense();
 
 		// Nocērp un apstrādā beigas, lai nemaisās: nozīmes nianses
-		linePart = extractSubsenses(res, factory, linePart, lemma);
+		linePart = extractSubsenses(res, linePart, lemma);
 
 		// Nocērp no sākuma saprotamo: nozīmes gramatikau
-		linePart = extractBeginGrammar(res, factory, linePart, lemma);
+		linePart = extractBeginGrammar(res, linePart, lemma);
 
 		// Tagad vajadzētu sekot definīcijai.
-		linePart = extractGloss(res, factory, linePart);
+		linePart = extractGloss(res, linePart);
 
 		// Piemēru analīze.
 		Tuple<LinkedList<Sample>,LinkedList<MLVVPhrase>> phrasals
-				= PhrasalHelper.me().parseAllPhrases(factory, linePart, lemma);
+				= PhrasalHelper.me().parseAllPhrases(linePart, lemma);
 		if (phrasals != null && phrasals.first.size() > 0)
 			res.examples = new LinkedList<>(phrasals.first);
 		if (phrasals != null && phrasals.second.size() > 0)
@@ -62,8 +62,7 @@ public class SenseParser
 	 * @return	neapstrādātā (pāri palikusī rindas daļa).
 	 */
 	protected String extractSubsenses(
-			MLVVSense sense, MLVVElementFactory factory, String linePart,
-			String lemma)
+			MLVVSense sense, String linePart, String lemma)
 	{
 		if (linePart.contains("<lines/>"))
 		{
@@ -73,7 +72,7 @@ public class SenseParser
 			if (sense.subsenses == null) sense.subsenses = new LinkedList<>();
 			for (String subP : subsensesParts)
 			{
-				MLVVSense ss = SenseParser.me().parse(factory, subP, lemma);
+				MLVVSense ss = SenseParser.me().parse(subP, lemma);
 				if (ss != null) sense.subsenses.add(ss);
 			}
 			linePart = linePart.substring(0, linePart.indexOf("<lines/>"));
@@ -88,8 +87,7 @@ public class SenseParser
 	 * @return	neapstrādātā (pāri palikusī rindas daļa).
 	 */
 	protected String extractBeginGrammar (
-			MLVVSense sense, MLVVElementFactory factory, String linePart,
-			String lemma)
+			MLVVSense sense, String linePart, String lemma)
 	{
 		boolean star = false;
 		if (linePart.startsWith("*"))
@@ -118,10 +116,10 @@ public class SenseParser
 				preHeader = header.substring(0, bIndex);
 				realHeder = header.substring(bIndex);
 			}
-			MLVVGram resGram = GramParser.me().parse(factory, realHeder);
+			MLVVGram resGram = GramParser.me().parse(realHeder);
 			if (preHeader != null && preHeader.trim().length() > 0)
 			{
-				MLVVGram other = factory.getNewGram();
+				MLVVGram other = MLVVElementFactory.me().getNewGram();
 				other.reinitialize(preHeader);
 				resGram.addTextsBefore(other, true);
 			}
@@ -144,7 +142,7 @@ public class SenseParser
 				Matcher gramMatch = gramPat.matcher(linePart);
 				if (gramMatch.matches())
 				{
-					sense.grammar = GramParser.me().parse(factory, gramMatch.group(1));
+					sense.grammar = GramParser.me().parse(gramMatch.group(1));
 					if (sense.grammar.freeText != null && !sense.grammar.freeText.isEmpty())
 						System.out.printf(
 								"No fragmenta \"%s\" sanāk nozīmes gramatika ar locījumiem \"%s\" (šķirklī %s)\n",
@@ -159,7 +157,7 @@ public class SenseParser
 			else
 			{
 				System.out.printf("Nesapārots i tags nozīmē \"%s\"", linePart);
-				MLVVGram tmp = factory.getNewGram();
+				MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 				tmp.reinitialize(linePart.substring(3));
 				sense.grammar = tmp;
 				linePart = "";
@@ -170,7 +168,7 @@ public class SenseParser
 			if (sense.grammar != null)((MLVVGram)sense.grammar).addStar();
 			else
 			{
-				MLVVGram tmp = factory.getNewGram();
+				MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 				tmp.reinitialize("*");
 				sense.grammar = tmp;
 			}
@@ -185,8 +183,7 @@ public class SenseParser
 	 * @param linePart	apstrādājamā rindiņa (rindiņas daļa).
 	 * @return	neapstrādātā (pāri palikusī rindas daļa).
 	 */
-	protected String extractGloss(
-			MLVVSense sense, MLVVElementFactory factory, String linePart)
+	protected String extractGloss(MLVVSense sense, String linePart)
 	{
 		// Noskaidro, vai pēc glosas ir piemēri.
 		int nextCircle = Finders.getAnyCircleIndex(linePart);
@@ -199,14 +196,14 @@ public class SenseParser
 		if (cut > -1)
 		{
 			sense.gloss = new LinkedList<>();
-			sense.gloss.add(GlossParser.me().parse(factory, linePart.substring(0, cut).trim()));
+			sense.gloss.add(GlossParser.me().parse(linePart.substring(0, cut).trim()));
 			linePart = linePart.substring(cut).trim();
 		}
 		// Ja piemēru nav.
 		else
 		{
 			sense.gloss = new LinkedList<>();
-			sense.gloss.add(GlossParser.me().parse(factory, linePart.trim()));
+			sense.gloss.add(GlossParser.me().parse(linePart.trim()));
 			linePart = "";
 		}
 		return linePart;

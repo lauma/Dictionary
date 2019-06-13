@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class EntryParser
 {
+	protected EntryParser(){};
 	protected static EntryParser singleton = new EntryParser();
 	public static EntryParser me()
 	{
@@ -22,14 +23,14 @@ public class EntryParser
 	 * Izanalizē rindu, un atgriež null, ja tajā nekā nav, vai MLVVEntry, ja no
 	 * šīs rindas tādu var izgūt.
 	 */
-	public MLVVEntry parse(MLVVElementFactory factory, String line)
+	public MLVVEntry parse(String line)
 	{
 		if (line == null || line.isEmpty()) return null;
 
 		// Ja rinda satur tikai burtu, neizgūst neko.
 		if (line.matches("<b>\\p{L}\\p{M}*</b>")) return null;
 
-		MLVVEntry result = factory.getNewEntry();
+		MLVVEntry result = MLVVElementFactory.me().getNewEntry();
 
 		// Atdala šķirkļa galvu.
 		String head, body;
@@ -102,10 +103,10 @@ public class EntryParser
 			System.out.println("Neizdodas izgūt šķirkļa galvu no šīs rindas:\n\t" + line);
 			return null;
 		}
-		else parseHeadBlock(result, factory, head);
+		else parseHeadBlock(result, head);
 		if (body.isEmpty() && result.references == null )
 			System.out.println("Neizdodas izgūt šķirkļa ķermeni no šīs rindas:\n\t" + line);
-		else if (!body.isEmpty()) parseBodyBlock(result, factory, body);
+		else if (!body.isEmpty()) parseBodyBlock(result, body);
 		return result;
 	}
 
@@ -113,10 +114,9 @@ public class EntryParser
 	 * TODO karodziņi
 	 * TODO izrunas
 	 */
-	protected void parseHeadBlock(
-			MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parseHeadBlock(MLVVEntry entry, String linePart)
 	{
-		entry.head = factory.getNewHeader();
+		entry.head = MLVVElementFactory.me().getNewHeader();
 		Matcher m = Pattern.compile("<b>(.+?)(\\*?)</b>(\\*?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
@@ -135,7 +135,7 @@ public class EntryParser
 				// Izmet ārā homonīma indeksu.
 				linePart = "<b>" + entry.head.lemma.text + "</b> " + m.group(2);
 			} else linePart = "<b>" + entry.head.lemma.text + "</b>" + gram;
-			entry.head.gram = GramParser.me().parse(factory, linePart);
+			entry.head.gram = GramParser.me().parse(linePart);
 			if (star!= null && !star.isEmpty())((MLVVGram)entry.head.gram).addStar();
 		} else
 		{
@@ -146,8 +146,7 @@ public class EntryParser
 		}
 	}
 
-	protected void parseBodyBlock(
-			MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parseBodyBlock(MLVVEntry entry, String linePart)
 	{
 		linePart = linePart.trim();
 		// Normatīvais komentārs
@@ -178,7 +177,7 @@ public class EntryParser
 		m = Pattern.compile("(.*?)<square/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			parseDerivs(entry, factory, m.group(2));
+			parseDerivs(entry, m.group(2));
 			linePart = m.group(1).trim();
 		}
 
@@ -186,7 +185,7 @@ public class EntryParser
 		m = Pattern.compile("(.*?)<diamond/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			parsePhraseology(entry, factory, m.group(2).trim());
+			parsePhraseology(entry, m.group(2).trim());
 			linePart = m.group(1).trim();
 		}
 
@@ -194,47 +193,44 @@ public class EntryParser
 		m = Pattern.compile("(.*?)<triangle/>(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			parseStables(entry, factory, m.group(2).trim());
+			parseStables(entry, m.group(2).trim());
 			linePart = m.group(1).trim();
 		}
 
 		if (linePart.length() > 0)
-			parseSenses(entry, factory, linePart);
+			parseSenses(entry, linePart);
 
 	}
 
 	/**
 	 * TODO vai viena gramatika var attiekties uz vairākām lemmām?
 	 */
-	protected void parseDerivs(
-			MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parseDerivs(MLVVEntry entry, String linePart)
 	{
 		String[] derivTexts = linePart.split("<square/>|\\s*(?=<b>)");
 		if (derivTexts.length < 1) return;
 		entry.derivs = new LinkedList<>();
 		for (String dt :derivTexts)
 		{
-			MLVVHeader h = HeaderParser.me().parseSingularHeader(factory, dt.trim());
+			MLVVHeader h = HeaderParser.me().parseSingularHeader(dt.trim());
 			if (h != null) entry.derivs.add(h);
 		}
 	}
 
-	protected void parsePhraseology(
-			MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parsePhraseology(MLVVEntry entry, String linePart)
 	{
 		String[] phrasesParts = linePart.split("<diamond/>");
 		//if (phrasesParts.length > 0 && phraseology == null)  phraseology = new LinkedList<>();
 		if (phrasesParts.length > 0 && entry.phrases == null)  entry.phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = PhraseParser.me().parseSpecialPhrasal(factory,
+			MLVVPhrase p = PhraseParser.me().parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.PHRASEOLOGICAL, entry.head.lemma.text);
 			if (p != null) entry.phrases.add(p);
 		}
 	}
 
-	protected void parseStables(
-			MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parseStables(MLVVEntry entry, String linePart)
 	{
 		linePart = linePart.trim();
 		String[] phrasesParts = linePart.split("<triangle/>");
@@ -242,12 +238,12 @@ public class EntryParser
 			entry.phrases = new LinkedList<>();
 		for (String phraseText : phrasesParts)
 		{
-			MLVVPhrase p = PhraseParser.me().parseSpecialPhrasal(factory,
+			MLVVPhrase p = PhraseParser.me().parseSpecialPhrasal(
 					phraseText.trim(), Phrase.Type.STABLE_UNIT, entry.head.lemma.text);
 			if (p != null) entry.phrases.add(p);
 		}
 	}
-	protected void parseSenses(MLVVEntry entry, MLVVElementFactory factory, String linePart)
+	protected void parseSenses(MLVVEntry entry, String linePart)
 	{
 		linePart = linePart.trim();
 		if (linePart.length() < 1) return;
@@ -262,7 +258,7 @@ public class EntryParser
 		entry.senses = new LinkedList<>();
 		for (int senseNumber = 0; senseNumber < sensesParts.length; senseNumber++)
 		{
-			MLVVSense s = SenseParser.me().parse(factory, sensesParts[senseNumber], entry.head.lemma.text);
+			MLVVSense s = SenseParser.me().parse(sensesParts[senseNumber], entry.head.lemma.text);
 			if (s != null) entry.senses.add(s);
 			if (numberSenses && (s.ordNumber == null || s.ordNumber.isEmpty()))
 				s.ordNumber = Integer.toString(senseNumber + 1);

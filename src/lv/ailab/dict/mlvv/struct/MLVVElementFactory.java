@@ -4,6 +4,13 @@ import lv.ailab.dict.struct.GenericElementFactory;
 
 public class MLVVElementFactory extends GenericElementFactory
 {
+	protected MLVVElementFactory(){};
+	protected static MLVVElementFactory singleton = new MLVVElementFactory();
+	public static MLVVElementFactory me()
+	{
+		return singleton;
+	}
+
 	@Override
 	public MLVVEntry getNewEntry() { return new MLVVEntry(); }
 	@Override

@@ -15,19 +15,20 @@ import java.util.regex.Pattern;
 
 public class GramParser
 {
+	protected GramParser(){};
 	protected static GramParser singleton = new GramParser();
 	public static GramParser me()
 	{
 		return singleton;
 	}
 
-	public MLVVGram parse(MLVVElementFactory factory, String linePart)
+	public MLVVGram parse(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.trim();
 		if (linePart.isEmpty()) return null;
 
-		MLVVGram gram = factory.getNewGram();
+		MLVVGram gram = MLVVElementFactory.me().getNewGram();
 		// ir ierobežojošās formas
 		Matcher gramFullRestrForms = Pattern.compile(
 				"((?:(?:(?!<u>).)*?[,;]\\s)?)" // kaut kas pirms pasvītrojuma
@@ -51,21 +52,21 @@ public class GramParser
 			String restrFirstFlag = gramFullRestrForms.group(2).trim() + gramFullRestrForms.group(3);
 			String restrForms = gramFullRestrForms.group(4);
 			String restrLastFlags = gramFullRestrForms.group(5).trim();
-			MLVVGram tmpGram = parse(factory, linePart);
+			MLVVGram tmpGram = parse(linePart);
 			if (tmpGram != null) gram = tmpGram;
-			parseFullRestrForms(gram, factory, restrFirstFlag, restrForms, restrLastFlags);
+			parseFullRestrForms(gram, restrFirstFlag, restrForms, restrLastFlags);
 		}
 		// Ierobežojošās formas ir pieminētas (uz to norāda kols), bet nav precīzi izrakstītas).
 		else if (gramSimpleRestrForms.matches())
-			parseSimpleRestForms(gram, factory, gramSimpleRestrForms.group(1),
+			parseSimpleRestForms(gram, gramSimpleRestrForms.group(1),
 					gramSimpleRestrForms.group(2));
 		// Ir altLemma iekavās
 		else if (gramAltLemmaBraces.matches())
-			parseBracedAltLemmas(gram, factory, gramAltLemmaBraces.group(1),
+			parseBracedAltLemmas(gram, gramAltLemmaBraces.group(1),
 					gramAltLemmaBraces.group(2), gramAltLemmaBraces.group(3));
 		// Ir parastā altLemma
 		else if (linePart.contains("<b>"))
-			parseStandardAltLemmas(gram, factory, linePart);
+			parseStandardAltLemmas(gram, linePart);
 		else // nav altLemmu
 			gram.freeText = linePart;
 
@@ -81,8 +82,7 @@ public class GramParser
 	 * @param restrLastFlags
 	 */
 	protected void parseFullRestrForms(
-			MLVVGram gram, MLVVElementFactory factory, String restrFirstFlag,
-			String restrForms, String restrLastFlags)
+			MLVVGram gram, String restrFirstFlag, String restrForms, String restrLastFlags)
 	{
 		String[] restrParts = restrForms.split("(?=\\b(retāk|arī)</i>\\s<u>|(?<!\\b(retāk|arī)</i>\\s)<u>)");
 		if (gram.formRestrictions == null)gram.formRestrictions = new LinkedList<>();
@@ -98,7 +98,7 @@ public class GramParser
 			{
 				p = p.substring("arī</i>".length()).trim();
 			}
-			MLVVHeader restr = HeaderParser.me().parseSingularHeader(factory, p, prefix);
+			MLVVHeader restr = HeaderParser.me().parseSingularHeader(p, prefix);
 			restrFirstFlag = restrFirstFlag.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 			restrLastFlags = restrLastFlags.replaceAll("</?i>", "").replaceAll("\\s+", " ").trim();
 			if (restrLastFlags.startsWith(";") || restrLastFlags.startsWith(","))
@@ -106,7 +106,7 @@ public class GramParser
 			if (restrFirstFlag.length() > 0 || restrLastFlags.length() > 0)
 			{
 				MLVVGram restrGram = (MLVVGram)restr.gram;
-				if (restrGram == null) restrGram = factory.getNewGram();
+				if (restrGram == null) restrGram = MLVVElementFactory.me().getNewGram();
 				if (restrGram.flagText != null)
 					restrGram.flagText = restrGram.flagText.trim();
 				if (restrFirstFlag.length() > 0 )
@@ -140,13 +140,12 @@ public class GramParser
 	 * @param postColonPart	gramatikas daļa pēc kola
 	 */
 	protected void parseSimpleRestForms(
-			MLVVGram gram, MLVVElementFactory factory, String preColonPart,
-			String postColonPart)
+			MLVVGram gram, String preColonPart, String postColonPart)
 	{
 		preColonPart = Editors.closeCursive(preColonPart);
 		postColonPart = Editors.openCursive(postColonPart);
-		MLVVHeader restr = factory.getNewHeader();
-		restr.gram = parse(factory, preColonPart);
+		MLVVHeader restr = MLVVElementFactory.me().getNewHeader();
+		restr.gram = parse(preColonPart);
 		if (gram.formRestrictions == null) gram.formRestrictions = new LinkedList<>();
 		gram.formRestrictions.add(restr);
 		gram.freeText = postColonPart;
@@ -162,8 +161,7 @@ public class GramParser
 	 * @param afterBracesPart	gramatikas daļa pēc iekavām
 	 */
 	protected void parseBracedAltLemmas(
-			MLVVGram gram, MLVVElementFactory factory, String beforeBracesPart,
-			String inBracesPart, String afterBracesPart)
+			MLVVGram gram, String beforeBracesPart, String inBracesPart, String afterBracesPart)
 	{
 		beforeBracesPart = beforeBracesPart.trim();
 		afterBracesPart = Editors.openCursive(afterBracesPart);
@@ -180,10 +178,10 @@ public class GramParser
 		inBracesPart = Editors.closeCursive(inBracesPart);
 
 		if (gram.altLemmas == null) gram.altLemmas = new LinkedList<>();
-		Header altLemma = HeaderParser.me().parseSingularHeader(factory,
+		Header altLemma = HeaderParser.me().parseSingularHeader(
 				PreNormalizer.correctGeneric(beforeBracesPart + afterBracesPart));
 		if (altLemma!= null) gram.altLemmas.add(altLemma);
-		altLemma = HeaderParser.me().parseSingularHeader(factory,
+		altLemma = HeaderParser.me().parseSingularHeader(
 				PreNormalizer.correctGeneric(inBracesPart + afterBracesPart));
 		if (altLemma!= null) gram.altLemmas.add(altLemma);
 	}
@@ -193,8 +191,7 @@ public class GramParser
 	 * jau ir veikta parse().
 	 * @param linePart	apstrādājamā rindas daļa (un tikai)
 	 */
-	protected void parseStandardAltLemmas(
-			MLVVGram gram, MLVVElementFactory factory, String linePart)
+	protected void parseStandardAltLemmas(MLVVGram gram, String linePart)
 	{
 		// Šādi sadalās tās daļas, kur uz vairākām vārdformām ir viena
 		// vārdšķira.
@@ -277,7 +274,7 @@ public class GramParser
 						if (!smallPart.contains(subcommon))
 							smallPart = smallPart + " " + common;
 						Header altLemma = HeaderParser.me().parseSingularHeader(
-								factory, smallPart, prefixPart);
+								smallPart, prefixPart);
 						if (altLemma!= null) gram.altLemmas.add(altLemma);
 					}
 				}

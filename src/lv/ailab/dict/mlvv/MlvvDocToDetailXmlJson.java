@@ -60,7 +60,6 @@ public class MlvvDocToDetailXmlJson
 	public Dictionary dict = new Dictionary();
 	public Validator val = new Validator();
 	public FlagStringCollector flags = new FlagStringCollector();
-	public MLVVElementFactory factory = new MLVVElementFactory();
 
 	/**
 	 * Izruna, šķirkļavārds, šķirkļa homonīma indekss.
@@ -114,7 +113,7 @@ public class MlvvDocToDetailXmlJson
 	{
 		try
 		{
-			MLVVEntry e = EntryParser.me().parse(factory, PreNormalizer.normalizeLine(line));
+			MLVVEntry e = EntryParser.me().parse(PreNormalizer.normalizeLine(line));
 			if (e != null)
 			{
 				dict.entries.add(e);

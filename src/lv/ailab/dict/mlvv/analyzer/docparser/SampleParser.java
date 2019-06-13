@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class SampleParser
 {
+	protected SampleParser(){};
 	protected static SampleParser singleton = new SampleParser();
 	public static SampleParser me()
 	{
@@ -23,24 +24,23 @@ public class SampleParser
 	 * @param linePart		šķirkļa teksta daļa, kas apraksta tieši šo frāzi un
 	 *                      neko citu
 	 */
-	public static Sample parseNoGlossSample(
-			MLVVElementFactory factory, String linePart)
+	public static Sample parseNoGlossSample(String linePart)
 	{
-		Sample res = factory.getNewSample();
+		Sample res = MLVVElementFactory.me().getNewSample();
 		//res.type = Type.SAMPLE;
 		//res.text = new LinkedList<>();
 		Matcher m = Pattern.compile("(.*\\.)(?::\\s+|</i>:\\s+<i>)((?!\"|\\p{Ll}).*)").matcher(linePart);
 		Matcher gramConsts = Pattern.compile("(?:<i>)?\\s*(Tr\\.|Pārn\\.|Sal\\.|Intr\\.)(?:</i>)?: (?:<i>)?(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			MLVVGram tmp = factory.getNewGram();
+			MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 			tmp.reinitialize(m.group(1));
 			res.grammar = tmp;
 			linePart = m.group(2).trim();
 		}
 		else if (gramConsts.matches())
 		{
-			MLVVGram tmp = factory.getNewGram();
+			MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 			tmp.reinitialize(gramConsts.group(1));
 			res.grammar = tmp;
 			linePart = gramConsts.group(2).trim();
@@ -57,13 +57,13 @@ public class SampleParser
 	 *                  citu
 	 * @return izgūtā frāze vai null
 	 */
-	public static Sample extractQuote(MLVVElementFactory factory, String linePart)
+	public static Sample extractQuote(String linePart)
 	{
 		if (linePart == null) return null;
 		linePart = linePart.replaceAll("\\s\\s+", " ").trim();
 		if (linePart.length() < 1) return null;
 
-		Sample res = factory.getNewSample();
+		Sample res = MLVVElementFactory.me().getNewSample();
 		//res.type = Type.QUOTE;
 		//res.text = new LinkedList<>();
 		// TODO: vai šeit likt \p{Lu}\p{Ll}+ nevis (Parn|Intr) ?
@@ -81,7 +81,7 @@ public class SampleParser
 			res.citedSource = m.group(5).trim();
 			String gramString = Editors.removeCursive(m.group(1)).trim();
 			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
-			MLVVGram tmp = factory.getNewGram();
+			MLVVGram tmp = MLVVElementFactory.me().getNewGram();
 			tmp.reinitialize(gramString);
 			res.grammar = tmp;
 		}

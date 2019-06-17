@@ -31,12 +31,9 @@ import java.util.stream.Collectors;
  */
 public class Flags implements HasToXML
 {
-	public MappingSet<String, String> pairings;
+	public MappingSet<String, String> pairings = new MappingSet<>();
 
-	public Flags()
-	{
-		pairings = new MappingSet<>();
-	}
+	protected Flags() {};
 
 	public void addAll(Flags others)
 	{

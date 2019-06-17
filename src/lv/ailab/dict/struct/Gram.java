@@ -57,14 +57,7 @@ public class Gram implements HasToJSON, HasToXML
 	public LinkedList<Header> formRestrictions;
 
 
-	public Gram()
-	{
-		freeText = null;
-		flags = null;
-		paradigm = null;
-		altLemmas = null;
-		formRestrictions = null;
-	}
+	protected Gram() {};
 
 	/**
 	 * Atlasa tās paradigmas, kas ir tiešā veidā attiecināmas uz to objektu,

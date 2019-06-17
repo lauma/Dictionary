@@ -87,7 +87,7 @@ public class StemSlotRule implements AdditionalHeaderRule
 					int newBegin = pattern.length();
 					Lemma altLemma = TElementFactory.me().getNewLemma();
 					altLemma.text = lemmaStub + curLemmaLogic.altWordEnding;
-					Flags altParams = new Flags();
+					Flags altParams = TElementFactory.me().getNewFlags();
 					if (curLemmaLogic.altWordFlags != null)
 						altParams.addAll(curLemmaLogic.altWordFlags);
 					THeader tmp = TElementFactory.me().getNewHeader();

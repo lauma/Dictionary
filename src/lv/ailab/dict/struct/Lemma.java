@@ -21,16 +21,7 @@ public class Lemma implements HasToJSON, HasToXML
 	 */
 	public String[] pronunciation;
 
-	public Lemma()
-	{
-		text = null;
-		pronunciation = null;
-	}
-	public Lemma(String lemma)
-	{
-		text = lemma;
-		pronunciation = null;
-	}
+	protected Lemma() {};
 
 	public Lemma(String lemma, String[] pronunciation)
 	{

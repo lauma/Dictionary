@@ -63,6 +63,8 @@ public class Entry implements HasToJSON, HasToXML
 	 */
 	public LinkedList<String> references;
 
+	protected Entry() {};
+
 	/**
 	 * Nav īsti skaidrs, vai šis ir labākais veids, kā apieties ar paradigmām.
 	 * Šobrīd, lai iestātos true, paradigmai jābūt uzstdītai visiem

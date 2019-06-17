@@ -184,7 +184,7 @@ public class AltEndingRule implements AdditionalHeaderRule
 					String lemmaStub = lemma.substring(0, lemma.length() - rule.lemmaEndingCutLength);
 					Lemma altLemma = TElementFactory.me().getNewLemma();
 					altLemma.text = lemmaStub + rule.altWordEnding;
-					Flags altParams = new Flags();
+					Flags altParams = TElementFactory.me().getNewFlags();
 					if (rule.altWordFlags != null)
 						altParams.addAll(rule.altWordFlags);
 					THeader tmp = TElementFactory.me().getNewHeader();

@@ -28,6 +28,8 @@ public class Dictionary
 {
 	public ArrayList<Entry> entries = new ArrayList<>();
 
+	protected Dictionary() {};
+
 	/**
 	 * Šķirkļi atrodas trešajā elementu līmenī, lai XML varētu ērti lādēt iekšā
 	 * TLex.

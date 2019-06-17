@@ -23,12 +23,6 @@ public class Gloss implements HasToJSON, HasToXML
 	 */
 	public Gram grammar = null;
 
-
-	public Gloss(String text)
-	{
-		this.text = text;
-	}
-
 	protected  Gloss() {};
 
 	/**

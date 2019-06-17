@@ -58,7 +58,7 @@ public class GramParser
 		result.freeText = Gram.normalizePronunc(
 				gramNode.getTextContent(), TPronuncNormalizer.me());
 		result.leftovers = null;
-		result.flags = new Flags();
+		result.flags = TElementFactory.me().getNewFlags();
 		result.paradigm = new HashSet<>();
 		result.altLemmas = null;
 		parseGram(result, lemma);

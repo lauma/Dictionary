@@ -38,12 +38,7 @@ public class Phrase implements HasToJSON, HasToXML
 	 */
 	public Type type;
 
-	public Phrase()
-	{
-		text = null;
-		grammar = null;
-		subsenses = null;
-	}
+	protected Phrase() {};
 
 	/**
 	 * Tikai statistiskām vajadzībām! Savāc visas paradigmas, kas šajā truktūrā

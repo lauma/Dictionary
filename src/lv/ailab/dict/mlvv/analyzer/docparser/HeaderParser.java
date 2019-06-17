@@ -38,7 +38,8 @@ public class HeaderParser
 		if (m.matches())
 		{
 			MLVVHeader res = MLVVElementFactory.me().getNewHeader();
-			res.lemma = new Lemma(m.group(2) + m.group(4));
+			res.lemma = MLVVElementFactory.me().getNewLemma();
+			res.lemma.text = m.group(2) + m.group(4);
 			String star = m.group(3) + m.group(5);
 			String gramStr = m.group(6);
 

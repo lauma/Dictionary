@@ -17,11 +17,7 @@ public class Sources implements HasToJSON, HasToXML
 	public String orig;
 	public LinkedList<String> s;
 
-	public Sources()
-	{
-		orig = null;
-		s = null;
-	}
+	protected Sources() {};
 
 	public boolean isEmpty()
 	{

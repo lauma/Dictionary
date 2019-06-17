@@ -120,7 +120,8 @@ public class EntryParser
 		Matcher m = Pattern.compile("<b>(.+?)(\\*?)</b>(\\*?)\\s*(.*)").matcher(linePart);
 		if (m.matches())
 		{
-			entry.head.lemma = new Lemma(m.group(1).trim());
+			entry.head.lemma = MLVVElementFactory.me().getNewLemma();
+			entry.head.lemma.text = m.group(1).trim();
 			String star = m.group(2) + m.group(3);
 			String gram = m.group(4);
 			// Homonīma infekss, ja tāds ir.

@@ -46,24 +46,7 @@ public class Sense implements HasToJSON, HasToXML
 	 */
 	public LinkedList<Sense> subsenses = null;
 
-	public Sense()
-	{
-		grammar = null;
-		gloss = null;
-		phrases = null;
-		subsenses = null;
-		ordNumber = null;
-	}
-
-	public Sense(String glossText)
-	{
-		grammar = null;
-		gloss = new LinkedList<>();
-		gloss.add(new Gloss(glossText));
-		phrases = null;
-		subsenses = null;
-		ordNumber = null;
-	}
+	protected Sense() {};
 
 	public Sense(Gloss gloss)
 	{

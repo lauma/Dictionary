@@ -27,11 +27,8 @@ public class Header implements HasToJSON, HasToXML
 	public Gram gram;
 
 
-	public Header()
-	{
-		lemma = null;
-		gram = null;
-	}
+	protected Header() {};
+
 	public void reinitialize(
 			GenericElementFactory factory, Lemma lemma, int paradigm, Flags flags)
 	{

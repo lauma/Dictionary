@@ -198,7 +198,7 @@ public class PhrasalHelper
 				Matcher colonMatcher = colonPhrases.matcher(part);
 				Matcher simpleMatcher = simplePhrases.matcher(part);
 
-				Sample resSample = new Sample();
+				Sample resSample = MLVVElementFactory.me().getNewSample();
 				//resSample.type = Sample.Type.SAMPLE;
 				//resSample.text = new LinkedList<>();
 

@@ -42,12 +42,7 @@ public class Sample implements HasToJSON, HasToXML
 	 */
 	public String citedSource;
 
-
-	public Sample()
-	{
-		text = null;
-		grammar = null;
-	}
+	protected Sample() {};
 
 	/**
 	 * Tikai statistiskām vajadzībām! Savāc visas paradigmas, kas šajā truktūrā

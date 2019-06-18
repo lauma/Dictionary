@@ -137,13 +137,6 @@ public class MLVVEntry extends Entry
 			s.append(", \"Derivatives\":");
 			s.append(JSONUtils.objectsToJSON(derivs));
 		}
-		if (references != null && references.size() > 0)
-		{
-			s.append(", \"References\":[");
-			s.append(references.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
-					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
-			s.append("]");
-		}
 		if (etymology != null && etymology.length() > 0)
 		{
 			s.append(", \"Etymology\":\"");
@@ -155,6 +148,13 @@ public class MLVVEntry extends Entry
 			s.append(", \"Normative\":\"");
 			s.append(JSONObject.escape(normative));
 			s.append("\"");
+		}
+		if (references != null && references.size() > 0)
+		{
+			s.append(", \"References\":[");
+			s.append(references.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
+					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
+			s.append("]");
 		}
 		if (sources != null && !sources.isEmpty())
 		{
@@ -239,18 +239,6 @@ public class MLVVEntry extends Entry
 			for (Header d : derivs) d.toXML(derivContN);
 			parent.appendChild(derivContN);
 		}
-		if (references != null && references.size() > 0)
-		{
-			Node refContainer = doc.createElement("References");
-			//refN.appendChild(doc.createTextNode(references));
-			for (String ref : references)
-			{
-				Node refItem = doc.createElement("EntryRef");
-				refItem.appendChild(doc.createTextNode(ref));
-				refContainer.appendChild(refItem);
-			}
-			parent.appendChild(refContainer);
-		}
 		if (etymology != null && etymology.length() > 0)
 		{
 			Node etymNode = doc.createElement("Etymology");
@@ -262,6 +250,18 @@ public class MLVVEntry extends Entry
 			Node freeTextN = doc.createElement("Normative");
 			freeTextN.appendChild(doc.createTextNode(normative));
 			parent.appendChild(freeTextN);
+		}
+		if (references != null && references.size() > 0)
+		{
+			Node refContainer = doc.createElement("References");
+			//refN.appendChild(doc.createTextNode(references));
+			for (String ref : references)
+			{
+				Node refItem = doc.createElement("EntryRef");
+				refItem.appendChild(doc.createTextNode(ref));
+				refContainer.appendChild(refItem);
+			}
+			parent.appendChild(refContainer);
 		}
 		if (sources != null && !sources.isEmpty())
 		{

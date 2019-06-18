@@ -37,7 +37,7 @@ public class Header implements HasToJSON, HasToXML
 		gram.flags = flags;
 		gram.paradigm = new HashSet<Integer>(){{add(paradigm);}};
 	}
-	
+
 	public void reinitialize(
 			GenericElementFactory factory, Lemma lemma, Set<Integer> paradigm, Flags flags)
 	{

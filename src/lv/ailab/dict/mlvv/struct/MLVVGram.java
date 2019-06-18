@@ -23,6 +23,7 @@ public class MLVVGram extends Gram
 	 * kursīvā.
 	 */
 	public String flagText = null;
+
 	protected MLVVGram(){};
 
 	/**

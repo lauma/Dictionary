@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class StdXmlLoader
 {
+	protected StdXmlLoader() {};
 	protected static StdXmlLoader singleton = new StdXmlLoader();
-
 	public static StdXmlLoader me()
 	{
 		return singleton;
@@ -77,7 +77,7 @@ public class StdXmlLoader
 		// Sources
 		result.sources = loadSourcesBlock(fields, elemFact,
 				"Entry");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Entry");
 		return result;
 	}
@@ -103,7 +103,7 @@ public class StdXmlLoader
 		// Gram
 		result.gram = loadGramBlock(fields, elemFact,
 				"Header");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Header");
 		return result;
 	}
@@ -129,7 +129,7 @@ public class StdXmlLoader
 		// Subsenses
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Sense", "Subsenses");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Sense");
 		return result;
 	}
@@ -153,7 +153,7 @@ public class StdXmlLoader
 		// Senses
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Phrase", "Senses");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Phrase");
 		return result;
 	}
@@ -188,7 +188,7 @@ public class StdXmlLoader
 			dieOnNonempty(flagFields, "Flag");
 			result.pairings.put(key, value);
 		}
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Flags");
 		if (result.pairings.isEmpty()) return null;
 		return result;
@@ -218,7 +218,7 @@ public class StdXmlLoader
 		// FreeText
 		result.freeText = XmlFieldMappingHandler.me().getSinglarStringField(fields,
 				"Gram", "FreeText");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Gram");
 		return result;
 	}
@@ -236,7 +236,7 @@ public class StdXmlLoader
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact,
 				"GlossVariant");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "GlossVariant");
 		return result;
 	}
@@ -256,7 +256,7 @@ public class StdXmlLoader
 		// CitedSource
 		result.citedSource = XmlFieldMappingHandler.me().getSinglarStringField(fields,
 				"Sample", "CitedSource");
-		// Warn, if there is something else
+		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Sample");
 		return result;
 	}

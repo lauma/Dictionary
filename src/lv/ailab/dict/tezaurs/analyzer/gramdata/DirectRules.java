@@ -573,6 +573,7 @@ public class DirectRules
 
 		FifthDecl.noChange("-es, dsk. ģen. -du, s.", ".*de"), // diplomande
 		//FifthDecl.noChange("-es, dsk. ģen. -fu, s.", ".*fe"), //vairs nav, jo atļāva miju.
+		FifthDecl.noChange("-es, dsk. ģen. -ku, s.", ".*ke"), // šitake
 		FifthDecl.noChange("-es, dsk. ģen. -su, s.", ".*se"), // bise
 		FifthDecl.noChange("-es, dsk. ģen. -stu, s.", ".*ste"), //abolicioniste
 		FifthDecl.noChange("dsk. ģen. -tu, s.", ".*te"), //artiste

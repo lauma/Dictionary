@@ -130,6 +130,12 @@ public class AbbrMap {
 		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__VERB);
+		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__PARTICIPLE);
+		pairingFlags.put("divd. īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__VERB);
+		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__PARTICIPLE);
+		pairingFlags.put("divd. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 
 		pairingFlags.put("pron.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);
@@ -1003,6 +1009,7 @@ public class AbbrMap {
 		pairingFlags.put("īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("apst. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("apst. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));

@@ -195,7 +195,9 @@ public class GramParser
 		gramText = gramText.trim();
 		if (gramText.length() < 1) return gramText;
 		// Likumi, kas uzdoti kā funkcijas.
-		boolean found;
+		//boolean found;
+		boolean found = RulesAsFunctions.matchEtymologyFlag(gramText, gram.flags);
+		if (found) return "";
 		do
 		{
 			found = false;

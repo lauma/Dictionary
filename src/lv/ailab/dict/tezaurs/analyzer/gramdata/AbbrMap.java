@@ -124,6 +124,10 @@ public class AbbrMap {
 		pairingFlags.put("refl. darb.", TFeatures.POS__REFL_VERB);
 		pairingFlags.put("refl. darb.", TFeatures.POS__VERB);
 
+		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
+		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", TFeatures.POS__PARTICIPLE);
+		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));

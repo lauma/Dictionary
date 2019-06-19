@@ -224,7 +224,7 @@ public class PhraseParser
 
 				String newText = Editors.removeCursive(part);
 				if (newText.endsWith(",")) newText = newText.substring(0, newText.length()-1);
-				phrase.text.add(newText);
+				phrase.text.add(newText.trim());
 			}
 			// Kursīvs sākas kaut kur vidū un iet līdz beigām - tātad kursīvā ir gramatika
 			// Izņēmums "... <i>arī</i> ...)
@@ -235,7 +235,7 @@ public class PhraseParser
 				gramText = (gramText + endsWithCursive.group(2)).trim();
 			}
 			// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
-			else phrase.text.add(Editors.removeCursive(part));
+			else phrase.text.add(Editors.removeCursive(part.trim()));
 		}
 		if (gramText.length() > 0)
 		{

@@ -2,9 +2,7 @@ package lv.ailab.dict.io.stdxml;
 
 import lv.ailab.dict.io.DictionaryXmlReadingException;
 import lv.ailab.dict.io.DomIoUtils;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 import java.util.*;
 
@@ -33,23 +31,13 @@ public class XmlFieldMappingHandler
 		XmlFieldMapping result = new XmlFieldMapping();
 		result.nodeChildren = new HashMap<>();
 		result.stringChildren = new HashMap<>();
+
+		// Bērnelementi.
 		NodeList fields = node.getChildNodes();
 		for (int i = 0; i < fields.getLength(); i++)
 		{
 			Node child = fields.item(i);
 			String childElemName = child.getNodeName();
-			/*if (childElemName.equals("#text"))
-			{
-				String text = node.getTextContent();
-				if (text != null) text = text.trim();
-				if (text != null && !text.isEmpty())
-				{
-					if (stringChildren.containsKey("#text"))
-						text = stringChildren.get("#text") + " " + text;
-					stringChildren.put("#text", text);
-				}
-			}
-			else*/
 			if (child.getChildNodes().getLength() > 0)
 			{
 				boolean hasElementChild = false;
@@ -70,29 +58,48 @@ public class XmlFieldMappingHandler
 				}
 				else
 				{
-					ArrayList<String> temp = result.stringChildren.get(childElemName);
-					if (temp == null) temp = new ArrayList<>();
 					String text = child.getTextContent();
 					if (text != null) text = text.trim();
 					if (text != null && !text.isEmpty())
 					{
+						ArrayList<String> temp = result.stringChildren.get(childElemName);
+						if (temp == null) temp = new ArrayList<>();
 						temp.add(child.getTextContent());
 						result.stringChildren.put(childElemName, temp);
 					}
 				}
 			}
 		}
+
+		// Atribūti.
+		NamedNodeMap attributes = node.getAttributes();
+		for (int i = 0; i < attributes.getLength(); i++)
+		{
+			Attr attr = (Attr) attributes.item(i);
+			String attrName = attr.getNodeName();
+			String attrVal = attr.getNodeValue();
+			if (attrVal != null) attrVal = attrVal.trim();
+			if (attrVal != null && !attrVal.isEmpty())
+			{
+				ArrayList<String> temp = result.stringChildren.get(attrName);
+				if (temp == null) temp = new ArrayList<>();
+				temp.add(attr.getNodeValue());
+				result.stringChildren.put(attrName, temp);
+			}
+		}
+
+		// Pēcapstrāde.
 		if (result.isEmpty()) return null;
 		if (result.stringChildren.isEmpty()) result.stringChildren = null;
 		if (result.nodeChildren.isEmpty()) result.nodeChildren = null;
 		return result;
 	}
 
-	public String getSinglarStringField(
+	public String takeoutSinglarStringField(
 			XmlFieldMapping fields, String parentElemName, String elemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<String> fieldTexts = fields.stringChildren.remove(elemName);
+		ArrayList<String> fieldTexts = fields.removeStringChildren(elemName);
 		if (fieldTexts != null && fieldTexts.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!",
@@ -102,12 +109,12 @@ public class XmlFieldMappingHandler
 		return null;
 	}
 
-	public LinkedList<String> getStringFieldArray(
+	public LinkedList<String> takeoutStringFieldArray(
 			XmlFieldMapping fields, String parentElemName,
 			String elemName, String childElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> nodesOfType = fields.nodeChildren.remove(elemName);
+		ArrayList<Node> nodesOfType = fields.removeNodeChildren(elemName);
 		if (nodesOfType != null && nodesOfType.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!",
@@ -123,12 +130,12 @@ public class XmlFieldMappingHandler
 		return null;
 	}
 
-	public LinkedList<Node> getNodeList(
+	public LinkedList<Node> takeoutNodeList(
 			XmlFieldMapping fields, String parentElemName, String elemName,
 			String childElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> containerNode = fields.nodeChildren.remove(elemName);
+		ArrayList<Node> containerNode = fields.removeNodeChildren(elemName);
 		if (containerNode != null && containerNode.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!", parentElemName, elemName));

@@ -32,31 +32,40 @@ public class MlvvXmlLoader extends StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// HomonymNumber
-		result.homId = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.homId = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Entry", "HomonymNumber");
 		// Header
 		result.head = loadSingularHeaderBlock(fields, castedFact,
 				"Entry");
+		// LemmaSign
+		String lemmaSign = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"Entry", "LemmaSign");
+		if (result.head.lemma == null) result.head.lemma = elemFact.getNewLemma();
+		if (result.head.lemma.text == null) result.head.lemma.text = lemmaSign;
 		// Senses
 		result.senses = loadSensesBlock(fields, castedFact,
 				"Entry", "Senses");
 		// StablePhrases
 		result.phrases = loadStablePhrasesBlock(fields, castedFact,
-				"Entry");
+				"Entry", "StablePhrases");
 		//Derivatives
 		result.derivs = loadHeaderListBlock(fields, castedFact,
 				"Entry", "Derivatives");
 		// Etymology
-		result.etymology = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.etymology = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Entry", "Etymology");
 		// Normative
-		result.normative = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.normative = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Entry", "Normative");
 		// References
-		result.references = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		result.references = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Entry", "References", "EntryRef");
 		// Sources - nav te plānots būt.
 		//result.sources = loadSourcesBlock(fields, castedFact, "Entry");
+
+		// Pārbauda galveno šķirkļavārdu.
+		checkMainLemma(result, lemmaSign);
+
 		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Entry");
 		return result;
@@ -72,7 +81,7 @@ public class MlvvXmlLoader extends StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// Paradigms - šobrīd nav
-		/*LinkedList<String> tmpPar = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		/*LinkedList<String> tmpPar = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Gram", "Paradigms", "Paradigm");
 		if (tmpPar != null) result.paradigm = tmpPar.stream()
 				.map(Integer::parseInt).collect(Collectors.toCollection(HashSet<Integer>::new));
@@ -86,10 +95,10 @@ public class MlvvXmlLoader extends StdXmlLoader
 		// Flags - šobrīd nav.
 		//result.flags = loadFlagsBlock(fields, castedFact, "Gram");
 		// Inflections
-		result.freeText = XmlFieldMappingHandler.me().getSinglarStringField(fields,
-				"Gram", "Inflections");
+		result.freeText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"Gram", "Inflection");
 		// FlagText
-		result.flagText = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.flagText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Gram", "FlagText");
 		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Gram");
@@ -107,14 +116,14 @@ public class MlvvXmlLoader extends StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// Type
-		String typeStr = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		String typeStr = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Phrase", "Type");
 		if (typeStr != null) result.type = Phrase.Type.parseString(typeStr);
 		// Text
-		result.text = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		result.text = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Phrase", "Text", "Variant");
 		// SciName
-		result.sciName = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		result.sciName = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Phrase", "SciName", "Variant");
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact, "Phrase");

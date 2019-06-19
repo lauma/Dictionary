@@ -12,14 +12,27 @@ import java.util.HashSet;
  */
 public class XmlFieldMapping
 {
-	public HashMap<String, ArrayList<Node>> nodeChildren = null;
-	public HashMap<String, ArrayList<String>> stringChildren = null;
+	protected HashMap<String, ArrayList<Node>> nodeChildren = null;
+	protected HashMap<String, ArrayList<String>> stringChildren = null;
 
 	public boolean isEmpty()
 	{
 		return (nodeChildren == null || nodeChildren.isEmpty()) &&
 				(stringChildren == null || stringChildren.isEmpty());
 	}
+
+	public ArrayList<Node> removeNodeChildren(String key)
+	{
+		if (nodeChildren == null) return null;
+		return nodeChildren.remove(key);
+	}
+
+	public ArrayList<String> removeStringChildren(String key)
+	{
+		if (stringChildren == null) return null;
+		return stringChildren.remove(key);
+	}
+
 
 	public HashSet<String> allKeys()
 	{

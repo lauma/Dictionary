@@ -28,9 +28,10 @@ public class StdXmlLoader
 	public Dictionary makeDictionary(Document doc, GenericElementFactory elemFact)
 	throws DictionaryXmlReadingException
 	{
-		if (!"Dictionary".equals(doc.getNodeName()))
+		Element docElem = doc.getDocumentElement();
+		if (!"Dictionary".equals(docElem.getNodeName()))
 			throw new DictionaryXmlReadingException("Nav atrasts XML saknes elements \"Dictionary\"");
-		Node latvianNode = DomIoUtils.getOnlyChildFromXml(doc, "Latvian");
+		Node latvianNode = DomIoUtils.getOnlyChildFromXml(docElem, "Latvian");
 		if (latvianNode == null)
 			throw new DictionaryXmlReadingException("Nav atrasts XML saknes elements \"Dictionary\\Latvian\"");
 		LinkedList<Node> entries = DomIoUtils.getSingleTypeNodeArrayFromXml(latvianNode, "Entry");
@@ -54,7 +55,7 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// HomonymNumber
-		result.homId = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.homId = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Entry", "HomonymNumber");
 		// Header
 		result.head = loadSingularHeaderBlock(fields, elemFact,
@@ -64,19 +65,23 @@ public class StdXmlLoader
 				"Entry", "Senses");
 		// StablePhrases
 		result.phrases = loadStablePhrasesBlock(fields, elemFact,
-				"Entry");
+				"Entry", "StablePhrases");
 		//Derivatives
 		result.derivs = loadHeaderListBlock(fields, elemFact,
 				"Entry", "Derivatives");
 		// Etymology
-		result.etymology = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.etymology = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Entry", "Etymology");
 		// References
-		result.references = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		result.references = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Entry", "References", "EntryRef");
 		// Sources
 		result.sources = loadSourcesBlock(fields, elemFact,
 				"Entry");
+		// Pārbauda galveno šķirkļavārdu un LemmaSign.
+		String lemmaSign = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"Entry", "LemmaSign");
+		checkMainLemma(result, lemmaSign);
 		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Entry");
 		return result;
@@ -92,7 +97,7 @@ public class StdXmlLoader
 		// Lemma
 		result.lemma = loadLemmaBlock(fields, elemFact, "Header");
 		// Pronunciations
-		LinkedList<String> tempProns = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		LinkedList<String> tempProns = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Header", "Pronunciations", "Pronunciation");
 		if (tempProns != null && !tempProns.isEmpty())
 		{
@@ -116,7 +121,7 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// SenseNumber
-		result.ordNumber = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.ordNumber = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Sense", "SenseNumber");
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact, "Sense");
@@ -125,7 +130,8 @@ public class StdXmlLoader
 		// Examples
 		result.examples = loadExamplesBlock(fields, elemFact, "Sense");
 		// StablePhrases
-		result.phrases = loadStablePhrasesBlock(fields, elemFact, "Sense");
+		result.phrases = loadStablePhrasesBlock(fields, elemFact,
+				"Sense", "StablePhrases");
 		// Subsenses
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Sense", "Subsenses");
@@ -142,11 +148,11 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// Type
-		String typeStr = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		String typeStr = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Phrase", "Type");
 		if (typeStr != null) result.type = Phrase.Type.parseString(typeStr);
 		// Text
-		result.text = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		result.text = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Phrase", "Text", "Variant");
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact, "Phrase");
@@ -166,7 +172,7 @@ public class StdXmlLoader
 		XmlFieldMapping fields = XmlFieldMappingHandler.me().domElemToHash((Element) flagsNode);
 		if (fields == null || fields.isEmpty()) return null;
 
-		ArrayList<Node> flagNodes = fields.nodeChildren.remove("Flag");
+		ArrayList<Node> flagNodes = fields.removeNodeChildren("Flag");
 		if (flagNodes != null) for (Node flagNode : flagNodes)
 		{
 			String key = null;
@@ -175,12 +181,12 @@ public class StdXmlLoader
 			XmlFieldMapping flagFields = XmlFieldMappingHandler.me().domElemToHash((Element) flagNode);
 			if (flagFields == null || flagFields.isEmpty()) break;
 
-			ArrayList<String> keyTexts = flagFields.stringChildren.remove("Key");
+			ArrayList<String> keyTexts = flagFields.removeStringChildren("Key");
 			if (keyTexts != null && keyTexts.size() > 1)
 				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Key\"!");
 			if (keyTexts!= null && !keyTexts.isEmpty()) key = keyTexts.get(0);
 
-			ArrayList<String> valueTexts = flagFields.stringChildren.remove("Value");
+			ArrayList<String> valueTexts = flagFields.removeStringChildren("Value");
 			if (valueTexts != null && valueTexts.size() > 1)
 				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Value\"!");
 			if (valueTexts!= null && !valueTexts.isEmpty()) value = valueTexts.get(0);
@@ -202,7 +208,7 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// Paradigms
-		LinkedList<String> tmpPar = XmlFieldMappingHandler.me().getStringFieldArray(fields,
+		LinkedList<String> tmpPar = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
 				"Gram", "Paradigms", "Paradigm");
 		if (tmpPar != null) result.paradigm = tmpPar.stream()
 				.map(Integer::parseInt).collect(Collectors.toCollection(HashSet<Integer>::new));
@@ -216,7 +222,7 @@ public class StdXmlLoader
 		result.flags = loadFlagsBlock(fields, elemFact,
 				"Gram");
 		// FreeText
-		result.freeText = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.freeText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Gram", "FreeText");
 		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Gram");
@@ -231,7 +237,7 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// GlossText
-		result.text = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.text = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"GlossVariant", "GlossText");
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact,
@@ -249,12 +255,12 @@ public class StdXmlLoader
 		if (fields == null || fields.isEmpty()) return null;
 
 		// Content
-		result.text = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.text = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Sample", "Content");
 		// Gram
 		result.grammar = loadGramBlock(fields, elemFact, "Sample");
 		// CitedSource
-		result.citedSource = XmlFieldMappingHandler.me().getSinglarStringField(fields,
+		result.citedSource = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Sample", "CitedSource");
 		// Brīdina, ja ir vēl kaut kas.
 		dieOnNonempty(fields, "Sample");
@@ -285,6 +291,23 @@ public class StdXmlLoader
 					fields.keyStringForLog()));
 	}
 
+	/**
+	 * Standarta brīdinājums, ko lieto, lai pateiktu, ka pēc apstrādes
+	 * ir radies šķirklis bez šķirkļavārda, vai šķirkļavārds nesakrīt ar XMLā
+	 * doto LemmaSign atribūtu.
+	 */
+	protected void checkMainLemma(Entry e, String lemmaSign)
+	throws DictionaryXmlReadingException
+	{
+		if (e.head == null || e.head.lemma == null || e.head.lemma.text == null)
+			throw new DictionaryXmlReadingException(
+					"Uztaisīts šķirklis bez šķirkļavārda!");
+		if (!e.head.lemma.text.equals(lemmaSign))
+			throw new DictionaryXmlReadingException(String.format(
+					"Šķirkļa galvenā Header lemma %s nesakrīt ar LemmaSign atribūtu %s!",
+					e.head.lemma.text, lemmaSign));
+	}
+
 	//===== Bloku lādēšana =====================================================
 	//======== Masīvu bloki ====================================================
 
@@ -293,7 +316,7 @@ public class StdXmlLoader
 			String parentElemName, String elemName)
 	throws DictionaryXmlReadingException
 	{
-		LinkedList<Node> headerNodes = XmlFieldMappingHandler.me().getNodeList(fields,
+		LinkedList<Node> headerNodes = XmlFieldMappingHandler.me().takeoutNodeList(fields,
 				parentElemName, elemName, "Header");
 		if (headerNodes == null) return null;
 		LinkedList<Header> result = new LinkedList<>();
@@ -310,7 +333,7 @@ public class StdXmlLoader
 			String parentElemName, String elemName)
 	throws DictionaryXmlReadingException
 	{
-		LinkedList<Node> senseNodes = XmlFieldMappingHandler.me().getNodeList(fields,
+		LinkedList<Node> senseNodes = XmlFieldMappingHandler.me().takeoutNodeList(fields,
 				parentElemName, elemName, "Sense");
 		if (senseNodes == null) return null;
 		LinkedList<Sense> result = new LinkedList<>();
@@ -327,7 +350,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		LinkedList<Node> glossVarNodes = XmlFieldMappingHandler.me().getNodeList(fields,
+		LinkedList<Node> glossVarNodes = XmlFieldMappingHandler.me().takeoutNodeList(fields,
 				parentElemName, "Gloss", "GlossVariant");
 		if (glossVarNodes == null) return null;
 		LinkedList<Gloss> result = new LinkedList<>();
@@ -341,11 +364,11 @@ public class StdXmlLoader
 
 	protected LinkedList<Phrase> loadStablePhrasesBlock(
 			XmlFieldMapping fields, GenericElementFactory elemFact,
-			String parentElemName)
+			String parentElemName, String elemName)
 	throws DictionaryXmlReadingException
 	{
-		LinkedList<Node> phraseNodes = XmlFieldMappingHandler.me().getNodeList(fields,
-				parentElemName, "StablePhrases", "Phrase");
+		LinkedList<Node> phraseNodes = XmlFieldMappingHandler.me().takeoutNodeList(fields,
+				parentElemName, elemName, "Phrase");
 		if (phraseNodes == null) return null;
 		LinkedList<Phrase> result = new LinkedList<>();
 		for (Node pNode : phraseNodes)
@@ -361,7 +384,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		LinkedList<Node> sampleNodes = XmlFieldMappingHandler.me().getNodeList(fields,
+		LinkedList<Node> sampleNodes = XmlFieldMappingHandler.me().takeoutNodeList(fields,
 				parentElemName, "Examples", "Sample");
 		if (sampleNodes == null) return null;
 		LinkedList<Sample> result = new LinkedList<>();
@@ -380,7 +403,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> headerNodes = fields.nodeChildren.remove("Header");
+		ArrayList<Node> headerNodes = fields.removeNodeChildren("Header");
 		if (headerNodes != null && headerNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Header\"!", parentElemName));
@@ -394,7 +417,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> sourcesNodes = fields.nodeChildren.remove("Sources");
+		ArrayList<Node> sourcesNodes = fields.removeNodeChildren("Sources");
 		if (sourcesNodes != null && sourcesNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Sources\"!", parentElemName));
@@ -408,7 +431,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> gramNodes = fields.nodeChildren.remove("Gram");
+		ArrayList<Node> gramNodes = fields.removeNodeChildren("Gram");
 		if (gramNodes != null && gramNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Gram\"!", parentElemName));
@@ -422,7 +445,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> flagsNodes = fields.nodeChildren.remove("Flags");
+		ArrayList<Node> flagsNodes = fields.removeNodeChildren("Flags");
 		if (flagsNodes != null && flagsNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Flags\"!", parentElemName));
@@ -435,7 +458,7 @@ public class StdXmlLoader
 			XmlFieldMapping fields, GenericElementFactory elemFact,
 			String parentElemName) throws DictionaryXmlReadingException
 	{
-		ArrayList<String> lemmaTexts = fields.stringChildren.remove("Lemma");
+		ArrayList<String> lemmaTexts = fields.removeStringChildren("Lemma");
 		if (lemmaTexts != null && lemmaTexts.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Lemma\"!", parentElemName));

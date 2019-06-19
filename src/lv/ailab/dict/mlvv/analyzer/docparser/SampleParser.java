@@ -80,10 +80,13 @@ public class SampleParser
 							.replaceAll("\\s\\s+", " ").trim();
 			res.citedSource = m.group(5).trim();
 			String gramString = Editors.removeCursive(m.group(1)).trim();
-			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1);
-			MLVVGram tmp = MLVVElementFactory.me().getNewGram();
-			tmp.reinitialize(gramString);
-			res.grammar = tmp;
+			if (gramString.endsWith(":")) gramString = gramString.substring(0, gramString.length()-1).trim();
+			if (!gramString.isEmpty())
+			{
+				MLVVGram tmp = MLVVElementFactory.me().getNewGram();
+				tmp.reinitialize(gramString);
+				res.grammar = tmp;
+			}
 		}
 		else
 		{

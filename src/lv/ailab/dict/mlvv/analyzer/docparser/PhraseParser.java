@@ -59,7 +59,7 @@ public class PhraseParser
 					linePart, phraseType);
 			if (lemma != null) System.out.printf(" (lemma \"%s\")", lemma);
 			System.out.println();
-			res.text.add(linePart);
+			res.text.add(linePart.trim());
 		}
 		for (String variant : res.text)
 			if (variant == null || variant.isEmpty()) res.text.remove(variant);
@@ -230,12 +230,12 @@ public class PhraseParser
 			// Izņēmums "... <i>arī</i> ...)
 			else if (endsWithCursive.matches())
 			{
-				phrase.text.add(Editors.removeCursive(endsWithCursive.group(1).trim()));
+				phrase.text.add(Editors.removeCursive(endsWithCursive.group(1)).trim());
 				if (gramText.length() > 0) gramText = gramText + "; ";
 				gramText = (gramText + endsWithCursive.group(2)).trim();
 			}
 			// Frāzē nekas nav kursīvā - tātad tur ir tikai frāze bez problēmām.
-			else phrase.text.add(Editors.removeCursive(part.trim()));
+			else phrase.text.add(Editors.removeCursive(part).trim());
 		}
 		if (gramText.length() > 0)
 		{

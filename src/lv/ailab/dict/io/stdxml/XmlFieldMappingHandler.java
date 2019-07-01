@@ -51,8 +51,8 @@ public class XmlFieldMappingHandler
 
 				if (hasElementChild)
 				{
-					ArrayList<Node> temp = result.nodeChildren.get(childElemName);
-					if (temp == null) temp = new ArrayList<>();
+					LinkedList<Node> temp = result.nodeChildren.get(childElemName);
+					if (temp == null) temp = new LinkedList<>();
 					temp.add(child);
 					result.nodeChildren.put(childElemName, temp);
 				}
@@ -62,9 +62,9 @@ public class XmlFieldMappingHandler
 					if (text != null) text = text.trim();
 					if (text != null && !text.isEmpty())
 					{
-						ArrayList<String> temp = result.stringChildren.get(childElemName);
-						if (temp == null) temp = new ArrayList<>();
-						temp.add(child.getTextContent());
+						LinkedList<String> temp = result.stringChildren.get(childElemName);
+						if (temp == null) temp = new LinkedList<>();
+						temp.add(text);
 						result.stringChildren.put(childElemName, temp);
 					}
 				}
@@ -81,8 +81,8 @@ public class XmlFieldMappingHandler
 			if (attrVal != null) attrVal = attrVal.trim();
 			if (attrVal != null && !attrVal.isEmpty())
 			{
-				ArrayList<String> temp = result.stringChildren.get(attrName);
-				if (temp == null) temp = new ArrayList<>();
+				LinkedList<String> temp = result.stringChildren.get(attrName);
+				if (temp == null) temp = new LinkedList<>();
 				temp.add(attr.getNodeValue());
 				result.stringChildren.put(attrName, temp);
 			}
@@ -99,7 +99,7 @@ public class XmlFieldMappingHandler
 			XmlFieldMapping fields, String parentElemName, String elemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<String> fieldTexts = fields.removeStringChildren(elemName);
+		LinkedList<String> fieldTexts = fields.removeStringChildren(elemName);
 		if (fieldTexts != null && fieldTexts.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!",
@@ -114,18 +114,20 @@ public class XmlFieldMappingHandler
 			String elemName, String childElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> nodesOfType = fields.removeNodeChildren(elemName);
-		if (nodesOfType != null && nodesOfType.size() > 1)
+		LinkedList<Node> nodesOfElemType = fields.removeNodeChildren(elemName);
+		if (nodesOfElemType != null && nodesOfElemType.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!",
 					parentElemName, elemName));
-		if (nodesOfType != null && !nodesOfType.isEmpty())
+		if (nodesOfElemType != null && !nodesOfElemType.isEmpty())
 		{
-			LinkedList<String> nodeContents = DomIoUtils.getPrimitiveArrayFromXml(
-					nodesOfType.get(0), childElemName);
-			if (nodeContents != null && nodeContents.size() > 0)
-				return nodeContents;
-			return null;
+			XmlFieldMapping nodeMapping = XmlFieldMappingHandler.me()
+					.domElemToHash((Element) nodesOfElemType.get(0));
+			LinkedList<String> nodesOfChildElemType = nodeMapping.removeStringChildren(childElemName);
+			nodeMapping.dieOnNonempty(elemName);
+			//LinkedList<String> nodeContents = DomIoUtils.getPrimitiveArrayFromXml(nodesOfType.get(0), childElemName);
+			if (nodesOfChildElemType != null && !nodesOfChildElemType.isEmpty())
+				return nodesOfChildElemType;
 		}
 		return null;
 	}
@@ -135,18 +137,20 @@ public class XmlFieldMappingHandler
 			String childElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> containerNode = fields.removeNodeChildren(elemName);
-		if (containerNode != null && containerNode.size() > 1)
+		LinkedList<Node> nodesOfElemType = fields.removeNodeChildren(elemName);
+		if (nodesOfElemType != null && nodesOfElemType.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"%s\"!", parentElemName, elemName));
-		if (containerNode!= null && !containerNode.isEmpty())
+		if (nodesOfElemType!= null && !nodesOfElemType.isEmpty())
 		{
-			LinkedList<Node> resultNodes = DomIoUtils.getSingleTypeNodeArrayFromXml(
-					containerNode.get(0), childElemName);
-			if (resultNodes == null) return null;
-			resultNodes.removeAll(Collections.singleton(null));
-			if (resultNodes.isEmpty()) return null;
-			return resultNodes;
+			XmlFieldMapping nodeMapping = XmlFieldMappingHandler.me()
+					.domElemToHash((Element) nodesOfElemType.get(0));
+			LinkedList<Node> nodesOfChildElemType = nodeMapping.removeNodeChildren(childElemName);
+			nodeMapping.dieOnNonempty(elemName);
+			//LinkedList<Node> resultNodes = DomIoUtils.getSingleTypeNodeArrayFromXml(nodesOfElemType.get(0), childElemName);
+			//resultNodes.removeAll(Collections.singleton(null));
+			if (nodesOfChildElemType != null && !nodesOfChildElemType.isEmpty())
+				return nodesOfChildElemType;
 		}
 		return null;
 	}

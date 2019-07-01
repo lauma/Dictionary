@@ -67,7 +67,7 @@ public class MlvvXmlLoader extends StdXmlLoader
 		checkMainLemma(result, lemmaSign);
 
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Entry");
+		fields.dieOnNonempty("Entry");
 		return result;
 	}
 
@@ -101,7 +101,7 @@ public class MlvvXmlLoader extends StdXmlLoader
 		result.flagText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Gram", "FlagText");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Gram");
+		fields.dieOnNonempty("Gram");
 		return result;
 	}
 
@@ -131,7 +131,7 @@ public class MlvvXmlLoader extends StdXmlLoader
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Phrase", "Senses");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Phrase");
+		fields.dieOnNonempty("Phrase");
 		return result;
 	}
 }

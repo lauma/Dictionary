@@ -83,7 +83,7 @@ public class StdXmlLoader
 				"Entry", "LemmaSign");
 		checkMainLemma(result, lemmaSign);
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Entry");
+		fields.dieOnNonempty("Entry");
 		return result;
 	}
 
@@ -109,7 +109,7 @@ public class StdXmlLoader
 		result.gram = loadGramBlock(fields, elemFact,
 				"Header");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Header");
+		fields.dieOnNonempty("Header");
 		return result;
 	}
 
@@ -136,7 +136,7 @@ public class StdXmlLoader
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Sense", "Subsenses");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Sense");
+		fields.dieOnNonempty("Sense");
 		return result;
 	}
 
@@ -160,7 +160,7 @@ public class StdXmlLoader
 		result.subsenses = loadSensesBlock(fields, elemFact,
 				"Phrase", "Senses");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Phrase");
+		fields.dieOnNonempty("Phrase");
 		return result;
 	}
 
@@ -172,7 +172,7 @@ public class StdXmlLoader
 		XmlFieldMapping fields = XmlFieldMappingHandler.me().domElemToHash((Element) flagsNode);
 		if (fields == null || fields.isEmpty()) return null;
 
-		ArrayList<Node> flagNodes = fields.removeNodeChildren("Flag");
+		LinkedList<Node> flagNodes = fields.removeNodeChildren("Flag");
 		if (flagNodes != null) for (Node flagNode : flagNodes)
 		{
 			String key = null;
@@ -181,21 +181,21 @@ public class StdXmlLoader
 			XmlFieldMapping flagFields = XmlFieldMappingHandler.me().domElemToHash((Element) flagNode);
 			if (flagFields == null || flagFields.isEmpty()) break;
 
-			ArrayList<String> keyTexts = flagFields.removeStringChildren("Key");
+			LinkedList<String> keyTexts = flagFields.removeStringChildren("Key");
 			if (keyTexts != null && keyTexts.size() > 1)
 				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Key\"!");
 			if (keyTexts!= null && !keyTexts.isEmpty()) key = keyTexts.get(0);
 
-			ArrayList<String> valueTexts = flagFields.removeStringChildren("Value");
+			LinkedList<String> valueTexts = flagFields.removeStringChildren("Value");
 			if (valueTexts != null && valueTexts.size() > 1)
 				throw new DictionaryXmlReadingException("Elementā \"Flag\" atrasti vairāki \"Value\"!");
 			if (valueTexts!= null && !valueTexts.isEmpty()) value = valueTexts.get(0);
 
-			dieOnNonempty(flagFields, "Flag");
+			flagFields.dieOnNonempty("Flag");
 			result.pairings.put(key, value);
 		}
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Flags");
+		fields.dieOnNonempty("Flags");
 		if (result.pairings.isEmpty()) return null;
 		return result;
 	}
@@ -225,7 +225,7 @@ public class StdXmlLoader
 		result.freeText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Gram", "FreeText");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Gram");
+		fields.dieOnNonempty("Gram");
 		return result;
 	}
 
@@ -243,7 +243,7 @@ public class StdXmlLoader
 		result.grammar = loadGramBlock(fields, elemFact,
 				"GlossVariant");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "GlossVariant");
+		fields.dieOnNonempty("GlossVariant");
 		return result;
 	}
 
@@ -263,7 +263,7 @@ public class StdXmlLoader
 		result.citedSource = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Sample", "CitedSource");
 		// Brīdina, ja ir vēl kaut kas.
-		dieOnNonempty(fields, "Sample");
+		fields.dieOnNonempty("Sample");
 		return result;
 	}
 
@@ -274,21 +274,6 @@ public class StdXmlLoader
 		result.s = DomIoUtils.getPrimitiveArrayFromXml(sourcesNode, "Source");
 		if (result.s != null && result.s.isEmpty()) return null;
 		return result;
-	}
-
-	/**
-	 * Standarta brīdinājums, ko lieto, lai pateiktu, ka pēc apstrādes
-	 * XmlFieldMapping struktūrā ir palicis kas neapstrādāts (neizņemts).
-	 * @param fields	struktūra, ko pārbaudīt
-	 * @param parentElemName	elementa vārds, ko izmantot kļūdas paziņojumā
-	 */
-	protected void dieOnNonempty(XmlFieldMapping fields, String parentElemName)
-	throws DictionaryXmlReadingException
-	{
-		if (!fields.isEmpty())
-			throw new DictionaryXmlReadingException(String.format(
-					"Elementā \"%s\" atrasts neatpazina \"%s\"!", parentElemName,
-					fields.keyStringForLog()));
 	}
 
 	/**
@@ -403,7 +388,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> headerNodes = fields.removeNodeChildren("Header");
+		LinkedList<Node> headerNodes = fields.removeNodeChildren("Header");
 		if (headerNodes != null && headerNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Header\"!", parentElemName));
@@ -417,7 +402,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> sourcesNodes = fields.removeNodeChildren("Sources");
+		LinkedList<Node> sourcesNodes = fields.removeNodeChildren("Sources");
 		if (sourcesNodes != null && sourcesNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Sources\"!", parentElemName));
@@ -431,7 +416,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> gramNodes = fields.removeNodeChildren("Gram");
+		LinkedList<Node> gramNodes = fields.removeNodeChildren("Gram");
 		if (gramNodes != null && gramNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Gram\"!", parentElemName));
@@ -445,7 +430,7 @@ public class StdXmlLoader
 			String parentElemName)
 	throws DictionaryXmlReadingException
 	{
-		ArrayList<Node> flagsNodes = fields.removeNodeChildren("Flags");
+		LinkedList<Node> flagsNodes = fields.removeNodeChildren("Flags");
 		if (flagsNodes != null && flagsNodes.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Flags\"!", parentElemName));
@@ -458,7 +443,7 @@ public class StdXmlLoader
 			XmlFieldMapping fields, GenericElementFactory elemFact,
 			String parentElemName) throws DictionaryXmlReadingException
 	{
-		ArrayList<String> lemmaTexts = fields.removeStringChildren("Lemma");
+		LinkedList<String> lemmaTexts = fields.removeStringChildren("Lemma");
 		if (lemmaTexts != null && lemmaTexts.size() > 1)
 			throw new DictionaryXmlReadingException(String.format(
 					"Elementā \"%s\" atrasti vairāki \"Lemma\"!", parentElemName));

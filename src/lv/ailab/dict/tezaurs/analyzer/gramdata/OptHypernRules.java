@@ -180,7 +180,6 @@ public class OptHypernRules
 		SixthDecl.std("-olekts, dsk. ģen. -olekšu, s.", ".*olekts"), // olekts
 		SixthDecl.std("-pāksts, dsk. ģen. -pākšu, s.", ".*pāksts"), // pāksts
 		SixthDecl.std("-palts, dsk. ģen. -palšu, s.", ".*palts"), // palts
-		SixthDecl.std("-pirts, dsk. ģen. -pirtu, s.", ".*pirts"), // asinspirts
 		SixthDecl.std("-pils, dsk. ģen. -piļu, s.", ".*pils"), // ordeņpils
 		SixthDecl.std("-plāts, dsk. ģen. -plāšu, s.", ".*plāts"), // plāts
 		SixthDecl.std("-plīts, dsk. ģen. -plīšu, s.", ".*plīts"), // plīts
@@ -224,6 +223,7 @@ public class OptHypernRules
 		SixthDecl.noChange("-debess, dsk. ģen. -debesu, s.", ".*debess"), //debess 1, padebess
 		SixthDecl.noChange("-grīsts, dsk. ģen. -grīstu, s.", ".*grīsts"), //grīsts
 		SixthDecl.noChange("-maksts, dsk. ģen. -makstu, s.", ".*maksts"), //maksts
+		SixthDecl.noChange("-pirts, dsk. ģen. -pirtu, s.", ".*pirts"), // asinspirts
 		SixthDecl.noChange("-šalts, dsk. ģen. -šaltu, s.", ".*šalts"), // šalts
 		SixthDecl.noChange("-takts, dsk. ģen. -taktu, s.", ".*takts"), // pietakts
 		SixthDecl.noChange("-uts, dsk. ģen. -utu, s.", ".*uts"), // uts

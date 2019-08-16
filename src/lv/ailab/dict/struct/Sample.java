@@ -109,6 +109,13 @@ public class Sample implements HasToJSON, HasToXML
 			res.append("\"");
 			hasPrev = true;
 		}*/
+		
+		if (grammar != null)
+		{
+			if (hasPrev) res.append(", ");
+			res.append(grammar.toJSON());
+			hasPrev = true;
+		}
 
 		if (text != null)
 		{
@@ -120,13 +127,6 @@ public class Sample implements HasToJSON, HasToXML
 			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
 					.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
 			res.append("]");*/
-			hasPrev = true;
-		}
-
-		if (grammar != null)
-		{
-			if (hasPrev) res.append(", ");
-			res.append(grammar.toJSON());
 			hasPrev = true;
 		}
 
@@ -152,6 +152,7 @@ public class Sample implements HasToJSON, HasToXML
 		Document doc = parent.getOwnerDocument();
 		Element phraseN = doc.createElement("Sample");
 		//if (type != null) phraseN.setAttribute("Type", type.toString());
+		if (grammar != null) grammar.toXML(phraseN);
 		if (text != null)
 		{
 			Node textN = doc.createElement("Content");
@@ -164,7 +165,6 @@ public class Sample implements HasToJSON, HasToXML
 			textN.appendChild(doc.createTextNode(text));
 			phraseN.appendChild(textN);
 		}
-		if (grammar != null) grammar.toXML(phraseN);
 		if (citedSource != null)
 		{
 			Node sourceN = doc.createElement("CitedSource");

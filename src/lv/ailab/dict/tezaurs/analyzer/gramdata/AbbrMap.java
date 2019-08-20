@@ -98,6 +98,7 @@ public class AbbrMap {
 		pairingFlags.put("darb.", TFeatures.POS__VERB);
 		pairingFlags.put("divd.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("Divd.", TFeatures.POS__PARTICIPLE);
+		pairingFlags.put("ģenit.", TFeatures.POS__GEN_ONLY);
 		pairingFlags.put("interj.", Tuple.of(TKeys.POS, TValues.INTERJECTION));
 		pairingFlags.put("īp. v.", TFeatures.POS__ADJ);
 		pairingFlags.put("īp.", TFeatures.POS__ADJ);
@@ -812,6 +813,8 @@ public class AbbrMap {
 		pairingFlags.put("tikai v.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.MASCULINE));
 		pairingFlags.put("parasti dem.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Deminutīvs"));
 
+		pairingFlags.put("parasti 3. personas tag.", TFeatures.USUALLY_USED__THIRD_PERS);
+		pairingFlags.put("parasti 3. personas tag.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Tagadne"));
 		pairingFlags.put("parasti 3. pers.", TFeatures.USUALLY_USED__THIRD_PERS);
 		pairingFlags.put("tikai 3. pers.", TFeatures.USED_ONLY__THIRD_PERS);
 		pairingFlags.put("parasti nāk. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Nākotne"));

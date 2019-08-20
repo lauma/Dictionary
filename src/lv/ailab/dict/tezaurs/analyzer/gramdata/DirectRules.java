@@ -402,7 +402,7 @@ public class DirectRules
 		Participle.isUsi("-gušais; s. -gusi, -gusī", ".*dzis"), // aizdudzis
 		Participle.isUsi("-kušais; s. -kusi, -kusī", ".*cis"), // jauniznācis
 		Participle.isUsi("-ušais; s. -usi, -usī", ".*[cdjlmprstv]is"), // aizkūpis
-		Participle.isUsi("-ušais, s. -usi, -usī", ".*[bdjt]is"), // caurkritis
+		Participle.isUsi("-ušais, s. -usi, -usī", ".*[bdjrt]is"), // caurkritis
 		// Paradigma 43: -ies/-usies
 		Participle.iesUsies("s. -usies", ".*ies"), // izdevies, pusapģērbies
 		//BaseRule.of("s. -usies", ".*ies", 43,

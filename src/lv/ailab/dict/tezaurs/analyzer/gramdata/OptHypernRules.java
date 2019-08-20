@@ -785,6 +785,7 @@ public class OptHypernRules
 		FirstConj.direct("-sprūku, -sprūc,", "-sprūk, pag. -spruku", "sprukt"), //aizsprukt
 		FirstConj.direct("-sprūstu, -sprūsti,", "-sprūst, pag. -sprūdu", "sprūst"), //iesprūst
 		FirstConj.direct("-spurcu, -spurc,", "-spurc, pag. -spurcu", "spurkt"), //nospurkt
+		FirstConj.direct("-spurdzu, -spurdz,", "-spurdz, pag. -spurdzu", "spurgt"), //piespurgt
 		FirstConj.direct("-stāju, -stāj,", "-stāj, pag. -stāju", "stāt"), //aizstāt
 		FirstConj.direct("-steidzu, -steidz,", "-steidz, pag. -steidzu", "steigt"), //aizsteigt
 		FirstConj.direct("-stiepju, -stiep,", "-stiepj, pag. -stiepu", "stiept"), //aizstiept
@@ -2053,7 +2054,7 @@ public class OptHypernRules
 		FirstConj.refl("-sējos, -sējies,", "-sējas, pag. -sējos", "sēties"), //izsēties
 		FirstConj.refl("-sienos, -sienies,", "-sienas, pag. -sējos", "sieties"), //aizsieties
 		FirstConj.refl("-sitos, -sities,", "-sitas, pag. -sitos", "sisties"), //aizsisties
-		FirstConj.refl("-skaros, -skaries,", "-skaras, pag. -skaros", "skarties"), //pieskarties
+		FirstConj.refl("-skaros, -skaries,", "-skaras, pag. -skāros", "skarties"), //pieskarties
 		FirstConj.refl("-skaišos, -skaisties,", "-skaišas, pag. -skaitos", "skaisties"), //apskaisties
 		FirstConj.refl("-skaujos, -skaujies,", "-skaujas, pag. -skāvos", "skauties"), //apskauties
 		FirstConj.refl("-skujos, -skujies,", "-skujas, pag. -skuvos", "skūties"), //noskūties

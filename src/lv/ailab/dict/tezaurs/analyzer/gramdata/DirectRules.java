@@ -262,6 +262,9 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikkurš, ikkatrs
 		BaseRule.of("vispārin. vietn., -a, v.", ".*[sš]", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__MASC}), // ikviens
+		BaseRule.of("-ā, v.; vietn.", ".*ais", 25,
+				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // kurais
+
 
 		BaseRule.of("vietn., -as, s.", ".*a", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__FEM}), // ref: šāda, jebkāda
@@ -279,6 +282,8 @@ public class DirectRules
 				null, new Tuple[]{TFeatures.POS__NEG_PRONOUN, TFeatures.GENDER__FEM}), // nekāda
 		BaseRule.of("vispārin. vietn., -as, s.", ".*a", 25,
 				null, new Tuple[]{TFeatures.POS__GEN_PRONOUN, TFeatures.GENDER__FEM}), // ikkura
+		BaseRule.of("-ās, s.; vietn.", ".*ā", 25,
+				null, new Tuple[]{TFeatures.POS__POSS_PRONOUN, TFeatures.GENDER__FEM}), // kurā
 
 		BaseRule.of("vietn. paša, pašam, pašu, ar pašu, pašā, dsk. ģen. pašu, v.", "pats", 25,
 				null, new Tuple[]{TFeatures.POS__PRONOUN, TFeatures.GENDER__MASC}), // pats

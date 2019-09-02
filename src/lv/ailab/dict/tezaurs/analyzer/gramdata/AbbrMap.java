@@ -353,6 +353,7 @@ public class AbbrMap {
 		pairingFlags.put("arhit.", Tuple.of(TKeys.DOMAIN, "Arhitektūra"));
 		pairingFlags.put("arh.", Tuple.of(TKeys.DOMAIN, "Arhitektūra"));
 		pairingFlags.put("astr.", Tuple.of(TKeys.DOMAIN, "Astronomija"));
+		pairingFlags.put("astron.", Tuple.of(TKeys.DOMAIN, "Astronomija"));
 		pairingFlags.put("av.", Tuple.of(TKeys.DOMAIN, "Aviācija"));
 		pairingFlags.put("ādas apstr.", Tuple.of(TKeys.DOMAIN, "Ādas apstrāde"));
 		pairingFlags.put("ādu apstr.", Tuple.of(TKeys.DOMAIN, "Ādas apstrāde"));

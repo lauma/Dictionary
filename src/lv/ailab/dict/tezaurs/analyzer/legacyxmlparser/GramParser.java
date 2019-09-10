@@ -391,17 +391,31 @@ public class GramParser
 		if (gram.flags.test(TKeys.USED_IN_FORM, TValues.GENITIVE) && gram.flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			gram.flags.add(TFeatures.POS__GEN_ONLY);
-			if (lemma.endsWith("u"))
-				gram.flags.add(TKeys.USED_IN_FORM, TValues.PLURAL);
-			else if (lemma.endsWith("a") || lemma.endsWith("s"))
+			if (lemma.endsWith("uguns") || lemma.endsWith("sāls"))
+			{
 				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
-			else System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
-			if (lemma.endsWith("a") || lemma.endsWith("us")) // tēvA, jāņA, medus
+				System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt dzimti.");
+			}
+			else if (lemma.endsWith("a") || lemma.endsWith("us")
+					|| lemma.endsWith("akmens") || lemma.endsWith("asmens")
+					|| lemma.endsWith("zibens")|| lemma.endsWith("mēness")
+					|| lemma.endsWith("ūdens") || lemma.endsWith("rudens")) // tēvA, jāņA, medus
+			{
+				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
 				gram.flags.add(TKeys.GENDER, TValues.MASCULINE);
+			}
 			else if (lemma.endsWith("s")) // annAS, eglES, sirdS
+			{
+				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
 				gram.flags.add(TKeys.GENDER, TValues.FEMININE);
+			}
+			else if (lemma.endsWith("u"))
+				gram.flags.add(TKeys.USED_IN_FORM, TValues.PLURAL);
 			else if (!lemma.endsWith("u"))
+			{
+				System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
 				System.out.println("Ģenitīvenim ar nestandarta galotni \"" + lemma + "\" nevar noteikt dzimti.");
+			}
 			gram.flags.add(TFeatures.FROZEN);
 		}
 		else if (gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) && gram.flags.test(TFeatures.NON_INFLECTIVE))

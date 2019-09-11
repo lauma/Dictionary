@@ -901,6 +901,9 @@ public class AbbrMap {
 		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
 		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ģenitīvā"));
 
+		pairingFlags.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
+		pairingFlags.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ar izskaņu -šana"));
+
 		pairingFlags.put("parasti ar dat.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.DATIVE));
 		pairingFlags.put("parasti ar ģen.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.GENITIVE));
 		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
@@ -975,6 +978,12 @@ public class AbbrMap {
 		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
 		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
 		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+
+		pairingFlags.put("parasti teikuma sākumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikuma sākums"));
+		pairingFlags.put("parasti izsaukuma teikuma beigās.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikuma beigas"));
+		pairingFlags.put("parasti izsaukuma teikuma beigās.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+
+		pairingFlags.put("aiz apzīmējamā vārda", Tuple.of(TKeys.USED_IN_STRUCT, "Aiz apzīmējamā vārda"));
 
 		pairingFlags.put("atkārtojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
 		pairingFlags.put("atkārtotā lietojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));

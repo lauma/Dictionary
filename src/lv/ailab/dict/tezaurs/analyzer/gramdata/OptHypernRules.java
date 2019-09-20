@@ -404,7 +404,7 @@ public class OptHypernRules
 				FirstConjStems.of("tik", "tīk", "tik")), //patikt
 		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.directAllPersParallelHomof(
-				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "riest (parastais)"), //ieriest 2
+				"-riešu, -ries, -rieš, pag. -rietu, arī -riesu", "riest", "riest (ar homoformām)"), //ieriest 2
 
 		// Paralēlās formas.
 		FirstConj.directAllPersParallel(
@@ -901,13 +901,13 @@ public class OptHypernRules
 		// Ar paralēlformām.
 		// TODO: sakārtot "riest" un "riesties"
 		FirstConj.direct3PersParallelHomof(
-				"-rieš, pag. -rieta, arī -riesa", "riest", "riest (parastais)"), // aizriest
+				"-rieš, pag. -rieta, arī -riesa", "riest", "riest (ar homoformām)"), // aizriest
 		// Bez paralēlformām.
 		FirstConj.direct3PersHomof("-aust, pag. -ausa", "aust", "aust (gaismai)"), //aizaust 1
 		FirstConj.direct3PersHomof("-dzīst, pag. -dzija", "dzīt", "dzīt (ievainojumam)"), //aizdzīt 2
 		FirstConj.direct3PersHomof("-irst, pag. -ira", "irt", "irt (audumam)"), //irt 2
 		// TODO: sakārtot "riest" un "riesties"
-		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "riest (parastais)"), //ieriest 1
+		FirstConj.direct3PersHomof("-rieš, pag. -rieta", "riest", "riest (bez homoformām)"), //ieriest 1
 		FirstConj.direct3PersHomof("-riest, pag. -rieta", "riest", "riest (izņēmums)"), //pieriest 1
 		FirstConj.direct3PersHomof("-sus, pag. -susa", "sust", "sust (žūt)"), //nosust 2
 
@@ -2141,8 +2141,10 @@ public class OptHypernRules
 
 			// TODO: sakārtot "riest" un "riesties"
 		FirstConj.refl3PersParallelHomof(
-				"-riešas, pag. -riesās, arī -rietās", "riesties", "riesties (parastais)"), //aizriesties
-		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "riesties (parastais)"), // ieriesties 1
+				"-riešas, pag. -riesās, arī -rietās", "riesties", "riesties (ar homoformām)"), //aizriesties
+		FirstConj.refl3PersParallelHomof(
+				"-riešas, pag. -rietās, arī -riesās", "riesties", "riesties (ar homoformām)"), //aizriesties
+		FirstConj.refl3PersHomof("-riešas, pag. -rietās", "riesties", "riesties (bez homoformām)"), // ieriesties 1
 
 		// Paralēlās formas.
 		FirstConj.refl3PersParallel("-jaušas, pag. -jautās, arī -jaužas, pag. -jaudās", "jausties"), //jausties

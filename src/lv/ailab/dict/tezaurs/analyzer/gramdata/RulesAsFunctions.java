@@ -628,8 +628,8 @@ public class RulesAsFunctions
 				for (String v : verbs)
 				if (v.endsWith("(ies)\""))
 				{
-					flagCollector.add(key, v.replace("(ies)", ""));
-					flagCollector.add(key, v.replace("(", "").replace(")", ""));
+					flagCollector.add(key, v.replace("(ies)", "").trim());
+					flagCollector.add(key, v.replace("(", "").replace(")", "").trim());
 				}
 				else flagCollector.add(key, v.trim());
 			}

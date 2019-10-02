@@ -111,8 +111,11 @@ public class Lemma implements HasToJSON, HasToXML
 			String pronsFromLegacyDict, GramPronuncNormalizer normalizer)
 	{
 		if ("".equals(pronsFromLegacyDict)) return;
+		pronsFromLegacyDict = pronsFromLegacyDict.replaceAll("</?em>", "");
+		if (pronsFromLegacyDict.endsWith("],"))
+			pronsFromLegacyDict = pronsFromLegacyDict.substring(0, pronsFromLegacyDict.length()-1);
 		pronunciation = pronsFromLegacyDict.trim().split(
-				"(, arī | vai |, (?!arī ))");
+				"(\\],? arī \\[|, arī | vai |, (?!arī ))");
 		for (int i = 0; i < pronunciation.length; i++)
 		{
 			pronunciation[i] = pronunciation[i].trim();
@@ -122,6 +125,11 @@ public class Lemma implements HasToJSON, HasToXML
 				pronunciation[i] = pronunciation[i].substring(0, pronunciation[i].length()-1);
 			if (normalizer != null)
 				pronunciation[i] = normalizer.normalizePronuncs(pronunciation[i]);
+			//if (pronunciation[i].matches(".*?(</?em>|\\[|]).*") ||
+			//	pronunciation[i].endsWith(","))
+			if (!pronunciation[i].matches("[a-zāčēģīķļņōŗšūž!\\\\/^~,\\- ]*"))
+				System.out.printf("Aizdomīga izruna \"%s\".\n", pronunciation[i]);
+
 		}
 	}
 }

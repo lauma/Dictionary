@@ -1,6 +1,5 @@
 package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
-import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;

@@ -53,6 +53,11 @@ public class TValues extends Values
 	public final static String FOREIGN = "Vārds svešvalodā";
 	public final static String PIECE_OF_WORD = "Vārda daļa";
 	public final static String PREFIX = "Priedēklis";
+	/**
+	 * Unexpected term, but https://termini.gov.lv/kolekcijas/93/skirklis/422773
+	 * says, it is exactly that.
+	 */
+	public final static String POSTFIX = "Izskaņa";
 	public final static String PREFIX_FOREIGN = "Svešvārdu priedēklis";
 	public final static String COMPOUND_PIECE = "Salikteņu daļa";
 	public final static String COMPOUND_FIRST_PIECE = "Salikteņu pirmā daļa";

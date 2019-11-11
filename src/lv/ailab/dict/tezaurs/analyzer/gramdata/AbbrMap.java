@@ -174,6 +174,8 @@ public class AbbrMap {
 		pairingFlags.put("svešvārdu pried.", Tuple.of(TKeys.POS, TValues.PREFIX_FOREIGN));
 		pairingFlags.put("svešvārdu pried.", TFeatures.POS__PREFIX);
 		pairingFlags.put("svešvārdu pried.", TFeatures.POS__PIECE);
+		pairingFlags.put("izskaņa", Tuple.of(TKeys.POS, TValues.POSTFIX));
+		pairingFlags.put("izskaņa", TFeatures.POS__PIECE);
 
 		pairingFlags.put("salikteņu otrā daļa", TFeatures.POS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu otrā daļa", TFeatures.POS__COMPOUND_LAST);

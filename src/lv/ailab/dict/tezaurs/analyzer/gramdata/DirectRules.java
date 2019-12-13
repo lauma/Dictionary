@@ -694,6 +694,7 @@ public class DirectRules
 		SecondDecl.std("-šņa, v.", ".*snis"), // alksnis
 		SecondDecl.std("-pja, v.", ".*pis"), //aitkopis
 		SecondDecl.std("-vja, v.", ".*vis"), //aizstāvis
+		SecondDecl.std("-žļa, v.", ".*zlis"), //grizlis
 		SecondDecl.std("-žņa, v.", ".*znis"), //aitkopis
 
 		SecondDecl.std("vsk. -ķa, v.", ".*ķis"), // antibiotiķi/antibiotiķis

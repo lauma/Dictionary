@@ -874,7 +874,7 @@ public class OptHypernRules
 		FirstConj.direct("-velku, -velc,", "-velk, pag. -vilku", "vilkt"), //aizvilkt
 		FirstConj.direct("-viļu, -vil,", "-viļ, pag. -vīlu", "vilt"), //aizvilt
 		FirstConj.direct("-vīstu, -vīsti,", "-vīst, pag. -vītu", "vīst"), //novīst
-		FirstConj.direct("-vīkšu, -vīkši,", "-vīkš, pag. -vīkšu", "vīkšt"), //savīkšt
+		FirstConj.direct("-vīkšu, -vīkš,", "-vīkš, pag. -vīkšu", "vīkšt"), //savīkšt
 		FirstConj.direct("-viju, -vij,", "-vij, pag. -viju", "vīt"), //aizvīt
 		// Z
 		FirstConj.direct("-zogu, -zodz,", "-zog, pag. -zagu", "zagt"), // apzagt
@@ -1322,6 +1322,7 @@ public class OptHypernRules
 		ThirdConj.directStd("-vēkšu, -vēkši,", "-vēkš, pag. -vēkšēju", "vēkšēt"), //vēkšēt
 		ThirdConj.directStd("-vēkšķu, -vēkšķi,", "-vēkšķ, pag. -vēkšķēju", "vēkšķēt"), //vēkšķēt
 		ThirdConj.directStd("-vēlu, -vēli,", "-vēl, pag. -vēlēju", "vēlēt"), //atvēlēt
+		// TODO - pielīdzināt 3. konj. standartam šos divus.
 		ThirdConj.directStd("-vīkšu, -vīkši,", "-vīkš, pag. -vīkšīju", "vīkšīt"), //savīkšīt
 		ThirdConj.directStd("-vīkšķu, -vīkšķi,", "-vīkšķ, pag. -vīkšķīju", "vīkšķīt"), //savīkšķīt
 		// Z

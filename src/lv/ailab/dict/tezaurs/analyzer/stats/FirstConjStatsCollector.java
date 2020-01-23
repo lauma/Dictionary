@@ -197,7 +197,7 @@ public class FirstConjStatsCollector
 			if (paradigms != null && paradigms.contains(15))
 			{
 				if (collectDirectByInfinitive) addByInf(directByInf, h);
-				if (collectReflByStems) addByStem(directbyStems, h);
+				if (collectDirectByStems) addByStem(directbyStems, h);
 				if (collectDirectByPrefix) addByPrefix(directByPrefix, h);
 			}
 

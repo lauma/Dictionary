@@ -452,8 +452,11 @@ public class OptHypernRules
 
 		// Izņēmums.
 		VerbDoubleRule.of("-pārdodu, -pārdod,", "-pārdod, pag. -pārdevu", "dot", 15,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("do", "dod", "dev")), //izpārdot
+		VerbDoubleRule.of("-dodu, -dod,", "-dod, pag. -devu", "dot", 15,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null,
+				FirstConjStems.of("do", "dod", "dev")), //aizdot
 		VerbDoubleRule.of("-nesajēdzu, -nesajēdz,", "-nesajēdz, pag. -nesajēdzu", "jēgt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "jēgt"), TFeatures.POS__DIRECT_VERB}, null,
 				FirstConjStems.of("jēg", "jēdz", "jēdz")), //nesajēgt
@@ -520,7 +523,7 @@ public class OptHypernRules
 		FirstConj.direct("-diršu, -dirs,", "-dirš, pag. -dirsu", "dirst"), //piedirst
 		FirstConj.direct("-dīcu, -dīc,", "-dīc, pag. -dīcu", "dīkt"), //idīkt
 		FirstConj.direct("-dobju, -dob,", "-dobj, pag. -dobu", "dobt"), //iedobt
-		FirstConj.direct("-dodu, -dod,", "-dod, pag. -devu", "dot"), //aizdot
+		//FirstConj.direct("-dodu, -dod,", "-dod, pag. -devu", "dot"), //aizdot // Pārcelts uz izņēmumiem, lai ir neregulārais flags
 		FirstConj.direct("-drāžu, -drāz,", "-drāž, pag. -drāzu", "drāzt"), //aizdrāzt
 		FirstConj.direct("-dugstu, -dugsti,", "-dugst, pag. -dugu", "dugt"), //sadugt
 		FirstConj.direct("-duru, -dur,", "-dur, pag. -dūru", "durt"), //aizdurt
@@ -1890,7 +1893,7 @@ public class OptHypernRules
 						TFeatures.INFINITIVE_HOMOFORMS, TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("tik", "tīk", "tik")), //iepatikties
 
-		// Paralēlās formas.
+			// Paralēlās formas.
 		FirstConj.reflAllPersParallel(
 				"-aujos, -aujies, -aujas, arī -aunos, -aunies, -aunas, pag. -āvos", "auties"), //apauties
 		FirstConj.reflAllPersParallel(
@@ -1910,6 +1913,9 @@ public class OptHypernRules
 				"-spurdzos, -spurdzies, -spurdzas, pag. -spurdzos, retāk -spurgstos, -spurgsties, -spurgstas, pag. -spurgos", "spurgties"), //iespurgties
 
 		// Izņēmums.
+		VerbDoubleRule.of("-dodos, -dodies,", "-dodas, pag. -devos", "doties", 18,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null,
+				FirstConjStems.of("do", "dod", "dev")), //atdoties
 		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "zīties"), TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("zī", "zīst", "zin")), //iepazīties
@@ -1943,7 +1949,7 @@ public class OptHypernRules
 		FirstConj.refl("-dējos, -dējies,", "-dējas, pag. -dējos", "dēties"), //dēties
 		FirstConj.refl("-dejos, -dejies,", "-dejas, pag. -dējos", "dieties"), //izdieties
 		FirstConj.refl("-diršos, -dirsies,", "-diršas, pag. -dirsos", "dirsties"), //apdirsties
-		FirstConj.refl("-dodos, -dodies,", "-dodas, pag. -devos", "doties"), //atdoties
+		//FirstConj.refl("-dodos, -dodies,", "-dodas, pag. -devos", "doties"), //atdoties // Pārcelts uz izņēmumiem, lai ir neregularitātes flags.
 		FirstConj.refl("-drāžos, -drāzies,", "-drāžas, pag. -drāzos", "drāzties"), //aizdrāzties
 		FirstConj.refl("-duros, -duries,", "-duras, pag. -dūros", "durties"), //aizdurties
 		FirstConj.refl("-dzeļos, -dzelies,", "-dzeļas, pag. -dzēlos", "dzelties"), //sadzelties

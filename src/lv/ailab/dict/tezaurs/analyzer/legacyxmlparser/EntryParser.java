@@ -55,11 +55,7 @@ public class EntryParser
 			else if (fieldname.equals("g_de")) //atvasinātās formas
 				loadDerivs(result, field);
 			else if (fieldname.equals("ref")) // atsauce uz citu šķirkli
-			{
-				result.references = new LinkedList<>();
-				result.references.addAll(Arrays.asList(field.getTextContent().split(", ")));
-				// TODO: vai šeit vajag dalījumu?
-			}
+				loadRef(result, field);
 			else
 				System.err.printf("Šķirklī \"%s\" lauks %s netiek apstrādāts!\n",
 						result.head.lemma.text, fieldname);
@@ -82,6 +78,52 @@ public class EntryParser
 			result.head.gram.flags.pairings.removeAll(TKeys.ETYMOLOGY);
 		}
 		return result;
+	}
+
+	/**
+	 * Process ref field. It must by split by commas, but commas in parenthesis
+	 * () must be ignored.
+	 */
+	private void loadRef (TEntry entry, Node ref)
+	{
+		entry.references = new LinkedList<>();
+		String refText = ref.getTextContent();
+		// Vajag sadalīt pa tiem komatiem, kas nav iekavās.
+		while (refText != null && !refText.isEmpty())
+		{
+			if (!refText.contains(", "))
+			{
+				entry.references.add(refText);
+				refText = null;
+			}
+			else if (!refText.contains("("))
+			{
+				entry.references.addAll(Arrays.asList(refText.split(", ")));
+				refText = null;
+			}
+			else
+			{
+				String beginPart = refText.substring(0, refText.indexOf(", "));
+				refText = refText.substring(refText.indexOf(", "));
+				if (beginPart.indexOf('(') > beginPart.indexOf(')'))
+				{
+					beginPart = beginPart + refText.substring(0, refText.indexOf(')'));
+					refText = refText.substring(refText.indexOf(')'));
+					if (refText.contains(", "))
+					{
+						beginPart = beginPart + refText.indexOf(", ");
+						refText = refText.substring(refText.indexOf(", "));
+					}
+					else
+					{
+						beginPart = beginPart + refText;
+						refText = "";
+					}
+				}
+				if (refText.startsWith(", ")) refText = refText.substring(2);
+				entry.references.add(beginPart);
+			}
+		}
 	}
 
 	/**

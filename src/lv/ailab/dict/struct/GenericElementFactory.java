@@ -5,6 +5,7 @@ public class GenericElementFactory
 	public Dictionary getNewDictionary() { return new Dictionary(); }
 	public Entry getNewEntry() { return new Entry(); }
 	public Flags getNewFlags() { return new Flags(); }
+	public StructRestriction getNewStructRestriction() { return new StructRestriction(); }
 	public Gloss getNewGloss() { return new Gloss(); }
 	public Gram getNewGram() { return new Gram(); }
 	public Header getNewHeader() { return new Header(); }

@@ -45,7 +45,16 @@ public class Gram implements HasToJSON, HasToXML
 	 * TODO: dublēt karodziņus.
 	 */
 	public LinkedList<Header> altLemmas;
-	
+
+	/**
+	 * Struktūra, kas satur izparsētas norādes par to, kādās formās un kādās
+	 * sintaktiskajās struktūrās skaidrojamais elements tiek lietots. Tēzaura
+	 * gadījumā formalizēts no tādām virknēm kā "parasti jautājuma teikumos" un
+	 * "bieži dsk. lok." MLVV gadījumā nav pilnīgi izdalīts, bet daļa no tā iet
+	 * formRestrictions.
+	 */
+	public LinkedList<StructRestriction> structRestrictions;
+
 	protected Gram() {};
 
 	/**
@@ -148,6 +157,14 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
+		if (structRestrictions != null && !structRestrictions.isEmpty())
+		{
+			if (hasPrev) res.append(", ");
+			res.append("\"StructuralRestrictions\":");
+			res.append(JSONUtils.objectsToJSON(structRestrictions));
+			hasPrev = true;
+		}
+
 		if (freeText != null && freeText.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
@@ -216,6 +233,14 @@ public class Gram implements HasToJSON, HasToXML
 			gramN.appendChild(addBeforeFT);
 
 		if (flags != null) flags.toXML(gramN);
+
+		if (structRestrictions != null && !structRestrictions.isEmpty())
+		{
+			Node structRestrContN = doc.createElement("StructuralRestrictions");
+			for (StructRestriction restr: structRestrictions)
+				if (restr != null) restr.toXML(structRestrContN);
+			gramN.appendChild(structRestrContN);
+		}
 
 		if (freeText != null && !freeText.isEmpty())
 		{

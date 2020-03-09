@@ -155,4 +155,17 @@ public class XmlFieldMappingHandler
 		return null;
 	}
 
+	// TODO integrēt šī lietojumu pārējās šīs klases metodēs.
+	public Node takeoutSingleNode(
+			XmlFieldMapping fields, String parentElemName, String elemName)
+	throws DictionaryXmlReadingException
+	{
+		LinkedList<Node> nodesOfElemType = fields.removeNodeChildren(elemName);
+		if (nodesOfElemType != null && nodesOfElemType.size() > 1)
+			throw new DictionaryXmlReadingException(String.format(
+					"Elementā \"%s\" atrasti vairāki \"%s\"!", parentElemName, elemName));
+		if (nodesOfElemType == null) return null;
+		return nodesOfElemType.get(0);
+	}
+
 }

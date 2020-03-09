@@ -216,13 +216,45 @@ public class StdXmlLoader
 		result.altLemmas = loadHeaderListBlock(fields, elemFact,
 				"Gram", "AltLemmas");
 		// Flags
-		result.flags = loadFlagsBlock(fields, elemFact,
+		result.flags = loadFlagsBlock(fields, elemFact, "Gram");
+		// StructuralRestrictions
+		result.structRestrictions = loadStructRestrBlock(fields, elemFact,
 				"Gram");
 		// FreeText
 		result.freeText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
 				"Gram", "FreeText");
 		// Brīdina, ja ir vēl kaut kas.
 		fields.dieOnNonempty("Gram");
+		return result;
+	}
+
+	public StructRestriction makeStructRestriction(Node structRestrNode, GenericElementFactory elemFact)
+	throws DictionaryXmlReadingException
+	{
+		StructRestriction result = elemFact.getNewStructRestriction();
+		XmlFieldMapping fields = XmlFieldMappingHandler.me().domElemToHash((Element) structRestrNode);
+		if (fields == null || fields.isEmpty()) return null;
+
+		//Restriction
+		result.type = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"StructuralRestriction", "Restriction");
+		//Frequency
+		result.type = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"StructuralRestriction", "Frequency");
+		// Value - Flags, LanguageMaterial
+		Node valueNode = XmlFieldMappingHandler.me().takeoutSingleNode(fields,
+				"StructuralRestrictions", "Value");
+		XmlFieldMapping valueFields =
+				XmlFieldMappingHandler.me().domElemToHash((Element) valueNode);
+		// Flags
+		result.valueFlags = loadFlagsBlock(valueFields, elemFact, "Value");
+		// LanguageMaterial
+		result.valueText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
+				"Value", "LanguageMaterial");
+
+		// Brīdina, ja ir vēl kaut kas.
+		valueFields.dieOnNonempty("Value");
+		fields.dieOnNonempty("StructuralRestrictions");
 		return result;
 	}
 
@@ -374,6 +406,24 @@ public class StdXmlLoader
 		{
 			Sample s = makeSample(sNode, elemFact);
 			if (s != null) result.add(s);
+		}
+		return result.isEmpty() ? null : result;
+	}
+
+	protected LinkedList<StructRestriction> loadStructRestrBlock(
+			XmlFieldMapping fields, GenericElementFactory elemFact,
+			String parentElemName)
+	throws DictionaryXmlReadingException
+	{
+		LinkedList<Node> structRestrNode = XmlFieldMappingHandler.me().takeoutNodeList(
+				fields,	parentElemName, "StructuralRestrictions",
+				"StructuralRestriction");
+		if (structRestrNode == null) return null;
+		LinkedList<StructRestriction> result = new LinkedList<>();
+		for (Node srNode : structRestrNode)
+		{
+			StructRestriction sr = makeStructRestriction(srNode, elemFact);
+			if (sr != null) result.add(sr);
 		}
 		return result.isEmpty() ? null : result;
 	}

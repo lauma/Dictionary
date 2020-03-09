@@ -86,6 +86,7 @@ public class TKeys extends Keys
 
 	/**
 	 * Bieži, reti, pareti.
+	 * TODO - pārcelt uz StructRestrs?
 	 */
 	public final static String USAGE_FREQUENCY = "Lietojuma biežums";
 

@@ -64,10 +64,6 @@ public class TGram extends Gram
 		try
 		{
 			// Interesanti, vai ar refleksiju šis triks būtu ātrāks?
-			// Tēzaurs vairs nelieto formRestrictions, bet nu drošības pēc.
-			if (gram.formRestrictions != null)
-				for (Header restr : gram.formRestrictions)
-					if (((THeader) restr).hasUnparsedGram()) return true;
 			// Šito šobrīd it kā nevajag, bet nu drošības pēc:
 			if (gram.altLemmas != null)
 				for (Header alt : gram.altLemmas)
@@ -112,9 +108,9 @@ public class TGram extends Gram
 				}
 			}
 			additional.append("]");
-			return toJSON(null, additional.toString());
+			return toJSON(null, null, additional.toString());
 		}
-		else return toJSON(null, null);
+		else return toJSON(null, null, null);
 	}
 
 	/**
@@ -141,8 +137,8 @@ public class TGram extends Gram
 				}
 				loContN.appendChild(loSemicolonN);
 			}
-			toXML(parent, null, loContN);
+			toXML(parent, null, null, loContN);
 		}
-		else toXML(parent, null, null);;
+		else toXML(parent, null, null, null);;
 	}
 }

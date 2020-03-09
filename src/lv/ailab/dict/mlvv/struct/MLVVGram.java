@@ -3,12 +3,15 @@ package lv.ailab.dict.mlvv.struct;
 import lv.ailab.dict.mlvv.analyzer.stringutils.Editors;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.Header;
+import lv.ailab.dict.utils.JSONUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
@@ -18,6 +21,14 @@ import java.util.TreeSet;
  */
 public class MLVVGram extends Gram
 {
+	/**
+	 * Struktūra, kas satur norādes, ka elements, ko šī gramatika skaidro,
+	 * attiecas tikai uz noteiktu šķirkļavārdu formu apakškopu. Šis elements
+	 * visbiežāk sastopams gramatikās, kas atrodas pie nozīmēm.
+	 * Visos saprātīgos gadījumos vajadzētu būt ne vairāk kā 1 šādam Header?
+	 */
+	public LinkedList<Header> formRestrictions;
+
 	/**
 	 * freeText izmanto galotņu šabloniem, flagtext - gramatikas beigu daļai
 	 * kursīvā.
@@ -35,6 +46,20 @@ public class MLVVGram extends Gram
 		flagText = null;
 		this.freeText = text;
 		separateFlagText();
+	}
+
+	/**
+	 * Visas paradigmas, kas vispār ir pieminētas šajā struktūrā.
+	 * Izmantojams meklēšanai un statistikai.
+	 */
+	@Override
+	public HashSet<Integer> getMentionedParadigms()
+	{
+		HashSet<Integer> res = super.getMentionedParadigms();
+		if (formRestrictions != null && formRestrictions.size() > 0)
+			for (Header h : formRestrictions)
+				res.addAll(h.getMentionedParadigms());
+		return res;
 	}
 
 	/**
@@ -180,9 +205,14 @@ public class MLVVGram extends Gram
 	@Override
 	public String toJSON ()
 	{
+		String flagTextRep = null;
 		if (flagText != null)
-			return toJSON("Inflection", "\"FlagText\":\"" + JSONObject.escape(flagText) + "\"");
-		else return toJSON("Inflection", null);
+			flagTextRep =  "\"FlagText\":\"" + JSONObject.escape(flagText) + "\"";
+		String formRestrRep = null;
+		if (formRestrictions != null && !formRestrictions.isEmpty())
+			formRestrRep = "\"FormRestrictions\":" + JSONUtils.objectsToJSON(formRestrictions);
+
+		return toJSON("Inflection", formRestrRep, flagTextRep);
 	}
 
 	/**
@@ -191,14 +221,21 @@ public class MLVVGram extends Gram
 	@Override
 	public void toXML(Node parent)
 	{
+		Document doc = parent.getOwnerDocument();
+		Node flagTextNode = null;
 		if (flagText != null)
 		{
-			Document doc = parent.getOwnerDocument();
-			Element flagTextNode = doc.createElement("FlagText");
+			flagTextNode = doc.createElement("FlagText");
 			flagTextNode.appendChild(doc.createTextNode(flagText));
-			toXML(parent, "Inflection", flagTextNode);
 		}
-		else toXML(parent, "Inflection", null);
+		Node formRestrNode = null;
+		if (formRestrictions != null && !formRestrictions.isEmpty())
+		{
+			formRestrNode = doc.createElement("FormRestrictions");
+			for (Header al: formRestrictions)
+				if (al != null) al.toXML(formRestrNode);
+		}
+		toXML(parent, "Inflection", formRestrNode, flagTextNode);
 	}
 
 }

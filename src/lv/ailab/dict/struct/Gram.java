@@ -45,18 +45,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * TODO: dublēt karodziņus.
 	 */
 	public LinkedList<Header> altLemmas;
-
-	/**
-	 * Struktūra, kas satur norādes, ka elements, ko šī gramatika skaidro,
-	 * attiecas tikai uz noteiktu šķirkļavārdu formu apakškopu. Šis elements
-	 * visbiežāk sastopams gramatikās, kas atrodas pie nozīmēm.
-	 * Visos saprātīgos gadījumos vajadzētu būt ne vairāk kā 1 šādam Header?
-	 *
-	 * TODO: pārcelt uz MLVVGram.
-	 */
-	public LinkedList<Header> formRestrictions;
-
-
+	
 	protected Gram() {};
 
 	/**
@@ -80,9 +69,6 @@ public class Gram implements HasToJSON, HasToXML
 		res.addAll(getDirectParadigms());
 		for (Header h : getImplicitHeaders())
 			res.addAll(h.getMentionedParadigms());
-		if (formRestrictions != null && formRestrictions.size() > 0)
-			for (Header h : formRestrictions)
-				res.addAll(h.getMentionedParadigms());
 		return res;
 	}
 
@@ -110,7 +96,7 @@ public class Gram implements HasToJSON, HasToXML
 	 */
 	public String toJSON()
 	{
-		return toJSON(null, null);
+		return toJSON(null, null, null);
 	}
 
 	/**
@@ -118,11 +104,13 @@ public class Gram implements HasToJSON, HasToXML
 	 * dažus parametrus aizpildot automātiski.
 	 * Ātruma problēmu gadījumā, iespējams, jāpāriet uz StringBuilder
 	 * atgriešanu.
-	 * @param freeTextFieldName	freeText lauka nosaukums
-	 * @param additional		JSON-noformēts atslēgu vērtību pārītis, ko pievienot
-	 *                      izdrukā.
+	 * @param freeTextFieldName		freeText lauka nosaukums
+	 * @param addBeforeFT    JSON-noformēts atslēgu vērtību pārītis, ko
+	 *                       		pievienotizdrukā pēc freeText lauka
+	 * @param addAfterFT		JSON-noformēts atslēgu vērtību pārītis, ko
+	 *                      		pievienotizdrukā pēc freeText lauka
 	 */
-	public String toJSON (String freeTextFieldName, String additional)
+	public String toJSON (String freeTextFieldName, String addBeforeFT, String addAfterFT)
 	{
 		StringBuilder res = new StringBuilder();
 
@@ -145,11 +133,10 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (formRestrictions != null && !formRestrictions.isEmpty())
+		if (addBeforeFT != null && addBeforeFT.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"FormRestrictions\":");
-			res.append(JSONUtils.objectsToJSON(formRestrictions));
+			res.append(addBeforeFT);
 			hasPrev = true;
 		}
 
@@ -174,10 +161,10 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (additional != null && additional.length() > 0)
+		if (addAfterFT != null && addAfterFT.length() > 0)
 		{
 			if (hasPrev) res.append(", ");
-			res.append(additional);
+			res.append(addAfterFT);
 			hasPrev = true;
 		}
 
@@ -187,17 +174,20 @@ public class Gram implements HasToJSON, HasToXML
 
 	public void toXML(Node parent)
 	{
-		toXML(parent, null, null);
+		toXML(parent, null, null, null);
 	}
 
 	/**
 	 * Reālā XML izveidošanas metode, ko konkrētais obekts sauc, dažus
 	 * parametrus aizpildot automatiski.
  	 * @param freeTextFieldName	freeText lauka nosaukums
-	 * @param additional	XML node ar papildus informāciju.
+	 * @param addBeforeFT	XML node ar papildus informāciju, ko pievienot pirms
+	 *                      freeText lauka.
+	 * @param addAfterFT	XML node ar papildus informāciju, ko pievienot pēc
+	 *                      freeText lauka.
 	 */
 
-	public void toXML(Node parent, String freeTextFieldName, Node additional)
+	public void toXML(Node parent, String freeTextFieldName, Node addBeforeFT, Node addAfterFT)
 	{
 		Document doc = parent.getOwnerDocument();
 		Node gramN = doc.createElement("Gram");
@@ -222,13 +212,8 @@ public class Gram implements HasToJSON, HasToXML
 			gramN.appendChild(altLemmasContN);
 		}
 
-		if (formRestrictions != null && !formRestrictions.isEmpty())
-		{
-			Node formRestrContN = doc.createElement("FormRestrictions");
-			for (Header al: formRestrictions)
-				if (al != null) al.toXML(formRestrContN);
-			gramN.appendChild(formRestrContN);
-		}
+		if (addBeforeFT != null)
+			gramN.appendChild(addBeforeFT);
 
 		if (flags != null) flags.toXML(gramN);
 
@@ -241,8 +226,8 @@ public class Gram implements HasToJSON, HasToXML
 			origN.appendChild(doc.createTextNode(freeText));
 			gramN.appendChild(origN);
 		}
-		if (additional != null)
-			gramN.appendChild(additional);
+		if (addAfterFT != null)
+			gramN.appendChild(addAfterFT);
 
 		parent.appendChild(gramN);
 	}

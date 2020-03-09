@@ -24,7 +24,7 @@ public class Keys
 	public final static String OTHER_FLAGS = "Citi";
 
 	//=== Morfoloģiskās pazīmes ================================================
-	/**
+	/*
 	 * Gramatiskā kategorija - skaitlis: vienskaitlis, daudzskaitlis vai
 	 * divskaitlis (tēzaurā ir manīts viens gadījums).
 	 * Norāda, ja kaut kādu iemeslu dēļ šķirkļavārdu analizējot, to ir izdevies
@@ -38,7 +38,7 @@ public class Keys
 	 * noskaidrot. Lielākoties nav pašmērķis.
 	 */
 	public final static String GENDER = "Dzimte";
-	/**
+	/*
 	 * Gramatiskā kategorija - locījums - vietas, kur norādīts fiksēts locījums.
 	 */
 	//public final static String CASE = "Locījums";

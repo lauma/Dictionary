@@ -215,9 +215,6 @@ public class StdXmlLoader
 		// AltLemmas
 		result.altLemmas = loadHeaderListBlock(fields, elemFact,
 				"Gram", "AltLemmas");
-		// FormRestrictions
-		result.formRestrictions = loadHeaderListBlock(fields, elemFact,
-				"Gram", "FormRestrictions");
 		// Flags
 		result.flags = loadFlagsBlock(fields, elemFact,
 				"Gram");

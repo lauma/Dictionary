@@ -120,6 +120,32 @@ public class StructRestriction implements HasToJSON, HasToXML
 
 		parent.appendChild(trN);
 	}
+
+	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
+	@Override
+	public boolean equals (Object o)
+	{
+		if (o == null) return false;
+		if (this.getClass() != o.getClass()) return false;
+		return (type == null && ((StructRestriction) o).type == null
+				|| type != null && type.equals(((StructRestriction) o).type))
+				&& (frequency == null && ((StructRestriction) o).frequency == null
+				|| frequency != null && frequency.equals(((StructRestriction) o).frequency))
+				&& (valueText == null && ((StructRestriction) o).valueText == null
+				|| valueText != null && valueText.equals(((StructRestriction) o).valueText))
+				&& (valueFlags == null && ((StructRestriction) o).valueFlags == null
+				|| valueFlags != null && valueFlags.equals(((StructRestriction) o).valueFlags));
+	}
+
+	// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
+	@Override
+	public int hashCode()
+	{
+		return 3343 * (type == null ? 1 : type.hashCode())
+				+ 691 * (frequency == null ? 1 : frequency.hashCode())
+				+ 43 * (valueText == null ? 1 : valueText.hashCode())
+				+ 7 * (valueFlags == null ? 1 : valueFlags.hashCode());
+	}
 }
 
 

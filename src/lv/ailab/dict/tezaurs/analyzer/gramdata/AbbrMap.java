@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestriction;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
@@ -23,6 +24,7 @@ public class AbbrMap {
 	protected static AbbrMap singleton;
 	protected MappingSet<String, String> binaryFlags;
 	protected MappingSet<String, Tuple<String, String>> pairingFlags;
+	protected MappingSet<String, StructRestriction> structRestrs;
 
 	public static AbbrMap getAbbrMap()
 	{
@@ -33,21 +35,27 @@ public class AbbrMap {
 	/**
 	 * Gramatikas fragmentu (mazāko gabaliņu bez komatiem un semikoliem) mēģina
 	 * atpazīt kā saīsinājumu.
-	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš
-	 * @param collector		karodziņu kolekcija, kurā savāc visu, kas atbilst
+	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš.
+	 * @param flagCollector	karodziņu kolekcija, kurā savāc visu, kas atbilst
 	 *                      šim gramatikas fragmentam.
+	 * @param structRestrCollector	ierobežojumkarodziņu kolekcijas, kas savāc
+	 *                              visu, kas atbilst šim gramatikas fragmentam.
 	 * @return vai tika atpazīts.
 	 */
-	public boolean translate(String gramSegment, Flags collector )
+	public boolean translate(String gramSegment, Flags flagCollector,
+							 HashSet<StructRestriction> structRestrCollector )
 	{
 		if (binaryFlags.containsKey(gramSegment))
-			collector.pairings.putAll(TKeys.OTHER_FLAGS, binaryFlags
+			flagCollector.pairings.putAll(TKeys.OTHER_FLAGS, binaryFlags
 					.getAll(gramSegment));
 		if (pairingFlags.containsKey(gramSegment))
 			for (Tuple<String, String> t : pairingFlags.getAll(gramSegment))
-			collector.pairings.put(t.first, t.second);
+				flagCollector.pairings.put(t.first, t.second);
+		if (structRestrs.containsKey(gramSegment))
+			structRestrCollector.addAll(structRestrs.getAll(gramSegment));
 		return (binaryFlags.containsKey(gramSegment) ||
-				pairingFlags.containsKey(gramSegment));
+				pairingFlags.containsKey(gramSegment) ||
+				structRestrs.containsKey(gramSegment));
 	}
 
 	/**

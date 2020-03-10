@@ -95,7 +95,7 @@ public class GramParser
 			{
 				gramElem = gramElem.trim();
 				// Meklē atbilstību zināmajiem saīsinājumiem.
-				boolean isFlag = TGram.knownAbbr.translate(gramElem, gram.flags);
+				boolean isFlag = TGram.knownAbbr.translate(gramElem, gram.flags, gram.structRestrictions);
 				if (!isFlag)
 				{
 					// Meklē atbilstību regulārājām izteiksmēm.

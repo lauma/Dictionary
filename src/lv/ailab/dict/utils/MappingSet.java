@@ -84,4 +84,19 @@ public class MappingSet<K, V>
 		return returnValue;
 	}
 
+	@Override
+	public boolean equals (Object o)
+	{
+		if (o == null) return false;
+		if (this.getClass() != o.getClass()) return false;
+		if (this.map == ((MappingSet) o).map) return true;
+		if (this.map == null) return false;
+		return (this.map.equals(((MappingSet) o).map));
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return 1019 *(map == null ? 1 : map.hashCode());
+	}
 }

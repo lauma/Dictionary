@@ -410,7 +410,7 @@ public class StdXmlLoader
 		return result.isEmpty() ? null : result;
 	}
 
-	protected LinkedList<StructRestriction> loadStructRestrBlock(
+	protected HashSet<StructRestriction> loadStructRestrBlock(
 			XmlFieldMapping fields, GenericElementFactory elemFact,
 			String parentElemName)
 	throws DictionaryXmlReadingException
@@ -419,7 +419,7 @@ public class StdXmlLoader
 				fields,	parentElemName, "StructuralRestrictions",
 				"StructuralRestriction");
 		if (structRestrNode == null) return null;
-		LinkedList<StructRestriction> result = new LinkedList<>();
+		HashSet<StructRestriction> result = new HashSet<>();
 		for (Node srNode : structRestrNode)
 		{
 			StructRestriction sr = makeStructRestriction(srNode, elemFact);

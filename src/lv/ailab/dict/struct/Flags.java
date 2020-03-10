@@ -161,4 +161,20 @@ public class Flags implements HasToXML
 			parent.appendChild(flagsContN);
 		}
 	}
+
+	@Override
+	public boolean equals (Object o)
+	{
+		if (o == null) return false;
+		if (this.getClass() != o.getClass()) return false;
+		if (this.pairings == ((Flags) o).pairings) return true;
+		if (this.pairings == null) return false;
+		return (this.pairings.equals(((Flags) o).pairings));
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return pairings == null ? 1 : pairings.hashCode();
+	}
 }

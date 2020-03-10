@@ -53,7 +53,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * "bieži dsk. lok." MLVV gadījumā nav pilnīgi izdalīts, bet daļa no tā iet
 	 * formRestrictions.
 	 */
-	public LinkedList<StructRestriction> structRestrictions;
+	public HashSet<StructRestriction> structRestrictions;
 
 	protected Gram() {};
 

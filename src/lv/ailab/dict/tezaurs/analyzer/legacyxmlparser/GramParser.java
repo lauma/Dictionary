@@ -58,6 +58,7 @@ public class GramParser
 				gramNode.getTextContent(), TPronuncNormalizer.me());
 		result.leftovers = null;
 		result.flags = TElementFactory.me().getNewFlags();
+		result.structRestrictions = new HashSet<>();
 		result.paradigm = new HashSet<>();
 		result.altLemmas = null;
 		parseGram(result, lemma);
@@ -95,7 +96,7 @@ public class GramParser
 			{
 				gramElem = gramElem.trim();
 				// Meklē atbilstību zināmajiem saīsinājumiem.
-				boolean isFlag = TGram.knownAbbr.translate(gramElem, gram.flags);
+				boolean isFlag = TGram.knownAbbr.translate(gramElem, gram.flags, gram.structRestrictions);
 				if (!isFlag)
 				{
 					// Meklē atbilstību regulārājām izteiksmēm.

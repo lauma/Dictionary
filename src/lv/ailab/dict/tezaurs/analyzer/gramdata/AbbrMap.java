@@ -1,10 +1,12 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
 import lv.ailab.dict.struct.Flags;
-import lv.ailab.dict.struct.StructRestriction;
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
@@ -24,7 +26,7 @@ public class AbbrMap {
 	protected static AbbrMap singleton;
 	protected MappingSet<String, String> binaryFlags;
 	protected MappingSet<String, Tuple<String, String>> pairingFlags;
-	protected MappingSet<String, StructRestriction> structRestrs;
+	protected MappingSet<String, StructRestrs.One> structRestrs;
 
 	public static AbbrMap getAbbrMap()
 	{
@@ -43,7 +45,7 @@ public class AbbrMap {
 	 * @return vai tika atpazīts.
 	 */
 	public boolean translate(String gramSegment, Flags flagCollector,
-							 HashSet<StructRestriction> structRestrCollector )
+							 StructRestrs structRestrCollector )
 	{
 		if (binaryFlags.containsKey(gramSegment))
 			flagCollector.pairings.putAll(TKeys.OTHER_FLAGS, binaryFlags
@@ -52,7 +54,7 @@ public class AbbrMap {
 			for (Tuple<String, String> t : pairingFlags.getAll(gramSegment))
 				flagCollector.pairings.put(t.first, t.second);
 		if (structRestrs.containsKey(gramSegment))
-			structRestrCollector.addAll(structRestrs.getAll(gramSegment));
+			structRestrCollector.restrictions.addAll(structRestrs.getAll(gramSegment));
 		return (binaryFlags.containsKey(gramSegment) ||
 				pairingFlags.containsKey(gramSegment) ||
 				structRestrs.containsKey(gramSegment));
@@ -84,6 +86,7 @@ public class AbbrMap {
 	 * @return	vārdšķira, ja gramatikas fragmentam ir piekārtota tieši viens
 	 * 			karodziņš un tas ir POS tipa, vai null pārējos gadījumos
 	 */
+	//FIXME
 	public String translateCase(String gramSegment)
 	{
 		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
@@ -97,6 +100,7 @@ public class AbbrMap {
 	{
 		binaryFlags = new MappingSet<>();
 		pairingFlags = new MappingSet<>();
+		structRestrs = new MappingSet<>();
 
 		pairingFlags.put("adj.", TFeatures.POS__ADJ);
 		pairingFlags.put("adv.", Tuple.of(TKeys.POS, TValues.ADVERB));
@@ -133,9 +137,10 @@ public class AbbrMap {
 		pairingFlags.put("refl. darb.", TFeatures.POS__REFL_VERB);
 		pairingFlags.put("refl. darb.", TFeatures.POS__VERB);
 
-		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", TFeatures.POS__PARTICIPLE);
+		structRestrs.put("dsk. ģen. īp. v. nozīmē.", StructRestrs.One.of(
+				Type.IN_FORM, TFrequency.UNDISCLOSED,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		//pairingFlags.put("dsk. ģen. īp. v. nozīmē.", TFeatures.POS__NOUN);
 		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__PARTICIPLE);
@@ -276,19 +281,19 @@ public class AbbrMap {
 		pairingFlags.put("vienojuma saiklis.", Tuple.of(TKeys.POS, "Vienojuma saiklis"));
 
 		pairingFlags.put("priev. ar akuz.", TFeatures.POS__ADPOSITION);
-		pairingFlags.put("priev. ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
+		structRestrs.put("priev. ar akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__ACUSATIVE));
 		pairingFlags.put("priev. ar ģen.", TFeatures.POS__ADPOSITION);
-		pairingFlags.put("priev. ar ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
+		structRestrs.put("priev. ar ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. ar ģen. vai dat.",TFeatures.POS__ADPOSITION);
-		pairingFlags.put("priev. ar ģen. vai dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("priev. ar ģen. vai dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
+		structRestrs.put("priev. ar ģen. vai dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		structRestrs.put("priev. ar ģen. vai dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", TFeatures.POS__ADPOSITION);
 		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", TFeatures.POS__POSTPOSITION);
-		pairingFlags.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
+		structRestrs.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. ar dat.", TFeatures.POS__ADPOSITION);
-		pairingFlags.put("priev. ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
+		structRestrs.put("priev. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
 		pairingFlags.put("priev. ar instr.", TFeatures.POS__ADPOSITION);
-		pairingFlags.put("priev. ar instr.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
+		structRestrs.put("priev. ar intr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
 
 		pairingFlags.put("persv.", TFeatures.POS__NOUN);
 		binaryFlags.put("persv.", TValues.PERSON_NAME);
@@ -300,12 +305,12 @@ public class AbbrMap {
 		binaryFlags.put("lokāms.", "Lokāms vārds");
 		binaryFlags.put("lokāms", "Lokāms vārds");
 
-		pairingFlags.put("ģen. nelok.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		structRestrs.put("ģen. nelok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
 		binaryFlags.put("ģen. nelok.", TValues.NON_INFLECTIVE);
-		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		structRestrs.put("ģen. nelok. īp. nozīmē.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē.", TValues.NON_INFLECTIVE);
-		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
+		structRestrs.put("ģen. nelok. īp. nozīmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē", TValues.NON_INFLECTIVE);
 
@@ -698,323 +703,322 @@ public class AbbrMap {
 		pairingFlags.put("lamu vārds", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 
 		// Formu ierobežojumi
-		pairingFlags.put("akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("arī ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
-		pairingFlags.put("lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));
-		pairingFlags.put("nom. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));		// Ļaunums.
-		pairingFlags.put("vok.", Tuple.of(TKeys.USED_IN_FORM, TValues.VOCATIVE));		// Ļaunums.
-		pairingFlags.put("parasti akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("parasti lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.VOCATIVE));
+		structRestrs.put("akuz.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("dat.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__DATIVE));
+		structRestrs.put("ģen.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
+		structRestrs.put("instr.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__INSTRUMENTAL));
+		structRestrs.put("lok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__LOCATIVE));
+		structRestrs.put("nom.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__NOMINATIVE));
+		structRestrs.put("nom. formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__NOMINATIVE));
+		structRestrs.put("vok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__VOCATIVE));
+		structRestrs.put("arī ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.CASE__GENITIVE));
+		structRestrs.put("parasti akuz.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("parasti lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__LOCATIVE));
+		structRestrs.put("parasti vok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__VOCATIVE));
 
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
-		pairingFlags.put("dsk. vai divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("divsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.DUAL));
-		pairingFlags.put("dsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("vsk.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("arī dsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));	// Ļaunums.
-		pairingFlags.put("arī vsk.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));		// Ļaunums.
-		pairingFlags.put("parasti dsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("parasti vsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("par. vsk.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("tikai dsk.", TFeatures.USED_ONLY__PLURAL);
-		pairingFlags.put("tikai vsk.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.SINGULAR));
+		structRestrs.put("dsk. vai divsk.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NUMBER__DUAL));
+		structRestrs.put("dsk. vai divsk.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NUMBER__PLURAL));
+		structRestrs.put("divsk.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NUMBER__DUAL));
+		structRestrs.put("dsk.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NUMBER__PLURAL));
+		structRestrs.put("vsk.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NUMBER__SINGULAR));
+		structRestrs.put("arī dsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.NUMBER__PLURAL)); 	// Ļaunums.
+		structRestrs.put("arī vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.NUMBER__SINGULAR)); 	// Ļaunums.
+		structRestrs.put("parasti dsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__PLURAL));
+		structRestrs.put("parasti vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__SINGULAR));
+		//pairingFlags.put("parasti vsk", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
+		structRestrs.put("par. vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__SINGULAR));
+		structRestrs.put("tikai dsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__PLURAL));
+		structRestrs.put("tikai vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__SINGULAR));
 
-		// TODO to kombinēto bezprievārda instrumentāli kopā ar skaitli vajag?
-		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr.", Tuple.of(TKeys.USED_IN_FORM, "Daudzskaitļa bezprievārda instrumentālis"));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_INSTRUMENTAL));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, "Daudzskaitļa bezprievārda instrumentālis"));
-		pairingFlags.put("dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_DATIVE));
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_GENITIVE));
-		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("dsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. akuz.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_ACUSATIVE));
-		pairingFlags.put("vsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("vsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. dat.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_DATIVE));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. ģen.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_GENITIVE));
-		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. lok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_LOCATIVE));
-		pairingFlags.put("vsk. nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.NOMINATIVE));
-		pairingFlags.put("vsk. nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. nom.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_NOMINATIVE));
-		pairingFlags.put("vsk. vok.", Tuple.of(TKeys.USED_IN_FORM, TValues.VOCATIVE));
-		pairingFlags.put("vsk. vok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("vsk. vok.", Tuple.of(TKeys.USED_IN_FORM, TValues.SINGULAR_VOCATIVE));
 
-		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("bieži vsk. lok.", Tuple.of(TKeys.OFTEN_USED_IN_FORM, TValues.SINGULAR_LOCATIVE));
+		structRestrs.put("dsk. bezpriev. instr.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__INSTRUMENTAL, TFeatures.CASE__NOPRON_INSTRUMENTAL, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. bezpriev. instr. vai dsk. lok.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__INSTRUMENTAL, TFeatures.CASE__NOPRON_INSTRUMENTAL, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. bezpriev. instr. vai dsk. lok.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. dat.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__DATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. ģen.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. lok.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("vsk. akuz.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("vsk. dat.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__DATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("vsk. ģen.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("vsk. lok.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("vsk. nom.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__NOMINATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("vsk. vok.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__VOCATIVE, TFeatures.NUMBER__SINGULAR}));
 
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOPRON_INSTRUMENTAL));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INSTRUMENTAL));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_INSTRUMENTAL));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Daudzskaitļa bezprievārda instrumentālis"));
-		pairingFlags.put("parasti dsk. bezpriev. instr. vai dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("parasti dsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_GENITIVE));
-		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("parasti dsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("parasti vsk. akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("parasti vsk. akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. akuz.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR_ACUSATIVE));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. ģen.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR_GENITIVE));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. lok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR_LOCATIVE));
-		pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NOMINATIVE));
-		pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. nom.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR_NOMINATIVE));
-		pairingFlags.put("parasti vsk. vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.VOCATIVE));
-		pairingFlags.put("parasti vsk. vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("parasti vsk. vok.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR_VOCATIVE));
+		structRestrs.put("bieži vsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.OFTEN,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__SINGULAR}));
 
-		pairingFlags.put("retāk dsk. dat.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.DATIVE));
-		pairingFlags.put("retāk dsk. dat.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("retāk dsk. dat.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL_DATIVE));
-		pairingFlags.put("retāk dsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("retāk dsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("retāk dsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL_GENITIVE));
-		pairingFlags.put("retāk dsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("retāk dsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("retāk dsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("retāk vsk. akuz.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.ACUSATIVE));
-		pairingFlags.put("retāk vsk. akuz.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("retāk vsk. akuz.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR_ACUSATIVE));
-		pairingFlags.put("retāk vsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("retāk vsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("retāk vsk. ģen.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR_GENITIVE));
-		pairingFlags.put("retāk vsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("retāk vsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL));
-		pairingFlags.put("retāk vsk. lok.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.PLURAL_LOCATIVE));
-		pairingFlags.put("retāk vsk. nom.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.NOMINATIVE));
-		pairingFlags.put("retāk vsk. nom.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR));
-		pairingFlags.put("retāk vsk. nom.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.SINGULAR_NOMINATIVE));
+		structRestrs.put("parasti dsk. bezpriev. instr. vai dsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__INSTRUMENTAL, TFeatures.CASE__NOPRON_INSTRUMENTAL, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("parasti dsk. bezpriev. instr. vai dsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("parasti dsk. ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("parasti dsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("parasti vsk. akuz.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("parasti vsk. ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("parasti vsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("parasti vsk. nom.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__NOMINATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("parasti vsk. vok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.CASE__VOCATIVE, TFeatures.NUMBER__SINGULAR}));
 
-		pairingFlags.put("tikai v.", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.MASCULINE));
-		pairingFlags.put("parasti dem.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Deminutīvs"));
+		structRestrs.put("retāk dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__DATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("retāk dsk. ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("retāk dsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("retāk vsk. akuz.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("retāk vsk. ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("retāk vsk. lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__SINGULAR}));
+		structRestrs.put("retāk vsk. nom.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__NOMINATIVE, TFeatures.NUMBER__SINGULAR}));
 
-		pairingFlags.put("parasti 3. personas tag.", TFeatures.USUALLY_USED__THIRD_PERS);
-		pairingFlags.put("parasti 3. personas tag.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Tagadne"));
-		pairingFlags.put("parasti 3. pers.", TFeatures.USUALLY_USED__THIRD_PERS);
-		pairingFlags.put("tikai 3. pers.", TFeatures.USED_ONLY__THIRD_PERS);
-		pairingFlags.put("parasti nāk. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Nākotne"));
+		structRestrs.put("tikai v.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY,
+				TFeatures.GENDER__MASC));
+		structRestrs.put("parasti dem.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				Tuple.of(TKeys.OTHER_FLAGS, "Deminutīvs"))); //TODO - kodējums?
+
+		structRestrs.put("parasti 3. personas tag.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.PERSON__3, TFeatures.TENSE__PRESENT}));
+		pairingFlags.put("parasti 3. personas tag.", TFeatures.POS__VERB);
+		structRestrs.put("parasti 3. pers.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.PERSON__3));
+		structRestrs.put("tikai 3. pers.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.PERSON__3));
+		structRestrs.put("parasti nāk. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__FUTURE));
 		pairingFlags.put("parasti nāk. formā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti saliktajos laikos", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Saliktie laiki"));
+		structRestrs.put("parasti saliktajos laikos", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				Tuple.of(TKeys.TENSE, TValues.COMPOSITE_TENSES)));
 		pairingFlags.put("parasti saliktajos laikos", TFeatures.POS__VERB);
-		pairingFlags.put("parasti saliktajos laikos.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Saliktie laiki"));
+		structRestrs.put("parasti saliktajos laikos.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				Tuple.of(TKeys.TENSE, TValues.COMPOSITE_TENSES)));
 		pairingFlags.put("parasti saliktajos laikos.", TFeatures.POS__VERB);
-		pairingFlags.put("tikai infinitīvā", Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("tikai infinitīvā", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("tikai infinitīvā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti nenoteiksmē", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("parasti nenoteiksmē", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("parasti nenoteiksmē", TFeatures.POS__VERB);
-		pairingFlags.put("infinitīva formā", Tuple.of(TKeys.USED_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("infinitīva formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("infinitīva formā", TFeatures.POS__VERB);
-		pairingFlags.put("nenoteiksmes formā", Tuple.of(TKeys.USED_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("nenoteiksmes formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("nenoteiksmes formā", TFeatures.POS__VERB);
-		pairingFlags.put("nenoteiksmes formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("nenoteiksmes formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("nenoteiksmes formā.", TFeatures.POS__VERB);
-		pairingFlags.put("parasti nenoteiksmes formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
+		structRestrs.put("parasti nenoteiksmes formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("parasti nenoteiksmes formā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti nenoteiksmes vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
-		pairingFlags.put("parasti nenoteiksmes vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE));
+		structRestrs.put("parasti nenoteiksmes vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
+		structRestrs.put("parasti nenoteiksmes vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("parasti nenoteiksmes vai divd. formā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti nenoteiksmē vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INFINITIVE));
-		pairingFlags.put("parasti nenoteiksmē vai divd. formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE));
+		structRestrs.put("parasti nenoteiksmē vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
+		structRestrs.put("parasti nenoteiksmē vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("parasti nenoteiksmē vai divd. formā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti pavēles formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
+		structRestrs.put("parasti pavēles formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā", TFeatures.POS__VERB);
-		pairingFlags.put("parasti pavēles formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
+		structRestrs.put("parasti pavēles formā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā.", TFeatures.POS__VERB);
-		pairingFlags.put("parasti pavēles izteiksmē", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.IMPERATIVE));
+		structRestrs.put("parasti pavēles izteiksmē", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("parasti pavēles izteiksmē", TFeatures.POS__VERB);
-		pairingFlags.put("pavēles izteiksmē", Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE));
+		structRestrs.put("pavēles izteiksmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("pavēles izteiksmē", TFeatures.POS__VERB);
-		pairingFlags.put("pavēles formā", Tuple.of(TKeys.USED_IN_FORM, TValues.IMPERATIVE));
+		structRestrs.put("pavēles formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("pavēles formā", TFeatures.POS__VERB);
-		pairingFlags.put("ar nenot. gal.", TFeatures.USED__INDEFINITE);
-		pairingFlags.put("ar nenot. galotni", TFeatures.USED__INDEFINITE);
-		pairingFlags.put("ar nenot. galotni.", TFeatures.USED__INDEFINITE);
-		pairingFlags.put("parasti ar nenot. galotni", TFeatures.USUALLY_USED__INDEFINITE);
-		pairingFlags.put("parasti ar nenot. galotni.", TFeatures.USUALLY_USED__INDEFINITE);
-		pairingFlags.put("parasti ar nenoteikto gal.", TFeatures.USUALLY_USED__INDEFINITE);
-		pairingFlags.put("parasti ar nenoteikto galotni", TFeatures.USUALLY_USED__INDEFINITE);
-		pairingFlags.put("retāk ar nenot. gal.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.INDEFINITE_ENDING));
-		pairingFlags.put("ar not. gal.", TFeatures.USED__DEFINITE);
-		pairingFlags.put("ar not. galotni", TFeatures.USED__DEFINITE);
-		pairingFlags.put("ar not. galotni.", TFeatures.USED__DEFINITE);
-		pairingFlags.put("ar noteikto gal.", TFeatures.USED__DEFINITE);
-		pairingFlags.put("ar noteikto gal.", TFeatures.USED__DEFINITE);
-		pairingFlags.put("ar noteikto galotni", TFeatures.USED__DEFINITE);
-		pairingFlags.put("retāk ar not. gal.", Tuple.of(TKeys.ALSO_USED_IN_FORM, TValues.DEFINITE_ENDING));
-		pairingFlags.put("īp. v. ar not. galotni", TFeatures.USED__DEFINITE);
-		pairingFlags.put("parasti ar not. gal.", TFeatures.USUALLY_USED__DEFINITE);
-		pairingFlags.put("parasti ar not. galotni.", TFeatures.USUALLY_USED__DEFINITE);
-		pairingFlags.put("parasti ar not. galotni", TFeatures.USUALLY_USED__DEFINITE);
-		pairingFlags.put("parasti ar noteikto gal.", TFeatures.USUALLY_USED__DEFINITE);
-		pairingFlags.put("parasti ar noteikto galotni.", TFeatures.USUALLY_USED__DEFINITE);
-		pairingFlags.put("parasti pārākajā pakāpē.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("parasti pārākās pakāpes formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("pamata pak.", Tuple.of(TKeys.USED_IN_FORM, TValues.POSITIVE_DEGREE));
-		pairingFlags.put("pārākajā pakāpē", Tuple.of(TKeys.USED_IN_FORM, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("pārākajā pakāpē.", Tuple.of(TKeys.USED_IN_FORM, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("pārākajā vai vispārākajā pak.", Tuple.of(TKeys.USED_IN_FORM, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("pārākajā vai vispārākajā pak.", Tuple.of(TKeys.USED_IN_FORM, TValues.SUPERLATIVE_DEGREE));
-		pairingFlags.put("parasti ar lielo sākumburtu", Tuple.of(TKeys.USUALLY_USED_IN_FORM, "Ar lielo sākumburtu"));
-		pairingFlags.put("ar lielo sākumburtu", Tuple.of(TKeys.USED_IN_FORM, "Ar lielo sākumburtu"));
-		pairingFlags.put("ar lielo sāk. b.", Tuple.of(TKeys.USED_IN_FORM, "Ar lielo sākumburtu"));
-		pairingFlags.put("ar mazo sākumburtu", Tuple.of(TKeys.USED_IN_FORM, "Ar mazo sākumburtu"));
-		pairingFlags.put("ar mazo burtu", Tuple.of(TKeys.USED_IN_FORM, "Ar mazo sākumburtu"));
-		pairingFlags.put("iron. ar mazo burtu", Tuple.of(TKeys.USED_IN_FORM, "Ar mazo sākumburtu"));
-		pairingFlags.put("parasti nolieguma formā", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE));
-		pairingFlags.put("parasti nolieguma formā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NEGATIVE));
-		pairingFlags.put("nolieg. formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
-		pairingFlags.put("nolieguma formā", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
-		pairingFlags.put("nolieguma formā.", Tuple.of(TKeys.USED_IN_FORM, TValues.NEGATIVE));
-		pairingFlags.put("parasti uzrunā.", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.VOCATIVE));
 
-		pairingFlags.put("ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("ar ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("ar instr.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
-		pairingFlags.put("ar lietv. ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ģenitīvā"));
+		structRestrs.put("ar nenot. gal.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("ar nenot. galotni", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("ar nenot. galotni.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("parasti ar nenot. galotni", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("parasti ar nenot. galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("parasti ar nenoteikto gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("parasti ar nenoteikto galotni", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("retāk ar nenot. gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, TFeatures.DEFINITNESS__INDEF));
+		structRestrs.put("ar not. gal.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("ar not. galotni", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("ar not. galotni.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("ar noteikto gal.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("ar noteikto galotni", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("retāk ar not. gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("īp. v. ar not. galotni", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("parasti ar not. gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("parasti ar not. galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("parasti ar noteikto gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("parasti ar noteikto galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
 
-		pairingFlags.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOUN));
-		pairingFlags.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Lietvārds ar izskaņu -šana"));
+		structRestrs.put("pamata pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__POS));
+		structRestrs.put("pārākajā pakāpē", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
+		structRestrs.put("pārākajā pakāpē.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
+		structRestrs.put("parasti pārākajā pakāpē.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEGREE__COMP));
+		structRestrs.put("parasti pārākās pakāpes formā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEGREE__COMP));
+		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
+		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__SUPER));
 
-		pairingFlags.put("parasti ar dat.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("parasti ar ģen.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
-		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
-		pairingFlags.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADJECTIVE));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.ADVERB));
-		pairingFlags.put("parasti ar adj. vai apst. pārāko pakāpi.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.COMPARATIVE_DEGREE));
-		pairingFlags.put("parasti ar negāciju", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE));
-		pairingFlags.put("parasti ar negāciju.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE));
+		structRestrs.put("parasti ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
+		structRestrs.put("ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
+		structRestrs.put("ar lielo sāk. b.", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
+		structRestrs.put("ar mazo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
+		structRestrs.put("ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
+		structRestrs.put("iron. ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
 
-		pairingFlags.put("retāk ar akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("retāk ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DUAL));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NOMINATIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.ACUSATIVE));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa nominatīvs"));
-		pairingFlags.put("retāk ar divsk. nom. vai akuz.", Tuple.of(TKeys.USED_TOGETHER_WITH, "Divskaitļa akuzatīvs"));
+		structRestrs.put("parasti nolieguma formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE)));
+		structRestrs.put("parasti nolieguma formā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE)));
+		structRestrs.put("nolieg. formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
+		structRestrs.put("nolieguma formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
+		structRestrs.put("nolieguma formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
+		structRestrs.put("parasti uzrunā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__VOCATIVE));
+
+		structRestrs.put("ar akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("retāk ar akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		structRestrs.put("parasti ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY, TFeatures.CASE__DATIVE));
+		structRestrs.put("retāk ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, TFeatures.CASE__DATIVE));
+		structRestrs.put("ar ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
+		structRestrs.put("parasti ar ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY, TFeatures.CASE__GENITIVE));
+		structRestrs.put("ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
+		structRestrs.put("ar lietv. ģen.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.POS__NOUN}));
+
+		// Laura vispār saka, ka te būtu jābūt tikai divsk. akuzatīvam, jo nominatīvu nelieto ar prievārdu.
+		structRestrs.put("retāk ar divsk. nom. vai akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__NOMINATIVE, TFeatures.NUMBER__DUAL}));
+		structRestrs.put("retāk ar divsk. nom. vai akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER,
+				new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__DUAL}));
+
+		structRestrs.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[]{TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, "Lietvārds ar izskaņu -šana")}));
+		structRestrs.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.POS__ADJ, TFeatures.DEGREE__COMP}));
+		structRestrs.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.POS__ADV, TFeatures.DEGREE__COMP}));
+		structRestrs.put("parasti ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.POS__ADJ, TFeatures.DEGREE__COMP}));
+		structRestrs.put("parasti ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.POS__ADV, TFeatures.DEGREE__COMP}));
+
+		structRestrs.put("parasti ar negāciju", StructRestrs.One.of(Type.TOGETHER_WITH,
+				TFrequency.USUALLY, TFeatures.NEGATIVE));
+		structRestrs.put("parasti ar negāciju.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				TFrequency.USUALLY, TFeatures.NEGATIVE));
+
 
 		// TODO: iztīrīt šito
-		pairingFlags.put("parasti apst.", Tuple.of(TKeys.USED_IN_FORM, TValues.ADVERB));
+		structRestrs.put("parasti apst.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.POS__ADV));
 
-		pairingFlags.put("izsaukuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma teikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("izsaukuma un pamudinājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Pamudinājuma teikums"));		pairingFlags.put("parasti nolieguma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
-		pairingFlags.put("jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("jautājuma teikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("retoriskajos jautājuma teikumos", Tuple.of(TKeys.USED_IN_STRUCT, "Retorisks jautājuma teikums"));
 
-		pairingFlags.put("parasti izsaukuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("parasti nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti jautājuma teikumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti pamudinājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Pamudinājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Retorisks jautājuma teikums"));
-		pairingFlags.put("parasti retoriskajos jautājumos un nolieguma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Nolieguma teikums"));
-		pairingFlags.put("parasti stāstījuma teikumos", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Stāstījuma teikums"));
-		pairingFlags.put("parasti stāstījuma teikumos.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Stāstījuma teikums"));
+		structRestrs.put("izsaukuma teikumos", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__INTERJ));
+		structRestrs.put("izsaukuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__INTERJ));
+		structRestrs.put("parasti izsaukuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
+		structRestrs.put("parasti izsaukuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
+		structRestrs.put("jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__QUESTION));
+		structRestrs.put("jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__QUESTION));
+		structRestrs.put("parasti jautājuma teikumā.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__QUESTION));
+		structRestrs.put("parasti jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__QUESTION));
+		structRestrs.put("parasti jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__QUESTION));
+		structRestrs.put("retoriskajos jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
+		structRestrs.put("parasti pamudinājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__ENCOURAGE));
+		structRestrs.put("parasti stāstījuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__DECLAR));
+		structRestrs.put("parasti stāstījuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__DECLAR));
 
-		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("teikumā ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("teikumā ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("teikumos ar noliegtu verbu.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+		structRestrs.put("izsaukuma un pamudinājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__INTERJ));
+		structRestrs.put("izsaukuma un pamudinājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.SENT__ENCOURAGE));
+		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
+		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY,
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
+		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti retoriskajos jautājumos un nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti retoriskajos jautājumos un nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumā ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikums ar noliegtu darbības vārdu"));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.VERB));
-		pairingFlags.put("parasti teikumos ar noliegtu verbu.", Tuple.of(TKeys.USUALLY_USED_TOGETHER_WITH, TValues.NEGATIVE_VERB));
+		structRestrs.put("teikumā ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("teikumā ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
+		structRestrs.put("teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
+		structRestrs.put("teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("teikumos ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
+		structRestrs.put("teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
 
-		pairingFlags.put("parasti teikuma sākumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikuma sākums"));
-		pairingFlags.put("parasti izsaukuma teikuma beigās.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Teikuma beigas"));
-		pairingFlags.put("parasti izsaukuma teikuma beigās.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Izsaukuma teikums"));
+		structRestrs.put("parasti teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("parasti teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
+		structRestrs.put("parasti teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("parasti teikumos ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
+		structRestrs.put("parasti teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		structRestrs.put("parasti teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
 
-		pairingFlags.put("aiz apzīmējamā vārda", Tuple.of(TKeys.USED_IN_STRUCT, "Aiz apzīmējamā vārda"));
+		structRestrs.put("parasti teikuma sākumā.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Teikuma sākums")));
+		structRestrs.put("parasti izsaukuma teikuma beigās.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
+				new Tuple[] {TFeatures.SENT__INTERJ, Tuple.of(TKeys.OTHER_FLAGS, "Teikuma beigas"),}));
 
-		pairingFlags.put("atkārtojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
-		pairingFlags.put("atkārtotā lietojumā.", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
-		pairingFlags.put("viena un tā paša vārda atkārtojumā", Tuple.of(TKeys.USED_IN_STRUCT, "Atkārtojums"));
-		pairingFlags.put("salīdzinājuma konstrukcijā", Tuple.of(TKeys.USED_IN_STRUCT, "Salīdzinājuma konstrukcija"));
+		structRestrs.put("aiz apzīmējamā vārda", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Aiz apzīmējamā vārda")));
 
-		pairingFlags.put("parasti atkārtojumā", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
-		pairingFlags.put("parasti atkārtojumā.", Tuple.of(TKeys.USUALLY_USED_IN_STRUCT, "Atkārtojums"));
+		structRestrs.put("atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("atkārtotā lietojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("viena un tā paša vārda atkārtojumā", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("arī atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.ALSO, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("parasti atkārtojumā", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("parasti atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
+				Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
 
-		pairingFlags.put("arī atkārtojumā.", Tuple.of(TKeys.ALSO_USED_IN_STRUCT, "Atkārtojums"));
+		structRestrs.put("salīdzinājuma konstrukcijā", StructRestrs.One.of(Type.IN_STRUCT,
+				Tuple.of(TKeys.OTHER_FLAGS, "Salīdzinājuma konstrukcija")));
 
-		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.USED_IN_STRUCT, "Palīgteikums"));
-		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
+		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums"), Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION)}));
 
 		// Lietojuma biežums.
-		pairingFlags.put("pareti.", Tuple.of(TKeys.USAGE_FREQUENCY, "Pareti"));
-		pairingFlags.put("pareti", Tuple.of(TKeys.USAGE_FREQUENCY, "Pareti"));
-		pairingFlags.put("reti.", Tuple.of(TKeys.USAGE_FREQUENCY, "Reti"));
-		pairingFlags.put("reti", Tuple.of(TKeys.USAGE_FREQUENCY, "Reti"));
-		pairingFlags.put("retāk.", Tuple.of(TKeys.USAGE_FREQUENCY, "Retāk"));
-		pairingFlags.put("retāk", Tuple.of(TKeys.USAGE_FREQUENCY, "Retāk"));
+		structRestrs.put("pareti", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.HALF_RARE));
+		structRestrs.put("pareti.", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.HALF_RARE));
+		structRestrs.put("reti", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.RARE));
+		structRestrs.put("reti.", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.RARE));
+		structRestrs.put("retāk", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.RARER));
+		structRestrs.put("retāk.", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.RARER));
 
 		// Kontaminācija
 		pairingFlags.put("subst. noz.", TFeatures.CONTAMINATION__NOUN);
@@ -1058,24 +1062,6 @@ public class AbbrMap {
 		pairingFlags.put("modāla vārda nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 		pairingFlags.put("modāla vārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
 
-		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen.: adj. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen.: adj. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen.: īp. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen.: īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen.: īp. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen.: īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen.: īp. v. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen.: īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.GENITIVE));
-		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.USED_IN_FORM, TValues.LOCATIVE));
-		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
 		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
 		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
@@ -1087,16 +1073,39 @@ public class AbbrMap {
 
 		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
 
-		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
-		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
-		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.DATIVE));
-		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
-		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
-		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
-		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.GENITIVE));
-		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.USED_TOGETHER_WITH, TValues.INSTRUMENTAL));
+
+		structRestrs.put("ģen.: adj. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen.: adj. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen. īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen.: īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen.: īp. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen. īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen.: īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("ģen. īp. v. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
+		structRestrs.put("lok.: apst. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
+				new Tuple[] {TFeatures.CASE__LOCATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB)}));
+
+		structRestrs.put("priev. noz. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO,
+				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.CASE__INSTRUMENTAL, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH,
+				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+
 
 		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.
 		binaryFlags.put("hip.", "Hipotēze");
@@ -1104,6 +1113,8 @@ public class AbbrMap {
 		binaryFlags.put("dsk. formas vsk. formu nozīmē.", "Daudzskaitļa formas lieto vienskaitļa formu nozīmē");
 		binaryFlags.put("dsk. lietojams arī vsk. nozīmē.", "Daudzskaitļa formas lieto vienskaitļa formu nozīmē");
 		binaryFlags.put("vsk. formas lietojamas arī dsk. formu nozīmē.", "Vienskaitļa formas lieto daudzskaitļa formu nozīmē");
+
+		// TODO vai šo arī var uz structRestr pārcelt?
 		binaryFlags.put("sar. arī vsk.", "Vienskaitļa formas lieto sarunvalodā");
 		binaryFlags.put("nelit. arī vsk.", "Vienskaitļa formas lieto sarunvalodā");
 		binaryFlags.put("apv. arī vsk.", "Vienskaitļa formas lieto dialektos");

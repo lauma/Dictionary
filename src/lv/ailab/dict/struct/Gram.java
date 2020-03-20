@@ -53,7 +53,7 @@ public class Gram implements HasToJSON, HasToXML
 	 * "bieži dsk. lok." MLVV gadījumā nav pilnīgi izdalīts, bet daļa no tā iet
 	 * formRestrictions.
 	 */
-	public HashSet<StructRestriction> structRestrictions;
+	public StructRestrs structRestrictions;
 
 	protected Gram() {};
 
@@ -157,11 +157,11 @@ public class Gram implements HasToJSON, HasToXML
 			hasPrev = true;
 		}
 
-		if (structRestrictions != null && !structRestrictions.isEmpty())
+		if (structRestrictions != null && !structRestrictions.restrictions.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"StructuralRestrictions\":");
-			res.append(JSONUtils.objectsToJSON(structRestrictions));
+			res.append(JSONUtils.objectsToJSON(structRestrictions.restrictions));
 			hasPrev = true;
 		}
 
@@ -234,13 +234,7 @@ public class Gram implements HasToJSON, HasToXML
 
 		if (flags != null) flags.toXML(gramN);
 
-		if (structRestrictions != null && !structRestrictions.isEmpty())
-		{
-			Node structRestrContN = doc.createElement("StructuralRestrictions");
-			for (StructRestriction restr: structRestrictions)
-				if (restr != null) restr.toXML(structRestrContN);
-			gramN.appendChild(structRestrContN);
-		}
+		if (structRestrictions != null) structRestrictions.toXML(gramN);
 
 		if (freeText != null && !freeText.isEmpty())
 		{

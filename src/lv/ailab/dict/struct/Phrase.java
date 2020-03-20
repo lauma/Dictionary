@@ -117,10 +117,8 @@ public class Phrase implements HasToJSON, HasToXML
 		if (text != null)
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"Text\":[");
-			res.append(text.stream().map(t -> "\"" + JSONObject.escape(t) + "\"")
-				.reduce((t1, t2) -> t1 + "," + t2).orElse(""));
-			res.append("]");
+			res.append("\"Text\":");
+			res.append(JSONUtils.simplesToJSON(text));
 			hasPrev = true;
 		}
 

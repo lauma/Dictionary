@@ -1,14 +1,13 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
-import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
-import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Likums šabloniem, kas sākas ar "parasti dsk.," vai  "tikai dsk.,". Tiek
@@ -72,15 +71,12 @@ public class PluralVerbRule implements EndingRule
 					add(TFeatures.POS__VERB);
 					if (positiveFlags != null) addAll(positiveFlags);
 				}},
-				new HashSet<Tuple<String, String>>()
+				alwaysFlags,
+				new HashSet<StructRestrs.One>()
 				{{
-					add(TFeatures.USUALLY_USED__PLURAL);
+					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__PLURAL));
 					if (singular3Pers)
-					{
-						add(TFeatures.USUALLY_USED__THIRD_PERS);
-						add(Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL_OR_THIRD_PERS));
-					};
-					if (alwaysFlags != null) addAll(alwaysFlags);
+						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.PERSON__3));
 				}});
 		pluralOnly = BaseRule.simple(
 				"tikai dsk., " + patternText, ".*" + lemmaEnding, paradigms,
@@ -89,15 +85,12 @@ public class PluralVerbRule implements EndingRule
 					add(TFeatures.POS__VERB);
 					if (positiveFlags != null) addAll(positiveFlags);
 				}},
-				new HashSet<Tuple<String, String>>()
+				alwaysFlags,
+				new HashSet<StructRestrs.One>()
 				{{
-					add(TFeatures.USED_ONLY__PLURAL);
+					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__PLURAL));
 					if (singular3Pers)
-					{
-						add(TFeatures.USED_ONLY__THIRD_PERS);
-						add(Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PLURAL_OR_THIRD_PERS));
-					};
-					if (alwaysFlags != null) addAll(alwaysFlags);
+						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.PERSON__3));
 				}});
 	}
 

@@ -8,5 +8,6 @@ public class Type
 	public static String TOGETHER_WITH = "Kopā ar";
 	public static String IN_FORM = "Formā/atvasinājumā";
 	public static String IN_STRUCT = "Teikumos / noteikta veida struktūrās";
+	public static String OVERALL_FREQUENCY = "Vispārīgais lietojuma biežums";
 
 }

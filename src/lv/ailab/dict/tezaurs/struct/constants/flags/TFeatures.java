@@ -19,6 +19,7 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__REFL_NOUN = Tuple.of(TKeys.POS, TValues.REFLEXIVE_NOUN);
 	public static final Tuple<String, String> POS__IRREG_VERB = Tuple.of(TKeys.POS, TValues.IRREGULAR_VERB);
 	public static final Tuple<String, String> POS__DIRECT_VERB = Tuple.of(TKeys.POS, TValues.DIRECT_VERB);
+	public static final Tuple<String, String> POS__NEG_VERB = Tuple.of(TKeys.POS, TValues.NEGATIVE_VERB);
 	public static final Tuple<String, String> POS__REFL_VERB = Tuple.of(TKeys.POS, TValues.REFLEXIVE_VERB);
 
 	public static final Tuple<String, String> POS__PARTICIPLE = Tuple.of(TKeys.POS, TValues.PARTICIPLE);
@@ -53,26 +54,17 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> CONTAMINATION__NOUN = Tuple.of(TKeys.CONTAMINATION, TValues.NOUN);
 	public static final Tuple<String, String> CONTAMINATION__ADJECTIVE = Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE);
 	public static final Tuple<String, String> CONTAMINATION__CARD_NUM = Tuple.of(TKeys.CONTAMINATION, TValues.CARDINAL_NUMERAL);
+	public static final Tuple<String, String> CONTAMINATION__ADVERB = Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB);
 
 	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);
 
-	public static final Tuple<String, String> INDEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.INDEFINITE_ENDING);
-	public static final Tuple<String, String> DEFINITE_ENDING = Tuple.of(TKeys.OTHER_FLAGS, TValues.DEFINITE_ENDING);
+	public static final Tuple<String, String> CASE__NOPRON_INSTRUMENTAL = Tuple.of(TKeys.CASE, TValues.NOPRON_INSTRUMENTAL);
+	public static final Tuple<String, String> CASE__INSTRUMENTAL = Tuple.of(TKeys.CASE, TValues.INSTRUMENTAL);
+	public static final Tuple<String, String> CASE__VOCATIVE = Tuple.of(TKeys.CASE, TValues.VOCATIVE);
 
-	public static final Tuple<String, String> USUALLY_USED__PLURAL = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PLURAL);
-	public static final Tuple<String, String> USED__INDEFINITE = Tuple.of(TKeys.USED_IN_FORM, TValues.INDEFINITE_ENDING);
-	public static final Tuple<String, String> USUALLY_USED__INDEFINITE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.INDEFINITE_ENDING);
-	public static final Tuple<String, String> USED__DEFINITE = Tuple.of(TKeys.USED_IN_FORM, TValues.DEFINITE_ENDING);
-	public static final Tuple<String, String> USUALLY_USED__DEFINITE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.DEFINITE_ENDING);
-	public static final Tuple<String, String> USUALLY_USED__THIRD_PERS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.THIRD_PERSON);
-	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE);
-	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE_IS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE_IS);
-	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE_TS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE_TS);
-	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE_AMS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE_AMS);
-	public static final Tuple<String, String> USUALLY_USED__PARTICIPLE_DAMS = Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PARTICIPLE_DAMS);
-	public static final Tuple<String, String> USED_ONLY__THIRD_PERS = Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.THIRD_PERSON);
-	public static final Tuple<String, String> USED_ONLY__PLURAL = Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.PLURAL);
-	public static final Tuple<String, String> USED_ONLY__SINGULAR = Tuple.of(TKeys.USED_ONLY_IN_FORM, TValues.SINGULAR);
+	public static final Tuple<String, String> NUMBER__DUAL = Tuple.of(TKeys.NUMBER, TValues.DUAL);
+
+	public static final Tuple<String, String> NEGATIVE = Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE);
 
 	public static final Tuple<String, String> USAGE_RESTR__HISTORICAL = Tuple.of(TKeys.USAGE_RESTRICTIONS, TValues.HISTORICAL);
 	public static final Tuple<String, String> USAGE_RESTR__DIALECTICISM = Tuple.of(TKeys.USAGE_RESTRICTIONS, TValues.DIALECTICISM);
@@ -84,7 +76,7 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> ENTRYWORD__PLURAL = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.PLURAL);
 	public static final Tuple<String, String> ENTRYWORD__SINGULAR = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.SINGULAR);
 	public static final Tuple<String, String> ENTRYWORD__FEM = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.FEMININE);
-	public static final Tuple<String, String> ENTRYWORD__CHANGED_PARADIGM = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.CHANGED_PARADIGM);
+	//public static final Tuple<String, String> ENTRYWORD__CHANGED_PARADIGM = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.CHANGED_PARADIGM);
 
 	public static final Tuple<String, String> INFINITIVE_HOMOFORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.INFINITIVE_HOMOFORMS);
 	public static final Tuple<String, String> PARALLEL_FORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.PARALLEL_FORMS);
@@ -107,5 +99,6 @@ public class TFeatures extends Features
 
 	public static final Tuple<String, String> PERSON_NAME = Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_NAME);
 	public static final Tuple<String, String> PLACE_NAME = Tuple.of(TKeys.OTHER_FLAGS, TValues.PLACE_NAME);
+	public static final Tuple<String, String> REPETITION_WITH_ONE_STEM = Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION_WITH_ONE_STEM);
 
 }

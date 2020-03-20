@@ -1,11 +1,9 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -35,9 +33,14 @@ public class SimpleSubRule
 	 * attiecīgajiem šabloniem.
 	 */
 	public final Set<Tuple<String,String>> positiveFlags;
+	/**
+	 * Šos formu/struktūru ierobežojumus uzstāda, ja gan gramatikas teksts, gan
+	 * lemma atbilst attiecīgajiem šabloniem.
+	 */
+	public Set<StructRestrs.One> positiveRestrictions;
 
 	public SimpleSubRule(String lemmaRestrict, Set<Integer> paradigms,
-			Set<Tuple<String, String>> positiveFlags)
+			Set<Tuple<String, String>> positiveFlags, Set<StructRestrs.One> positiveRestrictions)
 	{
 		this.lemmaRestrict = Pattern.compile(lemmaRestrict);
 		//this.paradigms = paradigms;
@@ -46,6 +49,7 @@ public class SimpleSubRule
 		//this.positiveFlags = positiveFlags;
 		this.positiveFlags = positiveFlags == null? null :
 				Collections.unmodifiableSet(positiveFlags);
+		this.positiveRestrictions = positiveRestrictions;
 	}
 
 	public SimpleSubRule(Pattern lemmaRestrict, Set<Integer> paradigms,
@@ -60,18 +64,42 @@ public class SimpleSubRule
 				Collections.unmodifiableSet(positiveFlags);
 	}
 
-	public static SimpleSubRule of(String lemmaRestrict, Integer[] paradigms, Tuple<String,String>[] positiveFlags)
+	public static SimpleSubRule of(
+			String lemmaRestrict, Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags)
 	{
 		return new SimpleSubRule(lemmaRestrict,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
-				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null);
+	}
+
+	public static SimpleSubRule of(
+			String lemmaRestrict, Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags, StructRestrs.One positiveRestriction)
+	{
+		return new SimpleSubRule(lemmaRestrict,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestriction == null ? null : new LinkedHashSet<StructRestrs.One>(){{add(positiveRestriction);}});
+	}
+
+	public static SimpleSubRule of(
+			String lemmaRestrict, Integer[] paradigms,
+			Tuple<String,String>[] positiveFlags, StructRestrs.One[] positiveRestrictions)
+	{
+		return new SimpleSubRule(lemmaRestrict,
+				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestrictions == null ? null : new LinkedHashSet<>(Arrays.asList(positiveRestrictions)));
 	}
 
 	public static SimpleSubRule of(String lemmaRestrict, Integer paradigm, Tuple<String,String>[] positiveFlags)
 	{
 		return new SimpleSubRule(lemmaRestrict,
 				new HashSet<Integer>(){{add(paradigm);}},
-				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)));
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null);
 	}
 
 	/**

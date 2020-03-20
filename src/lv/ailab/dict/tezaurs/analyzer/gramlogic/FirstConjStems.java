@@ -361,7 +361,7 @@ public class FirstConjStems
 			if (prefix.length() > 0)
 				flagCollector.add(TKeys.VERB_PREFIX, prefix);
 			else
-				flagCollector.add(TFeatures.NO_PREFIX);
+				flagCollector.add(TFeatures.PREFIX__NONE);
 			flagCollector.add(TKeys.INFINITIVE_STEM, prefix + infinityStem);
 
 			final String finalPrefix = prefix;

@@ -41,9 +41,8 @@ public class TValues extends Values
 	public final static String IRREGULAR_VERB = "Nekārtns darbības vārds";
 	public final static String DIRECT_VERB = "Tiešs darbības vārds";
 	public final static String REFLEXIVE_VERB = "Atgriezenisks darbības vārds";
-	public final static String PREFIX_VERB = "Darbības vārds ar priedēkli";
-	public final static String PREFIXLESS_VERB = "Darbības vārds bez priedēkļa";
 	public final static String NEGATIVE_VERB = "Noliegts darbības vārds";
+	public final static String MAIN_VERB = "Patstāvīgs darbības vārds";
 
 	public final static String PLACE_ADVERB = "Vietas apstākļa vārds";
 	public final static String INTEROGATIVE_ADVERB = "Jautājamais apstākļa vārds";
@@ -65,14 +64,6 @@ public class TValues extends Values
 
 	public final static String PHRASE = "Vārdu savienojums";
 
-	public final static String PARTICIPLE = "Divdabis";
-	public final static String PARTICIPLE_OSS = "Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)";
-	public final static String PARTICIPLE_IS = "Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)";
-	public final static String PARTICIPLE_AMS = "Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)";
-	public final static String PARTICIPLE_TS = "Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)";
-	public final static String PARTICIPLE_DAMS = "Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)";
-	public final static String PARTICIPLE_OT = "Nelokāmais divdabis (-ot, -oties)";
-
 	public final static String PLACE_NAME = "Vietvārds";
 	public final static String PERSON_NAME = "Personvārds";
 	public final static String HISTORICAL = "Vēsturisks";
@@ -80,8 +71,6 @@ public class TValues extends Values
 	public final static String HISTORICAL_PERSON = "Vēsturisks personvārds";
 	public final static String DIALECTICISM = "Dialektisms";
 	public final static String REGIONAL_TERM = "Apvidvārds";
-
-	public final static String NEGATIVE = "Noliegums";
 
 
 	public final static String DUAL = "Divskaitlis";
@@ -113,37 +102,24 @@ public class TValues extends Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
-	public final static String DUAL_NOMINATIVE = "Divskaitļa nominatīvs";
-	public final static String DUAL_ACUSATIVE = "Divskaitļa akuzatīvs";
-	public final static String SINGULAR_NOMINATIVE = "Vienskaitļa nominatīvs";
-	public final static String SINGULAR_GENITIVE = "Vienskaitļa ģenitīvs";
-	public final static String SINGULAR_DATIVE = "Vienskaitļa datīvs";
-	public final static String SINGULAR_ACUSATIVE = "Vienskaitļa akuzatīvs";
-	public final static String SINGULAR_LOCATIVE = "Vienskaitļa lokatīvs";
-	public final static String SINGULAR_VOCATIVE = "Vienskaitļa vokatīvs";
-	public final static String PLURAL_GENITIVE = "Daudzskaitļa ģenitīvs";
-	public final static String PLURAL_DATIVE = "Daudzskaitļa datīvs";
-	public final static String PLURAL_INSTRUMENTAL = "Daudzskaitļa instrumentālis";
-	public final static String PLURAL_LOCATIVE = "Daudzskaitļa lokatīvs";
 
-	public final static String INFINITIVE = "Nenoteiksme";
-	public final static String THIRD_PERSON = "Trešā persona";
-	public final static String PERSON_FORM = "Personas forma"; // Tipiski darbības vārdiem
-	public final static String PASSIVE_VOICE = "Ciešamā kārta"; // Ciešamās kārtas forma
-	public final static String IMPERATIVE = "Pavēles izteiksme"; // Pavēles izteiksmes forma
+	public final static String COMPOSITE_TENSES = "Saliktie laiki";
 
-	public final static String MAIN_VERB = "Patstāvīgs darbības vārds";
+	public final static String PARTICIPLE_OSS = "Lokāmais darāmās kārtas tagadnes divdabis (-ošs, -oša)";
+	public final static String PARTICIPLE_IS = "Lokāmais darāmās kārtas pagātnes divdabis (-is, -usi, -ies, -usies)";
+	public final static String PARTICIPLE_AMS = "Lokāmais ciešamās kārtas tagadnes divdabis (-ams, -ama, -āms, -āma)";
+	public final static String PARTICIPLE_TS = "Lokāmais ciešamās kārtas pagātnes divdabis (-ts, -ta)";
+	public final static String PARTICIPLE_DAMS = "Daļēji lokāmais divdabis (-dams, -dama, -damies, -damās)";
+	public final static String PARTICIPLE_OT = "Nelokāmais divdabis (-ot, -oties)";
 
-	public final static String POSITIVE_DEGREE = "Pamata pakāpe";
-	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
-	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
+	//public final static String PERSON_FORM = "Personas forma"; // Jebkura persona, lietots kopā ar atslēgku "person" - tipiski darbības vārdiem
 
-	public final static String INDEFINITE_ENDING = "Nenoteiktā galotne";
-	public final static String DEFINITE_ENDING = "Noteiktā galotne";
+	public final static String RETORICAL_QUESTION_SENT = "Retorisks jautājuma teikums";
+	public final static String NEG_VERB_SENT = "Teikums ar noliegtu darbības vārdu";
+
+	public final static String REPETITION = "Atkārtojums";
 
 	public final static String ATTRIBUTE = "Apzīmētājs";
-	//public final static String ADVERBIAL_MOD = "Apstāklis";
-	//public final static String ADVERBIAL_PLACE_MOD = "Vietas apstāklis";
 
 	public final static String ORIGINAL_NEEDED = "Oriģinālā gramatika satur karodziņos neatšifrētas nianses"; // Papildinformācija pārejai notekstuālajām gramatikām uz karodziņiem.
 
@@ -166,7 +142,6 @@ public class TValues extends Values
 
 	//// Galotņu šabloniem.
 	public final static String NO_PRESENT = "Nelieto tagadnes formas";
-	public final static String PAST = "Pagātne";
 
 	//// "Savienojumā ar" apstrādei.
 	public final static String ILLNESS_NAME = "Slimības izraisītāja mikroorganisma, arī slimības nosaukums";
@@ -181,16 +156,6 @@ public class TValues extends Values
 	public final static String TIME_TERM = "Vārds ar laika nozīmi";
 	public final static String DISTRUCTION_NAME = "Vārds, kas apzīmē bojāšanu, iznīcināšanu";
 	//public final static String VERB_WITH_DERIVS = "Dotais darbības vārds un tā atvasinājumi";
-	// Slikti, ka nākamos trijus arī vajag :/
-	public final static String NOUN_CONTAMINATION = "Lietvārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	public final static String NOUN_CONTAMINATION_ADJ_COMP = "Lietvārda nozīmē lietots īpašības vārds ar pārāko pakāpi"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	public final static String ADVERB_CONTAMINATION = "Apstākļa vārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	public final static String PLACE_ADVERB_CONTAMINATION = "Vietas apstākļa vārda nozīmē lietots vārds"; // Šo lieto tikai tur, kur nevar likt "kontaminācija=lietvārds"
-	public final static String REPETITION = "Atkārtots vienas un tās pašas saknes vārds";
-	public final static String DATIVE_AND_ADVERB = "Vārds datīvā un apstākļa vārds"; // Iesaistīšanās divu nosacījumu grupā.
-	public final static String ADVERB_AND_NEGVERB = "Apstākļa vārds un noliegts darbības vārds"; // Iesaistīšanās divu nosacījumu grupā.
-	public final static String NUMERAL_AND_ADVERB = "Skaitļa vārds un apstākļa vārds"; // Iesaistīšanās divu nosacījumu grupā.
-	public final static String NUMERAL_AND_ADJECTIVE = "Skaitļa vārds un īpašības vārds"; // Iesaistīšanās divu nosacījumu grupā.
-	public final static String NOUN_WITH_PREPOSITION = "Lietvārds un prievārds"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
-	public final static String PLURAL_OR_THIRD_PERS = "Daudzskaitlis vai trešā persona"; // Iesaistīšanās divu nosacījumu grupā, līdzīg lietvārda locījumam.
+	public final static String REPETITION_WITH_ONE_STEM = "Atkārtots vienas un tās pašas saknes vārds";
+	public final static String DERIVATIVES_OF = "Dotā vārda atvasinājumi";
 }

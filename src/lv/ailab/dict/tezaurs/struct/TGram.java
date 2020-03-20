@@ -25,19 +25,6 @@ public class TGram extends Gram
 
 	protected TGram() {};
 
-	/*
-	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
-	 */
-/*	public void set (String gramText, String lemma)
-	{
-		freeText = normalizePronunc(gramText, TPronuncNormalizer.me());
-		leftovers = null;
-		flags = new Flags();
-		paradigm = new HashSet<>();
-		altLemmas = null;
-		parseGram(lemma);
-	}*/
-	
 	public int paradigmCount()
 	{
 		if (paradigm == null) return 0;

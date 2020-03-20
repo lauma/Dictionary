@@ -24,13 +24,13 @@ public class Keys
 	public final static String OTHER_FLAGS = "Citi";
 
 	//=== Morfoloģiskās pazīmes ================================================
-	/*
+	/**
 	 * Gramatiskā kategorija - skaitlis: vienskaitlis, daudzskaitlis vai
 	 * divskaitlis (tēzaurā ir manīts viens gadījums).
 	 * Norāda, ja kaut kādu iemeslu dēļ šķirkļavārdu analizējot, to ir izdevies
 	 * noskaidrot. Lielākoties nav pašmērķis.
 	 */
-	//public final static String NUMBER = "Skaitlis";
+	public final static String NUMBER = "Skaitlis";
 	/**
 	 * Gramatiskā kategorija - dzimte: sieviešu, vīriešu un kopdzimte
 	 * (morfoanalizatoram nav, bet tēzauram ir)
@@ -41,7 +41,51 @@ public class Keys
 	/*
 	 * Gramatiskā kategorija - locījums - vietas, kur norādīts fiksēts locījums.
 	 */
-	//public final static String CASE = "Locījums";
+	public final static String CASE = "Locījums";
+
+	/*
+	 * Gramatiskā kategorija - darbības vārda persona.
+	 */
+	public final static String PERSON = "Persona";
+
+	/*
+	 * Gramatiskā kategorija - darbības vārda laiks.
+	 */
+	public final static String TENSE = "Laiks";
+
+	/*
+	 * Gramatiskā kategorija - darbības vārda izteiksme.
+	 */
+	public final static String MOOD = "Izteiksme";
+
+	/*
+	 * Gramatiskā kategorija - darbības vārda kārta.
+	 */
+	public final static String VOICE = "Kārta";
+
+	/*
+	 * Gramatiskā kategorija - īpašības vārda vai divdabja noteiktība.
+	 */
+	public final static String DEFINITENESS = "Noteiktība";
+
+	/*
+	 * Gramatiskā kategorija - īpašības vārda, divdabja vai apstākļa vārda
+	 * pakāpe.
+	 */
+	public final static String DEGREE = "Pakāpe";
+
+	//=== Struktrūras ==========================================================
+
+	/**
+	 * Atslēga teikuma veida norādīšanai.
+	 */
+	public final static String SENTENCE = "Teikums";
+
+	//=== Uzbūve ===============================================================
+	/**
+	 * Priedēkļa eksistence vārdam
+	 */
+	public final static String PREFIXNESS = "Priedēkļa piemitība";
 
 	//=== Morfoimporta informācija =============================================
 	/**

@@ -5,6 +5,7 @@ import lv.ailab.dict.struct.constants.structrestrs.Frequency;
 public class TFrequency extends Frequency
 {
 	public static String ALSO = "Arī"; // TODO - tikt vaļā no šī.
+	public static String HALF_RARE = "Pareti";
 	public static String RARER = "Retāk"; // TODO - tikt vaļā no šī.
 
 }

@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -53,6 +54,12 @@ public class BaseRule implements EndingRule
      */
     //TODO: varbūt šeit vajag Flags objektu?
     protected final Set<Tuple<String,String>> alwaysFlags;
+	/**
+	 * Šos ierobežojumus uzstāda, ja gramatikas teksts atbilst attiecīgajam
+	 * šablonam.
+	 */
+	//TODO: varbūt šeit vajag Flags objektu?
+	protected final Set<StructRestrs.One> alwaysRestrictions;
 
     /**
      * Šo izdrukā, kad liekas, ka likums varētu būt nepilnīgs - gramatikas
@@ -74,9 +81,13 @@ public class BaseRule implements EndingRule
      *                      atbilst šim šablonam
      * @param alwaysFlags	karodziņi, ko uzstādīt, ja gramatikas teksts
      *                      atbilst attiecīgajam šablonam.
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja gramatikas
+	 *                              teksts atbilst attiecīgajam šablonam.
      */
-    public BaseRule(String pattern, List<SimpleSubRule> lemmaLogic,
-			Set<Tuple<String, String>> alwaysFlags)
+    public BaseRule(
+    		String pattern, List<SimpleSubRule> lemmaLogic,
+			Set<Tuple<String, String>> alwaysFlags,
+			Set<StructRestrs.One> alwaysRestrictions)
     {
         if (lemmaLogic == null)
             throw new IllegalArgumentException (
@@ -89,6 +100,7 @@ public class BaseRule implements EndingRule
 
         this.lemmaLogic = Collections.unmodifiableList(lemmaLogic);
         this.alwaysFlags = alwaysFlags == null ? null : Collections.unmodifiableSet(alwaysFlags);
+        this.alwaysRestrictions = alwaysRestrictions == null ? null : Collections.unmodifiableSet(alwaysRestrictions);
 
 		if (lemmaLogic.size() == 1 && lemmaLogic.get(0).paradigms.size() == 1)
 			errorMessage = "Neizdodas \"%s\" ielikt paradigmā " + 
@@ -121,8 +133,8 @@ public class BaseRule implements EndingRule
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
 						add(new SimpleSubRule(lemmaRestrictions, new HashSet<Integer>(){{
-							add(paradigmId);}}, positiveFlags));}},
-				alwaysFlags);
+							add(paradigmId);}}, positiveFlags, null));}},
+				alwaysFlags, null);
 	}
 
 	/**
@@ -145,8 +157,68 @@ public class BaseRule implements EndingRule
 			Set<Tuple<String, String>> alwaysFlags)
 	{
 		return new BaseRule(patternText, new ArrayList<SimpleSubRule>() {{
-			add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags));}},
-				alwaysFlags);
+			add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags, null));}},
+				alwaysFlags, null);
+	}
+
+	/**
+	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
+	 * nosacījums ar vairākām paradigmām.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigms			paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      	atbilst attiecīgajam šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja gramatikas
+	 *                      		teksts atbilst attiecīgajam šablonam
+	 */
+	public static BaseRule simple(String patternText, String lemmaRestrictions,
+								  Set<Integer> paradigms,	Set<Tuple<String, String>> positiveFlags,
+								  Set<Tuple<String, String>> alwaysFlags,
+								  Set<StructRestrs.One> alwaysRestrictions)
+	{
+		return new BaseRule(patternText,
+				new ArrayList<SimpleSubRule>() {{
+					add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags, null));}},
+				alwaysFlags, alwaysRestrictions);
+	}
+
+	/**
+	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
+	 * nosacījums ar vairākām paradigmām.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigms			paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja gan gramatikas
+	 * 	                            teksts, gan lemma atbilst attiecīgajiem
+	 * 	                            šabloniem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      		atbilst attiecīgajam šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja gramatikas
+	 *                      		teksts atbilst attiecīgajam šablonam
+	 */
+	public static BaseRule simple(String patternText, String lemmaRestrictions,
+								  Set<Integer> paradigms,	Set<Tuple<String, String>> positiveFlags,
+								  Set<StructRestrs.One> positiveRestrictions,
+								  Set<Tuple<String, String>> alwaysFlags,
+								  Set<StructRestrs.One> alwaysRestrictions)
+	{
+		return new BaseRule(patternText,
+				new ArrayList<SimpleSubRule>() {{
+					add(new SimpleSubRule(lemmaRestrictions, paradigms, positiveFlags, positiveRestrictions));}},
+				alwaysFlags, alwaysRestrictions);
 	}
 
 	/**
@@ -169,7 +241,59 @@ public class BaseRule implements EndingRule
 		return new BaseRule(patternText,
 				lemmaLogic == null ? null : Arrays.asList(lemmaLogic),
 				alwaysFlags == null ? null :
-						new HashSet<>(Arrays.asList(alwaysFlags)));
+						new HashSet<>(Arrays.asList(alwaysFlags)), null);
+	}
+
+	/**
+	 * Papildus konstruktors īsumam.
+	 * Izveido BaseRule, ja lemmu nosacījumu doti masīvu struktūrā, nevis
+	 * sarakstos un kopās.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaLogic		nosacījumu saraksts, kurā katrs elements sastāv
+	 *                          no trijnieka: 1)lemmu aprakstoša šablona, 2)
+	 *                          paradigmām, ko lietot, ja lemma atbilst šim
+	 *                          šablonam, 3) karodziņiem, ko uzstādīt, ja lemma
+	 *                          atbilst šim šablonam.
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                          atbilst attiecīgajam šablonam.
+	 * @param alwaysRestriction	ierobežojums, ko uzstādīt, ja gramatikas teksts
+	 * 	 *                      atbilst attiecīgajam šablonam.
+	 * @return	jauns BaseRule
+	 */
+	public static BaseRule of(
+			String patternText, SimpleSubRule[] lemmaLogic,
+			Tuple<String,String>[] alwaysFlags, StructRestrs.One alwaysRestriction)
+	{
+		return new BaseRule(patternText,
+				lemmaLogic == null ? null : Arrays.asList(lemmaLogic),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(alwaysRestriction);}});
+	}
+
+	/**
+	 * Papildus konstruktors īsumam.
+	 * Izveido BaseRule, ja lemmu nosacījumu doti masīvu struktūrā, nevis
+	 * sarakstos un kopās.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai
+	 * @param lemmaLogic		nosacījumu saraksts, kurā katrs elements sastāv
+	 *                          no trijnieka: 1)lemmu aprakstoša šablona, 2)
+	 *                          paradigmām, ko lietot, ja lemma atbilst šim
+	 *                          šablonam, 3) karodziņiem, ko uzstādīt, ja lemma
+	 *                          atbilst šim šablonam.
+	 * @param alwaysFlags		karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                          atbilst attiecīgajam šablonam.
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja gramatikas
+	 * 	 *                          teksts atbilst attiecīgajam šablonam.
+	 * @return	jauns BaseRule
+	 */
+	public static BaseRule of(
+			String patternText, SimpleSubRule[] lemmaLogic,
+			Tuple<String,String>[] alwaysFlags, StructRestrs.One[] alwaysRestrictions)
+	{
+		return new BaseRule(patternText,
+				lemmaLogic == null ? null : Arrays.asList(lemmaLogic),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestrictions == null ? null : new HashSet<>(Arrays.asList(alwaysRestrictions)));
 	}
 
 	/**
@@ -200,6 +324,40 @@ public class BaseRule implements EndingRule
 
 	/**
 	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
+	 * nosacījums ar tikai vienu paradigmu. (Agrāk šis gadījums bija izdalīts
+	 * atsevišķā klasē).
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigmId		paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                      	teksts, gan lemma atbilst attiecīgajiem
+	 *                      	šabloniem
+	 * @param positiveRestriction	ierobežojums, ko uzstādīt, ja gan gramatikas
+	 * 	                        	teksts, gan lemma atbilst attiecīgajiem
+	 * 	                        	šabloniem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      		atbilst attiecīgajam šablonam
+	 * @param alwaysRestriction		ierobežojums, ko uzstādīt, ja gramatikas
+	 * 		                     	teksts atbilst attiecīgajam šablonam
+	 */
+	public static BaseRule of(String patternText, String lemmaRestrictions,
+							  int paradigmId,
+							  Tuple<String, String>[] positiveFlags,
+							  StructRestrs.One positiveRestriction,
+							  Tuple<String, String>[] alwaysFlags,
+							  StructRestrs.One alwaysRestriction)
+	{
+		return BaseRule.of(patternText,
+				new SimpleSubRule[]{
+						SimpleSubRule.of(lemmaRestrictions, new Integer[]{paradigmId}, positiveFlags, positiveRestriction)},
+				alwaysFlags, new StructRestrs.One[] {alwaysRestriction});
+	}
+
+	/**
+	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
 	 * nosacījums ar vairākām paradigmām.
 	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
 	 *                          eskeipots)
@@ -220,6 +378,37 @@ public class BaseRule implements EndingRule
 		return BaseRule.of(patternText, new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, paradigms, positiveFlags)},
 				alwaysFlags);
+	}
+
+	/**
+	 * Papildus konstruktors īsumam - gadījumiem, kad ir tikai viens lemmas
+	 * nosacījums ar vairākām paradigmām.
+	 * @param patternText		teksts, ar kuru jāsākas gramatikai (tiks
+	 *                          eskeipots)
+	 * @param lemmaRestrictions	regulā izteiksme, kas nosaka lemmas īpatnības
+	 *                      	(netiks eskeipota)
+	 * @param paradigms			paradigmas ID, ko uzstādīt, ja likums ir
+	 *                          piemērojams
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja gan gramatikas
+	 *                          teksts, gan lemma atbilst attiecīgajiem
+	 *                          šabloniem
+	 * @param positiveRestriction	ierobežojums, ko uzstādīt, ja gan gramatikas
+	 * 	                            teksts, gan lemma atbilst attiecīgajiem
+	 * 	                            šabloniem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja gramatikas teksts
+	 *                      		atbilst attiecīgajam šablonam
+	 * @param alwaysRestriction		ierobežojums, ko uzstādīt, ja gramatikas teksts
+	 *                      		atbilst attiecīgajam šablonam
+	 */
+	public static BaseRule of(
+			String patternText, String lemmaRestrictions,
+			Integer[] paradigms, Tuple<String, String>[] positiveFlags,
+			StructRestrs.One positiveRestriction, Tuple<String, String>[] alwaysFlags,
+			StructRestrs.One alwaysRestriction)
+	{
+		return BaseRule.of(patternText,
+				new SimpleSubRule[]{ SimpleSubRule.of(lemmaRestrictions, paradigms, positiveFlags, positiveRestriction)},
+				alwaysFlags, alwaysRestriction);
 	}
 
 	/**

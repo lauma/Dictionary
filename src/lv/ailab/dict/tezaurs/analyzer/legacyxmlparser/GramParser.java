@@ -1,6 +1,8 @@
 package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
 import lv.ailab.dict.struct.Gram;
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.DirectRules;
@@ -58,7 +60,7 @@ public class GramParser
 				gramNode.getTextContent(), TPronuncNormalizer.me());
 		result.leftovers = null;
 		result.flags = TElementFactory.me().getNewFlags();
-		result.structRestrictions = new HashSet<>();
+		result.structRestrictions = TElementFactory.me().getNewStructRestrs();
 		result.paradigm = new HashSet<>();
 		result.altLemmas = null;
 		parseGram(result, lemma);
@@ -203,22 +205,22 @@ public class GramParser
 			found = false;
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, gram.flags);
+					gramText, gram.structRestrictions);
 			// bim - parasti savienojumā "bim, bam" vai atkārtojumā "bim, bim"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseOrRepFlag(
-					gramText, gram.flags);
+					gramText, gram.structRestrictions);
 			// aijā - savienojumā "aijā, žūžū"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// savienojumā ar slimības izraisītāja mikroorganisma, arī slimības nosaukumu
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// aizliegt - savienojumā ar "zona", "josla", "teritorija", "ūdeņi" u. tml.
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithQuotFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// parasti savienojumā ar verbu "saukt", "dēvēt" formām
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 
 			if (newBegin > 0)
 			{
@@ -252,19 +254,19 @@ public class GramParser
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			// Kur ir āķis, ka šito vēl vajag?
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, gram.flags);
+					gramText, gram.structRestrictions);
 			//
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// savienojumā ar ...
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// aizbļaut - savienojumā ar "ausis"
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithQuotFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// parasti savienojumā ar verba "nevarēt" formām
 			if(newBegin == -1) newBegin = RulesAsFunctions.processTogetherWithGenQuotFlag(
-					gramText, gram.flags);
+					gramText, gram.flags, gram.structRestrictions);
 			// agrums->agrumā
 			//if(newBegin == -1) newBegin = RulesAsFunctions.processUsuallyInCaseFlag(
 			//		gramText, flags);
@@ -323,13 +325,17 @@ public class GramParser
 			if (pos.contains(TValues.GEN_ONLY)) gram.paradigm.add(49);
 				// Nelokāmie lietvārdi - 12.
 			else if (gram.flags.test(TFeatures.NON_INFLECTIVE) && gram.flags.testKey(TKeys.GENDER)
-					&& !gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases)) gram.paradigm.add(12); // bruto
+					//&& !gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases))
+					&& !gram.structRestrictions.testByTypeKey(Type.IN_FORM, TKeys.CASE))
+				gram.paradigm.add(12); // bruto
 
 			if (pos.contains(TValues.PIECE_OF_WORD)) gram.paradigm.add(0); //Priedēkļi un salikteņu gabali nav vārdi.
 		}
 		// Nelokāmie lietvārdi - 12.
 		else if (gram.flags.test(TFeatures.NON_INFLECTIVE) && gram.flags.testKey(TKeys.GENDER)
-				&& !gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases)) gram.paradigm.add(12); // video
+				//&& !gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases))
+				&& !gram.structRestrictions.testByTypeKey(Type.IN_FORM, TKeys.CASE))
+			gram.paradigm.add(12); // video
 	}
 
 	/**
@@ -388,12 +394,14 @@ public class GramParser
 		// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 		// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 		// problēmas.
-		if (gram.flags.test(TKeys.USED_IN_FORM, TValues.GENITIVE) && gram.flags.test(TFeatures.NON_INFLECTIVE))
+		//if (gram.flags.test(TKeys.USED_IN_FORM, TValues.GENITIVE) && gram.flags.test(TFeatures.NON_INFLECTIVE))
+		if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.CASE__GENITIVE)
+				&& gram.flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			gram.flags.add(TFeatures.POS__GEN_ONLY);
 			if (lemma.endsWith("uguns") || lemma.endsWith("sāls"))
 			{
-				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
+				gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 				System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt dzimti.");
 			}
 			else if (lemma.endsWith("a") || lemma.endsWith("us")
@@ -401,16 +409,16 @@ public class GramParser
 					|| lemma.endsWith("zibens")|| lemma.endsWith("mēness")
 					|| lemma.endsWith("ūdens") || lemma.endsWith("rudens")) // tēvA, jāņA, medus
 			{
-				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
+				gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 				gram.flags.add(TKeys.GENDER, TValues.MASCULINE);
 			}
 			else if (lemma.endsWith("s")) // annAS, eglES, sirdS
 			{
-				gram.flags.add(TKeys.USED_IN_FORM, TValues.SINGULAR);
+				gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 				gram.flags.add(TKeys.GENDER, TValues.FEMININE);
 			}
 			else if (lemma.endsWith("u"))
-				gram.flags.add(TKeys.USED_IN_FORM, TValues.PLURAL);
+				gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__PLURAL);
 			else if (!lemma.endsWith("u"))
 			{
 				System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt skaitli.");
@@ -418,7 +426,9 @@ public class GramParser
 			}
 			gram.flags.add(TFeatures.FROZEN);
 		}
-		else if (gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) && gram.flags.test(TFeatures.NON_INFLECTIVE))
+		//else if (gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) && gram.flags.test(TFeatures.NON_INFLECTIVE))
+		else if (gram.structRestrictions.testByTypeKey(Type.IN_FORM, TKeys.CASE)
+				&& gram.flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			if (gram.paradigm.size() > 0)
 				System.out.println("Sastingušajai \"" + lemma + "\" formai jau ir paradigmas " +

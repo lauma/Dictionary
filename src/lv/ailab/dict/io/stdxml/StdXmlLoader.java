@@ -228,10 +228,10 @@ public class StdXmlLoader
 		return result;
 	}
 
-	public StructRestriction makeStructRestriction(Node structRestrNode, GenericElementFactory elemFact)
+	public StructRestrs.One makeStructRestriction(Node structRestrNode, GenericElementFactory elemFact)
 	throws DictionaryXmlReadingException
 	{
-		StructRestriction result = elemFact.getNewStructRestriction();
+		StructRestrs.One result = new StructRestrs.One();
 		XmlFieldMapping fields = XmlFieldMappingHandler.me().domElemToHash((Element) structRestrNode);
 		if (fields == null || fields.isEmpty()) return null;
 
@@ -249,8 +249,10 @@ public class StdXmlLoader
 		// Flags
 		result.valueFlags = loadFlagsBlock(valueFields, elemFact, "Value");
 		// LanguageMaterial
-		result.valueText = XmlFieldMappingHandler.me().takeoutSinglarStringField(fields,
-				"Value", "LanguageMaterial");
+		LinkedList<String> lmTexts = XmlFieldMappingHandler.me().takeoutStringFieldArray(fields,
+				"Value", "LanguageMaterial", "Text");
+		if (lmTexts != null && !lmTexts.isEmpty())
+			result.valueText.addAll(lmTexts);
 
 		// Brīdina, ja ir vēl kaut kas.
 		valueFields.dieOnNonempty("Value");
@@ -410,7 +412,7 @@ public class StdXmlLoader
 		return result.isEmpty() ? null : result;
 	}
 
-	protected HashSet<StructRestriction> loadStructRestrBlock(
+	protected StructRestrs loadStructRestrBlock(
 			XmlFieldMapping fields, GenericElementFactory elemFact,
 			String parentElemName)
 	throws DictionaryXmlReadingException
@@ -419,13 +421,14 @@ public class StdXmlLoader
 				fields,	parentElemName, "StructuralRestrictions",
 				"StructuralRestriction");
 		if (structRestrNode == null) return null;
-		HashSet<StructRestriction> result = new HashSet<>();
+		StructRestrs result = elemFact.getNewStructRestrs();
+		result.restrictions = new HashSet<>();
 		for (Node srNode : structRestrNode)
 		{
-			StructRestriction sr = makeStructRestriction(srNode, elemFact);
-			if (sr != null) result.add(sr);
+			StructRestrs.One sr = makeStructRestriction(srNode, elemFact);
+			if (sr != null) result.restrictions.add(sr);
 		}
-		return result.isEmpty() ? null : result;
+		return result.restrictions.isEmpty() ? null : result;
 	}
 
 	//======== Vienpatņu elementu bloki ========================================

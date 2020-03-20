@@ -1,6 +1,8 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.struct.constants.flags.Features;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.EndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.FirstConjStems;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
@@ -12,7 +14,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.SecondThirdConj;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts.verbs.ThirdConj;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
-import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
@@ -1024,11 +1026,14 @@ public class OptHypernRules
 		VerbDoubleRule.of(
 				"-teicu, -teic,", "-teic (tagadnes formas parasti nelieto), pag. -teicu", "teikt", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "teikt"), TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
+				null, null,
+				new StructRestrs.One[]{StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__FUTURE),
+						StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__PAST)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikt
 		VerbDoubleRule.of("parasti pag., -sēdu, -sēdi, -sēda", null, "sēst", 15,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "sēst"), TFeatures.POS__DIRECT_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.PAST)},
+				null, null,
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__PAST),
 				FirstConjStems.of("sēs", null, "sēd")), // apsēst
 
 	};
@@ -2211,13 +2216,16 @@ public class OptHypernRules
 		VerbDoubleRule.of("-teicos, -teicies,", "-teicas (tagadnes formas parasti nelieto), pag. -teicos",
 				"teikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "teikties"), TFeatures.POS__REFL_VERB},
-				new Tuple[]{Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.NO_PRESENT)},
+				null, null,
+				new StructRestrs.One[] {StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__FUTURE),
+						StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.TENSE__PAST)},
 				FirstConjStems.of("teik", "teic", "teic")), //atteikties
 
 		VerbDoubleRule.of("parasti dsk. 3. pers., -sveicas, pag. -sveicās", null,
 				"sveikties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "sveikties"), TFeatures.POS__REFL_VERB},
-				new Tuple[]{TFeatures.USUALLY_USED__PLURAL, TFeatures.USUALLY_USED__THIRD_PERS},
+				null, null,
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, new Tuple[] {TFeatures.PERSON__3, TFeatures.NUMBER__PLURAL}),
 				FirstConjStems.of("sveik", "sveic", "sveic")), // apsveikties
 
 

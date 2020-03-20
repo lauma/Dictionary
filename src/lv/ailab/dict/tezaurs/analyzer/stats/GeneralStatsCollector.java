@@ -4,6 +4,7 @@ import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gloss;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Sense;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.struct.TEntry;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
@@ -211,7 +212,8 @@ public class GeneralStatsCollector
             if (collectFifthDeclExceptions && (h.gram.getDirectParadigms().contains(44) || h.gram.getDirectParadigms().contains(47)))
                	fifthDeclExceptions.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 
-			if (collectNonInflWithCase && h.gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) &&
+			//if (collectNonInflWithCase && h.gram.flags.testAnyValue(TKeys.USED_IN_FORM, TValues.allCases) &&
+			if (collectNonInflWithCase && h.gram.structRestrictions.testByTypeKey(Type.IN_FORM, TKeys.CASE) &&
 					h.gram.flags.test(TFeatures.NON_INFLECTIVE))
 				nonInflWithCase.add(Trio.of(h.lemma.text, entry.head.lemma.text, entry.homId));
 		}
@@ -497,8 +499,8 @@ public class GeneralStatsCollector
 						p -> !p.equals(TValues.CHANGED_PARADIGM)).forEach(inflFlags::add);*/
 			if (entry.head.gram.flags.test(TFeatures.ENTRYWORD__PLURAL))
 				inflFlags.add(TValues.PLURAL);
-			if (entry.head.gram.flags.test(TFeatures.USED_ONLY__SINGULAR))
-				inflFlags.add(TValues.SINGULAR);
+			//if (entry.head.gram.flags.test(TFeatures.USED_ONLY__SINGULAR))
+			//	inflFlags.add(TValues.SINGULAR);
 			if (entry.head.gram.flags.test(TFeatures.MULTI_INFLECTIVE))
 				inflFlags.add(TValues.MULTI_INFLECTIVE);
 			if (entry.head.gram.flags.testKey(TKeys.MULTIINFLECTION_PATTERN))

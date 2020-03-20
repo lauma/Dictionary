@@ -29,68 +29,6 @@ public class TKeys extends Keys
 	public final static String CONTAMINATION = "Kontaminācija";
 
 	/**
-	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
-	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
-	 * nepieciešams lietot jau definētās TValues. Konkrētus vārdus jāliek
-	 * pēdiņās.
-	 */
-	public final static String USED_TOGETHER_WITH = "Lieto kopā ar";
-	/**
-	 * Lietojums kopā ar konkrētiem vārdiem vai abstraktiem ierobežojumiem,
-	 * piemēram, "[vārds] ģenitīvā". Abstraktajiem ierobežojumiem pēc iespējas
-	 * nepieciešams lietot jau definētās TValues. Konkrētus vārdus jāliek
-	 * pēdiņās.
-	 * Šis variants ir gadījumiem, kad vārdnīcā ir "parasti savienojumā ar".
-	 */
-	public final static String USUALLY_USED_TOGETHER_WITH = "Parasti lieto kopā ar";
-	/**
-	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "parasti".
-	 * Ir viens izņēmuma gadījums, kad ir "parasti nelieto".
-	 */
-	public final static String USUALLY_USED_IN_FORM = "Parasti lieto noteiktā formā/atvasinājumā";
-	/**
-	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "bieži".
-	 */
-	public final static String OFTEN_USED_IN_FORM = "Bieži lieto noteiktā formā/atvasinājumā";
-	/**
-	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "tikai".
-	 */
-	public final static String USED_ONLY_IN_FORM = "Lieto tikai noteiktā formā/atvasinājumā";
-	/**
-	 * Formu ierobežojumi, kas tēzaurā norādīti ar atslēgvārdu "arī".
-	 * (Šis nudien ir ļaunums!)
-	 */
-	public final static String ALSO_USED_IN_FORM = "Lieto arī noteiktā formā/atvasinājumā";
-	/**
-	 * Nespecificēts, vispārīgs formu ierobežojums.
-	 */
-	public final static String USED_IN_FORM = "Lieto noteiktā formā/atvasinājumā";
-
-	/**
-	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "tikai".
-	 */
-	public final static String USUALLY_USED_IN_STRUCT = "Parasti lieto noteikta veida struktūrās";
-	/**
-	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "tikai".
-	 */
-	public final static String OFTEN_USED_IN_STRUCT = "Bieži lieto noteikta veida struktūrās";
-	/**
-	 * Ierobežojums par lietojumu teikumā vai struktūrā, kas norādīts ar atslēgvārdu "arī".
-	 * (Bieži ļaunums)
-	 */
-	public final static String ALSO_USED_IN_STRUCT = "Lieto arī noteikta veida struktūrās";
-	/**
-	 * Nespecificēts, vispārīgs ierobežojums par lietojumu teikumā vai struktūrā.
-	 */
-	public final static String USED_IN_STRUCT = "Lieto noteikta veida struktūrās";
-
-	/**
-	 * Bieži, reti, pareti.
-	 * TODO - pārcelt uz StructRestrs?
-	 */
-	public final static String USAGE_FREQUENCY = "Lietojuma biežums";
-
-	/**
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * Šķirkļavārda īpatnības tipiski tiek uzrādītas divos gadījumos:
 	 * 1) ja tēzaura šķirkļa vārds var nesakrist ar pamatformu (visbiežāk

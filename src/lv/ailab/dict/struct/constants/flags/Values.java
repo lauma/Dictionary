@@ -67,6 +67,50 @@ public class Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE);}});
 
+	//=== Persona ==============================================================
+	public final static String FIRST_PERSON = "Pirmā persona";
+	public final static String SECOND_PERSON = "Otrā persona";
+	public final static String THIRD_PERSON = "Trešā persona";
+
+	//=== Laiks ================================================================
+	public final static String PRESENT = "Tagadne";
+	public final static String FUTURE = "Nākotne";
+	public final static String PAST = "Pagātne";
+
+	//=== Izteiksme ============================================================
+	public final static String CONDITIONAL = "Vēlējuma izteiksme";
+	public final static String DEBITIVE = "Vajadzības izteiksme";
+	public final static String INFINITIVE = "Nenoteiksme";
+	public final static String INDICATIVE = "Īstenības izteiksme";
+	public final static String IMPERATIVE = "Pavēles izteiksme"; // Pavēles izteiksmes forma
+	public final static String PARTICIPLE = "Divdabis";
+	public final static String RELATIVE = "Atstāstījuma izteiksme";
+
+	//=== Kārta ================================================================
+	public final static String ACTIVE_VOICE = "Darāmā kārta"; // Ciešamās kārtas forma
+	public final static String PASSIVE_VOICE = "Ciešamā kārta"; // Ciešamās kārtas forma
+
+
+	//=== Noteiktība ===========================================================
+	public final static String INDEFINITE_ENDING = "Nenoteiktā galotne";
+	public final static String DEFINITE_ENDING = "Noteiktā galotne";
+
+	//=== Pakāpe ===============================================================
+	public final static String POSITIVE_DEGREE = "Pamata pakāpe";
+	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
+	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
+
+	//=== Noliegums: universāls ================================================
+	public final static String NEGATIVE = "Noliegums";
+
+	//=== Teikuma veidi ========================================================
+	public final static String DECLARATIVE_SENT = "Stāstījuma teikums";
+	public final static String ENCOURAGE_SENT = "Pamudinājuma teikums";
+	public final static String INTERJECTION_SENT = "Izsaukuma teikums";
+	public final static String NEGATION_SENT = "Nolieguma teikums";
+	public final static String QUESTION_SENT = "Jautājuma teikums";
+
+
 	//=== Citi =================================================================
 	public final static String NON_INFLECTIVE = "Nelokāms vārds";
 	public final static String MULTI_INFLECTIVE = "Vairākos punktos lokāms saliktenis";
@@ -75,4 +119,5 @@ public class Values
 	public final static String STEMS_ARE_ORDERED = "Pēdējie celmi lietojami retāk";
 
 	public final static String NO_PREFIX = "Vārds bez priedēkļa";
+	public final static String HAS_PREFIX = "Vārds ar priedēkli";
 }

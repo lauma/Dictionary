@@ -37,9 +37,9 @@ public final class WithAltLemma
 		if (paradigmId == 30) return AltFullLemmaRule.of(
 				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
 				lemmaEnding.length(), paradigmId,
-				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.DEFINITE_ENDING, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
+				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.DEFINITNESS__DEF, TFeatures.POS__NOUN, TFeatures.ENTRYWORD__PLURAL},
 				altLemmaEnding, paradigmId,
-				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR, TFeatures.DEFINITE_ENDING});
+				new Tuple[]{TFeatures.ENTRYWORD__SINGULAR, TFeatures.DEFINITNESS__DEF});
 		else return AltFullLemmaRule.of(
 				patternBegin + " ", patternEnding, ".*" + lemmaEnding,
 				lemmaEnding.length(), paradigmId,

@@ -1,7 +1,10 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.Arrays;
@@ -43,12 +46,19 @@ public class ThirdPersVerbRule implements EndingRule
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem ("Darbības vārds"
 	 *                      pievieno automātiski)
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
-	 *                      likuma šablonam ("Parasti 3. personā" pievieno
-	 *                      automātiski)
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam ("Parasti 3.
+	 *                              personā" pievieno automātiski)
      */
-    public ThirdPersVerbRule(String patternText, String lemmaEnding, Set<Integer> paradigms,
-            Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags)
+    public ThirdPersVerbRule(
+    		String patternText, String lemmaEnding, Set<Integer> paradigms,
+            Set<Tuple<String,String>> positiveFlags, Set<StructRestrs.One> positiveRestrictions,
+			Set<Tuple<String,String>> alwaysFlags, Set<StructRestrs.One> alwaysRestrictions)
     {
 		this.patternText = patternText;
         thirdPersUsually = BaseRule.simple(
@@ -57,24 +67,24 @@ public class ThirdPersVerbRule implements EndingRule
                 {{
                         add(TFeatures.POS__VERB);
                         if (positiveFlags != null) addAll(positiveFlags);
-                    }},
-                new HashSet<Tuple<String, String>>()
-                {{
-                        add(TFeatures.USUALLY_USED__THIRD_PERS);
-                        if (alwaysFlags != null) addAll(alwaysFlags);
-                    }});
+                }},
+				alwaysFlags,
+				new HashSet<StructRestrs.One>()
+				{{
+					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.PERSON__3));
+				}});
         thirdPersOnly = BaseRule.simple(
                 "tikai 3. pers., " + patternText, ".*" + lemmaEnding, paradigms,
                 new HashSet<Tuple<String, String>>()
                 {{
                         add(TFeatures.POS__VERB);
                         if (positiveFlags != null) addAll(positiveFlags);
-                    }},
-                new HashSet<Tuple<String, String>>()
-                {{
-                        add(TFeatures.USED_ONLY__THIRD_PERS);
-                        if (alwaysFlags != null) addAll(alwaysFlags);
-                    }});
+                }},
+				alwaysFlags,
+				new HashSet<StructRestrs.One>()
+				{{
+					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.PERSON__3));
+				}});
     }
 
 	/**
@@ -95,8 +105,9 @@ public class ThirdPersVerbRule implements EndingRule
 			int paradigmId,	Set<Tuple<String,String>> positiveFlags,
 			Set<Tuple<String,String>> alwaysFlags)
 	{
-		return new ThirdPersVerbRule(patternText, lemmaEnding,
-				new HashSet<Integer>() {{add(paradigmId);}}, positiveFlags, alwaysFlags);
+		return new ThirdPersVerbRule(
+				patternText, lemmaEnding, new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags, null, alwaysFlags, null);
 	}
 
     /**
@@ -116,10 +127,12 @@ public class ThirdPersVerbRule implements EndingRule
             int paradigmId, Tuple<String,String>[] positiveFlags,
 			Tuple<String,String>[] alwaysFlags)
     {
-        return new ThirdPersVerbRule(patternText, lemmaEnding,
-                new HashSet<Integer>() {{add(paradigmId);}},
+        return new ThirdPersVerbRule(
+        		patternText, lemmaEnding, new HashSet<Integer>() {{add(paradigmId);}},
                 positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-                alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+				null,
+                alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
     }
 
 	/**
@@ -138,10 +151,13 @@ public class ThirdPersVerbRule implements EndingRule
 	public static ThirdPersVerbRule of(String patternText, String lemmaEnding,
 			Integer[] paradigms, Tuple<String,String>[] positiveFlags, Tuple<String,String>[] alwaysFlags)
 	{
-		return new ThirdPersVerbRule(patternText, lemmaEnding,
+		return new ThirdPersVerbRule(
+				patternText, lemmaEnding,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
-				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)));
+				null,
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null);
 	}
 
     /**

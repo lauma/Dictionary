@@ -3,11 +3,13 @@ package lv.ailab.dict.struct;
 import lv.ailab.dict.utils.GramPronuncNormalizer;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
+import lv.ailab.dict.utils.JSONUtils;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Vārdforma (vf Tēzaura XML).
@@ -66,12 +68,8 @@ public class Lemma implements HasToJSON, HasToXML
 		res.append(String.format("\"Lemma\":\"%s\"", JSONObject.escape(text)));
 		if (pronunciation != null && pronunciation.length > 0)
 		{
-			res.append(", \"Pronunciations\":[\"");
-			ArrayList<String> escaped = new ArrayList<>();
-			for (String pron : pronunciation)
-				escaped.add(JSONObject.escape(pron));
-			res.append(String.join("\", \"", escaped));
-			res.append("\"]");
+			res.append(", \"Pronunciations\":");
+			res.append(JSONUtils.simplesToJSON(Arrays.asList(pronunciation)));
 		}
 		return res.toString();
 	}

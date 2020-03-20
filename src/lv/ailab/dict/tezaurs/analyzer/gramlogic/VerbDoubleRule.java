@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.utils.Tuple;
 
@@ -57,14 +58,21 @@ public class VerbDoubleRule implements EndingRule
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
 	 *                      Darbības vārds nav obligāts)
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
-	 *                      likuma šablonam
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
 	public VerbDoubleRule(String patternBegin, String patternEnd,
 			String lemmaEnd, Set<Integer> paradigms,
 			Set<Tuple<String,String>> positiveFlags,
+			Set<StructRestrs.One> positiveRestrictions,
 			Set<Tuple<String,String>> alwaysFlags,
+			Set<StructRestrs.One> alwaysRestrictions,
 			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
@@ -91,21 +99,27 @@ public class VerbDoubleRule implements EndingRule
 				thirdPersonPattern = allPersonPattern;
 			}
 			patternText = allPersonPattern;
-			allPersonRule = BaseRule.simple(allPersonPattern,
-					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
-			thirdPersonRule = new ThirdPersVerbRule(thirdPersonPattern,
-					lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+			allPersonRule = BaseRule.simple(
+					allPersonPattern, ".*" + lemmaEnd, paradigms,
+					positiveFlagsFull, positiveRestrictions,
+					alwaysFlagsSet, alwaysRestrictions);
+			thirdPersonRule = new ThirdPersVerbRule(
+					thirdPersonPattern, lemmaEnd, paradigms, positiveFlagsFull,
+					positiveRestrictions, alwaysFlagsSet, alwaysRestrictions);
 		} else if (patternEnd != null && patternEnd.trim().length() > 0)
 		{
 			patternText = patternEnd;
 			allPersonRule = null;
-			thirdPersonRule = new ThirdPersVerbRule(patternEnd,
-				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+			thirdPersonRule = new ThirdPersVerbRule(
+					patternEnd,	lemmaEnd, paradigms, positiveFlagsFull,
+					positiveRestrictions, alwaysFlagsSet, alwaysRestrictions);
 		} else if (patternBegin != null && patternBegin.trim().length() > 0)
 		{
 			patternText = patternBegin;
-			allPersonRule = BaseRule.simple(patternBegin,
-					".*" + lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+			allPersonRule = BaseRule.simple(
+					patternBegin, ".*" + lemmaEnd, paradigms,
+					positiveFlagsFull, positiveRestrictions, alwaysFlagsSet,
+					alwaysRestrictions);
 			thirdPersonRule = null;
 		}
 		else
@@ -125,12 +139,21 @@ public class VerbDoubleRule implements EndingRule
 	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
 	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
 	 *                      Darbības vārds nav obligāts)
-	 * @param alwaysFlags	karodziņi, ko uzstādīt, ja ir konstatēta atbilstība
-	 *                      likuma šablonam
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam
 	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
 	 */
-	public VerbDoubleRule(String patternEnd, String lemmaEnd, Set<Integer> paradigms,
-			Set<Tuple<String,String>> positiveFlags, Set<Tuple<String,String>> alwaysFlags,
+	public VerbDoubleRule(
+			String patternEnd, String lemmaEnd, Set<Integer> paradigms,
+			Set<Tuple<String,String>> positiveFlags,
+			Set<StructRestrs.One> positiveRestrictions,
+			Set<Tuple<String,String>> alwaysFlags,
+			Set<StructRestrs.One> alwaysRestrictions,
 			FirstConjStems stems)
 	{
 		HashSet<Tuple<String,String>> positiveFlagsFull = new HashSet<>();
@@ -141,8 +164,9 @@ public class VerbDoubleRule implements EndingRule
 
 		this.stems = stems;
 		allPersonRule = null;
-		thirdPersonRule = new ThirdPersVerbRule(patternEnd,
-				lemmaEnd, paradigms, positiveFlagsFull, alwaysFlagsSet);
+		thirdPersonRule = new ThirdPersVerbRule(
+				patternEnd, lemmaEnd, paradigms, positiveFlagsFull,
+				positiveRestrictions, alwaysFlagsSet, alwaysRestrictions);
 		patternText = patternEnd;
 	}
 
@@ -174,7 +198,91 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null,
+				stems);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai, var
+	 *                      būt null, ja tas ir likums tikai ar 3. personas
+	 *                      formām
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      var būt null, ja 3. personas dormas nevar atvasīnāt
+	 *                      no šī likuma automātiski
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
+	 *                      Darbības vārds nav obligāts)
+	 * @param positiveRestriction	ierobežojums, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestriction		ierobežojums, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
+	 */
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
+									String lemmaEnd, int paradigmId,
+									Tuple<String,String>[] positiveFlags,
+									StructRestrs.One positiveRestriction,
+									Tuple<String,String>[] alwaysFlags,
+									StructRestrs.One alwaysRestriction,
+									FirstConjStems stems)
+	{
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(positiveRestriction);}},
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(alwaysRestriction);}},
+				stems);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam.
+	 * @param patternBegin	gramatikas daļa ar galotnēm 1. un 2. personai, var
+	 *                      būt null, ja tas ir likums tikai ar 3. personas
+	 *                      formām
+	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
+	 *                      var būt null, ja 3. personas dormas nevar atvasīnāt
+	 *                      no šī likuma automātiski
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      varētu piemērot
+	 * @param paradigmId	paradigma, ko lietot, ja konstatēta atbilstība šim
+	 *                      likumam
+	 * @param positiveFlags	karodziņi, ko uzstādīt, ja ir gan atbilstība likuma
+	 *                      šablonam, gan lemmas nosacījumiem (Vārdšķira =
+	 *                      Darbības vārds nav obligāts)
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja ir konstatēta
+	 *                              atbilstība likuma šablonam
+	 * @param stems			visi nepieciešamie celmi, jau izgūti, vai null.
+	 */
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
+									String lemmaEnd, int paradigmId,
+									Tuple<String,String>[] positiveFlags,
+									StructRestrs.One[] positiveRestrictions,
+									Tuple<String,String>[] alwaysFlags,
+									StructRestrs.One[] alwaysRestrictions,
+									FirstConjStems stems)
+	{
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestrictions == null ? null : new HashSet<>(Arrays.asList(positiveRestrictions)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestrictions == null ? null : new HashSet<>(Arrays.asList(alwaysRestrictions)),
 				stems);
 	}
 
@@ -199,7 +307,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null,
 				stems);
 	}
 
@@ -236,7 +346,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null,
 				FirstConjStems.of(infinitiveStems, presentStems, pastStems,	areStemsOrdered));
 	}
 
@@ -268,7 +380,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null,
 				FirstConjStems.of(infinitiveStems, presentStems, pastStems, areStemsOrdered));
 	}
 
@@ -298,7 +412,87 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				null,
+				null);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam, ja celmu nav (paredzēts 2., 3. konj.).
+	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                          var būt null, ja tas ir likums tikai ar
+	 *                          3. personas formām
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                      	pagātnei, var būt null, ja 3. personas dormas
+	 *                      	nevar atvasīnāt no šī likuma automātiski
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                      	likuma šablonam, gan lemmas nosacījumiem
+	 *                      	(Vārdšķira = Darbības vārds nav obligāts)
+	 * @param positiveRestriction	ierobežojums, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestriction		ierobežojums, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 */
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
+									String lemmaEnd, int paradigmId,
+									Tuple<String,String>[] positiveFlags,
+									StructRestrs.One positiveRestriction,
+									Tuple<String,String>[] alwaysFlags,
+									StructRestrs.One alwaysRestriction)
+	{
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(positiveRestriction);}},
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(alwaysRestriction);}},
+				null);
+	}
+
+	/**
+	 * Konstruktors pilnam likumam, ja celmu nav (paredzēts 2., 3. konj.).
+	 * @param patternBegin		gramatikas daļa ar galotnēm 1. un 2. personai,
+	 *                          var būt null, ja tas ir likums tikai ar
+	 *                          3. personas formām
+	 * @param patternEnd		gramatikas daļa ar galotnēm 3. personai un
+	 *                      	pagātnei, var būt null, ja 3. personas dormas
+	 *                      	nevar atvasīnāt no šī likuma automātiski
+	 * @param lemmaEnd			nepieciešamā nenoteiksmes izskaņa lai šo likumu
+	 *                      	varētu piemērot
+	 * @param paradigmId		paradigma, ko lietot, ja konstatēta atbilstība
+	 *                      	šim likumam
+	 * @param positiveFlags		karodziņi, ko uzstādīt, ja ir gan atbilstība
+	 *                      	likuma šablonam, gan lemmas nosacījumiem
+	 *                      	(Vārdšķira = Darbības vārds nav obligāts)
+	 * @param positiveRestrictions	ierobežojumi, ko uzstādīt, ja ir gan
+	 *                              atbilstība likuma šablonam, gan lemmas
+	 *                              nosacījumiem
+	 * @param alwaysFlags			karodziņi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 * @param alwaysRestrictions	ierobežojumi, ko uzstādīt, ja ir konstatēta
+	 *                      		atbilstība likuma šablonam
+	 */
+	public static VerbDoubleRule of(String patternBegin, String patternEnd,
+									String lemmaEnd, int paradigmId,
+									Tuple<String,String>[] positiveFlags,
+									StructRestrs.One[] positiveRestrictions,
+									Tuple<String,String>[] alwaysFlags,
+									StructRestrs.One[] alwaysRestrictions)
+	{
+		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
+				new HashSet<Integer>() {{add(paradigmId);}},
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestrictions == null ? null : new HashSet<>(Arrays.asList(positiveRestrictions)),
+				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
+				alwaysRestrictions == null ? null : new HashSet<>(Arrays.asList(alwaysRestrictions)),
 				null);
 	}
 
@@ -323,8 +517,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				new HashSet<Integer>() {{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				null);
+				null, null);
 	}
 
 	/**
@@ -354,8 +549,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternBegin, patternEnd, lemmaEnd,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				null);
+				null, null);
 	}
 
 	/**
@@ -379,8 +575,9 @@ public class VerbDoubleRule implements EndingRule
 		return new VerbDoubleRule(patternEnd, lemmaEnd,
 				paradigms == null ? null : new HashSet<>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				alwaysFlags == null ? null : new HashSet<>(Arrays.asList(alwaysFlags)),
-				null);
+				null, null);
 	}
 
 	/**

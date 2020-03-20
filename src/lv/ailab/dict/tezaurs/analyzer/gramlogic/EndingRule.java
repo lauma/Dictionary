@@ -1,6 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
 import lv.ailab.dict.struct.Flags;
+import lv.ailab.dict.struct.StructRestrs;
 
 import java.util.Set;
 
@@ -23,13 +24,14 @@ public interface EndingRule extends Rule
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
 	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyDirect (
-			String gramText, String lemma,
-			Set<Integer> paradigmCollector,
-			Flags flagCollector);
+			String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector);
 	
 	/**
 	 * Piemērot likumu tā, ka patternText defises ir neobligātas.
@@ -40,11 +42,12 @@ public interface EndingRule extends Rule
 	 *                          gramatika un lemma atbilst šim likumam
 	 * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
 	 *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
 	 * @return  jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	int applyOptHyphens(
-			String gramText, String lemma,
-			Set<Integer> paradigmCollector,
-			Flags flagCollector);
+			String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector);
 }

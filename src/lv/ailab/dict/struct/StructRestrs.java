@@ -72,7 +72,7 @@ public class StructRestrs implements HasToXML
 	{
 		if (restrictions == null || restrictions.isEmpty()) return false;
 		for (One r : restrictions)
-			if (type.equals(r.type) && r.valueFlags.testKey(key))
+			if (type.equals(r.type) && r.valueFlags != null &&r.valueFlags.testKey(key))
 				return true;
 		return false;
 	}
@@ -81,8 +81,10 @@ public class StructRestrs implements HasToXML
 	{
 		if (restrictions == null || restrictions.isEmpty()) return false;
 		for (One r : restrictions)
-			if (type.equals(r.type) && r.valueFlags.test(feature))
+		{
+			if (type.equals(r.type) && r.valueFlags != null && r.valueFlags.test(feature))
 				return true;
+		}
 		return false;
 	}
 

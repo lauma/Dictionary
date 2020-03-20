@@ -1,7 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
 import lv.ailab.dict.struct.Gram;
-import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
@@ -156,7 +155,7 @@ public class GramParser
 			for (EndingRule r : rules)
 			{
 				if (newBegin != -1) break;
-				newBegin = r.applyOptHyphens(gramText, lemma, gram.paradigm, gram.flags);
+				newBegin = r.applyOptHyphens(gramText, lemma, gram.paradigm, gram.flags, gram.structRestrictions);
 			}
 			if (newBegin != -1) break;
 		}
@@ -165,7 +164,7 @@ public class GramParser
 			for (EndingRule r : rules)
 			{
 				if (newBegin != -1) break;
-				newBegin = r.applyDirect(gramText, lemma, gram.paradigm, gram.flags);
+				newBegin = r.applyDirect(gramText, lemma, gram.paradigm, gram.flags, gram.structRestrictions);
 			}
 			if (newBegin != -1) break;
 		}

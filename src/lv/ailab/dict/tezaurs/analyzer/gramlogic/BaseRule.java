@@ -58,7 +58,6 @@ public class BaseRule implements EndingRule
 	 * Šos ierobežojumus uzstāda, ja gramatikas teksts atbilst attiecīgajam
 	 * šablonam.
 	 */
-	//TODO: varbūt šeit vajag Flags objektu?
 	protected final Set<StructRestrs.One> alwaysRestrictions;
 
     /**
@@ -353,7 +352,8 @@ public class BaseRule implements EndingRule
 		return BaseRule.of(patternText,
 				new SimpleSubRule[]{
 						SimpleSubRule.of(lemmaRestrictions, new Integer[]{paradigmId}, positiveFlags, positiveRestriction)},
-				alwaysFlags, new StructRestrs.One[] {alwaysRestriction});
+				alwaysFlags,
+				alwaysRestriction == null ? null : new StructRestrs.One[] {alwaysRestriction});
 	}
 
 	/**
@@ -419,14 +419,17 @@ public class BaseRule implements EndingRule
      *                          gramatika un lemma atbilst šim likumam
      * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
      *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
      * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
-    public int applyDirect(String gramText, String lemma,
-            Set<Integer> paradigmCollector, Flags flagCollector)
+    public int applyDirect(
+    		String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector)
     {
-        return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector);
+        return apply(directPattern, gramText, lemma, paradigmCollector, flagCollector, restrCollector);
     }
 
     /**
@@ -437,14 +440,17 @@ public class BaseRule implements EndingRule
      *                          gramatika un lemma atbilst šim likumam
      * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
      *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
      * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
-    public int applyOptHyphens(String gramText, String lemma,
-            Set<Integer> paradigmCollector, Flags flagCollector)
+    public int applyOptHyphens(
+    		String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector)
     {
-        return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector);
+        return apply(optHyphenPattern, gramText, lemma, paradigmCollector, flagCollector, restrCollector);
     }
 
     /**
@@ -459,11 +465,15 @@ public class BaseRule implements EndingRule
      *                          gramatika un lemma atbilst šim likumam
      * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
      *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
      * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
-    protected int apply(Pattern gramPattern, String gramText, String lemma,
-            Set<Integer> paradigmCollector, Flags flagCollector)
+    protected int apply(
+    		Pattern gramPattern, String gramText, String lemma,
+            Set<Integer> paradigmCollector, Flags flagCollector,
+			StructRestrs restrCollector)
 	{
 		try
 		{
@@ -480,6 +490,8 @@ public class BaseRule implements EndingRule
 						paradigmCollector.addAll(rule.paradigms);
 						if (rule.positiveFlags != null)
 							flagCollector.addAll(rule.positiveFlags);
+						if (rule.positiveRestrictions != null)
+							restrCollector.restrictions.addAll(rule.positiveRestrictions);
 						matchedLemma = true;
 						break;
 					}
@@ -491,8 +503,9 @@ public class BaseRule implements EndingRule
 				}
 
 				if (alwaysFlags != null)
-					for (Tuple<String, String> t : alwaysFlags)
-						flagCollector.add(t.first, t.second);
+					flagCollector.addAll(alwaysFlags);
+				if (alwaysRestrictions != null)
+					restrCollector.restrictions.addAll(alwaysRestrictions);
 			}
 			if (newBegin > -1) usageCount++;
 			return newBegin;

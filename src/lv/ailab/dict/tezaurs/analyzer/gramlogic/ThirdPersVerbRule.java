@@ -169,18 +169,21 @@ public class ThirdPersVerbRule implements EndingRule
      *                          gramatika un lemma atbilst šim likumam
      * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
      *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
      * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
-    public int applyDirect(String gramText, String lemma,
-            Set<Integer> paradigmCollector, Flags flagCollector)
+    public int applyDirect(
+    		String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector)
     {
         int newBegin = thirdPersUsually.applyDirect(
-                gramText, lemma, paradigmCollector, flagCollector);
+                gramText, lemma, paradigmCollector, flagCollector, restrCollector);
         if (newBegin == -1)
             newBegin = thirdPersOnly.applyDirect(
-                    gramText, lemma, paradigmCollector, flagCollector);
+                    gramText, lemma, paradigmCollector, flagCollector, restrCollector);
         return newBegin;
     }
 
@@ -193,18 +196,21 @@ public class ThirdPersVerbRule implements EndingRule
      *                          gramatika un lemma atbilst šim likumam
      * @param flagCollector     kolekcija, kurā pielikt karodziņus gadījumā, ja
      *                          vismaz gramatika atbilst šim likumam
+	 * @param restrCollector    kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                          ja vismaz gramatika atbilst šim likumam
      * @return  jaunā sākumpocīcija (vieta, kur sākas neatpazītā gramatikas
      *          daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
      */
     @Override
-    public int applyOptHyphens(String gramText, String lemma,
-            Set<Integer> paradigmCollector, Flags flagCollector)
+    public int applyOptHyphens(
+    		String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector)
     {
         int newBegin = thirdPersUsually.applyOptHyphens(
-                gramText, lemma, paradigmCollector, flagCollector);
+                gramText, lemma, paradigmCollector, flagCollector, restrCollector);
         if (newBegin == -1)
             newBegin = thirdPersOnly.applyOptHyphens(
-                    gramText, lemma, paradigmCollector, flagCollector);
+                    gramText, lemma, paradigmCollector, flagCollector, restrCollector);
         return newBegin;
     }
 

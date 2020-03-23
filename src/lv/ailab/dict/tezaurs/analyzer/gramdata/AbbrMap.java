@@ -713,6 +713,13 @@ public class AbbrMap {
 		structRestrs.put("vok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__VOCATIVE));
 		structRestrs.put("arī ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.CASE__GENITIVE));
 		structRestrs.put("parasti akuz.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("parasti akuz. vai dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("parasti akuz. vai dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.NUMBER__PLURAL, TFeatures.CASE__DATIVE}));
+		structRestrs.put("parasti vsk. akuz. vai dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.NUMBER__SINGULAR, TFeatures.CASE__ACUSATIVE}));
+		structRestrs.put("parasti vsk. akuz. vai dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+				new Tuple[]{TFeatures.NUMBER__PLURAL, TFeatures.CASE__DATIVE}));
 		structRestrs.put("parasti lok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__LOCATIVE));
 		structRestrs.put("parasti vok.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__VOCATIVE));
 
@@ -856,9 +863,14 @@ public class AbbrMap {
 		structRestrs.put("retāk ar not. gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, TFeatures.DEFINITNESS__DEF));
 		structRestrs.put("īp. v. ar not. galotni", StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, TFeatures.DEFINITNESS__DEF));
 		structRestrs.put("parasti ar not. gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
+		structRestrs.put("parasti ar not. galotni", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
 		structRestrs.put("parasti ar not. galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
 		structRestrs.put("parasti ar noteikto gal.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
 		structRestrs.put("parasti ar noteikto galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.DEFINITNESS__DEF));
+
+		structRestrs.put("dsk. ar not. gal. lietv. nozīmē", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.NUMBER__PLURAL}));
+		pairingFlags.put("dsk. ar not. gal. lietv. nozīmē", TFeatures.CONTAMINATION__NOUN);
 
 		structRestrs.put("pamata pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__POS));
 		structRestrs.put("pārākajā pakāpē", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
@@ -914,6 +926,8 @@ public class AbbrMap {
 				TFrequency.USUALLY, TFeatures.NEGATIVE));
 		structRestrs.put("parasti ar negāciju.", StructRestrs.One.of(Type.TOGETHER_WITH,
 				TFrequency.USUALLY, TFeatures.NEGATIVE));
+		structRestrs.put(" savienojumā ar \"no\" priev. nozīmē.", StructRestrs.One.of(
+				Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN), "no"));
 
 
 		// TODO: iztīrīt šito

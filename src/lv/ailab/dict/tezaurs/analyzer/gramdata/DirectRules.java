@@ -442,7 +442,7 @@ public class DirectRules
 		Adjective.std("-ais; s. -a, -ā; īp."), // albīns
 		MultiPos.adjectiveParticiple("-ais; s. -a, -ā"), // abējāds, acains, agāms
 		//MultiPos.adjectiveParticiple("-ais; s. -a; -ā"), // aloģisks
-		//MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // abējāds, acains, agāms
+		//MultiPos.adjectiveParticiple("-ais, s. -a, -ā"), // dižciltīgais
 		//MultiPos.adjectiveParticiple("-ais, -a, -ā"), // pamīšs, supervienkāršs
 		//MultiPos.adjectiveParticiple("-ais, v."), // aizmugurējs
 		BaseRule.of("s. -as; tikai dsk.", new SimpleSubRule[]{
@@ -691,6 +691,7 @@ public class DirectRules
 		SecondDecl.std("-ča, dsk. ģen. -ču, v.", ".*cis"), //labrocis
 		SecondDecl.std("-ķa, dsk. ģen. -ķu, v.", ".*ķis"), //aizsarglenķis
 		SecondDecl.std("-ļa, dsk. ģen. -ļu, v.", ".*lis"), //brokolis
+		SecondDecl.std("-mja, dsk. ģen. -mju, v.", ".*mis"), //pirmgliemis
 		SecondDecl.std("-ņa, dsk. ģen. -ņu, v.", ".*nis"), //bizmanis
 		SecondDecl.std("-pja, dsk. ģen. -pju, v.", ".*pis"), //grāmatskapis
 		SecondDecl.std("-ša, dsk. ģen. -šu, v.", ".*[st]is"), //auseklītis, lāčplēsis
@@ -732,8 +733,10 @@ public class DirectRules
 	public static final EndingRule[] nounMultiDecl = {
 		// Vienskaitlis, vīriešu dzimte
 		// Ar mijām
-		GenNoun.any("-a, dsk. ģen. -u, v.", ".*[^aeiouāēīōū]s", 1,
-				null, new Tuple[]{TFeatures.GENDER__MASC}), // adventists
+		GenNoun.any("-a, dsk. ģen. -u, v.", new SimpleSubRule[]{
+						SimpleSubRule.of(".*[^aeiouāēīōū]s", 1,null),
+						SimpleSubRule.of(".*[^aeiouāēīōū]is", 3,null)},
+				new Tuple[]{TFeatures.GENDER__MASC}), // adventists, blākšķis
 		GenNoun.any("-ja, dsk. ģen. -ju, v.", new SimpleSubRule[]{
 						SimpleSubRule.of(".*js", 1, null),
 						SimpleSubRule.of(".*jis", 3, null)},

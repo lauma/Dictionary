@@ -56,18 +56,19 @@ public class StructRestrs implements HasToXML
 		restrictions.add(One.of(type, frequency, flags, value));
 	}
 
-	/*public HashSet<One> filterByTypeKey(String type, String key)
+	public HashSet<One> filterByType(String type)
 	{
 		if (restrictions == null || restrictions.isEmpty()) return null;
 		HashSet<One> res = new HashSet<>();
 		for (One r : restrictions)
 		{
-			if (type.equals(r.type) && r.valueFlags.testKey(key))
+			if (type.equals(r.type))
 				res.add(r);
 		}
 		return res;
 
-	}*/
+	}
+
 	public boolean testByTypeKey(String type, String key)
 	{
 		if (restrictions == null || restrictions.isEmpty()) return false;
@@ -226,6 +227,14 @@ public class StructRestrs implements HasToXML
 			result.valueText.add(valueText);
 			return result;
 		}
+
+		public void addFlag (Tuple <String, String> flag)
+		{
+			if (flag == null) return;
+			if (valueFlags == null) valueFlags = new Flags();
+			valueFlags.add(flag);
+		}
+
 		/**
 		 * Atdod tikai to, kas būs JSON objektā iekšā - bez ietverošajām { }
 		 * un bez elementa nosaukuma.

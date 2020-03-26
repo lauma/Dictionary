@@ -168,7 +168,9 @@ public class RulesAsFunctions
 			if (phrasesWithStuff.endsWith(" u. tml."))
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
 			String phrasesOnly = m.group(4);
-			String[] phrases = phrasesOnly.split("(?<=\"),(?: arī)? (?=\")");
+			if (phrasesOnly.startsWith("\"")) phrasesOnly = phrasesOnly.substring(1);
+			if (phrasesOnly.endsWith("\"")) phrasesOnly = phrasesOnly.substring(0, phrasesOnly.length()-1);
+			String[] phrases = phrasesOnly.split("\",(?: arī)? \"");
 			for (String p : phrases)
 				restrCollector.addOne(Type.IN_STRUCT, restrFreq,
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), p.trim());

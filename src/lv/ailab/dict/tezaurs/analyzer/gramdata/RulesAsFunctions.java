@@ -212,7 +212,9 @@ public class RulesAsFunctions
 			String phrasesOnly = m.group(4);
 			if (phrasesWithStuff.endsWith(" u. tml."))
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
-			String[] phrases = phrasesOnly.split("(?<=\")(, | vai | arī )(?=\")");
+			if (phrasesOnly.startsWith("\"")) phrasesOnly = phrasesOnly.substring(1);
+			if (phrasesOnly.endsWith("\"")) phrasesOnly = phrasesOnly.substring(0, phrasesOnly.length()-1);
+			String[] phrases = phrasesOnly.split("\"(, | vai | arī )\"");
 			for (String w : phrases)
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, w.trim());
 				//flagCollector.add(key, w.trim());

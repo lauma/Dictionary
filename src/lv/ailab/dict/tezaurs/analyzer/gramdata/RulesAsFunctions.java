@@ -98,7 +98,7 @@ public class RulesAsFunctions
 	public static int processInPhraseOrRepFlag(String gramText, StructRestrs restrCollector)
 	{
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā):? [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'] vai (?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - | )\\p{L}+)*)[\"'])([.,].*)?");
+				"((parasti |bieži |arī |)(?:savienojumā|atkārtojumā):? [\"'](\\p{L}+(?:(?:, | - | )\\p{L}+)*)[\"'] vai (?:savienojumā|atkārtojumā) [\"'](\\p{L}+(?:(?:, | - | )\\p{L}+)*)[\"'])([.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);

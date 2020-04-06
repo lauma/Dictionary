@@ -843,7 +843,7 @@ public class RulesAsFunctions
 	 * @return	indekss neapstrādātās gramatikas daļas sākumam
 	 */
 	public static int processInParticipleFormFlag(
-			String gramText, StructRestrs restrCollector)
+			String gramText, StructRestrs restrCollector, Flags flagCollector)
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
@@ -869,15 +869,16 @@ public class RulesAsFunctions
 				String partType = RulesAsFunctions.determineParticipleType(wordForm);
 				if (partType != null)
 				{
-					restrCollector.addOne(Type.IN_FORM, restrFreq, new Tuple[] {
-							TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE,
+					restrCollector.addOne(Type.IN_FORM, restrFreq, new Tuple[] {TFeatures.MOOD__PARTICIPLE,
 							Tuple.of(TKeys.MOOD, partType)});
+					flagCollector.add(TFeatures.POS__VERB);
 					newBegin = m.group(1).length();
 
 				} else
 				{
 					restrCollector.addOne(Type.IN_FORM, restrFreq,
-							new Tuple[] {TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE});
+							new Tuple[] {TFeatures.MOOD__PARTICIPLE});
+					flagCollector.add(TFeatures.POS__VERB);
 					System.err.printf(
 							"Neizdodas ielikt divdabja formu formu \"%s\" uztaisīt kā ierobežojumu\n",
 							wordForm);

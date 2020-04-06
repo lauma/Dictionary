@@ -1,6 +1,5 @@
 package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
-import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.struct.constants.structrestrs.Type;
@@ -75,6 +74,7 @@ public class GramParser
 	protected void parseGram(TGram gram, String lemma)
 	{
 		String correctedGram = correctOCRErrors(gram.freeText);
+		correctedGram = normalizeRestrictions(gram.freeText);
 		gram.altLemmas = new LinkedList<>();
 
 		// Salikteņu daļām, galotnēm un izskaņām.
@@ -206,7 +206,7 @@ public class GramParser
 			found = false;
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, gram.structRestrictions);
+					gramText, gram.structRestrictions, gram.flags);
 			// bim - parasti savienojumā "bim, bam" vai atkārtojumā "bim, bim"
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseOrRepFlag(
 					gramText, gram.structRestrictions);
@@ -255,7 +255,7 @@ public class GramParser
 			//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 			// Kur ir āķis, ka šito vēl vajag?
 			int newBegin = RulesAsFunctions.processInParticipleFormFlag(
-					gramText, gram.structRestrictions);
+					gramText, gram.structRestrictions, gram.flags);
 			//
 			if (newBegin == -1) newBegin = RulesAsFunctions.processInPhraseFlag(
 					gramText, gram.flags, gram.structRestrictions);
@@ -510,6 +510,20 @@ public class GramParser
 	{
 		//Datu nekonsekvences
 
+		return gramText;
+	}
+
+	/**
+	 * Priekšapstrāde pirms gramatikas teksta analīzes. Izvāc komatus starp
+	 * gramatikas fragmentiem, kam jāveido viens ierobežojums. Tads mazliet
+	 * apšaubāms workaround.
+	 */
+	private String normalizeRestrictions(String gramText)
+	{
+		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; trans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; trans.");
+		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; intrans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; intrans.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\., v.($|(?=[,;]))", "ar not. gal. pamata pak. v.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\.($|(?=[,;]))", "ar not. gal. pamata pak.");
 		return gramText;
 	}
 

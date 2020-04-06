@@ -880,6 +880,11 @@ public class AbbrMap {
 		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
 		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__SUPER));
 
+		structRestrs.put("ar not. gal. pamata pak. v.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
+		structRestrs.put("ar not. gal. pamata pak.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS}));
+
 		structRestrs.put("parasti ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
 		structRestrs.put("ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
 		structRestrs.put("ar lielo sāk. b.", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));

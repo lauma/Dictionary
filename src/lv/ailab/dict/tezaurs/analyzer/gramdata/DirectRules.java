@@ -1001,7 +1001,15 @@ public class DirectRules
 	 * Paradigm 16: Darbības vārdi 2. konjugācija tiešie
 	 */
 	public static final EndingRule[] directSecondConjVerb = {
-		// Galotņu šabloni.
+		// Šis likums ir saistīts ar funkciju, kas normalizē ierobežojumus - šī virkne normāli nav tēzaurā.
+		// TODO - varbūt lai Sp. ielabo?
+		VerbDoubleRule.of("parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos", null, "ēt", 16,
+				new Tuple[]{TFeatures.POS__DIRECT_VERB},
+				null, null,
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY,
+						new Tuple[]{TFeatures.PERSON__3, Tuple.of(TKeys.TENSE, TValues.COMPOSITE_TENSES)})), // aozdzelt'et
+
+			// Galotņu šabloni.
 		SecondConj.direct("-āju, -ā,", "-ā, pag. -āju", "āt"), //aijāt, aizkābāt
 		SecondConj.direct("-ēju, -ē,", "-ē, pag. -ēju", "ēt"), //abonēt, adsorbēt
 			// -ēju, -ē, -ē, pag. -ēju

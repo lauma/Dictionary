@@ -391,11 +391,10 @@ public class GramParser
 		if (gram.flags.test(TFeatures.POS__POSTPOSITION))
 			gram.flags.add(TFeatures.POS__ADPOSITION);
 
-		// Labākais, ko no ģenitīveņiem var izgūt. Pēteris grib gan dzimti,
-		// gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
+		// Labākais, ko no ģenitīveņiem var izgūt. Pēteris kādreiz gribēja gan
+		// dzimti, gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 		// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 		// problēmas.
-		//if (gram.flags.test(TKeys.USED_IN_FORM, TValues.GENITIVE) && gram.flags.test(TFeatures.NON_INFLECTIVE))
 		if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.CASE__GENITIVE)
 				&& gram.flags.test(TFeatures.NON_INFLECTIVE))
 		{
@@ -522,6 +521,7 @@ public class GramParser
 	{
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; trans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; trans.");
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; intrans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; intrans.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pārākajā vai vispārākajā pak\\., v\\.($|(?=[,;]))", "ar not. gal. pārākajā vai vispārākajā pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\., v.($|(?=[,;]))", "ar not. gal. pamata pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\.($|(?=[,;]))", "ar not. gal. pamata pak.");
 		return gramText;

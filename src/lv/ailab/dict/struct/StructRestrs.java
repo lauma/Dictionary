@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
 public class StructRestrs implements HasToXML
 {
@@ -107,7 +108,7 @@ public class StructRestrs implements HasToXML
 	 * Ierobežojumi par lietošanu noteiktās formās vai sintaktiskajās struktūrās.
 	 * @author Lauma
 	 */
-	public static class One implements HasToJSON, HasToXML
+	public static class One implements HasToJSON, HasToXML, Cloneable
 	{
 		public String type;
 		public String frequency;
@@ -346,14 +347,10 @@ public class StructRestrs implements HasToXML
 		{
 			if (o == null) return false;
 			if (this.getClass() != o.getClass()) return false;
-			return (type == null && ((One) o).type == null
-					|| type != null && type.equals(((One) o).type))
-					&& (frequency == null && ((One) o).frequency == null
-					|| frequency != null && frequency.equals(((One) o).frequency))
-					&& (valueText == null && ((One) o).valueText == null
-					|| valueText != null && valueText.equals(((One) o).valueText))
-					&& (valueFlags == null && ((One) o).valueFlags == null
-					|| valueFlags != null && valueFlags.equals(((One) o).valueFlags));
+			return (Objects.equals(type, ((One) o).type)) &&
+					(Objects.equals(frequency, ((One) o).frequency)) &&
+					(Objects.equals(valueText, ((One) o).valueText)) &&
+					(Objects.equals(valueFlags, ((One) o).valueFlags));
 		}
 
 		// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).
@@ -364,6 +361,19 @@ public class StructRestrs implements HasToXML
 					+ 691 * (frequency == null ? 1 : frequency.hashCode())
 					+ 43 * (valueText == null ? 1 : valueText.hashCode())
 					+ 7 * (valueFlags == null ? 1 : valueFlags.hashCode());
+		}
+
+		/**
+		 * @return a clone of this instance.
+		 * @see Cloneable
+		 */
+		@Override
+		public Object clone()
+		{
+			One clone = One.of(type, frequency);
+			if (valueFlags != null) clone.valueFlags = (Flags) valueFlags.clone();
+			if (valueText != null) clone.valueText = (LinkedHashSet<String>) valueText.clone();
+			return clone;
 		}
 	}
 }

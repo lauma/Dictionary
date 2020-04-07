@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * Izveidots 2015-10-08.
  * @author Lauma
  */
-public class Flags implements HasToXML
+public class Flags implements HasToXML, Cloneable
 {
 	public MappingSet<String, String> pairings = new MappingSet<>();
 
@@ -167,14 +168,24 @@ public class Flags implements HasToXML
 	{
 		if (o == null) return false;
 		if (this.getClass() != o.getClass()) return false;
-		if (this.pairings == ((Flags) o).pairings) return true;
-		if (this.pairings == null) return false;
-		return (this.pairings.equals(((Flags) o).pairings));
+		return (Objects.equals(this.pairings, ((Flags) o).pairings));
 	}
 
 	@Override
 	public int hashCode()
 	{
 		return pairings == null ? 1 : pairings.hashCode();
+	}
+
+	/**
+	 * @return a clone of this instance.
+	 * @see Cloneable
+	 */
+	@Override
+	public Object clone()
+	{
+		Flags clone = new Flags();
+		clone.addAll(this);
+		return clone;
 	}
 }

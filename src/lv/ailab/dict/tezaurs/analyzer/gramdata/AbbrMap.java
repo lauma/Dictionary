@@ -54,46 +54,12 @@ public class AbbrMap {
 			for (Tuple<String, String> t : pairingFlags.getAll(gramSegment))
 				flagCollector.pairings.put(t.first, t.second);
 		if (structRestrs.containsKey(gramSegment))
-			structRestrCollector.restrictions.addAll(structRestrs.getAll(gramSegment));
+			for (StructRestrs.One sr : structRestrs.getAll(gramSegment))
+				structRestrCollector.restrictions.add((StructRestrs.One)sr.clone());
+
 		return (binaryFlags.containsKey(gramSegment) ||
 				pairingFlags.containsKey(gramSegment) ||
 				structRestrs.containsKey(gramSegment));
-	}
-
-	/**
-	 * Atšifrēt gramatikas fragmentu, meklējot tikai vārdšķirās un tikai, ja ir
-	 * pieejams tieši viens atšifrējums.
-	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš
-	 * @return	vārdšķira, ja gramatikas fragmentam ir piekārtota tieši viens
-	 * 			karodziņš un tas ir POS tipa, vai null pārējos gadījumos
-	 */
-	public HashSet<String> translatePos(String gramSegment)
-	{
-		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
-		if (found == null) return null;
-		HashSet<String> result = new HashSet<>();
-		for (Tuple<String, String> feature : found)
-			if (feature.first.equals(TKeys.POS))
-				result.add(feature.second);
-		if (result.size() < 1) return null;
-		return result;
-	}
-
-	/**
-	 * Atšifrēt gramatikas fragmentu, meklējot tikai locījumos un tikai, ja ir
-	 * pieejams tieši viens atšifrējums.
-	 * @param gramSegment	gramatikas fragments, kas varētu būt karodziņš
-	 * @return	vārdšķira, ja gramatikas fragmentam ir piekārtota tieši viens
-	 * 			karodziņš un tas ir POS tipa, vai null pārējos gadījumos
-	 */
-	//FIXME
-	public String translateCase(String gramSegment)
-	{
-		HashSet<Tuple<String, String>> found = pairingFlags.getAll(gramSegment);
-		if (found == null || found.size() != 1) return null;
-		Tuple<String, String> feature = found.iterator().next();
-		if (!TValues.isCase(feature.second)) return null;
-		return feature.second;
 	}
 
 	protected AbbrMap()
@@ -732,7 +698,6 @@ public class AbbrMap {
 		structRestrs.put("arī vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.NUMBER__SINGULAR)); 	// Ļaunums.
 		structRestrs.put("parasti dsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__PLURAL));
 		structRestrs.put("parasti vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__SINGULAR));
-		//pairingFlags.put("parasti vsk", Tuple.of(TKeys.USUALLY_USED_IN_FORM, TValues.SINGULAR));
 		structRestrs.put("par. vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__SINGULAR));
 		structRestrs.put("tikai dsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__PLURAL));
 		structRestrs.put("tikai vsk.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__SINGULAR));
@@ -880,6 +845,12 @@ public class AbbrMap {
 		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
 		structRestrs.put("pārākajā vai vispārākajā pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__SUPER));
 
+		// Šos rada komatu izņemšanas aprisinājums, kas ļauj salikt vienā
+		// ierobežojumā saistītās lietas.
+		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__COMP, TFeatures.GENDER__MASC}));
+		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__SUPER, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pamata pak. v.", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pamata pak.", StructRestrs.One.of(Type.IN_FORM,
@@ -1028,8 +999,8 @@ public class AbbrMap {
 		structRestrs.put("salīdzinājuma konstrukcijā", StructRestrs.One.of(Type.IN_STRUCT,
 				Tuple.of(TKeys.OTHER_FLAGS, "Salīdzinājuma konstrukcija")));
 
-		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums"), Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION)}));
+		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums")));
+		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
 
 		// Lietojuma biežums.
 		structRestrs.put("pareti", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.HALF_RARE));
@@ -1093,37 +1064,36 @@ public class AbbrMap {
 		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
 
 
-		structRestrs.put("ģen.: adj. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen.: adj. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen. īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen.: īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen.: īp. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen. īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen.: īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("ģen. īp. v. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE)}));
-		structRestrs.put("lok.: apst. nozīmē", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.CASE__LOCATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB)}));
+		structRestrs.put("ģen.: adj. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen.: adj. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen.: adj. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen. īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen.: īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen.: īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen.: īp. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen.: īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen. īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen. īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen. īp. v. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("ģen.: īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("ģen.: īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		structRestrs.put("lok.: apst. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__LOCATIVE));
+		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
 
-		structRestrs.put("priev. noz. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
-		structRestrs.put("priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
-		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO,
-				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
-		structRestrs.put("priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[] {TFeatures.CASE__INSTRUMENTAL, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
-		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[] {TFeatures.CASE__DATIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
-		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[] {TFeatures.CASE__GENITIVE, Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION)}));
+		structRestrs.put("priev. noz. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		structRestrs.put("priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO, TFeatures.CASE__DATIVE));
+		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		structRestrs.put("priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
+		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
+		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
 
 
 		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.
@@ -1140,6 +1110,7 @@ public class AbbrMap {
 		binaryFlags.put("lit. val. tikai dsk.", "Vienskaitļa formas lieto sarunvalodā");
 
 		//pairingFlags.put("angļu val. \"byte\"", Tuple.of(TKeys.ETYMOLOGY, "angļu val. \"byte\""));
+
 	}
 
 }

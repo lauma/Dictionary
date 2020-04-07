@@ -252,9 +252,6 @@ public class RulesAsFunctions
 			String restrFreq = modifier.equals("parasti") ? TFrequency.USUALLY : TFrequency.UNDISCLOSED;
 
 			String restrValueRaw = m.group(3);
-			//TODO
-			Set<String> deabbrPos = AbbrMap.getAbbrMap().translatePos(restrValueRaw);
-			//else if (deabbrPos != null) flagValues.addAll(deabbrPos);
 			if (restrValueRaw.matches("dat\\.|ģen\\.|lok\\.|adj\\.|apst\\.|adv\\.|lietv\\.|skait\\.|subst\\.|vietn\\."))
 			{
 				Tuple<String, String> feature = null;

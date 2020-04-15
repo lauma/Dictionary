@@ -2,18 +2,27 @@ package lv.ailab.dict.utils;
 
 import org.json.simple.JSONObject;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class JSONUtils
 {
-	public static <E extends HasToJSON> String objectsToJSON(Iterable<E> l)
+	public static <E extends HasToJSON> String objectsToJSON(Collection<E> c)
 	{
-		if (l == null) return "[]";
+		return objectsToJSON(c, null);
+	}
+
+	public static <E extends HasToJSON> String objectsToJSON(Collection<E> c, Comparator<E> sorter)
+	{
+		if (c == null) return "[]";
 		StringBuilder res = new StringBuilder();
 		res.append("[");
-		Iterator<E> i = l.iterator();
+		Iterator<E> i =  sorter == null ? c.iterator() :
+			c.stream().sorted(sorter).iterator();
+
 		while (i.hasNext())
 		{
 			res.append("{");

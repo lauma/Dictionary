@@ -26,7 +26,7 @@ public class TKeys extends Keys
 	/**
 	 * "Īpašības vārda nozīmē", "Lietvārda nozīmē".
 	 */
-	public final static String CONTAMINATION = "Kontaminācija";
+	public final static String POS_CONVERSION = "Konversija";
 
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.

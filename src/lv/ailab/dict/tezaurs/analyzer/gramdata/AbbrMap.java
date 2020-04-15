@@ -10,8 +10,6 @@ import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.MappingSet;
 import lv.ailab.dict.utils.Tuple;
 
-import java.util.HashSet;
-
 /**
  * Singletonklase, kas satur visus zināmos saīsinājumus, tos atšifrējumus, kā
  * arī visus citus karodziņus, kas veidojami no fiksētām teksta virknēm.
@@ -107,19 +105,19 @@ public class AbbrMap {
 				Type.IN_FORM, TFrequency.UNDISCLOSED,
 				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
 		//pairingFlags.put("dsk. ģen. īp. v. nozīmē.", TFeatures.POS__NOUN);
-		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__PARTICIPLE);
-		pairingFlags.put("divd. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__PARTICIPLE);
-		pairingFlags.put("divd. īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__PARTICIPLE);
-		pairingFlags.put("divd. īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. v. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__VERB);
 		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__PARTICIPLE);
-		pairingFlags.put("divd. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("divd. īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 
 		pairingFlags.put("pron.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);
@@ -274,10 +272,10 @@ public class AbbrMap {
 		structRestrs.put("ģen. nelok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
 		binaryFlags.put("ģen. nelok.", TValues.NON_INFLECTIVE);
 		structRestrs.put("ģen. nelok. īp. nozīmē.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen. nelok. īp. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē.", TValues.NON_INFLECTIVE);
 		structRestrs.put("ģen. nelok. īp. nozīmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē", TValues.NON_INFLECTIVE);
 
 		/*binaryFlags.put("nāk.", "Nākotne");
@@ -835,7 +833,7 @@ public class AbbrMap {
 
 		structRestrs.put("dsk. ar not. gal. lietv. nozīmē", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.NUMBER__PLURAL}));
-		pairingFlags.put("dsk. ar not. gal. lietv. nozīmē", TFeatures.CONTAMINATION__NOUN);
+		pairingFlags.put("dsk. ar not. gal. lietv. nozīmē", TFeatures.CONVERSION__NOUN);
 
 		structRestrs.put("pamata pak.", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__POS));
 		structRestrs.put("pārākajā pakāpē", StructRestrs.One.of(Type.IN_FORM, TFeatures.DEGREE__COMP));
@@ -903,7 +901,7 @@ public class AbbrMap {
 		structRestrs.put("parasti ar negāciju.", StructRestrs.One.of(Type.TOGETHER_WITH,
 				TFrequency.USUALLY, TFeatures.NEGATIVE));
 		structRestrs.put(" savienojumā ar \"no\" priev. nozīmē.", StructRestrs.One.of(
-				Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN), "no"));
+				Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, Tuple.of(TKeys.POS_CONVERSION, TValues.PRONOUN), "no"));
 
 
 		// TODO: iztīrīt šito
@@ -953,29 +951,29 @@ public class AbbrMap {
 		structRestrs.put("parasti retoriskajos jautājumos un nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 
-		structRestrs.put("teikumā ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("teikumā ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("teikumā ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
-		structRestrs.put("teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
-		structRestrs.put("teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("teikumos ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
-		structRestrs.put("teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
 
-		structRestrs.put("parasti teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("parasti teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
+		//		TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("parasti teikumā ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
-		structRestrs.put("parasti teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("parasti teikumos ar noliegtu verbu", StructRestrs.One.of(Type.IN_STRUCT,
+		//		TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("parasti teikumos ar noliegtu verbu", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
-		structRestrs.put("parasti teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
+		//structRestrs.put("parasti teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.IN_STRUCT,
+		//		TFrequency.USUALLY, Tuple.of(TKeys.SENTENCE, TValues.NEG_VERB_SENT)));
 		structRestrs.put("parasti teikumos ar noliegtu verbu.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
 
@@ -1000,7 +998,7 @@ public class AbbrMap {
 				Tuple.of(TKeys.OTHER_FLAGS, "Salīdzinājuma konstrukcija")));
 
 		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums")));
-		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
+		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));
 
 		// Lietojuma biežums.
 		structRestrs.put("pareti", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.HALF_RARE));
@@ -1011,89 +1009,89 @@ public class AbbrMap {
 		structRestrs.put("retāk.", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.RARER));
 
 		// Kontaminācija
-		pairingFlags.put("subst. noz.", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("substantīva nozīmē", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("lietv. noz.", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("lietv. nozīmē", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("lietv. nozīmē.", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("īpašvārda nozīmē.", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("īpašvārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Īpašvārds"));
-		pairingFlags.put("parasti īpašvārda nozīmē.", TFeatures.CONTAMINATION__NOUN);
-		pairingFlags.put("parast īpašvārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Īpašvārds"));
-		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.VERB));
-		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.CONTAMINATION, "Palīgdarbības vārds"));
-		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.VERB));
-		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.CONTAMINATION, "Palīgdarbības vārds"));
-		pairingFlags.put("adj. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("adj. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("apst. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("apst. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("adv. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("adv. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("adv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
-		pairingFlags.put("interj. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
-		pairingFlags.put("izsauk. noz.", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
-		pairingFlags.put("izsauk. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
-		pairingFlags.put("izsauk. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
-		pairingFlags.put("izsauksmes vārda nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.INTERJECTION));
-		pairingFlags.put("saikļa nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
-		pairingFlags.put("saikļa nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.CONJUNCTION));
-		pairingFlags.put("skait. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.NUMERAL));
-		pairingFlags.put("skait. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.NUMERAL));
-		pairingFlags.put("part. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
-		pairingFlags.put("part. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
-		pairingFlags.put("partikulas nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
-		pairingFlags.put("modāla vārda nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
-		pairingFlags.put("modāla vārda nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PARTICLE));
+		pairingFlags.put("subst. noz.", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("substantīva nozīmē", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("lietv. noz.", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("lietv. nozīmē", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("lietv. nozīmē.", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("īpašvārda nozīmē.", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("īpašvārda nozīmē.", Tuple.of(TKeys.POS_CONVERSION, "Īpašvārds"));
+		pairingFlags.put("parasti īpašvārda nozīmē.", TFeatures.CONVERSION__NOUN);
+		pairingFlags.put("parast īpašvārda nozīmē.", Tuple.of(TKeys.POS_CONVERSION, "Īpašvārds"));
+		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.VERB));
+		pairingFlags.put("palīgverba nozīmē", Tuple.of(TKeys.POS_CONVERSION, "Palīgdarbības vārds"));
+		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.VERB));
+		pairingFlags.put("palīgverba nozīmē.", Tuple.of(TKeys.POS_CONVERSION, "Palīgdarbības vārds"));
+		pairingFlags.put("adj. noz.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("adj. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("adj. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("īp. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("īp. v. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("apst. noz.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("apst. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("apst. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("adv. noz.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("adv. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("adv. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
+		pairingFlags.put("interj. noz.", Tuple.of(TKeys.POS_CONVERSION, TValues.INTERJECTION));
+		pairingFlags.put("izsauk. noz.", Tuple.of(TKeys.POS_CONVERSION, TValues.INTERJECTION));
+		pairingFlags.put("izsauk. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.INTERJECTION));
+		pairingFlags.put("izsauk. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.INTERJECTION));
+		pairingFlags.put("izsauksmes vārda nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.INTERJECTION));
+		pairingFlags.put("saikļa nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));
+		pairingFlags.put("saikļa nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));
+		pairingFlags.put("skait. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.NUMERAL));
+		pairingFlags.put("skait. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.NUMERAL));
+		pairingFlags.put("part. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.PARTICLE));
+		pairingFlags.put("part. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PARTICLE));
+		pairingFlags.put("partikulas nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PARTICLE));
+		pairingFlags.put("modāla vārda nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.PARTICLE));
+		pairingFlags.put("modāla vārda nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PARTICLE));
 
-		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
-		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
-		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
-		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.NOUN));
-		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
-		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
-		pairingFlags.put("nenot. vietn. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.PRONOUN));
-		pairingFlags.put("nenot. vietn. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.INDEFINITE_PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.INDEFINITE_PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un adj. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.NOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.INDEFINITE_PRONOUN));
+		pairingFlags.put("nenoteiktā vietn. un lietv. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PRONOUN));
+		pairingFlags.put("nenot. vietn. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.PRONOUN));
+		pairingFlags.put("nenot. vietn. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.INDEFINITE_PRONOUN));
 
-		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("priev. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 
 
 		structRestrs.put("ģen.: adj. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen.: adj. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen.: adj. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen.: adj. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen.: adj. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen. īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen. īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen.: īp. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen.: īp. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen.: īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen.: īp. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen.: īp. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen.: īp. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen. īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen. īp. v. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen. īp. v. nozīmē.", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen. īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("ģen.: īp. v. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("ģen.: īp. v. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE));
+		pairingFlags.put("ģen.: īp. v. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		structRestrs.put("lok.: apst. nozīmē", StructRestrs.One.of(Type.IN_STRUCT, TFeatures.CASE__LOCATIVE));
-		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB));
+		pairingFlags.put("lok.: apst. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB));
 
 		structRestrs.put("priev. noz. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
-		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
-		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO, TFeatures.CASE__DATIVE));
-		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
-		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
 		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
-		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.CONTAMINATION, TValues.ADPOSITION));
+		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 
 
 		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.

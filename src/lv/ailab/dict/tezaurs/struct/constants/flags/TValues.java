@@ -115,7 +115,7 @@ public class TValues extends Values
 	//public final static String PERSON_FORM = "Personas forma"; // Jebkura persona, lietots kopā ar atslēgku "person" - tipiski darbības vārdiem
 
 	public final static String RETORICAL_QUESTION_SENT = "Retorisks jautājuma teikums";
-	public final static String NEG_VERB_SENT = "Teikums ar noliegtu darbības vārdu";
+	//public final static String NEG_VERB_SENT = "Teikums ar noliegtu darbības vārdu";
 
 	public final static String REPETITION = "Atkārtojums";
 

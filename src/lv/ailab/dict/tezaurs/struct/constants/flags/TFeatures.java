@@ -51,10 +51,10 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__COMPOUND_FIRST = Tuple.of(TKeys.POS, TValues.COMPOUND_FIRST_PIECE);
 	public static final Tuple<String, String> POS__COMPOUND_LAST = Tuple.of(TKeys.POS, TValues.COMPOUND_LAST_PIECE);
 
-	public static final Tuple<String, String> CONTAMINATION__NOUN = Tuple.of(TKeys.CONTAMINATION, TValues.NOUN);
-	public static final Tuple<String, String> CONTAMINATION__ADJECTIVE = Tuple.of(TKeys.CONTAMINATION, TValues.ADJECTIVE);
-	public static final Tuple<String, String> CONTAMINATION__CARD_NUM = Tuple.of(TKeys.CONTAMINATION, TValues.CARDINAL_NUMERAL);
-	public static final Tuple<String, String> CONTAMINATION__ADVERB = Tuple.of(TKeys.CONTAMINATION, TValues.ADVERB);
+	public static final Tuple<String, String> CONVERSION__NOUN = Tuple.of(TKeys.POS_CONVERSION, TValues.NOUN);
+	public static final Tuple<String, String> CONVERSION__ADJECTIVE = Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE);
+	public static final Tuple<String, String> CONVERSION__CARD_NUM = Tuple.of(TKeys.POS_CONVERSION, TValues.CARDINAL_NUMERAL);
+	public static final Tuple<String, String> CONVERSION__ADVERB = Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB);
 
 	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);
 

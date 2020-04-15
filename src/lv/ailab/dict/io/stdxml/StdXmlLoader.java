@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -422,7 +423,7 @@ public class StdXmlLoader
 				"StructuralRestriction");
 		if (structRestrNode == null) return null;
 		StructRestrs result = elemFact.getNewStructRestrs();
-		result.restrictions = new HashSet<>();
+		result.restrictions = new LinkedHashSet<>();
 		for (Node srNode : structRestrNode)
 		{
 			StructRestrs.One sr = makeStructRestriction(srNode, elemFact);

@@ -11,7 +11,6 @@ import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -204,8 +203,6 @@ public class RulesAsFunctions
 		{
 			newBegin = m.group(1).length();
 			String modifier = m.group(2).trim();
-			//String key = TKeys.USED_TOGETHER_WITH;
-			//if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
 			String restrFreq = modifier.equals("parasti") ? TFrequency.USUALLY : TFrequency.UNDISCLOSED;
 
 			String phrasesWithStuff = m.group(3);
@@ -404,7 +401,7 @@ public class RulesAsFunctions
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.POS__NOUN, TFeatures.REPETITION_WITH_ONE_STEM});
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.CONTAMINATION__NOUN, TFeatures.REPETITION_WITH_ONE_STEM});
+						new Tuple[] {TFeatures.CONVERSION__NOUN, TFeatures.REPETITION_WITH_ONE_STEM});
 			}
 
 			else if (restrValueRaw.matches("pamata skaitļa vārdu\\.?"))
@@ -540,7 +537,7 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches("not\\. galotnes adj\\. lietv\\. nozīmē vai savienojumā ar adj\\. vispārāko pakāpi\\."))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.POS__ADJ, TFeatures.DEFINITNESS__DEF, TFeatures.CONTAMINATION__NOUN});
+						new Tuple[] {TFeatures.POS__ADJ, TFeatures.DEFINITNESS__DEF, TFeatures.CONVERSION__NOUN});
 				restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED,
 						new Tuple[] {TFeatures.POS__ADJ, TFeatures.DEGREE__SUPER, });
 			}
@@ -551,14 +548,14 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches("apst\\. vai tā nozīmē lietotu vārdu\\.?"))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__ADV);
-				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.CONTAMINATION__ADVERB);
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.CONVERSION__ADVERB);
 			}
 			else if (restrValueRaw.matches("vietas adv\\. vai tā nozīmē lietotu vārdu\\.?"))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.POS__ADV, Tuple.of(TKeys.POS, TValues.PLACE_ADVERB)});
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.CONTAMINATION, TValues.PLACE_ADVERB));
+						Tuple.of(TKeys.POS_CONVERSION, TValues.PLACE_ADVERB));
 			}
 			else if (restrValueRaw.matches("īpašvārdu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
@@ -652,10 +649,7 @@ public class RulesAsFunctions
 			String modifier = m.group(2).trim();
 			String restrFreq = modifier.equals("parasti") ? TFrequency.USUALLY : TFrequency.UNDISCLOSED;
 
-			//String key = TKeys.USED_TOGETHER_WITH;
-			//if (modifier.equals("parasti")) key = TKeys.USUALLY_USED_TOGETHER_WITH;
 			String flagValueRaw = m.group(3);
-			//ArrayList<String> flagValues = new ArrayList<>();
 
 			Matcher specificVerb1 = Pattern.compile("verb[ua] (\"\\p{L}+(\\(ies\\))?\"(, (retāk )?\"\\p{L}+(\\(ies\\))?\")*)( formām)?\\.?").matcher(flagValueRaw);
 			Matcher specificVerb2 = Pattern.compile("verbiem (\"\\p{L}+\"(, \"\\p{L}+\")*) u\\. tml\\.").matcher(flagValueRaw);

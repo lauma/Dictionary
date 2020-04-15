@@ -10,14 +10,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StructRestrs implements HasToXML
 {
-	public HashSet<One> restrictions = new HashSet<>();
+	public LinkedHashSet<One> restrictions = new LinkedHashSet<>();
+
+	public boolean sortForPrint = false;
 
 	protected StructRestrs () {};
 
@@ -97,7 +97,11 @@ public class StructRestrs implements HasToXML
 		if (restrictions != null && !restrictions.isEmpty())
 		{
 			Node structRestrContN = doc.createElement("StructuralRestrictions");
-			for (StructRestrs.One restr: restrictions)
+			List<StructRestrs.One> sortedRestr = sortForPrint ?
+					restrictions.stream().sorted(One.getPartialComparator())
+							.collect(Collectors.toList()) :
+					new ArrayList<>(restrictions);
+			for (StructRestrs.One restr: sortedRestr)
 				if (restr != null) restr.toXML(structRestrContN);
 			parent.appendChild(structRestrContN);
 		}
@@ -317,14 +321,15 @@ public class StructRestrs implements HasToXML
 				trN.appendChild(freqN);
 			}
 
-			if (valueText != null || valueFlags != null && !valueFlags.pairings.isEmpty())
+			if (valueText != null && !valueText.isEmpty()
+					|| valueFlags != null && !valueFlags.pairings.isEmpty())
 			{
 				Node valueN = doc.createElement("Value");
 
 				if (valueFlags != null && !valueFlags.pairings.isEmpty())
 					valueFlags.toXML(valueN);
 
-				if (valueText != null)
+				if (valueText != null && !valueText.isEmpty())
 				{
 					Node langN = doc.createElement("LanguageMaterial");
 					for (String singleText : valueText)
@@ -333,7 +338,7 @@ public class StructRestrs implements HasToXML
 						textNode.appendChild(doc.createTextNode(singleText));
 						langN.appendChild(textNode);
 					}
-					trN.appendChild(langN);
+					valueN.appendChild(langN);
 				}
 				trN.appendChild(valueN);
 			}
@@ -374,6 +379,25 @@ public class StructRestrs implements HasToXML
 			if (valueFlags != null) clone.valueFlags = (Flags) valueFlags.clone();
 			if (valueText != null) clone.valueText = (LinkedHashSet<String>) valueText.clone();
 			return clone;
+		}
+
+		public static Comparator<One> getPartialComparator()
+		{
+			return (o1, o2) -> {
+				if (o1 == o2) return 0;
+				if (o1 == null) return -1;
+				if (o2 == null) return 1;
+				if (Objects.equals(o1.type, o2.type))
+				{
+					if (Objects.equals(o1.frequency, o2.frequency)) return 0;
+					if (o1.frequency == null) return -1;
+					if (o2.frequency == null) return 1;
+					return o1.frequency.compareTo(o2.frequency);
+				}
+				if (o1.type == null) return -1;
+				if (o2.type == null) return 1;
+				return o1.type.compareTo(o2.type);
+			};
 		}
 	}
 }

@@ -8,9 +8,7 @@ import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -161,7 +159,12 @@ public class Gram implements HasToJSON, HasToXML
 		{
 			if (hasPrev) res.append(", ");
 			res.append("\"StructuralRestrictions\":");
-			res.append(JSONUtils.objectsToJSON(structRestrictions.restrictions));
+			List<StructRestrs.One> sortedRestr = structRestrictions.sortForPrint ?
+					structRestrictions.restrictions.stream()
+							.sorted(StructRestrs.One.getPartialComparator())
+							.collect(Collectors.toList()) :
+					new ArrayList<>(structRestrictions.restrictions);
+			res.append(JSONUtils.objectsToJSON(sortedRestr));
 			hasPrev = true;
 		}
 

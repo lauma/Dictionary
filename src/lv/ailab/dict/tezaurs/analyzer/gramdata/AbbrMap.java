@@ -999,6 +999,7 @@ public class AbbrMap {
 
 		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums")));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));
+		pairingFlags.put("saikļa nozīmē palīgteikumos.", TFeatures.ORIGINAL_NEEDED);
 
 		// Lietojuma biežums.
 		structRestrs.put("pareti", StructRestrs.One.of(Type.OVERALL_FREQUENCY, TFrequency.HALF_RARE));

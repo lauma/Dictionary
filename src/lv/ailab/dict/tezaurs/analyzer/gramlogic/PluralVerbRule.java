@@ -76,7 +76,7 @@ public class PluralVerbRule implements EndingRule
 				{{
 					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.NUMBER__PLURAL));
 					if (singular3Pers)
-						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.PERSON__3));
+						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, new Tuple[]{TFeatures.NUMBER__SINGULAR, TFeatures.PERSON__3}));
 				}});
 		pluralOnly = BaseRule.simple(
 				"tikai dsk., " + patternText, ".*" + lemmaEnding, paradigms,
@@ -90,7 +90,7 @@ public class PluralVerbRule implements EndingRule
 				{{
 					add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.NUMBER__PLURAL));
 					if (singular3Pers)
-						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, TFeatures.PERSON__3));
+						add(StructRestrs.One.of(Type.IN_FORM, TFrequency.ONLY, new Tuple[] {TFeatures.NUMBER__SINGULAR, TFeatures.PERSON__3}));
 				}});
 	}
 

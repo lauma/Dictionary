@@ -143,7 +143,7 @@ public class RulesAsFunctions
 		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
 		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+((, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+((, | ?- ?| )\\p{L}+)*\")*)(?: u\\. tml\\.)?))([.,].*)?");
+				"((parasti |bieži |arī |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?:, retāk \"(\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*)\")?(?: u\\. tml\\.)?))(?:[.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -173,6 +173,10 @@ public class RulesAsFunctions
 			for (String p : phrases)
 				restrCollector.addOne(Type.IN_STRUCT, restrFreq,
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), p.trim());
+			String rarerPhrase = m.group(5);
+			if (rarerPhrase != null && !rarerPhrase.isEmpty())
+				restrCollector.addOne(Type.IN_STRUCT, TFrequency.RARER,
+						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), rarerPhrase);
 		}
 		return newBegin;
 	}
@@ -239,16 +243,31 @@ public class RulesAsFunctions
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
 				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
 				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
+		Pattern specialFlagPattern = Pattern.compile("savienojumā ar verba personas formu, tā divdabi ar izskaņu \"-dams\" un \"lai\"( vai savienojumā ar divdabi ar izskaņu \"-dams\")?.?");
 
 		int newBegin = -1;
-		Matcher m = flagPattern.matcher(gramText);
-		if (m.matches())
+		Matcher m1 = flagPattern.matcher(gramText);
+		Matcher m2 = specialFlagPattern.matcher(gramText);
+		if (hasComma && m2.matches())
 		{
-			newBegin = m.group(1).length();
-			String modifier = m.group(2).trim();
+			newBegin = m2.group(0).length();
+			flagCollector.add(TFeatures.ORIGINAL_NEEDED);
+			restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, new Tuple[] {
+					TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.MOOD__INDICATIVE, TFeatures.POS__PARTICLE}, "lai");
+			restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, new Tuple[] {
+					TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.MOOD__IMPERATIVE, TFeatures.POS__PARTICLE}, "lai");
+			String secondPart = m2.group(1);
+			if (secondPart != null && !secondPart.isEmpty())
+				restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED,
+						new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS});
+		}
+		else if (m1.matches())
+		{
+			newBegin = m1.group(1).length();
+			String modifier = m1.group(2).trim();
 			String restrFreq = modifier.equals("parasti") ? TFrequency.USUALLY : TFrequency.UNDISCLOSED;
 
-			String restrValueRaw = m.group(3);
+			String restrValueRaw = m1.group(3);
 			if (restrValueRaw.matches("dat\\.|ģen\\.|lok\\.|adj\\.|apst\\.|adv\\.|lietv\\.|skait\\.|subst\\.|vietn\\."))
 			{
 				Tuple<String, String> feature = null;
@@ -564,7 +583,8 @@ public class RulesAsFunctions
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.CASE__DATIVE, TFeatures.POS__ADV});
-				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__ADV);
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.CASE__DATIVE, TFeatures.POS__ADV});
 				// man palika žēl
 				// palika silts
 			}
@@ -613,7 +633,7 @@ public class RulesAsFunctions
 			}
 			else
 			{
-				System.err.printf("Neizdevās atšifrēt karodziņu \"%s\"\n", m
+				System.err.printf("Neizdevās atšifrēt karodziņu \"%s\"\n", m1
 						.group(1));
 				newBegin = 0;
 			}

@@ -8,11 +8,11 @@ import java.util.*;
  */
 public class MappingSet<K, V>
 {
-	protected HashMap<K, HashSet<V>> map = new HashMap<>();
+	protected LinkedHashMap<K, LinkedHashSet<V>> map = new LinkedHashMap<>();
 	
 	public void put (K key, V value)
 	{
-		HashSet<V> values = new HashSet<>();
+		LinkedHashSet<V> values = new LinkedHashSet<>();
 		if (map.containsKey(key)) values = map.get(key);
 		values.add(value);
 		map.put(key, values);
@@ -58,7 +58,7 @@ public class MappingSet<K, V>
 
 	public void putAll(K key, Collection<V> values)
 	{
-		HashSet<V> valuesInPlace = new HashSet<>();
+		LinkedHashSet<V> valuesInPlace = new LinkedHashSet<>();
 		if (map.containsKey(key)) valuesInPlace = map.get(key);
 		valuesInPlace.addAll(values);
 		map.put(key, valuesInPlace);
@@ -70,7 +70,7 @@ public class MappingSet<K, V>
 			putAll(key, data.getAll(key));
 	}
 
-	public HashSet<V> removeAll(K key)
+	public LinkedHashSet<V> removeAll(K key)
 	{
 		return map.remove(key);
 	}

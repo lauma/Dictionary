@@ -624,11 +624,35 @@ public class RulesAsFunctions
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__ADPOSITION});
 			}
-			else if (restrValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\.(, ģen\\., nom\\.(, akuz\\.)?)?"))
+			else if (restrValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\."))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__NUMERAL);
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL});
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__DATIVE});
+				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
+			}
+			else if (restrValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\., ģen\\., nom\\."))
+			{
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__NUMERAL);
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__DATIVE});
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__GENITIVE});
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__NOMINATIVE});
+				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
+			}
+			else if (restrValueRaw.matches("skait\\. vai skait\\. un lietv\\. dat\\., ģen\\., nom\\., akuz\\."))
+			{
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__NUMERAL);
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__DATIVE});
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__GENITIVE});
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__NOMINATIVE});
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.POS__NUMERAL, TFeatures.CASE__ACUSATIVE});
 				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
 			}
 			else

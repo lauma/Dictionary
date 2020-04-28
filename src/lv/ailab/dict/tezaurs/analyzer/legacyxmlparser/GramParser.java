@@ -521,9 +521,12 @@ public class GramParser
 	{
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; trans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; trans.");
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; intrans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; intrans.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., retāk ar nenot\\. gal\\., pamata pak\\., v\\.($|(?=[,;]))", "ar not. gal. vai retāk ar nenot. gal. pamata pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pārākajā vai vispārākajā pak\\., v\\.($|(?=[,;]))", "ar not. gal. pārākajā vai vispārākajā pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\., v.($|(?=[,;]))", "ar not. gal. pamata pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal\\., pamata pak\\.($|(?=[,;]))", "ar not. gal. pamata pak.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))dsk\\., ar mazo sākumburtu($|(?=[,;]))", "dsk. ar mazo sākumburtu");
+		gramText = gramText.replaceAll("(^|(?![,;] ))savienojumā \"līdz ar\"; priev\\. nozīmē ar instr\\.($|(?=[,;]))", "savienojumā \"līdz ar\": priev. nozīmē ar instr.");
 		return gramText;
 	}
 

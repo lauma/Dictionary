@@ -845,6 +845,10 @@ public class AbbrMap {
 
 		// Šos rada komatu izņemšanas aprisinājums, kas ļauj salikt vienā
 		// ierobežojumā saistītās lietas.
+		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
+		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, new Tuple[] {TFeatures.DEFINITNESS__INDEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__COMP, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
@@ -853,6 +857,9 @@ public class AbbrMap {
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pamata pak.", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS}));
+
+		structRestrs.put("dsk. ar mazo sākumburtu",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[]{Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu"), TFeatures.NUMBER__PLURAL}));
 
 		structRestrs.put("parasti ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
 		structRestrs.put("ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
@@ -866,7 +873,7 @@ public class AbbrMap {
 		structRestrs.put("nolieg. formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
 		structRestrs.put("nolieguma formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
 		structRestrs.put("nolieguma formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.NEGATIVE));
-		structRestrs.put("parasti uzrunā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__VOCATIVE));
+		structRestrs.put("parasti uzrunā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__VOCATIVE));
 
 		structRestrs.put("ar akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__ACUSATIVE));
 		structRestrs.put("retāk ar akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, TFeatures.CASE__ACUSATIVE));
@@ -1094,6 +1101,9 @@ public class AbbrMap {
 		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 
+		// Radies no gramatiku normalizācijas
+		structRestrs.put("savienojumā \"līdz ar\": priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
+		pairingFlags.put("savienojumā \"līdz ar\": priev. nozīmē ar instr.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 
 		//binaryFlags.put("var.", "Variants"); // Izņemts no datiem.
 		binaryFlags.put("hip.", "Hipotēze");

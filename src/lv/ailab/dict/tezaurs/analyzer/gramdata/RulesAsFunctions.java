@@ -709,19 +709,21 @@ public class RulesAsFunctions
 					verbStrings.add(verbGroup);
 				else
 				{
-					verbStrings.add(verbGroup.substring(0, verbGroup.indexOf(", retāk ")));
-					verbStrings.add(verbGroup
-							.substring(verbStrings.indexOf(", retāk ") + ", retāk ".length())
-							.replace(", retāk ", ", "));
+					String first = verbGroup.substring(0, verbGroup.indexOf(", retāk ")).trim();
+					String second = verbGroup.substring(verbGroup.indexOf(", retāk ") + ", retāk ".length());
+					second = second.replace(", retāk ", ", ").trim();
+					verbStrings.add(first);
+					verbStrings.add(second);
 				}
 
 				for (int i = 0; i < verbStrings.size(); i++)
 				{
-					String verbStr = verbStrings.get(0);
+					String verbStr = verbStrings.get(i);
 					String[] verbs = verbStr.split(",");
 					String updatedFreq = i > 0 ? TFrequency.RARER : restrFreq;
 					for (String v : verbs)
 					{
+						v = v.trim();
 						if (v.startsWith("\"")) v = v.substring(1);
 						if (v.endsWith("\"")) v = v.substring(0, v.length() - 1);
 						if (v.endsWith("(ies)"))
@@ -732,7 +734,7 @@ public class RulesAsFunctions
 									TFeatures.POS__VERB, v.replaceAll("[)(]", "").trim());
 						} else
 							restrCollector.addOne(Type.TOGETHER_WITH, updatedFreq,
-									TFeatures.POS__VERB, v.trim());
+									TFeatures.POS__VERB, v);
 					}
 
 				}

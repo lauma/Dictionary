@@ -849,6 +849,10 @@ public class AbbrMap {
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak. v.",
 				StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, new Tuple[] {TFeatures.DEFINITNESS__INDEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
+		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak.",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS}));
+		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak.",
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, new Tuple[] {TFeatures.DEFINITNESS__INDEF, TFeatures.DEGREE__POS}));
 		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__COMP, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pārākajā vai vispārākajā pak. v.",
@@ -857,6 +861,10 @@ public class AbbrMap {
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. pamata pak.", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS}));
+		structRestrs.put("ar nenot. gal. pamata pak.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[] {TFeatures.DEFINITNESS__INDEF, TFeatures.DEGREE__POS}));
+		structRestrs.put("ar not. galotni v.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.GENDER__MASC}));
 
 		structRestrs.put("dsk. ar mazo sākumburtu",
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[]{Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu"), TFeatures.NUMBER__PLURAL}));
@@ -1093,13 +1101,14 @@ public class AbbrMap {
 		pairingFlags.put("priev. noz. ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
 		pairingFlags.put("priev. nozīmē ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
-		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO, TFeatures.CASE__DATIVE));
-		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
 		pairingFlags.put("priev. nozīmē ar instr.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
 		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
 		structRestrs.put("priev. nozīmē ar dat. vai ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. nozīmē ar dat. vai ģen.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
+		structRestrs.put("arī priev. nozīmē ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.ALSO, TFeatures.CASE__DATIVE));
+		pairingFlags.put("arī priev. nozīmē ar dat.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADPOSITION));
+		pairingFlags.put("arī priev. nozīmē ar dat.", TFeatures.ORIGINAL_NEEDED);
 
 		// Radies no gramatiku normalizācijas
 		structRestrs.put("savienojumā \"līdz ar\": priev. nozīmē ar instr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));

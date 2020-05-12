@@ -63,6 +63,7 @@ public class TValues extends Values
 	public final static String COMPOUND_LAST_PIECE = "Salikteņu pēdējā daļa";
 
 	public final static String PHRASE = "Vārdu savienojums";
+	public final static String COMP_CONSTR = "Salīdzinājuma konstrukcija";
 
 	public final static String PLACE_NAME = "Vietvārds";
 	public final static String PERSON_NAME = "Personvārds";
@@ -141,7 +142,7 @@ public class TValues extends Values
 	// Sevišķi retās vērtības:
 
 	//// Galotņu šabloniem.
-	public final static String NO_PRESENT = "Nelieto tagadnes formas";
+	//public final static String NO_PRESENT = "Nelieto tagadnes formas";
 
 	//// "Savienojumā ar" apstrādei.
 	public final static String ILLNESS_NAME = "Slimības izraisītāja mikroorganisma, arī slimības nosaukums";

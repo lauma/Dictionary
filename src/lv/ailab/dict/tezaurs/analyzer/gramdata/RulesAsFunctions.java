@@ -143,7 +143,8 @@ public class RulesAsFunctions
 		//		Pattern.compile("((parasti |bieži |arī |)(?:savienojumā|atkārtojumā) [\"'](\\p{L}+((, | - |-| )\\p{L}+)*)[\"'])([.,].*)?") :
 		//		Pattern.compile("((parasti |bieži |arī )(?:savienojumā|atkārtojumā) [\"'](\\p{L}+(( - |-| )\\p{L}+)*)[\"'])([.].*)?");
 		Pattern flagPattern = Pattern.compile(
-				"((parasti |bieži |arī |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?:, retāk \"(\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*)\")?(?: u\\. tml\\.)?))(?:[.,].*)?");
+				//"((parasti |bieži |arī |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?:, retāk \"(\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*)\")?(?: u\\. tml\\.)?))(?:[.,].*)?");
+				"((parasti |bieži |arī |salīdzinājuma konstrukcijā |)(?:(?:savienojum|atkārtojum)(?:ā|os)):? ((\"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\"(?:,(?: arī)? \"\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*\")*)(?:, retāk \"(\\p{L}+(?:(?:, | ?- ?| )\\p{L}+)*)\")?(?: u\\. tml\\.)?))(?:[.,].*)?");
 
 		int newBegin = -1;
 		Matcher m = flagPattern.matcher(gramText);
@@ -171,12 +172,22 @@ public class RulesAsFunctions
 			if (phrasesOnly.endsWith("\"")) phrasesOnly = phrasesOnly.substring(0, phrasesOnly.length()-1);
 			String[] phrases = phrasesOnly.split("\",(?: arī)? \"");
 			for (String p : phrases)
-				restrCollector.addOne(Type.IN_STRUCT, restrFreq,
+			{
+				StructRestrs.One sr = StructRestrs.One.of(Type.IN_STRUCT, restrFreq,
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), p.trim());
+				if ("salīdzinājuma konstrukcijā".equals(indicator))
+					sr.valueFlags.add(TValues.COMP_CONSTR);
+				restrCollector.restrictions.add(sr);
+			}
 			String rarerPhrase = m.group(5);
 			if (rarerPhrase != null && !rarerPhrase.isEmpty())
-				restrCollector.addOne(Type.IN_STRUCT, TFrequency.RARER,
+			{
+				StructRestrs.One sr = StructRestrs.One.of(Type.IN_STRUCT, TFrequency.RARER,
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), rarerPhrase);
+				if ("salīdzinājuma konstrukcijā".equals(indicator))
+					sr.valueFlags.add(TValues.COMP_CONSTR);
+				restrCollector.restrictions.add(sr);
+			}
 		}
 		return newBegin;
 	}
@@ -391,6 +402,9 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches("(atkārtotu )?vienas un tās pašas saknes (lietvārdu\\.?|lietv\\.)"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.POS__NOUN, TFeatures.REPETITION_WITH_ONE_STEM});
+			else if (restrValueRaw.matches("(atkārtotu )?vienas un tās pašas saknes lietv(ārdu|\\.) ģen."))
+				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
+						new Tuple[] {TFeatures.POS__NOUN, TFeatures.REPETITION_WITH_ONE_STEM, TFeatures.CASE__GENITIVE});
 			else if (restrValueRaw.matches("atkārtotu vienas un tās pašas saknes lietv\\. ar laika nozīmi\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, new Tuple[] {
 						TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, TValues.TIME_TERM),
@@ -584,9 +598,10 @@ public class RulesAsFunctions
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.CASE__DATIVE, TFeatures.POS__ADV});
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.CASE__DATIVE, TFeatures.POS__ADV});
-				// man palika žēl
-				// palika silts
+						new Tuple[] {TFeatures.CASE__DATIVE, TFeatures.POS__ADJ});
+				flagCollector.add(TFeatures.ORIGINAL_NEEDED);
+				// man tapa žēl
+				// man tapa par siltu
 			}
 			else if (restrValueRaw.matches("lok\\. vai nenoteiksmi\\.?"))
 			{

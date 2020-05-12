@@ -1010,7 +1010,7 @@ public class AbbrMap {
 				Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
 
 		structRestrs.put("salīdzinājuma konstrukcijā", StructRestrs.One.of(Type.IN_STRUCT,
-				Tuple.of(TKeys.OTHER_FLAGS, "Salīdzinājuma konstrukcija")));
+				Tuple.of(TKeys.OTHER_FLAGS, TValues.COMP_CONSTR)));
 
 		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums")));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));

@@ -53,7 +53,7 @@ public class GramParser
 	/**
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
-	public TGram parseGram (Node gramNode, String lemma)
+	public TGram parseGram (Node gramNode, String lemma, ParseType type)
 	{
 		TGram result = TElementFactory.me().getNewGram();
 		result.freeText = Gram.normalizePronunc(
@@ -63,7 +63,7 @@ public class GramParser
 		result.structRestrictions = TElementFactory.me().getNewStructRestrs();
 		result.paradigm = new HashSet<>();
 		result.altLemmas = null;
-		parseGram(result, lemma);
+		parseGram(result, lemma, type);
 		return result;
 	}
 
@@ -71,15 +71,11 @@ public class GramParser
 	 * Gramatikas teksta analīzes virsmetode.
 	 * @param lemma		lemmu skatās, lai labāk saprastu apstrādājamo gramatiku
 	 */
-	protected void parseGram(TGram gram, String lemma)
+	protected void parseGram(TGram gram, String lemma, ParseType type)
 	{
 		String correctedGram = correctOCRErrors(gram.freeText);
 		correctedGram = normalizeRestrictions(gram.freeText);
 		gram.altLemmas = new LinkedList<>();
-
-		// Salikteņu daļām, galotnēm un izskaņām.
-		if (lemma.startsWith("-") || lemma.endsWith("-"))
-			gram.flags.add(TFeatures.POS__PIECE);
 
 		// Vispirms apstrādā galotņu šablonus (tie parasti ir gramatikas sākumā).
 		correctedGram = processBeginingWithPatterns(gram, correctedGram, lemma);
@@ -116,6 +112,11 @@ public class GramParser
 		// Skatoties uz visiem atpazītajiem karodziņiem, noteiktu karodziņu
 		// pielikšana vai noņemšana.
 		postprocessFlags(gram, lemma);
+
+		if (type == ParseType.WORD)
+		{
+			postprocessLexFlags(gram, lemma);
+		}
 
 		// Mēģina izdomāt paradigmu no karodziņiem.
 		paradigmFromFlags(gram, lemma);
@@ -497,6 +498,23 @@ public class GramParser
 	}
 
 	/**
+	 * Gramatikas analīzes piektais etapa apakšsolis, kas specifisks tikai
+	 * leksēmu gramatikām - analizējot no gramatikas teksta izgūtos karodziņus,
+	 * pieliek vai noņem (varbūt arī to vēlāk vajadzēs) karodziņus.
+	 */
+	private void postprocessLexFlags(TGram gram, String lemma)
+	{
+		// Salikteņu daļām, galotnēm un izskaņām.
+		if (lemma.startsWith("-") || lemma.endsWith("-"))
+			gram.flags.add(TFeatures.POS__PIECE);
+
+		// Izteiksme ir tikai verbiem.
+		if (gram.structRestrictions.testByTypeKey(Type.IN_FORM, TKeys.MOOD))
+			gram.flags.add(TFeatures.POS__VERB);
+
+	}
+
+	/**
 	 * Pēc apstrādes var pārbaudīt karodziņus uz iekšējo konsistenci, vai nav
 	 * kaut kas galīgi šķērsu aizgājis.
 	 * TODO: papildināt izstrādes gaitā.
@@ -554,5 +572,8 @@ public class GramParser
 		return gramText;
 	}
 
-
+	public enum ParseType
+	{
+		WORD, PHRASE, SENSE;
+	}
 }

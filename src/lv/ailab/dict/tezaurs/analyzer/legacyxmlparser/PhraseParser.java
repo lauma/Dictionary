@@ -33,7 +33,7 @@ public class PhraseParser
 				result.text.add(field.getTextContent());
 			}
 			else if (fieldname.equals("gram"))
-				result.grammar = GramParser.me().parseGram(field, lemma);
+				result.grammar = GramParser.me().parseGram(field, lemma, GramParser.ParseType.PHRASE);
 			else if (fieldname.equals("n"))
 			{
 				if (result.subsenses == null) result.subsenses = new LinkedList<>();

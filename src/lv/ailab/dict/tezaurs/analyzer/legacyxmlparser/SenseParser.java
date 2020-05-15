@@ -28,7 +28,7 @@ public class SenseParser
 			Node field = fields.item(i);
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram"))
-				result.grammar = GramParser.me().parseGram(field, lemma);
+				result.grammar = GramParser.me().parseGram(field, lemma, GramParser.ParseType.SENSE);
 			else if (fieldname.equals("d"))
 			{
 				NodeList glossFields = field.getChildNodes();

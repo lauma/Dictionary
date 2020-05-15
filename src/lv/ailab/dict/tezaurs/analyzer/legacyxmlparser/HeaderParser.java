@@ -44,7 +44,7 @@ public class HeaderParser
 		{
 			String fieldname = field.getNodeName();
 			if (fieldname.equals("gram")) // grammar
-				result.gram = GramParser.me().parseGram(field, result.lemma.text);
+				result.gram = GramParser.me().parseGram(field, result.lemma.text, GramParser.ParseType.WORD);
 			else System.err.printf(
 					"\'v\' elements \'%s\' netika apstrādāts\n", fieldname);
 		}

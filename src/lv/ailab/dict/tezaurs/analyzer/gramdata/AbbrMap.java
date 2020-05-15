@@ -72,8 +72,6 @@ public class AbbrMap {
 		pairingFlags.put("apstākļa vārds", Tuple.of(TKeys.POS, TValues.ADVERB));
 		pairingFlags.put("intr. darb.", TFeatures.POS__VERB);
 		pairingFlags.put("darb.", TFeatures.POS__VERB);
-		pairingFlags.put("divd.", TFeatures.POS__PARTICIPLE);
-		pairingFlags.put("Divd.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("ģenit.", TFeatures.POS__GEN_ONLY);
 		pairingFlags.put("interj.", Tuple.of(TKeys.POS, TValues.INTERJECTION));
 		pairingFlags.put("īp. v.", TFeatures.POS__ADJ);
@@ -101,23 +99,26 @@ public class AbbrMap {
 		pairingFlags.put("refl. darb.", TFeatures.POS__REFL_VERB);
 		pairingFlags.put("refl. darb.", TFeatures.POS__VERB);
 
+		structRestrs.put("divd.", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
+		structRestrs.put("Divd.", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
+
 		structRestrs.put("dsk. ģen. īp. v. nozīmē.", StructRestrs.One.of(
 				Type.IN_FORM, TFrequency.UNDISCLOSED,
 				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
 		//pairingFlags.put("dsk. ģen. īp. v. nozīmē.", TFeatures.POS__NOUN);
 		pairingFlags.put("dsk. ģen. īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__VERB);
-		pairingFlags.put("divd. īp. nozīmē", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		structRestrs.put("divd. īp. nozīmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__VERB);
-		pairingFlags.put("divd. īp. nozīmē.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		structRestrs.put("divd. īp. nozīmē.", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__VERB);
-		pairingFlags.put("divd. īp. v. nozīmē", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. v. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		structRestrs.put("divd. īp. v. nozīmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__VERB);
-		pairingFlags.put("divd. īp. v. nozīmē.", TFeatures.POS__PARTICIPLE);
 		pairingFlags.put("divd. īp. v. nozīmē.", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
+		structRestrs.put("divd. īp. v. nozīmē.", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
 
 		pairingFlags.put("pron.", TFeatures.POS__PRONOUN);
 		pairingFlags.put("vietn.", TFeatures.POS__PRONOUN);

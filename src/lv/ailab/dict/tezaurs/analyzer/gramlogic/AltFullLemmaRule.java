@@ -1,5 +1,6 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.*;
@@ -59,11 +60,17 @@ public class AltFullLemmaRule extends StemSlotRule
 	 * @param positiveFlags			šos karodziņus uzstāda pamata karodziņu
 	 *                              savācējam, ja gan gramatikas teksts, gan
 	 *                              lemma atbilst attiecīgajiem šabloniem.
+	 * @param positiveRestrictions	šos ierobežojumus uzstāda pamata ierobežojumu
+	 *                              savācējam, ja gan gramatikas teksts, gan
+	 *                              lemma atbilst attiecīgajiem šabloniem.
 	 * @param altLemmaEnding		teksta virkne kuru izmantos kā izskaņu,
 	 *                              veidojot papildus lemmu
 	 * @param altLemmaParadigms		paradigmu ID, ko lieto papildus izveidotajai
 	 *                              lemmai
 	 * @param altLemmaFlags			šos karodziņus uzstāda papildu pamatformai,
+	 *                              nevis pamatvārdam, ja gan gramatikas teksts,
+	 *                              gan lemma atbilst attiecīgajiem šabloniem
+	 * @param altWordRestrictions	šos ierobežojumus uzstāda papildu pamatformai,
 	 *                              nevis pamatvārdam, ja gan gramatikas teksts,
 	 *                              gan lemma atbilst attiecīgajiem šabloniem
 	 * @return	izveidotais likums
@@ -72,14 +79,16 @@ public class AltFullLemmaRule extends StemSlotRule
 			String patternBegin, String patternEnding, String lemmaRestrict,
 			int lemmaEndingCutLength, Set<Integer> paradigms,
 			Set<Tuple<String, String>> positiveFlags,
+			Set<StructRestrs.One> positiveRestrictions,
 			String altLemmaEnding, Set<Integer> altLemmaParadigms,
-			Set<Tuple<String, String>> altLemmaFlags)
+			Set<Tuple<String, String>> altLemmaFlags,
+			Set<StructRestrs.One> altWordRestrictions)
 	{
 		return new AltFullLemmaRule(patternBegin, patternEnding,
 				new ArrayList<StemSlotSubRule>(){{add(new StemSlotSubRule(
-						lemmaRestrict, lemmaEndingCutLength,
-						paradigms, positiveFlags, altLemmaEnding,
-						altLemmaParadigms, altLemmaFlags));}});
+						lemmaRestrict, lemmaEndingCutLength, paradigms,
+						positiveFlags, positiveRestrictions, altLemmaEnding,
+						altLemmaParadigms, altLemmaFlags, altWordRestrictions));}});
 	}
 	public static AltFullLemmaRule of(
 			String patternBegin, String patternEnding, String lemmaEnding,
@@ -90,9 +99,11 @@ public class AltFullLemmaRule extends StemSlotRule
 				lemmaEndingCutLength,
 				paradigms == null ? null : new HashSet<Integer>(Arrays.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				altLemmaEnding,
 				altParadigms == null ? null : new HashSet<Integer>(Arrays.asList(altParadigms)),
-				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
+				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)),
+				null);
 	}
 
 	public static AltFullLemmaRule of(
@@ -103,7 +114,9 @@ public class AltFullLemmaRule extends StemSlotRule
 		return simple(patternBegin, patternEnding, lemmaEnding,
 				lemmaEndingCutLength, new HashSet<Integer>(){{add(paradigmId);}},
 				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				null,
 				altLemmaEnding, new HashSet<Integer>(){{add(altParadigmId);}},
-				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)));
+				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)),
+				null);
 	}
 }

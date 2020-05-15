@@ -1,5 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
 
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.SimpleSubRule;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
@@ -23,12 +25,18 @@ public final class MultiPos
 	public static BaseRule adjectiveParticiple (String patternText)
 	{
 		return BaseRule.of(patternText, new SimpleSubRule[] {
-				SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14}, new Tuple[]{TFeatures.POS__ADJ}),
-				SimpleSubRule.of(".*ts", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*ošs", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS}),
-				//SimpleSubRule.of(".*dams", new Integer[]{13, 0}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*[āa]ms", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS}),
-				SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13}, new Tuple[]{TFeatures.POS__ADJ})},
+				SimpleSubRule.of(".*[^aeiouāēīōū]š", new Integer[]{14},
+						new Tuple[]{TFeatures.POS__ADJ}),
+				SimpleSubRule.of(".*ts", new Integer[]{13},
+						new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS}, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS)),
+				SimpleSubRule.of(".*ošs", new Integer[]{13},
+						new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS}, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_OSS)),
+				//SimpleSubRule.of(".*dams", new Integer[]{13, 0},
+						// new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_PARADIGM, TFeatures.UNCLEAR_POS}, StructRestrs.One.of(Type.IN_FORM, TFeatures.POS__PARTICIPLE_DAMS)),
+				SimpleSubRule.of(".*[āa]ms", new Integer[]{13},
+						new Tuple[]{TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS}, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS)),
+				SimpleSubRule.of(".*[^aeiouāēīōū]s", new Integer[]{13},
+						new Tuple[]{TFeatures.POS__ADJ})},
 			null);
 		// -dams divdabis izmests, jo tie lokās savādāk.
 	}

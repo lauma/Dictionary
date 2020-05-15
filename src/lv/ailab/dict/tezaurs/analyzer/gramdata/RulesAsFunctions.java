@@ -264,13 +264,13 @@ public class RulesAsFunctions
 			newBegin = m2.group(0).length();
 			flagCollector.add(TFeatures.ORIGINAL_NEEDED);
 			restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, new Tuple[] {
-					TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.MOOD__INDICATIVE, TFeatures.POS__PARTICLE}, "lai");
+					TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE_DAMS, TFeatures.MOOD__INDICATIVE, TFeatures.POS__PARTICLE}, "lai");
 			restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED, new Tuple[] {
-					TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS, TFeatures.MOOD__IMPERATIVE, TFeatures.POS__PARTICLE}, "lai");
+					TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE_DAMS, TFeatures.MOOD__IMPERATIVE, TFeatures.POS__PARTICLE}, "lai");
 			String secondPart = m2.group(1);
 			if (secondPart != null && !secondPart.isEmpty())
 				restrCollector.addOne(Type.TOGETHER_WITH, TFrequency.UNDISCLOSED,
-						new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__PARTICIPLE_DAMS});
+						new Tuple[] {TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE_DAMS});
 		}
 		else if (m1.matches())
 		{

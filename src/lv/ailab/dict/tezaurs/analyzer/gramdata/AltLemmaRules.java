@@ -1,5 +1,7 @@
 package lv.ailab.dict.tezaurs.analyzer.gramdata;
 
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AdditionalHeaderRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltEndingRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.AltFullLemmaRule;
@@ -178,13 +180,17 @@ public class AltLemmaRules
 	public static final AdditionalHeaderRule[] mascToFem = {
 		AltFullLemmaRule.simple("-ā, v., ", "ā, -ās, s.", new StemSlotSubRule[]{
 			StemSlotSubRule.of(".*tais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS)),
 			StemSlotSubRule.of(".*amais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS)),
 			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
 					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
 					3, "ā", new Integer[] {40},
@@ -192,13 +198,17 @@ public class AltLemmaRules
 		}), // aizturēts/aizturētais, akls/aklais
 		AltFullLemmaRule.simple("-ā, v. ", "ā, -ās, s.", new StemSlotSubRule[]{
 			StemSlotSubRule.of(".*tais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS)),
 			StemSlotSubRule.of(".*amais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS)),
 			StemSlotSubRule.of(".*[^tšm]ais", new Integer[] {30},
 					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
 					3, "ā", new Integer[] {40},
@@ -216,21 +226,29 @@ public class AltLemmaRules
 		WithAltLemma.mascSeconDeclToFemFifthDecl("-ša; s. -te, -šu", "tis", "te"), // aiolietis
 
 		AltEndingRule.of("s. -usī", ".*ušais", 5,
-				30, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__PARTICIPLE_IS},
-				"usī", 41, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__PARTICIPLE_IS}), //aizpagājušais
+				30, new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__VERB},
+				StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_IS),
+				"usī", 41, new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__VERB},
+				StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_IS)), //aizpagājušais
 		AltEndingRule.of("s. -ā", new StemSlotSubRule[]{
 			StemSlotSubRule.of(".*ošais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_OSS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_OSS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_OSS)),
 			StemSlotSubRule.of(".*tais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_TS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS)),
 			StemSlotSubRule.of(".*[aā]mais", new Integer[] {30},
-					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS},
+					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS),
 					3, "ā", new Integer[] {40},
-					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__PARTICIPLE_AMS, TFeatures.UNCLEAR_POS}),
+					new Tuple[]{TFeatures.GENDER__FEM, TFeatures.POS__ADJ, TFeatures.POS__VERB, TFeatures.UNCLEAR_POS},
+					StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS)),
 			StemSlotSubRule.of(".*[^štm]ais|visupirmais|vispirmais", new Integer[] {30},
 					new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__ADJ},
 					3, "ā", new Integer[] {40},

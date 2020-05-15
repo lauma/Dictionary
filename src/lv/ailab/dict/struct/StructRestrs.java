@@ -90,6 +90,19 @@ public class StructRestrs implements HasToXML
 		return false;
 	}
 
+	public HashSet<One> filterByTypeFeature(String type, Tuple<String,String> feature)
+	{
+
+		if (restrictions == null || restrictions.isEmpty()) return null;
+		HashSet<One> res = new HashSet<>();
+		for (One r : restrictions)
+		{
+			if (type.equals(r.type) && r.valueFlags != null && r.valueFlags.test(feature))
+				res.add(r);
+		}
+		return res;
+	}
+
 
 	public void toXML(Node parent)
 	{

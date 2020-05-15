@@ -3,6 +3,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.tezaurs.struct.TElementFactory;
 import lv.ailab.dict.tezaurs.struct.THeader;
 import lv.ailab.dict.utils.Tuple;
@@ -84,34 +85,39 @@ public class AltEndingRule implements AdditionalHeaderRule
 	 * Konstruktors īsumam - gadījumiem, kad likums apskata tikai vienu lemmas
 	 * nosacījumu.
 	 */
-	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			int lemmaEndCutLength, Set<Integer> paradigms,
-			Set<Tuple<String, String>> positiveFlags, String altLemmaEnd,
-			Set<Integer> altLemmaParadigms, Set<Tuple<String, String>> altLemmaFlags)
+	public static AltEndingRule simple(
+			String patternText, String lemmaRestrictions, int lemmaEndCutLength,
+			Set<Integer> paradigms, Set<Tuple<String, String>> positiveFlags,
+			Set<StructRestrs.One> positiveRestrictions, String altLemmaEnd,
+			Set<Integer> altLemmaParadigms, Set<Tuple<String, String>> altLemmaFlags,
+			Set<StructRestrs.One> altLemmaRestrictions)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<StemSlotSubRule>(){{
 					add( new StemSlotSubRule(lemmaRestrictions,lemmaEndCutLength,
-							paradigms, positiveFlags, altLemmaEnd,
-							altLemmaParadigms, altLemmaFlags));}});
+							paradigms, positiveFlags, positiveRestrictions,
+							altLemmaEnd, altLemmaParadigms, altLemmaFlags,
+							altLemmaRestrictions));}});
 	}
 
 	/**
 	 * Konstruktors īsumam - gadījumiem, kad likums apskata tikai vienu lemmas
 	 * nosacījumu ar vienu paradigmu un jaunajai lemmai ari ir viena paradigma
 	 */
-	public static AltEndingRule simple(String patternText, String lemmaRestrictions,
-			int lemmaEndCutLength, int paradigm,
-			Set<Tuple<String, String>> positiveFlags, String altLemmaEnd,
-			int altLemmaParadigm, Set<Tuple<String, String>> altLemmaFlags)
+	public static AltEndingRule simple(
+			String patternText, String lemmaRestrictions, int lemmaEndCutLength,
+			int paradigm, Set<Tuple<String, String>> positiveFlags,
+			Set<StructRestrs.One> positiveRestrictions, String altLemmaEnd,
+			int altLemmaParadigm, Set<Tuple<String, String>> altLemmaFlags,
+			Set<StructRestrs.One> altLemmaRestrictions)
 	{
 		return new AltEndingRule(patternText,
 				new ArrayList<StemSlotSubRule>(){{
 					add( new StemSlotSubRule(lemmaRestrictions, lemmaEndCutLength,
 							new HashSet<Integer>(){{add(paradigm);}},
-							positiveFlags, altLemmaEnd,
+							positiveFlags, positiveRestrictions, altLemmaEnd,
 							new HashSet<Integer>(){{add(altLemmaParadigm);}},
-							altLemmaFlags));}});
+							altLemmaFlags, altLemmaRestrictions));}});
 	}
 
 	public static AltEndingRule of(String patternText, StemSlotSubRule[] lemmaLogic)
@@ -129,11 +135,12 @@ public class AltEndingRule implements AdditionalHeaderRule
 						.asList(paradigms)),
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				altLemmaEnd,
+				null, altLemmaEnd,
 				altLemmaParadigms == null ? null : new HashSet<>(Arrays
 						.asList(altLemmaParadigms)),
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
-						.asList(altLemmaFlags)));
+						.asList(altLemmaFlags)),
+				null);
 	}
 
 	public static AltEndingRule of(String patternText, String lemmaRestrictions,
@@ -144,9 +151,26 @@ public class AltEndingRule implements AdditionalHeaderRule
 				paradigm,
 				positiveFlags == null ? null : new HashSet<>(Arrays
 						.asList(positiveFlags)),
-				altLemmaEnding, altLemmaParadigm,
+				null, altLemmaEnding, altLemmaParadigm,
 				altLemmaFlags == null ? null : new HashSet<>(Arrays
-						.asList(altLemmaFlags)));
+						.asList(altLemmaFlags)),
+				null);
+	}
+
+	public static AltEndingRule of(
+			String patternText, String lemmaRestrictions, int lemmaEndingCutLength,
+			int paradigm, Tuple<String, String>[] positiveFlags,
+			StructRestrs.One positiveRestriction, String altLemmaEnding,
+			int altLemmaParadigm, Tuple<String, String>[] altLemmaFlags,
+			StructRestrs.One altLemmaRestriction)
+	{
+		return simple(patternText, lemmaRestrictions, lemmaEndingCutLength,
+				paradigm,
+				positiveFlags == null ? null : new HashSet<>(Arrays.asList(positiveFlags)),
+				positiveRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(positiveRestriction);}},
+				altLemmaEnding, altLemmaParadigm,
+				altLemmaFlags == null ? null : new HashSet<>(Arrays.asList(altLemmaFlags)),
+				altLemmaRestriction == null ? null : new HashSet<StructRestrs.One>(){{add(altLemmaRestriction);}});
 	}
 
 
@@ -160,14 +184,17 @@ public class AltEndingRule implements AdditionalHeaderRule
 	 *                           ja gramatika un lemma atbilst šim likumam
 	 * @param flagCollector      kolekcija, kurā pielikt karodziņus gadījumā,
 	 *                           ja vismaz gramatika atbilst šim likumam
+	 * @param restrCollector     kolekcija, kurā pielikt ierobežojumus gadījumā,
+	 *                           ja vismaz gramatika atbilst šim likumam
 	 * @param altLemmasCollector kolekcija, kurā ielikt izveidotās papildus
 	 *                           formas un tām raksturīgos karodziņus.
 	 * @return jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 * daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
-	public int applyDirect(String gramText, String lemma,
-			Set<Integer> paradigmCollector, Flags flagCollector,
+	public int applyDirect(
+			String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector,
 			List<Header> altLemmasCollector)
 	{
 		int newBegin = -1;
@@ -187,13 +214,19 @@ public class AltEndingRule implements AdditionalHeaderRule
 					Flags altParams = TElementFactory.me().getNewFlags();
 					if (rule.altWordFlags != null)
 						altParams.addAll(rule.altWordFlags);
+					StructRestrs altRestrs = TElementFactory.me().getNewStructRestrs();
+					if (rule.altWordRestrictions != null)
+						altRestrs.restrictions.addAll(rule.altWordRestrictions);
+
 					THeader tmp = TElementFactory.me().getNewHeader();
-					tmp.reinitialize(TElementFactory.me(), altLemma, rule.altWordParadigms, altParams);
+					tmp.reinitialize(TElementFactory.me(), altLemma, rule.altWordParadigms, altParams, altRestrs);
 					altLemmasCollector.add(tmp);
 
 					paradigmCollector.addAll(rule.paradigms);
 					if (rule.positiveFlags != null)
 						flagCollector.addAll(rule.positiveFlags);
+					if (rule.positiveRestrictions != null)
+						restrCollector.restrictions.addAll(rule.positiveRestrictions);
 
 					matchedLemma = true;
 					break;

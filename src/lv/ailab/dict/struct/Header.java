@@ -30,22 +30,28 @@ public class Header implements HasToJSON, HasToXML
 	protected Header() {};
 
 	public void reinitialize(
-			GenericElementFactory factory, Lemma lemma, int paradigm, Flags flags)
+			GenericElementFactory factory, Lemma lemma, int paradigm,
+			Flags flags, StructRestrs restrs)
 	{
 		this.lemma = lemma;
 		gram = factory.getNewGram();
 		gram.flags = flags;
+		gram.structRestrictions = restrs;
 		gram.paradigm = new HashSet<Integer>(){{add(paradigm);}};
 	}
 
 	public void reinitialize(
-			GenericElementFactory factory, Lemma lemma, Set<Integer> paradigm, Flags flags)
+			GenericElementFactory factory, Lemma lemma, Set<Integer> paradigm,
+			Flags flags, StructRestrs restrs)
 	{
 		this.lemma = lemma;
-		if (paradigm != null && paradigm.size() > 0 || !flags.pairings.isEmpty())
+		if (paradigm != null && paradigm.size() > 0
+				|| flags != null && !flags.pairings.isEmpty()
+				|| restrs != null && !restrs.restrictions.isEmpty())
 		{
 			gram = factory.getNewGram();
 			gram.flags = flags;
+			gram.structRestrictions = restrs;
 			if (paradigm != null && paradigm.size() > 0)
 				gram.paradigm = new HashSet<>(paradigm);
 			else gram.paradigm = null;

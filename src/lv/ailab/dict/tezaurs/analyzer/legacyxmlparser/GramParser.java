@@ -146,7 +146,7 @@ public class GramParser
 			for (AdditionalHeaderRule r : rules)
 			{
 				if (newBegin != -1) break;
-				newBegin = r.applyDirect(gramText, lemma, gram.paradigm, gram.flags, gram.altLemmas);
+				newBegin = r.applyDirect(gramText, lemma, gram.paradigm, gram.flags, gram.structRestrictions, gram.altLemmas);
 			}
 			if (newBegin != -1) break;
 		}
@@ -355,19 +355,34 @@ public class GramParser
 		// Tālāk sekojošais ir shortcut, lai nebūtu dažāda mēroga karodziņiem
 		// jānorāda visi, pietiktu ar konkrētāku. Populārākie gadījumi.
 		// TODO - papildināt. Te šobrīd noteikti nav viss, tikai tas, ko ātrumā pamanīju likumu failā.
-		if (gram.flags.test(TFeatures.POS__PARTICIPLE_AMS) ||
-				gram.flags.test(TFeatures.POS__PARTICIPLE_DAMS) ||
-				gram.flags.test(TFeatures.POS__PARTICIPLE_IS) ||
-				gram.flags.test(TFeatures.POS__PARTICIPLE_OSS) ||
-				gram.flags.test(TFeatures.POS__PARTICIPLE_OT) ||
-				gram.flags.test(TFeatures.POS__PARTICIPLE_TS))
-			gram.flags.add(TFeatures.POS__PARTICIPLE);
+		HashSet<StructRestrs.One> particples =
+				gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_DAMS);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+		particples = gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_OT);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+
+		particples = gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_AMS);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+		particples = gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_IS);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+		particples = gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_OSS);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+		particples = gram.structRestrictions.filterByTypeFeature(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS);
+		if (particples != null) for (StructRestrs.One p : particples)
+			p.valueFlags.add(TFeatures.MOOD__PARTICIPLE);
+
+
 		if (gram.flags.test(TFeatures.POS__DIRECT_VERB) ||
 				gram.flags.test(TFeatures.POS__REFL_VERB))
 			gram.flags.add(TFeatures.POS__VERB);
 
-		if (gram.flags.test(TFeatures.POS__PARTICIPLE))
-			gram.flags.add(TFeatures.POS__VERB);
+		//if (gram.flags.test(TFeatures.POS__PARTICIPLE))
+		//	gram.flags.add(TFeatures.POS__VERB);
 		if (gram.flags.test(TFeatures.POS__REFL_NOUN))
 			gram.flags.add(TFeatures.POS__NOUN);
 		if (gram.flags.test(TFeatures.POS__REFL_NOUN))

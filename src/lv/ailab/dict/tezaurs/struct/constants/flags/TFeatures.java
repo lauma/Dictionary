@@ -22,14 +22,6 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__NEG_VERB = Tuple.of(TKeys.POS, TValues.NEGATIVE_VERB);
 	public static final Tuple<String, String> POS__REFL_VERB = Tuple.of(TKeys.POS, TValues.REFLEXIVE_VERB);
 
-	public static final Tuple<String, String> POS__PARTICIPLE = Tuple.of(TKeys.POS, TValues.PARTICIPLE);
-	public static final Tuple<String, String> POS__PARTICIPLE_OSS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_OSS);
-	public static final Tuple<String, String> POS__PARTICIPLE_OT = Tuple.of(TKeys.POS, TValues.PARTICIPLE_OT);
-	public static final Tuple<String, String> POS__PARTICIPLE_IS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_IS);
-	public static final Tuple<String, String> POS__PARTICIPLE_TS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_TS);
-	public static final Tuple<String, String> POS__PARTICIPLE_AMS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_AMS);
-	public static final Tuple<String, String> POS__PARTICIPLE_DAMS = Tuple.of(TKeys.POS, TValues.PARTICIPLE_DAMS);
-
 	public static final Tuple<String, String> POS__PERS_PRONOUN = Tuple.of(TKeys.POS, TValues.PERSONAL_PRONOUN);
 	public static final Tuple<String, String> POS__POSS_PRONOUN = Tuple.of(TKeys.POS, TValues.POSSESIVE_PRONOUN);
 	public static final Tuple<String, String> POS__DEM_PRONOUN = Tuple.of(TKeys.POS, TValues.DEMONSTRATIVE_PRONOUN);
@@ -50,6 +42,13 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__COMPOUND_PIECE = Tuple.of(TKeys.POS, TValues.COMPOUND_PIECE);
 	public static final Tuple<String, String> POS__COMPOUND_FIRST = Tuple.of(TKeys.POS, TValues.COMPOUND_FIRST_PIECE);
 	public static final Tuple<String, String> POS__COMPOUND_LAST = Tuple.of(TKeys.POS, TValues.COMPOUND_LAST_PIECE);
+
+	public static final Tuple<String, String> MOOD__PARTICIPLE_AMS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_AMS);
+	public static final Tuple<String, String> MOOD__PARTICIPLE_IS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_IS);
+	public static final Tuple<String, String> MOOD__PARTICIPLE_OSS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_OSS);
+	public static final Tuple<String, String> MOOD__PARTICIPLE_TS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_TS);
+	public static final Tuple<String, String> MOOD__PARTICIPLE_DAMS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_DAMS);
+	public static final Tuple<String, String> MOOD__PARTICIPLE_OT = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_OT);
 
 	public static final Tuple<String, String> CONVERSION__NOUN = Tuple.of(TKeys.POS_CONVERSION, TValues.NOUN);
 	public static final Tuple<String, String> CONVERSION__ADJECTIVE = Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE);

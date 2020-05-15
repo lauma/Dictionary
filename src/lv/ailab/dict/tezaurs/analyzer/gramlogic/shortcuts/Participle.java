@@ -1,8 +1,11 @@
 package lv.ailab.dict.tezaurs.analyzer.gramlogic.shortcuts;
 
+import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.BaseRule;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.utils.Tuple;
+import org.apache.poi.ss.formula.functions.T;
 
 /**
  * Ērtummetodes divdabjiem.
@@ -22,7 +25,8 @@ public final class Participle
 	public static BaseRule isUsi(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 42,
-				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null);
+				null, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_IS),
+				adjConversion(patternText) ? new Tuple[] {TFeatures.CONVERSION__ADJECTIVE} : null, null);
 	}
 
 	/**
@@ -34,7 +38,8 @@ public final class Participle
 	public static BaseRule iesUsies(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 43,
-				new Tuple[]{TFeatures.POS__PARTICIPLE_IS}, null);
+				null, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_IS),
+				adjConversion(patternText) ? new Tuple[] {TFeatures.CONVERSION__ADJECTIVE} : null, null);
 	}
 
 	/**
@@ -46,7 +51,8 @@ public final class Participle
 	public static BaseRule tsTa(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 13,
-				new Tuple[]{TFeatures.POS__PARTICIPLE_TS}, null);
+				null, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_TS),
+				adjConversion(patternText) ? new Tuple[] {TFeatures.CONVERSION__ADJECTIVE} : null, null);
 	}
 
 	/* Izveido BaseRule divdabjiem ar izskaņām -dams, -dama.
@@ -57,6 +63,12 @@ public final class Participle
 	public static BaseRule damsDamaDamiesDamas(String patternText, String lemmaRestrictions)
 	{
 		return BaseRule.of(patternText, lemmaRestrictions, 0,
-				new Tuple[]{TFeatures.POS__PARTICIPLE_DAMS}, null);
+				null, StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE_DAMS),
+				adjConversion(patternText) ? new Tuple[] {TFeatures.CONVERSION__ADJECTIVE} : null, null);
+	}
+
+	protected static boolean adjConversion (String patternText)
+	{
+		return patternText.matches("^.*\bīp\\. (v\\. )?noz(\\.|īmē\\.?)$");
 	}
 }

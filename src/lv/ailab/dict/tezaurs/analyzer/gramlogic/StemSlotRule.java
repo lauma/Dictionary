@@ -3,6 +3,7 @@ package lv.ailab.dict.tezaurs.analyzer.gramlogic;
 import lv.ailab.dict.struct.Flags;
 import lv.ailab.dict.struct.Header;
 import lv.ailab.dict.struct.Lemma;
+import lv.ailab.dict.struct.StructRestrs;
 import lv.ailab.dict.tezaurs.struct.TElementFactory;
 import lv.ailab.dict.tezaurs.struct.THeader;
 import lv.ailab.dict.utils.Tuple;
@@ -65,14 +66,17 @@ public class StemSlotRule implements AdditionalHeaderRule
 	 *                           ja gramatika un lemma atbilst šim likumam
 	 * @param flagCollector      kolekcija, kurā pielikt karodziņus gadījumā,
 	 *                           ja vismaz gramatika atbilst šim likumam
+	 * @param restrCollector     kolekcija, kurā pielikt ierobežojumus gadījumā
+	 *                           ja vismaz gramatika atbilst šim likumam
 	 * @param altLemmasCollector kolekcija, kurā ielikt izveidotās papildus
 	 *                           formas un tām raksturīgos karodziņus.
 	 * @return jaunā sākumpozīcija (vieta, kur sākas neatpazītā gramatikas
 	 * daļa) gramatikas tekstam, ja ir atbilsme šim likumam, -1 citādi.
 	 */
 	@Override
-	public int applyDirect(String gramText, String lemma,
-			Set<Integer> paradigmCollector, Flags flagCollector,
+	public int applyDirect(
+			String gramText, String lemma, Set<Integer> paradigmCollector,
+			Flags flagCollector, StructRestrs restrCollector,
 			List<Header> altLemmasCollector)
 	{
 		for (StemSlotSubRule curLemmaLogic : lemmaLogic)
@@ -91,13 +95,20 @@ public class StemSlotRule implements AdditionalHeaderRule
 					if (curLemmaLogic.altWordFlags != null)
 						altParams.addAll(curLemmaLogic.altWordFlags);
 					THeader tmp = TElementFactory.me().getNewHeader();
-					tmp.reinitialize(TElementFactory.me(), altLemma, curLemmaLogic.altWordParadigms, altParams);
+					StructRestrs altRestrs = TElementFactory.me().getNewStructRestrs();
+					if (curLemmaLogic.altWordRestrictions != null)
+						altRestrs.restrictions.addAll(curLemmaLogic.altWordRestrictions);
+
+					tmp.reinitialize(
+							TElementFactory.me(), altLemma, curLemmaLogic.altWordParadigms,
+							altParams, altRestrs);
 					altLemmasCollector.add(tmp);
 
 					paradigmCollector.addAll(curLemmaLogic.paradigms);
 					if (curLemmaLogic.positiveFlags != null)
-						for (Tuple<String, String> t : curLemmaLogic.positiveFlags)
-							flagCollector.add(t);
+						flagCollector.addAll(curLemmaLogic.positiveFlags);
+					if (curLemmaLogic.positiveRestrictions != null)
+						restrCollector.restrictions.addAll(curLemmaLogic.positiveRestrictions);
 
 					usageCount++;
 					return newBegin;

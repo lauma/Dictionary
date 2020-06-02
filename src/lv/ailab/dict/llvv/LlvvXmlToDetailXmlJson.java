@@ -29,6 +29,7 @@ public class LlvvXmlToDetailXmlJson
 	{
 		public final static boolean PRINT_XML = true;
 		public final static boolean PRINT_JSON = true;
+		public final static boolean PRINT_WORDLIST = true;
 		public final static boolean NORMALIZE_PRONUNCIATIONS = true;
 		public final static Pattern volumeNo = Pattern.compile("LLVV_(\\d(-\\d)?)_\\d+_\\d+\\.xml");
 	}
@@ -135,6 +136,27 @@ public class LlvvXmlToDetailXmlJson
 		{
 			e.printStackTrace(System.err);
 			System.out.println("Neizdodas izdrukāt rezultātu JSON failā " + outputDataPath + "llvv.json!");
+			success = false;
+		}
+
+		if (Config.PRINT_WORDLIST) try
+		{
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputDataPath + "llvv-wl.txt"),
+					StandardCharsets.UTF_8));
+			for (Entry e : dict.entries)
+			{
+				out.write(e.head.lemma.text);
+				if (e.homId != null && !"0".equals(e.homId))
+					out.write(":" + e.homId);
+				out.newLine();
+			}
+			out.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(System.err);
+			System.out.println("Neizdodas izdrukāt vārdu sarakstu " + outputDataPath + "llvv-wl.txt!");
 			success = false;
 		}
 

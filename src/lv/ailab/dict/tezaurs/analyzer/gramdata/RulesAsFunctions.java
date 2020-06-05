@@ -30,7 +30,7 @@ public class RulesAsFunctions
 	 * @param form	analizējamā forma
 	 * @return 	TValue divdabja tips vai null
 	 */
-	public static String determineParticipleType(String form)
+	public static String determineBaseParticipleType(String form)
 	{
 		if (form.endsWith("damies") || form.endsWith("dams")) //aizvilkties->aizvilkdamies
 			return TValues.PARTICIPLE_DAMS;
@@ -44,6 +44,24 @@ public class RulesAsFunctions
 			return TValues.PARTICIPLE_IS;
 		else if (form.endsWith("ot") || form.endsWith("oties")) // ievērojot
 			return TValues.PARTICIPLE_OT;
+		else return null;
+	}
+
+	/**
+	 * Izanalizē doto formu, nosaka kas tas ir par divdabi.
+	 * @param form	analizējamā forma
+	 * @return 	TValue divdabja tips vai null
+	 */
+	public static String determineDefParticipleType(String form)
+	{
+		if (form.endsWith("amais") || form.endsWith("āmais"))
+			return TValues.PARTICIPLE_AMS;
+		else if (form.endsWith("ošais"))
+			return TValues.PARTICIPLE_OSS;
+		else if (form.endsWith("tais"))
+			return TValues.PARTICIPLE_TS;
+		else if (form.endsWith("ušais")) // krist -> kritušais
+			return TValues.PARTICIPLE_IS;
 		else return null;
 	}
 
@@ -252,8 +270,8 @@ public class RulesAsFunctions
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
 				//Pattern.compile("(savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*, arī( \\p{L}+\\.?)+))([,].*)?") :
-				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
-				Pattern.compile("((parasti |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
+				Pattern.compile("((parasti |arī |)savienojumā ar (\\p{L}+\\.?(,? \\p{L}+\\.?)*?))(, adj. nozīmē\\.?)?") :
+				Pattern.compile("((parasti |arī |)savienojumā ar (\\p{L}+\\.?( \\p{L}+\\.?)*))");
 		Pattern specialFlagPattern = Pattern.compile("savienojumā ar verba personas formu, tā divdabi ar izskaņu \"-dams\" un \"lai\"( vai savienojumā ar divdabi ar izskaņu \"-dams\")?.?");
 
 		int newBegin = -1;
@@ -276,7 +294,9 @@ public class RulesAsFunctions
 		{
 			newBegin = m1.group(1).length();
 			String modifier = m1.group(2).trim();
-			String restrFreq = modifier.equals("parasti") ? TFrequency.USUALLY : TFrequency.UNDISCLOSED;
+			String restrFreq = TFrequency.UNDISCLOSED;
+			if (modifier.equals("parasti")) restrFreq = TFrequency.USUALLY;
+			else if (modifier.equals("arī")) restrFreq = TFrequency.ALSO;
 
 			String restrValueRaw = m1.group(3);
 			if (restrValueRaw.matches("dat\\.|ģen\\.|lok\\.|adj\\.|apst\\.|adv\\.|lietv\\.|skait\\.|subst\\.|vietn\\."))
@@ -615,7 +635,7 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches("divsk\\. nom\\."))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.NUMBER__DUAL, TFeatures.CASE__NOMINATIVE});
-			else if (restrValueRaw.matches("divsk\\. nom\\., akuz\\."))
+			else if (restrValueRaw.matches("divsk\\. nom\\.(,| vai) akuz\\."))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.NUMBER__DUAL, TFeatures.CASE__NOMINATIVE});
@@ -899,30 +919,34 @@ public class RulesAsFunctions
 	{
 		boolean hasComma = gramText.contains(",");
 		Pattern flagPattern = hasComma ?
-				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+(, \\p{Ll}+)*))([,].*|\\.)?") :
-				Pattern.compile("((parasti |bieži |)divd\\.(?: formā)?: (\\p{Ll}+))\\.?");
+				Pattern.compile("((parasti |bieži |biežāk |)divd\\.(?: formā)?( ar not\\. galotni)?: (\\p{Ll}+(, \\p{Ll}+)*))([,].*|\\.)?") :
+				Pattern.compile("((parasti |bieži |biežāk |)divd\\.(?: formā)?( ar not\\. galotni)?: (\\p{Ll}+))\\.?");
 
 		int newBegin = -1;
 		//aizelsties->aizelsies, aizelsdamies, aizdzert->aizdzerts
 		Matcher m = flagPattern.matcher(gramText);
 		if (m.matches())
 		{
-			String[] forms = m.group(3).split(", ");
+			String[] forms = m.group(4).split(", ");
 			newBegin = m.group(1).length();
+			String definite = m.group(3);
 			String indicator = m.group(2).trim();
 			String restrFreq = TFrequency.UNDISCLOSED;
 			if (indicator.equals("parasti"))
 				restrFreq = TFrequency.USUALLY;
-			else if (indicator.equals("bieži"))
+			else if (indicator.equals("bieži") || indicator.endsWith("biežāk"))
 				restrFreq = TFrequency.OFTEN;
 
 			for (String wordForm : forms)
 			{
-				String partType = RulesAsFunctions.determineParticipleType(wordForm);
+				String partType = definite == null ? RulesAsFunctions.determineBaseParticipleType(wordForm) :
+						RulesAsFunctions.determineDefParticipleType(wordForm);
 				if (partType != null)
 				{
-					restrCollector.addOne(Type.IN_FORM, restrFreq, new Tuple[] {TFeatures.MOOD__PARTICIPLE,
+					StructRestrs.One restr = StructRestrs.One.of(Type.IN_FORM, restrFreq, new Tuple[] {TFeatures.MOOD__PARTICIPLE,
 							Tuple.of(TKeys.MOOD, partType)});
+					if (definite != null) restr.addFlag(TFeatures.DEFINITNESS__DEF);
+					restrCollector.restrictions.add(restr);
 					flagCollector.add(TFeatures.POS__VERB);
 					newBegin = m.group(1).length();
 
@@ -932,8 +956,8 @@ public class RulesAsFunctions
 							new Tuple[] {TFeatures.MOOD__PARTICIPLE});
 					flagCollector.add(TFeatures.POS__VERB);
 					System.err.printf(
-							"Neizdodas ielikt divdabja formu formu \"%s\" uztaisīt kā ierobežojumu\n",
-							wordForm);
+							"Neizdodas divdabja formu formu \"%s\" no virknes \"%s\" uztaisīt kā ierobežojumu\n",
+							wordForm, gramText);
 					newBegin = 0;
 					break;
 				}

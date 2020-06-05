@@ -554,6 +554,8 @@ public class GramParser
 	{
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; trans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; trans.");
 		gramText = gramText.replaceAll("^parasti 3\\. pers\\., -ē, pag\\. -ēja; intrans\\.; parasti saliktajos laikos\\.?($|(?=[,;]))", "parasti 3. pers., -ē, pag. -ēja; parasti saliktajos laikos; intrans.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))parasti 3\\. pers\\. vai divd\\. formā: ", "parasti 3\\. pers\\., parasti divd. formā: ");
+		gramText = gramText.replaceAll("(^|(?![,;] ))ar nenot\\. gal(\\.|otni), retāk ar not\\. gal(\\.|otni), pamata pak\\., v\\.($|(?=[,;]))", "ar nenot. gal. vai retāk ar not. gal. pamata pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal(\\.|otni), retāk ar nenot\\. gal(\\.|otni), pamata pak\\., v\\.($|(?=[,;]))", "ar not. gal. vai retāk ar nenot. gal. pamata pak. v.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal(\\.|otni), retāk ar nenot. gal(\\.|otni), pamata pak.($|(?=[,;]))", "ar not. gal. vai retāk ar nenot. gal. pamata pak.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar not\\. gal(\\.|otni), pārākajā vai vispārākajā pak\\., v\\.($|(?=[,;]))", "ar not. gal. pārākajā vai vispārākajā pak. v.");
@@ -565,7 +567,9 @@ public class GramParser
 		gramText = gramText.replaceAll("(^|(?![,;] ))savienojumā \"līdz ar\"; priev\\. nozīmē ar instr\\.($|(?=[,;]))", "savienojumā \"līdz ar\": priev. nozīmē ar instr.");
 		gramText = gramText.replaceAll("(^|(?![,;] ))parasti savienojumā ar skait\\.; priev\\. nozīmē ar dat\\.($|(?=[,;]))", "priev. nozīmē; parasti savienojumā ar skait.; parasti ar dat."); // "pāri" šķirklī ir šāda loģika, tā Laura izskaidroja.
 		//gramText = gramText.replaceAll("(^|(?![,;] ))savienojumā ar \"skatīties\", \"raudzīties\" u\\. tml\\.; arī priev\\. nozīmē ar dat\\.($|(?=[,;]))", "savienojumā ar \"skatīties\", \"raudzīties\" u. tml., arī priev. nozīmē ar dat."); // "pāri"
-		gramText = gramText.replaceAll("(^|(?![,;] ))dsk. dat., instr.($|(?=[,;]))", "dsk. dat., dsk. instr.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))priev\\. ar vsk\\. ģen\\. un ak\\., dsk\\. ar ģen\\., arī ar dat\\., divsk\\. nom\\., ak\\.($|(?=[,;]))", "priev. ar vsk. ģen., priev. ar vsk akuz., priev. ar dsk. ģen., retāk priev. ar dsk. dat., retāk priev. ar divsk. nom., retāk priev. ar divsk. akuz.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))priev\\. ar ģen\\., retāk dat\\.($|(?=[,;]))", "priev\\. ar ģen\\., retāk priev. ar dat\\.");
+		gramText = gramText.replaceAll("(^|(?![,;] ))dsk\\. dat\\., instr\\.($|(?=[,;]))", "dsk. dat., dsk. instr.");
 		//gramText = gramText.replaceAll("(^|(?![,;] ))salīdzinājuma konstrukcijā; savienojumā \"tāds kā\"($|(?=[,;]))", "salīdzinājuma konstrukcijā; savienojumā ar \"kā\""); // Ar laiku Laura sola izņemt
 		gramText = gramText.replaceAll("(^|(?![,;] ))salīdzinājuma konstrukcijā; savienojumā \"tāds kā\"($|(?=[,;]))", "salīdzinājuma konstrukcijā savienojumā \"tāds kā\""); // Ar laiku Laura sola izņemt
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar ģen.; savienojumā ar vienas un tās pašas saknes lietv.($|(?=[,;]))", "savienojumā ar vienas un tās pašas saknes lietv. ģen."); // Ar laiku Laura sola izņemt

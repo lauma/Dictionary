@@ -257,8 +257,22 @@ public class AbbrMap {
 		structRestrs.put("priev. (aiz pārvaldāmā vārda) ar vsk. vai dsk. ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("priev. ar dat.", TFeatures.POS__ADPOSITION);
 		structRestrs.put("priev. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__DATIVE));
+		pairingFlags.put("retāk priev. ar dat.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("retāk priev. ar dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, TFeatures.CASE__DATIVE));
 		pairingFlags.put("priev. ar instr.", TFeatures.POS__ADPOSITION);
 		structRestrs.put("priev. ar intr.", StructRestrs.One.of(Type.TOGETHER_WITH, TFeatures.CASE__INSTRUMENTAL));
+		pairingFlags.put("priev. ar vsk. ģen.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("priev. ar vsk. ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__SINGULAR}));
+		pairingFlags.put("priev. ar vsk. akuz.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("priev. ar vsk akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__SINGULAR}));
+		pairingFlags.put("priev. ar dsk. ģen.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("priev. ar dsk. ģen.", StructRestrs.One.of(Type.TOGETHER_WITH, new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		pairingFlags.put("retāk priev. ar dsk. dat.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("retāk priev. ar dsk. dat.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, new Tuple[]{TFeatures.CASE__DATIVE, TFeatures.NUMBER__PLURAL}));
+		pairingFlags.put("retāk priev. ar divsk. nom.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("retāk priev. ar divsk. nom.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, new Tuple[]{TFeatures.CASE__NOMINATIVE, TFeatures.NUMBER__DUAL}));
+		pairingFlags.put("retāk priev. ar divsk. akuz.", TFeatures.POS__ADPOSITION);
+		structRestrs.put("retāk priev. ar divsk. akuz.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.RARER, new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__DUAL}));
 
 		pairingFlags.put("persv.", TFeatures.POS__NOUN);
 		binaryFlags.put("persv.", TValues.PERSON_NAME);
@@ -526,6 +540,10 @@ public class AbbrMap {
 		pairingFlags.put("japāņu", TFeatures.POS__FOREIGN);
 		pairingFlags.put("jap. val.", Tuple.of(TKeys.LANGUAGE, "Japāņu"));
 		pairingFlags.put("jap. val.", TFeatures.POS__FOREIGN);
+		pairingFlags.put("jidišā", Tuple.of(TKeys.LANGUAGE, "Jidišs"));
+		pairingFlags.put("jidišā", TFeatures.POS__FOREIGN);
+		pairingFlags.put("katalāņu val.", Tuple.of(TKeys.LANGUAGE, "Katalāņu"));
+		pairingFlags.put("katalāņu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("kirgīzu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
 		pairingFlags.put("kirgīzu val.", TFeatures.POS__FOREIGN);
 		pairingFlags.put("krievu val.", Tuple.of(TKeys.LANGUAGE, "Krievu"));
@@ -627,6 +645,7 @@ public class AbbrMap {
 		// TODO vēst. laikam ir domēns nevis ierobežojums!!!!!!!!!
 		pairingFlags.put("novec.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Novecojis"));
 		pairingFlags.put("neakt.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Neaktuāls")); // Historicismi
+		pairingFlags.put("okaz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Okazionālisms"));
 		pairingFlags.put("ar sirsnīgu emocionālo noskaņu", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sirsnīga emocionālā nokrāsa"));
 		pairingFlags.put("ar sirsnīgu emocionālo noskaņu.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sirsnīga emocionālā nokrāsa"));
 		pairingFlags.put("parasti dzejas valodā.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Poētiska stilistiskā nokrāsa"));
@@ -676,6 +695,8 @@ public class AbbrMap {
 		structRestrs.put("nom.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__NOMINATIVE));
 		structRestrs.put("nom. formā.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__NOMINATIVE));
 		structRestrs.put("vok.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__VOCATIVE));
+		structRestrs.put("akuz. vai instr.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__ACUSATIVE));
+		structRestrs.put("akuz. vai instr.", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__INSTRUMENTAL));
 		structRestrs.put("arī ģen.", StructRestrs.One.of(Type.IN_FORM, TFrequency.ALSO, TFeatures.CASE__GENITIVE));
 		structRestrs.put("parasti akuz.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__ACUSATIVE));
 		structRestrs.put("parasti akuz. vai dsk. dat.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.CASE__ACUSATIVE));
@@ -712,6 +733,8 @@ public class AbbrMap {
 				new Tuple[]{TFeatures.CASE__DATIVE, TFeatures.NUMBER__PLURAL}));
 		structRestrs.put("dsk. ģen.", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[]{TFeatures.CASE__GENITIVE, TFeatures.NUMBER__PLURAL}));
+		structRestrs.put("dsk. instr.", StructRestrs.One.of(Type.IN_FORM,
+				new Tuple[]{TFeatures.CASE__INSTRUMENTAL, TFeatures.NUMBER__PLURAL}));
 		structRestrs.put("dsk. lok.", StructRestrs.One.of(Type.IN_FORM,
 				new Tuple[]{TFeatures.CASE__LOCATIVE, TFeatures.NUMBER__PLURAL}));
 		structRestrs.put("vsk. akuz.", StructRestrs.One.of(Type.IN_FORM,
@@ -786,6 +809,8 @@ public class AbbrMap {
 		pairingFlags.put("tikai infinitīvā", TFeatures.POS__VERB);
 		structRestrs.put("parasti nenoteiksmē", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("parasti nenoteiksmē", TFeatures.POS__VERB);
+		structRestrs.put("divd. formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__PARTICIPLE));
+		pairingFlags.put("divd. formā", TFeatures.POS__VERB);
 		structRestrs.put("infinitīva formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__INFINITIVE));
 		pairingFlags.put("infinitīva formā", TFeatures.POS__VERB);
 		structRestrs.put("nenoteiksmes formā", StructRestrs.One.of(Type.IN_FORM, TFeatures.MOOD__INFINITIVE));
@@ -800,6 +825,8 @@ public class AbbrMap {
 		structRestrs.put("parasti nenoteiksmē vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__INFINITIVE));
 		structRestrs.put("parasti nenoteiksmē vai divd. formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__PARTICIPLE));
 		pairingFlags.put("parasti nenoteiksmē vai divd. formā", TFeatures.POS__VERB);
+		structRestrs.put("parasti divd. formā ar not. galotni.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, new Tuple[] {TFeatures.MOOD__PARTICIPLE, TFeatures.DEFINITNESS__DEF}));
+		pairingFlags.put("parasti divd. formā ar not. galotni.", TFeatures.POS__VERB);
 		structRestrs.put("parasti pavēles formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__IMPERATIVE));
 		pairingFlags.put("parasti pavēles formā", TFeatures.POS__VERB);
 		structRestrs.put("parasti pavēles formā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.MOOD__IMPERATIVE));
@@ -846,6 +873,10 @@ public class AbbrMap {
 
 		// Šos rada komatu izņemšanas aprisinājums, kas ļauj salikt vienā
 		// ierobežojumā saistītās lietas.
+		structRestrs.put("ar nenot. gal. vai retāk ar not. gal. pamata pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__INDEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
+		structRestrs.put("ar nenot. gal. vai retāk ar not. gal. pamata pak. v.",
+				StructRestrs.One.of(Type.IN_FORM, TFrequency.RARER, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak. v.",
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[] {TFeatures.DEFINITNESS__DEF, TFeatures.DEGREE__POS, TFeatures.GENDER__MASC}));
 		structRestrs.put("ar not. gal. vai retāk ar nenot. gal. pamata pak. v.",
@@ -942,6 +973,8 @@ public class AbbrMap {
 				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
 				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+		structRestrs.put("parasti nolieguma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
+				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 		structRestrs.put("parasti nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 		structRestrs.put("parasti pamudinājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,

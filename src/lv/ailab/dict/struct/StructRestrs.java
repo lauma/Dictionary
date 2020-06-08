@@ -10,6 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -115,12 +116,35 @@ public class StructRestrs implements HasToXML, HasToJSON
 			(restrictions.toArray(new One[restrictions.size()]))[0].toXML(structRestrContN);
 			return;
 		}
-		Node andContN = doc.createElement("AND");
-		structRestrContN.appendChild(andContN);
+
+		ArrayList<ArrayList<One>> clauses = orderInClauses();
+		Node listParent = parent;
+		if (clauses.size() > 1)
+		{
+			listParent = doc.createElement("AND");
+			structRestrContN.appendChild(listParent);
+		}
+		for (ArrayList<One> orList: clauses)
+		{
+			if (orList.size() > 1)
+			{
+				Node orContN = doc.createElement("OR");
+				for (One o : orList) o.toXML(orContN);
+				listParent.appendChild(orContN);
+			} else orList.get(0).toXML(listParent);
+		}
+
+		//for (StructRestrs.One restr: sortedRestr)
+		//	if (restr != null) restr.toXML(structRestrContN);
+	}
+
+	protected ArrayList<ArrayList<One>> orderInClauses()
+	{
 		List<StructRestrs.One> sortedRestr = sortForPrint ?
 				restrictions.stream().sorted(One.getPartialComparator())
 						.collect(Collectors.toList()) :
 				new ArrayList<>(restrictions);
+		ArrayList<ArrayList<One>> clauses = new ArrayList<>();
 		while (!sortedRestr.isEmpty())
 		{
 			One first  = sortedRestr.get(0);
@@ -132,18 +156,10 @@ public class StructRestrs implements HasToXML, HasToJSON
 				else other.add(o);
 			}
 
-			if (orList.size() > 1)
-			{
-				Node orContN = doc.createElement("OR");
-				for (One o : orList) o.toXML(orContN);
-				andContN.appendChild(orContN);
-			}
-			else orList.get(0).toXML(andContN);
+			clauses.add(orList);
 			sortedRestr = other;
 		}
-		//for (StructRestrs.One restr: sortedRestr)
-		//	if (restr != null) restr.toXML(structRestrContN);
-
+		return clauses;
 	}
 
 	public String toJSON()
@@ -152,24 +168,11 @@ public class StructRestrs implements HasToXML, HasToJSON
 		if (restrictions.size() == 1)
 			return (restrictions.toArray(new One[restrictions.size()]))[0].toJSON();
 		StringBuilder res = new StringBuilder();
-		res.append("\"Logic\":\"AND\", \"Args\":[");
+		ArrayList<ArrayList<One>> clauses = orderInClauses();
+		if (clauses.size() > 1) res.append("\"Logic\":\"AND\", \"Args\":[");
 		boolean hasPrev = false;
-		List<One> sortedRestr = sortForPrint ?
-				restrictions.stream()
-						.sorted(StructRestrs.One.getPartialComparator())
-						.collect(Collectors.toList()) :
-				new ArrayList<>(restrictions);
-		while (!sortedRestr.isEmpty())
+		for (ArrayList<One> orList : clauses)
 		{
-			One first  = sortedRestr.get(0);
-			ArrayList<One> orList = new ArrayList<>();
-			ArrayList<One> other = new ArrayList<>();
-			for (One o : sortedRestr)
-			{
-				if (o.equalTypeFreq(first)) orList.add(o);
-				else other.add(o);
-			}
-
 			if (hasPrev) res.append(", ");
 			res.append("{");
 			if (orList.size() > 1)
@@ -181,10 +184,9 @@ public class StructRestrs implements HasToXML, HasToJSON
 				res.append(orList.get(0).toJSON());
 			res.append("}");
 			hasPrev = true;
-			sortedRestr = other;
 		}
+		if (clauses.size() > 1) res.append("]");
 
-		res.append("]");
 		return res.toString();
 	}
 

@@ -158,13 +158,15 @@ public class Gram implements HasToJSON, HasToXML
 		if (structRestrictions != null && !structRestrictions.restrictions.isEmpty())
 		{
 			if (hasPrev) res.append(", ");
-			res.append("\"StructuralRestrictions\":");
-			List<StructRestrs.One> sortedRestr = structRestrictions.sortForPrint ?
+			res.append("\"StructuralRestrictions\":{");
+			res.append(structRestrictions.toJSON());
+			/*List<StructRestrs.One> sortedRestr = structRestrictions.sortForPrint ?
 					structRestrictions.restrictions.stream()
 							.sorted(StructRestrs.One.getPartialComparator())
 							.collect(Collectors.toList()) :
 					new ArrayList<>(structRestrictions.restrictions);
-			res.append(JSONUtils.objectsToJSON(sortedRestr));
+			res.append(JSONUtils.objectsToJSON(sortedRestr));*/
+			res.append("}");
 			hasPrev = true;
 		}
 

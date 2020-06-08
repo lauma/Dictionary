@@ -13,7 +13,7 @@ import org.w3c.dom.Node;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StructRestrs implements HasToXML
+public class StructRestrs implements HasToXML, HasToJSON
 {
 	public LinkedHashSet<One> restrictions = new LinkedHashSet<>();
 
@@ -90,11 +90,11 @@ public class StructRestrs implements HasToXML
 		return false;
 	}
 
-	public HashSet<One> filterByTypeFeature(String type, Tuple<String,String> feature)
+	public LinkedHashSet<One> filterByTypeFeature(String type, Tuple<String,String> feature)
 	{
 
 		if (restrictions == null || restrictions.isEmpty()) return null;
-		HashSet<One> res = new HashSet<>();
+		LinkedHashSet<One> res = new LinkedHashSet<>();
 		for (One r : restrictions)
 		{
 			if (type.equals(r.type) && r.valueFlags != null && r.valueFlags.test(feature))
@@ -107,18 +107,87 @@ public class StructRestrs implements HasToXML
 	public void toXML(Node parent)
 	{
 		Document doc = parent.getOwnerDocument();
-		if (restrictions != null && !restrictions.isEmpty())
+		if (restrictions == null || restrictions.isEmpty()) return;
+		Node structRestrContN = doc.createElement("StructuralRestrictions");
+		parent.appendChild(structRestrContN);
+		if (restrictions.size() == 1)
 		{
-			Node structRestrContN = doc.createElement("StructuralRestrictions");
-			List<StructRestrs.One> sortedRestr = sortForPrint ?
-					restrictions.stream().sorted(One.getPartialComparator())
-							.collect(Collectors.toList()) :
-					new ArrayList<>(restrictions);
-			for (StructRestrs.One restr: sortedRestr)
-				if (restr != null) restr.toXML(structRestrContN);
-			parent.appendChild(structRestrContN);
+			(restrictions.toArray(new One[restrictions.size()]))[0].toXML(structRestrContN);
+			return;
 		}
+		Node andContN = doc.createElement("AND");
+		structRestrContN.appendChild(andContN);
+		List<StructRestrs.One> sortedRestr = sortForPrint ?
+				restrictions.stream().sorted(One.getPartialComparator())
+						.collect(Collectors.toList()) :
+				new ArrayList<>(restrictions);
+		while (!sortedRestr.isEmpty())
+		{
+			One first  = sortedRestr.get(0);
+			ArrayList<One> orList = new ArrayList<>();
+			ArrayList<One> other = new ArrayList<>();
+			for (One o : sortedRestr)
+			{
+				if (o.equalTypeFreq(first)) orList.add(o);
+				else other.add(o);
+			}
+
+			if (orList.size() > 1)
+			{
+				Node orContN = doc.createElement("OR");
+				for (One o : orList) o.toXML(orContN);
+				andContN.appendChild(orContN);
+			}
+			else orList.get(0).toXML(andContN);
+			sortedRestr = other;
+		}
+		//for (StructRestrs.One restr: sortedRestr)
+		//	if (restr != null) restr.toXML(structRestrContN);
+
 	}
+
+	public String toJSON()
+	{
+		if (restrictions == null || restrictions.size() < 1) return "";
+		if (restrictions.size() == 1)
+			return (restrictions.toArray(new One[restrictions.size()]))[0].toJSON();
+		StringBuilder res = new StringBuilder();
+		res.append("\"Logic\":\"AND\", \"Args\":[");
+		boolean hasPrev = false;
+		List<One> sortedRestr = sortForPrint ?
+				restrictions.stream()
+						.sorted(StructRestrs.One.getPartialComparator())
+						.collect(Collectors.toList()) :
+				new ArrayList<>(restrictions);
+		while (!sortedRestr.isEmpty())
+		{
+			One first  = sortedRestr.get(0);
+			ArrayList<One> orList = new ArrayList<>();
+			ArrayList<One> other = new ArrayList<>();
+			for (One o : sortedRestr)
+			{
+				if (o.equalTypeFreq(first)) orList.add(o);
+				else other.add(o);
+			}
+
+			if (hasPrev) res.append(", ");
+			res.append("{");
+			if (orList.size() > 1)
+			{
+				res.append("\"Logic\":\"OR\", \"Args\":");
+				res.append(JSONUtils.objectsToJSON(orList));
+			}
+			else
+				res.append(orList.get(0).toJSON());
+			res.append("}");
+			hasPrev = true;
+			sortedRestr = other;
+		}
+
+		res.append("]");
+		return res.toString();
+	}
+
 
 
 	/**
@@ -357,6 +426,13 @@ public class StructRestrs implements HasToXML
 			}
 
 			parent.appendChild(trN);
+		}
+
+		public boolean equalTypeFreq (One other)
+		{
+			if (other == null) return false;
+			return Objects.equals(type, other.type)
+					&& Objects.equals(frequency, other.frequency);
 		}
 
 		// This is needed for putting Lemmas in hash structures (hasmaps, hashsets).

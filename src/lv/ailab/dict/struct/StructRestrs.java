@@ -169,23 +169,21 @@ public class StructRestrs implements HasToXML, HasToJSON
 			return (restrictions.toArray(new One[restrictions.size()]))[0].toJSON();
 		StringBuilder res = new StringBuilder();
 		ArrayList<ArrayList<One>> clauses = orderInClauses();
-		if (clauses.size() > 1) res.append("\"Logic\":\"AND\", \"Args\":[");
+		if (clauses.size() > 1) res.append("\"AND\":[{");
 		boolean hasPrev = false;
 		for (ArrayList<One> orList : clauses)
 		{
-			if (hasPrev) res.append(", ");
-			res.append("{");
+			if (hasPrev) res.append("}, {");
 			if (orList.size() > 1)
 			{
-				res.append("\"Logic\":\"OR\", \"Args\":");
+				res.append("\"OR\":");
 				res.append(JSONUtils.objectsToJSON(orList));
 			}
 			else
 				res.append(orList.get(0).toJSON());
-			res.append("}");
 			hasPrev = true;
 		}
-		if (clauses.size() > 1) res.append("]");
+		if (clauses.size() > 1) res.append("}]");
 
 		return res.toString();
 	}

@@ -17,6 +17,10 @@ import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
 import org.w3c.dom.Node;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -43,6 +47,8 @@ import java.util.LinkedList;
  */
 public class GramParser
 {
+	public final static String ADVERBLIST_LOCATION = "saraksti/adverbs-noDegree.txt";
+	protected HashSet<String> noDegreeAdverbs = initAdverbList();
 	protected GramParser(){}
 	protected static GramParser singleton = new GramParser();
 	public static GramParser me()
@@ -306,7 +312,8 @@ public class GramParser
 				else if (lemma.matches(".*[^aeiouāēīōū]š")) gram.paradigm.add(14);
 			}
 
-			if (pos.contains(TValues.ADVERB)) gram.paradigm.add(21);
+			if (pos.contains(TValues.ADVERB) && noDegreeAdverbs.contains(lemma)) gram.paradigm.add(21);
+			else if (pos.contains(TValues.ADVERB)) gram.paradigm.add(51);
 			if (pos.contains(TValues.PARTICLE)) gram.paradigm.add(28);
 			if (pos.contains(TValues.ADPOSITION)) gram.paradigm.add(26);
 			if (pos.contains(TValues.CONJUNCTION)) gram.paradigm.add(27);
@@ -530,6 +537,8 @@ public class GramParser
 				!(gram.flags.test(TFeatures.POS__DIRECT_VERB) ||
 						gram.flags.test(TFeatures.POS__REFL_VERB)))
 			System.out.println("Darbības vārdam \"" + lemma + "\" nav norādīts tiešs/atgriezenisks!");
+		if (gram.paradigm.contains(21) && gram.paradigm.contains(51))
+			System.out.println("Apstākļa vārdam \"" + lemma + "\" norādītas divas paradigmas!");
 	}
 
 
@@ -574,6 +583,27 @@ public class GramParser
 		gramText = gramText.replaceAll("(^|(?![,;] ))salīdzinājuma konstrukcijā; savienojumā \"tāds kā\"($|(?=[,;]))", "salīdzinājuma konstrukcijā savienojumā \"tāds kā\""); // Ar laiku Laura sola izņemt
 		gramText = gramText.replaceAll("(^|(?![,;] ))ar ģen.; savienojumā ar vienas un tās pašas saknes lietv.($|(?=[,;]))", "savienojumā ar vienas un tās pašas saknes lietv. ģen."); // Ar laiku Laura sola izņemt
 		return gramText;
+	}
+
+	protected HashSet<String> initAdverbList()
+	{
+		HashSet<String> advList = new HashSet<>();
+		BufferedReader input;
+		try
+		{
+			// Adverb file format - one word (lemma) per line.
+			input = new BufferedReader(
+					new InputStreamReader(
+							new FileInputStream(ADVERBLIST_LOCATION), StandardCharsets.UTF_8));
+			String line;
+			while ((line = input.readLine()) != null)
+				advList.add(line.trim());
+			input.close();
+		} catch (Exception e)
+		{
+			System.err.println("Bezpakāpju apstākļa vārdu saraksts netiek lietots.");
+		} //TODO - any IO issues ignored
+		return advList;
 	}
 
 	public enum ParseType

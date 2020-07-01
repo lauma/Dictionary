@@ -123,7 +123,7 @@ public final class WithAltLemma
 				lemmaEnd.length(), paradigm,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
 				altLemmaEnd, 9,
-				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.CHANGED_PARADIGM});
 	}
 
 	/**
@@ -140,6 +140,6 @@ public final class WithAltLemma
 				lemmaEnd.length(), 3,
 				new Tuple[]{TFeatures.GENDER__MASC, TFeatures.POS__NOUN},
 				altLemmaEnd, 9,
-				new Tuple[]{TFeatures.ENTRYWORD__FEM, TFeatures.CHANGED_PARADIGM});
+				new Tuple[]{TFeatures.GENDER__FEM, TFeatures.CHANGED_PARADIGM});
 	}
 }

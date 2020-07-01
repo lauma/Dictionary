@@ -499,7 +499,7 @@ public class DirectRules
 		BaseRule.of("v.; s. -a", ".*augs", 13,
 				new Tuple[]{TFeatures.POS__ADJ},
 				StructRestrs.One.of(Type.IN_FORM, TFeatures.DEFINITNESS__INDEF),
-				new Tuple[]{TFeatures.ENTRYWORD__FEM}, null)	, // augs
+				null, null)	, // augs
 
 		// Noteiktās galotnes.
 		// Paradigma: 30 - jaundzimušais, pēdējais

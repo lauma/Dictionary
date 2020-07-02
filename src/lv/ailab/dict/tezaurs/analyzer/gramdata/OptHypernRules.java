@@ -1046,9 +1046,9 @@ public class OptHypernRules
 	public static final EndingRule[] directSecondConjVerb = {
 		// Likumi, kam ir visu formu variants.
 		// Paralēlās formas.
-		SecondConj.directAllPersParallel(
+		SecondConj.directAllPersParallelFirstConj(
 				"-skandēju, -skandē, -skandē, pag. -skandēju, -skandēji, -skandēja (retāk -skanda, 1. konj.)",
-				"skandēt"), // noskandēt
+				"skand", true, "skandēt"), // noskandēt
 
 		// Standartīgie.
 		SecondConj.direct("-dabūju, -dabū,", "-dabū, pag. -dabūju", "dabūt"), //aizdabūt
@@ -1067,10 +1067,10 @@ public class OptHypernRules
 		// Paralēlās formas.
 		// Īpašā piezīme par glumēšanu: 2. konjugāciju nosaka 3. personas
 		// galotne "-ē" - 3. konjugācijai būtu bez.
-		SecondConj.direct3PersParallel(
-				"-dūmē, pag. -dūmēja (retāk -dūma, 1. konj.)", "dūmēt"), // apdūmēt
-		SecondConj.direct3PersParallel(
-				"-glumē, pag. -glumēja (retāk -gluma, 1. konj.)", "glumēt"), //izglumēt
+		SecondConj.direct3PersParallelFirstConj(
+				"-dūmē, pag. -dūmēja (retāk -dūma, 1. konj.)", "dūm", "dūmēt"), // apdūmēt
+		SecondConj.direct3PersParallelFirstConj(
+				"-glumē, pag. -glumēja (retāk -gluma, 1. konj.)", "glum", "glumēt"), //izglumēt
 
 		// Standartizētie.
 		SecondConj.direct3Pers("-knābā, pag. -knābāja", "knābāt"), //pieknābāt
@@ -1110,20 +1110,27 @@ public class OptHypernRules
 		ThirdConj.directOptChangeAllPersParallel(
 				"-sēžu, -sēdi, -sēž, arī -sēdu, -sēdi, -sēd, pag. -sēdēju", "sēdēt"), //iesēdēt
 
-		ThirdConj.directStdAllPersParallel(
-				"-dzirdu, -dzirdi, -dzird, pag. -dzirdu (1. konj.), arī -dzirdēju", "dzirdēt"), //izdzirdēt
-		ThirdConj.directStdAllPersParallel(
-				"-dzirdu, -dzirdi, -dzird, pag. -dzirdēju, arī -dzirdu (1. konj.)", "dzirdēt"), //padzirdēt
-		ThirdConj.directStdAllPersParallel(
-				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)", "slīdēt"), // aizslīdēt
-		ThirdConj.directStdAllPersParallel(
-				"-smirdu, -smirdi, -smird, pag. -smirdēju (3. pers. arī -smirda, 1. konj.)", "smirdēt"), // nosmirdēt
-		ThirdConj.directStdAllPersParallel(
-				"-spīdu, -spīdi, -spīd, pag. -spīdēju, -spīdēji, -spīdēja (retāk -spīda, 1. konj.)", "spīdēt"), // paspīdēt
-		ThirdConj.directStdAllPersParallel(
-				"-vīdu, -vīdi, -vīd, pag. -vīdēju (3. pers. retāk -vīda, 1. konj.)", "vīdēt"), //novīdēt
-		ThirdConj.directStdAllPersParallel(
-				"-vīdu, -vīdi, -vīd, pag. -vīdēju (retāk -vīdu, 1. konj.)", "vīdēt"), // pavīdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-dzirdu, -dzirdi, -dzird, pag. -dzirdu (1. konj.), arī -dzirdēju",
+				"dzird", false, "dzirdēt"), //izdzirdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-dzirdu, -dzirdi, -dzird, pag. -dzirdēju, arī -dzirdu (1. konj.)",
+				"dzird", false, "dzirdēt"), //padzirdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-slīdu, -slīdi, -slīd, pag. -slīdēju, -slīdēji, -slīdēja (retāk -slīda, 1. konj.)",
+				"slīd", true, "slīdēt"), // aizslīdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-smirdu, -smirdi, -smird, pag. -smirdēju (3. pers. arī -smirda, 1. konj.)",
+				"smird", true, "smirdēt"), // nosmirdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-spīdu, -spīdi, -spīd, pag. -spīdēju, -spīdēji, -spīdēja (retāk -spīda, 1. konj.)",
+				"spīd", true, "spīdēt"), // paspīdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-vīdu, -vīdi, -vīd, pag. -vīdēju (3. pers. retāk -vīda, 1. konj.)",
+				"vīd", true, "vīdēt"), //novīdēt
+		ThirdConj.directStdAllPersParallelFirstConj(
+				"-vīdu, -vīdi, -vīd, pag. -vīdēju (retāk -vīdu, 1. konj.)",
+				"vīd", false, "vīdēt"), // pavīdēt
 
 			ThirdConj.directOptChangeAllPersParallel(
 				"-guļu, -guli, -guļ (arī -gul), pag. -gulēju", "gulēt"), // iegulēt
@@ -1347,32 +1354,45 @@ public class OptHypernRules
 		ThirdConj.directOptChange3PersParallel(
 				"-kait, arī -kaiš, pag. -kaitēja", "kaitēt"), // kaitēt
 		// 1. konj. paralēlforma.
-		ThirdConj.directStd3PersParallel(
-				"-grand, pag. -grandēja (retāk -granda, 1. konj.)", "grandēt"), //aizgrandēt
-		ThirdConj.directStd3PersParallel(
-				"-gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)", "gruzdēt"), //aizgruzdēt
-		ThirdConj.directStd3PersParallel(
-				"-gruzd, pag. -gruzdēja (arī -gruzda, 1. konj.)", "gruzdēt"), //apgruzdēt
-		ThirdConj.directStd3PersParallel(
-				"-mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)", "mirdzēt"), //aizmirdzēt
-		ThirdConj.directStd3PersParallel(
-				"-rit, pag. -ritēja (retāk -rita, 1. konj.)", "ritēt"), // aizritēt
-		ThirdConj.directStd3PersParallel(
-				"-skand, pag. -skandēja (retāk -skanda, 1. konj.)", "skandēt"), // skandēt
-		ThirdConj.directStd3PersParallel(
-				"-smird, pag. -smirdēja (arī -smirda, 1. konj.)", "smirdēt"), // sasmirdēt
-		ThirdConj.directStd3PersParallel(
-				"-spindz, pag. -spindzēja (retāk -spindza, 1. konj.)", "spindzēt"), // aizspindzēt
-		ThirdConj.directStd3PersParallel(
-				"-spīd, pag. -spīdēja (retāk -spīda, 1. konj.)", "spīdēt"), // aizspīdēt
-		ThirdConj.directStd3PersParallel(
-				"-spridz, pag. -spridzēja (retāk -spridza, 1. konj.)", "spridzēt"), // iespriedzēt
-		ThirdConj.directStd3PersParallel(
-				"-šķind, pag. -šķindēja (retāk -šķinda, 1. konj.)", "šķindēt"), // aizšķindēt
-		ThirdConj.directStd3PersParallel(
-				"-viz, pag. -vizēja (retāk -viza, 1. konj.)", "vizēt"), // aizvizēt
-		ThirdConj.directStd3PersParallel(
-				"-vīd, pag. -vīdēja (retāk -vīda, 1. konj.)", "vīdēt"), // atvīdēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-grand, pag. -grandēja (retāk -granda, 1. konj.)",
+				"grand", "grandēt"), //aizgrandēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-gruzd, pag. -gruzdēja (retāk -gruzda, 1. konj.)",
+				"gruzd", "gruzdēt"), //aizgruzdēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-gruzd, pag. -gruzdēja (arī -gruzda, 1. konj.)",
+				"gruzd", "gruzdēt"), //apgruzdēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-mirdz, pag. -mirdzēja (retāk -mirdza, 1. konj.)",
+				"mirdz", "mirdzēt"), //aizmirdzēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-rit, pag. -ritēja (retāk -rita, 1. konj.)",
+				"rit", "ritēt"), // aizritēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-skand, pag. -skandēja (retāk -skanda, 1. konj.)",
+				"skand", "skandēt"), // skandēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-smird, pag. -smirdēja (arī -smirda, 1. konj.)",
+				"smird", "smirdēt"), // sasmirdēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-spindz, pag. -spindzēja (retāk -spindza, 1. konj.)",
+				"spindz", "spindzēt"), // aizspindzēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-spīd, pag. -spīdēja (retāk -spīda, 1. konj.)",
+				"spīd", "spīdēt"), // aizspīdēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-spridz, pag. -spridzēja (retāk -spridza, 1. konj.)",
+				"spridz", "spridzēt"), // iespriedzēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-šķind, pag. -šķindēja (retāk -šķinda, 1. konj.)",
+				"šķind", "šķindēt"), // aizšķindēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-viz, pag. -vizēja (retāk -viza, 1. konj.)",
+				"viz", "vizēt"), // aizvizēt
+		ThirdConj.directStd3PersParallelFirstConj(
+				"-vīd, pag. -vīdēja (retāk -vīda, 1. konj.)",
+				"vīd", "vīdēt"), // atvīdēt
 
 		// Standartizētie ar mijām.
 		ThirdConj.directChange3Pers("-vajag, pag. -vajadzēja", "vajadzēt"), //vajadzēt
@@ -1791,20 +1811,21 @@ public class OptHypernRules
 				"-vēdīju, -vēdī, -vēdī, arī -vēdu, -vēdi, -vēda, pag. vēdīju", "vēdīt"), //vēdīt
 
 		// Paralēlformu paralēlforma.
-		SecondThirdConj.directStdAllPersParallel(
+		SecondThirdConj.directStdAllPersParallelFirstConj(
 				"-bālu, -bāli, -bāl, arī -bālēju, -bālē, -balē, pag. -bālēju (arī -bālu, 1. konj.)",
-				"bālēt"), //nobālēt
-		SecondThirdConj.directStdAllPersParallel(
+				"bāl", "bālēt"), //nobālēt
+		SecondThirdConj.directStdAllPersParallelFirstConj(
 				"-bālēju, -bālē, -bālē, arī -bālu, -bāli, -bāl, pag. -bālēju (retāk -bālu, 1. konj.)",
-				"bālēt"), //sabālēt
-		SecondThirdConj.directStdAllPersParallel(
+				"bāl","bālēt"), //sabālēt
+		SecondThirdConj.directStdAllPersParallelFirstConj(
 				"-rūsēju, -rūsē, -rūsē, arī -rūsu, -rūsi, -rūs, pag. -rūsēju (retāk -rūsu, 1. konj.)",
-				"rūsēt"), // ierūsēt
+				"rūs", "rūsēt"), // ierūsēt
 
 		// Likumi, kam ir "parasti 3. pers." variants.
 		// Paralēlformu paralēlforma
-		SecondThirdConj.directStd3PersParallel(
-				"-rūsē, arī -rūs, pag. -rūsēja (retāk -rūsa, 1. konj.)", "rūsēt"), // aizsūsēt
+		SecondThirdConj.directStd3PersParallelFirstConj(
+				"-rūsē, arī -rūs, pag. -rūsēja (retāk -rūsa, 1. konj.)",
+				"rūs", "rūsēt"), // aizsūsēt
 
 		// Standartizētie
 		// A, B

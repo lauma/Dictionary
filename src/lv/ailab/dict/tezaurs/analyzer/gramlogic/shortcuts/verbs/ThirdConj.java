@@ -4,6 +4,7 @@ import lv.ailab.dict.tezaurs.analyzer.gramdata.RulesAsFunctions;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.PluralVerbRule;
 import lv.ailab.dict.tezaurs.analyzer.gramlogic.VerbDoubleRule;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
+import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.utils.Tuple;
 
 import java.util.ArrayList;
@@ -79,23 +80,22 @@ public final class ThirdConj
 
 	/**
 	 * Izveido likumu 3. konjugācijas tiešajam darbības vārdam bez tagadnes
-	 * mijas, bet ar paralēlajām formām, kam visām ir vienādas mijas, un ir
-	 * norādītas tikai 3. personas formas.
-	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
-	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * mijas, bet ar 1. konjugācijas paralēlajām formām, kam visām ir vienādas
+	 * mijas, un ir norādītas tikai 3. personas formas.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
+	 * @param pastStem		jau sagatavots 3. personas celms 1. konjugācijai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return likums ar paradigmu 17 un tikai 3. personas formām
 	 */
-	public static VerbDoubleRule directStd3PersParallel(
-			String patternEnd, String lemmaEnd)
+	public static VerbDoubleRule directStd3PersParallelFirstConj(
+			String patternEnd, String pastStem, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
-		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
+		posFlags.add(Tuple.of(TKeys.PAST_STEMS, pastStem));
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 17,
@@ -120,7 +120,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 45,
@@ -144,7 +144,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, new Integer[]{17, 45},
@@ -156,7 +156,7 @@ public final class ThirdConj
 	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
 	 * iespējams, ir paralēlās formas, nav tagadnes mijas.
 	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
-	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * 1. konjugācijas.
 	 * @param patternText	teksts, ar kuru jāsākas gramatikai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return VerbDoubleRule ar 17. paradigmu bez 3. personas likuma
@@ -168,7 +168,37 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		{
+			System.out.println("3. konjugācijas paralēlformu parasto likumu lieto uz 1. konj. paralēlformām!");
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
+		}
+		if (!RulesAsFunctions.containsFormsOnly(patternText))
+			posFlags.add(TFeatures.ORIGINAL_NEEDED);
+		return VerbDoubleRule.of(patternText, null, lemmaEnd, 17,
+				posFlags.toArray(new Tuple[posFlags.size()]), null);
+	}
+
+	/**
+	 * Izveido VerbDoubleRule 3. konjugācijas tiešajam darbības vārdam, kam
+	 * dotas visas formas, bet atvasināt tikai trešās personas formu likumu nav
+	 * iespējams, ir paralēlās formas no 1. konjugācijas, nav tagadnes mijas.
+	 * @param patternText	teksts, ar kuru jāsākas gramatikai
+	 * @param pastStem		jau sagatavots 3. personas celms 1. konjugācijai
+	 * @param parallelFor3PersOnly	norāde, ka paralēlforma ir tikai 3. personai,
+	 *                              nevis visām
+	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
+	 * @return VerbDoubleRule ar 17. paradigmu bez 3. personas likuma
+	 */
+	public static VerbDoubleRule directStdAllPersParallelFirstConj(
+			String patternText, String pastStem, boolean parallelFor3PersOnly,
+			String lemmaEnd)
+	{
+		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
+		posFlags.add(TFeatures.PARALLEL_FORMS);
+		posFlags.add(TFeatures.POS__DIRECT_VERB);
+		if (parallelFor3PersOnly) posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_3_PERS);
+		else posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
+		posFlags.add(Tuple.of(TKeys.PAST_STEMS, pastStem));
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 17,
@@ -192,7 +222,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, 45,
@@ -216,7 +246,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__DIRECT_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, new Integer[] {17, 45},
@@ -303,22 +333,21 @@ public final class ThirdConj
 	/**
 	 * Izveido likumu 3. konjugācijas atgriezeniskajam darbības vārdam ar
 	 * paralēlajām formām, kam visām ir vienādas mijas, un ir norādītas tikai
-	 * 3. personas formas, bez tagadnes mijas.
-	 * Metode pārbauda, vai gramatika nesatur paralēlformas tieši no
-	 * 1. konjugācijas un, ja satur, pieliek papildus karodziņu.
+	 * 3. personas formas, bez tagadnes mijas, ar 1. konjugācijas paralēlformām.
 	 * @param patternEnd	gramatikas daļa ar galotnēm 3. personai un pagātnei,
 	 *                      bez "parasti 3.pers.,"
+	 * @param pastStem		jau sagatavots 3. personas celms 1. konjugācijai
 	 * @param lemmaEnd		nepieciešamā nenoteiksmes izskaņa
 	 * @return likums ar paradigmu 20 un tikai 3. personas formām
 	 */
-	public static VerbDoubleRule reflStd3PersParallel(
-			String patternEnd, String lemmaEnd)
+	public static VerbDoubleRule reflStd3PersParallelFirstConj(
+			String patternEnd, String pastStem, String lemmaEnd)
 	{
 		ArrayList<Tuple<String, String>> posFlags = new ArrayList<>();
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__REFL_VERB);
-		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+		posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
+		posFlags.add(Tuple.of(TKeys.PAST_STEMS, pastStem));
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 20,
@@ -343,7 +372,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, 46,
@@ -367,7 +396,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternEnd))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternEnd))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternEnd, lemmaEnd, new Integer[] {20, 46},
@@ -391,7 +420,7 @@ public final class ThirdConj
 		posFlags.add(TFeatures.PARALLEL_FORMS);
 		posFlags.add(TFeatures.POS__REFL_VERB);
 		if (RulesAsFunctions.containsFirstConj(patternText))
-			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM);
+			posFlags.add(TFeatures.FIRST_CONJ_PARALLELFORM_ALL_PERS);
 		if (!RulesAsFunctions.containsFormsOnly(patternText))
 			posFlags.add(TFeatures.ORIGINAL_NEEDED);
 		return VerbDoubleRule.of(patternText, null, lemmaEnd, new Integer[] {20, 46},

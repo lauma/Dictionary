@@ -1401,10 +1401,12 @@ public class DirectRules
 
 		// Likumi, kam ir tikai "parasti 3. pers." variants.
 		// Likumi, kam ir paralēlās formas.
-		ThirdConj.reflStd3PersParallel(
-				"-grandas, pag. -grandējās (retāk -grandās, 1. konj.)", "grandēties"), //iegrandēties
-		ThirdConj.reflStd3PersParallel(
-				"-spindzas, pag. -spindzējās (retāk -spindzās, 1. konj.)", "spindzēties"), //iespindzēties
+		ThirdConj.reflStd3PersParallelFirstConj(
+				"-grandas, pag. -grandējās (retāk -grandās, 1. konj.)",
+				"grand", "grandēties"), //iegrandēties
+		ThirdConj.reflStd3PersParallelFirstConj(
+				"-spindzas, pag. -spindzējās (retāk -spindzās, 1. konj.)",
+				"spindz", "spindzēties"), //iespindzēties
 
 		// Standartizētie.
 		// A, B

@@ -116,6 +116,13 @@ public class Keys
 
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
+	 * Norādes par mijām un formu paralelitāti, ja ar paradigmām nepietiek, kā
+	 * arī norāde par vairākos punktos lokāmu vārdu.
+	 */
+	public final static String INFLECTION_WEARDNES = "Locīšanas īpatnības";
+
+	/**
+	 * Paredzēts morfoimporta atvieglošanai.
 	 * Vairākās vietās lokāmo salikteņu (vecāmāte, šīsaule) locīšanas šablons.
 	 */
 	public final static String MULTIINFLECTION_PATTERN = "Šablons salikteņa vairākpunktu locīšanai";

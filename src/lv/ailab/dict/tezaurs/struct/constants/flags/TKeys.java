@@ -10,6 +10,15 @@ import lv.ailab.dict.struct.constants.flags.Keys;
 public class TKeys extends Keys
 {
 	/**
+	 * Norādes par vārda daļu sīkāku grupējumu kategorijās (vārdšķiras analogs)
+	 */
+	public final static String WORDPART_POS = "Kategorija (vārda daļai)";
+
+	/**
+	 * Leksiski gramatiskā kategorija - pārejamība.
+	 */
+	public final static String TRANSITIVITY = "Pārejamība";
+	/**
 	 * Valoda, kurā ir šķirkļa vārds, ja tā nav latviešu
 	 */
 	public final static String LANGUAGE = "Valoda";
@@ -29,6 +38,23 @@ public class TKeys extends Keys
 	public final static String POS_CONVERSION = "Konversija";
 
 	/**
+	 * Norāde par lielā/mazā burta lietojumu
+	 */
+	public final static String CAPITALIZATION = "Lielo/mazo burtu lietojums";
+
+	/**
+	 * No "Citi" izdalīta atslēga tiem karodziņiem, kas parasti strukturālo
+	 * ierobežojumu elementā rakstoru vārda jēgas ierobežojumus.
+	 */
+	public final static String SEMANTIC_RESTR = "Semantisks frāzes raksturojums";
+	/**
+	 * No "Citi" izdalīta atslēga tiem karodziņiem, kas parasti strukturālo
+	 * ierobežojumu elementā raksturo apmerēram sintaktiskus ierobežojumus, bet
+	 * ne teikuma veidu.
+	 */
+	public final static String SMALL_SYNT_RESTR = "Apmēram morfosintaktisks ierobežojums, mazāks par teikumu";
+
+	/**
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * Šķirkļavārda īpatnības tipiski tiek uzrādītas divos gadījumos:
 	 * 1) ja tēzaura šķirkļa vārds var nesakrist ar pamatformu (visbiežāk
@@ -37,12 +63,6 @@ public class TKeys extends Keys
 	 *    no pamata šķirkļa vārda.
 	 */
 	public final static String ENTRYWORD_WEARDNES = "Šķirkļavārda īpatnības";
-	/**
-	 * Paredzēts morfoimporta atvieglošanai.
-	 * Norādes par mijām, 1. konjugācijas darbības vārdu homoformām un darbības
-	 * vārdu paralēlformām.
-	 */
-	public final static String INFLECTION_WEARDNES = "Locīšanas īpatnības";
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.
 	 * 1. konjugācijas darbības vārdiem - pamatvārda, ar kuru sakrīt locīšana,
@@ -57,4 +77,10 @@ public class TKeys extends Keys
 	 * Pēc gramatiku apstrādes šos jāizceļ uz Entry.etymology lauku.
 	 */
 	public final static String ETYMOLOGY = "Etimoloģiskas norādes";
+
+	/**
+	 * Karodziņi, ko liek kā kļūdu paziņojumus, lai identificētu vēlāk
+	 * pārskatāmās vietas.
+	 */
+	public final static String PROBLEMS = "Gramatiku analīzes problēmas";
 }

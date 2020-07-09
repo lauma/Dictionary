@@ -135,10 +135,10 @@ public class RulesAsFunctions
 			}
 			String phrase1 = m.group(3);
 			restrCollector.addOne(Type.IN_STRUCT, restrFreq,
-					Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), phrase1);
+					Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.PHRASE), phrase1);
 			String phrase2 = m.group(4);
 			restrCollector.addOne(Type.IN_STRUCT, restrFreq,
-					Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), phrase2);
+					Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.PHRASE), phrase2);
 		}
 		return newBegin;
 	}
@@ -192,7 +192,7 @@ public class RulesAsFunctions
 			for (String p : phrases)
 			{
 				StructRestrs.One sr = StructRestrs.One.of(Type.IN_STRUCT, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), p.trim());
+						Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.PHRASE), p.trim());
 				if ("salīdzinājuma konstrukcijā".equals(indicator))
 					sr.valueFlags.add(TValues.COMP_CONSTR);
 				restrCollector.restrictions.add(sr);
@@ -201,7 +201,7 @@ public class RulesAsFunctions
 			if (rarerPhrase != null && !rarerPhrase.isEmpty())
 			{
 				StructRestrs.One sr = StructRestrs.One.of(Type.IN_STRUCT, TFrequency.RARER,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.PHRASE), rarerPhrase);
+						Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.PHRASE), rarerPhrase);
 				if ("salīdzinājuma konstrukcijā".equals(indicator))
 					sr.valueFlags.add(TValues.COMP_CONSTR);
 				restrCollector.restrictions.add(sr);
@@ -328,27 +328,27 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches(
 					"slimības izraisītāja mikroorganisma, arī slimības nosaukumu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.ILLNESS_NAME));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.ILLNESS_NAME));
 			else if (restrValueRaw.matches(
 					"laika mērvienības nosaukumu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.TIME_UNIT_NAME));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.TIME_UNIT_NAME));
 			else if (restrValueRaw.matches(
 					"apģērba gabala nosaukumu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.CLOTHING_UNIT_NAME));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.CLOTHING_UNIT_NAME));
 			else if (restrValueRaw.matches(
 					"mācību priekšmeta nosaukumu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.TEACHING_SUBJECT_NAME));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.TEACHING_SUBJECT_NAME));
 			else if (restrValueRaw.matches(
 					"dimensiju apzīmējumiem\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.DIMENSION_NAME));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.DIMENSION_NAME));
 			else if (restrValueRaw.matches(
 					"daudzskaitliniekiem vai pāra priekšmetu apzīmējumiem\\.?"))
 			restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-					Tuple.of(TKeys.OTHER_FLAGS, TValues.MULTI_TINGY_NAME));
+					Tuple.of(TKeys.SEMANTIC_RESTR, TValues.MULTI_TINGY_NAME));
 			else if (restrValueRaw.matches("personvārdu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_NAME));
@@ -358,7 +358,7 @@ public class RulesAsFunctions
 						Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_NAME));
 			else if (restrValueRaw.matches("daudzuma, masas, lieluma, ilguma apzīmējumu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.ADVERBIAL_TERM));
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.ADVERBIAL_TERM));
 
 			else if (restrValueRaw.matches("verbu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__VERB);
@@ -394,7 +394,7 @@ public class RulesAsFunctions
 						new Tuple[] {TFeatures.POS__VERB, TFeatures.REPETITION_WITH_ONE_STEM});
 			else if (restrValueRaw.matches("verbu, kas apzīmē bojāšanu, iznīcināšanu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.POS__VERB, Tuple.of(TKeys.OTHER_FLAGS, TValues.DISTRUCTION_NAME)});
+						new Tuple[] {TFeatures.POS__VERB, Tuple.of(TKeys.SEMANTIC_RESTR, TValues.DISTRUCTION_NAME)});
 			else if (restrValueRaw.matches("divd\\."))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
 						new Tuple[] {TFeatures.POS__VERB, TFeatures.MOOD__PARTICIPLE});
@@ -427,7 +427,7 @@ public class RulesAsFunctions
 						new Tuple[] {TFeatures.POS__NOUN, TFeatures.REPETITION_WITH_ONE_STEM, TFeatures.CASE__GENITIVE});
 			else if (restrValueRaw.matches("atkārtotu vienas un tās pašas saknes lietv\\. ar laika nozīmi\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, new Tuple[] {
-						TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, TValues.TIME_TERM),
+						TFeatures.POS__NOUN, Tuple.of(TKeys.SEMANTIC_RESTR, TValues.TIME_TERM),
 						TFeatures.REPETITION_WITH_ONE_STEM});
 			else if (restrValueRaw.matches("lietv\\. (lokatīvā\\.?|lok\\.)"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
@@ -447,8 +447,8 @@ public class RulesAsFunctions
 			}
 			else if (restrValueRaw.matches("lietvārdu, kas nosauc personu ar negatīvu īpašību\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, new Tuple[] {
-						TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_TERM),
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE_PERSON_TERM)});
+						TFeatures.POS__NOUN, Tuple.of(TKeys.SEMANTIC_RESTR, TValues.PERSON_TERM),
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.NEGATIVE_PERSON_TERM)});
 			else if (restrValueRaw.matches("vienas un tās pašas saknes lietv\\. vai lietv. nozīmē lietotu vārdu\\.?"))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
@@ -546,10 +546,10 @@ public class RulesAsFunctions
 			else if (restrValueRaw.matches("pers. vietn\\. vai lietv., kas apzīmē personu\\.?"))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_TERM)});
+						new Tuple[] {TFeatures.POS__NOUN, Tuple.of(TKeys.SEMANTIC_RESTR, TValues.PERSON_TERM)});
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, new Tuple[] {
 						TFeatures.POS__PRONOUN, TFeatures.POS__PERS_PRONOUN,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_TERM)});
+						Tuple.of(TKeys.SEMANTIC_RESTR, TValues.PERSON_TERM)});
 			}
 			else if (restrValueRaw.matches("lietv\\., retāk ar apst\\."))
 			{
@@ -597,7 +597,7 @@ public class RulesAsFunctions
 
 			else if (restrValueRaw.matches("apzīmētāju\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.ATTRIBUTE));
+						Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.ATTRIBUTE));
 			else if (restrValueRaw.matches("apst\\. vai tā nozīmē lietotu vārdu\\.?"))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq, TFeatures.POS__ADV);
@@ -612,7 +612,7 @@ public class RulesAsFunctions
 			}
 			else if (restrValueRaw.matches("īpašvārdu\\.?"))
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						Tuple.of(TKeys.OTHER_FLAGS, TValues.PROPER));
+						Tuple.of(TKeys.POS, TValues.PROPER));
 			else if (restrValueRaw.matches("dat\\. un apst\\. vai adj\\."))
 			{
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
@@ -788,7 +788,7 @@ public class RulesAsFunctions
 			}
 			else  if (specificVerbDeriv.matches())
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,
-						new Tuple[] {TFeatures.POS__VERB, Tuple.of(TKeys.OTHER_FLAGS, TValues.DERIVATIVES_OF)},
+						new Tuple[] {TFeatures.POS__VERB, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.DERIVATIVES_OF)},
 						specificVerbDeriv.group(1));
 			else  if (specificVerbNeg.matches())
 				restrCollector.addOne(Type.TOGETHER_WITH, restrFreq,

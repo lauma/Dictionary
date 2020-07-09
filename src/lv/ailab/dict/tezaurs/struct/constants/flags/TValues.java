@@ -103,6 +103,9 @@ public class TValues extends Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
+	public final static String TRANSITIVE = "Pārejošs";
+	public final static String INTRANSITIVE = "Nepārejošs";
+	public final static String MIXED_TRANSITIVITY = "Pārejošs un nepārejošs";
 
 	public final static String COMPOSITE_TENSES = "Saliktie laiki";
 
@@ -155,4 +158,7 @@ public class TValues extends Values
 	//public final static String VERB_WITH_DERIVS = "Dotais darbības vārds un tā atvasinājumi";
 	public final static String REPETITION_WITH_ONE_STEM = "Atkārtots vienas un tās pašas saknes vārds";
 	public final static String DERIVATIVES_OF = "Dotā vārda atvasinājumi";
+
+	public final static String FIRST_LETTER_BIG = "Ar lielo sākumburtu";
+	public final static String FIRST_LETTER_SMALL = "Ar mazo sākumburtu";
 }

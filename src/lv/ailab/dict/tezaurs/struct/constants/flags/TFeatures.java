@@ -38,10 +38,10 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> POS__FRACT_NUMERAL = Tuple.of(TKeys.POS, TValues.FRACTIONAL_NUMERAL);
 	public static final Tuple<String, String> POS__FOREIGN = Tuple.of(TKeys.POS, TValues.FOREIGN);
 	public static final Tuple<String, String> POS__PIECE = Tuple.of(TKeys.POS, TValues.PIECE_OF_WORD);
-	public static final Tuple<String, String> POS__PREFIX = Tuple.of(TKeys.POS, TValues.PREFIX);
-	public static final Tuple<String, String> POS__COMPOUND_PIECE = Tuple.of(TKeys.POS, TValues.COMPOUND_PIECE);
-	public static final Tuple<String, String> POS__COMPOUND_FIRST = Tuple.of(TKeys.POS, TValues.COMPOUND_FIRST_PIECE);
-	public static final Tuple<String, String> POS__COMPOUND_LAST = Tuple.of(TKeys.POS, TValues.COMPOUND_LAST_PIECE);
+	public static final Tuple<String, String> WPPOS__PREFIX = Tuple.of(TKeys.WORDPART_POS, TValues.PREFIX);
+	public static final Tuple<String, String> WPPOS__COMPOUND_PIECE = Tuple.of(TKeys.WORDPART_POS, TValues.COMPOUND_PIECE);
+	public static final Tuple<String, String> WPPOS__COMPOUND_FIRST = Tuple.of(TKeys.WORDPART_POS, TValues.COMPOUND_FIRST_PIECE);
+	public static final Tuple<String, String> WPPOS__COMPOUND_LAST = Tuple.of(TKeys.WORDPART_POS, TValues.COMPOUND_LAST_PIECE);
 
 	public static final Tuple<String, String> MOOD__PARTICIPLE_AMS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_AMS);
 	public static final Tuple<String, String> MOOD__PARTICIPLE_IS = Tuple.of(TKeys.MOOD, TValues.PARTICIPLE_IS);
@@ -63,6 +63,10 @@ public class TFeatures extends Features
 
 	public static final Tuple<String, String> NUMBER__DUAL = Tuple.of(TKeys.NUMBER, TValues.DUAL);
 
+	public static final Tuple<String, String> TRANSITIVITY_TRANS = Tuple.of(TKeys.TRANSITIVITY, TValues.TRANSITIVE);
+	public static final Tuple<String, String> TRANSITIVITY_INTRANS = Tuple.of(TKeys.TRANSITIVITY, TValues.INTRANSITIVE);
+	public static final Tuple<String, String> TRANSITIVITY_MIXED = Tuple.of(TKeys.TRANSITIVITY, TValues.MIXED_TRANSITIVITY);
+
 	public static final Tuple<String, String> NEGATIVE = Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE);
 
 	public static final Tuple<String, String> USAGE_RESTR__HISTORICAL = Tuple.of(TKeys.USAGE_RESTRICTIONS, TValues.HISTORICAL);
@@ -77,6 +81,9 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> ENTRYWORD__FEM = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.FEMININE);
 	//public static final Tuple<String, String> ENTRYWORD__CHANGED_PARADIGM = Tuple.of(TKeys.ENTRYWORD_WEARDNES, TValues.CHANGED_PARADIGM);
 
+	public static final Tuple<String, String> FIRST_LETTER_BIG = Tuple.of(TKeys.CAPITALIZATION, TValues.FIRST_LETTER_BIG);
+	public static final Tuple<String, String> FIRST_LETTER_SMALL = Tuple.of(TKeys.CAPITALIZATION, TValues.FIRST_LETTER_SMALL);
+
 	public static final Tuple<String, String> INFINITIVE_HOMOFORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.INFINITIVE_HOMOFORMS);
 	public static final Tuple<String, String> PARALLEL_FORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.PARALLEL_FORMS);
 	public static final Tuple<String, String> FIRST_CONJ_PARALLELFORM_ALL_PERS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.FIRST_CONJ_PARALLELFORM_ALL_PERS);
@@ -89,16 +96,16 @@ public class TFeatures extends Features
 	//public static final Tuple<String, String> OPT_SOUNDCHANGE = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.OPT_SOUNDCHANGE);
 	public static final Tuple<String, String> FROZEN = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.FROZEN_FORM);
 
-	public static final Tuple<String, String> UNCLEAR_PARADIGM = Tuple.of(TKeys.OTHER_FLAGS, TValues.UNCLEAR_PARADIGM);
-	public static final Tuple<String, String> UNCLEAR_POS = Tuple.of(TKeys.OTHER_FLAGS, TValues.UNCLEAR_POS);
+	public static final Tuple<String, String> UNCLEAR_PARADIGM = Tuple.of(TKeys.PROBLEMS, TValues.UNCLEAR_PARADIGM);
+	public static final Tuple<String, String> UNCLEAR_POS = Tuple.of(TKeys.PROBLEMS, TValues.UNCLEAR_POS);
+	public static final Tuple<String, String> ORIGINAL_NEEDED = Tuple.of(TKeys.PROBLEMS, TValues.ORIGINAL_NEEDED);
 
 	public static final Tuple<String, String> CHANGED_PARADIGM = Tuple.of(TKeys.OTHER_FLAGS, TValues.CHANGED_PARADIGM);
 
 
-	public static final Tuple<String, String> ORIGINAL_NEEDED = Tuple.of(TKeys.OTHER_FLAGS, TValues.ORIGINAL_NEEDED);
-
 	public static final Tuple<String, String> PERSON_NAME = Tuple.of(TKeys.OTHER_FLAGS, TValues.PERSON_NAME);
 	public static final Tuple<String, String> PLACE_NAME = Tuple.of(TKeys.OTHER_FLAGS, TValues.PLACE_NAME);
-	public static final Tuple<String, String> REPETITION_WITH_ONE_STEM = Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION_WITH_ONE_STEM);
+
+	public static final Tuple<String, String> REPETITION_WITH_ONE_STEM = Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION_WITH_ONE_STEM);
 
 }

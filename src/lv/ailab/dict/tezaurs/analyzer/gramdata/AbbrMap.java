@@ -145,41 +145,41 @@ public class AbbrMap {
 		pairingFlags.put("vispārin.", TFeatures.POS__GEN_PRONOUN);
 		pairingFlags.put("vispārin. vietn.", TFeatures.POS__GEN_PRONOUN);
 
-		pairingFlags.put("pried.", TFeatures.POS__PREFIX);
+		pairingFlags.put("pried.", TFeatures.WPPOS__PREFIX);
 		pairingFlags.put("pried.", TFeatures.POS__PIECE);
-		pairingFlags.put("priedēklis", TFeatures.POS__PREFIX);
+		pairingFlags.put("priedēklis", TFeatures.WPPOS__PREFIX);
 		pairingFlags.put("priedēklis", TFeatures.POS__PIECE);
-		pairingFlags.put("svešvārdu pried.", Tuple.of(TKeys.POS, TValues.PREFIX_FOREIGN));
-		pairingFlags.put("svešvārdu pried.", TFeatures.POS__PREFIX);
+		pairingFlags.put("svešvārdu pried.", Tuple.of(TKeys.WORDPART_POS, TValues.PREFIX_FOREIGN));
+		pairingFlags.put("svešvārdu pried.", TFeatures.WPPOS__PREFIX);
 		pairingFlags.put("svešvārdu pried.", TFeatures.POS__PIECE);
-		pairingFlags.put("izskaņa", Tuple.of(TKeys.POS, TValues.POSTFIX));
+		pairingFlags.put("izskaņa", Tuple.of(TKeys.WORDPART_POS, TValues.POSTFIX));
 		pairingFlags.put("izskaņa", TFeatures.POS__PIECE);
 
-		pairingFlags.put("salikteņu otrā daļa", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņu otrā daļa", TFeatures.POS__COMPOUND_LAST);
+		pairingFlags.put("salikteņu otrā daļa", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu otrā daļa", TFeatures.WPPOS__COMPOUND_LAST);
 		pairingFlags.put("salikteņu otrā daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņu pirmā daļa.", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņu pirmā daļa.", TFeatures.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņu pirmā daļa.", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu pirmā daļa.", TFeatures.WPPOS__COMPOUND_FIRST);
 		pairingFlags.put("salikteņu pirmā daļa.", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņu pirmā daļa", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņu pirmā daļa", TFeatures.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņu pirmā daļa", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu pirmā daļa", TFeatures.WPPOS__COMPOUND_FIRST);
 		pairingFlags.put("salikteņu pirmā daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņa pirmā daļa.", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņa pirmā daļa.", TFeatures.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņa pirmā daļa.", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņa pirmā daļa.", TFeatures.WPPOS__COMPOUND_FIRST);
 		pairingFlags.put("salikteņa pirmā daļa.", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņa pirmā daļa", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņa pirmā daļa", TFeatures.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņa pirmā daļa", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņa pirmā daļa", TFeatures.WPPOS__COMPOUND_FIRST);
 		pairingFlags.put("salikteņa pirmā daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņa 1. daļa", TFeatures.POS__COMPOUND_PIECE);
-		pairingFlags.put("salikteņa 1. daļa", TFeatures.POS__COMPOUND_FIRST);
+		pairingFlags.put("salikteņa 1. daļa", TFeatures.WPPOS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņa 1. daļa", TFeatures.WPPOS__COMPOUND_FIRST);
 		pairingFlags.put("salikteņa 1. daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņu daļa.", TFeatures.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu daļa.", TFeatures.WPPOS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu daļa.", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņu daļa", TFeatures.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņu daļa", TFeatures.WPPOS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņu daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņa daļa", TFeatures.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņa daļa", TFeatures.WPPOS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņa daļa", TFeatures.POS__PIECE);
-		pairingFlags.put("salikteņos", TFeatures.POS__COMPOUND_PIECE);
+		pairingFlags.put("salikteņos", TFeatures.WPPOS__COMPOUND_PIECE);
 		pairingFlags.put("salikteņos", TFeatures.POS__PIECE);
 
 		pairingFlags.put("vārdu daļa", TFeatures.POS__PIECE);
@@ -278,7 +278,7 @@ public class AbbrMap {
 		binaryFlags.put("persv.", TValues.PERSON_NAME);
 		//pairingFlags.put("vietv.", TFeatures.POS__NOUN); // jāuzmanās ar mazciemu "Siltais"
 														// Ko darīt ar sastingušajām formām?
-		binaryFlags.put("vietv.", "Vietvārds");
+		binaryFlags.put("vietv.", TValues.PLACE_NAME);
 
 		binaryFlags.put("nelok.", TValues.NON_INFLECTIVE);
 		binaryFlags.put("lokāms.", "Lokāms vārds");
@@ -292,13 +292,6 @@ public class AbbrMap {
 		structRestrs.put("ģen. nelok. īp. nozīmē", StructRestrs.One.of(Type.IN_FORM, TFeatures.CASE__GENITIVE));
 		pairingFlags.put("ģen. nelok. īp. nozīmē", Tuple.of(TKeys.POS_CONVERSION, TValues.ADJECTIVE));
 		binaryFlags.put("ģen. nelok. īp. nozīmē", TValues.NON_INFLECTIVE);
-
-		/*binaryFlags.put("nāk.", "Nākotne");
-		binaryFlags.put("pag.", "Pagātne");
-		binaryFlags.put("tag.", "Tagadne");
-		
-		binaryFlags.put("nenot.", "Nenoteiktā galotne");
-		binaryFlags.put("not.", "Noteiktā galotne");*/
 		
 		pairingFlags.put("s.", TFeatures.GENDER__FEM);
 		pairingFlags.put("v.", TFeatures.GENDER__MASC);
@@ -307,24 +300,22 @@ public class AbbrMap {
 		//pairingFlags.put("v. un s.", TFeatures.GENDER__MASC);
 		pairingFlags.put("kopdz.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
 		
-		binaryFlags.put("intrans.", "Nepārejošs");
-		binaryFlags.put("intr.", "Nepārejošs");
-		binaryFlags.put("nepārej.", "Nepārejošs");
-		binaryFlags.put("intr. darb.", "Nepārejošs");
-		binaryFlags.put("trans.", "Pārejošs");
-		binaryFlags.put("pārej.", "Pārejošs");
-		binaryFlags.put("tr.", "Pārejošs");
-		binaryFlags.put("tr. darb.", "Pārejošs");
-		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs");
-		binaryFlags.put("tr. un intr. darb. v.", "Nepārejošs");
-		binaryFlags.put("tr. un intr. darb. v.", "Pārejošs un nepārejošs");
-		binaryFlags.put("arī intrans.", "Nepārejošs");
-		binaryFlags.put("arī intrans.", "Pārejošs un nepārejošs");
-		binaryFlags.put("arī trans.", "Pārejošs");
-		binaryFlags.put("arī trans.", "Pārejošs un nepārejošs");
+		pairingFlags.put("intrans.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("intr.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("nepārej.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("intr. darb.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("trans.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("pārej.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("tr.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("tr. darb.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("tr. un intr. darb. v.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("tr. un intr. darb. v.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("tr. un intr. darb. v.", TFeatures.TRANSITIVITY_MIXED);
+		pairingFlags.put("arī intrans.", TFeatures.TRANSITIVITY_INTRANS);
+		pairingFlags.put("arī intrans.", TFeatures.TRANSITIVITY_MIXED);
+		pairingFlags.put("arī trans.", TFeatures.TRANSITIVITY_TRANS);
+		pairingFlags.put("arī trans.", TFeatures.TRANSITIVITY_MIXED);
 
-		/*binaryFlags.put("konj.", "Konjugācija");
-		binaryFlags.put("pers.", "Persona");*/
 
 		binaryFlags.put("dem.", "Deminutīvs");
 		binaryFlags.put("Dem.", "Deminutīvs");
@@ -901,12 +892,12 @@ public class AbbrMap {
 		structRestrs.put("dsk. ar mazo sākumburtu",
 				StructRestrs.One.of(Type.IN_FORM, new Tuple[]{Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu"), TFeatures.NUMBER__PLURAL}));
 
-		structRestrs.put("parasti ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
-		structRestrs.put("ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
-		structRestrs.put("ar lielo sāk. b.", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar lielo sākumburtu")));
-		structRestrs.put("ar mazo sākumburtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
-		structRestrs.put("ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
-		structRestrs.put("iron. ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, Tuple.of(TKeys.OTHER_FLAGS, "Ar mazo sākumburtu")));
+		structRestrs.put("parasti ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, TFeatures.FIRST_LETTER_BIG));
+		structRestrs.put("ar lielo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFeatures.FIRST_LETTER_BIG));
+		structRestrs.put("ar lielo sāk. b.", StructRestrs.One.of(Type.IN_FORM, TFeatures.FIRST_LETTER_BIG));
+		structRestrs.put("ar mazo sākumburtu", StructRestrs.One.of(Type.IN_FORM, TFeatures.FIRST_LETTER_SMALL));
+		structRestrs.put("ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, TFeatures.FIRST_LETTER_SMALL));
+		structRestrs.put("iron. ar mazo burtu", StructRestrs.One.of(Type.IN_FORM, TFeatures.FIRST_LETTER_SMALL));
 
 		structRestrs.put("parasti nolieguma formā", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE)));
 		structRestrs.put("parasti nolieguma formā.", StructRestrs.One.of(Type.IN_FORM, TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.NEGATIVE)));
@@ -933,7 +924,7 @@ public class AbbrMap {
 				new Tuple[]{TFeatures.CASE__ACUSATIVE, TFeatures.NUMBER__DUAL}));
 
 		structRestrs.put("savienojumā ar verbālsubstantīvu ar izskaņu -šana.", StructRestrs.One.of(Type.TOGETHER_WITH,
-				new Tuple[]{TFeatures.POS__NOUN, Tuple.of(TKeys.OTHER_FLAGS, "Lietvārds ar izskaņu -šana")}));
+				new Tuple[]{TFeatures.POS__NOUN, Tuple.of(TKeys.SMALL_SYNT_RESTR, "Lietvārds ar izskaņu -šana")}));
 		structRestrs.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
 				new Tuple[]{TFeatures.POS__ADJ, TFeatures.DEGREE__COMP}));
 		structRestrs.put("parasti savienojumā ar adj. vai apst. pārāko pakāpi.", StructRestrs.One.of(Type.TOGETHER_WITH, TFrequency.USUALLY,
@@ -1027,26 +1018,26 @@ public class AbbrMap {
 				new Tuple[] {TFeatures.POS__VERB, TFeatures.POS__NEG_VERB}));
 
 		structRestrs.put("parasti teikuma sākumā.", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, "Teikuma sākums")));
+				TFrequency.USUALLY, Tuple.of(TKeys.SMALL_SYNT_RESTR, "Teikuma sākums")));
 		structRestrs.put("parasti izsaukuma teikuma beigās.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
-				new Tuple[] {TFeatures.SENT__INTERJ, Tuple.of(TKeys.OTHER_FLAGS, "Teikuma beigas"),}));
+				new Tuple[] {TFeatures.SENT__INTERJ, Tuple.of(TKeys.SMALL_SYNT_RESTR, "Teikuma beigas"),}));
 
-		structRestrs.put("aiz apzīmējamā vārda", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Aiz apzīmējamā vārda")));
+		structRestrs.put("aiz apzīmējamā vārda", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SMALL_SYNT_RESTR, "Aiz apzīmējamā vārda")));
 
-		structRestrs.put("atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
-		structRestrs.put("atkārtotā lietojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
-		structRestrs.put("viena un tā paša vārda atkārtojumā", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+		structRestrs.put("atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
+		structRestrs.put("atkārtotā lietojumā.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
+		structRestrs.put("viena un tā paša vārda atkārtojumā", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
 		structRestrs.put("arī atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.ALSO, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+				TFrequency.ALSO, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
 		structRestrs.put("parasti atkārtojumā", StructRestrs.One.of(Type.IN_STRUCT,
-				TFrequency.USUALLY, Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+				TFrequency.USUALLY, Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
 		structRestrs.put("parasti atkārtojumā.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
-				Tuple.of(TKeys.OTHER_FLAGS, TValues.REPETITION)));
+				Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.REPETITION)));
 
 		structRestrs.put("salīdzinājuma konstrukcijā", StructRestrs.One.of(Type.IN_STRUCT,
-				Tuple.of(TKeys.OTHER_FLAGS, TValues.COMP_CONSTR)));
+				Tuple.of(TKeys.SMALL_SYNT_RESTR, TValues.COMP_CONSTR)));
 
-		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.OTHER_FLAGS, "Palīgteikums")));
+		structRestrs.put("saikļa nozīmē palīgteikumos.", StructRestrs.One.of(Type.IN_STRUCT, Tuple.of(TKeys.SMALL_SYNT_RESTR, "Palīgteikums")));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", Tuple.of(TKeys.POS_CONVERSION, TValues.CONJUNCTION));
 		pairingFlags.put("saikļa nozīmē palīgteikumos.", TFeatures.ORIGINAL_NEEDED);
 

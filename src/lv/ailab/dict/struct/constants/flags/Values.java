@@ -41,8 +41,8 @@ public class Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(SINGULAR); add(PLURAL);}});
 	//=== Dzmite ===============================================================
-	public final static String FEMININE = "Sieviešu dzimte";
-	public final static String MASCULINE = "Vīriešu dzimte";
+	public final static String FEMININE = "Sieviešu";
+	public final static String MASCULINE = "Vīriešu";
 	public static boolean isGender(String test)
 	{
 		return allGenders.contains(test);
@@ -68,9 +68,9 @@ public class Values
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE);}});
 
 	//=== Persona ==============================================================
-	public final static String FIRST_PERSON = "Pirmā persona";
-	public final static String SECOND_PERSON = "Otrā persona";
-	public final static String THIRD_PERSON = "Trešā persona";
+	public final static String FIRST_PERSON = "Pirmā";
+	public final static String SECOND_PERSON = "Otrā";
+	public final static String THIRD_PERSON = "Trešā";
 
 	//=== Laiks ================================================================
 	public final static String PRESENT = "Tagadne";
@@ -78,27 +78,27 @@ public class Values
 	public final static String PAST = "Pagātne";
 
 	//=== Izteiksme ============================================================
-	public final static String CONDITIONAL = "Vēlējuma izteiksme";
-	public final static String DEBITIVE = "Vajadzības izteiksme";
+	public final static String CONDITIONAL = "Vēlējuma";
+	public final static String DEBITIVE = "Vajadzības";
 	public final static String INFINITIVE = "Nenoteiksme";
-	public final static String INDICATIVE = "Īstenības izteiksme";
-	public final static String IMPERATIVE = "Pavēles izteiksme"; // Pavēles izteiksmes forma
+	public final static String INDICATIVE = "Īstenības";
+	public final static String IMPERATIVE = "Pavēles"; // Pavēles izteiksmes forma
 	public final static String PARTICIPLE = "Divdabis";
-	public final static String RELATIVE = "Atstāstījuma izteiksme";
+	public final static String RELATIVE = "Atstāstījuma";
 
 	//=== Kārta ================================================================
-	public final static String ACTIVE_VOICE = "Darāmā kārta"; // Ciešamās kārtas forma
-	public final static String PASSIVE_VOICE = "Ciešamā kārta"; // Ciešamās kārtas forma
+	public final static String ACTIVE_VOICE = "Darāmā"; // Ciešamās kārtas forma
+	public final static String PASSIVE_VOICE = "Ciešamā"; // Ciešamās kārtas forma
 
 
 	//=== Noteiktība ===========================================================
-	public final static String INDEFINITE_ENDING = "Nenoteiktā galotne";
-	public final static String DEFINITE_ENDING = "Noteiktā galotne";
+	public final static String INDEFINITE_ENDING = "Nenoteiktā";
+	public final static String DEFINITE_ENDING = "Noteiktā";
 
 	//=== Pakāpe ===============================================================
-	public final static String POSITIVE_DEGREE = "Pamata pakāpe";
-	public final static String COMPARATIVE_DEGREE = "Pārākā pakāpe";
-	public final static String SUPERLATIVE_DEGREE = "Vispārākā pakāpe";
+	public final static String POSITIVE_DEGREE = "Pamata";
+	public final static String COMPARATIVE_DEGREE = "Pārākā";
+	public final static String SUPERLATIVE_DEGREE = "Vispārākā";
 
 	//=== Noliegums: universāls ================================================
 	public final static String NEGATIVE = "Noliegums";
@@ -113,6 +113,8 @@ public class Values
 
 	//=== Citi =================================================================
 	public final static String NON_INFLECTIVE = "Nelokāms vārds";
+
+	//=== Locīšanas īpatnības ==================================================
 	public final static String MULTI_INFLECTIVE = "Vairākos punktos lokāms saliktenis";
 
 	//=== 1. konjugācijas informācijas kodēšanai ===============================

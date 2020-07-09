@@ -74,7 +74,8 @@ public class Features
 
 
 	public static final Tuple<String, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE);
-	public static final Tuple<String, String> MULTI_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.MULTI_INFLECTIVE);
+
+	public static final Tuple<String, String> MULTI_INFLECTIVE = Tuple.of(Keys.INFLECTION_WEARDNES, Values.MULTI_INFLECTIVE);
 
 	public static final Tuple<String, String> STEMS_ARE_ORDERED = Tuple.of(Keys.OTHER_FLAGS, Values.STEMS_ARE_ORDERED);
 

@@ -17,7 +17,7 @@ public class TKeys extends Keys
 	/**
 	 * Leksiski gramatiskā kategorija - pārejamība.
 	 */
-	public final static String TRANSITIVITY = "Pārejamība";
+	public final static String TRANSITIVITY = "Transitivitāte";
 	/**
 	 * Valoda, kurā ir šķirkļa vārds, ja tā nav latviešu
 	 */
@@ -52,7 +52,7 @@ public class TKeys extends Keys
 	 * ierobežojumu elementā raksturo apmerēram sintaktiskus ierobežojumus, bet
 	 * ne teikuma veidu.
 	 */
-	public final static String SMALL_SYNT_RESTR = "Apmēram morfosintaktisks ierobežojums, mazāks par teikumu";
+	public final static String SMALL_SYNT_RESTR = "Sintaktisks ierobežojums";
 
 	/**
 	 * Paredzēts morfoimporta atvieglošanai.

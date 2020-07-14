@@ -487,7 +487,7 @@ public class GeneralStatsCollector
 					paradigms.size() == 3 && paradigms.contains(16) && paradigms.contains(17) && paradigms.contains(45) ||
 					paradigms.size() == 3 && paradigms.contains(19) && paradigms.contains(20) && paradigms.contains(46))
 				inflFlags.add("Fakultatīva mija");
-			if (entry.head.gram.flags.test(TFeatures.GENDER__CO) ||
+			if (entry.head.gram.flags.test(TFeatures.COGENDER) ||
 					paradigms.size() == 2 && paradigms.contains(7) && paradigms.contains(8) ||
 					paradigms.size() == 2 && paradigms.contains(9) && paradigms.contains(10) ||
 					paradigms.size() == 2 && paradigms.contains(44) && paradigms.contains(47))

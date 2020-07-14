@@ -84,13 +84,6 @@ public class TValues extends Values
 					new HashSet(){{add(SINGULAR); add(PLURAL); add(DUAL);}});
 
 	public final static String COGENDER = "Kopdzimte";
-	public static boolean isGender(String test)
-	{
-		return allGenders.contains(test);
-	}
-	public final static Set<String> allGenders =
-			Collections.unmodifiableSet(
-					new HashSet(){{add(FEMININE); add(MASCULINE); add(COGENDER);}});
 
 	public final static String INSTRUMENTAL = "Instrumentālis";
 	public final static String NOPRON_INSTRUMENTAL = "Bezprievārda instrumentālis";
@@ -103,9 +96,9 @@ public class TValues extends Values
 			Collections.unmodifiableSet(
 					new HashSet(){{add(NOMINATIVE); add(GENITIVE); add(DATIVE); add(ACUSATIVE); add(LOCATIVE); add(INSTRUMENTAL); add(NOPRON_INSTRUMENTAL); add(VOCATIVE);}});
 
-	public final static String TRANSITIVE = "Pārejošs";
-	public final static String INTRANSITIVE = "Nepārejošs";
-	public final static String MIXED_TRANSITIVITY = "Pārejošs un nepārejošs";
+	public final static String TRANSITIVE = "Transitīvs";
+	public final static String INTRANSITIVE = "Intransitīvs";
+	public final static String MIXED_TRANSITIVITY = "Transitīvs un intransitīvs";
 
 	public final static String COMPOSITE_TENSES = "Saliktie laiki";
 

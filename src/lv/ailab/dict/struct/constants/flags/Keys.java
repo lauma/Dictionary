@@ -79,7 +79,7 @@ public class Keys
 	/**
 	 * Atslēga teikuma veida norādīšanai.
 	 */
-	public final static String SENTENCE = "Teikums";
+	public final static String SENTENCE_TYPE = "Teikuma komunikatīvais tips";
 
 	//=== Uzbūve ===============================================================
 	/**

@@ -66,11 +66,11 @@ public class Features
 	public static final Tuple<String, String> DEGREE__COMP = Tuple.of(Keys.DEGREE, Values.COMPARATIVE_DEGREE);
 	public static final Tuple<String, String> DEGREE__SUPER = Tuple.of(Keys.DEGREE, Values.SUPERLATIVE_DEGREE);
 
-	public static final Tuple<String, String> SENT__DECLAR = Tuple.of(Keys.SENTENCE, Values.DECLARATIVE_SENT);
-	public static final Tuple<String, String> SENT__ENCOURAGE = Tuple.of(Keys.SENTENCE, Values.ENCOURAGE_SENT);
-	public static final Tuple<String, String> SENT__INTERJ = Tuple.of(Keys.SENTENCE, Values.INTERJECTION_SENT);
-	public static final Tuple<String, String> SENT__NEGATION = Tuple.of(Keys.SENTENCE, Values.NEGATION_SENT);
-	public static final Tuple<String, String> SENT__QUESTION = Tuple.of(Keys.SENTENCE, Values.QUESTION_SENT);
+	public static final Tuple<String, String> SENT__DECLAR = Tuple.of(Keys.SENTENCE_TYPE, Values.DECLARATIVE_SENT);
+	public static final Tuple<String, String> SENT__ENCOURAGE = Tuple.of(Keys.SENTENCE_TYPE, Values.ENCOURAGE_SENT);
+	public static final Tuple<String, String> SENT__INTERJ = Tuple.of(Keys.SENTENCE_TYPE, Values.INTERJECTION_SENT);
+	public static final Tuple<String, String> SENT__NEGATION = Tuple.of(Keys.SENTENCE_TYPE, Values.NEGATION_SENT);
+	public static final Tuple<String, String> SENT__QUESTION = Tuple.of(Keys.SENTENCE_TYPE, Values.QUESTION_SENT);
 
 
 	public static final Tuple<String, String> NON_INFLECTIVE = Tuple.of(Keys.OTHER_FLAGS, Values.NON_INFLECTIVE);

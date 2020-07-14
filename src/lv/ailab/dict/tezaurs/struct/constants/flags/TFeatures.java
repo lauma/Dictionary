@@ -55,8 +55,6 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> CONVERSION__CARD_NUM = Tuple.of(TKeys.POS_CONVERSION, TValues.CARDINAL_NUMERAL);
 	public static final Tuple<String, String> CONVERSION__ADVERB = Tuple.of(TKeys.POS_CONVERSION, TValues.ADVERB);
 
-	public static final Tuple<String, String> GENDER__CO = Tuple.of(TKeys.GENDER, TValues.COGENDER);
-
 	public static final Tuple<String, String> CASE__NOPRON_INSTRUMENTAL = Tuple.of(TKeys.CASE, TValues.NOPRON_INSTRUMENTAL);
 	public static final Tuple<String, String> CASE__INSTRUMENTAL = Tuple.of(TKeys.CASE, TValues.INSTRUMENTAL);
 	public static final Tuple<String, String> CASE__VOCATIVE = Tuple.of(TKeys.CASE, TValues.VOCATIVE);
@@ -84,6 +82,7 @@ public class TFeatures extends Features
 	public static final Tuple<String, String> FIRST_LETTER_BIG = Tuple.of(TKeys.CAPITALIZATION, TValues.FIRST_LETTER_BIG);
 	public static final Tuple<String, String> FIRST_LETTER_SMALL = Tuple.of(TKeys.CAPITALIZATION, TValues.FIRST_LETTER_SMALL);
 
+	public static final Tuple<String, String> COGENDER = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.COGENDER);
 	public static final Tuple<String, String> INFINITIVE_HOMOFORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.INFINITIVE_HOMOFORMS);
 	public static final Tuple<String, String> PARALLEL_FORMS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.PARALLEL_FORMS);
 	public static final Tuple<String, String> FIRST_CONJ_PARALLELFORM_ALL_PERS = Tuple.of(TKeys.INFLECTION_WEARDNES, TValues.FIRST_CONJ_PARALLELFORM_ALL_PERS);

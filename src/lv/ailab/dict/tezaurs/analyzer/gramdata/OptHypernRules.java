@@ -1940,7 +1940,7 @@ public class OptHypernRules
 
 		// Izņēmums.
 		VerbDoubleRule.of("-dodos, -dodies,", "-dodas, pag. -devos", "doties", 18,
-				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__IRREG_VERB, TFeatures.POS__DIRECT_VERB}, null,
+				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "dot"), TFeatures.POS__IRREG_VERB, TFeatures.POS__REFL_VERB}, null,
 				FirstConjStems.of("do", "dod", "dev")), //atdoties
 		VerbDoubleRule.of("-pazīstos, -pazīsties,", "-pazīstas, pag. -pazinos", "pazīties", 18,
 				new Tuple[]{Tuple.of(TKeys.INFLECT_AS, "zīties"), TFeatures.POS__REFL_VERB}, null,

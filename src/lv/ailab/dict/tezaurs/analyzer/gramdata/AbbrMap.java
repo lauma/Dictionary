@@ -295,10 +295,10 @@ public class AbbrMap {
 		
 		pairingFlags.put("s.", TFeatures.GENDER__FEM);
 		pairingFlags.put("v.", TFeatures.GENDER__MASC);
-		pairingFlags.put("v. un s.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
+		pairingFlags.put("v. un s.", TFeatures.COGENDER);
 		//pairingFlags.put("v. un s.", TFeatures.GENDER__FEM);
 		//pairingFlags.put("v. un s.", TFeatures.GENDER__MASC);
-		pairingFlags.put("kopdz.", Tuple.of(TKeys.GENDER, TValues.COGENDER));
+		pairingFlags.put("kopdz.", TFeatures.COGENDER);
 		
 		pairingFlags.put("intrans.", TFeatures.TRANSITIVITY_INTRANS);
 		pairingFlags.put("intr.", TFeatures.TRANSITIVITY_INTRANS);
@@ -671,7 +671,7 @@ public class AbbrMap {
 		pairingFlags.put("īsziņās", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));
 		pairingFlags.put("īsziņas", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Īsziņās"));
 		pairingFlags.put("senv.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Sens, reti lietots vārds"));
-		pairingFlags.put("paširon.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Pašironija"));
+		pairingFlags.put("paširon.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Ironiska ekspresīvā nokrāsa")); // Pēc vienošanās ar BS
 		pairingFlags.put("lamuvārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 		pairingFlags.put("lamu vārda noz.", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
 		pairingFlags.put("lamu vārda nozīmē", Tuple.of(TKeys.USAGE_RESTRICTIONS, "Lamuvārds"));
@@ -961,9 +961,9 @@ public class AbbrMap {
 		structRestrs.put("parasti jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__QUESTION));
 		structRestrs.put("retoriskajos jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
-				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE_TYPE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
-				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE_TYPE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti nolieguma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 		structRestrs.put("parasti nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
@@ -981,13 +981,13 @@ public class AbbrMap {
 				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
 		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY,
-				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE_TYPE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__INTERJ));
 		structRestrs.put("parasti izsaukuma teikumos vai retoriskajos jautājuma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
-				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE_TYPE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti retoriskajos jautājumos un nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT, TFrequency.USUALLY,
-				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE, TValues.RETORICAL_QUESTION_SENT)}));
+				new Tuple[] {TFeatures.SENT__QUESTION, Tuple.of(TKeys.SENTENCE_TYPE, TValues.RETORICAL_QUESTION_SENT)}));
 		structRestrs.put("parasti retoriskajos jautājumos un nolieguma teikumos.", StructRestrs.One.of(Type.IN_STRUCT,
 				TFrequency.USUALLY, TFeatures.SENT__NEGATION));
 

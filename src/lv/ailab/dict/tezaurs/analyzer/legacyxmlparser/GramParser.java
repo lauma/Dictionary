@@ -323,7 +323,8 @@ public class GramParser
 
 			if (pos.contains(TValues.PRONOUN)) gram.paradigm.add(25);
 
-			if (pos.contains(TValues.FOREIGN)) gram.paradigm.add(39);
+			if (pos.contains(TValues.FOREIGN) && !pos.contains(TValues.PIECE_OF_WORD))
+				gram.paradigm.add(39);
 
 			// NB! Pašlaik nelokāmie skaitļa vārdi iet Hardcoded paradigmā.
 			if (pos.contains(TValues.FRACTIONAL_NUMERAL)

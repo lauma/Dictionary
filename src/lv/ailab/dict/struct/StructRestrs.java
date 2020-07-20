@@ -1,6 +1,7 @@
 package lv.ailab.dict.struct;
 
 import lv.ailab.dict.struct.constants.structrestrs.Frequency;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import lv.ailab.dict.utils.HasToJSON;
 import lv.ailab.dict.utils.HasToXML;
 import lv.ailab.dict.utils.JSONUtils;
@@ -79,12 +80,23 @@ public class StructRestrs implements HasToXML, HasToJSON
 		return false;
 	}
 
-	public boolean testByTypeFeature(String type, Tuple<String,String> feature)
+	public boolean testByTypeKey(String type, String frequency, String key)
+	{
+		if (restrictions == null || restrictions.isEmpty()) return false;
+		for (One r : restrictions)
+			if (type.equals(r.type) && Objects.equals(frequency, r.frequency) &&
+					r.valueFlags != null &&r.valueFlags.testKey(key))
+				return true;
+		return false;
+	}
+
+	public boolean testByTypeFeature(String type, String frequency, Tuple<String,String> feature)
 	{
 		if (restrictions == null || restrictions.isEmpty()) return false;
 		for (One r : restrictions)
 		{
-			if (type.equals(r.type) && r.valueFlags != null && r.valueFlags.test(feature))
+			if (type.equals(r.type) && Objects.equals(frequency, r.frequency) &&
+					r.valueFlags != null && r.valueFlags.test(feature))
 				return true;
 		}
 		return false;

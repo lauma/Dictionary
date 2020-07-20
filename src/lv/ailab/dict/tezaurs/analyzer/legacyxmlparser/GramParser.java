@@ -2,6 +2,7 @@ package lv.ailab.dict.tezaurs.analyzer.legacyxmlparser;
 
 import lv.ailab.dict.struct.Gram;
 import lv.ailab.dict.struct.StructRestrs;
+import lv.ailab.dict.struct.constants.flags.Keys;
 import lv.ailab.dict.struct.constants.structrestrs.Type;
 import lv.ailab.dict.tezaurs.analyzer.TPronuncNormalizer;
 import lv.ailab.dict.tezaurs.analyzer.gramdata.AltLemmaRules;
@@ -15,6 +16,7 @@ import lv.ailab.dict.tezaurs.struct.TGram;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TFeatures;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TKeys;
 import lv.ailab.dict.tezaurs.struct.constants.flags.TValues;
+import lv.ailab.dict.tezaurs.struct.constants.structrestrs.TFrequency;
 import org.w3c.dom.Node;
 
 import java.io.BufferedReader;
@@ -419,13 +421,13 @@ public class GramParser
 		// dzimti, gan skaitli. Varētu būt, ka ieviesīs ģenitīveņiem atsevišķas
 		// paradigmas, un tad tiem, kam dzimte vai skaitlis trūks, būs
 		// problēmas.
-		if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.CASE__GENITIVE)
+		if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFrequency.UNDISCLOSED, TFeatures.CASE__GENITIVE)
 				&& gram.flags.test(TFeatures.NON_INFLECTIVE))
 		{
 			gram.flags.add(TFeatures.POS__GEN_ONLY);
 			if (lemma.endsWith("uguns") || lemma.endsWith("sāls"))
 			{
-				if (!gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.NUMBER__SINGULAR))
+				if (!gram.structRestrictions.testByTypeKey(Type.IN_FORM, TFrequency.UNDISCLOSED, TKeys.NUMBER))
 				{
 					HashSet<StructRestrs.One> formRestrs = gram.structRestrictions.filterByType(Type.IN_FORM);
 					if (formRestrs.size() == 1)
@@ -435,7 +437,8 @@ public class GramParser
 						System.out.println("Ģenitīvenim \"" + lemma + "\" nesaprot, kur likt skaitli.");
 						gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 					}
-				}
+				} else if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFrequency.UNDISCLOSED, TFeatures.NUMBER__PLURAL))
+					System.out.println("Ģenitīvenim \"" + lemma + "\" ir negaidīts daudzskaitlis.");
 				System.out.println("Ģenitīvenim \"" + lemma + "\" nevar noteikt dzimti.");
 			}
 			else if (lemma.endsWith("a") || lemma.endsWith("us")
@@ -443,7 +446,7 @@ public class GramParser
 					|| lemma.endsWith("zibens")|| lemma.endsWith("mēness")
 					|| lemma.endsWith("ūdens") || lemma.endsWith("rudens")) // tēvA, jāņA, medus
 			{
-				if (!gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.NUMBER__SINGULAR))
+				if (!gram.structRestrictions.testByTypeKey(Type.IN_FORM, TFrequency.UNDISCLOSED, TKeys.NUMBER))
 				{
 					HashSet<StructRestrs.One> formRestrs = gram.structRestrictions.filterByType(Type.IN_FORM);
 					if (formRestrs.size() == 1)
@@ -453,12 +456,16 @@ public class GramParser
 						System.out.println("Ģenitīvenim \"" + lemma + "\" nesaprot, kur likt skaitli.");
 						gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 					}
+					gram.flags.add(TKeys.GENDER, TValues.MASCULINE);
 				}
-				gram.flags.add(TKeys.GENDER, TValues.MASCULINE);
+				else if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFrequency.UNDISCLOSED, TFeatures.NUMBER__PLURAL))
+					System.out.println("Ģenitīvenim \"" + lemma + "\" ir negaidīts daudzskaitlis.");
+				else gram.flags.add(TKeys.GENDER, TValues.MASCULINE);
+
 			}
 			else if (lemma.endsWith("s")) // annAS, eglES, sirdS
 			{
-				if (!gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.NUMBER__SINGULAR))
+				if (!gram.structRestrictions.testByTypeKey(Type.IN_FORM, TFrequency.UNDISCLOSED, TKeys.NUMBER))
 				{
 					HashSet<StructRestrs.One> formRestrs = gram.structRestrictions.filterByType(Type.IN_FORM);
 					if (formRestrs.size() == 1)
@@ -468,12 +475,14 @@ public class GramParser
 						System.out.println("Ģenitīvenim \"" + lemma + "\" nesaprot, kur likt skaitli.");
 						gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__SINGULAR);
 					}
-				}
-				gram.flags.add(TKeys.GENDER, TValues.FEMININE);
+					gram.flags.add(TKeys.GENDER, TValues.FEMININE);
+				} else if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFrequency.UNDISCLOSED, TFeatures.NUMBER__PLURAL))
+					System.out.println("Ģenitīvenim \"" + lemma + "\" ir negaidīts daudzskaitlis.");
+				else gram.flags.add(TKeys.GENDER, TValues.FEMININE);
 			}
 			else if (lemma.endsWith("u"))
 			{
-				if (!gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFeatures.NUMBER__SINGULAR))
+				if (!gram.structRestrictions.testByTypeKey(Type.IN_FORM, TFrequency.UNDISCLOSED, TKeys.NUMBER))
 				{
 					HashSet<StructRestrs.One> formRestrs = gram.structRestrictions.filterByType(Type.IN_FORM);
 					if (formRestrs.size() == 1)
@@ -483,6 +492,11 @@ public class GramParser
 						System.out.println("Ģenitīvenim \"" + lemma + "\" nesaprot, kur likt skaitli.");
 						gram.structRestrictions.addOne(Type.IN_FORM, TFeatures.NUMBER__PLURAL);
 					}
+				}
+				else if (gram.structRestrictions.testByTypeFeature(Type.IN_FORM, TFrequency.UNDISCLOSED, TFeatures.NUMBER__SINGULAR))
+				{
+					System.out.println("Ģenitīvenim \"" + lemma + "\" ir negaidīts vienskaitlis.");
+					System.out.println("Ģenitīvenim ar nestandarta galotni \"" + lemma + "\" nevar noteikt dzimti.");
 				}
 			}
 			else if (!lemma.endsWith("u"))
